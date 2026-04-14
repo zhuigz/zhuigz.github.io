@@ -66,6 +66,7 @@ body::before {
 .nav-links { display: flex; gap: 32px; list-style: none; }
 .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; }
 .nav-links a:hover { color: var(--gold); }
+.nav-links a.active { color: var(--gold); }
 
 .hero {
   min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
@@ -139,9 +140,9 @@ section { padding: 100px 0; }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0; transition: opacity 0.4s;
 }
-.info-card:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); transform: translateY(-4px); }
+.info-card:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25), 0 0 0 1px rgba(246,196,69,0.04); }
 .info-card:hover::before { opacity: 1; }
-.info-card .icon { font-size: 28px; margin-bottom: 16px; display: block; }
+.info-card .icon { font-size: 24px; margin-bottom: 18px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: rgba(246,196,69,0.07); border-radius: 14px; border: 1px solid rgba(246,196,69,0.08); }
 .info-card .label { font-size: 12px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
 .info-card .value { font-size: 17px; font-weight: 500; }
 .info-card .value small { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
@@ -173,7 +174,7 @@ section { padding: 100px 0; }
   border-radius: 16px; padding: 32px; display: flex; gap: 20px; align-items: flex-start;
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-.ach-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); border-color: rgba(246,196,69,0.08); }
+.ach-card:hover { background: var(--bg-card-hover); transform: translateY(-5px); border-color: rgba(246,196,69,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(246,196,69,0.05); }
 .ach-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
 .ach-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .ach-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
@@ -194,7 +195,7 @@ section { padding: 100px 0; }
 .belief-item:hover { padding-left: 12px; }
 .belief-num { font-family: 'Outfit'; font-weight: 800; font-size: 32px; color: rgba(246,196,69,0.15); line-height: 1; min-width: 48px; flex-shrink: 0; }
 .belief-text { font-family: 'Noto Serif SC', serif; font-size: 17px; line-height: 1.8; }
-.belief-item:last-child { border-bottom: none; }
+.belief-item:last-child { border-bottom: none; background: linear-gradient(135deg, rgba(246,196,69,0.07), rgba(246,196,69,0.02)); border-radius: 14px; padding: 28px 28px; border: 1px solid rgba(246,196,69,0.14); margin-top: 8px; }
 .belief-item:last-child .belief-text { color: var(--gold); font-weight: 700; font-size: 19px; }
 .belief-item:last-child .belief-num { color: rgba(246,196,69,0.4); }
 
@@ -223,9 +224,17 @@ section { padding: 100px 0; }
   section { padding: 60px 0; }
   .growth-banner { padding: 32px 24px; }
 }
+
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  pointer-events: none; transition: width 0.08s linear;
+  box-shadow: 0 0 8px rgba(246,196,69,0.5);
+}
 </style>
 </head>
 <body>
+<div class="scroll-progress"></div>
 
 <div class="bg-glow">
   <div class="orb orb-1"></div>
@@ -427,16 +436,59 @@ section { padding: 100px 0; }
 </footer>
 
 <script>
+// 滚动进度条
+const progressBar = document.querySelector('.scroll-progress');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progressBar.style.width = (scrolled * 100) + '%';
+}, { passive: true });
+
+// 数字计数动画
+function animateCount(el) {
+  const raw = el.textContent.trim();
+  const match = raw.match(/^(\d+)(.*)/);
+  if (!match) return;
+  const target = parseInt(match[1]);
+  const suffix = match[2];
+  const duration = 1400;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(eased * target) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// 滚动显现 + 触发计数
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
+      if (entry.target.classList.contains('stats-bar')) {
+        entry.target.querySelectorAll('.stat-number').forEach(animateCount);
+      }
       observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 reveals.forEach(el => observer.observe(el));
+
+// 导航当前区块高亮
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => navObserver.observe(s));
 </script>
 
 </body>
