@@ -218,12 +218,15 @@ section { padding: 100px 0; }
 
 .footer { text-align: center; padding: 80px 24px 40px; }
 .footer-light {
-  width: 120px; height: 120px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(246,196,69,0.2), transparent 70%);
-  margin: 0 auto 32px; display: flex; align-items: center; justify-content: center;
-  font-size: 48px; animation: glow 4s ease-in-out infinite;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, var(--gold-light), var(--gold) 52%, var(--gold-dark));
+  margin: 0 auto 36px;
+  animation: glow 4s ease-in-out infinite;
 }
-@keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(246,196,69,0.1); } 50% { box-shadow: 0 0 80px rgba(246,196,69,0.2); } }
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(246,196,69,0.07), 0 0 0 18px rgba(246,196,69,0.03), 0 0 32px rgba(246,196,69,0.2); }
+  50% { box-shadow: 0 0 0 10px rgba(246,196,69,0.12), 0 0 0 22px rgba(246,196,69,0.05), 0 0 64px rgba(246,196,69,0.35); }
+}
 @keyframes footerShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 .footer-text {
   font-family: 'Noto Serif SC', serif; font-size: 20px; margin-bottom: 8px;
@@ -431,7 +434,7 @@ section { padding: 100px 0; }
 </div>
 
 <nav class="nav">
-  <div class="nav-logo">⚙️ 人生系统</div>
+  <div class="nav-logo">人生系统</div>
   <ul class="nav-links">
     <li><a href="#system">总览</a></li>
     <li><a href="#goals">目标</a></li>
@@ -777,7 +780,7 @@ section { padding: 100px 0; }
 </div>
 
 <footer class="footer">
-  <div class="footer-light">☀️</div>
+  <div class="footer-light"></div>
   <div class="footer-text">追光的人，终将光芒万丈</div>
   <div class="footer-sub">PRIVATE LIFE SYSTEM · 2026</div>
   <div class="footer-line">追光者 · 曹宗昱 · 人生系统 1.0 · 2026.01.23 启动</div>
