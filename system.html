@@ -64,10 +64,19 @@ body::before {
   background: rgba(10,10,15,0.8); backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s;
 }
-.nav-logo { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--gold); }
+.nav-logo { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--gold); transition: text-shadow 0.4s; cursor: default; }
+.nav-logo:hover { text-shadow: 0 0 18px rgba(246,196,69,0.55), 0 0 36px rgba(246,196,69,0.2); }
 .nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: rgba(246,196,69,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(246,196,69,0.45); }
+::selection { background: rgba(246,196,69,0.2); color: var(--text-primary); }
+section[id] { scroll-margin-top: 80px; }
+.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
 .nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a.active { color: var(--gold); }
 
 .hero {
@@ -76,14 +85,17 @@ body::before {
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(246,196,69,0.08); border: 1px solid rgba(246,196,69,0.15);
+  background: linear-gradient(105deg, rgba(246,196,69,0.06) 0%, rgba(246,196,69,0.06) 38%, rgba(255,236,120,0.17) 50%, rgba(246,196,69,0.06) 62%, rgba(246,196,69,0.06) 100%);
+  background-size: 300% auto;
+  border: 1px solid rgba(246,196,69,0.15);
   border-radius: 50px; padding: 8px 20px; font-size: 13px; color: var(--gold);
   letter-spacing: 2px; text-transform: uppercase; font-family: 'Outfit', sans-serif;
-  margin-bottom: 40px; animation: fadeDown 1s ease 0.2s both;
+  margin-bottom: 40px; animation: fadeDown 1s ease 0.2s both, badgeShimmer 6s ease-in-out 2.5s infinite;
 }
 .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.6); } }
+@keyframes badgeShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 
 .hero-name {
   font-family: 'Noto Serif SC', serif; font-size: clamp(48px, 10vw, 100px); font-weight: 900; line-height: 1.1;
@@ -144,7 +156,8 @@ section { padding: 100px 0; }
 }
 .info-card:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25), 0 0 0 1px rgba(246,196,69,0.04); }
 .info-card:hover::before { opacity: 1; }
-.info-card .icon { font-size: 24px; margin-bottom: 18px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: rgba(246,196,69,0.07); border-radius: 14px; border: 1px solid rgba(246,196,69,0.08); }
+.info-card .icon { font-size: 24px; margin-bottom: 18px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: rgba(246,196,69,0.07); border-radius: 14px; border: 1px solid rgba(246,196,69,0.08); transition: background 0.4s, border-color 0.4s; }
+.info-card:hover .icon { background: rgba(246,196,69,0.13); border-color: rgba(246,196,69,0.15); }
 .info-card .label { font-size: 12px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
 .info-card .value { font-size: 17px; font-weight: 500; }
 .info-card .value small { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
@@ -154,6 +167,7 @@ section { padding: 100px 0; }
 .role-item { display: flex; align-items: center; gap: 14px; padding: 20px 24px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; transition: all 0.3s; }
 .role-item:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); }
 .role-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.role-item:hover .role-dot { filter: brightness(1.4); transform: scale(1.3); transition: all 0.3s; }
 
 .stats-bar {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -195,7 +209,8 @@ section { padding: 100px 0; }
 .belief-item { display: flex; align-items: flex-start; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; }
 .belief-item:first-child { border-top: 1px solid rgba(255,255,255,0.04); }
 .belief-item:hover { padding-left: 12px; }
-.belief-num { font-family: 'Outfit'; font-weight: 800; font-size: 32px; color: rgba(246,196,69,0.15); line-height: 1; min-width: 48px; flex-shrink: 0; }
+.belief-num { font-family: 'Outfit'; font-weight: 800; font-size: 32px; color: rgba(246,196,69,0.15); line-height: 1; min-width: 48px; flex-shrink: 0; transition: color 0.35s; }
+.belief-item:hover .belief-num { color: rgba(246,196,69,0.42); }
 .belief-text { font-family: 'Noto Serif SC', serif; font-size: 17px; line-height: 1.8; }
 .belief-item:last-child { border-bottom: none; background: linear-gradient(135deg, rgba(246,196,69,0.07), rgba(246,196,69,0.02)); border-radius: 14px; padding: 28px 28px; border: 1px solid rgba(246,196,69,0.14); margin-top: 8px; }
 .belief-item:last-child .belief-text { color: var(--gold); font-weight: 700; font-size: 19px; }
@@ -209,7 +224,14 @@ section { padding: 100px 0; }
   font-size: 48px; animation: glow 4s ease-in-out infinite;
 }
 @keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(246,196,69,0.1); } 50% { box-shadow: 0 0 80px rgba(246,196,69,0.2); } }
-.footer-text { font-family: 'Noto Serif SC', serif; font-size: 20px; color: var(--gold); margin-bottom: 8px; }
+@keyframes footerShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
+.footer-text {
+  font-family: 'Noto Serif SC', serif; font-size: 20px; margin-bottom: 8px;
+  background: linear-gradient(105deg, var(--gold) 0%, var(--gold) 33%, var(--gold-light) 50%, var(--gold) 67%, var(--gold) 100%);
+  background-size: 260% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: footerShimmer 8s ease-in-out 1s infinite;
+}
 .footer-sub { font-size: 13px; color: var(--text-dim); letter-spacing: 2px; }
 .footer-line { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04); font-size: 12px; color: var(--text-dim); }
 
@@ -687,7 +709,7 @@ section { padding: 100px 0; }
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(246,196,69,0.1)">🌅</div><div><div class="gcard-role">引擎 · Engine</div><h4>早起</h4></div></div><p>6:30起床 + 听前哨站。以最饱满的状态开启清醒的17个小时。</p></div>
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(94,206,138,0.1)">💪</div><div><div class="gcard-role">引擎 · Engine</div><h4>锻炼</h4></div></div><p>环湖跑 + 健身。身体是见证AI奇点最重要的革命本钱，没有之一。</p></div>
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(74,158,245,0.1)">🎧</div><div><div class="gcard-role">燃料 · Fuel</div><h4>听课</h4></div></div><p>前哨站 + 高质量播客。找AI对启发深度剖析，内化于心，外化于行。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(165,128,240,0.1)">📖</div><div><div class="gcard-role">燃料 · Fuel</div><h4>阅读</h4></div></div><p>一周一本，非虚构类为主。有启发直接找Gemini探讨深化。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(165,128,240,0.1)">📖</div><div><div class="gcard-role">燃料 · Fuel</div><h4>阅读</h4></div></div><p>一周一本，非虚构类为主。有启发直接找AI探讨深化。</p></div>
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(245,122,106,0.1)">💰</div><div><div class="gcard-role">轮子 · Output</div><h4>做事&amp;赚钱</h4></div></div><p>公众号现金流 + 理财定投复利。个人IP建设正式开始，6h高效，杜绝完美主义。</p></div>
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(246,196,69,0.1)">⚡</div><div><div class="gcard-role">涡轮 · Turbo</div><h4>AI赋能</h4></div></div><p>Gemini + GPT + Claude 三驾马车。生产力杠杆，极大提升学习和生产效率。</p></div>
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(94,206,138,0.1)">📞</div><div><div class="gcard-role">涡轮 · Turbo</div><h4>战友链接</h4></div></div><p>电话/线下深度链接。把陌生人变成熟人是人生最重要的能力之一。</p></div>
