@@ -419,6 +419,67 @@ section { padding: 100px 0; }
   box-shadow: 0 0 8px rgba(246,196,69,0.5);
 }
 
+/* ===== Visual Polish ===== */
+
+/* 1. sys-card 顶部金线 */
+.sys-card { position: relative; overflow: hidden; }
+.sys-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.sys-card:hover::before { opacity: 1; }
+
+/* 2. fire-big 呼吸光晕 */
+@keyframes fireGlow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(246,196,69,0.3)); }
+  50% { filter: drop-shadow(0 0 22px rgba(246,196,69,0.55)) drop-shadow(0 0 40px rgba(246,196,69,0.2)); }
+}
+.fire-big { animation: fireGlow 3s ease-in-out infinite; }
+
+/* 3. strat-bignum 可见度 */
+.strat-bignum { color: rgba(246,196,69,0.09); transition: color 0.4s; }
+.strat-card:hover .strat-bignum { color: rgba(246,196,69,0.15); }
+
+/* 4. gcard-ico hover 光晕 */
+.gcard-ico { transition: all 0.4s cubic-bezier(0.16,1,0.3,1); }
+.gcard:hover .gcard-ico { filter: brightness(1.3); box-shadow: 0 0 20px rgba(255,255,255,0.08); transform: scale(1.08); }
+
+/* 5. feq-f 公式因子 hover */
+.feq-f { cursor: default; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
+.feq-f:hover { border-color: rgba(246,196,69,0.28); background: rgba(246,196,69,0.06); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+/* 6. divider 中心菱形 */
+.divider { position: relative; }
+.divider::after {
+  content: '◆'; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  font-size: 8px; color: rgba(246,196,69,0.22); line-height: 1;
+}
+
+/* 7. goal-tier 顶部光照 */
+.goal-tier { position: relative; overflow: hidden; }
+.goal-tier::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 80px;
+  opacity: 0.5; transition: opacity 0.4s; pointer-events: none;
+}
+.gt-1::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(94,206,138,0.12), transparent); }
+.gt-2::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(246,196,69,0.1), transparent); }
+.gt-3::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(165,128,240,0.12), transparent); }
+.goal-tier:hover::before { opacity: 1; }
+
+/* 8. ai-lnum 可见度 */
+.ai-lnum { color: rgba(255,255,255,0.07); transition: color 0.3s; }
+.ai-layer:hover .ai-lnum { color: rgba(255,255,255,0.12); }
+
+/* 9. dual-formula 结论行强调 */
+.dual-formula p:last-child { color: var(--text-primary); font-size: 15px; }
+
+/* 10. section-label 左侧装饰线 */
+.section-label::before {
+  content: ''; display: inline-block; width: 14px; height: 1px;
+  background: var(--gold); vertical-align: middle; margin-right: 10px; opacity: 0.55;
+}
+
 </style>
 </head>
 <body>
