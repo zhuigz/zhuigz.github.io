@@ -480,6 +480,96 @@ section { padding: 100px 0; }
   background: var(--gold); vertical-align: middle; margin-right: 10px; opacity: 0.55;
 }
 
+/* ===== WOW Layer ===== */
+
+/* Hero: 深空金色光晕 + 呼吸 */
+.hero::before {
+  content: '';
+  position: absolute; border-radius: 50%;
+  width: 800px; height: 800px;
+  left: 50%; top: 45%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(246,196,69,0.055) 0%, rgba(246,196,69,0.02) 40%, transparent 70%);
+  animation: heroBreathe 9s ease-in-out infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes heroBreathe {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* Hero name: 文字光晕 */
+.hero-name { filter: drop-shadow(0 0 40px rgba(246,196,69,0.12)); }
+
+/* Hero motto: 更优雅的分隔线 */
+.hero-motto::before, .hero-motto::after {
+  width: 60px; background: linear-gradient(90deg, transparent, rgba(246,196,69,0.5), transparent);
+}
+
+/* Section title hl: 微发光 */
+.section-title .hl { filter: drop-shadow(0 0 10px rgba(246,196,69,0.22)); }
+
+/* 公式框: 脉冲边框辉光 — 全页最戏剧化节点 */
+@keyframes formulaAura {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(246,196,69,0.08), 0 0 40px rgba(246,196,69,0.04), inset 0 0 60px rgba(246,196,69,0.02); }
+  50%       { box-shadow: 0 0 0 1px rgba(246,196,69,0.22), 0 0 80px rgba(246,196,69,0.09), inset 0 0 80px rgba(246,196,69,0.05); }
+}
+.formula-wrap { animation: formulaAura 5s ease-in-out infinite; border-color: transparent; }
+
+/* 人生繁荣 result: 更大 + 更亮 */
+.feq-r {
+  font-size: clamp(20px, 3.2vw, 30px);
+  animation: prosperityGlow 3.5s ease-in-out infinite;
+}
+@keyframes prosperityGlow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(246,196,69,0.45)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(246,196,69,0.85)) drop-shadow(0 0 40px rgba(246,196,69,0.3)); }
+}
+
+/* 公式乘号: 微金色 */
+.feq-x { color: rgba(246,196,69,0.35); }
+
+/* fire-bar: 光条脉冲 */
+@keyframes barPulse {
+  0%, 100% { box-shadow: 0 0 14px rgba(246,196,69,0.45); }
+  50%       { box-shadow: 0 0 28px rgba(246,196,69,0.8), 0 0 56px rgba(246,196,69,0.25); }
+}
+.fire-bar { animation: barPulse 3s ease-in-out infinite; }
+
+/* sys-card icon: hover 弹跳 */
+.sys-card-icon { transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1); }
+.sys-card:hover .sys-card-icon { transform: scale(1.28) translateY(-3px); }
+
+/* ach-card icon: hover 微旋 */
+.ach-icon { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.ach-card:hover .ach-icon { transform: scale(1.15) rotate(-6deg); }
+
+/* stats-bar: 整体辉光 */
+@keyframes statsGlow {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 60px rgba(246,196,69,0.05); }
+}
+.stats-bar { animation: statsGlow 7s ease-in-out infinite; }
+
+/* 双轨公式框: 必赢宣言辉光 */
+.dual-formula { animation: dualAura 7s ease-in-out 2s infinite; }
+@keyframes dualAura {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 40px rgba(246,196,69,0.06); }
+}
+
+/* movie-q: hover 左边线变亮 */
+.movie-q { transition: border-left-color 0.35s, background 0.35s, padding-left 0.35s; }
+.movie-q:hover { padding-left: 24px; }
+
+/* slogan-pill: hover 微上浮 */
+.slogan-pill { transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
+.slogan-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+/* orb 差速动画：三个光球各自节奏 */
+.orb-1 { animation-duration: 22s; }
+.orb-2 { animation-duration: 28s; animation-delay: -9s; }
+.orb-3 { animation-duration: 18s; animation-delay: -5s; }
+
 </style>
 </head>
 <body>
