@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>注意力复利 · AI时代的生存法则</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #F6C445;
+  --gold-light: #FFE08A;
+  --gold-dark: #D4A012;
+  --bg-deep: #0A0A0F;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-card-hover: rgba(255,255,255,0.06);
+  --text-primary: #F0EDE6;
+  --text-secondary: rgba(240,237,230,0.6);
+  --text-dim: rgba(240,237,230,0.35);
+  --accent-blue: #4A9EF5;
+  --accent-coral: #F57A6A;
+  --accent-green: #5ECE8A;
+  --accent-purple: #A580F0;
+  --accent-red: #C8352A;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.8;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.bg-glow .orb { position: absolute; border-radius: 50%; filter: blur(120px); animation: orbFloat 20s ease-in-out infinite; }
+.bg-glow .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(246,196,69,0.08), transparent 70%); top: -10%; left: -10%; }
+.bg-glow .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(74,158,245,0.05), transparent 70%); bottom: 20%; right: -10%; animation-delay: -7s; }
+.bg-glow .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(165,128,240,0.05), transparent 70%); top: 50%; left: 30%; animation-delay: -14s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -40px) scale(1.1); }
+  66% { transform: translate(-30px, 50px) scale(0.9); }
+}
+
+.container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(10,10,15,0.8); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s;
+}
+.nav-logo { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--gold); transition: text-shadow 0.4s; cursor: default; }
+.nav-logo:hover { text-shadow: 0 0 18px rgba(246,196,69,0.55), 0 0 36px rgba(246,196,69,0.2); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: rgba(246,196,69,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(246,196,69,0.45); }
+::selection { background: rgba(246,196,69,0.2); color: var(--text-primary); }
+section[id] { scroll-margin-top: 80px; }
+
+.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-links a.active { color: var(--gold); }
+
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center; position: relative; padding: 60px 24px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(105deg, rgba(246,196,69,0.06) 0%, rgba(246,196,69,0.06) 38%, rgba(255,236,120,0.17) 50%, rgba(246,196,69,0.06) 62%, rgba(246,196,69,0.06) 100%);
+  background-size: 300% auto;
+  border: 1px solid rgba(246,196,69,0.15);
+  border-radius: 50px; padding: 8px 20px; font-size: 13px; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase; font-family: 'Outfit', sans-serif;
+  margin-bottom: 40px; animation: fadeDown 1s ease 0.2s both, badgeShimmer 6s ease-in-out 2.5s infinite;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.6); } }
+@keyframes badgeShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
+
+.hero-name {
+  font-family: 'Noto Serif SC', serif; font-size: clamp(40px, 8vw, 88px); font-weight: 900; line-height: 1.15;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 50%, var(--gold-light) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: fadeUp 1s ease 0.4s both;
+}
+.hero-alias {
+  font-size: clamp(15px, 2.4vw, 20px); font-weight: 300; color: var(--text-secondary);
+  margin-top: 16px; letter-spacing: 3px; animation: fadeUp 1s ease 0.6s both;
+}
+.hero-alias span { color: var(--gold); font-weight: 600; }
+.hero-motto {
+  font-family: 'Noto Serif SC', serif; font-size: clamp(15px, 2.2vw, 20px); color: var(--text-secondary);
+  margin-top: 48px; max-width: 760px; line-height: 2; animation: fadeUp 1s ease 0.8s both;
+  padding: 20px 0;
+}
+.hero-motto::before, .hero-motto::after {
+  content: ''; display: block; width: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 16px;
+}
+.hero-motto::after { margin: 16px auto 0; }
+
+.hero-scroll {
+  position: absolute; bottom: 40px; display: flex; flex-direction: column;
+  align-items: center; gap: 8px; color: var(--text-dim); font-size: 12px;
+  letter-spacing: 2px; animation: fadeUp 1s ease 1.2s both;
+}
+.hero-scroll .line {
+  width: 1px; height: 40px; background: linear-gradient(180deg, var(--gold), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+section { padding: 100px 0; }
+.section-label { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; opacity: 0.7; }
+.section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 700; margin-bottom: 28px; line-height: 1.3; }
+.section-title .hl { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.section-intro { font-size: 15px; color: var(--text-secondary); max-width: 820px; margin-bottom: 56px; line-height: 2; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(246,196,69,0.2), transparent); margin: 0 auto; max-width: 600px; }
+
+/* Card grids */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.mod-card {
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px; padding: 28px; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  position: relative; overflow: hidden;
+}
+.mod-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.mod-card:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
+.mod-card:hover::before { opacity: 1; }
+.mod-card .icon { font-size: 22px; margin-bottom: 16px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: rgba(246,196,69,0.07); border-radius: 12px; border: 1px solid rgba(246,196,69,0.08); }
+.mod-card h4 { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+.mod-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.85; }
+.mod-card .key { color: var(--gold); font-weight: 500; }
+
+/* Quote / banner */
+.quote-banner {
+  background: linear-gradient(135deg, rgba(246,196,69,0.06), rgba(165,128,240,0.04));
+  border: 1px solid rgba(246,196,69,0.1); border-radius: 20px; padding: 44px;
+  text-align: center; margin: 56px 0; position: relative; overflow: hidden;
+}
+.quote-banner::before { content: '“'; position: absolute; font-family: 'Noto Serif SC', serif; font-size: 220px; opacity: 0.05; top: -60px; left: -10px; color: var(--gold); }
+.quote-banner .quote { font-family: 'Noto Serif SC', serif; font-size: clamp(16px, 2.4vw, 20px); color: var(--text-primary); line-height: 2; max-width: 760px; margin: 0 auto; }
+.quote-banner em { font-style: normal; color: var(--gold); }
+
+/* Numbered list (negatives / debts) */
+.list-group .l-item { display: flex; align-items: flex-start; gap: 22px; padding: 26px 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; }
+.list-group .l-item:first-child { border-top: 1px solid rgba(255,255,255,0.04); }
+.list-group .l-item:hover { padding-left: 10px; }
+.l-num { font-family: 'Outfit'; font-weight: 800; font-size: 28px; color: rgba(246,196,69,0.18); line-height: 1; min-width: 44px; flex-shrink: 0; transition: color 0.35s; }
+.list-group .l-item:hover .l-num { color: rgba(246,196,69,0.5); }
+.l-body h5 { font-family: 'Noto Serif SC', serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.l-body p { font-size: 14px; color: var(--text-secondary); line-height: 1.85; }
+
+/* Levels table */
+.levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 30px; }
+.level-card {
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px; padding: 22px 20px; position: relative; transition: all 0.3s;
+}
+.level-card:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.15); }
+.level-card .lv { font-family: 'Outfit'; font-size: 11px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; }
+.level-card h6 { font-family: 'Noto Serif SC', serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.level-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* Action grid */
+.actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.act-row {
+  background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px;
+  transition: all 0.3s;
+}
+.act-row:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.12); transform: translateY(-3px); }
+.act-tag { font-family: 'Outfit'; font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+.act-row h6 { font-family: 'Noto Serif SC', serif; font-size: 16px; font-weight: 700; }
+.act-row p { font-size: 13px; color: var(--text-secondary); line-height: 1.75; }
+
+/* Big formula */
+.formula {
+  background: linear-gradient(135deg, rgba(74,158,245,0.05), rgba(246,196,69,0.04));
+  border: 1px solid rgba(246,196,69,0.12); border-radius: 18px;
+  padding: 36px; text-align: center; margin: 40px 0;
+}
+.formula .eq { font-family: 'Outfit'; font-size: clamp(28px, 5vw, 42px); font-weight: 800;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.formula p { font-size: 14px; color: var(--text-secondary); margin-top: 14px; line-height: 1.9; }
+
+/* Quotes section */
+.quotes-list { display: flex; flex-direction: column; gap: 16px; }
+.q-item {
+  background: var(--bg-card); border-left: 2px solid var(--gold);
+  padding: 20px 24px; border-radius: 0 12px 12px 0;
+  font-family: 'Noto Serif SC', serif; font-size: 16px; line-height: 1.9;
+  transition: all 0.3s;
+}
+.q-item:hover { background: var(--bg-card-hover); border-left-width: 4px; padding-left: 28px; }
+
+.footer { text-align: center; padding: 80px 24px 40px; }
+.footer-light {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(246,196,69,0.2), transparent 70%);
+  margin: 0 auto 32px; display: flex; align-items: center; justify-content: center;
+  font-size: 48px; animation: glow 4s ease-in-out infinite;
+}
+@keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(246,196,69,0.1); } 50% { box-shadow: 0 0 80px rgba(246,196,69,0.2); } }
+@keyframes footerShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
+.footer-text {
+  font-family: 'Noto Serif SC', serif; font-size: 20px; margin-bottom: 8px;
+  background: linear-gradient(105deg, var(--gold) 0%, var(--gold) 33%, var(--gold-light) 50%, var(--gold) 67%, var(--gold) 100%);
+  background-size: 260% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: footerShimmer 8s ease-in-out 1s infinite;
+}
+.footer-sub { font-size: 13px; color: var(--text-dim); letter-spacing: 2px; }
+.footer-line { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04); font-size: 12px; color: var(--text-dim); }
+.footer-line a { color: var(--gold); text-decoration: none; }
+
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav { padding: 14px 20px; }
+  section { padding: 70px 0; }
+  .quote-banner { padding: 30px 22px; }
+  .formula { padding: 28px 20px; }
+}
+
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  pointer-events: none; transition: width 0.08s linear;
+  box-shadow: 0 0 8px rgba(246,196,69,0.5);
+}
+</style>
+</head>
+<body>
+<div class="scroll-progress"></div>
+
+<div class="bg-glow">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<nav class="nav">
+  <div class="nav-logo">注意力复利</div>
+  <ul class="nav-links">
+    <li><a href="#overview">闭环</a></li>
+    <li><a href="#compound">复利</a></li>
+    <li><a href="#debt">负债</a></li>
+    <li><a href="#body">身体</a></li>
+    <li><a href="#dmn">DMN</a></li>
+    <li><a href="#ai">AI时代</a></li>
+    <li><a href="#business">商业</a></li>
+    <li><a href="#network">网络</a></li>
+    <li><a href="#action">行动</a></li>
+    <li><a href="index.html">关于我</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">ATTENTION COMPOUNDING</div>
+  <h1 class="hero-name">注意力复利</h1>
+  <p class="hero-alias">AI时代的 · <span>生存法则</span></p>
+  <div class="hero-motto">
+    你的注意力在哪里，你就会被哪里塑造<br>
+    守住注意力，就守住了未来能长出来的全部可能
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- 全局闭环 -->
+  <section id="overview">
+    <div class="reveal">
+      <div class="section-label">The Loop</div>
+      <div class="section-title">一个真正的<span class="hl">生存闭环</span></div>
+      <p class="section-intro">这不只是"保护注意力"那么简单。它是一个从底层能量到外部价值的闭环：身体能量决定注意力质量，注意力质量决定表达与行动，表达与行动沉淀为作品与产品，作品让你嵌入更贵的社会网络，更贵的网络又反哺你的信息密度与判断力。反过来，能量低、注意力被切碎的人，看似收到很多信息，却没有任何资产沉淀。</p>
+    </div>
+    <div class="cards-grid reveal">
+      <div class="mod-card">
+        <span class="icon">⚡</span>
+        <h4>身体能量</h4>
+        <p>睡眠、饮食、血糖、炎症、运动 —— <span class="key">所有输出的底盘</span>。前额叶能否稳定工作，由这里决定。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🎯</span>
+        <h4>注意力</h4>
+        <p>能量决定注意力的<span class="key">质量、长度与穿透力</span>。它是AI时代最底层的生产资料。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🪧</span>
+        <h4>表达与封装</h4>
+        <p>把经验变成<span class="key">文章、视频、文档、流程</span>，让一份注意力服务更多人。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🤖</span>
+        <h4>AI 杠杆</h4>
+        <p>用AI放大学习、表达、创作、商业闭环 —— 而不是只把它当聊天工具。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">💱</span>
+        <h4>商业交换</h4>
+        <p>发现需求 → 做出产品 → 降低决策成本 → 完成交换。<span class="key">敢卖，也卖真东西。</span></p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🌐</span>
+        <h4>社会网络</h4>
+        <p>用成果嵌入更贵的网络，接触<span class="key">更高价值的问题</span>与更高密度的信息。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 复利 -->
+  <section id="compound">
+    <div class="reveal">
+      <div class="section-label">Compounding</div>
+      <div class="section-title">复利的本质：<span class="hl">使用</span>，而不是知道</div>
+      <p class="section-intro">认知本身并不重要，重要的是使用。一个道理听完的那一刻，并没有真正属于你。只有当你在未来许多天、许多年，甚至在状态最差、最想做糟糕决定的时候，仍然能把它调出来，它才开始变成复利。</p>
+    </div>
+
+    <div class="levels reveal">
+      <div class="level-card">
+        <div class="lv">LV.1</div>
+        <h6>有印象</h6>
+        <p>听到过，觉得好像有道理。模糊痕迹，无法复述。</p>
+      </div>
+      <div class="level-card">
+        <div class="lv">LV.2</div>
+        <h6>听过</h6>
+        <p>反复听过七八遍，比有印象更熟，但仍停留在"我知道"。</p>
+      </div>
+      <div class="level-card">
+        <div class="lv">LV.3</div>
+        <h6>了解</h6>
+        <p>能用自己的话清晰复述，并写出较完整的解释。</p>
+      </div>
+      <div class="level-card">
+        <div class="lv">LV.4</div>
+        <h6>知道</h6>
+        <p>已经在现实里做到过 —— 做到才算知道。</p>
+      </div>
+      <div class="level-card">
+        <div class="lv">LV.5</div>
+        <h6>掌握</h6>
+        <p>人生低谷、最想自我攻击时，仍能调用这个方法。</p>
+      </div>
+    </div>
+
+    <div class="quote-banner reveal">
+      <div class="quote">
+        复利不是<em>"我今天懂了一个道理"</em>，<br>
+        而是<em>这个道理未来每天都能帮我</em><br>
+        少浪费一点注意力，多沉淀一点资产。
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 负债 -->
+  <section id="debt">
+    <div class="reveal">
+      <div class="section-label">Attention Debt</div>
+      <div class="section-title">注意力<span class="hl">负债</span>：你以为在娱乐，其实在被刷</div>
+      <p class="section-intro">愤怒、短视频、虐恋、比较、抱怨、消费贷 —— 都是不同形态的注意力负债。它们不只消耗当下，还拖累未来。判断标准很简单：当一个东西让你"想离开却离不开"，结束后更空、更乱、更虚弱，它就不再是娱乐，而是在劫持你的注意力。</p>
+    </div>
+    <div class="list-group reveal">
+      <div class="l-item">
+        <div class="l-num">01</div>
+        <div class="l-body">
+          <h5>愤怒：把最好的注意力交给讨厌的人</h5>
+          <p>你越恨他、越关注他、越在脑子里反驳他，他在你的精神世界里就越重要。最锋利的反击不是回击，是无视。</p>
+        </div>
+      </div>
+      <div class="l-item">
+        <div class="l-num">02</div>
+        <div class="l-body">
+          <h5>短视频：不是你在刷它，是它在刷你</h5>
+          <p>以几十秒为单位打断注意力，靠音乐反复调度多巴胺。情绪起落之后是虚无，虚无之后是DMN自我攻击。长期如此会失去完成长任务的能力。</p>
+        </div>
+      </div>
+      <div class="l-item">
+        <div class="l-num">03</div>
+        <div class="l-body">
+          <h5>虐恋与上头：急切会破坏长期关系</h5>
+          <p>低能量会放大需求感，让人在夜里做出"当下要结果"的不可撤销动作。好的关系让人打开，坏的关系让人收缩。</p>
+        </div>
+      </div>
+      <div class="l-item">
+        <div class="l-num">04</div>
+        <div class="l-body">
+          <h5>消费贷：透支未来的注意力</h5>
+          <p>欠钱带来对确定性的极度渴望，每天担心如何还。注意力碎片化 → 产出下降 → 收入焦虑 → 借贷消费 → 负债吞噬注意力。</p>
+        </div>
+      </div>
+      <div class="l-item">
+        <div class="l-num">05</div>
+        <div class="l-body">
+          <h5>比较与意义追问</h5>
+          <p>低能量的DMN漫游里，三四个小时什么也没发生，只是老了三四个小时。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 压强公式 -->
+  <section id="focus">
+    <div class="reveal">
+      <div class="section-label">Pressure Formula</div>
+      <div class="section-title">深度注意力的<span class="hl">压强公式</span></div>
+      <p class="section-intro">焦虑往往来自目标太大、时间线太长、未来可能性太多。把目标拆到今天能做的一小步，注意力越聚焦，穿透力越强 —— 高跟鞋能在木板上踩出坑，因为力量集中在很小的接触面积上。</p>
+    </div>
+    <div class="formula reveal">
+      <div class="eq">P = F / S</div>
+      <p>F = 你拥有的注意力与能量　·　S = 你聚焦的面积<br>
+      面积越小，压强越大；不要追十个方向，把一个方向做到能产生外部结果。</p>
+    </div>
+
+    <div class="cards-grid reveal" style="margin-top:30px">
+      <div class="mod-card">
+        <span class="icon">🌬️</span>
+        <h4>发呆</h4>
+        <p>把注意力从外部刺激中抽回来。允许大脑从高刺激里降下来。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">✂️</span>
+        <h4>断</h4>
+        <p>感觉"快离不开"的临界点立刻断开。越想继续，越说明已经被吸住。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🏃</span>
+        <h4>行动阻断</h4>
+        <p>立刻起身、深蹲、洗脸、走出去。用行动打断语言回路里的内耗。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🔁</span>
+        <h4>重建惯性</h4>
+        <p>持续发内容、持续运动、持续公开，让"敢"变成神经系统的默认。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 身体能量 -->
+  <section id="body">
+    <div class="reveal">
+      <div class="section-label">Energy Base</div>
+      <div class="section-title">身体能量是<span class="hl">一切的底盘</span></div>
+      <p class="section-intro">很多人赚不到钱，不只是认知问题，而是身体能量问题。能量低，前额叶难以稳定工作，行动力、判断力、表达力下降；杏仁核更容易上线，恐惧、焦虑、冲动会变得更强。赚钱、表达、做IP、用AI之前，先把身体系统养起来。</p>
+    </div>
+    <div class="cards-grid reveal">
+      <div class="mod-card">
+        <span class="icon">🌙</span>
+        <h4>睡眠</h4>
+        <p>不要接触让你睡不着的人、事、念头。为了急一两年牺牲几十年的身体，<span class="key">极不复利</span>。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🍚</span>
+        <h4>血糖</h4>
+        <p>饮食混乱、焦虑性进食、血糖飙升又下降，会让前额叶下线，杏仁核接管。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🔥</span>
+        <h4>炎症</h4>
+        <p>皮肤、肠胃、口腔的慢性问题会持续<span class="key">占用大量能量</span>，让思考、表达都变难。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🔋</span>
+        <h4>ATP</h4>
+        <p>人是"烧炭的机器"，糖、脂肪、蛋白质转化为支撑大脑的能量。没有能量，再好的认知也无法落地。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🦁</span>
+        <h4>向外的生命力</h4>
+        <p>能量充足时，探索欲、表达欲、攻击性更在线 —— 敢公开、敢表达、敢要结果。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🏋️</span>
+        <h4>运动</h4>
+        <p>深蹲、跑步既打断惯性，又重新唤起向外行动的状态。</p>
+      </div>
+    </div>
+    <p class="section-intro reveal" style="margin-top:32px;font-size:13px;color:var(--text-dim)">※ 健康部分仅作为状态管理启发整理，不替代专业医疗建议。</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- DMN -->
+  <section id="dmn">
+    <div class="reveal">
+      <div class="section-label">Default Mode Network</div>
+      <div class="section-title">DMN：让漫游变成<span class="hl">复盘</span>，而不是攻击</div>
+      <p class="section-intro">DMN是大脑的漫游/发散网络。灵感、复盘、写作都来自它，但能量低时，它会变成自我攻击系统：意义追问 → 社会比较 → 自我批判 → 反复后悔。关键不是"不要想"，而是"不要无产出地想"。</p>
+    </div>
+    <div class="cards-grid reveal">
+      <div class="mod-card">
+        <span class="icon">❓</span>
+        <h4>意义追问</h4>
+        <p>负向：我是不是没希望了？<br>正向：<span class="key">我现在真正的问题是什么？下一步做什么？</span></p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">⚖️</span>
+        <h4>社会比较</h4>
+        <p>负向：别人都比我强，我太差了。<br>正向：<span class="key">他强在哪？我能学哪个动作？</span></p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🪞</span>
+        <h4>自我批判</h4>
+        <p>负向：我很烂，我不配。<br>正向：<span class="key">这件事的损失是什么？下次怎么规避？</span></p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">📝</span>
+        <h4>情绪漫游</h4>
+        <p>负向：刷视频、翻聊天记录、反复后悔。<br>正向：<span class="key">写下来，做成清单或行动计划。</span></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AI -->
+  <section id="ai">
+    <div class="reveal">
+      <div class="section-label">The AI Era</div>
+      <div class="section-title">AI时代：<span class="hl">中等智能</span>正在变得便宜</div>
+      <p class="section-intro">AI最可怕的不是它会聊天，而是它开始稳定输出中高水平智能。文书、设计、代码、营销 —— 大量"中等智能"工作会被压缩。智能信息差迅速缩小，重要的不再是"知道几个工具"，而是：你能不能把AI嵌入真实产出？能不能用它做出作品、产品、商业闭环？</p>
+    </div>
+    <div class="cards-grid reveal">
+      <div class="mod-card">
+        <span class="icon">📉</span>
+        <h4>智能过剩</h4>
+        <p>普通文本、资料整理、基础设计、基础代码不再稀缺。需要上移到判断、审美、策略与真实经验。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🎨</span>
+        <h4>表达门槛降低</h4>
+        <p>更多人能写、能画、能剪。空心AI内容会被淘汰，<span class="key">真实经历 + 深度结构</span>才能拉开差距。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🛠️</span>
+        <h4>不要只学工具</h4>
+        <p>学某个按钮容易过时。底层能力是<span class="key">"如何调度AI解决真实问题"</span>。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🎯</span>
+        <h4>把AI绑定到产出</h4>
+        <p>自媒体、文章、视频、产品、咨询 —— 让AI对话变成作品和现实结果，而不是停留在聊得很爽。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🧭</span>
+        <h4>历史视角</h4>
+        <p>农业过剩→粮食便宜，工业过剩→商品便宜，信息过剩→平台争夺注意力，<span class="key">智能过剩→普通智能便宜</span>。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🧠</span>
+        <h4>真正稀缺的</h4>
+        <p>判断、审美、结构、真实产出。一个强大脑持续调度AI，远胜于让AI替你思考。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 商业 / 表达 / IP -->
+  <section id="business">
+    <div class="reveal">
+      <div class="section-label">Business · Expression · IP</div>
+      <div class="section-title">公开表达，把黑箱<span class="hl">变成资产</span></div>
+      <p class="section-intro">很多人觉得自己很厉害却赚不到钱，因为最厉害的东西都留在脑子里、备忘录里 —— 没有公开给世界定价。公开不是炫耀，是让黑箱被看见。被看见才可能被信任、被关注、被购买。</p>
+    </div>
+    <div class="formula reveal">
+      <div class="eq" style="font-size:clamp(18px,3vw,26px)">经历 → 封装 → 公开 → 被看见 → 被定价 → 复利</div>
+      <p>这是表达的核心公式。员工、主管、创业者都需要它 —— 不会表达，能力很难被定价。</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="mod-card">
+        <span class="icon">📡</span>
+        <h4>IP ≠ 当网红</h4>
+        <p>IP是<span class="key">表达杠杆</span>：把一份注意力复制给成千上万人。一篇文章、一个视频、一份课程都是"注意力结晶"。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">💰</span>
+        <h4>商业链路</h4>
+        <p>发现需求 → 做出产品 → 表达营销降低决策成本 → 完成交换。营销本身中性，<span class="key">垃圾交付才可耻</span>。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">⏳</span>
+        <h4>结算周期</h4>
+        <p>日结 / 月薪 / 季度 / 年度 —— 收入与你承担的不确定性、调度的资源、影响的人数成正比。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🤝</span>
+        <h4>陌生人交易</h4>
+        <p>熟人关系不好变现，钱与情感混在一起两边难受。陌生人交易反而<span class="key">边界清晰</span>。世界由陌生人组成。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 网络 + 世界观 -->
+  <section id="network">
+    <div class="reveal">
+      <div class="section-label">Network &amp; Worldview</div>
+      <div class="section-title">你服务什么网络，就<span class="hl">获得什么价格</span></div>
+      <p class="section-intro">同样是洗碗，在县城、杭州、东京、纽约价格不同 —— 不是劳动不同，是网络不同。先做出成果，让外部看见结果；结果带来信用，信用让更贵的网络愿意接纳你。低价值网络最危险的地方，是让人在自我确认中停滞。</p>
+    </div>
+
+    <div class="quote-banner reveal">
+      <div class="quote">
+        世界观 → 思维 → 判断 → 决定 → <em>行动</em> → 习惯 →<br>
+        结果 → 社会网络 → <em>反过来塑造世界观</em>
+      </div>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="mod-card">
+        <span class="icon">🔭</span>
+        <h4>格物致知</h4>
+        <p>不要把"我怎么看"放得太大。先问"<span class="key">世界到底是什么样</span>"，再问"我接受吗"。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🤍</span>
+        <h4>诚意正心</h4>
+        <p>说的、做的、想的尽量一致。长期失信，注意力会被债务感占用，无法稳定向外。</p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🌊</span>
+        <h4>语言不能替代经验</h4>
+        <p>听一万小时游泳课，不下水仍然不会游。<span class="key">必须下水，必须行动。</span></p>
+      </div>
+      <div class="mod-card">
+        <span class="icon">🏛️</span>
+        <h4>叙事 + 结构</h4>
+        <p>只有叙事会喊口号；有结构才能改变世界。先理解规则，再利用规则，<span class="key">最后才谈改变规则</span>。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 行动清单 -->
+  <section id="action">
+    <div class="reveal">
+      <div class="section-label">Action List</div>
+      <div class="section-title">把这场讲义<span class="hl">真正用起来</span></div>
+      <p class="section-intro">如果听完只是觉得很爽，第二天继续刷短视频、继续内耗、继续不输出 —— 那它没有复利。下面是把它变成行为的最小动作。</p>
+    </div>
+
+    <div class="actions-grid reveal">
+      <div class="act-row">
+        <span class="act-tag">Attention</span>
+        <h6>保护注意力</h6>
+        <p>每天设一段无短视频、无音乐、无社交媒体的深度时间，恢复长注意力链。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">Body</span>
+        <h6>恢复身体能量</h6>
+        <p>优先保证睡眠；规律饮食；减少明显让你状态波动的食物；保持运动。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">DMN</span>
+        <h6>处理内耗</h6>
+        <p>情绪上来时先写下：发生了什么、我在怕什么、下一步做什么。把自我攻击转成产出。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">Capsule</span>
+        <h6>封装经验</h6>
+        <p>每完成一个小项目、一次经历，就整理成文档或文章 —— 让一次注意力可被反复复用。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">Public</span>
+        <h6>公开表达</h6>
+        <p>从朋友圈、公众号、小红书、视频号任选一个低门槛渠道持续发布，让世界看见黑箱。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">AI</span>
+        <h6>使用AI</h6>
+        <p>把AI用于学习、拆解、写作、复盘、项目搭建 —— 而不是只问零散答案。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">Network</span>
+        <h6>升级网络</h6>
+        <p>主动接触更高质量的人、内容、项目和现实反馈，避免低价值圈层的自我确认。</p>
+      </div>
+      <div class="act-row">
+        <span class="act-tag">Structure</span>
+        <h6>建立结构</h6>
+        <p>把目标拆成系统：输入 → 输出 → 反馈 → 复盘 → 迭代。让热血变成路径。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 金句 -->
+  <section id="quotes">
+    <div class="reveal">
+      <div class="section-label">Words To Remember</div>
+      <div class="section-title">最值得反复记住的<span class="hl">几句话</span></div>
+    </div>
+    <div class="quotes-list reveal">
+      <div class="q-item">复利不是听懂一个道理，而是在未来漫长时间里不断使用这个道理。</div>
+      <div class="q-item">你的注意力在哪里，你就会被哪里塑造。</div>
+      <div class="q-item">最厉害的东西如果只在脑子里，就无法被世界定价。</div>
+      <div class="q-item">短视频的本质不是你在刷它，而是它在刷你。</div>
+      <div class="q-item">好的关系会让你打开，坏的关系会让你收缩。</div>
+      <div class="q-item">身体能量不足时，所有认知都会变得很难落地。</div>
+      <div class="q-item">语言不能替代经验，必须下水，必须行动。</div>
+      <div class="q-item">不要恐惧陌生人，陌生人里有客户、朋友、恋人、老板和未来。</div>
+      <div class="q-item">AI时代，真正稀缺的不是工具，而是判断、审美、结构和真实产出。</div>
+      <div class="q-item">只有叙事会喊口号，有结构才能改变世界。</div>
+    </div>
+
+    <div class="quote-banner reveal" style="margin-top:60px">
+      <div class="quote">
+        所谓注意力复利，最后并不是技巧，而是一种<em>人生方向</em>：<br>
+        少把生命交给愤怒、短视频、比较和内耗，<br>
+        多把生命交给身体、行动、作品、关系、价值和<em>长期主义</em>。
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-light">☀️</div>
+  <div class="footer-text">守住注意力，守住未来</div>
+  <div class="footer-sub">ATTENTION COMPOUNDING</div>
+  <div class="footer-line">注意力复利 · AI时代的生存法则 · 由 <a href="index.html">追光者</a> 整理沉淀</div>
+</footer>
+
+<script>
+const progressBar = document.querySelector('.scroll-progress');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  progressBar.style.width = (scrolled * 100) + '%';
+}, { passive: true });
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => navObserver.observe(s));
+</script>
+
+</body>
+</html>
