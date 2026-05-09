@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>致 妈妈何永花 · 母亲节快乐</title>
+<meta name="description" content="献给我最亲爱的妈妈何永花 —— 母亲节快乐" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Outfit:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  /* ========== Base & Tokens ========== */
+  :root {
+    --cream: #FBF5EC;
+    --cream-deep: #F4E8D7;
+    --paper: #FFFAF1;
+    --blush: #F8D7D9;
+    --blush-soft: #FCEAEC;
+    --rose: #E8A8B0;
+    --rose-deep: #C97583;
+    --rose-shadow: rgba(201, 117, 131, 0.18);
+    --gold: #D4A574;
+    --gold-light: #E8C99B;
+    --gold-deep: #A87B49;
+    --ink: #4A3B33;
+    --ink-soft: #6B574B;
+    --ink-dim: rgba(74, 59, 51, 0.55);
+    --ink-faint: rgba(74, 59, 51, 0.28);
+    --line: rgba(168, 123, 73, 0.22);
+    --shadow-sm: 0 4px 14px rgba(168, 123, 73, 0.1);
+    --shadow-md: 0 12px 36px rgba(168, 123, 73, 0.14);
+    --shadow-lg: 0 30px 80px rgba(168, 123, 73, 0.18);
+    --serif: 'Noto Serif SC', 'Cormorant Garamond', serif;
+    --sans: 'Noto Sans SC', system-ui, sans-serif;
+    --hand: 'Ma Shan Zheng', 'Noto Serif SC', cursive;
+    --elegant: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+    --display: 'Outfit', 'Noto Sans SC', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--cream);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  /* Soft sun-warmed paper background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255, 220, 180, 0.45), transparent 60%),
+      radial-gradient(ellipse 70% 55% at 85% 15%, rgba(248, 215, 217, 0.55), transparent 60%),
+      radial-gradient(ellipse 80% 70% at 50% 100%, rgba(232, 201, 155, 0.35), transparent 70%),
+      linear-gradient(180deg, #FBF5EC 0%, #FCEAEC 50%, #F4E8D7 100%);
+    z-index: -2;
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(168, 123, 73, 0.06) 1px, transparent 0);
+    background-size: 28px 28px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  /* ========== Falling Petals Layer ========== */
+  .petal-layer {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    top: -40px;
+    width: 18px; height: 18px;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .petal svg { width: 100%; height: 100%; display: block; }
+
+  @keyframes petal-fall {
+    0%   { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+    8%   { opacity: 0.85; }
+    50%  { transform: translate3d(40px, 50vh, 0) rotate(180deg); }
+    92%  { opacity: 0.85; }
+    100% { transform: translate3d(-30px, 110vh, 0) rotate(360deg); opacity: 0; }
+  }
+
+  /* ========== Floating Orbs ========== */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
+  .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, var(--blush), transparent 70%); top: -120px; left: -120px; animation: orbFloat 18s ease-in-out infinite; }
+  .orb-2 { width: 600px; height: 600px; background: radial-gradient(circle, var(--gold-light), transparent 70%); top: 60%; right: -200px; animation: orbFloat 22s ease-in-out infinite reverse; }
+  .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, var(--rose), transparent 70%); bottom: -100px; left: 30%; animation: orbFloat 25s ease-in-out infinite; }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(40px, -30px) scale(1.05); }
+    66% { transform: translate(-30px, 40px) scale(0.95); }
+  }
+
+  /* ========== Top Bar ========== */
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 22px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .top-mark {
+    font-family: var(--display);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    font-size: 0.78rem;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+    pointer-events: auto;
+  }
+  .top-mark span { color: var(--rose-deep); }
+  .top-date {
+    font-family: var(--display);
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    color: var(--ink-dim);
+    pointer-events: auto;
+  }
+
+  /* ========== Hero ========== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 120px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-brush {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    letter-spacing: 0.5em;
+    color: var(--rose-deep);
+    margin-bottom: 28px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeDown 1.2s ease-out 0.2s forwards;
+  }
+  .hero-brush::before, .hero-brush::after {
+    content: '';
+    display: inline-block;
+    width: 36px; height: 1px;
+    background: var(--rose-deep);
+    vertical-align: middle;
+    margin: 0 18px;
+  }
+
+  .hero-greeting {
+    font-family: var(--elegant);
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--ink-soft);
+    letter-spacing: 0.2em;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.5s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--hand);
+    font-size: clamp(4.5rem, 14vw, 11rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #C97583 0%, #D4A574 50%, #C97583 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: nameShine 6s ease-in-out infinite, fadeUp 1.4s ease-out 0.8s both;
+    filter: drop-shadow(0 4px 24px rgba(201, 117, 131, 0.15));
+    position: relative;
+  }
+  @keyframes nameShine {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .hero-name-en {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    letter-spacing: 0.4em;
+    color: var(--gold-deep);
+    margin-top: 12px;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 1.2s forwards;
+  }
+
+  .hero-motto {
+    max-width: 640px;
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.4vw, 1.18rem);
+    line-height: 2.2;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 1.5s forwards;
+    letter-spacing: 0.05em;
+  }
+  .hero-motto em {
+    font-style: normal;
+    color: var(--rose-deep);
+    font-weight: 500;
+  }
+
+  .hero-flower {
+    margin-top: 60px;
+    width: 120px; height: 120px;
+    opacity: 0;
+    animation: fadeUp 1.4s ease-out 1.8s forwards, gentleSpin 40s linear infinite 1.8s;
+    filter: drop-shadow(0 8px 24px rgba(201, 117, 131, 0.25));
+  }
+  @keyframes gentleSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 2.2s forwards, gentleBob 2.4s ease-in-out infinite 2.2s;
+  }
+  .scroll-cue span {
+    font-family: var(--display);
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold-deep);
+  }
+  .scroll-cue::before {
+    content: '';
+    width: 1px; height: 48px;
+    background: linear-gradient(180deg, var(--gold-deep), transparent);
+  }
+  @keyframes gentleBob {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 8px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== Container & Section Heading ========== */
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+  section.block { padding: 110px 0; position: relative; }
+
+  .eyebrow {
+    font-family: var(--display);
+    font-size: 0.78rem;
+    letter-spacing: 0.45em;
+    color: var(--rose-deep);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: '·';
+    margin: 0 16px;
+    color: var(--gold);
+  }
+  .heading {
+    font-family: var(--elegant);
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    font-weight: 400;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+  }
+  .heading .hl {
+    background: linear-gradient(135deg, var(--rose-deep) 0%, var(--gold-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: var(--hand);
+    padding: 0 6px;
+  }
+  .sub {
+    text-align: center;
+    color: var(--ink-dim);
+    font-family: var(--serif);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 64px;
+  }
+
+  .divider-flower {
+    display: flex; align-items: center; justify-content: center;
+    gap: 18px;
+    margin: 0 auto 56px;
+    max-width: 320px;
+  }
+  .divider-flower::before, .divider-flower::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+  .divider-flower svg { width: 28px; height: 28px; flex-shrink: 0; }
+
+  /* ========== Letter Section ========== */
+  .letter-card {
+    background: var(--paper);
+    padding: 72px 64px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    border: 1px solid rgba(168, 123, 73, 0.1);
+    background-image:
+      linear-gradient(180deg, transparent calc(100% - 1px), rgba(168, 123, 73, 0.06) 100%);
+    background-size: 100% 2.4em;
+  }
+  .letter-card::before, .letter-card::after {
+    content: '';
+    position: absolute;
+    width: 28px; height: 28px;
+    border: 1px solid var(--rose);
+  }
+  .letter-card::before { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .letter-card::after { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+
+  .letter-salute {
+    font-family: var(--hand);
+    font-size: 2rem;
+    color: var(--rose-deep);
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+  .letter-body {
+    font-family: var(--serif);
+    font-size: 1.08rem;
+    line-height: 2.4;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+  .letter-body p { margin-bottom: 22px; }
+  .letter-body p:last-child { margin-bottom: 0; }
+  .letter-body em {
+    font-style: normal;
+    color: var(--rose-deep);
+    font-weight: 500;
+  }
+  .letter-sign {
+    margin-top: 44px;
+    text-align: right;
+    font-family: var(--hand);
+    color: var(--gold-deep);
+    line-height: 1.6;
+  }
+  .letter-sign .from {
+    font-size: 1.4rem;
+    color: var(--rose-deep);
+  }
+  .letter-sign .when {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-dim);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* ========== "Mom is..." Grid ========== */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .meta-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease, border-color 0.4s ease;
+    cursor: default;
+  }
+  .meta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--blush-soft) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+  .meta-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--rose);
+  }
+  .meta-card:hover::before { opacity: 1; }
+  .meta-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: grid; place-items: center;
+    margin-bottom: 22px;
+    background: linear-gradient(135deg, var(--blush) 0%, var(--gold-light) 100%);
+    color: white;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 18px var(--rose-shadow);
+    position: relative; z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .meta-card:hover .meta-icon { transform: rotate(-8deg) scale(1.08); }
+  .meta-card h3 {
+    font-family: var(--elegant);
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+    letter-spacing: 0.06em;
+  }
+  .meta-card p {
+    font-family: var(--serif);
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    position: relative; z-index: 1;
+  }
+
+  /* ========== Memory / Timeline ========== */
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, var(--rose) 10%, var(--gold) 50%, var(--rose) 90%, transparent 100%);
+    transform: translateX(-50%);
+  }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+  .tl-content {
+    background: var(--paper);
+    padding: 28px 32px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  .tl-content:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .tl-item:nth-child(odd) .tl-content { grid-column: 1; text-align: right; }
+  .tl-item:nth-child(even) .tl-content { grid-column: 3; text-align: left; }
+  .tl-dot {
+    grid-column: 2;
+    justify-self: center;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--rose-deep);
+    box-shadow: 0 0 0 6px var(--blush-soft), 0 0 0 7px var(--rose);
+    position: relative;
+  }
+  .tl-dot::after {
+    content: '';
+    position: absolute; inset: -10px;
+    border-radius: 50%;
+    border: 1px solid var(--rose);
+    opacity: 0.4;
+    animation: pulseDot 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.4); opacity: 0; }
+  }
+  .tl-age {
+    font-family: var(--display);
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    color: var(--rose-deep);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .tl-title {
+    font-family: var(--elegant);
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+  }
+  .tl-text {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.9;
+  }
+
+  /* ========== Blessing Wall ========== */
+  .wall {
+    columns: 3 280px;
+    column-gap: 22px;
+  }
+  .wish-card {
+    break-inside: avoid;
+    margin-bottom: 22px;
+    background: var(--paper);
+    padding: 28px 26px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.4s ease;
+  }
+  .wish-card:hover {
+    transform: translateY(-6px) rotate(-0.6deg);
+    box-shadow: var(--shadow-md);
+    border-color: var(--rose);
+  }
+  .wish-card.tone-rose { background: linear-gradient(135deg, #FFFAF1 0%, #FCEAEC 100%); }
+  .wish-card.tone-gold { background: linear-gradient(135deg, #FFFAF1 0%, #FDF2E2 100%); }
+  .wish-card.tone-cream { background: linear-gradient(135deg, #FFFAF1 0%, #F8E9D5 100%); }
+  .wish-quote {
+    font-family: var(--display);
+    font-size: 2.4rem;
+    color: var(--rose);
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.55;
+  }
+  .wish-text {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    line-height: 1.95;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .wish-text strong {
+    font-weight: 500;
+    color: var(--rose-deep);
+  }
+  .wish-meta {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-family: var(--display);
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+  }
+
+  /* ========== Wishes (numbered) ========== */
+  .wishlist {
+    display: grid;
+    gap: 18px;
+  }
+  .wish-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+    gap: 28px;
+    padding: 24px 28px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .wish-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--rose-deep), var(--gold));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s ease;
+  }
+  .wish-row:hover {
+    transform: translateX(8px);
+    border-color: var(--rose);
+  }
+  .wish-row:hover::before { transform: scaleY(1); }
+  .wish-num {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 2.6rem;
+    background: linear-gradient(135deg, var(--rose-deep), var(--gold-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .wish-content { font-family: var(--serif); }
+  .wish-content h4 {
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .wish-content p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.85;
+  }
+
+  /* ========== Hug Interaction ========== */
+  .hug-section {
+    text-align: center;
+    padding: 120px 24px;
+    position: relative;
+  }
+  .hug-stage {
+    position: relative;
+    height: 380px;
+    max-width: 600px;
+    margin: 40px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .hug-button {
+    position: relative;
+    pointer-events: auto;
+    background: linear-gradient(135deg, var(--rose-deep) 0%, var(--gold-deep) 100%);
+    color: white;
+    font-family: var(--elegant);
+    font-size: 1.15rem;
+    letter-spacing: 0.2em;
+    padding: 22px 56px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 12px 36px rgba(201, 117, 131, 0.45), 0 0 0 0 rgba(201, 117, 131, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 5;
+    animation: hugPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes hugPulse {
+    0%, 100% { box-shadow: 0 12px 36px rgba(201, 117, 131, 0.45), 0 0 0 0 rgba(201, 117, 131, 0.35); }
+    50%      { box-shadow: 0 12px 36px rgba(201, 117, 131, 0.45), 0 0 0 24px rgba(201, 117, 131, 0); }
+  }
+  .hug-button:hover { transform: translateY(-4px) scale(1.04); }
+  .hug-button:active { transform: translateY(0) scale(0.98); }
+  .hug-counter {
+    margin-top: 28px;
+    font-family: var(--display);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-deep);
+    text-transform: uppercase;
+  }
+  .hug-counter strong {
+    font-size: 1.5rem;
+    color: var(--rose-deep);
+    margin: 0 4px;
+    font-weight: 500;
+  }
+
+  .float-heart {
+    position: absolute;
+    width: 28px; height: 28px;
+    pointer-events: none;
+    animation: floatUp 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes floatUp {
+    0%   { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
+    20%  { opacity: 1; }
+    100% { transform: translate(var(--dx, 40px), -260px) scale(1.4) rotate(var(--rot, 30deg)); opacity: 0; }
+  }
+
+  /* ========== Final Dedication ========== */
+  .final {
+    text-align: center;
+    padding: 140px 24px 100px;
+    position: relative;
+  }
+  .final-quote {
+    font-family: var(--hand);
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    line-height: 1.6;
+    color: var(--ink);
+    margin: 0 auto 32px;
+    max-width: 760px;
+    background: linear-gradient(135deg, var(--rose-deep), var(--gold-deep) 60%, var(--rose-deep));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: nameShine 8s ease-in-out infinite;
+  }
+  .final-sub {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.15em;
+  }
+  .final-flowers {
+    display: flex; justify-content: center; gap: 40px;
+    margin-top: 60px;
+  }
+  .final-flowers svg {
+    width: 56px; height: 56px;
+    filter: drop-shadow(0 6px 18px rgba(201, 117, 131, 0.3));
+  }
+  .final-flowers svg:nth-child(1) { animation: gentleSpin 30s linear infinite; }
+  .final-flowers svg:nth-child(2) { animation: gentleSpin 40s linear infinite reverse; transform: scale(1.2); }
+  .final-flowers svg:nth-child(3) { animation: gentleSpin 25s linear infinite; }
+
+  /* ========== Footer ========== */
+  footer {
+    text-align: center;
+    padding: 50px 24px 40px;
+    font-family: var(--display);
+    font-size: 0.78rem;
+    letter-spacing: 0.3em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    border-top: 1px solid var(--line);
+    margin-top: 40px;
+    position: relative;
+    z-index: 2;
+  }
+  footer .heart {
+    color: var(--rose-deep);
+    margin: 0 6px;
+    display: inline-block;
+    animation: heartBeat 1.6s ease-in-out infinite;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.15); }
+    50% { transform: scale(0.95); }
+    75% { transform: scale(1.1); }
+  }
+
+  /* ========== Reveal ========== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal.delay-1 { transition-delay: 0.1s; }
+  .reveal.delay-2 { transition-delay: 0.2s; }
+  .reveal.delay-3 { transition-delay: 0.3s; }
+  .reveal.delay-4 { transition-delay: 0.4s; }
+
+  /* ========== Responsive ========== */
+  @media (max-width: 768px) {
+    .top-bar { padding: 18px 22px; }
+    .top-mark { font-size: 0.68rem; letter-spacing: 0.2em; }
+    .top-mark::before, .top-mark::after { display: none; }
+    .top-date { display: none; }
+    .container { padding: 0 22px; }
+    section.block { padding: 80px 0; }
+    .letter-card { padding: 44px 28px; }
+    .letter-body { font-size: 1rem; line-height: 2.1; }
+    .timeline::before { left: 22px; }
+    .tl-item { grid-template-columns: 60px 1fr; gap: 14px; }
+    .tl-item:nth-child(odd) .tl-content,
+    .tl-item:nth-child(even) .tl-content { grid-column: 2; text-align: left; }
+    .tl-dot { grid-column: 1; justify-self: center; }
+    .wall { columns: 1; }
+    .wish-row { grid-template-columns: 60px 1fr; gap: 16px; padding: 20px; }
+    .wish-num { font-size: 2rem; }
+    .hero-flower { width: 90px; height: 90px; margin-top: 40px; }
+    .final-flowers { gap: 24px; }
+    .final-flowers svg { width: 42px; height: 42px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <div class="top-mark">For Mama · <span>HE YONGHUA</span></div>
+  <div class="top-date">2026 · MOTHER'S DAY</div>
+</div>
+
+<!-- Floating orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Petal layer (JS will fill) -->
+<div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
+
+<!-- ============== HERO ============== -->
+<header class="hero">
+  <div class="hero-brush">Happy Mother's Day</div>
+  <div class="hero-greeting">致 我最最亲爱的妈妈</div>
+  <h1 class="hero-name">何永花</h1>
+  <div class="hero-name-en">— HE YONGHUA, MY MOTHER —</div>
+  <p class="hero-motto">
+    您的名字里有花，<br />
+    而您本身，就是我此生<em>最盛大的春天</em>。
+  </p>
+
+  <!-- Carnation SVG -->
+  <svg class="hero-flower" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="petalG" cx="50%" cy="40%" r="60%">
+        <stop offset="0%" stop-color="#FCEAEC"/>
+        <stop offset="60%" stop-color="#E8A8B0"/>
+        <stop offset="100%" stop-color="#C97583"/>
+      </radialGradient>
+      <linearGradient id="leafG" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#A8C9A0"/>
+        <stop offset="100%" stop-color="#5E8A5C"/>
+      </linearGradient>
+    </defs>
+    <!-- stem & leaves -->
+    <path d="M60 60 Q58 80 60 110" stroke="#5E8A5C" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M60 80 Q40 78 32 88 Q44 92 60 86 Z" fill="url(#leafG)" opacity="0.85"/>
+    <path d="M60 92 Q80 90 88 100 Q76 104 60 98 Z" fill="url(#leafG)" opacity="0.85"/>
+    <!-- carnation petals -->
+    <g transform="translate(60 50)">
+      <circle r="28" fill="url(#petalG)" opacity="0.55"/>
+      <circle r="22" fill="url(#petalG)" opacity="0.7"/>
+      <circle r="16" fill="url(#petalG)" opacity="0.85"/>
+      <circle r="10" fill="#C97583" opacity="0.85"/>
+      <g stroke="#FCEAEC" stroke-width="0.8" opacity="0.8" fill="none">
+        <path d="M-22 0 L22 0"/>
+        <path d="M0 -22 L0 22"/>
+        <path d="M-16 -16 L16 16"/>
+        <path d="M-16 16 L16 -16"/>
+      </g>
+    </g>
+  </svg>
+
+  <a class="scroll-cue" href="#letter">
+    <span>SCROLL</span>
+  </a>
+</header>
+
+<!-- ============== LETTER ============== -->
+<section class="block" id="letter">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">A LETTER TO YOU</div>
+      <h2 class="heading">写给妈妈的<span class="hl">一封信</span></h2>
+      <p class="sub">有些话，平日里说不出口，今天想全部告诉您</p>
+    </div>
+
+    <div class="divider-flower reveal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="#E8A8B0"/><circle cx="12" cy="12" r="3" fill="#C97583"/></svg>
+    </div>
+
+    <article class="letter-card reveal">
+      <p class="letter-salute">亲爱的妈妈：</p>
+      <div class="letter-body">
+        <p>
+          <em>何永花</em> —— 这是您的名字，也是我从小到大，每一次喊出口都会觉得心安的三个字。
+          您的名字里有"花"，而您也真的把自己活成了一朵花 —— 在风里、雨里，在我看不见的地方，悄悄地开，悄悄地为我挡住了所有不温柔。
+        </p>
+        <p>
+          小时候，我总以为您是无所不能的：您能做出全世界最好吃的饭，能把破了的衣服补得像新的一样，能在我哭的时候只用一句话就让我笑出来。后来我长大了，才慢慢明白 —— 您不是无所不能，您只是把"为我"两个字，刻进了每一天的日子里。
+        </p>
+        <p>
+          您说您不老，可是我分明看见您鬓边添了几丝白发；您说您不累，可是我深夜回家时，常常看见客厅那盏您专门为我留的灯。<em>那盏灯，是这世界上最温柔的灯</em>，它告诉我：无论我走多远，无论我多狼狈，总有一个人在等我回家。
+        </p>
+        <p>
+          妈妈，今天是属于您的日子。不是节日提醒了我，是我每天每天都想说，只是不知道从哪里开始。所以请允许我，把这些藏在心底很久的话，一字一句地写给您看。
+        </p>
+        <p>
+          愿您从今往后，<em>不必再为我操心，可以放心地为自己活一次</em>。愿您的余生，被这个世界温柔以待，比您温柔待我，再多一点点。
+        </p>
+      </div>
+      <div class="letter-sign">
+        永远爱您的孩子<br />
+        <span class="from">—— 您的小棉袄</span>
+        <span class="when">2026 · 母亲节</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============== "MOM IS..." ============== -->
+<section class="block">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">WHAT MOM MEANS TO ME</div>
+      <h2 class="heading">妈妈，是<span class="hl">这世上最温柔的存在</span></h2>
+      <p class="sub">在我的世界里，您是 ——</p>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-card reveal">
+        <div class="meta-icon">☀</div>
+        <h3>清晨的第一缕阳光</h3>
+        <p>是您温柔的一声"起床啦"，唤醒了我整个童年。后来我走得再远，也总记得那束光里有粥的香味。</p>
+      </div>
+      <div class="meta-card reveal delay-1">
+        <div class="meta-icon">🏮</div>
+        <h3>夜晚为我亮的那盏灯</h3>
+        <p>不论我回得多晚，那盏灯都会亮着。后来我才懂，那不是灯，那是您的牵挂，是我永远不会迷路的方向。</p>
+      </div>
+      <div class="meta-card reveal delay-2">
+        <div class="meta-icon">⚓</div>
+        <h3>风浪里最稳的港湾</h3>
+        <p>这世界再大，再让我害怕，我只要回到您身边，喊一声"妈"，所有的风都会停下来。</p>
+      </div>
+      <div class="meta-card reveal">
+        <div class="meta-icon">📖</div>
+        <h3>岁月里最温柔的诗</h3>
+        <p>您从未读给我听，可您做的每一顿饭、缝的每一颗扣子、说的每一句"路上小心"，都是这首诗的字字句句。</p>
+      </div>
+      <div class="meta-card reveal delay-1">
+        <div class="meta-icon">🔥</div>
+        <h3>冬天里的那只暖炉</h3>
+        <p>哪怕天再冷，只要回到您的厨房，闻到锅里咕嘟咕嘟的声音，就觉得这一年所有的寒冷，都被原谅了。</p>
+      </div>
+      <div class="meta-card reveal delay-2">
+        <div class="meta-icon">🌙</div>
+        <h3>迷茫时永不熄灭的星</h3>
+        <p>我迷路过、跌倒过、不被理解过。每一次抬头，都看见您在那里，不催我快走，只告诉我"妈妈在"。</p>
+      </div>
+      <div class="meta-card reveal">
+        <div class="meta-icon">🌧</div>
+        <h3>雨里悄悄为我撑的那把伞</h3>
+        <p>您总是把伞偏向我这一边，自己半边肩膀都湿透了。后来我才明白，那不是伞，是您整个人都在为我挡雨。</p>
+      </div>
+      <div class="meta-card reveal delay-1">
+        <div class="meta-icon">🌸</div>
+        <h3>名字里那一朵永开的花</h3>
+        <p>"何永花"—— 我多希望这个名字真的有魔法，让您像花一样永远盛开，永远不会被时光带走。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TIMELINE ============== -->
+<section class="block">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">OUR STORY IN TIME</div>
+      <h2 class="heading">我和妈妈的<span class="hl">时光长卷</span></h2>
+      <p class="sub">那些被您温柔托起的、长长的岁月</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-age">第一声啼哭</div>
+          <div class="tl-title">您把我，带到了这个世界</div>
+          <div class="tl-text">从那一刻起，您把您的名字也借给了我 —— 我成了"妈妈的孩子"，这是我此生最自豪的身份。</div>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-age">蹒跚学步</div>
+          <div class="tl-title">您蹲下来，张开双臂</div>
+          <div class="tl-text">您说"宝贝过来"，于是我朝您跑去，一头扎进您的怀里。那是我学会的第一个方向，也是一生都不会忘的方向 —— 妈妈在的方向。</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-age">背着书包</div>
+          <div class="tl-title">每个清晨的那碗粥</div>
+          <div class="tl-text">您总是比我早起一个小时，只为让我吃一口热饭。后来我才知道，那不是粥，是您的爱，浓浓地熬了一整碗。</div>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-age">青春叛逆</div>
+          <div class="tl-title">您还是没有放开我的手</div>
+          <div class="tl-text">那些年我顶撞过您，关上过门，说过让您伤心的话。可您从来没有真的放下过我，您只是擦掉眼泪，第二天又给我做了我最爱吃的菜。</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-age">第一次远行</div>
+          <div class="tl-title">您站在车站，挥手到看不见</div>
+          <div class="tl-text">您说"路上小心"，说了好多遍。后来我从车窗回头，看见您还站在那儿。那一刻我才懂，原来"目送"两个字，是这世上最远的距离。</div>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <div class="tl-age">现在 · 此刻</div>
+          <div class="tl-title">该轮到我，做您的依靠</div>
+          <div class="tl-text">妈妈，这一次换我牵您的手了。换我蹲下来听您慢慢讲话，换我为您留一盏灯，换我为您撑伞 —— 因为接下来的路，我想陪着您一起走。</div>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-content">
+          <div class="tl-age">未来 · 漫长岁月</div>
+          <div class="tl-title">愿余生，都是这样的好天气</div>
+          <div class="tl-text">愿您往后的每一天，都被阳光叫醒，被花香环绕，被笑声填满。愿岁月不再催您，愿时光不再老您，愿我能一直一直，叫您一声"妈"。</div>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BLESSING WALL ============== -->
+<section class="block">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">BLESSING WALL</div>
+      <h2 class="heading">写给您的<span class="hl">每一句心里话</span></h2>
+      <p class="sub">这些话，我想一辈子说给您听</p>
+    </div>
+
+    <div class="divider-flower reveal">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="#E8A8B0"/><circle cx="12" cy="12" r="3" fill="#C97583"/></svg>
+    </div>
+
+    <div class="wall">
+      <div class="wish-card tone-rose reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">妈妈，谢谢您把这世界上<strong>最好的</strong>都给了我，自己却舍不得用一点。从今往后，我想把好的，都换您先尝一口。</p>
+        <div class="wish-meta">— 谢谢您 ·001</div>
+      </div>
+
+      <div class="wish-card tone-gold reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">您鬓边的<strong>白发</strong>，是为我熬过的一千个深夜；您眼角的皱纹，是岁月写给您的勋章。在我心里，它们比世界上任何风景都好看。</p>
+        <div class="wish-meta">— 您最美 ·002</div>
+      </div>
+
+      <div class="wish-card tone-cream reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">愿您从此被这个世界<strong>温柔以待</strong>，比您温柔待我，再多一点点；愿您往后所求皆所愿，所行皆坦途。</p>
+        <div class="wish-meta">— 愿您安好 ·003</div>
+      </div>
+
+      <div class="wish-card tone-rose reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">妈妈，您不需要再坚强了。<strong>这次换我来撑伞</strong>，换我做您的肩膀，换我为您留一盏永远不会灭的灯。</p>
+        <div class="wish-meta">— 我来护您 ·004</div>
+      </div>
+
+      <div class="wish-card tone-gold reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">您给了我<strong>整个世界</strong>，我愿用我的一生，把整个世界还给您 —— 用我的爱，用我的陪伴，用我所有能给的好。</p>
+        <div class="wish-meta">— 一生还您 ·005</div>
+      </div>
+
+      <div class="wish-card tone-cream reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">您是我此生最大的<strong>幸运</strong>。在所有的妈妈里，能成为您的孩子，是上天给我最珍贵的礼物，没有之一。</p>
+        <div class="wish-meta">— 此生有幸 ·006</div>
+      </div>
+
+      <div class="wish-card tone-rose reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">妈妈，您也曾是<strong>爱笑的少女</strong>。我希望您不必只活成"妈妈"，也希望您重新成为那个会唱歌、会跳舞、会偷偷为自己买花的何永花。</p>
+        <div class="wish-meta">— 做回少女 ·007</div>
+      </div>
+
+      <div class="wish-card tone-gold reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">愿您的厨房永远<strong>飘着饭香</strong>，灯光永远为您而亮；愿您的余生，都有花开，有人陪，有梦做，有人等您回家。</p>
+        <div class="wish-meta">— 余生都甜 ·008</div>
+      </div>
+
+      <div class="wish-card tone-cream reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">您总说"妈妈不老"，可我多想<strong>替您挡住时光</strong>。如果可以，请把您的皱纹给我，把您的白发给我，让您永远是那个温柔的何永花。</p>
+        <div class="wish-meta">— 时光留步 ·009</div>
+      </div>
+
+      <div class="wish-card tone-rose reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">谢谢您，让我成为<strong>您的孩子</strong>。这是我所有自我介绍里，最骄傲、最不舍得丢掉的一句 —— 我是何永花的孩子。</p>
+        <div class="wish-meta">— 最大荣光 ·010</div>
+      </div>
+
+      <div class="wish-card tone-gold reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">妈妈，<strong>我爱您</strong>。这三个字我说得很少，可我每一次想您、每一次回头、每一次叫"妈"，里面都藏着这三个字，藏了千遍万遍。</p>
+        <div class="wish-meta">— 我爱您 ·011</div>
+      </div>
+
+      <div class="wish-card tone-cream reveal">
+        <div class="wish-quote">"</div>
+        <p class="wish-text">愿来生，我们还能再做一次<strong>母女（子）</strong>。如果可以，下一辈子换我做妈妈，让我也好好疼您一次，把您欠自己的爱，全都还给您。</p>
+        <div class="wish-meta">— 来生再续 ·012</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WISHES ============== -->
+<section class="block">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">MY WISHES FOR YOU</div>
+      <h2 class="heading">为您许下的<span class="hl">十个愿望</span></h2>
+      <p class="sub">愿您往后的日子，都比今天更甜一点</p>
+    </div>
+
+    <div class="wishlist">
+      <div class="wish-row reveal">
+        <div class="wish-num">01</div>
+        <div class="wish-content">
+          <h4>愿您身体康健</h4>
+          <p>愿岁月不再催您匆忙，愿四季的风都对您温柔，愿您每一次体检都是"一切正常"。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">02</div>
+        <div class="wish-content">
+          <h4>愿您笑口常开</h4>
+          <p>愿您每天醒来都有想笑的事，愿那些让您皱眉的人和事，都被风轻轻吹散。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">03</div>
+        <div class="wish-content">
+          <h4>愿您不必再为我操心</h4>
+          <p>从今往后，请把"担心"两个字交给我；您只管去看花、去散步、去做那些让自己开心的事。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">04</div>
+        <div class="wish-content">
+          <h4>愿您拥有自己的小天地</h4>
+          <p>愿您有一片小阳台，可以种您喜欢的花；愿您有一首循环的歌，是您一个人哼也会笑的歌。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">05</div>
+        <div class="wish-content">
+          <h4>愿您所行皆坦途</h4>
+          <p>愿您出门有阳光，回家有热饭；愿您走过的每一段路，都被这个世界好好对待。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">06</div>
+        <div class="wish-content">
+          <h4>愿您敢为自己花钱</h4>
+          <p>看上的衣服请不要再放回去，喜欢的东西请买给自己。您值得世界上所有好的东西，不必再省。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">07</div>
+        <div class="wish-content">
+          <h4>愿您依然有梦</h4>
+          <p>那些您年轻时没去成的远方、没学完的歌、没做完的梦 —— 趁现在，我们一起去把它们一个一个找回来。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">08</div>
+        <div class="wish-content">
+          <h4>愿您与自己和解</h4>
+          <p>您已经做得够好了，比这世界上99%的妈妈都更好。请别再苛责自己，请抱抱您自己。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">09</div>
+        <div class="wish-content">
+          <h4>愿岁月赠您从容</h4>
+          <p>愿您的白发被风轻轻吹起的时候，您也能笑着说一句"我这一生，挺好的"。</p>
+        </div>
+      </div>
+      <div class="wish-row reveal">
+        <div class="wish-num">10</div>
+        <div class="wish-content">
+          <h4>愿我们还有很长很长的来日</h4>
+          <p>愿我能陪您看遍春夏秋冬，陪您慢慢变老。愿在每一个母亲节，我都能亲口对您说："妈妈，我在，我爱您。"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== HUG INTERACTION ============== -->
+<section class="hug-section block" id="hug">
+  <div class="container">
+    <div class="reveal">
+      <div class="eyebrow">A HUG FOR MAMA</div>
+      <h2 class="heading">点一下，<span class="hl">送给妈妈一个拥抱</span></h2>
+      <p class="sub">每一次点击，都是一颗想您的心</p>
+    </div>
+
+    <div class="hug-stage reveal">
+      <button class="hug-button" id="hugBtn" type="button">
+        ♥ 给妈妈一个拥抱
+      </button>
+    </div>
+
+    <div class="hug-counter reveal">
+      已经送出 <strong id="hugCount">0</strong> 个拥抱
+    </div>
+  </div>
+</section>
+
+<!-- ============== FINAL ============== -->
+<section class="final">
+  <div class="container">
+    <div class="reveal">
+      <p class="final-quote">
+        妈妈，<br />
+        我爱您，<br />
+        胜过爱我自己 ——<br />
+        从此生，到来生。
+      </p>
+      <p class="final-sub">HAPPY MOTHER'S DAY · 2026 · 致 何永花</p>
+
+      <div class="final-flowers">
+        <svg viewBox="0 0 60 60"><g transform="translate(30 30)"><circle r="22" fill="#FCEAEC"/><circle r="16" fill="#E8A8B0"/><circle r="10" fill="#C97583"/><circle r="4" fill="#A87B49"/></g></svg>
+        <svg viewBox="0 0 60 60"><g transform="translate(30 30)"><circle r="22" fill="#FDF2E2"/><circle r="16" fill="#E8C99B"/><circle r="10" fill="#D4A574"/><circle r="4" fill="#A87B49"/></g></svg>
+        <svg viewBox="0 0 60 60"><g transform="translate(30 30)"><circle r="22" fill="#FCEAEC"/><circle r="16" fill="#E8A8B0"/><circle r="10" fill="#C97583"/><circle r="4" fill="#A87B49"/></g></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Made with <span class="heart">♥</span> for Mama He Yonghua · 2026
+</footer>
+
+<script>
+  /* ========== Reveal on Scroll ========== */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  /* ========== Falling Petals ========== */
+  const PETAL_COLORS = [
+    ['#FCEAEC', '#E8A8B0', '#C97583'],
+    ['#FDF2E2', '#E8C99B', '#D4A574'],
+    ['#F8D7D9', '#E8A8B0', '#C97583'],
+  ];
+  const petalLayer = document.getElementById('petalLayer');
+  const PETAL_COUNT = window.innerWidth < 768 ? 14 : 28;
+
+  function spawnPetal(initial = false) {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    const size = 14 + Math.random() * 18;
+    const colors = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
+    const left = Math.random() * 100;
+    const dur = 12 + Math.random() * 14;
+    const delay = initial ? -Math.random() * dur : 0;
+    el.style.left = left + 'vw';
+    el.style.width = el.style.height = size + 'px';
+    el.style.animation = `petal-fall ${dur}s linear ${delay}s infinite`;
+
+    el.innerHTML = `
+      <svg viewBox="0 0 24 24">
+        <defs>
+          <radialGradient id="pg${Date.now()}${Math.random()}" cx="50%" cy="40%" r="60%">
+            <stop offset="0%" stop-color="${colors[0]}"/>
+            <stop offset="60%" stop-color="${colors[1]}"/>
+            <stop offset="100%" stop-color="${colors[2]}"/>
+          </radialGradient>
+        </defs>
+        <path d="M12 2 Q18 6 18 12 Q22 14 18 18 Q12 22 12 22 Q12 22 6 18 Q2 14 6 12 Q6 6 12 2 Z"
+              fill="${colors[1]}" opacity="0.85"/>
+        <circle cx="12" cy="12" r="3" fill="${colors[2]}" opacity="0.7"/>
+      </svg>`;
+    petalLayer.appendChild(el);
+  }
+  for (let i = 0; i < PETAL_COUNT; i++) spawnPetal(true);
+
+  /* ========== Hug Button — Floating Hearts ========== */
+  const hugBtn = document.getElementById('hugBtn');
+  const hugCount = document.getElementById('hugCount');
+  const hugStage = hugBtn.parentElement;
+  let count = 0;
+  const HEART_SVG = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#E8A8B0"/>
+        <stop offset="100%" stop-color="#C97583"/>
+      </linearGradient>
+    </defs>
+    <path d="M12 21s-7-4.5-9.5-9C.5 8.5 3 4 7 4c2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 4 0 6.5 4.5 4.5 8-2.5 4.5-9.5 9-9.5 9z"
+          fill="url(#hg)"/>
+  </svg>`;
+
+  function spawnHearts(n) {
+    const rect = hugBtn.getBoundingClientRect();
+    const stageRect = hugStage.getBoundingClientRect();
+    for (let i = 0; i < n; i++) {
+      const h = document.createElement('div');
+      h.className = 'float-heart';
+      h.innerHTML = HEART_SVG;
+      const size = 18 + Math.random() * 28;
+      h.style.width = h.style.height = size + 'px';
+      h.style.left = (rect.left - stageRect.left + rect.width / 2 - size / 2 + (Math.random() - 0.5) * rect.width * 0.6) + 'px';
+      h.style.top = (rect.top - stageRect.top + rect.height / 2 - size / 2) + 'px';
+      h.style.setProperty('--dx', ((Math.random() - 0.5) * 240) + 'px');
+      h.style.setProperty('--rot', ((Math.random() - 0.5) * 80) + 'deg');
+      h.style.animationDuration = (2.4 + Math.random() * 1.6) + 's';
+      hugStage.appendChild(h);
+      setTimeout(() => h.remove(), 4000);
+    }
+  }
+
+  hugBtn.addEventListener('click', () => {
+    count++;
+    hugCount.textContent = count;
+    spawnHearts(8 + Math.floor(Math.random() * 6));
+    hugBtn.style.transform = 'translateY(-2px) scale(1.06)';
+    setTimeout(() => { hugBtn.style.transform = ''; }, 200);
+
+    if (count === 1) hugBtn.innerHTML = '♥ 再抱一下妈妈';
+    if (count === 5) hugBtn.innerHTML = '♥ 妈妈在笑啦';
+    if (count === 10) hugBtn.innerHTML = '♥ 多抱一会儿';
+    if (count === 20) hugBtn.innerHTML = '♥ 妈妈我爱您';
+    if (count >= 50) hugBtn.innerHTML = '♥ 抱不够 抱不够';
+  });
+
+  /* ========== Click anywhere to bloom a small heart ========== */
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button, a, .meta-card, .wish-card, .wish-row, .tl-content')) return;
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.innerHTML = HEART_SVG;
+    const size = 16 + Math.random() * 12;
+    h.style.position = 'fixed';
+    h.style.width = h.style.height = size + 'px';
+    h.style.left = (e.clientX - size / 2) + 'px';
+    h.style.top = (e.clientY - size / 2) + 'px';
+    h.style.setProperty('--dx', ((Math.random() - 0.5) * 120) + 'px');
+    h.style.setProperty('--rot', ((Math.random() - 0.5) * 60) + 'deg');
+    h.style.zIndex = '100';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 3500);
+  });
+</script>
+</body>
+</html>
