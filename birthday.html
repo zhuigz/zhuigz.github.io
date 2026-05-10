@@ -110,35 +110,28 @@
     100% { opacity: 1; }
   }
 
-  /* ==================== 开场动画 ==================== */
-  #intro {
-    position: fixed; inset: 0;
-    background: var(--bg-deep);
-    z-index: 9500;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
-    transition: opacity 1.4s ease, visibility 1.4s ease;
-  }
-  #intro.gone { opacity: 0; visibility: hidden; pointer-events: none; }
-  .intro-orb {
-    width: 120px; height: 120px;
+  /* ==================== 开场光球（角落装饰，不再全屏蒙版） ==================== */
+  .corner-orb {
+    position: fixed;
+    top: 24px; right: 24px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: var(--grad);
     box-shadow:
-      0 0 60px var(--c1),
-      0 0 120px rgba(255, 143, 177, 0.5),
-      inset 0 0 40px rgba(255,255,255,0.4);
+      0 0 18px var(--c1),
+      0 0 36px rgba(255, 143, 177, 0.5),
+      inset 0 0 14px rgba(255,255,255,0.4);
     animation: orbPulse 2.4s ease-in-out infinite;
-    position: relative;
+    z-index: 50;
+    pointer-events: none;
   }
-  .intro-orb::before, .intro-orb::after {
+  .corner-orb::before {
     content: '';
-    position: absolute; inset: -20px;
-    border: 1px solid rgba(255,255,255,0.18);
+    position: absolute; inset: -8px;
+    border: 1px solid rgba(255,255,255,0.25);
     border-radius: 50%;
     animation: orbRing 3s linear infinite;
   }
-  .intro-orb::after { inset: -40px; animation-duration: 4s; animation-direction: reverse; }
   @keyframes orbPulse {
     0%, 100% { transform: scale(1); filter: hue-rotate(0deg); }
     50% { transform: scale(1.1); filter: hue-rotate(20deg); }
@@ -147,25 +140,7 @@
     from { transform: rotate(0deg); opacity: 0.6; }
     to { transform: rotate(360deg); opacity: 0.3; }
   }
-  .intro-text {
-    margin-top: 50px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    letter-spacing: 8px;
-    color: var(--text-soft);
-    text-transform: uppercase;
-    animation: introFade 2s ease infinite alternate;
-  }
-  @keyframes introFade { from { opacity: 0.4; } to { opacity: 1; } }
-  .intro-zh {
-    margin-top: 18px;
-    font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
-    font-size: 22px;
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+
 
   /* ==================== 通用区块 ==================== */
   section {
@@ -1135,25 +1110,22 @@
     margin: 0 6px;
   }
 
-  /* ==================== Reveal ==================== */
+  /* ==================== Reveal（纯 CSS，无 JS 依赖） ==================== */
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
+    transform: translateY(20px);
+    animation: revealIn 1s cubic-bezier(.2,.7,.2,1) forwards;
+    animation-delay: 0.15s;
   }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .reveal.delay-1 { animation-delay: 0.30s; }
+  .reveal.delay-2 { animation-delay: 0.45s; }
+  .reveal.delay-3 { animation-delay: 0.60s; }
+  .reveal.delay-4 { animation-delay: 0.75s; }
+  @keyframes revealIn {
+    to { opacity: 1; transform: translateY(0); }
   }
-  /* 安全兜底：如果 4 秒内观察器没有触发，强制显示，避免页面空白 */
-  body.force-show .reveal {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal.delay-1 { transition-delay: 0.15s; }
-  .reveal.delay-2 { transition-delay: 0.3s; }
-  .reveal.delay-3 { transition-delay: 0.45s; }
-  .reveal.delay-4 { transition-delay: 0.6s; }
+  /* 双重保险：哪怕动画都没生效，给一个最终态 */
+  .reveal.shown { opacity: 1 !important; transform: none !important; }
 
   /* ==================== Confetti（CSS） ==================== */
   #confetti-layer {
@@ -1222,12 +1194,8 @@
 <canvas id="fireworks-canvas"></canvas>
 <div id="confetti-layer"></div>
 
-<!-- 开场 -->
-<div id="intro">
-  <div class="intro-orb"></div>
-  <div class="intro-text">Loading the universe…</div>
-  <div class="intro-zh">为追光者点亮今夜的星河</div>
-</div>
+<!-- 角落装饰光球（替代原全屏开场） -->
+<div class="corner-orb"></div>
 
 <!-- Hero -->
 <section class="hero">
@@ -1452,25 +1420,18 @@
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-  /* ==================== Intro 关闭 ==================== */
-  function dismissIntro() {
-    const intro = document.getElementById('intro');
-    if (intro && !intro.classList.contains('gone')) {
-      intro.classList.add('gone');
-      try { launchConfetti(60); } catch(e) {}
-    }
+  /* ==================== 入场撒花 ==================== */
+  function onReady(fn) {
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
   }
-  window.addEventListener('load', () => {
-    setTimeout(dismissIntro, 1400);
-  });
-  // 兜底 1：DOMContentLoaded 之后 3.2 秒强制关闭 intro，避免 load 事件被卡住
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(dismissIntro, 3200);
-    // 兜底 2：再过 800 毫秒，强制让所有 .reveal 元素显示出来（即使 IntersectionObserver 没触发）
+  onReady(() => {
+    // 给所有 .reveal 一个最终态兜底，确保万无一失
     setTimeout(() => {
-      document.body.classList.add('force-show');
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-    }, 4000);
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('shown'));
+    }, 2500);
+    // 入场轻撒花
+    setTimeout(() => { try { launchConfetti(50); } catch(e) {} }, 600);
   });
 
   /* ==================== 自定义鼠标 ==================== */
