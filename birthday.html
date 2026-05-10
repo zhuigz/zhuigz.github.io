@@ -30,10 +30,10 @@
   body {
     font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
     background:
-      radial-gradient(ellipse at 20% 10%, rgba(165, 128, 240, 0.18), transparent 55%),
-      radial-gradient(ellipse at 80% 80%, rgba(255, 143, 177, 0.18), transparent 55%),
-      radial-gradient(ellipse at 50% 50%, rgba(26, 17, 64, 0.6), transparent 70%),
-      var(--bg-deep);
+      radial-gradient(ellipse 60% 40% at 18% 8%, rgba(165, 128, 240, 0.45), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 82% 82%, rgba(255, 143, 177, 0.42), transparent 70%),
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(40, 22, 90, 0.55), transparent 75%),
+      linear-gradient(180deg, #14092e 0%, #0B0820 50%, #14092e 100%);
     color: var(--text);
     line-height: 1.7;
     cursor: none;
@@ -76,8 +76,39 @@
     pointer-events: none;
   }
   #stars-canvas { z-index: 1; }
-  #trail-canvas { z-index: 2; }
+  #trail-canvas { z-index: 3; }
   #fireworks-canvas { z-index: 9000; }
+
+  /* CSS 星粒兜底层：即使 canvas 失败也保留繁星感 */
+  #css-stars {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 18%, #ffffff, transparent 60%),
+      radial-gradient(1px 1px at 28% 38%, #FFE08A, transparent 60%),
+      radial-gradient(1.2px 1.2px at 44% 12%, #ffffff, transparent 60%),
+      radial-gradient(1px 1px at 60% 28%, #C8B0FA, transparent 60%),
+      radial-gradient(1.4px 1.4px at 76% 8%, #ffffff, transparent 60%),
+      radial-gradient(1px 1px at 88% 22%, #FFC2D6, transparent 60%),
+      radial-gradient(1.3px 1.3px at 18% 52%, #FFE08A, transparent 60%),
+      radial-gradient(1px 1px at 36% 68%, #ffffff, transparent 60%),
+      radial-gradient(1.2px 1.2px at 56% 78%, #C8B0FA, transparent 60%),
+      radial-gradient(1px 1px at 72% 64%, #ffffff, transparent 60%),
+      radial-gradient(1.3px 1.3px at 92% 56%, #FFC2D6, transparent 60%),
+      radial-gradient(1px 1px at 8% 84%, #FFE08A, transparent 60%),
+      radial-gradient(1.2px 1.2px at 24% 92%, #ffffff, transparent 60%),
+      radial-gradient(1px 1px at 48% 88%, #C8B0FA, transparent 60%),
+      radial-gradient(1.3px 1.3px at 66% 96%, #FFC2D6, transparent 60%),
+      radial-gradient(1px 1px at 82% 78%, #ffffff, transparent 60%);
+    animation: cssStarsTwinkle 5s ease-in-out infinite alternate;
+    opacity: 0.9;
+  }
+  @keyframes cssStarsTwinkle {
+    0%   { opacity: 0.55; }
+    100% { opacity: 1; }
+  }
 
   /* ==================== 开场动画 ==================== */
   #intro {
@@ -206,17 +237,19 @@
   }
   .hero-tag {
     font-family: 'Outfit', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 8px;
-    color: var(--gold);
+    color: #FFE08A;
     text-transform: uppercase;
-    padding: 8px 22px;
-    border: 1px solid rgba(246, 196, 69, 0.4);
+    padding: 10px 26px;
+    border: 1px solid rgba(246, 196, 69, 0.6);
     border-radius: 999px;
-    margin-bottom: 32px;
-    background: rgba(246, 196, 69, 0.05);
+    margin-bottom: 36px;
+    background: rgba(246, 196, 69, 0.12);
     backdrop-filter: blur(4px);
     animation: tagFloat 3s ease-in-out infinite;
+    box-shadow: 0 0 24px rgba(246, 196, 69, 0.25), inset 0 0 12px rgba(246, 196, 69, 0.1);
+    text-shadow: 0 0 14px rgba(246, 196, 69, 0.5);
   }
   @keyframes tagFloat {
     0%, 100% { transform: translateY(0); }
@@ -226,17 +259,18 @@
     font-family: 'Dancing Script', cursive;
     font-size: clamp(56px, 10vw, 120px);
     line-height: 1;
-    background: linear-gradient(135deg, #fff 0%, var(--c2-soft) 50%, var(--c1-soft) 100%);
+    color: #ffffff;
+    background: linear-gradient(135deg, #ffffff 0%, #FFE6F0 45%, #E6D6FF 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 40px rgba(255, 143, 177, 0.3);
+    -webkit-text-fill-color: transparent;
     margin-bottom: 12px;
     animation: heroGlow 4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 22px rgba(255, 192, 220, 0.6));
   }
   @keyframes heroGlow {
-    from { filter: drop-shadow(0 0 20px rgba(255, 143, 177, 0.4)); }
-    to   { filter: drop-shadow(0 0 50px rgba(165, 128, 240, 0.6)); }
+    from { filter: drop-shadow(0 0 18px rgba(255, 192, 220, 0.55)) drop-shadow(0 0 36px rgba(255, 143, 177, 0.45)); }
+    to   { filter: drop-shadow(0 0 22px rgba(220, 200, 255, 0.6)) drop-shadow(0 0 60px rgba(165, 128, 240, 0.6)); }
   }
   .hero-name {
     font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
@@ -244,10 +278,11 @@
     font-weight: 700;
     letter-spacing: 6px;
     margin-bottom: 18px;
-    background: var(--grad);
+    background: linear-gradient(135deg, #FFD6E8 0%, #FF8FB1 45%, #C8B0FA 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 18px rgba(255, 143, 177, 0.55));
   }
   .hero-name .age {
     font-family: 'Outfit', sans-serif;
@@ -261,46 +296,52 @@
   .hero-alias {
     font-family: 'Noto Serif SC', serif;
     font-size: clamp(15px, 2vw, 19px);
-    color: var(--text-soft);
+    color: #F4EFFF;
     letter-spacing: 4px;
     margin-bottom: 36px;
+    text-shadow: 0 0 18px rgba(255, 192, 220, 0.35);
   }
   .hero-alias span {
     color: var(--gold);
     margin: 0 8px;
+    text-shadow: 0 0 12px rgba(246, 196, 69, 0.5);
   }
   .hero-motto {
     font-family: 'Noto Serif SC', serif;
-    font-size: clamp(14px, 1.6vw, 17px);
-    color: var(--text-soft);
+    font-size: clamp(15px, 1.7vw, 18px);
+    color: #F4EFFF;
     letter-spacing: 2px;
-    max-width: 600px;
+    max-width: 620px;
     margin-bottom: 60px;
     line-height: 2;
+    text-shadow: 0 0 16px rgba(165, 128, 240, 0.25);
   }
   .hero-motto em {
-    color: var(--c2-soft);
+    color: #FFD6E8;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
+    text-shadow: 0 0 14px rgba(255, 143, 177, 0.5);
   }
   .scroll-cue {
     position: absolute;
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    color: var(--text-dim);
+    color: #FFE08A;
     font-family: 'Outfit', sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 4px;
     text-transform: uppercase;
     animation: cuePulse 2s ease-in-out infinite;
+    text-shadow: 0 0 12px rgba(246, 196, 69, 0.4);
   }
   .scroll-cue::after {
     content: '';
     display: block;
-    width: 1px; height: 40px;
+    width: 1px; height: 44px;
     margin: 14px auto 0;
     background: linear-gradient(to bottom, var(--gold), transparent);
+    box-shadow: 0 0 8px var(--gold);
   }
   @keyframes cuePulse { 50% { opacity: 0.4; transform: translate(-50%, 6px); } }
 
@@ -1104,6 +1145,11 @@
     opacity: 1;
     transform: translateY(0);
   }
+  /* 安全兜底：如果 4 秒内观察器没有触发，强制显示，避免页面空白 */
+  body.force-show .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .reveal.delay-1 { transition-delay: 0.15s; }
   .reveal.delay-2 { transition-delay: 0.3s; }
   .reveal.delay-3 { transition-delay: 0.45s; }
@@ -1171,6 +1217,7 @@
 
 <!-- 画布层 -->
 <canvas id="stars-canvas"></canvas>
+<div id="css-stars"></div>
 <canvas id="trail-canvas"></canvas>
 <canvas id="fireworks-canvas"></canvas>
 <div id="confetti-layer"></div>
@@ -1406,12 +1453,24 @@
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
   /* ==================== Intro 关闭 ==================== */
+  function dismissIntro() {
+    const intro = document.getElementById('intro');
+    if (intro && !intro.classList.contains('gone')) {
+      intro.classList.add('gone');
+      try { launchConfetti(60); } catch(e) {}
+    }
+  }
   window.addEventListener('load', () => {
+    setTimeout(dismissIntro, 1400);
+  });
+  // 兜底 1：DOMContentLoaded 之后 3.2 秒强制关闭 intro，避免 load 事件被卡住
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(dismissIntro, 3200);
+    // 兜底 2：再过 800 毫秒，强制让所有 .reveal 元素显示出来（即使 IntersectionObserver 没触发）
     setTimeout(() => {
-      document.getElementById('intro').classList.add('gone');
-      // 进场撒花
-      launchConfetti(60);
-    }, 1600);
+      document.body.classList.add('force-show');
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    }, 4000);
   });
 
   /* ==================== 自定义鼠标 ==================== */
@@ -1442,20 +1501,27 @@
   /* ==================== 星空 Canvas ==================== */
   (function stars() {
     const c = document.getElementById('stars-canvas');
+    if (!c) return;
     const ctx = c.getContext('2d');
     let stars = [], shooting = [];
     function resize() {
       c.width = window.innerWidth;
       c.height = window.innerHeight;
-      const count = Math.floor((c.width * c.height) / 9000);
+      const count = Math.floor((c.width * c.height) / 5000);
       stars = Array.from({length: count}, () => ({
         x: Math.random()*c.width,
         y: Math.random()*c.height,
-        r: Math.random()*1.4 + 0.2,
-        a: Math.random()*0.6 + 0.2,
-        twinkle: Math.random()*0.02 + 0.005,
+        r: Math.random()*1.8 + 0.4,
+        a: Math.random()*0.5 + 0.45,
+        twinkle: Math.random()*0.025 + 0.008,
         dir: Math.random() > 0.5 ? 1 : -1,
-        hue: Math.random() > 0.7 ? '#FFC2D6' : (Math.random() > 0.5 ? '#C8B0FA' : '#FFE08A')
+        hue: (function(){
+          const r = Math.random();
+          if (r > 0.75) return '#FFC2D6';
+          if (r > 0.55) return '#C8B0FA';
+          if (r > 0.35) return '#FFE08A';
+          return '#FFFFFF';
+        })()
       }));
     }
     resize();
@@ -1480,12 +1546,12 @@
       // 星
       stars.forEach(s => {
         s.a += s.twinkle * s.dir;
-        if (s.a > 0.9 || s.a < 0.15) s.dir *= -1;
+        if (s.a > 1 || s.a < 0.35) s.dir *= -1;
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
         ctx.fillStyle = s.hue;
         ctx.globalAlpha = s.a;
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 10;
         ctx.shadowColor = s.hue;
         ctx.fill();
       });
