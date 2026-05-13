@@ -64,6 +64,26 @@ body{
 ::-webkit-scrollbar-thumb{background:rgba(246,196,69,.2);border-radius:0}
 ::-webkit-scrollbar-thumb:hover{background:rgba(246,196,69,.4)}
 
+/* ─────────── Cursor follower ─────────── */
+@media (pointer:fine){
+  body,a,button,.hero-step,.dim,.wheel,.p-card,.fw,.conv-col,.anchor{cursor:none}
+}
+.cursor-dot,.cursor-ring{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:9998;
+  border-radius:50%;mix-blend-mode:difference;
+  transition:width .35s var(--ease),height .35s var(--ease),background .25s,border-color .25s,opacity .3s;
+  will-change:transform;
+}
+.cursor-dot{width:6px;height:6px;background:var(--gold)}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(246,196,69,.55);background:transparent}
+.cursor-ring.hover{width:64px;height:64px;border-color:var(--gold)}
+.cursor-ring.hover-jade{border-color:var(--jade)}
+.cursor-ring.hover-crimson{border-color:var(--crimson-light)}
+.cursor-ring.hover-violet{border-color:var(--violet)}
+.cursor-dot.hover{width:4px;height:4px;background:var(--paper)}
+.cursor-hidden .cursor-dot,.cursor-hidden .cursor-ring{opacity:0}
+@media (pointer:coarse),(hover:none){.cursor-dot,.cursor-ring{display:none}}
+
 /* ─────────── Background ─────────── */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .bg-grid{
@@ -561,6 +581,73 @@ section{position:relative;z-index:5}
   font-family:var(--serif);font-style:italic;font-size:14px;color:var(--gold);line-height:1.85;letter-spacing:.02em;
 }
 
+/* ═══════════════════════════════════════ CREDO (Korchagin) ═══════════════════════════════════════ */
+.credo{
+  padding:220px 56px;position:relative;overflow:hidden;
+  background:
+    linear-gradient(180deg,transparent,rgba(200,53,42,.04) 40%,rgba(165,128,240,.04) 70%,transparent),
+    var(--ink);
+}
+.credo::before{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(900px,90vw);height:min(900px,90vw);border-radius:50%;
+  background:radial-gradient(circle,rgba(246,196,69,.06),transparent 65%);
+  filter:blur(50px);pointer-events:none;
+}
+.credo::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border-radius:50%;
+  border:1px solid rgba(246,196,69,.12);
+  animation:spin 90s linear infinite;pointer-events:none;
+}
+.credo-inner{max-width:880px;margin:0 auto;position:relative;z-index:3;text-align:center}
+.credo-mark{
+  position:relative;display:inline-block;margin-bottom:42px;
+  font-family:var(--italic);font-style:italic;font-weight:700;font-size:96px;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(246,196,69,.5);letter-spacing:-.04em;
+}
+.credo-mark::after{
+  content:'生命之约';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-family:var(--serif);font-style:normal;-webkit-text-stroke:0;color:var(--gold);
+  font-size:11px;letter-spacing:.42em;font-weight:600;white-space:nowrap;text-transform:uppercase;
+}
+.credo-pre{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.4em;
+  color:var(--paper-4);text-transform:uppercase;font-weight:500;margin-bottom:60px;
+}
+.credo-pre em{font-style:italic;font-family:var(--italic);text-transform:none;letter-spacing:.04em;color:var(--paper-3);font-size:1.05em}
+.credo-text{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(20px,2.2vw,28px);line-height:2;color:var(--paper);letter-spacing:.02em;
+}
+.credo-text .line{opacity:0;transform:translateY(20px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);margin-bottom:18px}
+.credo-text.v .line{opacity:1;transform:translateY(0)}
+.credo-text.v .line:nth-child(1){transition-delay:.15s}
+.credo-text.v .line:nth-child(2){transition-delay:.6s}
+.credo-text.v .line:nth-child(3){transition-delay:1.1s}
+.credo-text.v .line:nth-child(4){transition-delay:1.7s}
+.credo-text.v .line:nth-child(5){transition-delay:2.3s}
+.credo-text.v .line:nth-child(6){transition-delay:2.9s}
+.credo-text.v .line:nth-child(7){transition-delay:3.6s}
+.credo-text .indent{font-family:var(--italic);font-style:italic;font-size:.86em;color:var(--paper-2)}
+.credo-text .ghost{font-family:var(--italic);font-style:italic;font-size:.84em;color:var(--paper-3);margin-top:-6px}
+.credo-text .climax{
+  margin-top:48px;padding:42px 32px 0;border-top:1px solid var(--line-strong);
+  font-family:var(--serif);font-weight:700;font-size:clamp(22px,2.4vw,30px);line-height:1.75;
+  font-style:italic;font-family:var(--italic);letter-spacing:.02em;
+}
+.credo-text .climax .battle{
+  font-family:var(--serif);font-style:normal;font-weight:900;font-size:1.08em;letter-spacing:.06em;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--crimson-light));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.credo-attr{
+  margin-top:64px;font-family:var(--italic);font-style:italic;
+  font-size:14px;color:var(--gold);letter-spacing:.04em;line-height:1.7;
+}
+.credo-attr .sep{display:inline-block;margin:0 .6em;color:var(--paper-4)}
+.credo-attr .work{color:var(--paper-2)}
+
 /* ═══════════════════════════════════════ Footer ═══════════════════════════════════════ */
 footer{
   padding:48px 56px 36px;border-top:1px solid var(--line);
@@ -612,6 +699,9 @@ footer{
 </style>
 </head>
 <body>
+
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
 
 <div class="bg">
   <div class="bg-grid"></div>
@@ -746,7 +836,7 @@ footer{
 
         <div class="feature r">
           <div class="feat-label">CORE TARGET · 硬指标</div>
-          <div class="feat-num">300<span class="small">万 — 1000万</span></div>
+          <div class="feat-num count" data-target="300">0<span class="small">万 — 1000万</span></div>
           <div class="feat-math"><strong>300万</strong> × 4% = <strong>12万/年</strong> · <strong>1万/月</strong> · 二三线城市 <strong>完全自由</strong></div>
         </div>
 
@@ -891,7 +981,7 @@ footer{
 
         <div class="feature r">
           <div class="feat-label">CORE TARGET · 时间锚点</div>
-          <div class="feat-num">2050<span class="small">社会主义现代化强国</span></div>
+          <div class="feat-num count" data-target="2050">0<span class="small">社会主义现代化强国</span></div>
           <div class="feat-math">用 <strong>AI 极致生产力</strong> 撬动 <strong>民生七维普惠</strong> · 以 <strong>反腐制度</strong> 守住每一分红利</div>
         </div>
 
@@ -1093,6 +1183,28 @@ footer{
   </div>
 </section>
 
+<!-- ═════════════════════════ CREDO · 生命之约 ═════════════════════════ -->
+<section class="credo" id="credo">
+  <div class="credo-inner">
+    <div class="credo-mark r">℘</div>
+    <div class="credo-pre r">CREDO · 生命之约 &nbsp;·&nbsp; <em>From "How the Steel Was Tempered" / 钢铁是怎样炼成的</em></div>
+
+    <div class="credo-text">
+      <p class="line">人最宝贵的是<span class="gradient-gold">生命</span>。</p>
+      <p class="line">生命属于人，<em style="font-style:italic;color:var(--paper-2);font-family:var(--italic)">只有一次</em>。</p>
+      <p class="line">人的一生应当这样度过 ——</p>
+      <p class="line indent">当他回首往事的时候，不会因为<span style="color:var(--gold)">虚度年华</span>而悔恨，</p>
+      <p class="line indent">也不因<span style="color:var(--gold)">碌碌无为</span>而羞耻；</p>
+      <p class="line">这样，在临终的时候，他就能够说 ——</p>
+      <p class="line climax">"我已把自己整个的生命和全部的精力，<br>都献给了世界上最壮丽的事业 ——<br><span class="battle">为人类的解放而斗争。</span>"</p>
+    </div>
+
+    <div class="credo-attr r">
+      <span class="work">— 尼·奥斯特洛夫斯基 ·《钢铁是怎样炼成的》</span><span class="sep">·</span>保尔·柯察金 之独白
+    </div>
+  </div>
+</section>
+
 <!-- ═════════════════════════ CONVERGENCE ═════════════════════════ -->
 <section class="conv" id="convergence">
   <div class="container">
@@ -1154,7 +1266,78 @@ const io = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-document.querySelectorAll('.r,.r-l,.r-r,.r-s,.stag,.feature,.tlf-line').forEach(el => io.observe(el));
+document.querySelectorAll('.r,.r-l,.r-r,.r-s,.stag,.feature,.tlf-line,.credo-text').forEach(el => io.observe(el));
+
+/* ─────────── Cursor follower ─────────── */
+(function(){
+  if(!matchMedia('(pointer:fine)').matches) return;
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  let mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my, dx=mx, dy=my;
+  window.addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY});
+  document.addEventListener('mouseleave', ()=>document.body.classList.add('cursor-hidden'));
+  document.addEventListener('mouseenter', ()=>document.body.classList.remove('cursor-hidden'));
+  (function tick(){
+    dx += (mx-dx)*0.55;
+    dy += (my-dy)*0.55;
+    rx += (mx-rx)*0.16;
+    ry += (my-ry)*0.16;
+    dot.style.transform = `translate(${dx}px,${dy}px) translate(-50%,-50%)`;
+    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(tick);
+  })();
+  // hover state — tier-aware tint
+  const hoverMap = [
+    ['#tier1 a, #tier1 .dim, #tier1 .wheel, #tier1 .p-card, #tier1 .anchor, .hero-step[data-c="jade"]', 'hover-jade'],
+    ['#tier2 a, #tier2 .dim, #tier2 .wheel, #tier2 .p-card, #tier2 .fw, .hero-step[data-c="crimson"]', 'hover-crimson'],
+    ['#tier3 a, #tier3 .dim, #tier3 .wheel, #tier3 .p-card, #tier3 .wit-card, #tier3 .flow-step, .hero-step[data-c="violet"]', 'hover-violet'],
+  ];
+  document.querySelectorAll('a, button, .dim, .wheel, .p-card, .fw, .conv-col, .anchor, .hero-step, .wit-card, .flow-step, .brand-seal').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>{
+      ring.classList.add('hover');dot.classList.add('hover');
+      for(const [sel,cls] of hoverMap){ if(el.matches(sel)||el.closest(sel.split(',')[0].trim())){ring.classList.add(cls);break;} }
+    });
+    el.addEventListener('mouseleave', ()=>{
+      ring.classList.remove('hover','hover-jade','hover-crimson','hover-violet');
+      dot.classList.remove('hover');
+    });
+  });
+})();
+
+/* ─────────── Magnetic hero ladder steps ─────────── */
+document.querySelectorAll('.hero-step').forEach(step=>{
+  step.addEventListener('mousemove', e=>{
+    const r = step.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width/2)) * 0.22;
+    const y = (e.clientY - (r.top + r.height/2)) * 0.22;
+    step.style.transform = `translate(${x}px,${y}px)`;
+  });
+  step.addEventListener('mouseleave', ()=>{step.style.transform=''});
+});
+
+/* ─────────── Animated counters ─────────── */
+const counters = document.querySelectorAll('.count[data-target]');
+const counterIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseFloat(el.dataset.target);
+    const small = el.querySelector('.small');
+    const smallHTML = small ? small.outerHTML : '';
+    const dur = 1800;
+    const t0 = performance.now();
+    function step(now){
+      const t = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - t, 4);
+      const v = Math.round(target * eased);
+      el.innerHTML = v + smallHTML;
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    counterIO.unobserve(el);
+  });
+}, { threshold: 0.4 });
+counters.forEach(c => counterIO.observe(c));
 
 /* Progress bar */
 const bar = document.getElementById('progressBar');
