@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 · 这十年 | 友谊地久天长</title>
+<meta name="description" content="C · D · H · W —— 朔州少年，十年挚友。山河为证，岁月为凭。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;500;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* Base palette - 深空底色 */
+  --bg-void: #07060B;
+  --bg-deep: #0A0911;
+  --bg-soft: #12101C;
+
+  /* Friendship palette - 暖色情感 */
+  --gold: #F6C445;
+  --gold-light: #FFE08A;
+  --gold-dark: #D4A012;
+  --sunrise: #FF9A5C;
+  --sunrise-deep: #E85D2B;
+  --dawn-rose: #FFB59E;
+  --dawn-violet: #6C4BB8;
+  --dawn-indigo: #2D2470;
+
+  /* Per-friend accents - 四人专属配色 */
+  --c-color: #F6C445;   /* 曹 - 金 */
+  --d-color: #5ECE8A;   /* 邸 - 翠绿 */
+  --h-color: #4A9EF5;   /* 胡 - 蓝 */
+  --w-color: #F57A6A;   /* 王 - 珊瑚 */
+
+  /* Text */
+  --text-primary: #F2EFE7;
+  --text-secondary: rgba(242,239,231,0.62);
+  --text-dim: rgba(242,239,231,0.35);
+  --text-faint: rgba(242,239,231,0.16);
+
+  --line: rgba(246,196,69,0.18);
+  --hairline: rgba(255,255,255,0.06);
+
+  --font-serif: "Noto Serif SC", "Songti SC", serif;
+  --font-sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-num: "Outfit", -apple-system, sans-serif;
+  --font-italic: "Cormorant Garamond", "Noto Serif SC", serif;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  background:var(--bg-void);
+  color:var(--text-primary);
+  font-family:var(--font-sans);
+  overflow-x:hidden;
+  line-height:1.7;
+  cursor:none;
+}
+@media (hover:none){ body{cursor:auto} }
+
+::selection{background:var(--gold);color:var(--bg-void)}
+
+/* ========== 自定义光标 ========== */
+.cursor-dot,.cursor-ring{
+  position:fixed;top:0;left:0;pointer-events:none;
+  z-index:9999;border-radius:50%;
+  transform:translate(-50%,-50%);
+  will-change:transform;
+}
+.cursor-dot{
+  width:6px;height:6px;background:var(--gold);
+  transition:width .3s var(--ease-out),height .3s var(--ease-out),background .3s;
+}
+.cursor-ring{
+  width:36px;height:36px;border:1px solid rgba(246,196,69,0.45);
+  transition:width .35s var(--ease-out),height .35s var(--ease-out),border-color .3s,opacity .3s;
+}
+.cursor-hover .cursor-dot{width:0;height:0}
+.cursor-hover .cursor-ring{width:64px;height:64px;border-color:var(--gold-light);background:rgba(246,196,69,0.08)}
+@media (hover:none){ .cursor-dot,.cursor-ring{display:none} }
+
+/* ========== 顶部滚动进度 ========== */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--gold),var(--sunrise),var(--dawn-violet));
+  z-index:200;transition:width .15s linear;
+  box-shadow:0 0 18px rgba(246,196,69,0.5);
+}
+
+/* ========== 导航 ========== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:22px 48px;display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom, rgba(7,6,11,0.85), rgba(7,6,11,0));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:padding .4s var(--ease-out),background .4s;
+}
+.nav.scrolled{padding:14px 48px;background:rgba(7,6,11,0.78);border-bottom:1px solid var(--hairline)}
+.nav-brand{
+  font-family:var(--font-num);font-weight:700;font-size:18px;letter-spacing:.18em;
+  color:var(--text-primary);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-brand .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 16px var(--gold);animation:pulse 2.4s ease-in-out infinite}
+.nav-links{display:flex;list-style:none;gap:36px}
+.nav-links a{
+  color:var(--text-secondary);text-decoration:none;font-size:13px;letter-spacing:.08em;
+  font-family:var(--font-num);font-weight:300;
+  position:relative;transition:color .3s;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:-6px;height:1px;width:0;
+  background:var(--gold);transition:width .4s var(--ease-out);
+}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-links a:hover::after{width:100%}
+.nav-back{
+  font-family:var(--font-num);font-weight:300;font-size:13px;letter-spacing:.1em;
+  color:var(--text-secondary);text-decoration:none;
+  border:1px solid var(--hairline);padding:8px 16px;border-radius:99px;
+  transition:all .3s;
+}
+.nav-back:hover{border-color:var(--gold);color:var(--gold)}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.4);opacity:.6}
+}
+
+/* ========== HERO ========== */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;padding:120px 24px 80px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(255,154,92,0.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(108,75,184,0.18), transparent 60%),
+    var(--bg-void);
+}
+.hero-stars{position:absolute;inset:0;pointer-events:none;opacity:.7}
+.hero-stars span{
+  position:absolute;background:#fff;border-radius:50%;
+  animation:twinkle 4s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.2;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.2)}
+}
+
+.hero-orbs{position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;perspective:800px}
+.orb{
+  position:absolute;width:14px;height:14px;border-radius:50%;
+  box-shadow:0 0 40px currentColor,0 0 80px currentColor;
+  animation:orbFloat 9s ease-in-out infinite;
+  filter:blur(.5px);
+}
+.orb.c{color:var(--c-color);background:var(--c-color);top:24%;left:18%;animation-delay:0s}
+.orb.d{color:var(--d-color);background:var(--d-color);top:34%;right:18%;animation-delay:1.2s}
+.orb.h{color:var(--h-color);background:var(--h-color);bottom:30%;left:22%;animation-delay:2.4s}
+.orb.w{color:var(--w-color);background:var(--w-color);bottom:24%;right:22%;animation-delay:3.6s}
+@keyframes orbFloat{
+  0%,100%{transform:translateY(0) translateX(0) scale(1)}
+  33%{transform:translateY(-30px) translateX(20px) scale(1.15)}
+  66%{transform:translateY(20px) translateX(-15px) scale(.9)}
+}
+
+.hero-eyebrow{
+  font-family:var(--font-num);font-size:12px;letter-spacing:.55em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:48px;
+  opacity:0;animation:fadeDown 1.2s var(--ease-out) .3s forwards;
+}
+.hero-eyebrow .pipe{display:inline-block;width:20px;height:1px;background:var(--gold);vertical-align:middle;margin:0 14px}
+
+.hero-title{
+  font-family:var(--font-num);font-weight:900;
+  font-size:clamp(110px, 22vw, 280px);line-height:.85;letter-spacing:-.04em;
+  background:linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 35%, var(--sunrise) 65%, var(--dawn-rose) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:24px;position:relative;
+}
+.hero-title .char{
+  display:inline-block;
+  opacity:0;transform:translateY(80px) rotateX(-40deg);
+  animation:heroChar 1.4s var(--ease-out) forwards;
+}
+.hero-title .char:nth-child(1){animation-delay:.5s}
+.hero-title .char:nth-child(2){animation-delay:.7s}
+@keyframes heroChar{
+  to{opacity:1;transform:translateY(0) rotateX(0)}
+}
+
+.hero-sub{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(28px, 4vw, 52px);letter-spacing:.4em;
+  color:var(--text-primary);margin-bottom:32px;
+  opacity:0;animation:fadeUp 1.2s var(--ease-out) 1s forwards;
+}
+.hero-sub .hl{
+  background:linear-gradient(135deg,var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+.hero-tag{
+  font-family:var(--font-italic);font-style:italic;font-weight:300;
+  font-size:clamp(16px, 1.6vw, 22px);color:var(--text-secondary);
+  letter-spacing:.1em;margin-bottom:64px;
+  opacity:0;animation:fadeUp 1.2s var(--ease-out) 1.3s forwards;
+}
+
+.hero-meta{
+  display:flex;gap:48px;align-items:center;
+  font-family:var(--font-num);font-size:13px;letter-spacing:.2em;
+  color:var(--text-secondary);
+  opacity:0;animation:fadeUp 1.2s var(--ease-out) 1.6s forwards;
+}
+.hero-meta .yr{font-size:18px;color:var(--gold);font-weight:300}
+.hero-meta .arrow{width:60px;height:1px;background:linear-gradient(90deg,var(--gold),var(--sunrise));position:relative}
+.hero-meta .arrow::after{content:'';position:absolute;right:0;top:-3px;width:7px;height:7px;border-right:1px solid var(--sunrise);border-top:1px solid var(--sunrise);transform:rotate(45deg)}
+
+.hero-scroll{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  font-family:var(--font-num);font-size:11px;letter-spacing:.3em;color:var(--text-dim);
+  opacity:0;animation:fadeUp 1.2s var(--ease-out) 2s forwards;
+}
+.hero-scroll .line{width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold));position:relative;overflow:hidden}
+.hero-scroll .line::after{content:'';position:absolute;top:-60px;left:0;width:100%;height:60px;background:var(--gold);animation:scrollLine 2.4s ease-in-out infinite}
+@keyframes scrollLine{0%{top:-60px}100%{top:60px}}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ========== 容器 ========== */
+.container{max-width:1180px;margin:0 auto;padding:0 32px}
+.section{padding:160px 0;position:relative}
+.section-num{
+  font-family:var(--font-num);font-size:12px;font-weight:300;letter-spacing:.4em;
+  color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:14px;
+}
+.section-num .bar{width:32px;height:1px;background:var(--gold)}
+.section-title{
+  font-family:var(--font-serif);font-weight:500;
+  font-size:clamp(40px, 6vw, 72px);line-height:1.15;letter-spacing:.04em;
+  margin-bottom:32px;color:var(--text-primary);
+}
+.section-title .hl{
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.section-lead{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(17px, 1.6vw, 21px);line-height:1.95;
+  color:var(--text-secondary);max-width:760px;margin-bottom:60px;
+}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:0 auto;max-width:1180px}
+
+/* ========== 进入动画 ========== */
+.reveal{opacity:0;transform:translateY(60px);transition:opacity 1.2s var(--ease-out),transform 1.2s var(--ease-out)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-stagger > *{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+.reveal-stagger.visible > *{opacity:1;transform:translateY(0)}
+.reveal-stagger.visible > *:nth-child(1){transition-delay:0s}
+.reveal-stagger.visible > *:nth-child(2){transition-delay:.12s}
+.reveal-stagger.visible > *:nth-child(3){transition-delay:.24s}
+.reveal-stagger.visible > *:nth-child(4){transition-delay:.36s}
+.reveal-stagger.visible > *:nth-child(5){transition-delay:.48s}
+.reveal-stagger.visible > *:nth-child(6){transition-delay:.6s}
+
+/* ========== 缘起 PROLOGUE ========== */
+.prologue{
+  background:
+    radial-gradient(ellipse at top, rgba(246,196,69,0.06), transparent 60%),
+    var(--bg-void);
+}
+.prologue-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.prologue-quote{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(28px, 3.4vw, 44px);line-height:1.6;letter-spacing:.06em;
+  color:var(--text-primary);position:relative;padding-left:32px;
+}
+.prologue-quote::before{
+  content:'"';position:absolute;left:-10px;top:-30px;
+  font-family:var(--font-italic);font-size:120px;color:var(--gold);opacity:.4;
+  line-height:1;
+}
+.prologue-quote .hl{
+  background:linear-gradient(135deg,var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:500;
+}
+.prologue-meta{font-family:var(--font-num);font-size:13px;letter-spacing:.2em;color:var(--text-dim);margin-top:32px;padding-left:32px}
+
+.location-card{
+  border:1px solid var(--hairline);border-radius:8px;padding:48px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+  position:relative;overflow:hidden;
+  transition:transform .6s var(--ease-out),border-color .6s;
+}
+.location-card:hover{transform:translateY(-6px);border-color:rgba(246,196,69,0.35)}
+.location-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.location-label{font-family:var(--font-num);font-size:11px;letter-spacing:.4em;color:var(--gold);margin-bottom:18px}
+.location-name{font-family:var(--font-serif);font-weight:500;font-size:34px;line-height:1.3;margin-bottom:8px}
+.location-en{font-family:var(--font-italic);font-style:italic;color:var(--text-dim);font-size:18px;margin-bottom:32px;letter-spacing:.04em}
+.location-coords{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:24px;border-top:1px solid var(--hairline)}
+.location-coords > div{font-family:var(--font-num)}
+.location-coords .k{font-size:11px;letter-spacing:.25em;color:var(--text-dim);margin-bottom:6px;text-transform:uppercase}
+.location-coords .v{font-size:18px;color:var(--text-primary);font-weight:300}
+
+/* ========== 四人组 QUARTET ========== */
+.quartet{background:var(--bg-deep)}
+.quartet-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px}
+.friend-card{
+  position:relative;padding:40px 28px 36px;
+  border:1px solid var(--hairline);border-radius:8px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  transition:transform .7s var(--ease-out),border-color .5s,box-shadow .5s;
+  cursor:none;overflow:hidden;
+}
+.friend-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .8s var(--ease-out);
+}
+.friend-card::after{
+  content:'';position:absolute;inset:0;border-radius:8px;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,0%), color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
+  opacity:0;transition:opacity .5s;pointer-events:none;
+}
+.friend-card:hover{transform:translateY(-10px);border-color:color-mix(in srgb, var(--accent) 45%, transparent);box-shadow:0 30px 60px -20px color-mix(in srgb, var(--accent) 25%, transparent)}
+.friend-card:hover::before{transform:scaleX(1)}
+.friend-card:hover::after{opacity:1}
+.friend-card.c{--accent:var(--c-color)}
+.friend-card.d{--accent:var(--d-color)}
+.friend-card.h{--accent:var(--h-color)}
+.friend-card.w{--accent:var(--w-color)}
+
+.friend-letter{
+  font-family:var(--font-num);font-size:96px;font-weight:200;line-height:1;
+  color:var(--accent);margin-bottom:24px;letter-spacing:-.04em;
+  text-shadow:0 0 30px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.friend-surname{font-family:var(--font-serif);font-size:24px;font-weight:500;margin-bottom:6px}
+.friend-fullname{font-family:var(--font-num);font-size:11px;letter-spacing:.3em;color:var(--text-dim);margin-bottom:24px;text-transform:uppercase}
+.friend-journey{list-style:none;padding:0}
+.friend-journey li{
+  font-size:12px;color:var(--text-secondary);
+  padding:8px 0;border-top:1px solid var(--hairline);
+  display:flex;justify-content:space-between;gap:8px;
+  font-family:var(--font-sans);
+}
+.friend-journey li .stage{font-family:var(--font-num);font-size:10px;color:var(--text-dim);letter-spacing:.15em}
+.friend-journey li .school{text-align:right}
+
+.quartet-bond{
+  margin-top:80px;text-align:center;
+  font-family:var(--font-italic);font-style:italic;font-weight:400;
+  font-size:clamp(20px, 2.4vw, 28px);color:var(--text-secondary);letter-spacing:.04em;
+}
+.quartet-bond .sep{display:inline-block;margin:0 20px;color:var(--gold);opacity:.5}
+
+/* ========== 时间轴 TIMELINE ========== */
+.timeline{position:relative}
+.timeline-spine{
+  position:absolute;left:50%;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,
+    transparent 0%,
+    var(--line) 8%,
+    var(--line) 92%,
+    transparent 100%);
+  transform:translateX(-50%);
+}
+.timeline-spine::before{
+  content:'';position:absolute;left:50%;top:0;width:1px;height:var(--progress, 0%);
+  background:linear-gradient(to bottom, var(--gold), var(--sunrise));
+  box-shadow:0 0 12px var(--gold);
+  transform:translateX(-50%);transition:height .1s linear;
+}
+
+.era{
+  position:relative;padding:120px 0;
+  display:grid;grid-template-columns:1fr 80px 1fr;align-items:start;gap:0;
+}
+.era-marker{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--bg-void);border:2px solid var(--gold);
+  justify-self:center;margin-top:8px;position:relative;z-index:2;
+  transition:all .6s var(--ease-out);
+}
+.era-marker::after{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1px solid var(--gold);opacity:0;
+  transition:all .6s var(--ease-out);
+}
+.era.visible .era-marker{background:var(--gold);box-shadow:0 0 24px var(--gold)}
+.era.visible .era-marker::after{opacity:.4;inset:-12px}
+
+.era-side{padding:0 60px}
+.era-side.left{text-align:right}
+.era-year{
+  font-family:var(--font-num);font-size:14px;letter-spacing:.3em;color:var(--gold);
+  margin-bottom:10px;font-weight:300;
+}
+.era-name{
+  font-family:var(--font-serif);font-weight:500;
+  font-size:clamp(36px, 4.6vw, 56px);line-height:1.1;margin-bottom:18px;
+}
+.era-name .hl{
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.era-tag{
+  display:inline-block;font-family:var(--font-num);font-size:11px;letter-spacing:.25em;
+  color:var(--text-dim);padding:6px 14px;border:1px solid var(--hairline);border-radius:99px;
+  margin-bottom:22px;
+}
+.era-body{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:17px;line-height:1.95;color:var(--text-secondary);
+}
+.era-body p+p{margin-top:14px}
+.era-body em{color:var(--gold);font-style:normal;font-weight:500}
+
+.era-card{
+  border:1px solid var(--hairline);border-radius:10px;padding:36px 32px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+  transition:transform .6s var(--ease-out),border-color .6s;
+  position:relative;overflow:hidden;
+}
+.era-card:hover{transform:translateY(-6px);border-color:rgba(246,196,69,0.3)}
+.era-card::before{
+  content:'';position:absolute;top:0;left:-100%;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transition:left .8s var(--ease-out);
+}
+.era-card:hover::before{left:0}
+
+.school-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:14px}
+.school-list li{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-top:1px solid var(--hairline);
+}
+.school-list li:first-child{border-top:none;padding-top:0}
+.school-list .who{
+  font-family:var(--font-num);font-weight:700;font-size:14px;
+  width:48px;letter-spacing:.05em;
+  color:var(--who-color, var(--gold));
+}
+.school-list .who.c{--who-color:var(--c-color)}
+.school-list .who.d{--who-color:var(--d-color)}
+.school-list .who.h{--who-color:var(--h-color)}
+.school-list .who.w{--who-color:var(--w-color)}
+.school-list .where{flex:1;font-size:14px;color:var(--text-primary);font-weight:300}
+.school-list .class{font-family:var(--font-num);font-size:11px;color:var(--text-dim);letter-spacing:.15em}
+
+/* ========== 日出特辑 SUNRISE ========== */
+.sunrise-section{
+  position:relative;padding:200px 24px 220px;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,
+      #0a0820 0%,
+      #1a1245 30%,
+      #4a2670 55%,
+      #c25a3e 75%,
+      #f6a14a 90%,
+      #ffd17d 100%);
+}
+.sunrise-section::before{
+  content:'';position:absolute;left:50%;bottom:-180px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,#FFE4A0 0%,#FFB35A 30%,#E85D2B 65%,transparent 75%);
+  transform:translateX(-50%);
+  box-shadow:0 0 200px 40px rgba(255,179,90,0.6);
+  animation:sunRise 4s var(--ease-out) forwards;
+  animation-play-state:paused;
+}
+.sunrise-section.activated::before{animation-play-state:running}
+@keyframes sunRise{
+  from{bottom:-440px;opacity:.6}
+  to{bottom:-180px;opacity:1}
+}
+.sunrise-section::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:220px;
+  background:linear-gradient(180deg,transparent,rgba(20,10,5,0.5),rgba(7,6,11,1));
+  z-index:2;pointer-events:none;
+}
+.sunrise-mountains{
+  position:absolute;left:0;right:0;bottom:140px;height:160px;z-index:2;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.65) 100%);
+  clip-path:polygon(0% 100%, 8% 65%, 18% 80%, 28% 40%, 38% 70%, 48% 30%, 58% 65%, 68% 45%, 78% 75%, 88% 50%, 100% 70%, 100% 100%);
+}
+.sunrise-stars{position:absolute;top:0;left:0;right:0;height:50%;z-index:1;pointer-events:none}
+.sunrise-stars span{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+
+.sunrise-inner{position:relative;z-index:3;max-width:880px;margin:0 auto;text-align:center}
+.sunrise-eyebrow{
+  font-family:var(--font-num);font-size:12px;letter-spacing:.55em;color:rgba(255,255,255,0.85);
+  text-transform:uppercase;margin-bottom:30px;
+}
+.sunrise-date{
+  font-family:var(--font-num);font-weight:200;font-size:clamp(54px,8vw,110px);
+  letter-spacing:.05em;color:#fff;line-height:1;margin-bottom:28px;
+  text-shadow:0 4px 40px rgba(0,0,0,0.4);
+}
+.sunrise-date .sep{color:var(--gold-light);margin:0 .15em}
+.sunrise-title{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(32px,4.6vw,56px);letter-spacing:.06em;
+  color:#fff;line-height:1.4;margin-bottom:32px;
+  text-shadow:0 2px 20px rgba(0,0,0,0.3);
+}
+.sunrise-title em{font-style:normal;color:var(--gold-light);font-weight:500}
+.sunrise-quote{
+  font-family:var(--font-italic);font-style:italic;font-weight:400;
+  font-size:clamp(20px,2.4vw,28px);color:rgba(255,255,255,0.9);
+  letter-spacing:.04em;max-width:640px;margin:0 auto;
+  text-shadow:0 2px 12px rgba(0,0,0,0.3);
+}
+
+.sunrise-timeline{
+  margin-top:90px;display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;position:relative;z-index:3;
+}
+.sunrise-timeline::before{
+  content:'';position:absolute;top:24px;left:8%;right:8%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),rgba(255,255,255,0.4),transparent);
+}
+.st-stop{text-align:center;position:relative}
+.st-stop .dot{
+  width:14px;height:14px;border-radius:50%;background:#fff;margin:0 auto 18px;
+  box-shadow:0 0 0 6px rgba(255,255,255,0.12), 0 0 20px rgba(255,255,255,0.6);
+  position:relative;z-index:2;
+}
+.st-stop .time{font-family:var(--font-num);font-size:22px;font-weight:300;color:#fff;letter-spacing:.06em;margin-bottom:6px}
+.st-stop .what{font-size:12px;color:rgba(255,255,255,0.75);letter-spacing:.1em;font-family:var(--font-sans)}
+
+.sunrise-details{
+  margin-top:80px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  position:relative;z-index:3;max-width:880px;margin-left:auto;margin-right:auto;
+}
+.sd-card{
+  padding:24px;border-radius:8px;
+  background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.15);
+  text-align:left;
+}
+.sd-card .k{font-family:var(--font-num);font-size:11px;letter-spacing:.25em;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:8px}
+.sd-card .v{font-family:var(--font-serif);font-weight:500;font-size:18px;color:#fff;line-height:1.4}
+
+/* ========== 闪光金句 BOND QUOTE ========== */
+.bond{
+  padding:200px 24px;text-align:center;position:relative;
+  background:radial-gradient(ellipse at center, rgba(246,196,69,0.06), transparent 60%), var(--bg-void);
+  overflow:hidden;
+}
+.bond-mark{
+  font-family:var(--font-italic);font-size:200px;line-height:.6;
+  color:var(--gold);opacity:.18;margin-bottom:-20px;
+}
+.bond-text{
+  font-family:var(--font-serif);font-weight:400;
+  font-size:clamp(34px, 5vw, 64px);line-height:1.5;letter-spacing:.05em;
+  max-width:980px;margin:0 auto 40px;
+}
+.bond-text .hl{
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:600;
+}
+.bond-text .ten{
+  font-family:var(--font-num);font-weight:900;font-size:1.15em;
+  display:inline-block;padding:0 .15em;
+}
+.bond-attr{
+  font-family:var(--font-num);font-size:13px;letter-spacing:.35em;
+  color:var(--text-dim);text-transform:uppercase;
+}
+.bond-attr .bar{display:inline-block;width:32px;height:1px;background:var(--gold);vertical-align:middle;margin:0 16px}
+
+/* ========== 未来 FUTURE ========== */
+.future{
+  padding:160px 24px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at bottom, rgba(255,154,92,0.08), transparent 60%),
+    var(--bg-deep);
+}
+.future-grid{
+  display:grid;grid-template-columns:1.1fr 1fr;gap:80px;
+  max-width:1180px;margin:0 auto;align-items:center;
+}
+.future-tag{
+  display:inline-block;font-family:var(--font-num);font-size:11px;
+  letter-spacing:.4em;color:var(--gold);
+  padding:8px 18px;border:1px solid rgba(246,196,69,0.35);border-radius:99px;
+  margin-bottom:32px;text-transform:uppercase;
+}
+.future-title{
+  font-family:var(--font-serif);font-weight:500;
+  font-size:clamp(44px, 6vw, 76px);line-height:1.15;letter-spacing:.04em;
+  margin-bottom:36px;
+}
+.future-title .hl{
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.future-body{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:18px;line-height:1.95;color:var(--text-secondary);
+}
+.future-body p+p{margin-top:16px}
+
+.trip-card{
+  border:1px solid rgba(246,196,69,0.25);border-radius:12px;padding:44px;
+  background:linear-gradient(180deg, rgba(246,196,69,0.04), rgba(255,154,92,0.02));
+  position:relative;overflow:hidden;
+}
+.trip-card::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(circle at 100% 0%, rgba(246,196,69,0.12), transparent 50%);
+  pointer-events:none;
+}
+.trip-eyebrow{font-family:var(--font-num);font-size:11px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.trip-name{font-family:var(--font-serif);font-weight:500;font-size:32px;line-height:1.3;margin-bottom:8px}
+.trip-sub{font-family:var(--font-italic);font-style:italic;color:var(--text-dim);font-size:16px;margin-bottom:32px;letter-spacing:.04em}
+.trip-rows{display:flex;flex-direction:column;gap:14px}
+.trip-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 0;border-top:1px solid var(--hairline);
+}
+.trip-row:first-child{border-top:none;padding-top:0}
+.trip-row .k{font-family:var(--font-num);font-size:11px;letter-spacing:.25em;color:var(--text-dim);text-transform:uppercase}
+.trip-row .v{font-family:var(--font-serif);font-size:16px;color:var(--text-primary)}
+.trip-cta{
+  margin-top:36px;font-family:var(--font-italic);font-style:italic;
+  font-size:18px;color:var(--gold);
+  display:flex;align-items:center;gap:14px;
+}
+.trip-cta .arrow{width:40px;height:1px;background:var(--gold);position:relative;transition:width .4s var(--ease-out)}
+.trip-cta .arrow::after{content:'';position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--gold);border-top:1px solid var(--gold);transform:rotate(45deg)}
+
+/* ========== 计数 STATS ========== */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  max-width:1180px;margin:80px auto 0;padding:60px 32px;
+  border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);
+}
+.stat{text-align:center}
+.stat-num{
+  font-family:var(--font-num);font-weight:200;
+  font-size:clamp(48px, 6vw, 84px);line-height:1;letter-spacing:-.02em;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  display:block;margin-bottom:12px;
+}
+.stat-unit{font-family:var(--font-num);font-size:14px;color:var(--text-dim);letter-spacing:.1em}
+.stat-label{font-size:13px;color:var(--text-secondary);letter-spacing:.15em;margin-top:6px;font-family:var(--font-sans)}
+
+/* ========== 页脚 FOOTER ========== */
+.footer{
+  padding:80px 24px 48px;text-align:center;
+  border-top:1px solid var(--hairline);
+  background:var(--bg-void);
+}
+.footer-quote{
+  font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(22px, 2.4vw, 32px);letter-spacing:.12em;
+  color:var(--text-primary);margin-bottom:24px;line-height:1.7;
+}
+.footer-quote .hl{
+  background:linear-gradient(135deg,var(--gold),var(--sunrise));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-weight:500;
+}
+.footer-sig{
+  font-family:var(--font-italic);font-style:italic;color:var(--gold);
+  font-size:18px;letter-spacing:.15em;margin-bottom:36px;
+}
+.footer-meta{
+  font-family:var(--font-num);font-size:11px;letter-spacing:.3em;
+  color:var(--text-dim);text-transform:uppercase;
+}
+.footer-meta a{color:var(--text-secondary);text-decoration:none;border-bottom:1px solid var(--hairline);padding-bottom:2px;transition:border-color .3s,color .3s}
+.footer-meta a:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ========== 响应式 ========== */
+@media (max-width:980px){
+  .nav-links{display:none}
+  .prologue-grid{grid-template-columns:1fr;gap:48px}
+  .quartet-grid{grid-template-columns:repeat(2,1fr)}
+  .timeline-spine{left:24px}
+  .era{grid-template-columns:48px 1fr;gap:0}
+  .era-marker{order:1;justify-self:start;margin-left:16px}
+  .era-side{padding:0 0 0 28px;text-align:left !important;order:2}
+  .era-side.left{grid-column:2}
+  .era-side.right{grid-column:2;margin-top:32px}
+  .sunrise-timeline{grid-template-columns:repeat(2,1fr);gap:32px}
+  .sunrise-timeline::before{display:none}
+  .sunrise-details{grid-template-columns:1fr}
+  .future-grid{grid-template-columns:1fr;gap:48px}
+  .stats-bar{grid-template-columns:repeat(2,1fr);gap:40px 20px}
+}
+@media (max-width:560px){
+  .nav{padding:16px 20px}
+  .container{padding:0 20px}
+  .section{padding:100px 0}
+  .quartet-grid{grid-template-columns:1fr;gap:18px}
+  .hero{padding:100px 20px 60px}
+  .hero-meta{flex-direction:column;gap:14px}
+  .sunrise-section{padding:140px 20px 180px}
+}
+
+/* ========== 减弱动效 ========== */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  .reveal,.reveal-stagger > *{opacity:1 !important;transform:none !important}
+}
+
+</style>
+</head>
+<body>
+
+<!-- 自定义光标 -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- 滚动进度条 -->
+<div class="scroll-progress"></div>
+
+<!-- 导航 -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-brand" data-hover><span class="dot"></span>F4 · 10Y</a>
+  <ul class="nav-links">
+    <li><a href="#prologue" data-hover>缘起</a></li>
+    <li><a href="#quartet" data-hover>四人</a></li>
+    <li><a href="#elementary" data-hover>小学</a></li>
+    <li><a href="#middle" data-hover>初中</a></li>
+    <li><a href="#high" data-hover>高中</a></li>
+    <li><a href="#sunrise" data-hover>日出</a></li>
+    <li><a href="#university" data-hover>大学</a></li>
+    <li><a href="#future" data-hover>未来</a></li>
+  </ul>
+  <a href="index.html" class="nav-back" data-hover>← 回到追光者</a>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top">
+  <div class="hero-stars" id="heroStars"></div>
+  <div class="hero-orbs">
+    <span class="orb c"></span>
+    <span class="orb d"></span>
+    <span class="orb h"></span>
+    <span class="orb w"></span>
+  </div>
+
+  <div class="hero-eyebrow">A Story of Four<span class="pipe"></span>F O U R · F R I E N D S<span class="pipe"></span>2015 — 2025</div>
+
+  <h1 class="hero-title"><span class="char">F</span><span class="char">4</span></h1>
+
+  <div class="hero-sub">这<span class="hl">十年</span></div>
+
+  <div class="hero-tag">— Ten Years Forged in Time, Bonded by Heart —</div>
+
+  <div class="hero-meta">
+    <span class="yr">2015</span>
+    <span class="arrow"></span>
+    <span class="yr">2025</span>
+  </div>
+
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========== 缘起 PROLOGUE ========== -->
+<section class="section prologue" id="prologue">
+  <div class="container">
+    <div class="prologue-grid">
+      <div class="reveal">
+        <div class="section-num"><span class="bar"></span>01 · PROLOGUE</div>
+        <h2 class="section-title">山西<span class="hl">朔州</span>，<br>一切的<span class="hl">缘起</span></h2>
+        <div class="prologue-quote">
+          四个少年，<span class="hl">十年风雪</span>，<br>
+          从一间小学的教室，<br>
+          走到了山河彼岸的<span class="hl">四座城市</span>。
+        </div>
+        <div class="prologue-meta">— 一段从 2015 开始，仍在续写的故事 —</div>
+      </div>
+
+      <div class="reveal location-card" data-hover>
+        <div class="location-label">◍ ORIGIN POINT</div>
+        <div class="location-name">山西省 · 朔州市 · 朔城区</div>
+        <div class="location-en">Shuocheng District, Shuozhou, Shanxi</div>
+        <div class="location-coords">
+          <div>
+            <div class="k">North Lat.</div>
+            <div class="v">39°19′ N</div>
+          </div>
+          <div>
+            <div class="k">East Long.</div>
+            <div class="v">112°25′ E</div>
+          </div>
+          <div>
+            <div class="k">起点</div>
+            <div class="v">朔城区第九小学</div>
+          </div>
+          <div>
+            <div class="k">起点年份</div>
+            <div class="v">2015 · 四年级</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========== 四人组 QUARTET ========== -->
+<section class="section quartet" id="quartet">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:760px;margin:0 auto">
+      <div class="section-num" style="justify-content:center"><span class="bar"></span>02 · THE QUARTET<span class="bar"></span></div>
+      <h2 class="section-title" style="text-align:center">我们<span class="hl">四个</span></h2>
+      <p class="section-lead" style="margin:0 auto 60px;text-align:center">
+        曹宗昱 · 邸启 · 胡泽浩 · 王卓民 —— 此后江湖相称，皆以姓氏首字母为号：
+        <strong style="color:var(--c-color)">C</strong> ·
+        <strong style="color:var(--d-color)">D</strong> ·
+        <strong style="color:var(--h-color)">H</strong> ·
+        <strong style="color:var(--w-color)">W</strong>。
+      </p>
+    </div>
+
+    <div class="quartet-grid reveal-stagger">
+      <div class="friend-card c" data-hover data-tilt>
+        <div class="friend-letter">C</div>
+        <div class="friend-surname">曹</div>
+        <div class="friend-fullname">CAO ZONGYU · 追光者</div>
+        <ul class="friend-journey">
+          <li><span class="stage">PRIMARY</span><span class="school">朔城区第九小学</span></li>
+          <li><span class="stage">MIDDLE</span><span class="school">朔城区第七中学</span></li>
+          <li><span class="stage">HIGH</span><span class="school">朔城一中 · 882</span></li>
+          <li><span class="stage">UNIV.</span><span class="school">华中农业大学</span></li>
+        </ul>
+      </div>
+      <div class="friend-card d" data-hover data-tilt>
+        <div class="friend-letter">D</div>
+        <div class="friend-surname">邸</div>
+        <div class="friend-fullname">DI QI</div>
+        <ul class="friend-journey">
+          <li><span class="stage">PRIMARY</span><span class="school">朔城区第九小学</span></li>
+          <li><span class="stage">MIDDLE</span><span class="school">昱仁中学</span></li>
+          <li><span class="stage">HIGH</span><span class="school">朔城一中 · 853</span></li>
+          <li><span class="stage">UNIV.</span><span class="school">山西农业大学</span></li>
+        </ul>
+      </div>
+      <div class="friend-card h" data-hover data-tilt>
+        <div class="friend-letter">H</div>
+        <div class="friend-surname">胡</div>
+        <div class="friend-fullname">HU ZEHAO</div>
+        <ul class="friend-journey">
+          <li><span class="stage">PRIMARY</span><span class="school">朔城区第九小学</span></li>
+          <li><span class="stage">MIDDLE</span><span class="school">昱仁中学</span></li>
+          <li><span class="stage">HIGH</span><span class="school">朔城一中 · 842</span></li>
+          <li><span class="stage">UNIV.</span><span class="school">西南交通大学</span></li>
+        </ul>
+      </div>
+      <div class="friend-card w" data-hover data-tilt>
+        <div class="friend-letter">W</div>
+        <div class="friend-surname">王</div>
+        <div class="friend-fullname">WANG ZHUOMIN</div>
+        <ul class="friend-journey">
+          <li><span class="stage">PRIMARY</span><span class="school">朔城区第九小学</span></li>
+          <li><span class="stage">MIDDLE</span><span class="school">朔城区第八中学</span></li>
+          <li><span class="stage">HIGH</span><span class="school">朔州市第一中学</span></li>
+          <li><span class="stage">UNIV.</span><span class="school">大同煤炭职业技术学院</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quartet-bond reveal">
+      四人不同路 <span class="sep">·</span> 一颗心同向 <span class="sep">·</span> 山高水阔不曾散
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========== 时间轴 ========== -->
+<section class="timeline" id="timeline">
+  <div class="timeline-spine" id="spine"></div>
+
+  <!-- 小学篇 -->
+  <article class="era" id="elementary">
+    <div class="era-side left reveal">
+      <div class="era-year">2015 — 2017</div>
+      <h3 class="era-name"><span class="hl">小学</span>篇<br>缘起九小</h3>
+      <span class="era-tag">CHAPTER I · WHERE IT ALL BEGAN</span>
+      <div class="era-body">
+        <p>D 与 W，从一年级起便是<em>朔城区第九小学</em>一班的同窗。三年里，他们抬头不见低头见，却始终隔着一层薄薄的客气。</p>
+        <p>四年级，C 从太原悄然转回，命运的纽带开始悄悄拧紧。一年后，H 也从太原而来，四颗星终于在同一片夜空下聚齐。</p>
+        <p>从那以后的两年，<em>五年级与六年级</em>，我们四个几乎形影不离，每一个课间、每一个放学、每一个周末，都填满了笑声与少年的莽撞。</p>
+      </div>
+    </div>
+    <div class="era-marker"></div>
+    <div class="era-side right reveal">
+      <div class="era-card" data-hover>
+        <div class="trip-eyebrow">SCHOOL · 朔城区第九小学</div>
+        <ul class="school-list" style="margin-top:18px">
+          <li><span class="who d">D</span><span class="where">一班 · 自一年级起</span><span class="class">'12 →</span></li>
+          <li><span class="who w">W</span><span class="where">一班 · 自一年级起</span><span class="class">'12 →</span></li>
+          <li><span class="who c">C</span><span class="where">四年级 · 太原转入</span><span class="class">'15</span></li>
+          <li><span class="who h">H</span><span class="where">五年级 · 太原转入</span><span class="class">'16</span></li>
+        </ul>
+        <div class="trip-cta" style="margin-top:28px;font-size:15px">四人成军 <span class="arrow"></span> F4 正式集结</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 初中篇 -->
+  <article class="era" id="middle">
+    <div class="era-side left reveal">
+      <div class="era-card" data-hover>
+        <div class="trip-eyebrow">DIVIDED · 三所学校</div>
+        <ul class="school-list" style="margin-top:18px">
+          <li><span class="who c">C</span><span class="where">朔城区第七中学</span><span class="class">SOLO</span></li>
+          <li><span class="who w">W</span><span class="where">朔城区第八中学</span><span class="class">SOLO</span></li>
+          <li><span class="who d">D</span><span class="where">昱仁中学 · 同班</span><span class="class">TOGETHER</span></li>
+          <li><span class="who h">H</span><span class="where">昱仁中学 · 同班</span><span class="class">TOGETHER</span></li>
+        </ul>
+        <div class="trip-cta" style="margin-top:28px;font-size:15px">周末专属据点 <span class="arrow"></span> 金沙植物园</div>
+      </div>
+    </div>
+    <div class="era-marker"></div>
+    <div class="era-side right reveal">
+      <div class="era-year">2017 — 2020</div>
+      <h3 class="era-name"><span class="hl">初中</span>篇<br>四散却不散</h3>
+      <span class="era-tag">CHAPTER II · APART BUT NEVER APART</span>
+      <div class="era-body">
+        <p>升入初中，潮水退去——大多数小学同窗就此消失在彼此的世界里，连一句"再见"都没来得及说。</p>
+        <p>而我们四人，被随机分入了<em>三所</em>不同的学校：七中、八中、昱仁。三组拼图，散落在朔城的不同角落。</p>
+        <p>神奇的是，距离并没有冲淡什么。整整三年，每个周末我们都会聚到一起，<em>金沙植物园</em>几乎成了我们四人的私属客厅——熟得不能再熟。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- 高中篇 -->
+  <article class="era" id="high">
+    <div class="era-side left reveal">
+      <div class="era-year">2020 — 2024</div>
+      <h3 class="era-name"><span class="hl">高中</span>篇<br>挤出时间的友谊</h3>
+      <span class="era-tag">CHAPTER III · STOLEN HOURS</span>
+      <div class="era-body">
+        <p>高中再次把我们打散：W 去了朔州一中，C、D、H 都进了朔城一中，却分别落在 <em>882、853、842</em> 三个班级。</p>
+        <p>高中的时间是被切成碎片的，但只要有一寸空闲，我们都会用它来相聚——逛公园、打羽毛球、谈天说地，把少年才有的天马行空，统统倾倒在朔城的街巷里。</p>
+        <p>这是一种珍贵到近乎奢侈的友谊：在最忙的年纪里，仍执意挤出时间，去守护四个人的频率。</p>
+      </div>
+    </div>
+    <div class="era-marker"></div>
+    <div class="era-side right reveal">
+      <div class="era-card" data-hover>
+        <div class="trip-eyebrow">CLASSES · 高中坐席</div>
+        <ul class="school-list" style="margin-top:18px">
+          <li><span class="who w">W</span><span class="where">朔州市第一中学</span><span class="class">— —</span></li>
+          <li><span class="who c">C</span><span class="where">朔城一中</span><span class="class">CLASS · 882</span></li>
+          <li><span class="who d">D</span><span class="where">朔城一中</span><span class="class">CLASS · 853</span></li>
+          <li><span class="who h">H</span><span class="where">朔城一中</span><span class="class">CLASS · 842</span></li>
+        </ul>
+        <div class="trip-cta" style="margin-top:28px;font-size:15px">同城三班一校 <span class="arrow"></span> 周末从不缺席</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ========== 日出特辑 ========== -->
+<section class="sunrise-section" id="sunrise">
+  <div class="sunrise-stars" id="sunStars"></div>
+  <div class="sunrise-mountains"></div>
+
+  <div class="sunrise-inner reveal">
+    <div class="sunrise-eyebrow">★ MEMORY · A FLASHBULB MOMENT</div>
+    <div class="sunrise-date">2024<span class="sep">·</span>07<span class="sep">·</span>28</div>
+    <h2 class="sunrise-title">凌晨三点半，<br>四个人，两辆小电驴，<br><em>奔赴一场日出之约</em></h2>
+    <p class="sunrise-quote">"此生无憾"——四个人，肩并肩，在风里说出了同一句话。</p>
+  </div>
+
+  <div class="sunrise-timeline reveal-stagger">
+    <div class="st-stop"><div class="dot"></div><div class="time">21:00</div><div class="what">头夜入眠</div></div>
+    <div class="st-stop"><div class="dot"></div><div class="time">03:30</div><div class="what">凌晨起身</div></div>
+    <div class="st-stop"><div class="dot"></div><div class="time">04:00</div><div class="what">直奔西山</div></div>
+    <div class="st-stop"><div class="dot"></div><div class="time">05:25</div><div class="what">山顶席地</div></div>
+    <div class="st-stop"><div class="dot"></div><div class="time">05:40</div><div class="what">日出破云</div></div>
+  </div>
+
+  <div class="sunrise-details reveal-stagger">
+    <div class="sd-card">
+      <div class="k">装备 · LOADOUT</div>
+      <div class="v">两辆小电驴 · 一只蓝牙音响<br>提前买好的零食 · 可乐与雪碧</div>
+    </div>
+    <div class="sd-card">
+      <div class="k">天气 · WEATHER</div>
+      <div class="v">起初阴云压顶，几乎以为白来一趟<br>最后太阳还是破云而出，照亮山河</div>
+    </div>
+    <div class="sd-card">
+      <div class="k">心情 · MOOD</div>
+      <div class="v">青春里最浓墨重彩的一笔<br>风过山脊，少年无悔</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========== 大学篇 ========== -->
+<section class="timeline" id="university-wrap">
+  <div class="timeline-spine"></div>
+  <article class="era" id="university" style="padding-top:160px">
+    <div class="era-side left reveal">
+      <div class="era-year">2024 — NOW</div>
+      <h3 class="era-name"><span class="hl">大学</span>篇<br>四城同心</h3>
+      <span class="era-tag">CHAPTER IV · FOUR CITIES, ONE BOND</span>
+      <div class="era-body">
+        <p>高考之后，我们第一次被真正意义上"分开"了——<br>
+        C 去了<em>武汉</em>，H 去了<em>成都</em>，D 留在山西去了<em>晋中</em>，W 北上去了<em>大同</em>。</p>
+        <p>各自开启全新的人生，平时联系不再像从前那般频繁。但<em>寒假</em>一回到朔州，我们就一头扎进熟悉的小馆子，搓一顿好的，再打一场久违的台球，聊到夜深也舍不得散。</p>
+        <p>原来真正的好朋友，从来不靠日日相见维持。哪怕隔着千里万里，再见时仍是当年那四个少年，连话题都不必重新热身。</p>
+      </div>
+    </div>
+    <div class="era-marker"></div>
+    <div class="era-side right reveal">
+      <div class="era-card" data-hover>
+        <div class="trip-eyebrow">FOUR CITIES · 四城分布</div>
+        <ul class="school-list" style="margin-top:18px">
+          <li><span class="who c">C</span><span class="where">武汉 · 华中农业大学</span><span class="class">1196 km</span></li>
+          <li><span class="who h">H</span><span class="where">成都 · 西南交通大学</span><span class="class">1240 km</span></li>
+          <li><span class="who d">D</span><span class="where">晋中 · 山西农业大学</span><span class="class">280 km</span></li>
+          <li><span class="who w">W</span><span class="where">大同 · 大同煤炭职业技术学院</span><span class="class">130 km</span></li>
+        </ul>
+        <div class="trip-cta" style="margin-top:28px;font-size:15px">寒假再聚 <span class="arrow"></span> 一顿饭，一场台球</div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ========== 闪光金句 ========== -->
+<section class="bond">
+  <div class="reveal">
+    <div class="bond-mark">"</div>
+    <h2 class="bond-text">
+      到如今，<br>
+      <span class="hl">认识的时间，<br>比不认识的时间都长了</span>。
+    </h2>
+    <div class="bond-attr"><span class="bar"></span>F4 · 整整 <span style="color:var(--gold);font-family:var(--font-num);font-weight:700;letter-spacing:.1em">10</span> 年<span class="bar"></span></div>
+  </div>
+
+  <div class="stats-bar reveal-stagger">
+    <div class="stat">
+      <span class="stat-num" data-count="10">0</span>
+      <div class="stat-unit">YEARS</div>
+      <div class="stat-label">整整十年</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="4">0</span>
+      <div class="stat-unit">FRIENDS</div>
+      <div class="stat-label">四个少年</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="4">0</span>
+      <div class="stat-unit">CITIES</div>
+      <div class="stat-label">四座城市</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-count="1" data-suffix="∞">0</span>
+      <div class="stat-unit">FUTURE</div>
+      <div class="stat-label">未完待续</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========== 未来 FUTURE ========== -->
+<section class="future" id="future">
+  <div class="future-grid">
+    <div class="reveal">
+      <div class="future-tag">★ NEXT CHAPTER · COMING SOON</div>
+      <h2 class="future-title">凡此过往，<br>皆为<span class="hl">序章</span>。</h2>
+      <div class="future-body">
+        <p>大一即将结束，大二就在不远的地方等着我们。<br>
+        我们已经开始悄悄商量——一场<em style="color:var(--gold);font-style:normal">说走就走的旅行</em>，<br>
+        时间未定，地点未定，但四个人到齐，便是天涯。</p>
+        <p>小学、初中、高中那些年挤不出的长假，<br>
+        大学的寒暑假终于都还给我们了。</p>
+        <p style="margin-top:24px;font-family:var(--font-italic);font-style:italic;color:var(--gold);font-size:22px;line-height:1.6">
+          前途似海，来日方长。<br>
+          愿我们下一个十年，<br>
+          比这一个更加璀璨。
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal trip-card" data-hover>
+      <div class="trip-eyebrow">★ SUMMER 2026 · 待启程</div>
+      <div class="trip-name">F4 十周年纪念之旅</div>
+      <div class="trip-sub">— A trip we have been promising ourselves —</div>
+      <div class="trip-rows">
+        <div class="trip-row"><span class="k">出行</span><span class="v">C · D · H · W 四人到齐</span></div>
+        <div class="trip-row"><span class="k">时间</span><span class="v">2026 暑假 · 待定</span></div>
+        <div class="trip-row"><span class="k">地点</span><span class="v">山河之间 · 待定</span></div>
+        <div class="trip-row"><span class="k">主题</span><span class="v">说走就走，不留遗憾</span></div>
+        <div class="trip-row"><span class="k">心情</span><span class="v">十年挚友 · 共赴山海</span></div>
+      </div>
+      <div class="trip-cta">敬请期待 <span class="arrow"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 页脚 ========== -->
+<footer class="footer">
+  <div class="footer-quote">
+    山高水长 <span style="color:var(--text-dim);margin:0 14px">·</span>
+    <span class="hl">友谊地久天长</span> <span style="color:var(--text-dim);margin:0 14px">·</span>
+    岁月不老
+  </div>
+  <div class="footer-sig">— For C · D · H · W, with all my heart —</div>
+  <div class="footer-meta">
+    F4 · 这十年 &nbsp;·&nbsp; CRAFTED BY <a href="index.html" data-hover>追光者</a> &nbsp;·&nbsp; 2015 → ∞
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   F4 · 这十年 —— 互动脚本
+   设计参考：Active Theory 的电影级叙事 + Rauno Freiberg 的克制微交互
+   ============================================================ */
+
+/* --------- 自定义光标 --------- */
+(function(){
+  if (matchMedia('(hover: none)').matches) return;
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  let mx=window.innerWidth/2, my=window.innerHeight/2;
+  let rx=mx, ry=my;
+  document.addEventListener('mousemove', e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
+  });
+  function loop(){
+    rx += (mx-rx)*0.18;
+    ry += (my-ry)*0.18;
+    ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  }
+  loop();
+  // hover 状态
+  document.querySelectorAll('[data-hover], a, button').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', ()=>document.body.classList.remove('cursor-hover'));
+  });
+})();
+
+/* --------- 滚动进度 + 导航状态 + 时间轴脊柱 --------- */
+(function(){
+  const bar = document.querySelector('.scroll-progress');
+  const nav = document.getElementById('nav');
+  const spines = document.querySelectorAll('.timeline-spine');
+
+  function onScroll(){
+    const h = document.documentElement;
+    const p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (p*100) + '%';
+    nav.classList.toggle('scrolled', h.scrollTop > 60);
+
+    // 时间轴进度
+    spines.forEach(sp=>{
+      const rect = sp.getBoundingClientRect();
+      const total = rect.height;
+      const visibleStart = Math.max(0, -rect.top);
+      const progress = Math.min(100, (visibleStart / total) * 100 + 5);
+      sp.style.setProperty('--progress', progress + '%');
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+/* --------- 入场动画 (IntersectionObserver) --------- */
+(function(){
+  const targets = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+  targets.forEach(t=>io.observe(t));
+
+  // 时间轴章节
+  const eras = document.querySelectorAll('.era');
+  const ioEra = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:0.25});
+  eras.forEach(e=>ioEra.observe(e));
+})();
+
+/* --------- 日出动画触发 --------- */
+(function(){
+  const sun = document.querySelector('.sunrise-section');
+  if(!sun) return;
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add('activated');
+    });
+  }, {threshold:0.35});
+  io.observe(sun);
+})();
+
+/* --------- Hero 星空 + 日出星空 --------- */
+(function(){
+  function makeStars(host, n){
+    if(!host) return;
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<n;i++){
+      const s = document.createElement('span');
+      const size = Math.random()*2 + 0.5;
+      s.style.width = size+'px';
+      s.style.height = size+'px';
+      s.style.left = Math.random()*100 + '%';
+      s.style.top = Math.random()*100 + '%';
+      s.style.animationDelay = (Math.random()*4) + 's';
+      s.style.animationDuration = (3 + Math.random()*4) + 's';
+      frag.appendChild(s);
+    }
+    host.appendChild(frag);
+  }
+  makeStars(document.getElementById('heroStars'), 90);
+  makeStars(document.getElementById('sunStars'), 60);
+})();
+
+/* --------- 数字计数 --------- */
+(function(){
+  const nums = document.querySelectorAll('.stat-num[data-count]');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const dur = 1600;
+      const start = performance.now();
+      function step(now){
+        const t = Math.min(1, (now-start)/dur);
+        const eased = 1 - Math.pow(1-t, 3);
+        const v = target * eased;
+        el.textContent = (Number.isInteger(target) ? Math.round(v) : v.toFixed(1)) + (t>=1 ? suffix : '');
+        if(t<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    });
+  }, {threshold:0.5});
+  nums.forEach(n=>io.observe(n));
+})();
+
+/* --------- 卡片磁性 + 光斑跟随 --------- */
+(function(){
+  const cards = document.querySelectorAll('[data-tilt], .friend-card');
+  cards.forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const r = card.getBoundingClientRect();
+      const mx = ((e.clientX - r.left) / r.width) * 100;
+      const my = ((e.clientY - r.top) / r.height) * 100;
+      card.style.setProperty('--mx', mx + '%');
+      card.style.setProperty('--my', my + '%');
+      // 轻微 3D tilt
+      const rx = ((e.clientY - r.top) / r.height - 0.5) * -6;
+      const ry = ((e.clientX - r.left) / r.width - 0.5) * 6;
+      card.style.transform = `translateY(-10px) perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+    card.addEventListener('mouseleave', ()=>{
+      card.style.transform = '';
+    });
+  });
+})();
+
+/* --------- 平滑锚点滚动 (兼容) --------- */
+(function(){
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const id = a.getAttribute('href');
+      if(id.length<2) return;
+      const target = document.querySelector(id);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+})();
+
+/* --------- HERO 标题视差 --------- */
+(function(){
+  const title = document.querySelector('.hero-title');
+  const sub = document.querySelector('.hero-sub');
+  if(!title) return;
+  document.addEventListener('mousemove', e=>{
+    const x = (e.clientX/window.innerWidth - 0.5);
+    const y = (e.clientY/window.innerHeight - 0.5);
+    title.style.transform = `translate(${x*16}px, ${y*10}px)`;
+    if(sub) sub.style.transform = `translate(${x*-8}px, ${y*-4}px)`;
+  });
+})();
+
+</script>
+</body>
+</html>
