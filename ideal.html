@@ -238,28 +238,46 @@ section{position:relative;z-index:5}
 @keyframes chip-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
 
 .hero-title{
+  position:relative;
   font-family:var(--serif);font-weight:900;
   font-size:clamp(56px,11vw,180px);line-height:.92;letter-spacing:.025em;
   margin-bottom:42px;
 }
+.hero-title .tl-prefix,.hero-title .tl-main{position:relative;z-index:3}
 .hero-title .tl-prefix{display:block;font-size:.32em;font-weight:400;font-family:var(--serif);color:var(--paper-3);letter-spacing:.5em;margin-bottom:18px;font-style:italic;font-family:var(--italic)}
 .hero-title .tl-main{
   display:block;
   background:linear-gradient(
-    158deg,
-    #9A7840 0%,
-    #C4A058 10%,
-    #F0DCA0 24%,
-    #C8A45C 36%,
-    #FAF0D0 50%,
-    #D0A860 63%,
-    #EEE0A8 75%,
-    #B88840 88%,
-    #9A7840 100%
+    180deg,
+    #F4DEAA 0%,
+    #E8C888 32%,
+    #D4AC68 62%,
+    #B48848 100%
   );
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   letter-spacing:.04em;
+  filter:
+    drop-shadow(0 1px 0 #8A5C20)
+    drop-shadow(0 2px 0 #5E3E14)
+    drop-shadow(0 3px 0 #3A2608)
+    drop-shadow(0 4px 0 #1F1404)
+    drop-shadow(0 10px 22px rgba(0,0,0,.6));
 }
+.hero-title::after{
+  content:'MMXXVI';
+  position:absolute;
+  left:50%;top:62%;
+  transform:translate(-50%,-50%);
+  font-family:var(--italic);font-style:italic;font-weight:700;
+  font-size:clamp(180px,28vw,440px);
+  line-height:1;letter-spacing:.04em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(232,184,122,.055);
+  white-space:nowrap;pointer-events:none;
+  z-index:0;
+  user-select:none;
+}
+@media(max-width:900px){.hero-title::after{font-size:clamp(140px,32vw,260px);opacity:.7}}
 
 .hero-motto{
   margin:60px auto 0;max-width:680px;position:relative;
