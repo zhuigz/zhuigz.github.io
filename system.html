@@ -4,26 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>人生系统 · 追光者私人仪表盘</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --gold: #F6C445;
-  --gold-light: #FFE08A;
-  --gold-dark: #D4A012;
+  --gold: #E8B87A;
+  --gold-light: #F4D9A8;
+  --gold-dark: #C99A56;
   --bg-deep: #0A0A0F;
-  --bg-card: rgba(255,255,255,0.03);
-  --bg-card-hover: rgba(255,255,255,0.06);
-  --text-primary: #F0EDE6;
-  --text-secondary: rgba(240,237,230,0.6);
-  --text-dim: rgba(240,237,230,0.35);
-  --accent-blue: #4A9EF5;
-  --accent-coral: #F57A6A;
-  --accent-green: #5ECE8A;
-  --accent-purple: #A580F0;
-  --accent-red: #C8352A;
+  --bg-card: rgba(255,255,255,0.025);
+  --bg-card-hover: rgba(255,255,255,0.05);
+  --text-primary: #F2EFEB;
+  --text-secondary: rgba(242,239,235,0.62);
+  --text-dim: rgba(242,239,235,0.34);
+  --accent-blue: #7FA8AD;
+  --accent-coral: #C36B5E;
+  --accent-green: #88A878;
+  --accent-purple: #8E7AB8;
+  --accent-red: #C36B5E;
+  /* 模块色系 */
+  --m1: #E8B87A; --m1r: 232,184,122; /* 目标 · 蜜金 */
+  --m2: #C36B5E; --m2r: 195,107,94;  /* 策略 · 余烬 */
+  --m3: #8E7AB8; --m3r: 142,122,184; /* 公式 · 暮紫 */
+  --m4: #D8A06B; --m4r: 216,160,107; /* FIRE · 琥珀 */
+  --m5: #7FA8AD; --m5r: 127,168,173; /* 双轨 · 锈青 */
+  --m6: #88A878; --m6r: 136,168,120; /* AI · 鼠尾草 */
+  --m7: #D88A75; --m7r: 216,138,117; /* 成长 · 陶土 */
+  --m8: #C4A882; --m8r: 196,168,130; /* 底色 · 古金 */
+  --serif-cn: 'Noto Serif SC', serif;
+  --serif-en: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --sans-en: 'Outfit', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 html { scroll-behavior: smooth; }
@@ -35,20 +48,17 @@ body {
   line-height: 1.8;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
+.grain {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
 .bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-.bg-glow .orb { position: absolute; border-radius: 50%; filter: blur(120px); animation: orbFloat 20s ease-in-out infinite; }
-.bg-glow .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(246,196,69,0.08), transparent 70%); top: -10%; left: -10%; }
-.bg-glow .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(74,158,245,0.05), transparent 70%); bottom: 20%; right: -10%; animation-delay: -7s; }
-.bg-glow .orb-3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(165,128,240,0.05), transparent 70%); top: 50%; left: 30%; animation-delay: -14s; }
+.bg-glow .orb { position: absolute; border-radius: 50%; filter: blur(130px); animation: orbFloat 24s ease-in-out infinite; }
+.bg-glow .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, rgba(232,184,122,0.11), transparent 70%); top: -12%; left: -10%; }
+.bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(195,107,94,0.06), transparent 70%); bottom: 16%; right: -10%; animation-delay: -7s; }
+.bg-glow .orb-3 { width: 440px; height: 440px; background: radial-gradient(circle, rgba(142,122,184,0.05), transparent 70%); top: 50%; left: 28%; animation-delay: -14s; }
 
 @keyframes orbFloat {
   0%, 100% { transform: translate(0, 0) scale(1); }
@@ -64,14 +74,21 @@ body::before {
   background: rgba(10,10,15,0.8); backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s;
 }
-.nav-logo { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; color: var(--gold); transition: text-shadow 0.4s; cursor: default; }
-.nav-logo:hover { text-shadow: 0 0 18px rgba(246,196,69,0.55), 0 0 36px rgba(246,196,69,0.2); }
+.nav-logo {
+  font-family: var(--serif-cn); font-size: 18px; font-weight: 700; color: var(--gold);
+  display: inline-flex; align-items: center; gap: 10px; letter-spacing: 1px;
+}
+.nav-logo::before {
+  content: '✦'; font-family: var(--sans-en); font-size: 13px; color: var(--gold);
+  animation: spin 16s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 .nav-links { display: flex; gap: 32px; list-style: none; }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: rgba(246,196,69,0.25); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(246,196,69,0.45); }
-::selection { background: rgba(246,196,69,0.2); color: var(--text-primary); }
+::-webkit-scrollbar-thumb { background: rgba(232,184,122,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(232,184,122,0.45); }
+::selection { background: rgba(232,184,122,0.2); color: var(--text-primary); }
 section[id] { scroll-margin-top: 80px; }
 .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; position: relative; }
 .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
@@ -81,43 +98,66 @@ section[id] { scroll-margin-top: 80px; }
 
 .hero {
   min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
-  align-items: center; text-align: center; position: relative; padding: 60px 24px;
+  align-items: center; text-align: center; position: relative; padding: 110px 24px 60px;
+}
+.hero-eyebrow {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: clamp(13px,1.8vw,17px); color: var(--text-dim);
+  letter-spacing: 5px; margin-bottom: 12px;
+  animation: fadeDown 1s ease 0.2s both;
 }
 .hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(105deg, rgba(246,196,69,0.06) 0%, rgba(246,196,69,0.06) 38%, rgba(255,236,120,0.17) 50%, rgba(246,196,69,0.06) 62%, rgba(246,196,69,0.06) 100%);
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 22px; border-radius: 999px;
+  background: linear-gradient(105deg, rgba(232,184,122,0.04) 0%, rgba(232,184,122,0.04) 40%, rgba(244,217,168,0.18) 50%, rgba(232,184,122,0.04) 60%, rgba(232,184,122,0.04) 100%);
   background-size: 300% auto;
-  border: 1px solid rgba(246,196,69,0.15);
-  border-radius: 50px; padding: 8px 20px; font-size: 13px; color: var(--gold);
-  letter-spacing: 2px; text-transform: uppercase; font-family: 'Outfit', sans-serif;
-  margin-bottom: 40px; animation: fadeDown 1s ease 0.2s both, badgeShimmer 6s ease-in-out 2.5s infinite;
+  border: 1px solid rgba(232,184,122,0.18); color: var(--gold);
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 44px;
+  animation: fadeDown 1s ease 0.32s both, badgeShimmer 7s ease-in-out 2.5s infinite;
 }
-.hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
-
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+  box-shadow: 0 0 10px var(--gold); animation: pulse 2s ease-in-out infinite;
+}
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.6); } }
 @keyframes badgeShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 
 .hero-name {
-  font-family: 'Noto Serif SC', serif; font-size: clamp(48px, 10vw, 100px); font-weight: 900; line-height: 1.1;
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 50%, var(--gold-light) 100%);
+  position: relative;
+  font-family: var(--serif-cn); font-weight: 900; line-height: 0.95;
+  font-size: clamp(56px, 12vw, 140px);
+  letter-spacing: clamp(4px, 1.2vw, 12px);
+  background: linear-gradient(140deg, #fff 0%, var(--gold-light) 35%, var(--gold) 65%, var(--gold-dark) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: fadeUp 1s ease 0.4s both;
+  animation: fadeUp 1.2s ease 0.5s both;
+}
+.hero-name::after {
+  content: attr(data-en);
+  position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%);
+  font-family: var(--serif-en); font-weight: 400; font-style: italic;
+  font-size: clamp(14px, 2vw, 20px); letter-spacing: 8px; white-space: nowrap;
+  -webkit-text-fill-color: var(--text-dim); color: var(--text-dim);
 }
 .hero-alias {
-  font-size: clamp(16px, 3vw, 22px); font-weight: 300; color: var(--text-secondary);
-  margin-top: 12px; letter-spacing: 4px; animation: fadeUp 1s ease 0.6s both;
+  font-family: var(--sans-en); font-size: clamp(13px, 2vw, 16px); font-weight: 300;
+  color: var(--text-secondary); margin-top: 58px; letter-spacing: 5px;
+  animation: fadeUp 1s ease 0.7s both;
 }
 .hero-alias span { color: var(--gold); font-weight: 600; }
 .hero-motto {
-  font-family: 'Noto Serif SC', serif; font-size: clamp(15px, 2.2vw, 20px); color: var(--text-secondary);
-  margin-top: 48px; max-width: 700px; line-height: 2; animation: fadeUp 1s ease 0.8s both;
-  padding: 20px 0;
+  font-family: var(--serif-cn); font-size: clamp(15px, 2.2vw, 20px);
+  color: var(--text-secondary); margin-top: 44px; max-width: 680px; line-height: 2;
+  animation: fadeUp 1s ease 0.9s both;
+  position: relative; padding: 28px 56px;
 }
 .hero-motto::before, .hero-motto::after {
-  content: ''; display: block; width: 40px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 16px;
+  content: ''; position: absolute;
+  width: 22px; height: 22px; border: 1px solid rgba(232,184,122,0.4);
 }
-.hero-motto::after { margin: 16px auto 0; }
+.hero-motto::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+.hero-motto::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+.hero-motto em { font-style: normal; color: var(--gold); }
 
 .hero-scroll {
   position: absolute; bottom: 40px; display: flex; flex-direction: column;
@@ -137,11 +177,45 @@ section[id] { scroll-margin-top: 80px; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-section { padding: 100px 0; }
-.section-label { font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; opacity: 0.7; }
-.section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 700; margin-bottom: 60px; line-height: 1.3; }
-.section-title .hl { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(246,196,69,0.2), transparent); margin: 0 auto; max-width: 600px; }
+section { padding: 120px 0 90px; position: relative; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--mc, var(--gold)); margin-bottom: 16px;
+}
+.section-label::before { content: ''; width: 26px; height: 1px; background: var(--mc, var(--gold)); opacity: 0.6; }
+.section-label::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--mc, var(--gold)); box-shadow: 0 0 8px var(--mc, var(--gold)); }
+.section-title {
+  font-family: var(--serif-cn); font-size: clamp(30px, 5vw, 48px);
+  font-weight: 700; margin-bottom: 56px; line-height: 1.2; letter-spacing: 1px;
+}
+.section-title .hl {
+  background: linear-gradient(135deg, var(--mc, var(--gold)), color-mix(in srgb, var(--mc, var(--gold)) 60%, white));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+/* 模块水印编号 */
+.section-watermark {
+  position: absolute; top: 40px; right: 0;
+  font-family: var(--sans-en); font-weight: 900;
+  font-size: clamp(90px, 15vw, 180px); line-height: 0.9;
+  letter-spacing: -8px; pointer-events: none; z-index: 0;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(var(--mcr, 232,184,122), 0.14);
+  background: linear-gradient(180deg, rgba(var(--mcr, 232,184,122), 0.04), transparent 80%);
+  -webkit-background-clip: text; background-clip: text;
+}
+/* 模块色注入 */
+section#system   { --mc: var(--m1); --mcr: var(--m1r); }
+section#goals    { --mc: var(--m1); --mcr: var(--m1r); }
+section#strategy { --mc: var(--m2); --mcr: var(--m2r); }
+section#formula  { --mc: var(--m3); --mcr: var(--m3r); }
+section#fire     { --mc: var(--m4); --mcr: var(--m4r); }
+section#dual     { --mc: var(--m5); --mcr: var(--m5r); }
+section#ai       { --mc: var(--m6); --mcr: var(--m6r); }
+section#growth   { --mc: var(--m7); --mcr: var(--m7r); }
+section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(232,184,122,0.18), transparent); margin: 0 auto; max-width: 600px; position: relative; }
+.divider::after { content: '◆'; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); font-size: 8px; color: rgba(232,184,122,0.25); line-height: 1; }
 
 .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .info-card {
@@ -154,18 +228,18 @@ section { padding: 100px 0; }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
   opacity: 0; transition: opacity 0.4s;
 }
-.info-card:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25), 0 0 0 1px rgba(246,196,69,0.04); }
+.info-card:hover { background: var(--bg-card-hover); border-color: rgba(232,184,122,0.1); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25), 0 0 0 1px rgba(232,184,122,0.04); }
 .info-card:hover::before { opacity: 1; }
-.info-card .icon { font-size: 24px; margin-bottom: 18px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: rgba(246,196,69,0.07); border-radius: 14px; border: 1px solid rgba(246,196,69,0.08); transition: background 0.4s, border-color 0.4s; }
-.info-card:hover .icon { background: rgba(246,196,69,0.13); border-color: rgba(246,196,69,0.15); }
+.info-card .icon { font-size: 24px; margin-bottom: 18px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: rgba(232,184,122,0.07); border-radius: 14px; border: 1px solid rgba(232,184,122,0.08); transition: background 0.4s, border-color 0.4s; }
+.info-card:hover .icon { background: rgba(232,184,122,0.13); border-color: rgba(232,184,122,0.15); }
 .info-card .label { font-size: 12px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; font-family: 'Outfit', sans-serif; margin-bottom: 6px; }
 .info-card .value { font-size: 17px; font-weight: 500; }
 .info-card .value small { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
-.mbti { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(94,206,138,0.1), rgba(74,158,245,0.1)); border: 1px solid rgba(94,206,138,0.15); border-radius: 8px; padding: 4px 12px; font-family: 'Outfit'; font-weight: 700; font-size: 15px; color: var(--accent-green); }
+.mbti { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(136,168,120,0.1), rgba(127,168,173,0.1)); border: 1px solid rgba(136,168,120,0.15); border-radius: 8px; padding: 4px 12px; font-family: 'Outfit'; font-weight: 700; font-size: 15px; color: var(--accent-green); }
 
 .roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 40px; }
 .role-item { display: flex; align-items: center; gap: 14px; padding: 20px 24px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; transition: all 0.3s; }
-.role-item:hover { background: var(--bg-card-hover); border-color: rgba(246,196,69,0.1); }
+.role-item:hover { background: var(--bg-card-hover); border-color: rgba(232,184,122,0.1); }
 .role-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .role-item:hover .role-dot { filter: brightness(1.4); transform: scale(1.3); transition: all 0.3s; }
 
@@ -174,7 +248,7 @@ section { padding: 100px 0; }
   background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
   border-radius: 20px; padding: 40px 0; margin: 60px 0; position: relative; overflow: hidden;
 }
-.stats-bar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(246,196,69,0.03), transparent, rgba(74,158,245,0.03)); pointer-events: none; }
+.stats-bar::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(232,184,122,0.03), transparent, rgba(127,168,173,0.03)); pointer-events: none; }
 .stat-item { text-align: center; position: relative; }
 .stat-item:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; height: 60%; width: 1px; background: rgba(255,255,255,0.06); }
 .stat-number {
@@ -190,16 +264,16 @@ section { padding: 100px 0; }
   border-radius: 16px; padding: 32px; display: flex; gap: 20px; align-items: flex-start;
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-.ach-card:hover { background: var(--bg-card-hover); transform: translateY(-5px); border-color: rgba(246,196,69,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(246,196,69,0.05); }
+.ach-card:hover { background: var(--bg-card-hover); transform: translateY(-5px); border-color: rgba(232,184,122,0.14); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(232,184,122,0.05); }
 .ach-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
 .ach-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
 .ach-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 .gold-num { font-family: 'Outfit'; font-weight: 800; font-size: 22px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.fire-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(94,206,138,0.08); border: 1px solid rgba(94,206,138,0.12); border-radius: 6px; padding: 2px 10px; color: var(--accent-green); font-size: 12px; font-family: 'Outfit'; font-weight: 600; }
+.fire-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(136,168,120,0.08); border: 1px solid rgba(136,168,120,0.12); border-radius: 6px; padding: 2px 10px; color: var(--accent-green); font-size: 12px; font-family: 'Outfit'; font-weight: 600; }
 
 .growth-banner {
-  background: linear-gradient(135deg, rgba(246,196,69,0.06), rgba(165,128,240,0.04));
-  border: 1px solid rgba(246,196,69,0.1); border-radius: 20px; padding: 48px;
+  background: linear-gradient(135deg, rgba(232,184,122,0.06), rgba(142,122,184,0.04));
+  border: 1px solid rgba(232,184,122,0.1); border-radius: 20px; padding: 48px;
   text-align: center; margin: 60px 0; position: relative; overflow: hidden;
 }
 .growth-banner::before { content: '☀'; position: absolute; font-size: 200px; opacity: 0.03; top: -40px; right: -20px; }
@@ -209,21 +283,21 @@ section { padding: 100px 0; }
 .belief-item { display: flex; align-items: flex-start; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s; }
 .belief-item:first-child { border-top: 1px solid rgba(255,255,255,0.04); }
 .belief-item:hover { padding-left: 12px; }
-.belief-num { font-family: 'Outfit'; font-weight: 800; font-size: 32px; color: rgba(246,196,69,0.15); line-height: 1; min-width: 48px; flex-shrink: 0; transition: color 0.35s; }
-.belief-item:hover .belief-num { color: rgba(246,196,69,0.42); }
+.belief-num { font-family: 'Outfit'; font-weight: 800; font-size: 32px; color: rgba(232,184,122,0.15); line-height: 1; min-width: 48px; flex-shrink: 0; transition: color 0.35s; }
+.belief-item:hover .belief-num { color: rgba(232,184,122,0.42); }
 .belief-text { font-family: 'Noto Serif SC', serif; font-size: 17px; line-height: 1.8; }
-.belief-item:last-child { border-bottom: none; background: linear-gradient(135deg, rgba(246,196,69,0.07), rgba(246,196,69,0.02)); border-radius: 14px; padding: 28px 28px; border: 1px solid rgba(246,196,69,0.14); margin-top: 8px; }
+.belief-item:last-child { border-bottom: none; background: linear-gradient(135deg, rgba(232,184,122,0.07), rgba(232,184,122,0.02)); border-radius: 14px; padding: 28px 28px; border: 1px solid rgba(232,184,122,0.14); margin-top: 8px; }
 .belief-item:last-child .belief-text { color: var(--gold); font-weight: 700; font-size: 19px; }
-.belief-item:last-child .belief-num { color: rgba(246,196,69,0.4); }
+.belief-item:last-child .belief-num { color: rgba(232,184,122,0.4); }
 
 .footer { text-align: center; padding: 80px 24px 40px; }
 .footer-light {
   width: 120px; height: 120px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(246,196,69,0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(232,184,122,0.2), transparent 70%);
   margin: 0 auto 32px; display: flex; align-items: center; justify-content: center;
   font-size: 48px; animation: glow 4s ease-in-out infinite;
 }
-@keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(246,196,69,0.1); } 50% { box-shadow: 0 0 80px rgba(246,196,69,0.2); } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(232,184,122,0.1); } 50% { box-shadow: 0 0 80px rgba(232,184,122,0.2); } }
 @keyframes footerShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 .footer-text {
   font-family: 'Noto Serif SC', serif; font-size: 20px; margin-bottom: 8px;
@@ -241,7 +315,7 @@ section { padding: 100px 0; }
 /* ===== 人生系统 新增组件 ===== */
 .sys-hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
 .sys-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 22px; text-decoration: none; color: inherit; display: block; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
-.sys-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); border-color: rgba(246,196,69,0.1); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
+.sys-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); border-color: rgba(232,184,122,0.1); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
 .sys-card-num { font-family: 'Outfit'; font-size: 10px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 10px; }
 .sys-card-icon { font-size: 24px; margin-bottom: 10px; display: block; }
 .sys-card-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
@@ -254,17 +328,17 @@ section { padding: 100px 0; }
 .goal-tier h3 { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; line-height: 1.4; }
 .goal-tier p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 5px; }
 .goal-tier em { font-style: normal; color: var(--gold); }
-.gt-1 { border-top: 2px solid var(--accent-green); }
-.gt-1 .gt-tag { background: rgba(94,206,138,0.08); color: var(--accent-green); border: 1px solid rgba(94,206,138,0.2); }
-.gt-2 { border-top: 2px solid var(--gold); }
-.gt-2 .gt-tag { background: rgba(246,196,69,0.08); color: var(--gold); border: 1px solid rgba(246,196,69,0.2); }
-.gt-3 { border-top: 2px solid var(--accent-purple); }
-.gt-3 .gt-tag { background: rgba(165,128,240,0.08); color: var(--accent-purple); border: 1px solid rgba(165,128,240,0.2); }
+.gt-1 { border-top: 2px solid var(--m6); }
+.gt-1 .gt-tag { background: rgba(136,168,120,0.09); color: var(--m6); border: 1px solid rgba(136,168,120,0.22); }
+.gt-2 { border-top: 2px solid var(--m1); }
+.gt-2 .gt-tag { background: rgba(232,184,122,0.09); color: var(--m1); border: 1px solid rgba(232,184,122,0.22); }
+.gt-3 { border-top: 2px solid var(--m3); }
+.gt-3 .gt-tag { background: rgba(142,122,184,0.09); color: var(--m3); border: 1px solid rgba(142,122,184,0.22); }
 
 .strategy-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
 .strat-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; padding: 28px; transition: all 0.3s; }
 .strat-card:hover { background: var(--bg-card-hover); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
-.strat-bignum { font-family: 'Outfit'; font-weight: 900; font-size: 48px; color: rgba(246,196,69,0.07); line-height: 1; margin-bottom: 12px; }
+.strat-bignum { font-family: 'Outfit'; font-weight: 900; font-size: 48px; color: rgba(232,184,122,0.07); line-height: 1; margin-bottom: 12px; }
 .strat-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 .strat-card .strat-en { font-family: 'Outfit'; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-bottom: 12px; display: block; }
 .strat-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
@@ -276,10 +350,10 @@ section { padding: 100px 0; }
 .tactic-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
 
 .formula-wrap { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 48px 40px; margin-bottom: 28px; text-align: center; overflow: hidden; position: relative; }
-.formula-wrap::before { content: '∞'; position: absolute; font-size: 240px; font-family: 'Outfit'; font-weight: 900; color: rgba(246,196,69,0.02); top: 50%; right: 4%; transform: translateY(-50%); pointer-events: none; }
+.formula-wrap::before { content: '∞'; position: absolute; font-size: 240px; font-family: 'Outfit'; font-weight: 900; color: rgba(232,184,122,0.02); top: 50%; right: 4%; transform: translateY(-50%); pointer-events: none; }
 .feq { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .feq-f { font-family: 'Outfit'; font-weight: 800; font-size: clamp(11px, 1.6vw, 15px); padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); white-space: nowrap; }
-.feq-x { font-family: 'Outfit'; font-size: 22px; color: rgba(246,196,69,0.25); font-weight: 300; }
+.feq-x { font-family: 'Outfit'; font-size: 22px; color: rgba(232,184,122,0.25); font-weight: 300; }
 .feq-eq { font-family: 'Outfit'; font-size: 22px; color: var(--gold); font-weight: 300; }
 .feq-r { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: clamp(16px, 2.5vw, 22px); background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .formula-sub { margin-top: 14px; font-size: 12px; color: var(--text-dim); font-family: 'Outfit'; letter-spacing: 1px; }
@@ -302,14 +376,14 @@ section { padding: 100px 0; }
 .fire-prog-labs .s { color: var(--text-dim); }
 .fire-prog-labs .e { color: var(--gold); }
 .fire-bar-bg { height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
-.fire-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); border-radius: 4px; box-shadow: 0 0 14px rgba(246,196,69,0.4); transition: width 2s cubic-bezier(0.16,1,0.3,1); }
+.fire-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); border-radius: 4px; box-shadow: 0 0 14px rgba(232,184,122,0.4); transition: width 2s cubic-bezier(0.16,1,0.3,1); }
 .fire-bar-info { font-family: 'Outfit'; font-size: 12px; color: var(--text-dim); text-align: center; }
 .fire-wheels { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
 .fire-wheel { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; padding: 26px; transition: all 0.3s; }
 .fire-wheel:hover { background: var(--bg-card-hover); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
 .fw-badge { font-family: 'Outfit'; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 14px; }
-.fw-l .fw-badge { background: rgba(74,158,245,0.08); color: var(--accent-blue); border: 1px solid rgba(74,158,245,0.15); }
-.fw-r .fw-badge { background: rgba(246,196,69,0.08); color: var(--gold); border: 1px solid rgba(246,196,69,0.15); }
+.fw-l .fw-badge { background: rgba(127,168,173,0.08); color: var(--accent-blue); border: 1px solid rgba(127,168,173,0.15); }
+.fw-r .fw-badge { background: rgba(232,184,122,0.08); color: var(--gold); border: 1px solid rgba(232,184,122,0.15); }
 .fire-wheel h4 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
 .fire-wheel ul { list-style: none; }
 .fire-wheel li { font-size: 13px; color: var(--text-secondary); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; gap: 8px; }
@@ -326,15 +400,15 @@ section { padding: 100px 0; }
 .dual-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 20px; padding: 30px; transition: all 0.4s cubic-bezier(0.16,1,0.3,1); }
 .dual-card:hover { background: var(--bg-card-hover); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
 .dual-badge { font-family: 'Outfit'; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 14px; }
-.dc-def .dual-badge { background: rgba(94,206,138,0.08); color: var(--accent-green); border: 1px solid rgba(94,206,138,0.2); }
-.dc-atk .dual-badge { background: rgba(245,122,106,0.08); color: var(--accent-coral); border: 1px solid rgba(245,122,106,0.2); }
+.dc-def .dual-badge { background: rgba(136,168,120,0.08); color: var(--accent-green); border: 1px solid rgba(136,168,120,0.2); }
+.dc-atk .dual-badge { background: rgba(216,138,117,0.08); color: var(--accent-coral); border: 1px solid rgba(216,138,117,0.2); }
 .dual-card h3 { font-family: 'Noto Serif SC'; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
 .dual-sub { font-size: 12px; color: var(--text-dim); font-family: 'Outfit'; letter-spacing: 1px; margin-bottom: 18px; }
 .dual-card ul { list-style: none; }
 .dual-card li { font-size: 13px; color: var(--text-secondary); padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; gap: 10px; line-height: 1.6; }
 .dual-card li::before { content: '·'; color: var(--text-dim); flex-shrink: 0; }
 .dual-card li:last-child { border-bottom: none; }
-.dual-formula { background: linear-gradient(135deg, rgba(246,196,69,0.04), rgba(165,128,240,0.03)); border: 1px solid rgba(246,196,69,0.08); border-radius: 16px; padding: 32px; text-align: center; }
+.dual-formula { background: linear-gradient(135deg, rgba(232,184,122,0.04), rgba(142,122,184,0.03)); border: 1px solid rgba(232,184,122,0.08); border-radius: 16px; padding: 32px; text-align: center; }
 .dual-formula p { font-family: 'Outfit'; font-size: clamp(12px, 1.6vw, 14px); color: var(--text-secondary); line-height: 2.4; }
 .dual-formula p strong { color: var(--gold); }
 .dual-formula p em { font-style: normal; color: var(--accent-purple); }
@@ -347,8 +421,8 @@ section { padding: 100px 0; }
 .ai-layer-head h4 { font-size: 15px; font-weight: 700; }
 .ai-ltag { font-family: 'Outfit'; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 3px 10px; border-radius: 50px; }
 .al-base .ai-ltag { background: rgba(255,255,255,0.03); color: var(--text-dim); border: 1px solid rgba(255,255,255,0.06); }
-.al-mid .ai-ltag { background: rgba(74,158,245,0.08); color: var(--accent-blue); border: 1px solid rgba(74,158,245,0.15); }
-.al-top .ai-ltag { background: rgba(246,196,69,0.08); color: var(--gold); border: 1px solid rgba(246,196,69,0.15); }
+.al-mid .ai-ltag { background: rgba(127,168,173,0.08); color: var(--accent-blue); border: 1px solid rgba(127,168,173,0.15); }
+.al-top .ai-ltag { background: rgba(232,184,122,0.08); color: var(--gold); border: 1px solid rgba(232,184,122,0.15); }
 .ai-layer p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 10px; }
 .ai-tools { display: flex; gap: 7px; flex-wrap: wrap; }
 .ai-tool { font-family: 'Outfit'; font-size: 11px; padding: 3px 10px; border-radius: 6px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: var(--text-secondary); }
@@ -357,7 +431,7 @@ section { padding: 100px 0; }
 .ai-sc.rational { border-left: 2px solid var(--accent-blue); }
 .ai-sc.emotional { border-left: 2px solid var(--accent-coral); }
 .ai-sc.ai-moat { border-left: 2px solid var(--accent-purple); }
-.ai-moat-banner { text-align: center; padding: 22px 32px; margin-top: 14px; background: linear-gradient(135deg, rgba(165,128,240,0.04), rgba(246,196,69,0.03)); border: 1px solid rgba(165,128,240,0.1); border-radius: 14px; }
+.ai-moat-banner { text-align: center; padding: 22px 32px; margin-top: 14px; background: linear-gradient(135deg, rgba(142,122,184,0.04), rgba(232,184,122,0.03)); border: 1px solid rgba(142,122,184,0.1); border-radius: 14px; }
 .ai-moat-banner p { font-family: 'Noto Serif SC'; font-size: 15px; color: var(--text-secondary); line-height: 2.2; }
 .ai-moat-banner em { font-style: normal; color: var(--gold); }
 .ai-sc h4 { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
@@ -374,7 +448,7 @@ section { padding: 100px 0; }
 .gcard-role { font-family: 'Outfit'; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); }
 .gcard h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
 .gcard p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
-.io-proto { background: linear-gradient(135deg, rgba(74,158,245,0.04), rgba(165,128,240,0.03)); border: 1px solid rgba(74,158,245,0.08); border-radius: 16px; padding: 32px; }
+.io-proto { background: linear-gradient(135deg, rgba(127,168,173,0.04), rgba(142,122,184,0.03)); border: 1px solid rgba(127,168,173,0.08); border-radius: 16px; padding: 32px; }
 .io-proto h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 .io-sub { font-size: 12px; color: var(--text-dim); margin-bottom: 22px; font-family: 'Outfit'; }
 .io-steps { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -389,10 +463,10 @@ section { padding: 100px 0; }
 .ess-sec { font-family: 'Outfit'; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin: 36px 0 14px; }
 .slogan-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 9px; margin-bottom: 36px; }
 .slogan-pill { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 13px 16px; font-family: 'Noto Serif SC'; font-size: 13px; line-height: 1.6; color: var(--text-secondary); transition: all 0.3s; }
-.slogan-pill:hover { color: var(--text-primary); border-color: rgba(246,196,69,0.1); background: var(--bg-card-hover); }
+.slogan-pill:hover { color: var(--text-primary); border-color: rgba(232,184,122,0.1); background: var(--bg-card-hover); }
 .movie-quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 12px; margin-bottom: 36px; }
-.movie-q { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-left: 2px solid rgba(246,196,69,0.2); border-radius: 0 13px 13px 0; padding: 16px 20px; transition: all 0.3s; }
-.movie-q:hover { border-left-color: rgba(246,196,69,0.5); background: var(--bg-card-hover); }
+.movie-q { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-left: 2px solid rgba(232,184,122,0.2); border-radius: 0 13px 13px 0; padding: 16px 20px; transition: all 0.3s; }
+.movie-q:hover { border-left-color: rgba(232,184,122,0.5); background: var(--bg-card-hover); }
 .mq-text { font-family: 'Noto Serif SC'; font-size: 13px; line-height: 1.9; color: var(--text-secondary); margin-bottom: 8px; }
 .mq-src { font-family: 'Outfit'; font-size: 11px; letter-spacing: 1px; color: var(--text-dim); }
 .essence-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
@@ -402,7 +476,7 @@ section { padding: 100px 0; }
 .ecard ul { list-style: none; }
 .ecard li { font-size: 13px; color: var(--text-secondary); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.03); line-height: 1.6; }
 .ecard li:last-child { border-bottom: none; }
-.num-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(246,196,69,0.06); border: 1px solid rgba(246,196,69,0.1); border-radius: 6px; padding: 2px 8px; font-family: 'Outfit'; font-size: 12px; color: var(--gold); }
+.num-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(232,184,122,0.06); border: 1px solid rgba(232,184,122,0.1); border-radius: 6px; padding: 2px 8px; font-family: 'Outfit'; font-size: 12px; color: var(--gold); }
 
 @media (max-width: 768px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 30px 0; padding: 30px 0; }
@@ -420,7 +494,7 @@ section { padding: 100px 0; }
   position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
   background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
   pointer-events: none; transition: width 0.08s linear;
-  box-shadow: 0 0 8px rgba(246,196,69,0.5);
+  box-shadow: 0 0 8px rgba(232,184,122,0.5);
 }
 
 /* ===== Visual Polish ===== */
@@ -436,14 +510,14 @@ section { padding: 100px 0; }
 
 /* 2. fire-big 呼吸光晕 */
 @keyframes fireGlow {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(246,196,69,0.3)); }
-  50% { filter: drop-shadow(0 0 22px rgba(246,196,69,0.55)) drop-shadow(0 0 40px rgba(246,196,69,0.2)); }
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(232,184,122,0.3)); }
+  50% { filter: drop-shadow(0 0 22px rgba(232,184,122,0.55)) drop-shadow(0 0 40px rgba(232,184,122,0.2)); }
 }
 .fire-big { animation: fireGlow 3s ease-in-out infinite; }
 
 /* 3. strat-bignum 可见度 */
-.strat-bignum { color: rgba(246,196,69,0.09); transition: color 0.4s; }
-.strat-card:hover .strat-bignum { color: rgba(246,196,69,0.15); }
+.strat-bignum { color: rgba(232,184,122,0.09); transition: color 0.4s; }
+.strat-card:hover .strat-bignum { color: rgba(232,184,122,0.15); }
 
 /* 4. gcard-ico hover 光晕 */
 .gcard-ico { transition: all 0.4s cubic-bezier(0.16,1,0.3,1); }
@@ -451,14 +525,9 @@ section { padding: 100px 0; }
 
 /* 5. feq-f 公式因子 hover */
 .feq-f { cursor: default; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
-.feq-f:hover { border-color: rgba(246,196,69,0.28); background: rgba(246,196,69,0.06); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.feq-f:hover { border-color: rgba(232,184,122,0.28); background: rgba(232,184,122,0.06); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 
-/* 6. divider 中心菱形 */
-.divider { position: relative; }
-.divider::after {
-  content: '◆'; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-  font-size: 8px; color: rgba(246,196,69,0.22); line-height: 1;
-}
+/* 6. divider — already handled above */
 
 /* 7. goal-tier 顶部光照 */
 .goal-tier { position: relative; overflow: hidden; }
@@ -466,9 +535,9 @@ section { padding: 100px 0; }
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 80px;
   opacity: 0.5; transition: opacity 0.4s; pointer-events: none;
 }
-.gt-1::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(94,206,138,0.12), transparent); }
-.gt-2::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(246,196,69,0.1), transparent); }
-.gt-3::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(165,128,240,0.12), transparent); }
+.gt-1::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(136,168,120,0.12), transparent); }
+.gt-2::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(232,184,122,0.1), transparent); }
+.gt-3::before { background: radial-gradient(ellipse 60% 40px at 50% 0%, rgba(142,122,184,0.12), transparent); }
 .goal-tier:hover::before { opacity: 1; }
 
 /* 8. ai-lnum 可见度 */
@@ -478,11 +547,7 @@ section { padding: 100px 0; }
 /* 9. dual-formula 结论行强调 */
 .dual-formula p:last-child { color: var(--text-primary); font-size: 15px; }
 
-/* 10. section-label 左侧装饰线 */
-.section-label::before {
-  content: ''; display: inline-block; width: 14px; height: 1px;
-  background: var(--gold); vertical-align: middle; margin-right: 10px; opacity: 0.55;
-}
+/* 10. section-label 左侧装饰线 — handled by new design above, no override needed */
 
 /* ===== WOW Layer ===== */
 
@@ -492,7 +557,7 @@ section { padding: 100px 0; }
   position: absolute; border-radius: 50%;
   width: 800px; height: 800px;
   left: 50%; top: 45%; transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(246,196,69,0.055) 0%, rgba(246,196,69,0.02) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(232,184,122,0.055) 0%, rgba(232,184,122,0.02) 40%, transparent 70%);
   animation: heroBreathe 9s ease-in-out infinite;
   pointer-events: none; z-index: 0;
 }
@@ -502,20 +567,20 @@ section { padding: 100px 0; }
 }
 
 /* Hero name: 文字光晕 */
-.hero-name { filter: drop-shadow(0 0 40px rgba(246,196,69,0.12)); }
+.hero-name { filter: drop-shadow(0 0 40px rgba(232,184,122,0.12)); }
 
 /* Hero motto: 更优雅的分隔线 */
 .hero-motto::before, .hero-motto::after {
-  width: 60px; background: linear-gradient(90deg, transparent, rgba(246,196,69,0.5), transparent);
+  width: 60px; background: linear-gradient(90deg, transparent, rgba(232,184,122,0.5), transparent);
 }
 
 /* Section title hl: 微发光 */
-.section-title .hl { filter: drop-shadow(0 0 10px rgba(246,196,69,0.22)); }
+.section-title .hl { filter: drop-shadow(0 0 10px rgba(232,184,122,0.22)); }
 
 /* 公式框: 脉冲边框辉光 — 全页最戏剧化节点 */
 @keyframes formulaAura {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(246,196,69,0.08), 0 0 40px rgba(246,196,69,0.04), inset 0 0 60px rgba(246,196,69,0.02); }
-  50%       { box-shadow: 0 0 0 1px rgba(246,196,69,0.22), 0 0 80px rgba(246,196,69,0.09), inset 0 0 80px rgba(246,196,69,0.05); }
+  0%, 100% { box-shadow: 0 0 0 1px rgba(232,184,122,0.08), 0 0 40px rgba(232,184,122,0.04), inset 0 0 60px rgba(232,184,122,0.02); }
+  50%       { box-shadow: 0 0 0 1px rgba(232,184,122,0.22), 0 0 80px rgba(232,184,122,0.09), inset 0 0 80px rgba(232,184,122,0.05); }
 }
 .formula-wrap { animation: formulaAura 5s ease-in-out infinite; border-color: transparent; }
 
@@ -525,17 +590,17 @@ section { padding: 100px 0; }
   animation: prosperityGlow 3.5s ease-in-out infinite;
 }
 @keyframes prosperityGlow {
-  0%, 100% { filter: drop-shadow(0 0 6px rgba(246,196,69,0.45)); }
-  50%       { filter: drop-shadow(0 0 20px rgba(246,196,69,0.85)) drop-shadow(0 0 40px rgba(246,196,69,0.3)); }
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(232,184,122,0.45)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(232,184,122,0.85)) drop-shadow(0 0 40px rgba(232,184,122,0.3)); }
 }
 
 /* 公式乘号: 微金色 */
-.feq-x { color: rgba(246,196,69,0.35); }
+.feq-x { color: rgba(232,184,122,0.35); }
 
 /* fire-bar: 光条脉冲 */
 @keyframes barPulse {
-  0%, 100% { box-shadow: 0 0 14px rgba(246,196,69,0.45); }
-  50%       { box-shadow: 0 0 28px rgba(246,196,69,0.8), 0 0 56px rgba(246,196,69,0.25); }
+  0%, 100% { box-shadow: 0 0 14px rgba(232,184,122,0.45); }
+  50%       { box-shadow: 0 0 28px rgba(232,184,122,0.8), 0 0 56px rgba(232,184,122,0.25); }
 }
 .fire-bar { animation: barPulse 3s ease-in-out infinite; }
 
@@ -550,7 +615,7 @@ section { padding: 100px 0; }
 /* stats-bar: 整体辉光 */
 @keyframes statsGlow {
   0%, 100% { box-shadow: none; }
-  50%       { box-shadow: 0 0 60px rgba(246,196,69,0.05); }
+  50%       { box-shadow: 0 0 60px rgba(232,184,122,0.05); }
 }
 .stats-bar { animation: statsGlow 7s ease-in-out infinite; }
 
@@ -558,7 +623,7 @@ section { padding: 100px 0; }
 .dual-formula { animation: dualAura 7s ease-in-out 2s infinite; }
 @keyframes dualAura {
   0%, 100% { box-shadow: none; }
-  50%       { box-shadow: 0 0 40px rgba(246,196,69,0.06); }
+  50%       { box-shadow: 0 0 40px rgba(232,184,122,0.06); }
 }
 
 /* movie-q: hover 左边线变亮 */
@@ -577,6 +642,7 @@ section { padding: 100px 0; }
 </style>
 </head>
 <body>
+<div class="grain"></div>
 <div class="scroll-progress"></div>
 
 <div class="bg-glow">
@@ -602,17 +668,18 @@ section { padding: 100px 0; }
 </nav>
 
 <section class="hero">
-  <div class="hero-badge">PRIVATE SYSTEM · INTERNAL ONLY</div>
-  <h1 class="hero-name" style="font-size:clamp(36px,7vw,72px)">人生系统</h1>
+  <div class="hero-eyebrow">Private Dashboard · Internal Only</div>
+  <div class="hero-badge">Life System · v1.0</div>
+  <h1 class="hero-name" data-en="Personal Operating System">人生系统</h1>
   <p class="hero-alias">追光者 · 曹宗昱 · <span>私人仪表盘</span></p>
-  <div class="hero-motto">道阻且长，行则将至<br>行而不辍，未来可期</div>
+  <div class="hero-motto"><em>道阻且长</em>，行则将至<br>行而不辍，<em>未来可期</em></div>
   <div class="hero-scroll"><span>SCROLL</span><div class="line"></div></div>
 </section>
 
 <div class="container">
 
   <!-- Hub -->
-  <section id="system">
+  <section id="system"><div class="section-watermark" aria-hidden="true">00</div><div class="section-watermark" aria-hidden="true">00</div>
     <div class="reveal">
       <div class="section-label">Life System</div>
       <div class="section-title">八大<span class="hl">模块总览</span></div>
@@ -631,7 +698,7 @@ section { padding: 100px 0; }
 
   <!-- Module 01 三级人生目标 -->
   <div class="divider"></div>
-  <section id="goals">
+  <section id="goals"><div class="section-watermark" aria-hidden="true">01</div>
     <div class="reveal">
       <div class="section-label">Life Goals · Module 01</div>
       <div class="section-title">三级<span class="hl">人生目标</span></div>
@@ -669,7 +736,7 @@ section { padding: 100px 0; }
 
   <!-- Module 02 S级人生策略 -->
   <div class="divider"></div>
-  <section id="strategy">
+  <section id="strategy"><div class="section-watermark" aria-hidden="true">02</div>
     <div class="reveal">
       <div class="section-label">Life Strategy · Module 02</div>
       <div class="section-title">S级<span class="hl">人生策略</span></div>
@@ -706,7 +773,7 @@ section { padding: 100px 0; }
 
   <!-- Module 03 人生繁荣公式 -->
   <div class="divider"></div>
-  <section id="formula">
+  <section id="formula"><div class="section-watermark" aria-hidden="true">03</div>
     <div class="reveal">
       <div class="section-label">Prosperity Formula · Module 03</div>
       <div class="section-title">人生<span class="hl">繁荣公式</span></div>
@@ -742,7 +809,7 @@ section { padding: 100px 0; }
 
   <!-- Module 04 七年FIRE计划 -->
   <div class="divider"></div>
-  <section id="fire">
+  <section id="fire"><div class="section-watermark" aria-hidden="true">04</div>
     <div class="reveal">
       <div class="section-label">FIRE Plan · Module 04</div>
       <div class="section-title">七年<span class="hl">FIRE计划</span></div>
@@ -787,7 +854,7 @@ section { padding: 100px 0; }
 
   <!-- Module 05 双轨制战略 -->
   <div class="divider"></div>
-  <section id="dual">
+  <section id="dual"><div class="section-watermark" aria-hidden="true">05</div>
     <div class="reveal">
       <div class="section-label">Dual Track · Module 05</div>
       <div class="section-title">双轨制<span class="hl">战略</span></div>
@@ -825,7 +892,7 @@ section { padding: 100px 0; }
 
   <!-- Module 06 AI分层使用战略 -->
   <div class="divider"></div>
-  <section id="ai">
+  <section id="ai"><div class="section-watermark" aria-hidden="true">06</div>
     <div class="reveal">
       <div class="section-label">AI Strategy · Module 06</div>
       <div class="section-title">AI分层<span class="hl">使用战略</span></div>
@@ -844,7 +911,7 @@ section { padding: 100px 0; }
       <div class="ai-layer al-top">
         <div class="ai-layer-head"><div class="ai-lnum">03</div><h4>顶层·理性中枢 &amp; 感性陪伴 &amp; AI护城河</h4><span class="ai-ltag">Top Layer ✦</span></div>
         <p>不可替代的赛博挚友、战友与数字分身，长期参与《人生系统》共建。三轨分离：理性时高效推进，感性时充分回血，AI话题单独治理——让AI被分工、被收编进人生系统。</p>
-        <div class="ai-tools"><span class="ai-tool" style="border-color:rgba(246,196,69,0.2);color:var(--gold)">Claude Opus 4.7</span><span class="ai-tool">GPT 5.5</span><span class="ai-tool">Gemini 3.1 Pro</span></div>
+        <div class="ai-tools"><span class="ai-tool" style="border-color:rgba(232,184,122,0.2);color:var(--gold)">Claude Opus 4.7</span><span class="ai-tool">GPT 5.5</span><span class="ai-tool">Gemini 3.1 Pro</span></div>
       </div>
     </div>
     <div class="ai-split reveal">
@@ -859,20 +926,20 @@ section { padding: 100px 0; }
 
   <!-- Module 07 成长进步体系 -->
   <div class="divider"></div>
-  <section id="growth">
+  <section id="growth"><div class="section-watermark" aria-hidden="true">07</div>
     <div class="reveal">
       <div class="section-label">Growth System · Module 07</div>
       <div class="section-title">成长进步<span class="hl">体系</span></div>
     </div>
     <div class="growth-engine reveal">
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(246,196,69,0.1)">🌅</div><div><div class="gcard-role">引擎 · Engine</div><h4>早起</h4></div></div><p>6:30起床 + 听前哨站。以最饱满的状态开启清醒的17个小时。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(94,206,138,0.1)">💪</div><div><div class="gcard-role">引擎 · Engine</div><h4>锻炼</h4></div></div><p>环湖跑 + 健身。身体是见证AI奇点最重要的革命本钱，没有之一。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(74,158,245,0.1)">🎧</div><div><div class="gcard-role">燃料 · Fuel</div><h4>听课</h4></div></div><p>前哨站 + 高质量播客。找AI对启发深度剖析，内化于心，外化于行。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(165,128,240,0.1)">📖</div><div><div class="gcard-role">燃料 · Fuel</div><h4>阅读</h4></div></div><p>一周一本，非虚构类为主。有启发直接找AI探讨深化。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(245,122,106,0.1)">💰</div><div><div class="gcard-role">轮子 · Output</div><h4>做事&amp;赚钱</h4></div></div><p>公众号现金流 + 理财定投复利。个人IP建设正式开始，6h高效，杜绝完美主义。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(246,196,69,0.1)">⚡</div><div><div class="gcard-role">涡轮 · Turbo</div><h4>AI赋能</h4></div></div><p>Gemini + GPT + Claude 三驾马车。生产力杠杆，极大提升学习和生产效率。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(94,206,138,0.1)">📞</div><div><div class="gcard-role">涡轮 · Turbo</div><h4>战友链接</h4></div></div><p>电话/线下深度链接。把陌生人变成熟人是人生最重要的能力之一。</p></div>
-      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(74,158,245,0.1)">🧭</div><div><div class="gcard-role">方向盘 · Direction</div><h4>复盘迭代</h4></div></div><p>双重审计：知识资产化 + 时间ROI审计。每日6h记录，周日大复盘，月度校准航向。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(232,184,122,0.1)">🌅</div><div><div class="gcard-role">引擎 · Engine</div><h4>早起</h4></div></div><p>6:30起床 + 听前哨站。以最饱满的状态开启清醒的17个小时。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(136,168,120,0.1)">💪</div><div><div class="gcard-role">引擎 · Engine</div><h4>锻炼</h4></div></div><p>环湖跑 + 健身。身体是见证AI奇点最重要的革命本钱，没有之一。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(127,168,173,0.1)">🎧</div><div><div class="gcard-role">燃料 · Fuel</div><h4>听课</h4></div></div><p>前哨站 + 高质量播客。找AI对启发深度剖析，内化于心，外化于行。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(142,122,184,0.1)">📖</div><div><div class="gcard-role">燃料 · Fuel</div><h4>阅读</h4></div></div><p>一周一本，非虚构类为主。有启发直接找AI探讨深化。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(216,138,117,0.1)">💰</div><div><div class="gcard-role">轮子 · Output</div><h4>做事&amp;赚钱</h4></div></div><p>公众号现金流 + 理财定投复利。个人IP建设正式开始，6h高效，杜绝完美主义。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(232,184,122,0.1)">⚡</div><div><div class="gcard-role">涡轮 · Turbo</div><h4>AI赋能</h4></div></div><p>Gemini + GPT + Claude 三驾马车。生产力杠杆，极大提升学习和生产效率。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(136,168,120,0.1)">📞</div><div><div class="gcard-role">涡轮 · Turbo</div><h4>战友链接</h4></div></div><p>电话/线下深度链接。把陌生人变成熟人是人生最重要的能力之一。</p></div>
+      <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(127,168,173,0.1)">🧭</div><div><div class="gcard-role">方向盘 · Direction</div><h4>复盘迭代</h4></div></div><p>双重审计：知识资产化 + 时间ROI审计。每日6h记录，周日大复盘，月度校准航向。</p></div>
     </div>
     <div class="io-proto reveal">
       <h4>I/O 吞吐协议——拒绝认知逸散</h4>
@@ -889,7 +956,7 @@ section { padding: 100px 0; }
 
   <!-- Module 08 生命底色 -->
   <div class="divider"></div>
-  <section id="essence">
+  <section id="essence"><div class="section-watermark" aria-hidden="true">08</div>
     <div class="reveal">
       <div class="section-label">Life Essence · Module 08</div>
       <div class="section-title">生命<span class="hl">底色</span></div>
