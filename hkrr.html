@@ -311,6 +311,27 @@ em, i { font-family: var(--italic); font-style: italic; }
   overflow: hidden;
   z-index: 1;
 }
+/* editorial ghost — Latin spelling of "formula", the page's identity */
+.hero::after {
+  content: 'FORMVLA';
+  position: absolute;
+  left: 50%; top: 47%;
+  transform: translate(-50%, -50%);
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(200px, 30vw, 540px);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--pap-5);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  opacity: 0;
+  animation: hRise 1.8s var(--ease) 0.6s forwards;
+}
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -388,11 +409,24 @@ em, i { font-family: var(--italic); font-style: italic; }
   font-family: var(--italic);
   font-style: italic;
   font-size: clamp(20px, 2.4vw, 32px);
-  color: var(--pap-3);
-  margin-bottom: 18px;
-  letter-spacing: 0.02em;
+  color: var(--pap-2);
+  margin-bottom: 22px;
+  letter-spacing: 0.04em;
   opacity: 0;
   animation: hRise 1s var(--ease) .35s forwards;
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-eq::before, .hero-eq::after {
+  content: '';
+  width: 36px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--pap-5), transparent);
+}
+.hero-eq::after {
+  background: linear-gradient(to left, transparent, var(--pap-5), transparent);
 }
 
 .hero-formula {
@@ -417,44 +451,58 @@ em, i { font-family: var(--italic); font-style: italic; }
   opacity: 0;
   transform: translateY(40px) scale(0.92);
   animation: lDrop 1.2s var(--ease) forwards;
-  transition: color .35s, transform .55s var(--ease), text-shadow .35s;
+  transition: color .35s, transform .55s var(--ease), text-shadow .35s, filter .5s;
 }
-.hero-formula .l-1 { animation-delay: .55s; }
-.hero-formula .l-2 { animation-delay: .70s; }
-.hero-formula .l-3 { animation-delay: .85s; }
-.hero-formula .l-4 { animation-delay: 1.00s; }
+/* subtle static aura — each letter already carries its principle's color hint */
+.hero-formula .l-1 {
+  animation-delay: .55s;
+  text-shadow: 0 0 36px color-mix(in oklab, var(--h) 22%, transparent);
+}
+.hero-formula .l-2 {
+  animation-delay: .70s;
+  text-shadow: 0 0 36px color-mix(in oklab, var(--k) 22%, transparent);
+}
+.hero-formula .l-3 {
+  animation-delay: .85s;
+  text-shadow: 0 0 36px color-mix(in oklab, var(--r1) 22%, transparent);
+}
+.hero-formula .l-4 {
+  animation-delay: 1.00s;
+  text-shadow: 0 0 36px color-mix(in oklab, var(--r2) 22%, transparent);
+}
 .hero-formula .l:hover {
   transform: translateY(-18px) scale(1.04);
 }
 .hero-formula .l-1:hover {
   color: var(--h);
-  text-shadow: 0 0 60px color-mix(in oklab, var(--h) 60%, transparent);
+  text-shadow: 0 0 80px color-mix(in oklab, var(--h) 70%, transparent), 0 0 30px color-mix(in oklab, var(--h) 45%, transparent);
 }
 .hero-formula .l-2:hover {
   color: var(--k);
-  text-shadow: 0 0 60px color-mix(in oklab, var(--k) 60%, transparent);
+  text-shadow: 0 0 80px color-mix(in oklab, var(--k) 70%, transparent), 0 0 30px color-mix(in oklab, var(--k) 45%, transparent);
 }
 .hero-formula .l-3:hover {
   color: var(--r1);
-  text-shadow: 0 0 60px color-mix(in oklab, var(--r1) 60%, transparent);
+  text-shadow: 0 0 80px color-mix(in oklab, var(--r1) 70%, transparent), 0 0 30px color-mix(in oklab, var(--r1) 45%, transparent);
 }
 .hero-formula .l-4:hover {
   color: var(--r2);
-  text-shadow: 0 0 60px color-mix(in oklab, var(--r2) 60%, transparent);
+  text-shadow: 0 0 80px color-mix(in oklab, var(--r2) 70%, transparent), 0 0 30px color-mix(in oklab, var(--r2) 45%, transparent);
 }
 
 .hero-formula .x {
   display: inline-block;
   font-style: italic;
   font-weight: 400;
-  color: var(--pap-4);
-  font-size: 0.5em;
-  margin: 0 0.06em;
-  vertical-align: 0.22em;
+  color: var(--pap-3);
+  font-size: 0.42em;
+  margin: 0 0.05em;
+  vertical-align: 0.32em;
   opacity: 0;
-  transform: scale(0.4);
-  animation: xPop 0.6s var(--ease) forwards;
+  transform: scale(0.4) rotate(-12deg);
+  animation: xPop 0.7s var(--ease) forwards;
   font-family: var(--italic);
+  text-shadow: 0 0 28px color-mix(in oklab, var(--gold) 18%, transparent);
 }
 .hero-formula .x-1 { animation-delay: .65s; }
 .hero-formula .x-2 { animation-delay: .80s; }
@@ -464,7 +512,7 @@ em, i { font-family: var(--italic); font-style: italic; }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes xPop {
-  to { opacity: 1; transform: scale(1); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
 .hero-words {
@@ -1969,7 +2017,7 @@ input[type=range]::-moz-range-thumb {
     <span class="sep"></span>
     <a class="sec" href="#audit" data-section="audit">自检</a>
   </nav>
-  <a class="home" href="/" data-cursor="HOME">↩ Home</a>
+  <a class="home" href="index.html" data-cursor="HOME">↩ Home</a>
 </header>
 
 <main id="top">
@@ -2581,7 +2629,7 @@ input[type=range]::-moz-range-thumb {
       <span class="sep"></span>
       <span>Vol. I · 2026</span>
       <span class="sep"></span>
-      <a href="/" data-cursor="HOME">↩ 返回主页</a>
+      <a href="index.html" data-cursor="HOME">↩ 返回主页</a>
     </div>
   </div>
 </footer>
