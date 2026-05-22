@@ -686,11 +686,39 @@ strong { color: var(--ink); font-weight: 600; }
     var(--bg);
   padding: 0 32px;
   justify-content: center;
+  overflow: hidden;
+}
+/* editorial ghost — Latin for "life" */
+.prologue::before {
+  content: 'VITA';
+  position: absolute;
+  left: 50%; top: 48%;
+  transform: translate(-50%, -50%);
+  font-family: var(--latin);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(220px, 32vw, 560px);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(232, 184, 122, 0.06);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0;
+  animation: vitaRise 2.6s ease 1s forwards;
+}
+@keyframes vitaRise {
+  from { opacity: 0; transform: translate(-50%, -46%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
 }
 .prologue-inner {
   max-width: 720px;
   text-align: center;
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 .prologue-eyebrow {
   font-family: var(--mono);
@@ -1920,9 +1948,13 @@ a.prologue-scroll:hover .scroll-line {
           <div class="tl-month">2026.04</div>
           <div class="tl-desc">南昌 · 与学长五刷《长安三万里》· 第 6 位挚友</div>
         </div>
-        <div class="tl-item tl-current">
+        <div class="tl-item">
           <div class="tl-month">2026.05</div>
-          <div class="tl-desc">个人 IP 正式启动 · 即将启程长沙</div>
+          <div class="tl-desc">长沙之行 · 山河又添一城</div>
+        </div>
+        <div class="tl-item tl-current">
+          <div class="tl-month">2026.05 · 此刻</div>
+          <div class="tl-desc">个人 IP 正式启动 · 19 岁生日将至</div>
         </div>
       </div>
 
@@ -1930,15 +1962,15 @@ a.prologue-scroll:hover .scroll-line {
       <h3 class="section-title">这一年攒下的</h3>
       <div class="stats-grid">
         <div class="stat">
-          <div class="stat-num">80<span class="u">万+</span></div>
+          <div class="stat-num">90<span class="u">万+</span></div>
           <div class="stat-label">公众号阅读量</div>
         </div>
         <div class="stat">
-          <div class="stat-num">4000<span class="u">+</span></div>
+          <div class="stat-num">4500<span class="u">+</span></div>
           <div class="stat-label">收入（元）</div>
         </div>
         <div class="stat">
-          <div class="stat-num">200<span class="u">万字</span></div>
+          <div class="stat-num">300<span class="u">万字</span></div>
           <div class="stat-label">与 AI 的对话</div>
         </div>
         <div class="stat">
