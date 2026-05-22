@@ -54,9 +54,7 @@ body {
   font-family: var(--sans-cn);
   line-height: 1.8;
   overflow-x: hidden;
-  cursor: none;
 }
-@media (hover: none) { body { cursor: auto; } }
 
 /* —— 颗粒噪点贴图 —— */
 .grain {
@@ -64,30 +62,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
-
-/* —— 光标跟随 —— */
-.cursor-glow, .cursor-dot {
-  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
-  will-change: transform;
-}
-.cursor-glow {
-  width: 380px; height: 380px; margin: -190px 0 0 -190px;
-  background: radial-gradient(circle, rgba(232,184,122,0.16) 0%, rgba(232,184,122,0.04) 35%, transparent 65%);
-  border-radius: 50%; mix-blend-mode: screen;
-  transition: opacity 0.4s, width 0.3s, height 0.3s;
-}
-.cursor-dot {
-  width: 8px; height: 8px; margin: -4px 0 0 -4px;
-  background: var(--gold); border-radius: 50%;
-  box-shadow: 0 0 12px var(--gold), 0 0 24px rgba(232,184,122,0.5);
-  transition: transform 0.18s ease, opacity 0.4s;
-}
-.cursor-dot.is-hover {
-  transform: scale(2.4);
-  background: transparent;
-  box-shadow: inset 0 0 0 1px var(--gold), 0 0 16px rgba(232,184,122,0.5);
-}
-@media (hover: none) { .cursor-glow, .cursor-dot { display: none; } }
 
 /* —— 滚动进度 —— */
 .scroll-progress {
@@ -397,13 +371,19 @@ section { padding: 140px 0 100px; position: relative; }
   color: var(--ink-dim);
 }
 .stats-row {
-  display: grid; grid-template-columns: minmax(180px, 0.85fr) 1.4fr 1fr;
-  align-items: center; gap: 28px;
-  padding: 32px 6px; border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: minmax(180px, 0.85fr) 1.4fr;
+  align-items: center; gap: 36px;
+  padding: 36px 6px; border-top: 1px solid var(--line);
   position: relative;
 }
 .stats-row:first-of-type { border-top: 0; padding-top: 56px; }
 .stats-row:last-of-type { padding-bottom: 24px; }
+.stats-row::after {
+  content: ''; position: absolute; right: 6px; bottom: -1px;
+  width: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold));
+  transition: width 0.7s ease;
+}
+.stats-row:hover::after { width: 40%; }
 .stats-row .num {
   font-family: var(--sans-en); font-weight: 800;
   font-size: clamp(56px, 9vw, 116px); line-height: 0.92;
@@ -421,18 +401,8 @@ section { padding: 140px 0 100px; position: relative; }
   font-family: var(--sans-cn); color: var(--ink-soft); font-size: 13px;
   letter-spacing: 1px;
 }
-.stats-row .meta {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
-  color: var(--ink-dim); text-align: right;
-}
-.stats-row .meta .bar {
-  margin-top: 8px;
-  height: 2px; background: linear-gradient(90deg, var(--gold), rgba(232,184,122,0.05));
-  border-radius: 2px;
-}
 @media (max-width: 720px) {
   .stats-row { grid-template-columns: 1fr; gap: 6px; padding: 28px 6px; }
-  .stats-row .meta { text-align: left; }
 }
 
 /* ===================== ROLES (跑马灯) ===================== */
@@ -497,35 +467,39 @@ section { padding: 140px 0 100px; position: relative; }
 }
 .ach-card:hover::before { opacity: 1; }
 .ach-head {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 16px;
-}
-.ach-index {
-  font-family: var(--sans-en); font-weight: 800; font-size: 22px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  letter-spacing: 0;
-}
-.ach-tag {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
-  color: var(--ink-dim); padding: 4px 10px;
-  border: 1px solid var(--line); border-radius: 999px;
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px;
 }
 .ach-icon {
-  position: absolute; top: 22px; right: 22px;
+  flex-shrink: 0;
   width: 38px; height: 38px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 12px; font-size: 18px;
+  border-radius: 11px; font-size: 18px;
   background: rgba(232,184,122,0.08);
   border: 1px solid rgba(232,184,122,0.15);
+  transition: transform 0.4s, background 0.4s, border-color 0.4s;
 }
+.ach-card:hover .ach-icon { transform: translateZ(12px) scale(1.05); background: rgba(232,184,122,0.14); border-color: rgba(232,184,122,0.25); }
 .ach-icon.coral { background: rgba(195,107,94,0.1); border-color: rgba(195,107,94,0.18); }
 .ach-icon.violet { background: rgba(142,122,184,0.1); border-color: rgba(142,122,184,0.18); }
 .ach-icon.teal { background: rgba(127,168,173,0.1); border-color: rgba(127,168,173,0.18); }
 .ach-icon.sage { background: rgba(136,168,120,0.1); border-color: rgba(136,168,120,0.18); }
+.ach-index {
+  font-family: var(--sans-en); font-weight: 800; font-size: 22px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 0; line-height: 1;
+}
+.ach-tag {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+  color: var(--ink-dim); padding: 5px 10px;
+  border: 1px solid var(--line); border-radius: 999px;
+  white-space: nowrap;
+}
 .ach-card h4 {
   font-family: var(--serif-cn); font-size: 18px; font-weight: 700; line-height: 1.4;
-  margin-bottom: 8px; padding-right: 48px;
+  margin-bottom: 8px;
 }
 .ach-card p {
   font-size: 13.5px; color: var(--ink-soft); line-height: 1.75;
@@ -730,8 +704,6 @@ section { padding: 140px 0 100px; position: relative; }
 </head>
 <body>
 <div class="grain"></div>
-<div class="cursor-glow"></div>
-<div class="cursor-dot"></div>
 <div class="scroll-progress"></div>
 
 <div class="bg-glow">
@@ -836,22 +808,18 @@ section { padding: 140px 0 100px; position: relative; }
       <div class="stats-row">
         <div class="num" data-num="300" data-suffix="W+">0<span class="unit">W+</span></div>
         <div class="label">AI 对话累计字数<small>与 Claude / GPT / Gemini 协作的语料</small></div>
-        <div class="meta">2023 — NOW<div class="bar" style="width:96%"></div></div>
       </div>
       <div class="stats-row">
         <div class="num" data-num="90" data-suffix="W+">0<span class="unit">W+</span></div>
         <div class="label">公众号阅读总量<small>文字带来的覆盖与影响力</small></div>
-        <div class="meta">2024 — NOW<div class="bar" style="width:78%"></div></div>
       </div>
       <div class="stats-row">
         <div class="num" data-num="780" data-suffix="H+">0<span class="unit">H+</span></div>
         <div class="label">成长课程学习时长<small>主动学习的总投入时间</small></div>
-        <div class="meta">2022 — NOW<div class="bar" style="width:86%"></div></div>
       </div>
       <div class="stats-row">
         <div class="num" data-num="30" data-suffix="W+">0<span class="unit">W+</span></div>
         <div class="label">连续复盘文字累计<small>每天一次的自我对话</small></div>
-        <div class="meta">100+ DAYS<div class="bar" style="width:72%"></div></div>
       </div>
     </div>
 
@@ -890,92 +858,131 @@ section { padding: 140px 0 100px; position: relative; }
 
     <div class="timeline reveal-stagger">
       <div class="ach-card tilt">
-        <div class="ach-icon">🤖</div>
-        <div class="ach-head"><span class="ach-index">01</span><span class="ach-tag">AI · LANG</span></div>
+        <div class="ach-head">
+          <div class="ach-icon">🤖</div>
+          <span class="ach-index">01</span>
+          <span class="ach-tag">AI · LANG</span>
+        </div>
         <h4>AI 深度沟通</h4>
         <p>跟 Gemini / GPT / Claude 深度沟通 <span class="gold-num">300w+</span> 字，构建个人的 AI 原生工作流。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon violet">🎨</div>
-        <div class="ach-head"><span class="ach-index">02</span><span class="ach-tag">VISUAL · IMG</span></div>
+        <div class="ach-head">
+          <div class="ach-icon violet">🎨</div>
+          <span class="ach-index">02</span>
+          <span class="ach-tag">VISUAL · IMG</span>
+        </div>
         <h4>GPT-Image-2 视觉创作</h4>
         <p>熟练使用 GPT-Image-2，已生成原创作品 <span class="gold-num">500+</span> 张<span class="fire-badge image-badge">IMAGE</span></p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon teal">💻</div>
-        <div class="ach-head"><span class="ach-index">03</span><span class="ach-tag">AGENT · CODE</span></div>
+        <div class="ach-head">
+          <div class="ach-icon teal">💻</div>
+          <span class="ach-index">03</span>
+          <span class="ach-tag">AGENT · CODE</span>
+        </div>
         <h4>顶级 Coding Agent 实战</h4>
         <p>熟练使用 <strong>Claude Code</strong> 与 <strong>Codex</strong> 等顶级 Coding Agent，把"想法 → 网站"的链路压缩到一晚<span class="fire-badge code-badge">AGENT</span></p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon sage">🌐</div>
-        <div class="ach-head"><span class="ach-index">04</span><span class="ach-tag">BUILD · SHIP</span></div>
+        <div class="ach-head">
+          <div class="ach-icon sage">🌐</div>
+          <span class="ach-index">04</span>
+          <span class="ach-tag">BUILD · SHIP</span>
+        </div>
         <h4>独立建站</h4>
         <p>独立做出 <span class="gold-num">10+</span> 个网站，覆盖个人说明书、人生回忆录、工作流、FIRE 计算器等场景。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon">📱</div>
-        <div class="ach-head"><span class="ach-index">05</span><span class="ach-tag">WRITE · WECHAT</span></div>
+        <div class="ach-head">
+          <div class="ach-icon">📱</div>
+          <span class="ach-index">05</span>
+          <span class="ach-tag">WRITE · WECHAT</span>
+        </div>
         <h4>公众号运营</h4>
         <p>总阅读量超 <span class="gold-num">90w+</span>，累计变现 <span class="gold-num">4500+</span>。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon violet">🎧</div>
-        <div class="ach-head"><span class="ach-index">06</span><span class="ach-tag">LEARN · HOURS</span></div>
+        <div class="ach-head">
+          <div class="ach-icon violet">🎧</div>
+          <span class="ach-index">06</span>
+          <span class="ach-tag">LEARN · HOURS</span>
+        </div>
         <h4>成长课程</h4>
         <p>听成长类课程累计 <span class="gold-num">780h+</span>，把自学时间结构化成体系。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon coral">📚</div>
-        <div class="ach-head"><span class="ach-index">07</span><span class="ach-tag">READ · BOOKS</span></div>
+        <div class="ach-head">
+          <div class="ach-icon coral">📚</div>
+          <span class="ach-index">07</span>
+          <span class="ach-tag">READ · BOOKS</span>
+        </div>
         <h4>阅读</h4>
         <p>3 个月读完 <span class="gold-num">20</span> 本高质量非虚构类书籍。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon teal">📝</div>
-        <div class="ach-head"><span class="ach-index">08</span><span class="ach-tag">REVIEW · DAILY</span></div>
+        <div class="ach-head">
+          <div class="ach-icon teal">📝</div>
+          <span class="ach-index">08</span>
+          <span class="ach-tag">REVIEW · DAILY</span>
+        </div>
         <h4>连续复盘</h4>
         <p>连续复盘超百天，累计 <span class="gold-num">30w+</span> 字——每天一次自我对话。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon coral">💰</div>
-        <div class="ach-head"><span class="ach-index">09</span><span class="ach-tag">FREEDOM</span></div>
+        <div class="ach-head">
+          <div class="ach-icon coral">💰</div>
+          <span class="ach-index">09</span>
+          <span class="ach-tag">FREEDOM</span>
+        </div>
         <h4>大一经济独立</h4>
         <p>通过开源节流以及公众号创收，在大一已实现经济独立。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon">📈</div>
-        <div class="ach-head"><span class="ach-index">10</span><span class="ach-tag">FIRE · INDEX</span></div>
+        <div class="ach-head">
+          <div class="ach-icon">📈</div>
+          <span class="ach-index">10</span>
+          <span class="ach-tag">FIRE · INDEX</span>
+        </div>
         <h4>定投美股纳指</h4>
         <p>FIRE 理念实践：累计投入 1000+，收益率保持 4%+ <span class="fire-badge">FIRE 践行中</span></p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon sage">📞</div>
-        <div class="ach-head"><span class="ach-index">11</span><span class="ach-tag">CONNECT</span></div>
+        <div class="ach-head">
+          <div class="ach-icon sage">📞</div>
+          <span class="ach-index">11</span>
+          <span class="ach-tag">CONNECT</span>
+        </div>
         <h4>深度链接</h4>
         <p>跟 <span class="gold-num">20+</span> 位认知同频、志同道合的战友约过电话，做过深度沟通。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon violet">🏛️</div>
-        <div class="ach-head"><span class="ach-index">12</span><span class="ach-tag">EVENT · 2025</span></div>
+        <div class="ach-head">
+          <div class="ach-icon violet">🏛️</div>
+          <span class="ach-index">12</span>
+          <span class="ach-tag">EVENT · 2025</span>
+        </div>
         <h4>AI 峰会</h4>
         <p>参加 2025 企业 AI 落地应用百人峰会（武汉站）。</p>
       </div>
 
       <div class="ach-card tilt">
-        <div class="ach-icon coral">🎪</div>
-        <div class="ach-head"><span class="ach-index">13</span><span class="ach-tag">EVENT · OFFLINE</span></div>
+        <div class="ach-head">
+          <div class="ach-icon coral">🎪</div>
+          <span class="ach-index">13</span>
+          <span class="ach-tag">EVENT · OFFLINE</span>
+        </div>
         <h4>线下活动策划</h4>
         <p>策划并举办多次 30+ 人参与的线下活动。</p>
       </div>
@@ -1082,34 +1089,6 @@ section { padding: 140px 0 100px; position: relative; }
 </footer>
 
 <script>
-// —— 光标跟随：双层 lerp 平滑 ——
-(function () {
-  if (matchMedia('(hover: none)').matches) return;
-  const glow = document.querySelector('.cursor-glow');
-  const dot = document.querySelector('.cursor-dot');
-  let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
-  let gx = tx, gy = ty, dx = tx, dy = ty;
-  window.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
-  function tick () {
-    gx += (tx - gx) * 0.14;
-    gy += (ty - gy) * 0.14;
-    dx += (tx - dx) * 0.32;
-    dy += (ty - dy) * 0.32;
-    glow.style.transform = `translate(${gx}px, ${gy}px)`;
-    dot.style.transform = `translate(${dx}px, ${dy}px)`;
-    requestAnimationFrame(tick);
-  }
-  tick();
-
-  const hoverable = 'a, button, .info-card, .ach-card, .role-chip, .connect-card, .belief-item, .nav-logo';
-  document.querySelectorAll(hoverable).forEach(el => {
-    el.addEventListener('mouseenter', () => dot.classList.add('is-hover'));
-    el.addEventListener('mouseleave', () => dot.classList.remove('is-hover'));
-  });
-  window.addEventListener('mouseleave', () => { glow.style.opacity = '0'; dot.style.opacity = '0'; });
-  window.addEventListener('mouseenter', () => { glow.style.opacity = '1'; dot.style.opacity = '1'; });
-})();
-
 // —— 3D 卡片倾斜 + 光斑追踪 ——
 (function () {
   if (matchMedia('(hover: none)').matches) return;
