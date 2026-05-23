@@ -109,7 +109,31 @@ a{ color:inherit; text-decoration:none; }
   min-height:100vh; padding:120px 32px 60px;
   display:flex; flex-direction:column; justify-content:space-between;
   position:relative; z-index:2;
+  overflow:hidden;
 }
+/* editorial ghost — Latin for "momentum / drive" */
+.hero::before{
+  content:'MOMENTVM';
+  position:absolute;
+  left:50%; top:58%;
+  transform:translate(-50%,-50%);
+  font-family:'Instrument Serif',serif;
+  font-style:italic; font-weight:400;
+  font-size:clamp(200px, 30vw, 560px);
+  line-height:1; letter-spacing:0.02em;
+  color:transparent;
+  -webkit-text-stroke:1.5px rgba(19,19,26,0.07);
+  white-space:nowrap;
+  pointer-events:none; user-select:none;
+  z-index:0;
+  opacity:0;
+  animation:momentvmRise 2.2s cubic-bezier(.2,.8,.2,1) 1.4s forwards;
+}
+@keyframes momentvmRise{
+  from{ opacity:0; transform:translate(-50%,-54%); }
+  to{ opacity:1; transform:translate(-50%,-50%); }
+}
+.hero-top, .hero-title, .hero-bottom{ position:relative; z-index:2; }
 .hero-top{
   display:grid; grid-template-columns:1fr auto; align-items:start; gap:30px;
   font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.15em;
@@ -380,13 +404,13 @@ a{ color:inherit; text-decoration:none; }
 
 /* ============== footer ============== */
 .footer{
-  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;
+  display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:24px;
   padding:32px; border-top:1px solid var(--ink); position:relative; z-index:2;
   font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
 }
 .footer .back{ display:inline-flex; align-items:center; gap:10px; transition:color .3s ease; }
 .footer .back:hover{ color:var(--c-coral); }
-.footer .ctr{ text-align:center; opacity:.6; }
+.footer .ctr{ text-align:left; opacity:.6; }
 .footer .rt{ text-align:right; opacity:.6; }
 @media (max-width:700px){ .footer{ grid-template-columns:1fr; text-align:left; } .footer .ctr,.footer .rt{ text-align:left; } }
 
@@ -523,7 +547,7 @@ a{ color:inherit; text-decoration:none; }
 <!-- HERO -->
 <header class="hero">
   <div class="hero-top">
-    <div class="left">— A field manual for the <b style="color:var(--c-coral)">non-mediocre life</b>. Eight subsystems, one machine, calibrated daily, raced for 7 years toward FIRE.</div>
+    <div class="left">— A field manual for the <b style="color:var(--c-coral)">non-mediocre life</b>. Five subsystems, eight rituals, one machine, calibrated daily, raced for 7 years toward FIRE.</div>
     <div class="right">
       <span class="meta-line">VOL. 01 / GROWTH SYSTEM</span>
       <span class="meta-line">ISSUE — 追光者 · <b>ZONGYU</b></span>
@@ -538,7 +562,7 @@ a{ color:inherit; text-decoration:none; }
   </h1>
 
   <div class="hero-bottom">
-    <div><b>8</b> SUBSYSTEMS / 子系统</div>
+    <div><b>5</b> SUBSYSTEMS / 子系统</div>
     <div><b>17</b> WAKING HOURS / 清醒小时</div>
     <div><b>52</b> BOOKS · ANNUAL / 一周一本</div>
     <div><b>7</b> YEARS · FIRE / 七年战略</div>
