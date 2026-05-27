@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>生命底色 · Life Undertone | 追光者 · 曹宗昱</title>
 <meta name="description" content="构成我整个人生的所有微光 — 我相信的、走过的、看过的、爱过的一切。">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -20,6 +20,7 @@
   --text-secondary: rgba(240,237,230,0.6);
   --text-dim: rgba(240,237,230,0.35);
   --accent-red: #C8352A;
+  --italic: 'Instrument Serif', 'Noto Serif SC', serif;
   /* 七色生命光谱 — 经过调色，统一在低饱和、暖调底色之上，避免原色拼盘感 */
   --c1:#E8B87A;  /* §1 身份与根基 · 蜜金 honey gold */
   --c2:#C36B5E;  /* §2 精神图腾 · 余烬赤 ember terracotta */
@@ -71,9 +72,6 @@ body::before {
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 .nav-logo { font-family: 'Noto Serif SC', serif; font-size: 17px; font-weight: 700; color: var(--gold); }
-.nav-back { color: var(--text-secondary); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.3s; }
-.nav-back:hover { color: var(--gold); }
-.nav-back::before { content: '←'; margin-right: 8px; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
@@ -90,11 +88,53 @@ section[id] { scroll-margin-top: 70px; }
   box-shadow: 0 0 10px rgba(232,184,122,0.4);
 }
 
+/* ===================== COLOR SPINE — fixed left bookmark ===================== */
+.color-spine {
+  position: fixed; left: 0; top: 0; bottom: 0; width: 4px;
+  z-index: 91; display: flex; flex-direction: column;
+  pointer-events: none;
+}
+.color-spine .cs-seg {
+  flex: 1; transition: flex 0.9s cubic-bezier(.2,.8,.2,1), opacity 0.7s ease, box-shadow 0.7s ease;
+  opacity: 0.2;
+}
+.color-spine .cs-seg.active {
+  flex: 5; opacity: 0.9;
+  box-shadow: 2px 0 20px var(--seg-c), 4px 0 40px var(--seg-c);
+}
+.cs-seg:nth-child(1){ background:var(--c1); --seg-c:var(--c1); }
+.cs-seg:nth-child(2){ background:var(--c2); --seg-c:var(--c2); }
+.cs-seg:nth-child(3){ background:var(--c3); --seg-c:var(--c3); }
+.cs-seg:nth-child(4){ background:var(--c4); --seg-c:var(--c4); }
+.cs-seg:nth-child(5){ background:var(--c5); --seg-c:var(--c5); }
+.cs-seg:nth-child(6){ background:var(--c6); --seg-c:var(--c6); }
+.cs-seg:nth-child(7){ background:var(--c7); --seg-c:var(--c7); }
+@media (max-width:768px){ .color-spine{ width:3px; } }
+
 /* ===================== HERO ===================== */
 .hero {
   min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
   align-items: center; text-align: center; position: relative; padding: 90px 24px 60px;
+  overflow: hidden;
 }
+/* COLORES — Latin "colors" / also means "character & appearances" */
+.hero::before {
+  content: 'COLORES';
+  position: absolute; left: 50%; top: 54%;
+  transform: translate(-50%, -50%);
+  font-family: var(--italic); font-style: italic; font-weight: 400;
+  font-size: clamp(140px, 24vw, 440px);
+  line-height: 1; letter-spacing: 0.025em; white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1px rgba(232,184,122, 0.055);
+  pointer-events: none; user-select: none;
+  z-index: 0; opacity: 0;
+  animation: coloresRise 2.8s cubic-bezier(.2,.8,.2,1) 1.2s forwards;
+}
+@keyframes coloresRise {
+  from { opacity: 0; transform: translate(-50%, -56%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+.hero > * { position: relative; z-index: 2; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
   background: linear-gradient(105deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.04) 62%, rgba(255,255,255,0.04) 100%);
@@ -113,18 +153,22 @@ section[id] { scroll-margin-top: 70px; }
 
 .hero-name {
   font-family: 'Noto Serif SC', serif; font-size: clamp(56px, 12vw, 130px); font-weight: 900; line-height: 1;
-  background: linear-gradient(105deg, var(--c1) 0%, var(--c2) 18%, var(--c3) 36%, var(--c4) 54%, var(--c5) 70%, var(--c6) 85%, var(--c7) 100%);
-  background-size: 280% auto;
+  background: linear-gradient(120deg,
+    var(--c1) 0%, var(--c2) 16%, var(--c3) 32%,
+    var(--c4) 50%, var(--c5) 66%, var(--c6) 82%, var(--c7) 100%);
+  background-size: 400% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: fadeUp 1.2s ease 0.4s both, heroShimmer 14s ease-in-out 2s infinite;
+  animation: fadeUp 1.2s ease 0.4s both, auroraFlow 24s ease-in-out 2s infinite;
   letter-spacing: 8px;
+  filter: drop-shadow(0 0 40px rgba(232,184,122,0.08));
 }
+@keyframes auroraFlow { 0%, 100% { background-position: 0% center; } 50% { background-position: 100% center; } }
 @keyframes heroShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 180% center; } }
 
 .hero-en {
-  font-family: 'Outfit', sans-serif; font-size: clamp(14px, 2.4vw, 20px); font-weight: 300;
-  color: var(--text-secondary); margin-top: 18px; letter-spacing: 12px;
-  animation: fadeUp 1s ease 0.6s both; padding-left: 12px;
+  font-family: var(--italic); font-style: italic; font-size: clamp(14px, 2vw, 18px); font-weight: 400;
+  color: var(--text-secondary); margin-top: 18px; letter-spacing: 8px;
+  animation: fadeUp 1s ease 0.6s both;
 }
 
 .hero-lead {
@@ -139,25 +183,36 @@ section[id] { scroll-margin-top: 70px; }
 .hero-lead::after { margin: 18px auto 0; }
 .hero-lead em { font-style: normal; color: var(--text-primary); font-weight: 500; }
 
-/* 七色光谱条 — 平滑过渡而非硬分段 */
+/* 七色光谱条 */
 .spectrum-bar {
-  width: min(620px, 90vw); height: 5px; border-radius: 3px;
+  width: min(560px, 88vw); height: 6px; border-radius: 3px;
   background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
-  margin-top: 40px;
-  box-shadow: 0 0 32px rgba(232,184,122,0.12), inset 0 0 0 0.5px rgba(255,255,255,0.08);
-  animation: fadeUp 1s ease 1s both;
+  margin-top: 44px;
+  box-shadow: 0 0 40px rgba(232,184,122,0.18), inset 0 0 0 0.5px rgba(255,255,255,0.1);
+  animation: fadeUp 1s ease 1s both, spectrumBreath 7s ease-in-out 2.5s infinite;
   position: relative;
 }
 .spectrum-bar::after {
-  content: ''; position: absolute; inset: -3px; border-radius: 6px;
+  content: ''; position: absolute; inset: -4px; border-radius: 8px;
   background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
-  filter: blur(14px); opacity: 0.5; z-index: -1;
+  filter: blur(16px); opacity: 0.5; z-index: -1;
+}
+@keyframes spectrumBreath {
+  0%,100% { box-shadow: 0 0 40px rgba(232,184,122,0.18), inset 0 0 0 0.5px rgba(255,255,255,0.1); }
+  50%      { box-shadow: 0 0 70px rgba(232,184,122,0.32), inset 0 0 0 0.5px rgba(255,255,255,0.15); }
 }
 
 /* TOC 七色圆点 */
 .toc-dots {
-  display: flex; gap: 18px; margin-top: 36px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: 18px; margin-top: 32px; flex-wrap: wrap; justify-content: center;
   animation: fadeUp 1s ease 1.2s both;
+  position: relative;
+}
+.toc-dots::before {
+  content: ''; position: absolute;
+  top: 50%; left: 8px; right: 8px; height: 1px;
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
+  opacity: 0.18; transform: translateY(-50%); pointer-events: none;
 }
 .toc-dot {
   width: 14px; height: 14px; border-radius: 50%; cursor: pointer;
@@ -200,15 +255,20 @@ section[id] { scroll-margin-top: 70px; }
 
 /* ===================== SECTION 通用 ===================== */
 .section { padding: 110px 0 80px; position: relative; }
+.section::before {
+  content: ''; position: absolute; top: 0; left: -24px; right: -24px; height: 260px;
+  background: linear-gradient(180deg, rgba(var(--sc-rgb), 0.055), transparent);
+  pointer-events: none; z-index: 0;
+}
+.section > * { position: relative; z-index: 1; }
 .section-num {
-  font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(80px, 14vw, 160px);
+  font-family: var(--italic); font-style: italic; font-weight: 400;
+  font-size: clamp(80px, 14vw, 160px);
   line-height: 1; position: absolute;
   top: 60px; right: 20px; pointer-events: none; z-index: 0;
-  letter-spacing: -8px;
+  letter-spacing: -4px;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(var(--sc-rgb), 0.18);
-  background: linear-gradient(180deg, rgba(var(--sc-rgb), 0.05), transparent 80%);
-  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-stroke: 1px rgba(var(--sc-rgb), 0.16);
 }
 .section-label {
   font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 5px;
@@ -223,6 +283,7 @@ section[id] { scroll-margin-top: 70px; }
 .section-title .hl {
   background: linear-gradient(135deg, var(--sc), color-mix(in srgb, var(--sc) 50%, #fff));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 20px color-mix(in oklab, var(--sc) 35%, transparent));
 }
 .section-sub {
   color: var(--text-secondary); font-size: 15px; max-width: 640px;
@@ -236,8 +297,10 @@ section[id] { scroll-margin-top: 70px; }
   display: flex; align-items: center; gap: 14px;
 }
 .subsection-label::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sc);
-  box-shadow: 0 0 12px var(--sc);
+  content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--sc);
+  box-shadow: 0 0 0 3px rgba(var(--sc-rgb), 0.15), 0 0 18px var(--sc);
+  flex-shrink: 0;
+  animation: pulse 2.8s ease-in-out infinite;
 }
 .subsection-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(var(--sc-rgb),0.2), transparent); }
 .subsection-label small { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 11px;
@@ -261,21 +324,27 @@ section[id] { scroll-margin-top: 70px; }
 /* 通用卡片 — 自动跟随 --sc */
 .tcard {
   background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 16px; padding: 24px; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  border-radius: 16px; padding: 24px; transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
   position: relative; overflow: hidden;
 }
 .tcard::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, transparent, var(--sc), transparent);
-  opacity: 0; transition: opacity 0.4s;
+  opacity: 0; transition: opacity 0.5s;
+}
+.tcard::after {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, transparent, var(--sc), transparent);
+  opacity: 0; transition: opacity 0.5s;
 }
 .tcard:hover {
   background: var(--bg-card-hover);
   border-color: rgba(var(--sc-rgb), 0.22);
   transform: translateY(-4px);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.28), 0 0 0 1px rgba(var(--sc-rgb), 0.05);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(var(--sc-rgb), 0.06),
+              0 0 40px -20px rgba(var(--sc-rgb), 0.3);
 }
-.tcard:hover::before { opacity: 1; }
+.tcard:hover::before, .tcard:hover::after { opacity: 1; }
 
 /* 通用 chip */
 .chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -521,10 +590,11 @@ section[id] { scroll-margin-top: 70px; }
   text-transform: uppercase; color: var(--sc); opacity: 0.7; margin-bottom: 20px;
 }
 .motto-banner .motto-text {
-  font-family: 'Noto Serif SC', serif; font-size: clamp(20px, 3.4vw, 30px);
-  font-weight: 700; line-height: 1.9; letter-spacing: 4px;
+  font-family: var(--italic); font-style: italic; font-size: clamp(20px, 3.4vw, 30px);
+  font-weight: 400; line-height: 1.9; letter-spacing: 2px;
   background: linear-gradient(135deg, var(--text-primary), var(--sc));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px color-mix(in oklab, var(--sc) 30%, transparent));
 }
 
 /* 博主语录 */
@@ -1084,6 +1154,15 @@ section[id] { scroll-margin-top: 70px; }
   text-align: center; padding: 100px 24px 60px;
   position: relative;
 }
+.l-footer::before {
+  content: '';
+  display: block;
+  width: min(480px, 80vw); height: 5px; border-radius: 3px;
+  margin: 0 auto 60px;
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
+  box-shadow: 0 0 30px rgba(232,184,122, 0.2);
+  opacity: 0.65;
+}
 .l-footer .closing {
   font-family: 'Noto Serif SC', serif; font-size: clamp(18px, 2.6vw, 24px);
   line-height: 2; color: var(--text-secondary); max-width: 720px; margin: 0 auto 32px;
@@ -1092,26 +1171,13 @@ section[id] { scroll-margin-top: 70px; }
 .l-footer .closing em {
   font-style: normal;
   background: linear-gradient(105deg, var(--c1), var(--c2), var(--c4), var(--c5), var(--c7));
-  background-size: 200% auto;
+  background-size: 300% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  font-weight: 700; animation: heroShimmer 10s ease-in-out infinite;
+  font-weight: 700; animation: auroraFlow 14s ease-in-out infinite;
 }
 .l-footer .signature {
   font-family: 'Outfit', sans-serif; font-size: 12px; letter-spacing: 4px;
   color: var(--text-dim); text-transform: uppercase; margin-top: 14px;
-}
-.l-footer .ret-home {
-  display: inline-block; margin-top: 36px;
-  padding: 12px 28px; border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.12);
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 13px; letter-spacing: 2px; transition: all 0.3s;
-}
-.l-footer .ret-home:hover {
-  border-color: var(--c1);
-  color: var(--c1);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(232,184,122, 0.18);
 }
 
 /* ===================== 响应式 ===================== */
@@ -1131,6 +1197,17 @@ section[id] { scroll-margin-top: 70px; }
 </head>
 <body>
 <div class="scroll-progress"></div>
+
+<!-- 七色书脊 — 固定左侧，随章节呼吸 -->
+<div class="color-spine">
+  <div class="cs-seg"></div>
+  <div class="cs-seg"></div>
+  <div class="cs-seg"></div>
+  <div class="cs-seg"></div>
+  <div class="cs-seg"></div>
+  <div class="cs-seg"></div>
+  <div class="cs-seg"></div>
+</div>
 
 <div class="bg-glow">
   <div class="orb orb-1"></div>
@@ -2170,6 +2247,21 @@ const navObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.25 });
 sections.forEach(s => navObserver.observe(s));
+
+// 七色书脊 — 随章节激活
+const spineSegs = document.querySelectorAll('.cs-seg');
+const spineObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const cls = [...entry.target.classList].find(c => /^s\d$/.test(c));
+      if (cls) {
+        const idx = parseInt(cls[1]) - 1;
+        spineSegs.forEach((seg, i) => seg.classList.toggle('active', i === idx));
+      }
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => spineObserver.observe(s));
 </script>
 
 </body>
