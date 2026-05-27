@@ -7,7 +7,7 @@
 <meta name="description" content="个人成长领域 · 内容生产工作流仪表盘 — 图文 · 文章 · 短视频 全流程沉淀">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================
    追光者·LSA 个人IP工作流仪表盘
@@ -531,6 +531,182 @@ a { color: inherit; text-decoration: none; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================================
+   WORKFLOW · VISUAL REFINEMENTS
+   ========================================================= */
+
+/* italic display font */
+:root { --italic: "Instrument Serif", "Noto Serif SC", serif; }
+
+/* hero stacking context for ghost */
+.hero > * { position: relative; z-index: 2; }
+
+/* FLUXUS — Latin: "flow / stream / current" */
+.hero::after {
+  content: "FLUXUS";
+  position: absolute;
+  right: -14px;
+  bottom: -58px;
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 172px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px oklch(0.74 0.18 45 / 0.14);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* "LSA" in Instrument Serif italic */
+.hero__brand .brand-lsa {
+  font-family: var(--italic);
+  font-style: italic;
+  color: var(--accent);
+  text-shadow: 0 0 36px oklch(0.74 0.18 45 / 0.55);
+}
+
+/* dot pulse */
+@keyframes accentPulse {
+  0%, 100% { text-shadow: 0 0 8px oklch(0.74 0.18 45 / 0.5); }
+  50%       { text-shadow: 0 0 24px oklch(0.74 0.18 45), 0 0 48px oklch(0.74 0.18 45 / 0.35); }
+}
+.hero__brand .accent { animation: accentPulse 2.8s ease-in-out infinite; }
+
+/* hero stats gradient fill */
+.hero__stat-num {
+  background: linear-gradient(135deg, #F5F4F0 40%, oklch(0.74 0.18 45) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 14px oklch(0.74 0.18 45 / 0.25));
+}
+.hero__stat-num .unit {
+  -webkit-text-fill-color: var(--text-dim);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+}
+
+/* tab bar: full-width indicator + flash on activate */
+.tabbar { box-shadow: 0 1px 0 oklch(0.74 0.18 45 / 0.08); }
+.tabbar__btn::after { width: 100%; border-radius: 0; }
+@keyframes tabFlash {
+  0%   { background: oklch(0.74 0.18 45 / 0.18); }
+  100% { background: oklch(0.74 0.18 45 / 0.05); }
+}
+.tabbar__btn.is-active { animation: tabFlash 0.5s ease forwards; }
+
+/* section title subtle glow */
+.section__title { filter: drop-shadow(0 0 22px oklch(0.74 0.18 45 / 0.12)); }
+
+/* pull quote: glow on hover */
+.pull {
+  transition: padding-left .4s cubic-bezier(0.2,0.8,0.2,1), color .4s, border-color .3s, box-shadow .3s;
+}
+.pull:hover {
+  border-left-color: var(--accent);
+  box-shadow: -4px 0 18px oklch(0.74 0.18 45 / 0.22);
+}
+
+/* subhead decorative line: glow */
+.subhead::before { width: 20px; box-shadow: 0 0 10px var(--accent-glow); }
+
+/* flow connector: gradient line */
+.flow::before {
+  background: linear-gradient(
+    to bottom,
+    oklch(0.74 0.18 45 / 0.5) 0%,
+    var(--line-strong) 50%,
+    oklch(0.74 0.18 45 / 0.25) 100%
+  );
+}
+
+/* highlight block: glow on hover */
+.highlight { transition: border-left-color .3s, box-shadow .3s; }
+.highlight:hover {
+  border-left-color: var(--accent);
+  box-shadow: -3px 0 16px oklch(0.74 0.18 45 / 0.18);
+}
+
+/* chain final node: glow ring */
+.chain__node--final {
+  box-shadow: 0 0 0 1px var(--accent), 0 0 22px oklch(0.74 0.18 45 / 0.38);
+}
+
+/* stage card: shimmer trail */
+.stage { overflow: hidden; }
+
+/* asset card: bottom edge accent on hover */
+.asset:hover {
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 1px var(--accent-line), inset 0 -2px 0 var(--accent-line);
+}
+
+/* footer brand: carved warm brass */
+.footer__brand {
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter:
+    drop-shadow(0 1px 0 rgba(120, 84, 20, 0.9))
+    drop-shadow(0 2px 4px rgba(232, 184, 122, 0.3))
+    drop-shadow(0 0 22px oklch(0.74 0.18 45 / 0.4));
+}
+
+/* clean up orphaned rule */
+.footer__home { display: none; }
+
+/* section num glow */
+.section__num {
+  text-shadow: 0 0 12px oklch(0.74 0.18 45 / 0.6);
+  letter-spacing: 0.12em;
+}
+
+/* principle open: left glow edge */
+.principle.is-open {
+  border-left: 2px solid oklch(0.74 0.18 45 / 0.6);
+  box-shadow: -2px 0 16px oklch(0.74 0.18 45 / 0.15);
+}
+
+/* rung current: stronger glow */
+.rung--current .rung__score {
+  text-shadow: 0 0 18px oklch(0.74 0.18 45 / 0.8);
+}
+.rung--target .rung__score {
+  text-shadow: 0 0 14px oklch(0.78 0.14 145 / 0.7);
+}
+
+/* spec row: left border reveal on hover */
+.spec__row { transition: background .2s, border-left .2s; border-left: 2px solid transparent; }
+.spec__row:hover { background: var(--bg-card-hover); border-left-color: oklch(0.74 0.18 45 / 0.4); }
+
+/* flow step open: name glow */
+.flow-step.is-open .flow-step__name {
+  text-shadow: 0 0 16px oklch(0.74 0.18 45 / 0.5);
+}
+
+/* body tab state: subtle bg tint shift */
+body { transition: background-image 1.2s ease; }
+body[data-tab="video"] {
+  background-image:
+    radial-gradient(circle at 14% 8%, oklch(0.60 0.13 232 / 0.045), transparent 38%),
+    radial-gradient(circle at 86% 92%, oklch(0.74 0.18 45 / 0.025), transparent 38%);
+}
+body[data-tab="content"] {
+  background-image:
+    radial-gradient(circle at 12% 6%, oklch(0.74 0.18 45 / 0.05), transparent 35%),
+    radial-gradient(circle at 88% 94%, oklch(0.74 0.18 45 / 0.03), transparent 35%);
+}
 </style>
 </head>
 <body>
@@ -543,11 +719,12 @@ a { color: inherit; text-decoration: none; }
   <div class="hero__meta">
     <span class="hero__meta-dot"></span>
     <span>WORKFLOW · DASHBOARD · v1.0</span>
+    <span style="margin-left:auto;opacity:0.5;font-size:10px" id="heroTs"></span>
   </div>
-  <h1 class="hero__brand">追光者<span class="accent">·</span>LSA</h1>
+  <h1 class="hero__brand">追光者<span class="accent">·</span><em class="brand-lsa">LSA</em></h1>
   <p class="hero__sub">
     个人成长领域 · 内容生产工作流仪表盘<br>
-    从「想法」到「系统」，从「单条灵感」到「可复用流程」。
+    从「想法」到「系统」，从「单条灵感」到<em style="font-family:var(--italic);font-style:italic;color:var(--accent);opacity:0.85">可复用流程</em>。
   </p>
   <div class="hero__stats">
     <div class="hero__stat">
@@ -1219,6 +1396,7 @@ a { color: inherit; text-decoration: none; }
       p.hidden = !match;
       if (match) { p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; }
     });
+    document.body.dataset.tab = tab;
     try { localStorage.setItem('wf_tab', tab); } catch (e) {}
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
@@ -1274,6 +1452,17 @@ a { color: inherit; text-decoration: none; }
     });
   }, { rootMargin: '-40px 0px -40px 0px', threshold: 0.05 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // hero timestamp
+  const heroTs = document.getElementById('heroTs');
+  if (heroTs) {
+    function fmtTs() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+    heroTs.textContent = fmtTs();
+  }
 
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
   document.querySelectorAll('.hero__stat-num[data-count]').forEach(el => {
