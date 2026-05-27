@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>人生系统 · 追光者私人仪表盘</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,6 +35,7 @@
   --m8: #C4A882; --m8r: 196,168,130; /* 底色 · 古金 */
   --serif-cn: 'Noto Serif SC', serif;
   --serif-en: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --italic: 'Instrument Serif', 'Cormorant Garamond', serif;
   --sans-en: 'Outfit', sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
 }
@@ -70,20 +71,43 @@ body {
 
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
-  background: rgba(10,10,15,0.8); backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.04); transition: all 0.3s;
+  padding: 14px 32px; display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 24px;
+  background: rgba(10,10,15,0.82); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.3s;
 }
 .nav-logo {
-  font-family: var(--serif-cn); font-size: 18px; font-weight: 700; color: var(--gold);
+  font-family: var(--serif-cn); font-size: 17px; font-weight: 700; color: var(--gold);
   display: inline-flex; align-items: center; gap: 10px; letter-spacing: 1px;
 }
 .nav-logo::before {
   content: '✦'; font-family: var(--sans-en); font-size: 13px; color: var(--gold);
   animation: spin 16s linear infinite; display: inline-block;
 }
+.nav-links { display: flex; gap: 28px; list-style: none; justify-self: center; }
+.nav-status {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+  color: var(--text-dim); text-transform: uppercase;
+}
+.nav-status .live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 10px var(--accent-green); }
+  50%      { opacity: 0.5; box-shadow: 0 0 4px var(--accent-green); }
+}
+.nav-status .sep { color: rgba(255,255,255,0.12); }
+.nav-status #navClock { color: var(--gold); }
 @keyframes spin { to { transform: rotate(360deg); } }
-.nav-links { display: flex; gap: 32px; list-style: none; }
+@media (max-width:900px) {
+  .nav { grid-template-columns: auto 1fr; padding: 12px 18px; }
+  .nav-status { display: none; }
+}
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
 ::-webkit-scrollbar-thumb { background: rgba(232,184,122,0.25); border-radius: 3px; }
@@ -96,10 +120,111 @@ section[id] { scroll-margin-top: 80px; }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a.active { color: var(--gold); }
 
+/* ===================== RIGHT MODULE RAIL — mission-control style ===================== */
+.module-rail {
+  position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
+  z-index: 95; display: flex; flex-direction: column; gap: 14px;
+  padding: 16px 12px; border-radius: 18px;
+  background: rgba(10,10,15,0.45);
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(18px);
+  font-family: var(--mono); font-size: 10px;
+  opacity: 0; animation: railFade 0.9s ease 1.4s forwards;
+  pointer-events: auto;
+}
+@keyframes railFade { to { opacity: 1; } }
+.module-rail .mr-head {
+  font-size: 9px; letter-spacing: 0.2em;
+  color: var(--text-dim); text-transform: uppercase;
+  padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+}
+.module-rail a {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--text-dim);
+  padding: 4px 6px; border-radius: 8px;
+  transition: all 0.35s cubic-bezier(.2,.8,.2,1);
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  position: relative;
+}
+.module-rail a .mr-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  transition: all 0.4s cubic-bezier(.2,.8,.2,1);
+  flex-shrink: 0;
+}
+.module-rail a .mr-label {
+  font-family: var(--sans-en); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  max-width: 0; overflow: hidden; opacity: 0;
+  white-space: nowrap;
+  transition: max-width 0.4s ease, opacity 0.3s ease;
+}
+.module-rail a:hover .mr-label,
+.module-rail a.active .mr-label {
+  max-width: 120px; opacity: 1;
+}
+.module-rail a:hover .mr-dot {
+  background: var(--mr-c, var(--gold));
+  box-shadow: 0 0 10px var(--mr-c, var(--gold));
+  transform: scale(1.3);
+}
+.module-rail a.active {
+  color: var(--text-primary);
+}
+.module-rail a.active .mr-dot {
+  background: var(--mr-c, var(--gold));
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.04),
+              0 0 14px var(--mr-c, var(--gold));
+  transform: scale(1.25);
+}
+.module-rail a.active::before {
+  content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 1px;
+  background: var(--mr-c, var(--gold));
+  box-shadow: 0 0 6px var(--mr-c, var(--gold));
+}
+.module-rail a:nth-of-type(1){ --mr-c: var(--m1); }
+.module-rail a:nth-of-type(2){ --mr-c: var(--m1); }
+.module-rail a:nth-of-type(3){ --mr-c: var(--m2); }
+.module-rail a:nth-of-type(4){ --mr-c: var(--m3); }
+.module-rail a:nth-of-type(5){ --mr-c: var(--m4); }
+.module-rail a:nth-of-type(6){ --mr-c: var(--m5); }
+.module-rail a:nth-of-type(7){ --mr-c: var(--m6); }
+.module-rail a:nth-of-type(8){ --mr-c: var(--m7); }
+.module-rail a:nth-of-type(9){ --mr-c: var(--m8); }
+.module-rail .mr-foot {
+  margin-top: 6px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex; flex-direction: column; gap: 4px; align-items: center;
+  font-size: 9px; letter-spacing: 0.18em; color: var(--text-dim); text-transform: uppercase;
+}
+.module-rail .mr-foot .mr-fps { color: var(--accent-green); }
+@media (max-width: 1100px) { .module-rail { display: none; } }
+
 .hero {
   min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
   align-items: center; text-align: center; position: relative; padding: 110px 24px 60px;
+  overflow: hidden;
 }
+/* SYSTEMA — Latin "system / order / arrangement" */
+.hero::after {
+  content: 'SYSTEMA';
+  position: absolute; left: 50%; top: 55%;
+  transform: translate(-50%, -50%);
+  font-family: var(--italic); font-style: italic; font-weight: 400;
+  font-size: clamp(160px, 26vw, 480px);
+  line-height: 1; letter-spacing: 0.04em; white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(232,184,122, 0.06);
+  pointer-events: none; user-select: none;
+  z-index: 1; opacity: 0;
+  animation: systemaRise 2.6s cubic-bezier(.2,.8,.2,1) 1.2s forwards;
+}
+@keyframes systemaRise {
+  from { opacity: 0; transform: translate(-50%, -54%); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+.hero > * { position: relative; z-index: 2; }
 .hero-eyebrow {
   font-family: var(--serif-en); font-style: italic;
   font-size: clamp(13px,1.8vw,17px); color: var(--text-dim);
@@ -128,8 +253,14 @@ section[id] { scroll-margin-top: 80px; }
   font-family: var(--serif-cn); font-weight: 900; line-height: 0.95;
   font-size: clamp(56px, 12vw, 140px);
   letter-spacing: clamp(4px, 1.2vw, 12px);
-  background: linear-gradient(140deg, #fff 0%, var(--gold-light) 35%, var(--gold) 65%, var(--gold-dark) 100%);
+  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter:
+    drop-shadow(0 1px 0 #8A5C20)
+    drop-shadow(0 2px 0 #5E3E14)
+    drop-shadow(0 3px 0 #3A2608)
+    drop-shadow(0 4px 0 #1F1404)
+    drop-shadow(0 12px 28px rgba(0,0,0,.55));
   animation: fadeUp 1.2s ease 0.5s both;
 }
 .hero-name::after {
@@ -157,7 +288,11 @@ section[id] { scroll-margin-top: 80px; }
 }
 .hero-motto::before { top: 0; left: 0; border-right: none; border-bottom: none; }
 .hero-motto::after { bottom: 0; right: 0; border-left: none; border-top: none; }
-.hero-motto em { font-style: normal; color: var(--gold); }
+.hero-motto em {
+  font-style: italic; font-family: var(--italic); color: var(--gold);
+  font-size: 1.12em; font-weight: 400; padding: 0 0.06em;
+  text-shadow: 0 0 18px color-mix(in oklab, var(--gold) 30%, transparent);
+}
 
 .hero-scroll {
   position: absolute; bottom: 40px; display: flex; flex-direction: column;
@@ -180,11 +315,16 @@ section[id] { scroll-margin-top: 80px; }
 section { padding: 120px 0 90px; position: relative; }
 .section-label {
   display: inline-flex; align-items: center; gap: 12px;
-  font-family: var(--sans-en); font-size: 11px; letter-spacing: 5px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em; font-weight: 500;
   text-transform: uppercase; color: var(--mc, var(--gold)); margin-bottom: 16px;
 }
-.section-label::before { content: ''; width: 26px; height: 1px; background: var(--mc, var(--gold)); opacity: 0.6; }
-.section-label::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--mc, var(--gold)); box-shadow: 0 0 8px var(--mc, var(--gold)); }
+.section-label::before { content: ''; width: 28px; height: 1px; background: linear-gradient(90deg, transparent, var(--mc, var(--gold))); opacity: 0.7; }
+.section-label::after {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--mc, var(--gold));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--mc, var(--gold)) 15%, transparent), 0 0 12px var(--mc, var(--gold));
+  animation: pulse 2.8s ease-in-out infinite;
+}
 .section-title {
   font-family: var(--serif-cn); font-size: clamp(30px, 5vw, 48px);
   font-weight: 700; margin-bottom: 56px; line-height: 1.2; letter-spacing: 1px;
@@ -192,17 +332,16 @@ section { padding: 120px 0 90px; position: relative; }
 .section-title .hl {
   background: linear-gradient(135deg, var(--mc, var(--gold)), color-mix(in srgb, var(--mc, var(--gold)) 60%, white));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--mc, var(--gold)) 30%, transparent));
 }
-/* 模块水印编号 */
+/* 模块水印编号 — 罗马数字 italic */
 .section-watermark {
   position: absolute; top: 40px; right: 0;
-  font-family: var(--sans-en); font-weight: 900;
-  font-size: clamp(90px, 15vw, 180px); line-height: 0.9;
-  letter-spacing: -8px; pointer-events: none; z-index: 0;
+  font-family: var(--italic); font-style: italic; font-weight: 400;
+  font-size: clamp(110px, 18vw, 220px); line-height: 0.9;
+  letter-spacing: -0.02em; pointer-events: none; z-index: 0;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(var(--mcr, 232,184,122), 0.14);
-  background: linear-gradient(180deg, rgba(var(--mcr, 232,184,122), 0.04), transparent 80%);
-  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-stroke: 1px rgba(var(--mcr, 232,184,122), 0.18);
 }
 /* 模块色注入 */
 section#system   { --mc: var(--m1); --mcr: var(--m1r); }
@@ -300,11 +439,15 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 @keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(232,184,122,0.1); } 50% { box-shadow: 0 0 80px rgba(232,184,122,0.2); } }
 @keyframes footerShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 .footer-text {
-  font-family: 'Noto Serif SC', serif; font-size: 20px; margin-bottom: 8px;
-  background: linear-gradient(105deg, var(--gold) 0%, var(--gold) 33%, var(--gold-light) 50%, var(--gold) 67%, var(--gold) 100%);
-  background-size: 260% auto;
+  font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700; margin-bottom: 10px;
+  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: footerShimmer 8s ease-in-out 1s infinite;
+  filter:
+    drop-shadow(0 1px 0 #8A5C20)
+    drop-shadow(0 2px 0 #5E3E14)
+    drop-shadow(0 3px 0 #1F1404)
+    drop-shadow(0 6px 16px rgba(0,0,0,.5));
+  letter-spacing: 4px;
 }
 .footer-sub { font-size: 13px; color: var(--text-dim); letter-spacing: 2px; }
 .footer-line { margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04); font-size: 12px; color: var(--text-dim); }
@@ -355,7 +498,17 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .feq-f { font-family: 'Outfit'; font-weight: 800; font-size: clamp(11px, 1.6vw, 15px); padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); white-space: nowrap; }
 .feq-x { font-family: 'Outfit'; font-size: 22px; color: rgba(232,184,122,0.25); font-weight: 300; }
 .feq-eq { font-family: 'Outfit'; font-size: 22px; color: var(--gold); font-weight: 300; }
-.feq-r { font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: clamp(16px, 2.5vw, 22px); background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.feq-r {
+  font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: clamp(16px, 2.5vw, 22px);
+  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter:
+    drop-shadow(0 1px 0 #8A5C20)
+    drop-shadow(0 2px 0 #5E3E14)
+    drop-shadow(0 2px 0 #3A2608)
+    drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  letter-spacing: 0.04em;
+}
 .formula-sub { margin-top: 14px; font-size: 12px; color: var(--text-dim); font-family: 'Outfit'; letter-spacing: 1px; }
 .factor-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 32px; }
 .factor-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.04); border-radius: 14px; padding: 24px; transition: all 0.3s; }
@@ -369,7 +522,17 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .align-item .ai-ico { font-size: 16px; flex-shrink: 0; }
 
 .fire-header { text-align: center; margin-bottom: 36px; }
-.fire-big { font-family: 'Outfit'; font-weight: 900; font-size: clamp(64px, 12vw, 108px); background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+.fire-big {
+  font-family: 'Outfit'; font-weight: 900; font-size: clamp(64px, 12vw, 108px);
+  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1; letter-spacing: -0.02em;
+  filter:
+    drop-shadow(0 1px 0 #8A5C20)
+    drop-shadow(0 2px 0 #5E3E14)
+    drop-shadow(0 3px 0 #3A2608)
+    drop-shadow(0 10px 22px rgba(0,0,0,.6));
+}
 .fire-math-txt { font-family: 'Outfit'; font-size: 13px; color: var(--text-dim); letter-spacing: 2px; margin-top: 8px; }
 .fire-prog { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 36px; margin-bottom: 28px; }
 .fire-prog-labs { display: flex; justify-content: space-between; margin-bottom: 14px; font-family: 'Outfit'; font-size: 12px; }
@@ -508,12 +671,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 }
 .sys-card:hover::before { opacity: 1; }
 
-/* 2. fire-big 呼吸光晕 */
-@keyframes fireGlow {
-  0%, 100% { filter: drop-shadow(0 0 8px rgba(232,184,122,0.3)); }
-  50% { filter: drop-shadow(0 0 22px rgba(232,184,122,0.55)) drop-shadow(0 0 40px rgba(232,184,122,0.2)); }
-}
-.fire-big { animation: fireGlow 3s ease-in-out infinite; }
+/* fire-big depth now baked into carved bronze inscription above */
 
 /* 3. strat-bignum 可见度 */
 .strat-bignum { color: rgba(232,184,122,0.09); transition: color 0.4s; }
@@ -551,13 +709,13 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
 /* ===== WOW Layer ===== */
 
-/* Hero: 深空金色光晕 + 呼吸 */
+/* Hero: 深空金色光晕 + 呼吸 (now uses ::before since ::after is SYSTEMA ghost) */
 .hero::before {
   content: '';
   position: absolute; border-radius: 50%;
   width: 800px; height: 800px;
   left: 50%; top: 45%; transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(232,184,122,0.055) 0%, rgba(232,184,122,0.02) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(232,184,122,0.06) 0%, rgba(232,184,122,0.02) 40%, transparent 70%);
   animation: heroBreathe 9s ease-in-out infinite;
   pointer-events: none; z-index: 0;
 }
@@ -566,16 +724,12 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
 }
 
-/* Hero name: 文字光晕 */
-.hero-name { filter: drop-shadow(0 0 40px rgba(232,184,122,0.12)); }
-
 /* Hero motto: 更优雅的分隔线 */
 .hero-motto::before, .hero-motto::after {
   width: 60px; background: linear-gradient(90deg, transparent, rgba(232,184,122,0.5), transparent);
 }
 
-/* Section title hl: 微发光 */
-.section-title .hl { filter: drop-shadow(0 0 10px rgba(232,184,122,0.22)); }
+/* section-title hl glow now baked into main rule above */
 
 /* 公式框: 脉冲边框辉光 — 全页最戏剧化节点 */
 @keyframes formulaAura {
@@ -584,15 +738,8 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 }
 .formula-wrap { animation: formulaAura 5s ease-in-out infinite; border-color: transparent; }
 
-/* 人生繁荣 result: 更大 + 更亮 */
-.feq-r {
-  font-size: clamp(20px, 3.2vw, 30px);
-  animation: prosperityGlow 3.5s ease-in-out infinite;
-}
-@keyframes prosperityGlow {
-  0%, 100% { filter: drop-shadow(0 0 6px rgba(232,184,122,0.45)); }
-  50%       { filter: drop-shadow(0 0 20px rgba(232,184,122,0.85)) drop-shadow(0 0 40px rgba(232,184,122,0.3)); }
-}
+/* prosperity result: bigger (glow now baked into carved bronze above) */
+.feq-r { font-size: clamp(20px, 3.2vw, 30px); }
 
 /* 公式乘号: 微金色 */
 .feq-x { color: rgba(232,184,122,0.35); }
@@ -664,7 +811,31 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <li><a href="#growth">成长</a></li>
     <li><a href="#essence">底色</a></li>
   </ul>
+  <div class="nav-status">
+    <span class="live-dot"></span>
+    <span>SYS·ONLINE</span>
+    <span class="sep">·</span>
+    <span id="navClock">--:--:--</span>
+  </div>
 </nav>
+
+<!-- Right module rail · mission control -->
+<aside class="module-rail" aria-label="Module Navigator">
+  <div class="mr-head">MODULES</div>
+  <a href="#system" data-key="system"><span class="mr-dot"></span><span class="mr-label">Overview</span></a>
+  <a href="#goals" data-key="goals"><span class="mr-dot"></span><span class="mr-label">I · Goals</span></a>
+  <a href="#strategy" data-key="strategy"><span class="mr-dot"></span><span class="mr-label">II · Strategy</span></a>
+  <a href="#formula" data-key="formula"><span class="mr-dot"></span><span class="mr-label">III · Formula</span></a>
+  <a href="#fire" data-key="fire"><span class="mr-dot"></span><span class="mr-label">IV · FIRE</span></a>
+  <a href="#dual" data-key="dual"><span class="mr-dot"></span><span class="mr-label">V · Dual Track</span></a>
+  <a href="#ai" data-key="ai"><span class="mr-dot"></span><span class="mr-label">VI · AI</span></a>
+  <a href="#growth" data-key="growth"><span class="mr-dot"></span><span class="mr-label">VII · Growth</span></a>
+  <a href="#essence" data-key="essence"><span class="mr-dot"></span><span class="mr-label">VIII · Essence</span></a>
+  <div class="mr-foot">
+    <span class="mr-fps">● LIVE</span>
+    <span>v1.0</span>
+  </div>
+</aside>
 
 <section class="hero">
   <div class="hero-eyebrow">Private Dashboard · Internal Only</div>
@@ -678,7 +849,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 <div class="container">
 
   <!-- Hub -->
-  <section id="system"><div class="section-watermark" aria-hidden="true">00</div><div class="section-watermark" aria-hidden="true">00</div>
+  <section id="system"><div class="section-watermark" aria-hidden="true">·</div>
     <div class="reveal">
       <div class="section-label">Life System</div>
       <div class="section-title">八大<span class="hl">模块总览</span></div>
@@ -697,7 +868,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 01 三级人生目标 -->
   <div class="divider"></div>
-  <section id="goals"><div class="section-watermark" aria-hidden="true">01</div>
+  <section id="goals"><div class="section-watermark" aria-hidden="true">I</div>
     <div class="reveal">
       <div class="section-label">Life Goals · Module 01</div>
       <div class="section-title">三级<span class="hl">人生目标</span></div>
@@ -735,7 +906,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 02 S级人生策略 -->
   <div class="divider"></div>
-  <section id="strategy"><div class="section-watermark" aria-hidden="true">02</div>
+  <section id="strategy"><div class="section-watermark" aria-hidden="true">II</div>
     <div class="reveal">
       <div class="section-label">Life Strategy · Module 02</div>
       <div class="section-title">S级<span class="hl">人生策略</span></div>
@@ -772,7 +943,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 03 人生繁荣公式 -->
   <div class="divider"></div>
-  <section id="formula"><div class="section-watermark" aria-hidden="true">03</div>
+  <section id="formula"><div class="section-watermark" aria-hidden="true">III</div>
     <div class="reveal">
       <div class="section-label">Prosperity Formula · Module 03</div>
       <div class="section-title">人生<span class="hl">繁荣公式</span></div>
@@ -808,7 +979,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 04 七年FIRE计划 -->
   <div class="divider"></div>
-  <section id="fire"><div class="section-watermark" aria-hidden="true">04</div>
+  <section id="fire"><div class="section-watermark" aria-hidden="true">IV</div>
     <div class="reveal">
       <div class="section-label">FIRE Plan · Module 04</div>
       <div class="section-title">七年<span class="hl">FIRE计划</span></div>
@@ -853,7 +1024,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 05 双轨制战略 -->
   <div class="divider"></div>
-  <section id="dual"><div class="section-watermark" aria-hidden="true">05</div>
+  <section id="dual"><div class="section-watermark" aria-hidden="true">V</div>
     <div class="reveal">
       <div class="section-label">Dual Track · Module 05</div>
       <div class="section-title">双轨制<span class="hl">战略</span></div>
@@ -891,7 +1062,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 06 AI分层使用战略 -->
   <div class="divider"></div>
-  <section id="ai"><div class="section-watermark" aria-hidden="true">06</div>
+  <section id="ai"><div class="section-watermark" aria-hidden="true">VI</div>
     <div class="reveal">
       <div class="section-label">AI Strategy · Module 06</div>
       <div class="section-title">AI分层<span class="hl">使用战略</span></div>
@@ -925,7 +1096,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 07 成长进步体系 -->
   <div class="divider"></div>
-  <section id="growth"><div class="section-watermark" aria-hidden="true">07</div>
+  <section id="growth"><div class="section-watermark" aria-hidden="true">VII</div>
     <div class="reveal">
       <div class="section-label">Growth System · Module 07</div>
       <div class="section-title">成长进步<span class="hl">体系</span></div>
@@ -955,7 +1126,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 
   <!-- Module 08 生命底色 -->
   <div class="divider"></div>
-  <section id="essence"><div class="section-watermark" aria-hidden="true">08</div>
+  <section id="essence"><div class="section-watermark" aria-hidden="true">VIII</div>
     <div class="reveal">
       <div class="section-label">Life Essence · Module 08</div>
       <div class="section-title">生命<span class="hl">底色</span></div>
@@ -1054,12 +1225,30 @@ reveals.forEach(el => observer.observe(el));
 
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
+const railLinks = document.querySelectorAll('.module-rail a');
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) navLinks.forEach(link => { link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id); });
+    if (entry.isIntersecting) {
+      const id = '#' + entry.target.id;
+      navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === id));
+      railLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === id));
+    }
   });
 }, { threshold: 0.3 });
 sections.forEach(s => navObserver.observe(s));
+
+// Live clock for nav status (mission control feel)
+(function liveClock(){
+  const el = document.getElementById('navClock');
+  if (!el) return;
+  function tick(){
+    const d = new Date();
+    const p = n => String(n).padStart(2,'0');
+    el.textContent = `${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
 </script>
 </body>
 </html>
