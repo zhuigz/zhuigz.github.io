@@ -713,6 +713,221 @@ body{
   .reveal,.reveal-stagger > *{opacity:1 !important;transform:none !important}
 }
 
+/* =========================================================
+   F4 · 这十年 · VISUAL REFINEMENTS
+   ========================================================= */
+
+/* Hero: create stacking context for AMICITIA ghost */
+.hero { z-index: 0; }
+
+/* AMICITIA — Latin: friendship / loving bond */
+.hero::after {
+  content: "AMICITIA";
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(64px, 12vw, 158px);
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(246,196,69,0.1);
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
+/* Hero title: depth glow */
+.hero-title {
+  filter:
+    drop-shadow(0 0 40px rgba(246,196,69,0.35))
+    drop-shadow(0 0 90px rgba(255,154,92,0.18));
+}
+
+/* Hero sub hl: subtle glow */
+.hero-sub .hl {
+  filter: drop-shadow(0 0 16px rgba(246,196,69,0.55));
+}
+
+/* Hero tag: Cormorant glow */
+.hero-tag {
+  text-shadow: 0 0 40px rgba(246,196,69,0.12);
+}
+
+/* Section num bar: glow line */
+.section-num .bar { box-shadow: 0 0 10px var(--gold); }
+
+/* Section title: filter depth */
+.section-title {
+  filter: drop-shadow(0 0 28px rgba(246,196,69,0.12));
+}
+.section-title .hl {
+  filter: drop-shadow(0 0 20px rgba(246,196,69,0.4));
+}
+
+/* Era title hl glow */
+.era-name .hl {
+  filter: drop-shadow(0 0 18px rgba(246,196,69,0.4));
+}
+
+/* Era marker: richer glow when active */
+.era.visible .era-marker {
+  box-shadow: 0 0 28px var(--gold), 0 0 56px rgba(246,196,69,0.22);
+}
+.era.visible .era-marker::after { opacity: 0.45; inset: -14px; }
+
+/* Friend card letter: color glow */
+.friend-card .friend-letter {
+  filter: drop-shadow(0 0 24px currentColor);
+  transition: filter 0.5s;
+}
+.friend-card:hover .friend-letter {
+  filter: drop-shadow(0 0 40px currentColor) drop-shadow(0 0 80px currentColor);
+}
+
+/* Friend card: top bar glow when hovered */
+.friend-card:hover::before {
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Timeline spine: gold glow on active fill */
+.timeline-spine::before {
+  box-shadow: 0 0 14px var(--gold);
+}
+
+/* Bond section: quotation mark glow */
+.bond-mark {
+  text-shadow: 0 0 60px rgba(246,196,69,0.25);
+}
+
+/* Bond text hl: glow */
+.bond-text .hl {
+  filter: drop-shadow(0 0 24px rgba(246,196,69,0.45));
+}
+
+/* Stat number: glow depth */
+.stat-num {
+  filter: drop-shadow(0 0 30px rgba(246,196,69,0.28));
+}
+
+/* Footer signature: warm gold glow */
+.footer-sig {
+  text-shadow:
+    0 0 24px rgba(246,196,69,0.6),
+    0 0 60px rgba(255,154,92,0.22);
+  letter-spacing: 0.2em;
+}
+
+/* Prologue quote: hl glow */
+.prologue-quote .hl {
+  filter: drop-shadow(0 0 14px rgba(246,196,69,0.4));
+}
+
+/* Sunrise section: date glow */
+.sunrise-date {
+  text-shadow:
+    0 4px 40px rgba(0,0,0,0.4),
+    0 0 60px rgba(255,215,125,0.4);
+}
+
+/* ─── F4 Quartet Tetrad — fixed right panel ─── */
+.f4-tetrad {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.f4-tetrad::before {
+  content: '';
+  position: absolute;
+  top: 32px; bottom: 32px;
+  left: 50%; width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom,
+    rgba(246,196,69,0.18),
+    rgba(94,206,138,0.18),
+    rgba(74,158,245,0.18),
+    rgba(245,122,106,0.18)
+  );
+  z-index: -1;
+}
+.f4-tetrad-label {
+  font-family: var(--font-num);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(246,196,69,0.35);
+  margin-bottom: 4px;
+  writing-mode: vertical-rl;
+}
+.f4-node {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-num);
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.82;
+  user-select: none;
+  cursor: default;
+}
+.f4-node.c-node { border-color: var(--c-color); color: var(--c-color); }
+.f4-node.d-node { border-color: var(--d-color); color: var(--d-color); }
+.f4-node.h-node { border-color: var(--h-color); color: var(--h-color); }
+.f4-node.w-node { border-color: var(--w-color); color: var(--w-color); }
+
+@keyframes friendPulse {
+  0%, 100% { transform: scale(1); opacity: 0.72; }
+  50%       { transform: scale(1.18); opacity: 0.95; box-shadow: 0 0 14px currentColor; }
+}
+.f4-node.c-node { animation: friendPulse 3.4s ease-in-out 0.0s  infinite; }
+.f4-node.d-node { animation: friendPulse 3.4s ease-in-out 0.85s infinite; }
+.f4-node.h-node { animation: friendPulse 3.4s ease-in-out 1.7s  infinite; }
+.f4-node.w-node { animation: friendPulse 3.4s ease-in-out 2.55s infinite; }
+
+@media (max-width: 980px) { .f4-tetrad { display: none; } }
+
+/* era-card: top shimmer line glow */
+.era-card:hover::before { box-shadow: 0 0 12px rgba(246,196,69,0.3); }
+
+/* trip-cta arrow: glow on hover */
+.trip-card:hover .trip-cta .arrow { width: 56px; box-shadow: 0 0 12px var(--gold); }
+
+/* location-card: top border glow */
+.location-card::before { box-shadow: 0 0 10px rgba(246,196,69,0.25); }
+
+/* sunrise quote: refined glow */
+.sunrise-quote { text-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 0 30px rgba(255,215,125,0.15); }
+
+/* bond section: additional background glow */
+.bond { position: relative; }
+.bond::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 200px;
+  background: radial-gradient(ellipse, rgba(246,196,69,0.04), transparent 70%);
+  pointer-events: none;
+}
+
+/* future title hl glow */
+.future-title .hl {
+  filter: drop-shadow(0 0 20px rgba(246,196,69,0.35));
+}
+
+/* footer quote hl */
+.footer-quote .hl {
+  filter: drop-shadow(0 0 14px rgba(246,196,69,0.4));
+}
 </style>
 </head>
 <body>
@@ -738,6 +953,15 @@ body{
     <li><a href="#future" data-hover>未来</a></li>
   </ul>
 </nav>
+
+<!-- F4 Quartet Tetrad — four friends, always together -->
+<div class="f4-tetrad" aria-hidden="true">
+  <div class="f4-tetrad-label">F · 4</div>
+  <div class="f4-node c-node">C</div>
+  <div class="f4-node d-node">D</div>
+  <div class="f4-node h-node">H</div>
+  <div class="f4-node w-node">W</div>
+</div>
 
 <!-- ========== HERO ========== -->
 <section class="hero" id="top">
