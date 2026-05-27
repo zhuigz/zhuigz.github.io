@@ -1,0 +1,2264 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IDOP 理论 — 个人 IP 的核心闭环</title>
+<meta name="description" content="IDOP · Input 输入 / Deposit 沉淀 / Output 输出 / Product 产品。首尾是 IP，中间是 DO。个人 IP 不是想出来的，而是做出来的。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   IDOP · The Personal-IP Loop
+   Visual language: deep ink, gold spine, four-letter circuit.
+   I and P at the edges (the brand), D and O at the core (the act).
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --ink-0:  #060608;
+  --ink-1:  #0a0a0e;
+  --ink-2:  #101015;
+  --ink-3:  #16161c;
+  --ink-4:  #1e1e26;
+
+  /* Type colors */
+  --pap-0:  #f5f2e9;
+  --pap-1:  rgba(245,242,233,0.86);
+  --pap-2:  rgba(245,242,233,0.62);
+  --pap-3:  rgba(245,242,233,0.42);
+  --pap-4:  rgba(245,242,233,0.24);
+  --pap-5:  rgba(245,242,233,0.12);
+  --pap-6:  rgba(245,242,233,0.06);
+
+  /* The four loop colors */
+  --i:  #f5a45b;   /* Input    — warm amber, source */
+  --d:  #6fe1b3;   /* Deposit  — verdant, asset */
+  --o:  #7eb9f5;   /* Output   — sky, expression */
+  --p:  #c9a0ff;   /* Product  — violet, delivery */
+
+  --i-deep: #c97a2c;
+  --d-deep: #2faa7e;
+  --o-deep: #4d8cd2;
+  --p-deep: #8c5fd6;
+
+  /* The single accent (the spine) */
+  --gold:    #f0c878;
+  --gold-2:  #e6b75a;
+  --gold-3:  rgba(240,200,120,0.20);
+  --gold-4:  rgba(240,200,120,0.08);
+
+  /* Type */
+  --serif:  "Fraunces", "Instrument Serif", "Songti SC", Georgia, serif;
+  --ital:   "Instrument Serif", "Fraunces", "Songti SC", serif;
+  --sans:   "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif;
+  --disp:   "Outfit", "Inter", sans-serif;
+  --mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease:    cubic-bezier(.2,.8,.2,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--ink-1); color: var(--pap-0); scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 16.5px;
+  line-height: 1.72;
+  letter-spacing: -0.003em;
+  background: var(--ink-1);
+  color: var(--pap-0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -5%, rgba(240,200,120,0.10), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(201,160,255,0.06), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 60%, rgba(126,185,245,0.05), transparent 70%);
+}
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9998;
+  opacity: 0.040; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+em, i { font-family: var(--ital); font-style: italic; }
+::selection { background: var(--gold-3); color: var(--pap-0); }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--ink-0); }
+::-webkit-scrollbar-thumb { background: var(--pap-5); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--pap-4); }
+
+/* ============================================================
+   Reading progress
+   ============================================================ */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 1px; z-index: 1000;
+  background: var(--pap-6);
+  pointer-events: none;
+}
+.progress::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--i), var(--d), var(--o), var(--p));
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+  transition: transform .14s linear;
+}
+
+/* ============================================================
+   Masthead
+   ============================================================ */
+.mast {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 22px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+  transition: background .5s, backdrop-filter .5s, border-color .5s, padding .4s;
+  border-bottom: 1px solid transparent;
+}
+.mast.lifted {
+  background: color-mix(in oklab, var(--ink-1) 72%, transparent);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border-bottom-color: var(--pap-6);
+  padding: 14px 32px;
+}
+.mast .mark { display: inline-flex; align-items: center; gap: 14px; color: var(--pap-0); }
+.mast .mark .dots { display: inline-flex; gap: 4px; }
+.mast .mark .dots i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: block;
+  animation: dotPulse 4s ease-in-out infinite;
+}
+.mast .mark .dots i:nth-child(1) { background: var(--i);  animation-delay: 0s; }
+.mast .mark .dots i:nth-child(2) { background: var(--d);  animation-delay: 0.25s; }
+.mast .mark .dots i:nth-child(3) { background: var(--o);  animation-delay: 0.5s; }
+.mast .mark .dots i:nth-child(4) { background: var(--p);  animation-delay: 0.75s; }
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.85); }
+}
+.mast .ctr { display: none; align-items: center; gap: 16px; }
+@media (min-width: 920px) { .mast .ctr { display: inline-flex; } }
+.mast .ctr .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--pap-4); }
+.mast .ctr .sec {
+  color: var(--pap-3);
+  transition: color .3s;
+  position: relative;
+}
+.mast .ctr .sec.active { color: var(--pap-0); }
+.mast .home {
+  color: var(--pap-3);
+  transition: color .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.mast .home:hover { color: var(--pap-0); }
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+.wrap-narrow { max-width: 880px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+section { padding: 140px 0; position: relative; z-index: 1; }
+@media (max-width: 720px) { section { padding: 96px 0; } }
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 28px;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.eyebrow.center { justify-content: center; }
+.eyebrow.center::before {
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.eyebrow.center::after {
+  content: "";
+  width: 28px; height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.h-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(36px, 5.4vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--pap-0);
+}
+.h-title .hl {
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.h-sub {
+  font-family: var(--sans);
+  font-size: clamp(16px, 1.45vw, 19px);
+  line-height: 1.7;
+  color: var(--pap-2);
+  max-width: 56ch;
+  margin-top: 24px;
+}
+.h-sub.center { margin-left: auto; margin-right: auto; }
+
+.lede {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(20px, 1.95vw, 26px);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--pap-1);
+}
+.lede em { color: var(--gold); font-style: normal; font-weight: 500; }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  padding: 160px 0 96px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 0;
+}
+.hero-orbit svg { width: min(110vh, 1100px); height: min(110vh, 1100px); opacity: 0.55; }
+.orbit-line { fill: none; stroke: var(--pap-5); stroke-width: 0.6; }
+.orbit-spark {
+  fill: var(--gold);
+  filter: drop-shadow(0 0 8px var(--gold));
+  animation: sparkRun 22s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes sparkRun { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+.hero-inner {
+  text-align: center;
+  max-width: 900px;
+  position: relative; z-index: 2;
+  padding: 0 32px;
+}
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 36px;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 8px 16px;
+  border: 1px solid var(--gold-3);
+  border-radius: 100px;
+  background: var(--gold-4);
+}
+.hero-tag .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold);
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+.hero-letters {
+  display: flex; align-items: baseline; justify-content: center;
+  gap: clamp(8px, 2vw, 28px);
+  margin: 32px 0 8px;
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(72px, 17vw, 220px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.hero-letters .L {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(180deg, var(--pap-0) 0%, var(--pap-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: transform .5s var(--ease);
+}
+.hero-letters .L .small {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  -webkit-text-fill-color: var(--pap-3);
+  color: var(--pap-3);
+  white-space: nowrap;
+}
+.hero-letters .L.gold {
+  background: linear-gradient(180deg, var(--gold-light, #ffd98a) 0%, var(--gold) 70%, var(--gold-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 80px rgba(240,200,120,0.18);
+}
+.hero-letters .L.gold .small { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+.hero-letters .L.do {
+  background: linear-gradient(180deg, var(--pap-0) 0%, var(--pap-1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-equation {
+  margin-top: 64px;
+  display: flex; justify-content: center; align-items: center;
+  flex-wrap: wrap; gap: 8px 18px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+}
+.hero-equation .seg { color: var(--pap-1); }
+.hero-equation .seg .ltr {
+  display: inline-block;
+  width: 22px; height: 22px;
+  text-align: center; line-height: 22px;
+  border-radius: 50%;
+  margin-right: 6px;
+  font-weight: 700;
+  font-family: var(--disp);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.hero-equation .seg.i .ltr { background: var(--i); color: var(--ink-0); }
+.hero-equation .seg.d .ltr { background: var(--d); color: var(--ink-0); }
+.hero-equation .seg.o .ltr { background: var(--o); color: var(--ink-0); }
+.hero-equation .seg.p .ltr { background: var(--p); color: var(--ink-0); }
+.hero-equation .sep { color: var(--pap-4); }
+
+.hero-title {
+  margin-top: 56px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 36px);
+  line-height: 1.35;
+  color: var(--pap-1);
+  letter-spacing: -0.01em;
+}
+.hero-title em { color: var(--gold); font-style: normal; font-weight: 500; }
+.hero-kicker {
+  margin-top: 22px;
+  font-size: 16px;
+  color: var(--pap-2);
+  max-width: 64ch;
+  margin-left: auto; margin-right: auto;
+  line-height: 1.7;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 36px; left: 50%; transform: translateX(-50%);
+  display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  z-index: 2;
+}
+.hero-scroll .line {
+  width: 1px; height: 48px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  position: relative; overflow: hidden;
+}
+.hero-scroll .line::after {
+  content: "";
+  position: absolute; top: -16px; left: 0;
+  width: 1px; height: 16px;
+  background: var(--pap-0);
+  animation: scrollDot 2.2s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0% { top: -16px; opacity: 1; }
+  100% { top: 48px; opacity: 0; }
+}
+
+/* ============================================================
+   Section divider
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pap-5) 30%, var(--pap-5) 70%, transparent);
+}
+
+/* ============================================================
+   Compare table — section 01
+   ============================================================ */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 64px;
+  border: 1px solid var(--pap-6);
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--ink-2);
+}
+@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
+.compare-col {
+  padding: 36px 32px;
+  position: relative;
+}
+.compare-col + .compare-col { border-left: 1px solid var(--pap-6); }
+@media (max-width: 760px) {
+  .compare-col + .compare-col { border-left: 0; border-top: 1px solid var(--pap-6); }
+}
+.compare-col h4 {
+  font-family: var(--disp);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 28px;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.compare-col.naive { background: linear-gradient(180deg, rgba(245,164,91,0.04), transparent 60%); }
+.compare-col.system { background: linear-gradient(180deg, rgba(240,200,120,0.05), transparent 60%); }
+.compare-col.naive h4 { color: var(--pap-2); }
+.compare-col.naive h4::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pap-3);
+  display: inline-block;
+}
+.compare-col.system h4 { color: var(--gold); }
+.compare-col.system h4::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  display: inline-block;
+}
+.compare-list { display: flex; flex-direction: column; }
+.compare-row {
+  padding: 14px 0;
+  font-size: 15.5px;
+  line-height: 1.55;
+  border-top: 1px solid var(--pap-6);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.compare-row:first-child { border-top: 0; }
+.compare-col.naive .compare-row { color: var(--pap-2); }
+.compare-col.system .compare-row { color: var(--pap-0); }
+.compare-row::before {
+  content: "—";
+  color: var(--pap-4);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.compare-col.system .compare-row::before {
+  content: "→";
+  color: var(--gold);
+}
+
+/* ============================================================
+   The Loop — section 02
+   ============================================================ */
+.loop-stage {
+  position: relative;
+  margin: 72px auto 0;
+  width: min(720px, 100%);
+  aspect-ratio: 1 / 1;
+}
+.loop-stage svg { width: 100%; height: 100%; }
+.loop-ring { fill: none; stroke: var(--pap-5); stroke-width: 0.6; }
+.loop-ring-gold {
+  fill: none;
+  stroke: url(#goldGrad);
+  stroke-width: 1.4;
+  stroke-dasharray: 8 6;
+  opacity: 0.7;
+  animation: ringRotate 60s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes ringRotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.loop-arrow {
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+.loop-arrow.a1 { stroke: var(--i); }
+.loop-arrow.a2 { stroke: var(--d); }
+.loop-arrow.a3 { stroke: var(--o); }
+.loop-arrow.a4 { stroke: var(--p); }
+
+.loop-node {
+  position: absolute;
+  width: 22%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.loop-node .badge {
+  font-family: var(--disp);
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--c-light, #fff) 0%, var(--c, #fff) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px var(--c-glow, transparent));
+  transition: transform .4s var(--ease), filter .4s;
+}
+.loop-node .ttl {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 19px;
+  margin-top: 6px;
+  color: var(--pap-0);
+  letter-spacing: -0.01em;
+}
+.loop-node .ttl-en {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c, var(--pap-2));
+  margin-top: 4px;
+}
+.loop-node .desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--pap-2);
+  margin-top: 10px;
+  max-width: 22ch;
+  margin-left: auto; margin-right: auto;
+}
+.loop-node:hover .badge {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 32px var(--c-glow, transparent));
+}
+
+/* fixed positions */
+.loop-node.top    { top: 8%;  left: 50%; --c: var(--i); --c-light: #ffd1a0; --c-glow: rgba(245,164,91,0.55); }
+.loop-node.right  { top: 50%; left: 92%; --c: var(--d); --c-light: #b7f3d6; --c-glow: rgba(111,225,179,0.45); }
+.loop-node.bottom { top: 92%; left: 50%; --c: var(--o); --c-light: #bfd9f8; --c-glow: rgba(126,185,245,0.45); }
+.loop-node.left   { top: 50%; left: 8%;  --c: var(--p); --c-light: #ddc7ff; --c-glow: rgba(201,160,255,0.45); }
+
+.loop-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.loop-center .word {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: clamp(4px, 0.6vw, 10px);
+  line-height: 1;
+}
+.loop-center .word .x {
+  display: inline-block;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.loop-center .word .y {
+  display: inline-block;
+  color: var(--pap-1);
+  opacity: 0.55;
+}
+.loop-center .cap {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  margin-top: 10px;
+}
+.loop-center .cap b { color: var(--gold); font-weight: 500; }
+
+@media (max-width: 720px) {
+  .loop-node .badge { font-size: 36px; }
+  .loop-node .ttl { font-size: 15px; }
+  .loop-node .desc { display: none; }
+  .loop-node { width: 30%; }
+}
+
+/* ============================================================
+   Letter map — IP / DO callout
+   ============================================================ */
+.ipdo {
+  margin-top: 72px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+@media (max-width: 760px) { .ipdo { grid-template-columns: 1fr; } }
+.ipdo-card {
+  padding: 36px 32px;
+  border: 1px solid var(--pap-6);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 60%);
+  position: relative;
+  overflow: hidden;
+}
+.ipdo-card::before {
+  content: attr(data-letters);
+  position: absolute;
+  right: -8px; bottom: -28px;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 200px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  opacity: 0.06;
+  color: var(--pap-0);
+  pointer-events: none;
+}
+.ipdo-card .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  margin-bottom: 14px;
+}
+.ipdo-card .pair {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.ipdo-card .pair .a, .ipdo-card .pair .b {
+  background: linear-gradient(180deg, var(--gold-light, #ffd98a), var(--gold-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ipdo-card .pair .dim { color: var(--pap-3); }
+.ipdo-card .pair .sl { color: var(--pap-4); margin: 0 6px; font-weight: 400; }
+.ipdo-card .narrative {
+  margin-top: 18px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--pap-1);
+  max-width: 42ch;
+}
+.ipdo-card .narrative em { color: var(--gold); font-style: normal; font-weight: 500; }
+
+/* ============================================================
+   Module section — Input / Deposit / Output / Product
+   ============================================================ */
+.mod {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) 1fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 880px) { .mod { grid-template-columns: 1fr; gap: 40px; } }
+.mod-side {
+  position: sticky;
+  top: 120px;
+}
+.mod-side .mod-num {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 140px;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--c, var(--pap-0)) 0%, var(--c-deep, var(--pap-2)) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 32px var(--c-glow, transparent));
+}
+.mod-side .mod-en {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c, var(--pap-2));
+  margin-top: 14px;
+}
+.mod-side .mod-cn {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  color: var(--pap-0);
+  margin-top: 6px;
+}
+.mod-side .mod-tag {
+  margin-top: 18px;
+  display: inline-flex;
+  padding: 6px 12px;
+  border: 1px solid var(--c, var(--pap-5));
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c, var(--pap-2));
+  background: color-mix(in oklab, var(--c, transparent) 8%, transparent);
+}
+
+.mod.i  { --c: var(--i); --c-deep: var(--i-deep); --c-glow: rgba(245,164,91,0.25); }
+.mod.d  { --c: var(--d); --c-deep: var(--d-deep); --c-glow: rgba(111,225,179,0.25); }
+.mod.o  { --c: var(--o); --c-deep: var(--o-deep); --c-glow: rgba(126,185,245,0.25); }
+.mod.pp { --c: var(--p); --c-deep: var(--p-deep); --c-glow: rgba(201,160,255,0.25); }
+
+.mod-body h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--pap-0);
+}
+.mod-body h3 em { color: var(--c, var(--gold)); font-style: normal; }
+.mod-body .lede {
+  margin-top: 24px;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.55;
+  color: var(--pap-1);
+}
+.mod-body .lede em { color: var(--c, var(--gold)); font-style: normal; font-weight: 500; }
+.mod-body p {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.78;
+  color: var(--pap-1);
+  max-width: 64ch;
+}
+.mod-body p em { color: var(--c, var(--gold)); font-style: normal; font-weight: 500; }
+.mod-body .one-line {
+  margin-top: 28px;
+  padding: 22px 26px;
+  border-left: 2px solid var(--c, var(--gold));
+  background: color-mix(in oklab, var(--c, var(--gold)) 6%, transparent);
+  border-radius: 0 14px 14px 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--pap-0);
+  font-style: italic;
+}
+.mod-body .one-line em { font-style: italic; color: var(--c, var(--gold)); font-weight: 500; }
+
+/* Three pillars (Input) */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 36px;
+}
+@media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
+.pillar {
+  padding: 28px 24px;
+  border: 1px solid var(--pap-6);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 70%);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .35s, transform .35s var(--ease), background .35s;
+}
+.pillar:hover { border-color: color-mix(in oklab, var(--cc) 60%, transparent); transform: translateY(-3px); }
+.pillar::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cc), transparent);
+  opacity: 0.7;
+}
+.pillar .pl-letter {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--cc);
+  letter-spacing: -0.02em;
+}
+.pillar .pl-en {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  margin-top: 6px;
+}
+.pillar .pl-cn {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin-top: 16px;
+  color: var(--pap-0);
+}
+.pillar .pl-q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--cc);
+  margin-top: 6px;
+}
+.pillar .pl-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--pap-2);
+  margin-top: 14px;
+}
+.pillar.h { --cc: var(--i); }       /* Happiness — warm/amber, audio of Input.H */
+.pillar.k { --cc: var(--gold); }
+.pillar.r { --cc: var(--o); }
+
+/* tag chips */
+.chip-set {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 16px;
+}
+.chip {
+  font-size: 12.5px;
+  padding: 6px 12px;
+  border: 1px solid var(--pap-6);
+  border-radius: 100px;
+  color: var(--pap-2);
+  background: rgba(255,255,255,0.02);
+  font-family: var(--sans);
+  white-space: nowrap;
+  transition: color .25s, border-color .25s, background .25s;
+}
+.chip:hover {
+  color: var(--pap-0);
+  border-color: var(--cc, var(--gold));
+  background: color-mix(in oklab, var(--cc, var(--gold)) 10%, transparent);
+}
+
+/* Deposit pipeline */
+.pipeline {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+@media (max-width: 760px) { .pipeline { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .pipeline { grid-template-columns: 1fr; } }
+.pipe-step {
+  padding: 22px 18px;
+  border: 1px solid var(--pap-6);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.02);
+  position: relative;
+}
+.pipe-step .num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--d);
+}
+.pipe-step .ttl {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--pap-0);
+  margin-top: 8px;
+}
+.pipe-step .sub {
+  font-size: 13px;
+  color: var(--pap-2);
+  margin-top: 8px;
+  line-height: 1.55;
+}
+
+/* HKRR matrix card */
+.hkrr-matrix {
+  margin-top: 36px;
+  padding: 32px;
+  border: 1px solid var(--pap-6);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(126,185,245,0.04), transparent 70%);
+}
+.hkrr-matrix h4 {
+  font-family: var(--disp);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 22px;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.hkrr-matrix h4::before {
+  content: "★";
+  color: var(--gold);
+}
+.hkrr-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+@media (max-width: 760px) { .hkrr-grid { grid-template-columns: 1fr 1fr; } }
+.hkrr-cell {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--pap-6);
+  border-top: 2px solid var(--cc);
+}
+.hkrr-cell .letter {
+  font-family: var(--disp);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--cc);
+  line-height: 1;
+}
+.hkrr-cell .name {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cc);
+  margin-top: 6px;
+}
+.hkrr-cell .cn {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 12px;
+  color: var(--pap-0);
+}
+.hkrr-cell .desc {
+  font-size: 13px;
+  color: var(--pap-2);
+  margin-top: 8px;
+  line-height: 1.55;
+}
+.hkrr-cell.h { --cc: #ffb86a; }
+.hkrr-cell.k { --cc: #7eb9f5; }
+.hkrr-cell.r1 { --cc: #ff8a93; }
+.hkrr-cell.r2 { --cc: #6fe1b3; }
+
+/* relation block (IDOP × HKRR) */
+.relation {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 760px) { .relation { grid-template-columns: 1fr; } }
+.rel-card {
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid var(--pap-6);
+}
+.rel-card .lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.rel-card .ttl {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin-top: 8px;
+  color: var(--pap-0);
+}
+.rel-card p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--pap-2);
+  line-height: 1.65;
+}
+
+/* product list */
+.prod-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 760px) { .prod-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .prod-grid { grid-template-columns: 1fr; } }
+.prod-item {
+  padding: 14px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--pap-6);
+  background: rgba(255,255,255,0.02);
+  font-size: 14px;
+  color: var(--pap-1);
+  text-align: center;
+  transition: color .25s, border-color .25s, background .25s, transform .25s;
+}
+.prod-item:hover {
+  color: var(--pap-0);
+  border-color: var(--p);
+  background: color-mix(in oklab, var(--p) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Flywheel section
+   ============================================================ */
+.flywheel-stage {
+  margin-top: 60px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 880px) { .flywheel-stage { grid-template-columns: 1fr; gap: 40px; } }
+.fw-visual {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+}
+.fw-visual svg { width: 100%; height: 100%; }
+.fw-arc {
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.fw-arc.a1 { stroke: var(--i); }
+.fw-arc.a2 { stroke: var(--d); }
+.fw-arc.a3 { stroke: var(--o); }
+.fw-arc.a4 { stroke: var(--p); }
+.fw-spin { animation: spinSlow 24s linear infinite; transform-origin: 50% 50%; }
+@keyframes spinSlow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.fw-node {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pap-1);
+  background: var(--ink-2);
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--pap-6);
+  transform: translate(-50%, -50%);
+}
+.fw-node.n1 { top: 8%;  left: 50%; border-color: var(--i); color: var(--i); }
+.fw-node.n2 { top: 50%; left: 92%; border-color: var(--d); color: var(--d); }
+.fw-node.n3 { top: 92%; left: 50%; border-color: var(--o); color: var(--o); }
+.fw-node.n4 { top: 50%; left: 8%;  border-color: var(--p); color: var(--p); }
+.fw-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.fw-center .word {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--gold);
+}
+.fw-center .cap {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  margin-top: 6px;
+}
+
+.fw-side h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--pap-0);
+}
+.fw-side h3 em { color: var(--gold); font-style: normal; }
+.fw-side p {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--pap-1);
+}
+.fw-feedback {
+  margin-top: 24px;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+/* ============================================================
+   Pull quote — big editorial moment
+   ============================================================ */
+.pull-quote {
+  padding: 120px 0;
+  text-align: center;
+}
+.pull-quote .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--pap-0);
+  max-width: 22ch;
+  margin: 0 auto;
+}
+.pull-quote .q em {
+  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+}
+.pull-quote .cap {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+}
+
+/* ============================================================
+   AI / Evolvability — section 08
+   ============================================================ */
+.ai-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 56px;
+}
+@media (max-width: 760px) { .ai-grid { grid-template-columns: 1fr; } }
+.ai-card {
+  padding: 32px 28px;
+  border-radius: 18px;
+  border: 1px solid var(--pap-6);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 60%);
+  position: relative;
+  overflow: hidden;
+}
+.ai-card.cheap::before, .ai-card.evo::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cc), transparent);
+}
+.ai-card.cheap { --cc: var(--o); }
+.ai-card.evo   { --cc: var(--d); }
+.ai-card .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cc);
+  margin-bottom: 18px;
+}
+.ai-card h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--pap-0);
+}
+.ai-card p {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--pap-1);
+}
+.ai-equation {
+  margin-top: 48px;
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(22px, 2.4vw, 32px);
+  letter-spacing: -0.01em;
+  color: var(--pap-0);
+  line-height: 1.5;
+}
+.ai-equation em { color: var(--gold); font-style: italic; }
+.ai-equation .plus { color: var(--pap-4); margin: 0 6px; }
+
+/* ============================================================
+   Principles — section 09
+   ============================================================ */
+.principles {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (max-width: 760px) { .principles { grid-template-columns: 1fr; } }
+.principle {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--pap-6);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+}
+.principle .x {
+  font-family: var(--disp);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--i);
+  line-height: 1.2;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.principle .t {
+  font-size: 15px;
+  color: var(--pap-1);
+  line-height: 1.55;
+}
+.principle-credo {
+  margin-top: 56px;
+  padding: 56px 32px;
+  text-align: center;
+  border: 1px solid var(--gold-3);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(240,200,120,0.10), transparent 70%),
+    linear-gradient(180deg, rgba(240,200,120,0.04), transparent 70%);
+  position: relative;
+}
+.principle-credo .seal {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--gold-3);
+  border-radius: 100px;
+  color: var(--gold);
+  margin-bottom: 22px;
+}
+.principle-credo .line1 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.4;
+  color: var(--pap-0);
+}
+.principle-credo .line2 {
+  margin-top: 14px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.4;
+  color: var(--gold);
+}
+
+/* ============================================================
+   Final
+   ============================================================ */
+.final-def {
+  padding: 56px 40px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(240,200,120,0.05), transparent 70%),
+    var(--ink-2);
+  border: 1px solid var(--pap-6);
+  margin-top: 56px;
+}
+.final-def .blk {
+  font-family: var(--serif);
+  font-size: clamp(17px, 1.7vw, 22px);
+  line-height: 1.7;
+  color: var(--pap-1);
+}
+.final-def .blk em {
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.final-lines {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 36px;
+}
+@media (max-width: 720px) { .final-lines { grid-template-columns: 1fr; } }
+.final-line {
+  padding: 22px 24px;
+  border-radius: 14px;
+  border: 1px solid var(--pap-6);
+  background: rgba(255,255,255,0.025);
+  display: flex; align-items: baseline; gap: 16px;
+}
+.final-line .ltr {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--cc);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.final-line .txt {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--pap-0);
+  line-height: 1.45;
+}
+.final-line .txt em { color: var(--cc); font-style: normal; font-weight: 500; }
+.final-line.i { --cc: var(--i); }
+.final-line.d { --cc: var(--d); }
+.final-line.o { --cc: var(--o); }
+.final-line.p { --cc: var(--p); }
+
+.coda {
+  margin-top: 96px;
+  text-align: center;
+}
+.coda .seal {
+  display: inline-flex; gap: 4px; align-items: baseline;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: clamp(56px, 11vw, 144px);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+.coda .seal .L {
+  background: linear-gradient(180deg, var(--gold-light, #ffd98a) 0%, var(--gold-2) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.coda .seal .D {
+  background: linear-gradient(180deg, var(--pap-0) 0%, var(--pap-2) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  opacity: 0.7;
+}
+.coda .cap {
+  margin-top: 24px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 28px);
+  color: var(--pap-0);
+  line-height: 1.5;
+}
+.coda .cap em { color: var(--gold); font-style: italic; }
+.coda .stamp {
+  margin-top: 36px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+footer {
+  padding: 64px 32px 56px;
+  border-top: 1px solid var(--pap-6);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  text-align: center;
+}
+footer .ft-row {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  flex-wrap: wrap;
+}
+footer .ft-row .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--pap-5); }
+footer a:hover { color: var(--pap-0); }
+
+/* ============================================================
+   Reveal
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal.d2 { transition-delay: 0.1s; }
+.reveal.d3 { transition-delay: 0.2s; }
+.reveal.d4 { transition-delay: 0.3s; }
+.reveal.d5 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="mast" id="mast">
+  <a href="index.html" class="mark">
+    <span class="dots"><i></i><i></i><i></i><i></i></span>
+    <span>IDOP&nbsp;·&nbsp;Theory</span>
+  </a>
+  <nav class="ctr" id="navCtr">
+    <a href="#why"     class="sec" data-target="why">Why</a>
+    <span class="sep"></span>
+    <a href="#loop"    class="sec" data-target="loop">Loop</a>
+    <span class="sep"></span>
+    <a href="#input"   class="sec" data-target="input">Input</a>
+    <span class="sep"></span>
+    <a href="#deposit" class="sec" data-target="deposit">Deposit</a>
+    <span class="sep"></span>
+    <a href="#output"  class="sec" data-target="output">Output</a>
+    <span class="sep"></span>
+    <a href="#product" class="sec" data-target="product">Product</a>
+    <span class="sep"></span>
+    <a href="#fly"     class="sec" data-target="fly">Flywheel</a>
+  </nav>
+  <a href="index.html" class="home">← 返回主页</a>
+</header>
+
+<!-- ============================================================
+     Hero
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-orbit" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000">
+      <defs>
+        <linearGradient id="goldGradHero" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"  stop-color="#FFE08A"/>
+          <stop offset="50%" stop-color="#F0C878"/>
+          <stop offset="100%" stop-color="#C99A4A"/>
+        </linearGradient>
+      </defs>
+      <circle cx="500" cy="500" r="420" class="orbit-line"/>
+      <circle cx="500" cy="500" r="340" class="orbit-line" style="opacity:.55"/>
+      <circle cx="500" cy="500" r="260" class="orbit-line" style="opacity:.32"/>
+      <g class="orbit-spark">
+        <circle cx="920" cy="500" r="3.6"/>
+      </g>
+      <g class="orbit-spark" style="animation-duration:38s">
+        <circle cx="500" cy="160" r="2.4"/>
+      </g>
+      <g class="orbit-spark" style="animation-duration:54s; animation-direction:reverse">
+        <circle cx="240" cy="500" r="2"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <span class="hero-tag"><span class="dot"></span>原创理论 · The Personal-IP Loop</span>
+
+    <div class="hero-letters" aria-label="IDOP">
+      <span class="L gold">I<span class="small">Input</span></span>
+      <span class="L do">D<span class="small">Deposit</span></span>
+      <span class="L do">O<span class="small">Output</span></span>
+      <span class="L gold">P<span class="small">Product</span></span>
+    </div>
+
+    <p class="hero-equation" style="margin-top:74px">
+      <span class="seg i"><span class="ltr">I</span>Input · 输入</span>
+      <span class="sep">×</span>
+      <span class="seg d"><span class="ltr">D</span>Deposit · 沉淀</span>
+      <span class="sep">×</span>
+      <span class="seg o"><span class="ltr">O</span>Output · 输出</span>
+      <span class="sep">×</span>
+      <span class="seg p"><span class="ltr">P</span>Product · 产品</span>
+    </p>
+
+    <h1 class="hero-title">
+      个人 <em>IP</em> 的核心闭环 ——<br/>
+      不是想出来的，而是 <em>做</em> 出来的。
+    </h1>
+    <p class="hero-kicker">
+      首尾是 IP，中间是 DO。这不是缩写游戏，而是一句方法论：<br/>
+      个人 IP 不靠灵感、不靠流量、不靠包装，靠的是输入、沉淀、输出、产品的长期复利。
+    </p>
+  </div>
+
+  <a href="#why" class="hero-scroll">
+    <span>scroll</span>
+    <span class="line"></span>
+  </a>
+</section>
+
+<!-- ============================================================
+     01 · Why
+     ============================================================ -->
+<section id="why">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">01 · Why IDOP</span>
+      <h2 class="h-title">"做个人 IP" 这四个字，<br/>已经被说得太浅。</h2>
+      <p class="h-sub">
+        多数人理解的个人 IP 是：发内容、拍视频、涨粉丝、接广告、卖课、变现。<br/>
+        这太表层了。真正可持续的个人 IP，不是单点动作，而是一整套<em style="color:var(--gold);font-style:normal">从源头到交付的价值生产系统</em>。
+      </p>
+    </div>
+
+    <div class="compare reveal d2">
+      <div class="compare-col naive">
+        <h4>普通做号思维</h4>
+        <div class="compare-list">
+          <div class="compare-row">想到什么发什么</div>
+          <div class="compare-row">追热点、追流量</div>
+          <div class="compare-row">内容发完就结束</div>
+          <div class="compare-row">有粉再想变现</div>
+          <div class="compare-row">靠爆款</div>
+          <div class="compare-row">把账号当窗口</div>
+          <div class="compare-row">短期数据决定一切</div>
+        </div>
+      </div>
+      <div class="compare-col system">
+        <h4>IDOP 系统思维</h4>
+        <div class="compare-list">
+          <div class="compare-row">用高质量输入持续供能</div>
+          <div class="compare-row">沉淀长期认知资产</div>
+          <div class="compare-row">输出后进入反馈迭代</div>
+          <div class="compare-row">从一开始就考虑产品交付</div>
+          <div class="compare-row">靠系统</div>
+          <div class="compare-row">把自己当作品在打磨</div>
+          <div class="compare-row">长期复利决定结果</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal d3" style="margin-top:48px;text-align:center">
+      <p class="lede">
+        高质量<em>输入</em> → 深度<em>沉淀</em> → 公开<em>输出</em> → <em>产品</em>交付 → 反馈反哺新一轮输入与沉淀。<br/>
+        这就是 IDOP 理论。
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     02 · The Loop
+     ============================================================ -->
+<section id="loop">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow center">02 · The Loop</span>
+      <h2 class="h-title">IDOP 是什么 ——<br/>个人 IP 的<span class="hl">核心闭环</span>。</h2>
+      <p class="h-sub center">
+        四个模块首尾相接，构成一个完整循环。<br/>
+        不是流程图，是一台可以持续运转的飞轮。
+      </p>
+    </div>
+
+    <div class="loop-stage reveal d2">
+      <svg viewBox="0 0 800 800" aria-hidden="true">
+        <defs>
+          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"  stop-color="#FFE08A"/>
+            <stop offset="100%" stop-color="#D4A012"/>
+          </linearGradient>
+          <marker id="arrI" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f5a45b"/></marker>
+          <marker id="arrD" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6fe1b3"/></marker>
+          <marker id="arrO" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7eb9f5"/></marker>
+          <marker id="arrP" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#c9a0ff"/></marker>
+        </defs>
+        <circle cx="400" cy="400" r="300" class="loop-ring"/>
+        <circle cx="400" cy="400" r="300" class="loop-ring-gold"/>
+        <circle cx="400" cy="400" r="200" class="loop-ring" style="opacity:.45"/>
+
+        <!-- arcs with arrowheads, between adjacent nodes (top→right→bottom→left→top) -->
+        <path d="M 580 220 A 280 280 0 0 1 600 420" class="loop-arrow a1" marker-end="url(#arrD)"/>
+        <path d="M 580 580 A 280 280 0 0 1 380 600" class="loop-arrow a2" marker-end="url(#arrO)"/>
+        <path d="M 220 580 A 280 280 0 0 1 200 380" class="loop-arrow a3" marker-end="url(#arrP)"/>
+        <path d="M 220 220 A 280 280 0 0 1 420 200" class="loop-arrow a4" marker-end="url(#arrI)"/>
+      </svg>
+
+      <div class="loop-node top">
+        <div class="badge">I</div>
+        <div class="ttl">输入</div>
+        <div class="ttl-en">Input</div>
+        <div class="desc">高质量源头，决定我有什么值得表达。</div>
+      </div>
+      <div class="loop-node right">
+        <div class="badge">D</div>
+        <div class="ttl">沉淀</div>
+        <div class="ttl-en">Deposit</div>
+        <div class="desc">把灵感、知识、经验沉淀成可复用资产。</div>
+      </div>
+      <div class="loop-node bottom">
+        <div class="badge">O</div>
+        <div class="ttl">输出</div>
+        <div class="ttl-en">Output</div>
+        <div class="desc">公开表达，积累信任，让世界看见。</div>
+      </div>
+      <div class="loop-node left">
+        <div class="badge">P</div>
+        <div class="ttl">产品</div>
+        <div class="ttl-en">Product</div>
+        <div class="desc">将能力封装为别人愿意付费的价值交付。</div>
+      </div>
+
+      <div class="loop-center">
+        <div class="word">
+          <span class="x">I</span><span class="y">D</span><span class="y">O</span><span class="x">P</span>
+        </div>
+        <div class="cap">首尾是 <b>IP</b>　·　中间是 <b>DO</b></div>
+      </div>
+    </div>
+
+    <div class="ipdo reveal d3">
+      <div class="ipdo-card" data-letters="IP">
+        <div class="lbl">首尾 · The Brand</div>
+        <div class="pair"><span class="a">I</span><span class="dim">D</span><span class="dim">O</span><span class="a">P</span></div>
+        <div class="narrative">
+          <em>I</em> 与 <em>P</em> 围出 <em>IP</em> ——<br/>
+          这不是流量账号，不是明星人设，更不是包装。<br/>
+          这是一个真实成长的人，正在被世界看见。
+        </div>
+      </div>
+      <div class="ipdo-card" data-letters="DO">
+        <div class="lbl">中间 · The Act</div>
+        <div class="pair"><span class="dim">I</span><span class="a">D</span><span class="a">O</span><span class="dim">P</span></div>
+        <div class="narrative">
+          <em>D</em> 与 <em>O</em> 拼出 <em>DO</em> ——<br/>
+          没有捷径，没有讨巧，没有靠想象。<br/>
+          每一次沉淀、每一次输出，都是在动手。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     03 · Input
+     ============================================================ -->
+<section id="input">
+  <div class="wrap">
+    <div class="mod i">
+      <div class="mod-side reveal">
+        <div class="mod-num">01</div>
+        <div class="mod-en">Input</div>
+        <div class="mod-cn">输入</div>
+        <div class="mod-tag">Source decides ceiling</div>
+      </div>
+      <div class="mod-body">
+        <div class="reveal">
+          <h3>源头，决定<em>上限</em>。</h3>
+          <p class="lede">
+            没有源头活水，输出迟早会枯。<br/>
+            真正完整的 Input，至少包含<em>三类</em>：认知输入、审美输入、用户输入。
+          </p>
+        </div>
+
+        <div class="pillars reveal d2">
+          <div class="pillar k">
+            <div class="pl-letter">K</div>
+            <div class="pl-en">Knowledge</div>
+            <div class="pl-cn">认知输入</div>
+            <div class="pl-q">"我有什么值得讲？"</div>
+            <div class="pl-desc">高质量课程、播客、书籍、AI 内容、真实项目，提供观点 / 模型 / 方法 / 判断与灵感。</div>
+            <div class="chip-set">
+              <span class="chip">浪前</span>
+              <span class="chip">无人知晓</span>
+              <span class="chip">数字生命卡兹克</span>
+              <span class="chip">财富自由之路</span>
+              <span class="chip">原则</span>
+              <span class="chip">反脆弱</span>
+              <span class="chip">纳瓦尔宝典</span>
+            </div>
+          </div>
+
+          <div class="pillar h">
+            <div class="pl-letter">H</div>
+            <div class="pl-en">Happiness</div>
+            <div class="pl-cn">审美输入</div>
+            <div class="pl-q">"我如何讲得更好？"</div>
+            <div class="pl-desc">在 AI 什么都能生成的时代，能不能判断 65 分和 85 分，决定了拉开差距的厚度。</div>
+            <div class="chip-set">
+              <span class="chip">好文章</span>
+              <span class="chip">好海报</span>
+              <span class="chip">好封面</span>
+              <span class="chip">好纪录片</span>
+              <span class="chip">好网站</span>
+              <span class="chip">好 PPT</span>
+              <span class="chip">好排版</span>
+              <span class="chip">好空间</span>
+            </div>
+          </div>
+
+          <div class="pillar r">
+            <div class="pl-letter">R</div>
+            <div class="pl-en">Resonance</div>
+            <div class="pl-cn">用户输入</div>
+            <div class="pl-q">"别人到底需要什么？"</div>
+            <div class="pl-desc">评论 / 私信 / 朋友的真实困惑 / 同龄人的痛点 / 市场的真实数据，是个人 IP 不自嗨的安全绳。</div>
+            <div class="chip-set">
+              <span class="chip">评论区</span>
+              <span class="chip">私信</span>
+              <span class="chip">同龄人困惑</span>
+              <span class="chip">爆款拆解</span>
+              <span class="chip">付费意愿</span>
+              <span class="chip">真实焦虑</span>
+              <span class="chip">真实渴望</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="one-line reveal d3">
+          <em>认知输入</em>让我有东西可讲，<em>审美输入</em>让我把东西讲得更好，<em>用户输入</em>让我知道别人真正需要什么。
+        </div>
+
+        <p class="reveal d4">
+          所以源头不是单线供给，而是<em>三股共流</em>。<br/>
+          它们对应 HKRR 里的 <em>H · K · R</em>：有真东西、好看舒服、击中真实处境。<br/>
+          Input 端用 HKR 做筛选，源头一旦干净，后面整条链就有底气。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     04 · Deposit
+     ============================================================ -->
+<section id="deposit">
+  <div class="wrap">
+    <div class="mod d">
+      <div class="mod-side reveal">
+        <div class="mod-num">02</div>
+        <div class="mod-en">Deposit</div>
+        <div class="mod-cn">沉淀</div>
+        <div class="mod-tag">Information → Asset</div>
+      </div>
+      <div class="mod-body">
+        <div class="reveal">
+          <h3>把过眼云烟，<em>资产化</em>。</h3>
+          <p class="lede">
+            只有输入没有沉淀，就是<em>万花丛中过，片叶不沾身</em>。<br/>
+            沉淀不是记录，沉淀是<em>认知资产化</em>。
+          </p>
+        </div>
+
+        <div class="pipeline reveal d2">
+          <div class="pipe-step">
+            <div class="num">STEP 01</div>
+            <div class="ttl">产生灵感启发</div>
+            <div class="sub">在阅读、对话、思考、生活中捕捉那些不经意的火花。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 02</div>
+            <div class="ttl">找 AI 深聊拆解</div>
+            <div class="sub">把模糊的感觉拆成可表达的结构、对比与判断。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 03</div>
+            <div class="ttl">交叉验证补充</div>
+            <div class="sub">用案例、数据、反例打磨结论的边界与适用条件。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 04</div>
+            <div class="ttl">整理入素材库</div>
+            <div class="sub">归档到「灵感启发收获素材库」，等待周日大复盘分流。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 05</div>
+            <div class="ttl">周日大复盘</div>
+            <div class="sub">分流进入个人 IP 素材库 / 人生系统 / 暂存观察。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 06</div>
+            <div class="ttl">长期可复用</div>
+            <div class="sub">沉淀后的资产可以反复进入文章、视频、课程、产品。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 07</div>
+            <div class="ttl">高分样本库</div>
+            <div class="sub">审美层面的沉淀：把好的拆解透，让审美变成判断力。</div>
+          </div>
+          <div class="pipe-step">
+            <div class="num">STEP 08</div>
+            <div class="ttl">需求信号库</div>
+            <div class="sub">收集评论、问题与市场反馈，判断哪些值得长期服务。</div>
+          </div>
+        </div>
+
+        <div class="one-line reveal d3">
+          沉淀的本质，是把<em>过眼云烟式的信息</em>，转化为<em>可复用、可输出、可升级</em>的认知资产。
+        </div>
+
+        <p class="reveal d4">
+          认知资产化 ——把想法讲清楚、把感触结构化、把灵感变成素材、把素材变成选题、把选题变成内容、把内容变成产品模块。<br/>
+          审美标准化 ——建立高分样本、失败案例、审美词典，让"好"可以被复述。<br/>
+          需求结构化 ——记录市场信号、归类用户问题，让共鸣不靠运气。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PULL QUOTE
+     ============================================================ -->
+<section class="pull-quote">
+  <div class="wrap-narrow reveal">
+    <p class="q">
+      没有沉淀，输入只是<em>信息消费</em>；<br/>
+      没有输出，沉淀只是<em>私人收藏</em>；<br/>
+      没有产品，影响力很难变成<em>价值交付</em>。
+    </p>
+    <div class="cap">— IDOP 的底层逻辑</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     05 · Output
+     ============================================================ -->
+<section id="output">
+  <div class="wrap">
+    <div class="mod o">
+      <div class="mod-side reveal">
+        <div class="mod-num">03</div>
+        <div class="mod-en">Output</div>
+        <div class="mod-cn">输出</div>
+        <div class="mod-tag">Show the black box</div>
+      </div>
+      <div class="mod-body">
+        <div class="reveal">
+          <h3>让世界，<em>看见我的黑箱</em>。</h3>
+          <p class="lede">
+            再好的想法，留在脑子里就只是想法。<br/>
+            <em>Output</em> 把沉淀后的内容公开表达出来 ——图文、文章、视频、网站、知识可视化。
+          </p>
+        </div>
+
+        <p class="reveal d2">
+          其中，<em>视频</em>是现阶段流量端最核心的表达形态。<br/>
+          但视频不是随便拍，而要遵循一套质量标准 ——<em>HKRR</em>。
+        </p>
+
+        <div class="hkrr-matrix reveal d3">
+          <h4>HKRR · 输出端的质量标准</h4>
+          <div class="hkrr-grid">
+            <div class="hkrr-cell h">
+              <div class="letter">H</div>
+              <div class="name">Happiness</div>
+              <div class="cn">愉悦感 / 希望感</div>
+              <div class="desc">不一定搞笑，但要让人愿意看、愿意分享、愿意靠近。</div>
+            </div>
+            <div class="hkrr-cell k">
+              <div class="letter">K</div>
+              <div class="name">Knowledge</div>
+              <div class="cn">有真东西</div>
+              <div class="desc">有信息量、方法、行动建议、真实价值，不是空洞鸡汤。</div>
+            </div>
+            <div class="hkrr-cell r1">
+              <div class="letter">R</div>
+              <div class="name">Resonance</div>
+              <div class="cn">击中真实处境</div>
+              <div class="desc">不是站在高处讲道理，而是让用户觉得：他说的是我。</div>
+            </div>
+            <div class="hkrr-cell r2">
+              <div class="letter">R</div>
+              <div class="name">Rhythm</div>
+              <div class="cn">叙事节奏</div>
+              <div class="desc">不是信息堆砌，而是叙事推进、情绪变化、观看留存。</div>
+            </div>
+          </div>
+
+          <div class="relation">
+            <div class="rel-card">
+              <div class="lbl">IDOP × HKRR · 关系一</div>
+              <div class="ttl">IDOP 管流程，HKRR 管质量。</div>
+              <p>IDOP 是个人 IP 的总闭环，HKRR 是贯穿其中的质量标尺。<br/>一个让它跑起来，一个让它跑得好。</p>
+            </div>
+            <div class="rel-card">
+              <div class="lbl">IDOP × HKRR · 关系二</div>
+              <div class="ttl">Input 用 HKR 选源头，Output 用 HKRR 打磨内容。</div>
+              <p>两端都要被质量标尺锁住 ——上游不进垃圾，下游不出次品。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="one-line reveal d4" style="--c: var(--o)">
+          Output 不是把脑子里的东西<em>倒出来</em>，而是让信任<em>慢慢长出来</em>。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     06 · Product
+     ============================================================ -->
+<section id="product">
+  <div class="wrap">
+    <div class="mod pp">
+      <div class="mod-side reveal">
+        <div class="mod-num">04</div>
+        <div class="mod-en">Product</div>
+        <div class="mod-cn">产品</div>
+        <div class="mod-tag">Trust → Delivery</div>
+      </div>
+      <div class="mod-body">
+        <div class="reveal">
+          <h3>把信任，<em>变成交付</em>。</h3>
+          <p class="lede">
+            如果只发视频、只涨粉、只有播放量，个人 IP 永远停在<em>表层</em>。<br/>
+            产品的本质，是把方法、经验、能力封装成<em>别人能用、愿意付费</em>的价值交付。
+          </p>
+        </div>
+
+        <p class="reveal d2">
+          <em>Output</em> 让别人看见我、理解我、信任我；<br/>
+          <em>Product</em> 让别人真正被我帮助，并愿意为这种价值付费。<br/>
+          产品不是割韭菜，也不是粗暴卖课 ——而是把无形的能力，做成有形的承诺。
+        </p>
+
+        <div class="prod-grid reveal d3">
+          <div class="prod-item">系统课程</div>
+          <div class="prod-item">资料包</div>
+          <div class="prod-item">训练营</div>
+          <div class="prod-item">咨询</div>
+          <div class="prod-item">AI 工作流</div>
+          <div class="prod-item">网站服务</div>
+          <div class="prod-item">视觉资产服务</div>
+          <div class="prod-item">个人 IP 诊断</div>
+          <div class="prod-item">提示词包</div>
+          <div class="prod-item">模板与工具</div>
+          <div class="prod-item">知识库</div>
+          <div class="prod-item">人生系统普适版</div>
+        </div>
+
+        <div class="one-line reveal d4" style="--c: var(--p)">
+          Input 决定<em>源头</em>，Deposit 决定<em>资产</em>，Output 决定<em>信任</em>，Product 决定<em>价值交付</em>。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     07 · Flywheel
+     ============================================================ -->
+<section id="fly">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow center">07 · The Flywheel</span>
+      <h2 class="h-title">IDOP 不是一条直线，<br/>而是一台<span class="hl">飞轮</span>。</h2>
+      <p class="h-sub center">
+        Feedback 不是单独一环。它是闭环本身的<em style="color:var(--gold);font-style:normal">回流机制</em>。<br/>
+        每一次输出和产品反馈，都要重新成为下一轮的输入与沉淀。
+      </p>
+    </div>
+
+    <div class="flywheel-stage">
+      <div class="fw-visual reveal d2">
+        <svg viewBox="0 0 600 600" aria-hidden="true">
+          <defs>
+            <linearGradient id="fwgrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="#f5a45b" stop-opacity=".5"/>
+              <stop offset="33%" stop-color="#6fe1b3" stop-opacity=".5"/>
+              <stop offset="66%" stop-color="#7eb9f5" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#c9a0ff" stop-opacity=".5"/>
+            </linearGradient>
+            <marker id="fwArr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0 L10 5 L0 10 z" fill="#f0c878"/>
+            </marker>
+          </defs>
+          <g class="fw-spin">
+            <circle cx="300" cy="300" r="220" fill="none" stroke="url(#fwgrad)" stroke-width="22" stroke-dasharray="20 60" stroke-linecap="round" opacity=".6"/>
+            <circle cx="300" cy="300" r="220" fill="none" stroke="url(#fwgrad)" stroke-width="1.5" opacity=".7"/>
+          </g>
+          <circle cx="300" cy="300" r="150" fill="none" stroke="rgba(245,242,233,0.08)" stroke-dasharray="3 6"/>
+          <circle cx="300" cy="300" r="90"  fill="none" stroke="rgba(240,200,120,0.4)"/>
+          <circle cx="300" cy="300" r="90"  fill="rgba(240,200,120,0.04)"/>
+        </svg>
+        <div class="fw-node n1">Input</div>
+        <div class="fw-node n2">Deposit</div>
+        <div class="fw-node n3">Output</div>
+        <div class="fw-node n4">Product</div>
+        <div class="fw-center">
+          <div class="word">Feedback</div>
+          <div class="cap">回流 · Re-entry</div>
+        </div>
+      </div>
+
+      <div class="fw-side reveal d3">
+        <h3>爆款是<em>结果</em>，<br/>系统是<em>原因</em>。</h3>
+        <p>视频数据、评论反馈、私信问题、用户购买、产品使用、市场信号 ——这些反馈都不能浪费。它们要重新成为 Input 的素材、Deposit 的判断依据、Output 的下一次切口、Product 的迭代方向。</p>
+        <p>这也是为什么 IDOP 不需要写成 IDOPF。<br/>Feedback 不是新增的第五环，而是<em>整个闭环本身的回流</em>。</p>
+
+        <div class="fw-feedback">
+          <span class="chip">视频数据</span>
+          <span class="chip">评论区</span>
+          <span class="chip">私信问题</span>
+          <span class="chip">真实需求</span>
+          <span class="chip">购买情况</span>
+          <span class="chip">使用反馈</span>
+          <span class="chip">市场信号</span>
+          <span class="chip">哪些爆了</span>
+          <span class="chip">哪些没人看</span>
+          <span class="chip">哪些卖不动</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PULL QUOTE 2
+     ============================================================ -->
+<section class="pull-quote">
+  <div class="wrap-narrow reveal">
+    <p class="q">
+      不是简单<em>发内容</em>，<br/>
+      而是让输入、沉淀、输出、产品<br/>
+      形成<em>长期复利</em>。
+    </p>
+    <div class="cap">— IDOP 的飞轮哲学</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     08 · AI & Evolvability
+     ============================================================ -->
+<section id="ai">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow center">08 · AI × Evolvability</span>
+      <h2 class="h-title">AI 给<span class="hl">廉价变异</span>，<br/>IDOP 给<span class="hl">持续进化</span>。</h2>
+      <p class="h-sub center">
+        AI 最大的礼物，不是让你更容易<em style="color:var(--gold);font-style:normal">成功</em>，<br/>
+        而是让你更容易<em style="color:var(--gold);font-style:normal">失败</em>。
+      </p>
+    </div>
+
+    <div class="ai-grid">
+      <div class="ai-card cheap reveal d2">
+        <div class="lbl">廉价失败 · Cheap Failure</div>
+        <h4>AI 把试错的单位成本，大幅压低了。</h4>
+        <p>过去做产品、做项目、创业，一次失败可能意味着几个月时间、几十万成本、巨大心力消耗。今天，普通人可以更快做出一个网页、一段视频、一个 App 原型、一个产品雏形、一份文档、一个小工具。<em style="color:var(--o);font-style:normal">失败不再致命</em>。</p>
+      </div>
+      <div class="ai-card evo reveal d3">
+        <div class="lbl">可演化性 · Evolvability</div>
+        <h4>但廉价失败本身没有意义，关键是<em style="color:var(--d);font-style:normal">把每一次失败都变成下一次的输入</em>。</h4>
+        <p>一个系统能否进化，不取决于它能产生多少变异，而取决于它能不能从环境中拿到反馈、记住有效经验、保留成功结构、把失败变成下一次输入、让新经验与旧经验重组。<em style="color:var(--d);font-style:normal">这正是 IDOP 飞轮的价值</em>。</p>
+      </div>
+    </div>
+
+    <p class="ai-equation reveal d4">
+      AI 降低<em>失败成本</em>　<span class="plus">+</span>　IDOP 提高<em>失败价值</em>
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     09 · Principles
+     ============================================================ -->
+<section id="principles">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow center">09 · Principles</span>
+      <h2 class="h-title">不能为了目的，<br/>不择手段。</h2>
+      <p class="h-sub center">
+        流量、变现、产品都重要。<br/>
+        但<em style="color:var(--gold);font-style:normal">真正的个人 IP，是长期信任资产，不是短期流量机器</em>。
+      </p>
+    </div>
+
+    <div class="principles">
+      <div class="principle reveal d2"><span class="x">✕</span><span class="t">不制造焦虑割韭菜</span></div>
+      <div class="principle reveal d2"><span class="x">✕</span><span class="t">不夸大承诺、不虚假包装</span></div>
+      <div class="principle reveal d3"><span class="x">✕</span><span class="t">不抄袭、不洗稿</span></div>
+      <div class="principle reveal d3"><span class="x">✕</span><span class="t">不为了流量背叛真实判断</span></div>
+      <div class="principle reveal d4"><span class="x">✕</span><span class="t">不做自己都不信的内容</span></div>
+      <div class="principle reveal d4"><span class="x">✕</span><span class="t">不赚违心的钱</span></div>
+      <div class="principle reveal d5"><span class="x">✕</span><span class="t">不为了短期结果破坏长期信任</span></div>
+      <div class="principle reveal d5"><span class="x">✕</span><span class="t">不把"个人 IP"做成明星包装</span></div>
+    </div>
+
+    <div class="principle-credo reveal d5">
+      <span class="seal">原则 · Credo</span>
+      <p class="line1">慢一点没关系，<br/>但要<em style="color:var(--gold);font-style:italic">问心无愧</em>。</p>
+      <p class="line2">结果要好，过程也要对得起自己。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================
+     10 · Final
+     ============================================================ -->
+<section id="final">
+  <div class="wrap-narrow">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow center">10 · The Final Definition</span>
+      <h2 class="h-title">IDOP 理论<br/><span class="hl">最终定义</span>。</h2>
+    </div>
+
+    <div class="final-def reveal d2">
+      <p class="blk">
+        <em>IDOP 理论</em>是我的个人 IP 核心闭环 ——<br/>
+        通过<em>认知输入</em>、<em>审美输入</em>与<em>用户输入</em>，持续获得高质量素材；<br/>
+        通过<em>AI 深聊</em>、<em>入库</em>与<em>周日复盘</em>完成沉淀；<br/>
+        通过<em>图文、文章、视频、网站</em>等形式公开输出，积累信任；<br/>
+        最终将<em>方法、经验、能力</em>产品化，完成价值交付，<br/>
+        并用真实反馈反哺下一轮输入与迭代。
+      </p>
+    </div>
+
+    <div class="final-lines">
+      <div class="final-line i reveal d2">
+        <span class="ltr">I</span>
+        <span class="txt"><em>Input</em> 输入　决定源头。</span>
+      </div>
+      <div class="final-line d reveal d2">
+        <span class="ltr">D</span>
+        <span class="txt"><em>Deposit</em> 沉淀　形成资产。</span>
+      </div>
+      <div class="final-line o reveal d3">
+        <span class="ltr">O</span>
+        <span class="txt"><em>Output</em> 输出　积累信任。</span>
+      </div>
+      <div class="final-line p reveal d3">
+        <span class="ltr">P</span>
+        <span class="txt"><em>Product</em> 产品　完成交付。</span>
+      </div>
+    </div>
+
+    <div class="coda reveal d4">
+      <div class="seal">
+        <span class="L">I</span><span class="D">D</span><span class="D">O</span><span class="L">P</span>
+      </div>
+      <p class="cap">首尾是 <em>IP</em>，中间是 <em>DO</em>。<br/>个人 IP 不是<em>想</em>出来的，而是<em>做</em>出来的。</p>
+      <div class="stamp">— 追光者 · The Light Chaser</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-row">
+    <a href="index.html">追光者 · 个人主页</a>
+    <span class="sep"></span>
+    <a href="hkrr.html">HKRR · 内容质量</a>
+    <span class="sep"></span>
+    <a href="system.html">人生系统</a>
+    <span class="sep"></span>
+    <a href="fire.html">七年 FIRE</a>
+  </div>
+  <div style="margin-top:18px;opacity:.6">© IDOP Theory · Original by 追光者 · The Personal-IP Loop</div>
+</footer>
+
+<script>
+/* ============================================================
+   Reading progress
+   ============================================================ */
+const progress = document.getElementById('progress');
+function updateProgress() {
+  const h = document.documentElement;
+  const total = h.scrollHeight - h.clientHeight;
+  const p = total > 0 ? (h.scrollTop / total) : 0;
+  progress.style.setProperty('--p', p);
+}
+document.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+
+/* ============================================================
+   Masthead state
+   ============================================================ */
+const mast = document.getElementById('mast');
+function updateMast() {
+  mast.classList.toggle('lifted', window.scrollY > 40);
+}
+document.addEventListener('scroll', updateMast, { passive: true });
+updateMast();
+
+/* ============================================================
+   Section observer for nav highlight
+   ============================================================ */
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('#navCtr .sec');
+const linkMap = {};
+links.forEach(l => linkMap[l.dataset.target] = l);
+
+const navObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const link = linkMap[e.target.id];
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0, rootMargin: '-40% 0px -55% 0px' });
+sections.forEach(s => navObs.observe(s));
+
+/* ============================================================
+   Reveal on scroll
+   ============================================================ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>
