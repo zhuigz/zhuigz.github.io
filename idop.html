@@ -3,55 +3,55 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>IDOP 理论 — 个人 IP 的核心闭环</title>
+<title>IDOP — 个人 IP 的核心闭环 · DWG. IDOP-001</title>
 <meta name="description" content="IDOP · Input 输入 / Deposit 沉淀 / Output 输出 / Product 产品。首尾是 IP，中间是 DO。个人 IP 不是想出来的，而是做出来的。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-/* ============================================================
+/* ============================================================================
    IDOP · The Personal-IP Loop
-   Visual language: deep ink, gold spine, four-letter circuit.
-   I and P at the edges (the brand), D and O at the core (the act).
-   ============================================================ */
+   DRAWING. IDOP-001 · REV 2026.05
+   Visual language: engineering blueprint.
+   Cyan hairlines on cool ink. Mono-dominant. Amber accent for DO/action.
+   ============================================================================ */
 
 :root {
-  /* Surfaces */
-  --ink-0:  #060608;
-  --ink-1:  #0a0a0e;
-  --ink-2:  #101015;
-  --ink-3:  #16161c;
-  --ink-4:  #1e1e26;
+  /* Surfaces — cool ink with a faint blue cast */
+  --ink-0:  #07080d;
+  --ink-1:  #0a1018;
+  --ink-2:  #0e1622;
+  --ink-3:  #131c2c;
+  --ink-4:  #1a2436;
 
-  /* Type colors */
-  --pap-0:  #f5f2e9;
-  --pap-1:  rgba(245,242,233,0.86);
-  --pap-2:  rgba(245,242,233,0.62);
-  --pap-3:  rgba(245,242,233,0.42);
-  --pap-4:  rgba(245,242,233,0.24);
-  --pap-5:  rgba(245,242,233,0.12);
-  --pap-6:  rgba(245,242,233,0.06);
+  /* Drafting paper / type */
+  --paper:  #E9EEF4;
+  --pap-1:  rgba(233,238,244,0.85);
+  --pap-2:  rgba(233,238,244,0.60);
+  --pap-3:  rgba(233,238,244,0.42);
+  --pap-4:  rgba(233,238,244,0.24);
+  --pap-5:  rgba(233,238,244,0.12);
+  --pap-6:  rgba(233,238,244,0.06);
 
-  /* The four loop colors */
-  --i:  #f5a45b;   /* Input    — warm amber, source */
-  --d:  #6fe1b3;   /* Deposit  — verdant, asset */
-  --o:  #7eb9f5;   /* Output   — sky, expression */
-  --p:  #c9a0ff;   /* Product  — violet, delivery */
+  /* Blueprint cyan — the line color */
+  --cyan:    #7DD3FC;
+  --cyan-2:  #38BDF8;
+  --cyan-d:  #1E6A9A;
+  --cyan-glow: rgba(125,211,252,0.18);
 
-  --i-deep: #c97a2c;
-  --d-deep: #2faa7e;
-  --o-deep: #4d8cd2;
-  --p-deep: #8c5fd6;
+  /* Amber — the lone warm. The "DO". The action. */
+  --amber:    #F5B14B;
+  --amber-2:  #E89A24;
+  --amber-glow: rgba(245,177,75,0.22);
 
-  /* The single accent (the spine) */
-  --gold:    #f0c878;
-  --gold-2:  #e6b75a;
-  --gold-3:  rgba(240,200,120,0.20);
-  --gold-4:  rgba(240,200,120,0.08);
+  /* Stage quad — cool-shifted */
+  --st-i:  #7DD3FC;     /* Input — cyan */
+  --st-d:  #A7F3D0;     /* Deposit — mint */
+  --st-o:  #C4B5FD;     /* Output — periwinkle */
+  --st-p:  #FDE68A;     /* Product — muted gold (the only warm; payoff) */
 
   /* Type */
-  --serif:  "Fraunces", "Instrument Serif", "Songti SC", Georgia, serif;
-  --ital:   "Instrument Serif", "Fraunces", "Songti SC", serif;
+  --serif:  "Instrument Serif", "Songti SC", Georgia, serif;
   --sans:   "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif;
   --disp:   "Outfit", "Inter", sans-serif;
   --mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -61,1994 +61,2840 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: var(--ink-1); color: var(--pap-0); scroll-behavior: smooth; font-size: 16px; }
+html { background: var(--ink-1); color: var(--paper); scroll-behavior: smooth; font-size: 16px; }
 body {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 16.5px;
-  line-height: 1.72;
-  letter-spacing: -0.003em;
+  font-size: 14.5px;
+  line-height: 1.62;
+  letter-spacing: 0.003em;
   background: var(--ink-1);
-  color: var(--pap-0);
+  color: var(--paper);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
   position: relative;
 }
+
+/* Blueprint grid — 1px hairlines, brighter every 5th */
 body::before {
   content: "";
   position: fixed; inset: 0;
   pointer-events: none; z-index: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% -5%, rgba(240,200,120,0.10), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(201,160,255,0.06), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 0% 60%, rgba(126,185,245,0.05), transparent 70%);
+  background-image:
+    linear-gradient(to right, rgba(125,211,252,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(125,211,252,0.04) 1px, transparent 1px),
+    linear-gradient(to right, rgba(125,211,252,0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(125,211,252,0.07) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 300px 300px, 300px 300px;
+  background-position: 0 0;
 }
 body::after {
   content: "";
   position: fixed; inset: 0;
-  pointer-events: none; z-index: 9998;
-  opacity: 0.040; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, transparent, rgba(7,8,13,0.65) 90%),
+    radial-gradient(ellipse 50% 35% at 50% 0%, rgba(125,211,252,0.04), transparent 70%);
 }
 
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-em, i { font-family: var(--ital); font-style: italic; }
-::selection { background: var(--gold-3); color: var(--pap-0); }
+em, i { font-family: var(--serif); font-style: italic; }
+::selection { background: var(--amber-glow); color: var(--paper); }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--ink-0); }
-::-webkit-scrollbar-thumb { background: var(--pap-5); border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: var(--pap-4); }
+::-webkit-scrollbar-thumb { background: var(--pap-5); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan-d); }
 
 /* ============================================================
-   Reading progress
+   Crosshair cursor
    ============================================================ */
-.progress {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: 1px; z-index: 1000;
-  background: var(--pap-6);
+.xhair {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .xhair { display: block; }
+}
+.xhair .vbar, .xhair .hbar {
+  position: absolute;
+  background: rgba(245,177,75,0.32);
+}
+.xhair .vbar { width: 1px; top: 0; bottom: 0; left: var(--x, 0); }
+.xhair .hbar { height: 1px; left: 0; right: 0; top: var(--y, 0); }
+.xhair .dot {
+  position: absolute;
+  top: var(--y, 0); left: var(--x, 0);
+  width: 14px; height: 14px;
+  border: 1px solid var(--amber);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  transition: width .25s var(--ease), height .25s var(--ease), background .2s;
+}
+.xhair .lbl {
+  position: absolute;
+  top: var(--y, 0); left: var(--x, 0);
+  transform: translate(14px, 14px);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
+  opacity: 0;
+  transition: opacity .2s;
+  white-space: nowrap;
+  background: var(--ink-1);
+  padding: 2px 6px;
+  border: 1px solid var(--amber);
+}
+.xhair.hover .dot { width: 22px; height: 22px; background: var(--amber-glow); }
+.xhair.hover .lbl { opacity: 1; }
+
+/* ============================================================
+   Reading progress · line counter
+   ============================================================ */
+.counter {
+  position: fixed;
+  top: 16px; right: 18px;
+  z-index: 1000;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
   pointer-events: none;
 }
-.progress::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, var(--i), var(--d), var(--o), var(--p));
-  transform-origin: 0 50%;
-  transform: scaleX(var(--p, 0));
-  transition: transform .14s linear;
+.counter .lc {
+  background: var(--ink-1);
+  border: 1px solid var(--pap-5);
+  padding: 4px 8px;
+  border-left: 2px solid var(--cyan);
 }
+.counter .max { color: var(--pap-3); }
 
 /* ============================================================
-   Masthead
+   Masthead · drawing's persistent header bar (title block top)
    ============================================================ */
 .mast {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  padding: 22px 32px;
-  display: flex; align-items: center; justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--pap-2);
-  transition: background .5s, backdrop-filter .5s, border-color .5s, padding .4s;
-  border-bottom: 1px solid transparent;
+  background: color-mix(in oklab, var(--ink-1) 88%, transparent);
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border-bottom: 1px solid var(--pap-5);
 }
-.mast.lifted {
-  background: color-mix(in oklab, var(--ink-1) 72%, transparent);
-  backdrop-filter: blur(22px) saturate(150%);
-  -webkit-backdrop-filter: blur(22px) saturate(150%);
-  border-bottom-color: var(--pap-6);
-  padding: 14px 32px;
+.mast > div {
+  padding: 12px 22px;
+  border-right: 1px solid var(--pap-6);
+  display: flex; align-items: center;
 }
-.mast .mark { display: inline-flex; align-items: center; gap: 14px; color: var(--pap-0); }
-.mast .mark .dots { display: inline-flex; gap: 4px; }
-.mast .mark .dots i {
-  width: 7px; height: 7px;
-  border-radius: 50%;
+.mast > div:last-child { border-right: 0; justify-content: flex-end; }
+.mast .stamp-l {
+  gap: 14px;
+  color: var(--paper);
+}
+.mast .stamp-l .crp {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.mast .stamp-l .crp i {
+  width: 8px; height: 8px;
   display: block;
-  animation: dotPulse 4s ease-in-out infinite;
+  border: 1px solid var(--cyan);
+  transform: rotate(45deg);
+  background: var(--cyan-glow);
 }
-.mast .mark .dots i:nth-child(1) { background: var(--i);  animation-delay: 0s; }
-.mast .mark .dots i:nth-child(2) { background: var(--d);  animation-delay: 0.25s; }
-.mast .mark .dots i:nth-child(3) { background: var(--o);  animation-delay: 0.5s; }
-.mast .mark .dots i:nth-child(4) { background: var(--p);  animation-delay: 0.75s; }
-@keyframes dotPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.55; transform: scale(0.85); }
+.mast .stamp-c {
+  gap: 22px;
+  justify-content: center;
+  display: none;
 }
-.mast .ctr { display: none; align-items: center; gap: 16px; }
-@media (min-width: 920px) { .mast .ctr { display: inline-flex; } }
-.mast .ctr .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--pap-4); }
-.mast .ctr .sec {
+@media (min-width: 920px) { .mast .stamp-c { display: flex; } }
+.mast .stamp-c .sec {
   color: var(--pap-3);
-  transition: color .3s;
+  transition: color .25s;
   position: relative;
+  padding: 4px 2px;
 }
-.mast .ctr .sec.active { color: var(--pap-0); }
-.mast .home {
-  color: var(--pap-3);
-  transition: color .2s;
+.mast .stamp-c .sec.active { color: var(--amber); }
+.mast .stamp-c .sec.active::before {
+  content: "▸"; position: absolute; left: -10px; top: 4px; color: var(--amber);
+}
+.mast .stamp-r { gap: 14px; }
+.mast .stamp-r .home {
+  color: var(--pap-2);
   display: inline-flex; align-items: center; gap: 8px;
+  transition: color .2s;
 }
-.mast .home:hover { color: var(--pap-0); }
+.mast .stamp-r .home:hover { color: var(--amber); }
+.mast .stamp-r .rev { color: var(--pap-3); }
+
+@media (max-width: 600px) {
+  .mast { grid-template-columns: 1fr 1fr; }
+  .mast .stamp-c { display: none; }
+  .mast .stamp-l { font-size: 9.5px; }
+  .mast .stamp-r .rev { display: none; }
+}
 
 /* ============================================================
    Layout primitives
    ============================================================ */
-.wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
-.wrap-narrow { max-width: 880px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
-
-section { padding: 140px 0; position: relative; z-index: 1; }
-@media (max-width: 720px) { section { padding: 96px 0; } }
-
-.eyebrow {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-  display: inline-flex; align-items: center; gap: 12px;
-  margin-bottom: 28px;
-}
-.eyebrow::before {
-  content: "";
-  width: 28px; height: 1px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-}
-.eyebrow.center { justify-content: center; }
-.eyebrow.center::before {
-  background: linear-gradient(90deg, transparent, var(--gold));
-}
-.eyebrow.center::after {
-  content: "";
-  width: 28px; height: 1px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-}
-
-.h-title {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(36px, 5.4vw, 72px);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
-  color: var(--pap-0);
-}
-.h-title .hl {
-  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.h-sub {
-  font-family: var(--sans);
-  font-size: clamp(16px, 1.45vw, 19px);
-  line-height: 1.7;
-  color: var(--pap-2);
-  max-width: 56ch;
-  margin-top: 24px;
-}
-.h-sub.center { margin-left: auto; margin-right: auto; }
-
-.lede {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(20px, 1.95vw, 26px);
-  line-height: 1.5;
-  letter-spacing: -0.015em;
-  color: var(--pap-1);
-}
-.lede em { color: var(--gold); font-style: normal; font-weight: 500; }
-
-/* ============================================================
-   Hero
-   ============================================================ */
-.hero {
-  min-height: 100vh;
-  padding: 160px 0 96px;
-  display: flex; align-items: center; justify-content: center;
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
   position: relative;
-  overflow: hidden;
-}
-.hero-orbit {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 0;
-}
-.hero-orbit svg { width: min(110vh, 1100px); height: min(110vh, 1100px); opacity: 0.55; }
-.orbit-line { fill: none; stroke: var(--pap-5); stroke-width: 0.6; }
-.orbit-spark {
-  fill: var(--gold);
-  filter: drop-shadow(0 0 8px var(--gold));
-  animation: sparkRun 22s linear infinite;
-  transform-origin: 50% 50%;
-}
-@keyframes sparkRun { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-
-.hero-inner {
-  text-align: center;
-  max-width: 900px;
-  position: relative; z-index: 2;
-  padding: 0 32px;
-}
-.hero-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 36px;
-  display: inline-flex; align-items: center; gap: 14px;
-  padding: 8px 16px;
-  border: 1px solid var(--gold-3);
-  border-radius: 100px;
-  background: var(--gold-4);
-}
-.hero-tag .dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 12px var(--gold);
-  animation: dotPulse 2.5s ease-in-out infinite;
-}
-
-.hero-letters {
-  display: flex; align-items: baseline; justify-content: center;
-  gap: clamp(8px, 2vw, 28px);
-  margin: 32px 0 8px;
-  font-family: var(--disp);
-  font-weight: 700;
-  font-size: clamp(72px, 17vw, 220px);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-}
-.hero-letters .L {
-  position: relative;
-  display: inline-block;
-  background: linear-gradient(180deg, var(--pap-0) 0%, var(--pap-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  transition: transform .5s var(--ease);
-}
-.hero-letters .L .small {
-  position: absolute;
-  bottom: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  -webkit-text-fill-color: var(--pap-3);
-  color: var(--pap-3);
-  white-space: nowrap;
-}
-.hero-letters .L.gold {
-  background: linear-gradient(180deg, var(--gold-light, #ffd98a) 0%, var(--gold) 70%, var(--gold-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 0 0 80px rgba(240,200,120,0.18);
-}
-.hero-letters .L.gold .small { color: var(--gold); -webkit-text-fill-color: var(--gold); }
-.hero-letters .L.do {
-  background: linear-gradient(180deg, var(--pap-0) 0%, var(--pap-1) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-.hero-equation {
-  margin-top: 64px;
-  display: flex; justify-content: center; align-items: center;
-  flex-wrap: wrap; gap: 8px 18px;
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-}
-.hero-equation .seg { color: var(--pap-1); }
-.hero-equation .seg .ltr {
-  display: inline-block;
-  width: 22px; height: 22px;
-  text-align: center; line-height: 22px;
-  border-radius: 50%;
-  margin-right: 6px;
-  font-weight: 700;
-  font-family: var(--disp);
-  font-size: 12px;
-  letter-spacing: 0;
-}
-.hero-equation .seg.i .ltr { background: var(--i); color: var(--ink-0); }
-.hero-equation .seg.d .ltr { background: var(--d); color: var(--ink-0); }
-.hero-equation .seg.o .ltr { background: var(--o); color: var(--ink-0); }
-.hero-equation .seg.p .ltr { background: var(--p); color: var(--ink-0); }
-.hero-equation .sep { color: var(--pap-4); }
-
-.hero-title {
-  margin-top: 56px;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(24px, 2.6vw, 36px);
-  line-height: 1.35;
-  color: var(--pap-1);
-  letter-spacing: -0.01em;
-}
-.hero-title em { color: var(--gold); font-style: normal; font-weight: 500; }
-.hero-kicker {
-  margin-top: 22px;
-  font-size: 16px;
-  color: var(--pap-2);
-  max-width: 64ch;
-  margin-left: auto; margin-right: auto;
-  line-height: 1.7;
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 36px; left: 50%; transform: translateX(-50%);
-  display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--pap-3);
   z-index: 2;
 }
-.hero-scroll .line {
-  width: 1px; height: 48px;
-  background: linear-gradient(180deg, var(--gold), transparent);
-  position: relative; overflow: hidden;
-}
-.hero-scroll .line::after {
-  content: "";
-  position: absolute; top: -16px; left: 0;
-  width: 1px; height: 16px;
-  background: var(--pap-0);
-  animation: scrollDot 2.2s ease-in-out infinite;
-}
-@keyframes scrollDot {
-  0% { top: -16px; opacity: 1; }
-  100% { top: 48px; opacity: 0; }
-}
-
-/* ============================================================
-   Section divider
-   ============================================================ */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--pap-5) 30%, var(--pap-5) 70%, transparent);
-}
-
-/* ============================================================
-   Compare table — section 01
-   ============================================================ */
-.compare {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  margin-top: 64px;
-  border: 1px solid var(--pap-6);
-  border-radius: 18px;
-  overflow: hidden;
-  background: var(--ink-2);
-}
-@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
-.compare-col {
-  padding: 36px 32px;
+.wrap-narrow {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 40px;
   position: relative;
+  z-index: 2;
 }
-.compare-col + .compare-col { border-left: 1px solid var(--pap-6); }
-@media (max-width: 760px) {
-  .compare-col + .compare-col { border-left: 0; border-top: 1px solid var(--pap-6); }
-}
-.compare-col h4 {
-  font-family: var(--disp);
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-bottom: 28px;
-  display: inline-flex; align-items: center; gap: 10px;
-}
-.compare-col.naive { background: linear-gradient(180deg, rgba(245,164,91,0.04), transparent 60%); }
-.compare-col.system { background: linear-gradient(180deg, rgba(240,200,120,0.05), transparent 60%); }
-.compare-col.naive h4 { color: var(--pap-2); }
-.compare-col.naive h4::before {
-  content: "";
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--pap-3);
-  display: inline-block;
-}
-.compare-col.system h4 { color: var(--gold); }
-.compare-col.system h4::before {
-  content: "";
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 10px var(--gold);
-  display: inline-block;
-}
-.compare-list { display: flex; flex-direction: column; }
-.compare-row {
-  padding: 14px 0;
-  font-size: 15.5px;
-  line-height: 1.55;
-  border-top: 1px solid var(--pap-6);
-  display: flex; align-items: flex-start; gap: 12px;
-}
-.compare-row:first-child { border-top: 0; }
-.compare-col.naive .compare-row { color: var(--pap-2); }
-.compare-col.system .compare-row { color: var(--pap-0); }
-.compare-row::before {
-  content: "—";
-  color: var(--pap-4);
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.compare-col.system .compare-row::before {
-  content: "→";
-  color: var(--gold);
+@media (max-width: 600px) {
+  .wrap, .wrap-narrow { padding: 0 22px; }
 }
 
-/* ============================================================
-   The Loop — section 02
-   ============================================================ */
-.loop-stage {
+section {
+  padding: 120px 0 100px;
   position: relative;
-  margin: 72px auto 0;
-  width: min(720px, 100%);
-  aspect-ratio: 1 / 1;
+  z-index: 2;
 }
-.loop-stage svg { width: 100%; height: 100%; }
-.loop-ring { fill: none; stroke: var(--pap-5); stroke-width: 0.6; }
-.loop-ring-gold {
-  fill: none;
-  stroke: url(#goldGrad);
-  stroke-width: 1.4;
-  stroke-dasharray: 8 6;
-  opacity: 0.7;
-  animation: ringRotate 60s linear infinite;
-  transform-origin: 50% 50%;
-}
-@keyframes ringRotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-.loop-arrow {
-  fill: none;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  opacity: 0.55;
-}
-.loop-arrow.a1 { stroke: var(--i); }
-.loop-arrow.a2 { stroke: var(--d); }
-.loop-arrow.a3 { stroke: var(--o); }
-.loop-arrow.a4 { stroke: var(--p); }
+@media (max-width: 720px) { section { padding: 88px 0 72px; } }
 
-.loop-node {
+/* Sheet — the framed engineering drawing card */
+.sheet {
+  position: relative;
+  border: 1px solid var(--pap-5);
+  background: linear-gradient(180deg, rgba(125,211,252,0.015), transparent 60%);
+  padding: 36px 36px 56px;
+}
+.sheet.no-pad { padding: 0; }
+@media (max-width: 720px) { .sheet { padding: 24px 18px 36px; } }
+
+/* Corner crop marks for sheets */
+.sheet::before, .sheet::after,
+.sheet > .crop-tr, .sheet > .crop-bl {
+  content: "";
   position: absolute;
-  width: 22%;
-  text-align: center;
-  transform: translate(-50%, -50%);
-}
-.loop-node .badge {
-  font-family: var(--disp);
-  font-size: 64px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  background: linear-gradient(180deg, var(--c-light, #fff) 0%, var(--c, #fff) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 18px var(--c-glow, transparent));
-  transition: transform .4s var(--ease), filter .4s;
-}
-.loop-node .ttl {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 19px;
-  margin-top: 6px;
-  color: var(--pap-0);
-  letter-spacing: -0.01em;
-}
-.loop-node .ttl-en {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--c, var(--pap-2));
-  margin-top: 4px;
-}
-.loop-node .desc {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--pap-2);
-  margin-top: 10px;
-  max-width: 22ch;
-  margin-left: auto; margin-right: auto;
-}
-.loop-node:hover .badge {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 32px var(--c-glow, transparent));
-}
-
-/* fixed positions */
-.loop-node.top    { top: 8%;  left: 50%; --c: var(--i); --c-light: #ffd1a0; --c-glow: rgba(245,164,91,0.55); }
-.loop-node.right  { top: 50%; left: 92%; --c: var(--d); --c-light: #b7f3d6; --c-glow: rgba(111,225,179,0.45); }
-.loop-node.bottom { top: 92%; left: 50%; --c: var(--o); --c-light: #bfd9f8; --c-glow: rgba(126,185,245,0.45); }
-.loop-node.left   { top: 50%; left: 8%;  --c: var(--p); --c-light: #ddc7ff; --c-glow: rgba(201,160,255,0.45); }
-
-.loop-center {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  width: 14px; height: 14px;
+  border-color: var(--cyan);
   pointer-events: none;
 }
-.loop-center .word {
-  font-family: var(--disp);
-  font-weight: 700;
-  font-size: clamp(28px, 4vw, 56px);
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: baseline;
-  gap: clamp(4px, 0.6vw, 10px);
-  line-height: 1;
-}
-.loop-center .word .x {
-  display: inline-block;
-  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.loop-center .word .y {
-  display: inline-block;
-  color: var(--pap-1);
-  opacity: 0.55;
-}
-.loop-center .cap {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-  margin-top: 10px;
-}
-.loop-center .cap b { color: var(--gold); font-weight: 500; }
+.sheet::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
+.sheet::after  { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
+.sheet > .crop-tr { top: -1px; right: -1px; border-top: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
+.sheet > .crop-bl { bottom: -1px; left: -1px; border-bottom: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
 
-@media (max-width: 720px) {
-  .loop-node .badge { font-size: 36px; }
-  .loop-node .ttl { font-size: 15px; }
-  .loop-node .desc { display: none; }
-  .loop-node { width: 30%; }
-}
-
-/* ============================================================
-   Letter map — IP / DO callout
-   ============================================================ */
-.ipdo {
-  margin-top: 72px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-}
-@media (max-width: 760px) { .ipdo { grid-template-columns: 1fr; } }
-.ipdo-card {
-  padding: 36px 32px;
-  border: 1px solid var(--pap-6);
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 60%);
-  position: relative;
-  overflow: hidden;
-}
-.ipdo-card::before {
-  content: attr(data-letters);
+/* Sheet title block — top-left or top-right tab */
+.sheet-tab {
   position: absolute;
-  right: -8px; bottom: -28px;
-  font-family: var(--disp);
-  font-weight: 800;
-  font-size: 200px;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  opacity: 0.06;
-  color: var(--pap-0);
-  pointer-events: none;
-}
-.ipdo-card .lbl {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-  margin-bottom: 14px;
-}
-.ipdo-card .pair {
-  display: inline-flex; align-items: baseline; gap: 4px;
-  font-family: var(--disp);
-  font-weight: 700;
-  font-size: 56px;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.ipdo-card .pair .a, .ipdo-card .pair .b {
-  background: linear-gradient(180deg, var(--gold-light, #ffd98a), var(--gold-2));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.ipdo-card .pair .dim { color: var(--pap-3); }
-.ipdo-card .pair .sl { color: var(--pap-4); margin: 0 6px; font-weight: 400; }
-.ipdo-card .narrative {
-  margin-top: 18px;
-  font-size: 15.5px;
-  line-height: 1.7;
-  color: var(--pap-1);
-  max-width: 42ch;
-}
-.ipdo-card .narrative em { color: var(--gold); font-style: normal; font-weight: 500; }
-
-/* ============================================================
-   Module section — Input / Deposit / Output / Product
-   ============================================================ */
-.mod {
-  display: grid;
-  grid-template-columns: minmax(0, 280px) 1fr;
-  gap: 64px;
-  align-items: start;
-}
-@media (max-width: 880px) { .mod { grid-template-columns: 1fr; gap: 40px; } }
-.mod-side {
-  position: sticky;
-  top: 120px;
-}
-.mod-side .mod-num {
-  font-family: var(--disp);
-  font-weight: 800;
-  font-size: 140px;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  background: linear-gradient(180deg, var(--c, var(--pap-0)) 0%, var(--c-deep, var(--pap-2)) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 0 32px var(--c-glow, transparent));
-}
-.mod-side .mod-en {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--c, var(--pap-2));
-  margin-top: 14px;
-}
-.mod-side .mod-cn {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 28px;
-  letter-spacing: -0.01em;
-  color: var(--pap-0);
-  margin-top: 6px;
-}
-.mod-side .mod-tag {
-  margin-top: 18px;
-  display: inline-flex;
-  padding: 6px 12px;
-  border: 1px solid var(--c, var(--pap-5));
-  border-radius: 100px;
+  top: -1px; left: 36px;
+  background: var(--ink-1);
+  border: 1px solid var(--pap-5);
+  border-top: 1px solid var(--cyan);
+  padding: 8px 14px 8px 14px;
+  display: inline-flex; align-items: center; gap: 14px;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--c, var(--pap-2));
-  background: color-mix(in oklab, var(--c, transparent) 8%, transparent);
-}
-
-.mod.i  { --c: var(--i); --c-deep: var(--i-deep); --c-glow: rgba(245,164,91,0.25); }
-.mod.d  { --c: var(--d); --c-deep: var(--d-deep); --c-glow: rgba(111,225,179,0.25); }
-.mod.o  { --c: var(--o); --c-deep: var(--o-deep); --c-glow: rgba(126,185,245,0.25); }
-.mod.pp { --c: var(--p); --c-deep: var(--p-deep); --c-glow: rgba(201,160,255,0.25); }
-
-.mod-body h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(28px, 3.2vw, 40px);
-  line-height: 1.18;
-  letter-spacing: -0.02em;
-  color: var(--pap-0);
-}
-.mod-body h3 em { color: var(--c, var(--gold)); font-style: normal; }
-.mod-body .lede {
-  margin-top: 24px;
-  font-family: var(--serif);
-  font-size: clamp(18px, 1.6vw, 22px);
-  line-height: 1.55;
   color: var(--pap-1);
+  transform: translateY(-100%);
 }
-.mod-body .lede em { color: var(--c, var(--gold)); font-style: normal; font-weight: 500; }
-.mod-body p {
-  margin-top: 18px;
-  font-size: 16px;
+.sheet-tab.right { left: auto; right: 36px; }
+.sheet-tab .num { color: var(--cyan); }
+.sheet-tab .div { width: 1px; height: 12px; background: var(--pap-5); }
+.sheet-tab .ti { color: var(--paper); }
+.sheet-tab .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+}
+@media (max-width: 600px) { .sheet-tab { left: 18px; font-size: 9px; padding: 6px 10px; gap: 10px; } }
+
+/* Sheet meta — bottom right info block */
+.sheet-meta {
+  position: absolute;
+  bottom: -1px; right: 36px;
+  background: var(--ink-1);
+  border: 1px solid var(--pap-5);
+  border-bottom: 1px solid var(--cyan);
+  padding: 6px 12px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+  transform: translateY(100%);
+}
+.sheet-meta b { color: var(--paper); font-weight: 500; }
+
+/* Section header common */
+.sec-head {
+  margin-bottom: 36px;
+}
+.sec-head .num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.sec-head .num::before, .sec-head .num::after {
+  content: "";
+  height: 1px;
+  background: var(--cyan);
+}
+.sec-head .num::before { width: 16px; background: linear-gradient(90deg, transparent, var(--cyan)); }
+.sec-head .num::after  { width: 60px; background: linear-gradient(90deg, var(--cyan), transparent); }
+.sec-head h2 {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+  color: var(--paper);
+}
+.sec-head h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--amber);
+}
+.sec-head .spec {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--pap-2);
+  text-transform: uppercase;
+  max-width: 70ch;
+}
+.sec-head .spec b { color: var(--cyan); font-weight: 500; }
+
+/* Body copy */
+.copy {
+  font-family: var(--sans);
+  font-size: 15px;
   line-height: 1.78;
   color: var(--pap-1);
   max-width: 64ch;
 }
-.mod-body p em { color: var(--c, var(--gold)); font-style: normal; font-weight: 500; }
-.mod-body .one-line {
-  margin-top: 28px;
-  padding: 22px 26px;
-  border-left: 2px solid var(--c, var(--gold));
-  background: color-mix(in oklab, var(--c, var(--gold)) 6%, transparent);
-  border-radius: 0 14px 14px 0;
-  font-family: var(--serif);
-  font-size: 18px;
-  line-height: 1.55;
-  color: var(--pap-0);
-  font-style: italic;
-}
-.mod-body .one-line em { font-style: italic; color: var(--c, var(--gold)); font-weight: 500; }
-
-/* Three pillars (Input) */
-.pillars {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-top: 36px;
-}
-@media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
-.pillar {
-  padding: 28px 24px;
-  border: 1px solid var(--pap-6);
-  border-radius: 16px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 70%);
-  position: relative;
-  overflow: hidden;
-  transition: border-color .35s, transform .35s var(--ease), background .35s;
-}
-.pillar:hover { border-color: color-mix(in oklab, var(--cc) 60%, transparent); transform: translateY(-3px); }
-.pillar::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--cc), transparent);
-  opacity: 0.7;
-}
-.pillar .pl-letter {
-  font-family: var(--disp);
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 1;
-  color: var(--cc);
-  letter-spacing: -0.02em;
-}
-.pillar .pl-en {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-  margin-top: 6px;
-}
-.pillar .pl-cn {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 500;
-  margin-top: 16px;
-  color: var(--pap-0);
-}
-.pillar .pl-q {
+.copy + .copy { margin-top: 14px; }
+.copy em {
+  color: var(--amber);
   font-family: var(--serif);
   font-style: italic;
-  font-size: 14px;
-  color: var(--cc);
-  margin-top: 6px;
+  font-weight: 400;
 }
-.pillar .pl-desc {
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--pap-2);
-  margin-top: 14px;
-}
-.pillar.h { --cc: var(--i); }       /* Happiness — warm/amber, audio of Input.H */
-.pillar.k { --cc: var(--gold); }
-.pillar.r { --cc: var(--o); }
+.copy b { color: var(--paper); font-weight: 500; }
 
-/* tag chips */
-.chip-set {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-top: 16px;
-}
-.chip {
-  font-size: 12.5px;
-  padding: 6px 12px;
-  border: 1px solid var(--pap-6);
-  border-radius: 100px;
-  color: var(--pap-2);
-  background: rgba(255,255,255,0.02);
-  font-family: var(--sans);
-  white-space: nowrap;
-  transition: color .25s, border-color .25s, background .25s;
-}
-.chip:hover {
-  color: var(--pap-0);
-  border-color: var(--cc, var(--gold));
-  background: color-mix(in oklab, var(--cc, var(--gold)) 10%, transparent);
-}
-
-/* Deposit pipeline */
-.pipeline {
-  margin-top: 36px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-@media (max-width: 760px) { .pipeline { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 460px) { .pipeline { grid-template-columns: 1fr; } }
-.pipe-step {
-  padding: 22px 18px;
-  border: 1px solid var(--pap-6);
-  border-radius: 14px;
-  background: rgba(255,255,255,0.02);
-  position: relative;
-}
-.pipe-step .num {
+/* Dimension line — the "[—— 24.0 ——]" tick */
+.dim {
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.22em;
-  color: var(--d);
-}
-.pipe-step .ttl {
-  font-family: var(--serif);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--pap-0);
-  margin-top: 8px;
-}
-.pipe-step .sub {
-  font-size: 13px;
-  color: var(--pap-2);
-  margin-top: 8px;
-  line-height: 1.55;
-}
-
-/* HKRR matrix card */
-.hkrr-matrix {
-  margin-top: 36px;
-  padding: 32px;
-  border: 1px solid var(--pap-6);
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(126,185,245,0.04), transparent 70%);
-}
-.hkrr-matrix h4 {
-  font-family: var(--disp);
-  font-size: 13px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
+  color: var(--cyan);
   text-transform: uppercase;
-  font-weight: 600;
-  color: var(--gold);
-  margin-bottom: 22px;
   display: inline-flex; align-items: center; gap: 10px;
 }
-.hkrr-matrix h4::before {
-  content: "★";
-  color: var(--gold);
+.dim::before, .dim::after {
+  content: "";
+  height: 1px;
+  background: var(--cyan);
+  flex: 1;
 }
-.hkrr-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-@media (max-width: 760px) { .hkrr-grid { grid-template-columns: 1fr 1fr; } }
-.hkrr-cell {
-  padding: 18px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid var(--pap-6);
-  border-top: 2px solid var(--cc);
-}
-.hkrr-cell .letter {
-  font-family: var(--disp);
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--cc);
-  line-height: 1;
-}
-.hkrr-cell .name {
+.dim::before { background: linear-gradient(90deg, transparent, var(--cyan)); }
+.dim::after  { background: linear-gradient(90deg, var(--cyan), transparent); }
+
+/* Annotation strip */
+.anno {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--cc);
-  margin-top: 6px;
-}
-.hkrr-cell .cn {
-  font-family: var(--serif);
-  font-size: 16px;
-  font-weight: 500;
-  margin-top: 12px;
-  color: var(--pap-0);
-}
-.hkrr-cell .desc {
-  font-size: 13px;
   color: var(--pap-2);
-  margin-top: 8px;
-  line-height: 1.55;
 }
-.hkrr-cell.h { --cc: #ffb86a; }
-.hkrr-cell.k { --cc: #7eb9f5; }
-.hkrr-cell.r1 { --cc: #ff8a93; }
-.hkrr-cell.r2 { --cc: #6fe1b3; }
+.anno b { color: var(--amber); font-weight: 500; }
 
-/* relation block (IDOP × HKRR) */
-.relation {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-@media (max-width: 760px) { .relation { grid-template-columns: 1fr; } }
-.rel-card {
-  padding: 22px 24px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid var(--pap-6);
-}
-.rel-card .lbl {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.rel-card .ttl {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 500;
-  margin-top: 8px;
-  color: var(--pap-0);
-}
-.rel-card p {
-  margin-top: 8px;
-  font-size: 14px;
-  color: var(--pap-2);
-  line-height: 1.65;
-}
-
-/* product list */
-.prod-grid {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-@media (max-width: 760px) { .prod-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 460px) { .prod-grid { grid-template-columns: 1fr; } }
-.prod-item {
-  padding: 14px 16px;
-  border-radius: 100px;
-  border: 1px solid var(--pap-6);
-  background: rgba(255,255,255,0.02);
-  font-size: 14px;
-  color: var(--pap-1);
-  text-align: center;
-  transition: color .25s, border-color .25s, background .25s, transform .25s;
-}
-.prod-item:hover {
-  color: var(--pap-0);
-  border-color: var(--p);
-  background: color-mix(in oklab, var(--p) 10%, transparent);
-  transform: translateY(-2px);
-}
-
-/* ============================================================
-   Flywheel section
-   ============================================================ */
-.flywheel-stage {
-  margin-top: 60px;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 56px;
-  align-items: center;
-}
-@media (max-width: 880px) { .flywheel-stage { grid-template-columns: 1fr; gap: 40px; } }
-.fw-visual {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  max-width: 520px;
-  margin: 0 auto;
-  width: 100%;
-}
-.fw-visual svg { width: 100%; height: 100%; }
-.fw-arc {
-  fill: none;
-  stroke-width: 1.4;
-  stroke-linecap: round;
-}
-.fw-arc.a1 { stroke: var(--i); }
-.fw-arc.a2 { stroke: var(--d); }
-.fw-arc.a3 { stroke: var(--o); }
-.fw-arc.a4 { stroke: var(--p); }
-.fw-spin { animation: spinSlow 24s linear infinite; transform-origin: 50% 50%; }
-@keyframes spinSlow { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-.fw-node {
-  position: absolute;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--pap-1);
-  background: var(--ink-2);
-  padding: 6px 12px;
-  border-radius: 100px;
-  border: 1px solid var(--pap-6);
-  transform: translate(-50%, -50%);
-}
-.fw-node.n1 { top: 8%;  left: 50%; border-color: var(--i); color: var(--i); }
-.fw-node.n2 { top: 50%; left: 92%; border-color: var(--d); color: var(--d); }
-.fw-node.n3 { top: 92%; left: 50%; border-color: var(--o); color: var(--o); }
-.fw-node.n4 { top: 50%; left: 8%;  border-color: var(--p); color: var(--p); }
-.fw-center {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-.fw-center .word {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 500;
-  color: var(--gold);
-}
-.fw-center .cap {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-  margin-top: 6px;
-}
-
-.fw-side h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(28px, 3vw, 38px);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--pap-0);
-}
-.fw-side h3 em { color: var(--gold); font-style: normal; }
-.fw-side p {
-  margin-top: 18px;
-  font-size: 16px;
-  line-height: 1.75;
-  color: var(--pap-1);
-}
-.fw-feedback {
-  margin-top: 24px;
-  display: flex; flex-wrap: wrap; gap: 8px;
-}
-
-/* ============================================================
-   Pull quote — big editorial moment
-   ============================================================ */
-.pull-quote {
-  padding: 120px 0;
-  text-align: center;
-}
-.pull-quote .q {
+/* Italic pull quote */
+.pq {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(28px, 4vw, 52px);
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-  color: var(--pap-0);
-  max-width: 22ch;
-  margin: 0 auto;
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 30px);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--paper);
 }
-.pull-quote .q em {
-  background: linear-gradient(180deg, var(--gold) 0%, var(--gold-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-style: italic;
-}
-.pull-quote .cap {
-  margin-top: 28px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--pap-3);
-}
+.pq em { color: var(--amber); }
 
 /* ============================================================
-   AI / Evolvability — section 08
+   HERO — Drawing No. IDOP-001
    ============================================================ */
-.ai-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  margin-top: 56px;
-}
-@media (max-width: 760px) { .ai-grid { grid-template-columns: 1fr; } }
-.ai-card {
-  padding: 32px 28px;
-  border-radius: 18px;
-  border: 1px solid var(--pap-6);
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 60%);
+.hero {
+  min-height: 100vh;
+  padding: 120px 0 80px;
+  display: flex; align-items: stretch;
   position: relative;
-  overflow: hidden;
 }
-.ai-card.cheap::before, .ai-card.evo::before {
+.hero .wrap { display: flex; flex-direction: column; justify-content: center; flex: 1; }
+
+.hero-frame {
+  position: relative;
+  border: 1px solid var(--pap-5);
+  padding: 64px 40px;
+  background: linear-gradient(180deg, rgba(125,211,252,0.02), transparent 50%);
+}
+@media (max-width: 720px) { .hero-frame { padding: 48px 22px; } }
+/* hero corner brackets */
+.hero-frame::before, .hero-frame::after {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--cc), transparent);
+  width: 22px; height: 22px;
+  border: 1px solid var(--cyan);
+  pointer-events: none;
 }
-.ai-card.cheap { --cc: var(--o); }
-.ai-card.evo   { --cc: var(--d); }
-.ai-card .lbl {
+.hero-frame::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.hero-frame::after  { bottom: -1px; right: -1px; border-top: 0; border-left: 0; }
+.hero-frame .crop-tr, .hero-frame .crop-bl {
+  position: absolute;
+  width: 22px; height: 22px;
+  border: 1px solid var(--cyan);
+  pointer-events: none;
+}
+.hero-frame .crop-tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+.hero-frame .crop-bl { bottom: -1px; left: -1px; border-top: 0; border-right: 0; }
+
+/* Hero stamps */
+.hero-stamp {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+  background: var(--ink-1);
+  border: 1px solid var(--pap-5);
+  padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 6px;
+  min-width: 200px;
+}
+.hero-stamp .row { display: flex; justify-content: space-between; gap: 18px; }
+.hero-stamp .lbl { color: var(--pap-3); }
+.hero-stamp .val { color: var(--paper); }
+.hero-stamp .val.cy { color: var(--cyan); }
+.hero-stamp .val.am { color: var(--amber); }
+.hero-stamp.tl { top: -1px; left: 32px; transform: translateY(-50%); border-top-color: var(--cyan); }
+.hero-stamp.br { bottom: -1px; right: 32px; transform: translateY(50%); border-bottom-color: var(--amber); }
+@media (max-width: 720px) {
+  .hero-stamp { min-width: 0; font-size: 9px; padding: 8px 10px; }
+  .hero-stamp.tl { left: 16px; }
+  .hero-stamp.br { right: 16px; }
+}
+
+/* OPVS ghost — the missing Latin word */
+.opus-ghost {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(80px, 14vw, 180px);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(125,211,252,0.10);
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+}
+@media (max-width: 880px) { .opus-ghost { display: none; } }
+
+/* Hero spec line */
+.hero-spec {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--cc);
-  margin-bottom: 18px;
-}
-.ai-card h4 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 24px;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-  color: var(--pap-0);
-}
-.ai-card p {
-  margin-top: 14px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--pap-1);
-}
-.ai-equation {
-  margin-top: 48px;
-  text-align: center;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(22px, 2.4vw, 32px);
-  letter-spacing: -0.01em;
-  color: var(--pap-0);
-  line-height: 1.5;
-}
-.ai-equation em { color: var(--gold); font-style: italic; }
-.ai-equation .plus { color: var(--pap-4); margin: 0 6px; }
-
-/* ============================================================
-   Principles — section 09
-   ============================================================ */
-.principles {
-  margin-top: 56px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-@media (max-width: 760px) { .principles { grid-template-columns: 1fr; } }
-.principle {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 18px 20px;
-  border: 1px solid var(--pap-6);
-  border-radius: 12px;
-  background: rgba(255,255,255,0.02);
-}
-.principle .x {
-  font-family: var(--disp);
-  font-weight: 600;
-  font-size: 18px;
-  color: var(--i);
-  line-height: 1.2;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.principle .t {
-  font-size: 15px;
-  color: var(--pap-1);
-  line-height: 1.55;
-}
-.principle-credo {
-  margin-top: 56px;
-  padding: 56px 32px;
-  text-align: center;
-  border: 1px solid var(--gold-3);
-  border-radius: 18px;
-  background:
-    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(240,200,120,0.10), transparent 70%),
-    linear-gradient(180deg, rgba(240,200,120,0.04), transparent 70%);
+  color: var(--cyan);
+  display: inline-flex; align-items: center; gap: 14px;
+  margin-bottom: 36px;
   position: relative;
+  z-index: 2;
 }
-.principle-credo .seal {
-  display: inline-block;
+.hero-spec::before {
+  content: "SPEC";
+  background: var(--cyan);
+  color: var(--ink-0);
+  padding: 3px 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+/* The big I-D-O-P letters — outlined drafting letterforms */
+.hero-letters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 1.4vw, 20px);
+  margin: 0 0 16px;
+  position: relative;
+  z-index: 2;
+}
+.hl-letter {
+  position: relative;
+  text-align: center;
+  padding-bottom: 56px;
+}
+.hl-letter .glyph {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(72px, 15vw, 180px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--paper);
+  display: block;
+  transition: -webkit-text-stroke .4s, color .4s, transform .4s var(--ease);
+}
+.hl-letter:nth-child(1) .glyph { -webkit-text-stroke-color: var(--st-i); }
+.hl-letter:nth-child(2) .glyph { -webkit-text-stroke-color: var(--amber); }
+.hl-letter:nth-child(3) .glyph { -webkit-text-stroke-color: var(--amber); }
+.hl-letter:nth-child(4) .glyph { -webkit-text-stroke-color: var(--st-p); }
+.hl-letter:hover .glyph { color: transparent; transform: translateY(-3px); -webkit-text-stroke-width: 1.8px; }
+
+/* baseline dimension line under each letter */
+.hl-letter .dimline {
+  position: absolute;
+  bottom: 38px; left: 8%; right: 8%;
+  height: 1px;
+  background: var(--cyan);
+  opacity: 0.7;
+}
+.hl-letter .dimline::before, .hl-letter .dimline::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 1px; height: 9px;
+  background: var(--cyan);
+}
+.hl-letter .dimline::before { left: 0; }
+.hl-letter .dimline::after  { right: 0; }
+
+.hl-letter .meta {
+  position: absolute;
+  bottom: 8px; left: 0; right: 0;
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 6px 14px;
-  border: 1px solid var(--gold-3);
-  border-radius: 100px;
-  color: var(--gold);
-  margin-bottom: 22px;
+  color: var(--pap-2);
+  display: flex; flex-direction: column; gap: 3px;
+  align-items: center;
 }
-.principle-credo .line1 {
-  font-family: var(--serif);
-  font-style: italic;
+.hl-letter .meta .name {
+  color: var(--paper);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+.hl-letter:nth-child(1) .meta .name { color: var(--st-i); }
+.hl-letter:nth-child(2) .meta .name { color: var(--amber); }
+.hl-letter:nth-child(3) .meta .name { color: var(--amber); }
+.hl-letter:nth-child(4) .meta .name { color: var(--st-p); }
+.hl-letter .meta .cn { color: var(--pap-2); font-size: 10px; }
+
+@media (max-width: 600px) {
+  .hl-letter { padding-bottom: 44px; }
+  .hl-letter .dimline { bottom: 30px; }
+  .hl-letter .meta { font-size: 9px; }
+  .hl-letter .meta .name { font-size: 10px; }
+}
+
+/* IP / DO bracket annotation under letters */
+.hero-brackets {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: clamp(8px, 1.4vw, 20px);
+  margin-top: 20px;
+  position: relative;
+  z-index: 2;
+}
+.hb-grp {
+  position: relative;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 18px;
+}
+.hb-grp::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 8%; right: 8%; height: 12px;
+  border: 1px solid;
+  border-bottom: 0;
+}
+.hb-grp.ip { color: var(--cyan); }
+.hb-grp.do { color: var(--amber); }
+.hb-grp.ip::before { border-color: var(--cyan); }
+.hb-grp.do::before { border-color: var(--amber); }
+.hb-grp .pair {
+  font-family: var(--disp);
+  font-weight: 700;
   font-size: clamp(22px, 2.4vw, 32px);
-  line-height: 1.4;
-  color: var(--pap-0);
+  letter-spacing: 0.06em;
+  color: inherit;
+  margin-bottom: 6px;
 }
-.principle-credo .line2 {
-  margin-top: 14px;
+.hb-grp .note {
+  color: var(--pap-2);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+}
+
+/* Hero title + leader callouts */
+.hero-title {
+  margin-top: 56px;
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 34px);
   line-height: 1.4;
-  color: var(--gold);
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  max-width: 28ch;
+  position: relative;
+  z-index: 2;
+}
+.hero-title b {
+  font-family: var(--disp);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--amber);
+  letter-spacing: 0;
+}
+.hero-kicker {
+  margin-top: 22px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  line-height: 1.7;
+  color: var(--pap-2);
+  text-transform: uppercase;
+  max-width: 62ch;
+}
+.hero-kicker b { color: var(--cyan); font-weight: 500; }
+
+/* Hero "scroll to begin" */
+.hero-scroll {
+  margin-top: 56px;
+  display: inline-flex;
+  align-items: center; gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  position: relative;
+  z-index: 2;
+  padding: 6px 0;
+}
+.hero-scroll .arr {
+  display: inline-block;
+  width: 36px; height: 1px;
+  background: linear-gradient(90deg, var(--cyan), transparent);
+  position: relative;
+}
+.hero-scroll .arr::after {
+  content: "";
+  position: absolute;
+  top: -3px; left: 0;
+  width: 6px; height: 6px;
+  border-bottom: 1px solid var(--cyan);
+  border-right: 1px solid var(--cyan);
+  transform: rotate(45deg);
+  animation: arrMove 1.8s ease-in-out infinite;
+}
+@keyframes arrMove {
+  0%, 100% { left: 0; opacity: 0; }
+  50%      { left: 24px; opacity: 1; }
 }
 
 /* ============================================================
-   Final
+   01 · Why · AS-BUILT vs SPEC sheet
    ============================================================ */
-.final-def {
-  padding: 56px 40px;
-  border-radius: 22px;
-  background:
-    linear-gradient(180deg, rgba(240,200,120,0.05), transparent 70%),
-    var(--ink-2);
-  border: 1px solid var(--pap-6);
-  margin-top: 56px;
+.spec-table {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 64px 1fr 1fr;
+  border: 1px solid var(--pap-5);
+  font-size: 14px;
 }
-.final-def .blk {
-  font-family: var(--serif);
-  font-size: clamp(17px, 1.7vw, 22px);
-  line-height: 1.7;
-  color: var(--pap-1);
+@media (max-width: 720px) {
+  .spec-table { grid-template-columns: 38px 1fr 1fr; font-size: 13px; }
 }
-.final-def .blk em {
-  color: var(--gold);
-  font-style: normal;
-  font-weight: 500;
+.spec-table .hd {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--pap-5);
+  color: var(--pap-2);
+  background: rgba(125,211,252,0.04);
+}
+.spec-table .hd.col-as { color: var(--pap-1); }
+.spec-table .hd.col-sp { color: var(--cyan); }
+.spec-table .hd.col-sp .pill {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 9px;
+  background: var(--cyan);
+  color: var(--ink-0);
+  padding: 2px 6px;
+  font-weight: 700;
+}
+.spec-table .cell {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--pap-6);
+  display: flex; align-items: flex-start;
+  line-height: 1.55;
+}
+.spec-table .cell.idx {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--pap-3);
+  background: rgba(125,211,252,0.02);
+  border-right: 1px solid var(--pap-6);
+}
+.spec-table .cell.as { color: var(--pap-2); border-right: 1px solid var(--pap-6); }
+.spec-table .cell.sp { color: var(--paper); }
+.spec-table .cell.sp::before {
+  content: "▸";
+  color: var(--amber);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.spec-table .row-last .cell { border-bottom: 0; }
+
+.note-strip {
+  margin-top: 28px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--pap-2);
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+.note-strip .tag {
+  background: var(--ink-2);
+  border: 1px solid var(--cyan);
+  border-left-width: 3px;
+  padding: 5px 10px;
+  color: var(--cyan);
+}
+.note-strip .arr { color: var(--amber); }
+
+/* ============================================================
+   02 · Loop · Mechanical assembly drawing
+   ============================================================ */
+.loop-grid {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+@media (max-width: 980px) { .loop-grid { grid-template-columns: 1fr; } }
+
+.loop-asm {
+  position: relative;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  aspect-ratio: 1.05 / 1;
+  overflow: hidden;
+}
+.loop-asm svg { width: 100%; height: 100%; display: block; }
+.loop-asm .view-label {
+  position: absolute;
+  top: 16px; left: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  background: var(--ink-1);
+  padding: 4px 8px;
+  border: 1px solid var(--pap-5);
+  border-left: 2px solid var(--cyan);
+}
+.loop-asm .view-rev {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--pap-2);
+  text-transform: uppercase;
 }
 
-.final-lines {
+/* BOM — parts list */
+.bom {
+  border: 1px solid var(--pap-5);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  background: var(--ink-1);
+  display: flex; flex-direction: column;
+}
+.bom .bom-hd {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--cyan);
+  display: flex; justify-content: space-between;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-size: 10px;
+}
+.bom .bom-hd b { color: var(--paper); font-weight: 500; }
+.bom table { width: 100%; border-collapse: collapse; }
+.bom th, .bom td {
+  padding: 9px 14px;
+  text-align: left;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--pap-6);
+  vertical-align: middle;
+}
+.bom th {
+  color: var(--pap-3);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: rgba(125,211,252,0.03);
+}
+.bom td.code { color: var(--cyan); font-weight: 500; width: 36px; }
+.bom td.idx  { color: var(--pap-3); width: 36px; }
+.bom td.desc { color: var(--paper); }
+.bom td.cn   { color: var(--pap-2); font-family: var(--sans); font-size: 13px; }
+.bom tr.divider td { background: rgba(245,177,75,0.04); border-top: 1px dashed var(--amber); }
+.bom tr.brand td.code { color: var(--cyan); }
+.bom tr.brand td.desc { color: var(--cyan); }
+.bom tr.core td.code  { color: var(--amber); }
+.bom tr.core td.desc  { color: var(--amber); }
+.bom .bom-ft {
+  padding: 10px 14px;
+  border-top: 1px solid var(--pap-5);
+  color: var(--pap-2);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex; justify-content: space-between;
+}
+.bom .bom-ft b { color: var(--amber); }
+
+/* ============================================================
+   Module · alternating sheet sections (Input/Deposit/Output/Product)
+   ============================================================ */
+.mod-section {
+  padding: 96px 0 80px;
+}
+.mod-banner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--pap-5);
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.mod-banner .left { display: flex; align-items: baseline; gap: 22px; flex-wrap: wrap; }
+.mod-banner .big {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--c, var(--paper));
+  -webkit-text-stroke: 1.2px var(--c, var(--paper));
+  background: transparent;
+  /* No fill — outlined letterform */
+  -webkit-text-fill-color: transparent;
+}
+.mod-banner .meta {
+  display: flex; flex-direction: column; gap: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+}
+.mod-banner .meta .en {
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  color: var(--c, var(--paper));
+}
+.mod-banner .meta .cn {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: 0;
+  color: var(--paper);
+}
+.mod-banner .tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c, var(--paper));
+  padding: 6px 12px;
+  border: 1px solid var(--c, var(--pap-5));
+  background: color-mix(in oklab, var(--c, transparent) 8%, transparent);
+}
+.mod-section.m-i  { --c: var(--st-i); }
+.mod-section.m-d  { --c: var(--st-d); }
+.mod-section.m-o  { --c: var(--st-o); }
+.mod-section.m-p  { --c: var(--st-p); }
+
+.mod-lead {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2.1vw, 26px);
+  line-height: 1.5;
+  color: var(--paper);
+  max-width: 50ch;
+  margin-bottom: 36px;
+}
+.mod-lead b { color: var(--c, var(--amber)); font-family: var(--disp); font-style: normal; font-weight: 600; }
+
+/* ============================================================
+   03 · Input · Three-feed convergence diagram
+   ============================================================ */
+.conv {
+  margin-top: 12px;
+  position: relative;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  padding: 32px;
+}
+@media (max-width: 720px) { .conv { padding: 22px 18px; } }
+.conv .conv-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  position: absolute;
+  top: 10px; left: 16px;
+  background: var(--ink-1);
+  padding: 0 8px;
+  transform: translateY(-50%);
+}
+.conv-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 90px 1fr;
+  gap: 18px;
+  align-items: center;
+  margin-top: 16px;
+}
+@media (max-width: 720px) { .conv-grid { grid-template-columns: 1fr; gap: 14px; } }
+.conv-feeds {
+  display: flex; flex-direction: column;
   gap: 14px;
-  margin-top: 36px;
 }
-@media (max-width: 720px) { .final-lines { grid-template-columns: 1fr; } }
-.final-line {
-  padding: 22px 24px;
-  border-radius: 14px;
+.conv-feed {
+  border: 1px solid var(--pap-5);
+  border-left: 2px solid var(--fc, var(--cyan));
+  padding: 16px 18px;
+  position: relative;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--fc, var(--cyan)) 6%, transparent), transparent 60%);
+}
+.conv-feed .ltr {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--fc, var(--cyan));
+  position: absolute;
+  top: 14px; right: 16px;
+}
+.conv-feed .en {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fc, var(--cyan));
+}
+.conv-feed .cn {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 4px;
+  color: var(--paper);
+}
+.conv-feed .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--fc, var(--cyan));
+  margin-top: 6px;
+}
+.conv-feed .desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pap-2);
+  margin-top: 10px;
+}
+.conv-feed .ratesp {
+  margin-top: 12px;
+  display: flex; gap: 6px;
+  flex-wrap: wrap;
+}
+.conv-feed .ratesp span {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--pap-2);
+  text-transform: uppercase;
+  padding: 3px 7px;
   border: 1px solid var(--pap-6);
-  background: rgba(255,255,255,0.025);
-  display: flex; align-items: baseline; gap: 16px;
 }
-.final-line .ltr {
+.conv-feed.f-k { --fc: var(--cyan); }
+.conv-feed.f-h { --fc: var(--amber); }
+.conv-feed.f-r { --fc: var(--st-o); }
+
+/* center junction */
+.conv-junction {
+  position: relative;
+  height: 200px;
+  display: flex; align-items: center; justify-content: center;
+}
+.conv-junction svg { width: 100%; height: 100%; }
+.conv-out {
+  border: 1px solid var(--cyan);
+  background: linear-gradient(180deg, rgba(125,211,252,0.06), transparent 70%);
+  padding: 18px 20px;
+}
+.conv-out .lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.conv-out .ttl {
+  font-family: var(--disp);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--paper);
+  margin-top: 6px;
+}
+.conv-out .note {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pap-1);
+  margin-top: 10px;
+}
+.conv-out .note em { color: var(--amber); font-style: italic; }
+
+/* leader callout */
+.leader {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+}
+.leader::before {
+  content: "";
+  width: 22px; height: 1px;
+  background: var(--cyan);
+}
+.leader b { color: var(--cyan); font-weight: 500; }
+
+/* ============================================================
+   04 · Deposit · Exploded axonometric stack
+   ============================================================ */
+.expl {
+  margin-top: 12px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  padding: 32px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 32px;
+  align-items: center;
+}
+@media (max-width: 880px) { .expl { grid-template-columns: 1fr; gap: 22px; } }
+.expl .view-tag {
+  position: absolute;
+  top: 10px; left: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--st-d);
+  background: var(--ink-1);
+  padding: 0 8px;
+  transform: translateY(-50%);
+}
+.expl-svg {
+  width: 100%;
+  aspect-ratio: 1 / 1.2;
+  position: relative;
+}
+.expl-svg svg { width: 100%; height: 100%; }
+
+.expl-steps {
+  display: flex; flex-direction: column;
+  gap: 6px;
+}
+.expl-step {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--pap-6);
+  align-items: baseline;
+}
+.expl-step:last-child { border-bottom: 0; }
+.expl-step .num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--st-d);
+}
+.expl-step .body { display: flex; flex-direction: column; gap: 2px; }
+.expl-step .ttl {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: 15.5px;
+  color: var(--paper);
+}
+.expl-step .sub {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--pap-2);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   05 · Output · Signal-flow with inline HKRR quality gates
+   ============================================================ */
+.flow {
+  margin-top: 12px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  padding: 32px 28px 28px;
+  position: relative;
+}
+@media (max-width: 720px) { .flow { padding: 22px 18px; } }
+.flow .view-tag {
+  position: absolute;
+  top: 10px; left: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--st-o);
+  background: var(--ink-1);
+  padding: 0 8px;
+  transform: translateY(-50%);
+}
+.flow-chain {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) 28px repeat(4, minmax(0, 1fr) 28px) minmax(110px, 1fr);
+  gap: 0;
+  align-items: stretch;
+  margin: 14px 0 18px;
+  overflow-x: auto;
+}
+.flow-chain::-webkit-scrollbar { height: 6px; }
+.flow-chain::-webkit-scrollbar-thumb { background: var(--pap-5); }
+.flow-node, .flow-gate {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 8px;
+  text-align: center;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-2);
+}
+.flow-node.src { border-color: var(--st-o); background: rgba(196,181,253,0.06); }
+.flow-node.out { border-color: var(--amber); background: rgba(245,177,75,0.06); }
+.flow-node .lbl {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+}
+.flow-node .ttl {
+  font-family: var(--disp);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--paper);
+  margin-top: 4px;
+}
+.flow-node.src .ttl { color: var(--st-o); }
+.flow-node.out .ttl { color: var(--amber); }
+.flow-gate {
+  border-color: var(--cyan);
+  background: linear-gradient(180deg, rgba(125,211,252,0.08), rgba(125,211,252,0.02));
+  padding: 10px 6px;
+}
+.flow-gate .gltr {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--cyan);
+}
+.flow-gate .gname {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-top: 6px;
+}
+.flow-gate .gcn {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--pap-1);
+  margin-top: 4px;
+}
+
+/* arrow segments */
+.flow-arr {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.flow-arr::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--pap-4);
+}
+.flow-arr::after {
+  content: "";
+  position: absolute;
+  right: 2px; top: 50%;
+  width: 8px; height: 8px;
+  border-top: 1px solid var(--pap-2);
+  border-right: 1px solid var(--pap-2);
+  transform: translateY(-50%) rotate(45deg);
+}
+.flow-arr.am::before { background: var(--amber); }
+.flow-arr.am::after { border-color: var(--amber); }
+
+@media (max-width: 720px) {
+  .flow-chain {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .flow-arr {
+    height: 22px;
+  }
+  .flow-arr::before { left: 50%; right: auto; width: 1px; top: 0; bottom: 0; height: 100%; }
+  .flow-arr::after { right: auto; top: auto; bottom: 2px; left: 50%; transform: translateX(-50%) rotate(135deg); }
+}
+
+.flow-spec {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--pap-5);
+}
+@media (max-width: 720px) { .flow-spec { grid-template-columns: 1fr; } }
+.fs-card {
+  padding: 16px 18px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-2);
+}
+.fs-card .lbl {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.fs-card .ttl {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  margin-top: 6px;
+  color: var(--paper);
+  line-height: 1.4;
+}
+.fs-card .ttl b { font-family: var(--disp); font-style: normal; font-weight: 600; color: var(--cyan); }
+.fs-card .desc {
+  font-size: 13px;
+  color: var(--pap-1);
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   06 · Product · Family tree
+   ============================================================ */
+.tree {
+  margin-top: 12px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  padding: 32px 28px;
+  position: relative;
+}
+@media (max-width: 720px) { .tree { padding: 22px 18px; } }
+.tree .view-tag {
+  position: absolute;
+  top: 10px; left: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--st-p);
+  background: var(--ink-1);
+  padding: 0 8px;
+  transform: translateY(-50%);
+}
+.tree-root {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.tree-root .lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--st-p);
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--st-p);
+  background: rgba(253,230,138,0.05);
+  margin-bottom: 10px;
+}
+.tree-root .ttl {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--paper);
+  max-width: 56ch;
+  margin: 0 auto;
+}
+.tree-root .ttl em { color: var(--amber); }
+
+.tree-trunk {
+  width: 1px;
+  height: 36px;
+  background: var(--st-p);
+  margin: 0 auto;
+  position: relative;
+}
+.tree-trunk::after {
+  content: "";
+  position: absolute;
+  left: -4px; bottom: -1px;
+  width: 9px; height: 9px;
+  border-bottom: 1px solid var(--st-p);
+  border-right: 1px solid var(--st-p);
+  transform: rotate(45deg);
+}
+.tree-tier {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+.tree-tier.t1 { grid-template-columns: repeat(3, 1fr); }
+.tree-tier.t2 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 760px) {
+  .tree-tier.t1, .tree-tier.t2 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 460px) {
+  .tree-tier.t1, .tree-tier.t2 { grid-template-columns: 1fr; }
+}
+.tree-tier .tier-lbl {
+  grid-column: 1 / -1;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 4px;
+}
+.tree-tier .tier-lbl::before {
+  content: ""; flex: 1; height: 1px; background: var(--pap-5);
+}
+.tree-tier .tier-lbl::after {
+  content: ""; flex: 1; height: 1px; background: var(--pap-5);
+}
+.tree-node {
+  padding: 12px 14px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-2);
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--paper);
+  position: relative;
+  font-family: var(--sans);
+  transition: border-color .25s, transform .25s, background .25s;
+}
+.tree-node:hover {
+  border-color: var(--st-p);
+  background: rgba(253,230,138,0.06);
+  transform: translateY(-2px);
+}
+.tree-node.core { border-color: var(--st-p); background: rgba(253,230,138,0.04); }
+.tree-node .nm {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: 14.5px;
+  color: var(--paper);
+}
+.tree-node .nm.am { color: var(--st-p); }
+.tree-node .ds {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   07 · Flywheel · Static exploded axonometric (ascending)
+   ============================================================ */
+.fw {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+@media (max-width: 880px) { .fw { grid-template-columns: 1fr; } }
+
+.fw-svg {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  padding: 16px;
+}
+.fw-svg svg { width: 100%; height: 100%; }
+.fw-svg .view-tag {
+  position: absolute;
+  top: 10px; left: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: var(--ink-1);
+  padding: 0 8px;
+  transform: translateY(-50%);
+}
+.fw-svg .rpm {
+  position: absolute;
+  bottom: 14px; right: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+.fw-svg .rpm b { color: var(--paper); }
+
+.fw-side .pq { margin-bottom: 22px; }
+.fw-side .copy { margin-bottom: 14px; }
+
+.fb-chips {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 18px;
+}
+.fb-chips .c {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pap-1);
+  padding: 4px 9px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-2);
+}
+.fb-chips .c.am { color: var(--amber); border-color: var(--amber); }
+
+/* ============================================================
+   PULL QUOTE — engineering note
+   ============================================================ */
+.pq-section {
+  padding: 96px 0;
+}
+.pq-section .pq-wrap {
+  border-top: 1px solid var(--cyan);
+  border-bottom: 1px solid var(--cyan);
+  padding: 56px 32px;
+  text-align: left;
+  position: relative;
+  background: linear-gradient(180deg, rgba(125,211,252,0.03), transparent);
+}
+.pq-section .pq-wrap::before {
+  content: "NOTE";
+  position: absolute;
+  top: -10px; left: 22px;
+  background: var(--ink-1);
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  padding: 0 8px;
+}
+.pq-section .pq-wrap::after {
+  content: "—";
+  position: absolute;
+  bottom: -10px; right: 22px;
+  background: var(--ink-1);
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 0 8px;
+}
+.pq-section .q {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  max-width: 42ch;
+}
+.pq-section .q em {
+  color: var(--amber);
+  font-style: italic;
+}
+.pq-section .by {
+  margin-top: 22px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pap-3);
+}
+.pq-section .by b { color: var(--cyan); }
+
+/* ============================================================
+   08 · AI × Evolvability — failure-cost analysis sheet
+   ============================================================ */
+.fca {
+  margin-top: 32px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-1);
+  padding: 32px 28px;
+  position: relative;
+}
+@media (max-width: 720px) { .fca { padding: 22px 18px; } }
+.fca .view-tag {
+  position: absolute;
+  top: 10px; left: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: var(--ink-1);
+  padding: 0 8px;
+  transform: translateY(-50%);
+}
+.fca-grid {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 18px;
+  align-items: stretch;
+  margin-top: 12px;
+}
+@media (max-width: 880px) { .fca-grid { grid-template-columns: 1fr; } }
+.fca-col {
+  padding: 24px 22px;
+  border: 1px solid var(--pap-5);
+  background: var(--ink-2);
+  border-left: 2px solid var(--cc);
+}
+.fca-col.cheap { --cc: var(--st-o); }
+.fca-col.evo   { --cc: var(--st-d); }
+.fca-col .lbl {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cc);
+}
+.fca-col .ttl {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  margin-top: 8px;
+  color: var(--paper);
+  line-height: 1.4;
+}
+.fca-col .ttl em { color: var(--cc); }
+.fca-col .desc {
+  font-size: 13.5px;
+  color: var(--pap-1);
+  margin-top: 12px;
+  line-height: 1.65;
+}
+.fca-col .desc b { color: var(--cc); font-weight: 500; }
+.fca-col .unit {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+  padding-top: 12px;
+  border-top: 1px dashed var(--pap-5);
+}
+.fca-col .unit b { color: var(--cc); }
+
+.fca-op {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--amber);
+}
+@media (max-width: 880px) { .fca-op { padding: 8px 0; } }
+
+.fca-eq {
+  margin-top: 28px;
+  padding: 22px 24px;
+  border: 1px solid var(--amber);
+  border-left-width: 3px;
+  background: rgba(245,177,75,0.04);
+  display: flex; align-items: baseline; gap: 18px;
+  flex-wrap: wrap;
+}
+.fca-eq .lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  flex-shrink: 0;
+}
+.fca-eq .eq {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  color: var(--paper);
+  line-height: 1.45;
+}
+.fca-eq .eq b {
+  font-family: var(--disp);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--amber);
+}
+
+/* ============================================================
+   09 · Principles — material standards
+   ============================================================ */
+.std {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--pap-5);
+}
+@media (max-width: 720px) { .std { grid-template-columns: 1fr; } }
+.std-row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  border-bottom: 1px solid var(--pap-6);
+  border-right: 1px solid var(--pap-6);
+}
+.std-row:nth-child(2n) { border-right: 0; }
+@media (max-width: 720px) {
+  .std-row { border-right: 0; }
+}
+.std-row .code {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--cyan);
+  padding: 14px 12px;
+  background: rgba(125,211,252,0.03);
+  border-right: 1px solid var(--pap-6);
+  display: flex; align-items: center;
+}
+.std-row .txt {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--pap-1);
+  display: flex; align-items: center;
+  line-height: 1.5;
+}
+.std-row .txt::before {
+  content: "✕";
+  color: var(--amber);
+  margin-right: 10px;
+  font-family: var(--mono);
+  flex-shrink: 0;
+}
+
+.std-stamp {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+.std-stamp .seal {
+  position: relative;
+  border: 2px solid var(--amber);
+  padding: 18px 28px;
+  display: inline-flex; flex-direction: column;
+  align-items: flex-start; gap: 6px;
+  transform: rotate(-2deg);
+  background: rgba(245,177,75,0.04);
+}
+.std-stamp .seal::before, .std-stamp .seal::after {
+  content: "";
+  position: absolute;
+  width: 8px; height: 8px;
+  border: 1px solid var(--amber);
+}
+.std-stamp .seal::before { top: 4px; left: 4px; border-right: 0; border-bottom: 0; }
+.std-stamp .seal::after  { bottom: 4px; right: 4px; border-left: 0; border-top: 0; }
+.std-stamp .seal .lbl {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+.std-stamp .seal .ttl {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+.std-stamp .seal .by {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--paper);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   10 · Final · Title block sign-off
+   ============================================================ */
+.title-block {
+  margin-top: 36px;
+  border: 1px solid var(--cyan);
+  background: var(--ink-1);
+}
+.tb-defn {
+  padding: 32px 32px 28px;
+  border-bottom: 1px solid var(--pap-5);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.75;
+  color: var(--paper);
+}
+.tb-defn em { color: var(--amber); }
+.tb-defn b { font-family: var(--disp); font-style: normal; font-weight: 600; color: var(--cyan); }
+
+.tb-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--pap-5);
+}
+@media (max-width: 760px) { .tb-summary { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .tb-summary { grid-template-columns: 1fr; } }
+.tb-cell {
+  padding: 20px 18px;
+  border-right: 1px solid var(--pap-5);
+  display: flex; flex-direction: column; gap: 6px;
+  position: relative;
+}
+.tb-cell:last-child { border-right: 0; }
+@media (max-width: 760px) {
+  .tb-cell:nth-child(2n) { border-right: 0; }
+}
+@media (max-width: 460px) {
+  .tb-cell { border-right: 0; border-bottom: 1px solid var(--pap-5); }
+  .tb-cell:last-child { border-bottom: 0; }
+}
+.tb-cell .ltr {
   font-family: var(--disp);
   font-weight: 800;
   font-size: 44px;
   line-height: 1;
-  color: var(--cc);
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
+  color: var(--cc, var(--paper));
+  letter-spacing: -0.03em;
 }
-.final-line .txt {
-  font-family: var(--serif);
-  font-size: 17px;
-  color: var(--pap-0);
-  line-height: 1.45;
-}
-.final-line .txt em { color: var(--cc); font-style: normal; font-weight: 500; }
-.final-line.i { --cc: var(--i); }
-.final-line.d { --cc: var(--d); }
-.final-line.o { --cc: var(--o); }
-.final-line.p { --cc: var(--p); }
-
-.coda {
-  margin-top: 96px;
-  text-align: center;
-}
-.coda .seal {
-  display: inline-flex; gap: 4px; align-items: baseline;
-  font-family: var(--disp);
-  font-weight: 800;
-  font-size: clamp(56px, 11vw, 144px);
-  letter-spacing: -0.04em;
-  line-height: 0.9;
-}
-.coda .seal .L {
-  background: linear-gradient(180deg, var(--gold-light, #ffd98a) 0%, var(--gold-2) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.coda .seal .D {
-  background: linear-gradient(180deg, var(--pap-0) 0%, var(--pap-2) 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  opacity: 0.7;
-}
-.coda .cap {
-  margin-top: 24px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(20px, 2vw, 28px);
-  color: var(--pap-0);
-  line-height: 1.5;
-}
-.coda .cap em { color: var(--gold); font-style: italic; }
-.coda .stamp {
-  margin-top: 36px;
+.tb-cell .nm {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--pap-3);
+  color: var(--cc, var(--paper));
 }
+.tb-cell .cn {
+  font-family: var(--disp);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--paper);
+}
+.tb-cell .verb {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--pap-1);
+  margin-top: 2px;
+}
+.tb-cell.i { --cc: var(--st-i); }
+.tb-cell.d { --cc: var(--st-d); }
+.tb-cell.o { --cc: var(--st-o); }
+.tb-cell.p { --cc: var(--st-p); }
+
+.tb-signoff {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: stretch;
+}
+@media (max-width: 720px) { .tb-signoff { grid-template-columns: 1fr; } }
+.tb-signoff > div {
+  padding: 16px 22px;
+  border-right: 1px solid var(--pap-5);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pap-2);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.tb-signoff > div:last-child { border-right: 0; }
+@media (max-width: 720px) {
+  .tb-signoff > div { border-right: 0; border-bottom: 1px solid var(--pap-5); }
+  .tb-signoff > div:last-child { border-bottom: 0; }
+}
+.tb-signoff .lbl { color: var(--pap-3); font-size: 9px; }
+.tb-signoff .val { color: var(--paper); font-size: 12px; letter-spacing: 0.14em; }
+.tb-signoff .val.am { color: var(--amber); }
+.tb-signoff .val.cy { color: var(--cyan); }
+
+/* Coda — the dimensioned IDOP wordmark */
+.coda {
+  margin-top: 80px;
+  padding: 64px 0 24px;
+  text-align: center;
+  position: relative;
+}
+.coda .wordmark {
+  display: inline-grid;
+  grid-template-columns: repeat(4, auto);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: baseline;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: clamp(72px, 14vw, 168px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  position: relative;
+}
+.coda .wordmark span {
+  color: transparent;
+  -webkit-text-stroke: 1.2px;
+  display: inline-block;
+  position: relative;
+}
+.coda .wordmark .ci { -webkit-text-stroke-color: var(--st-i); }
+.coda .wordmark .cd { -webkit-text-stroke-color: var(--amber); }
+.coda .wordmark .co { -webkit-text-stroke-color: var(--amber); }
+.coda .wordmark .cp { -webkit-text-stroke-color: var(--st-p); }
+.coda .underline {
+  margin-top: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+.coda .underline .ln {
+  height: 1px; width: 80px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+.coda .closing {
+  margin-top: 32px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--paper);
+  line-height: 1.5;
+}
+.coda .closing em { color: var(--amber); }
 
 /* ============================================================
-   Footer
+   Footer · drawing's bottom title block
    ============================================================ */
 footer {
-  padding: 64px 32px 56px;
-  border-top: 1px solid var(--pap-6);
+  margin-top: 120px;
+  border-top: 1px solid var(--pap-5);
+  padding: 32px 40px 28px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--pap-3);
-  text-align: center;
-}
-footer .ft-row {
-  display: flex; align-items: center; justify-content: center; gap: 14px;
+  display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap;
+  gap: 14px;
+  position: relative;
+  z-index: 2;
 }
-footer .ft-row .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--pap-5); }
-footer a:hover { color: var(--pap-0); }
+footer .left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+footer .left b { color: var(--paper); font-weight: 500; }
+footer .left .crp {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+footer .left .crp i {
+  width: 7px; height: 7px;
+  display: block;
+  border: 1px solid var(--cyan);
+  transform: rotate(45deg);
+  background: var(--cyan-glow);
+}
+footer .right { opacity: 0.6; }
+@media (max-width: 600px) { footer { padding: 22px 22px; } }
 
 /* ============================================================
-   Reveal
+   Reveal animation
    ============================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  transform: translateY(20px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
-.reveal.d2 { transition-delay: 0.1s; }
-.reveal.d3 { transition-delay: 0.2s; }
-.reveal.d4 { transition-delay: 0.3s; }
-.reveal.d5 { transition-delay: 0.4s; }
+.reveal.d2 { transition-delay: 0.08s; }
+.reveal.d3 { transition-delay: 0.16s; }
+.reveal.d4 { transition-delay: 0.24s; }
+
+.draw-line {
+  stroke-dasharray: var(--len, 1000);
+  stroke-dashoffset: var(--len, 1000);
+  transition: stroke-dashoffset 1.4s var(--ease-out);
+}
+.draw-line.drawn { stroke-dashoffset: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .draw-line { stroke-dashoffset: 0; }
 }
 </style>
 </head>
 <body>
 
-<div class="progress" id="progress"></div>
+<!-- crosshair cursor -->
+<div class="xhair" id="xhair" aria-hidden="true">
+  <div class="vbar"></div>
+  <div class="hbar"></div>
+  <div class="dot"></div>
+  <div class="lbl" id="xhairLbl">EXAMINE</div>
+</div>
 
+<!-- line-counter progress -->
+<div class="counter" id="counter">
+  <span class="lc"><span id="lcPos">0000</span> <span class="max">/ <span id="lcMax">0420</span></span></span>
+</div>
+
+<!-- masthead · drawing title block (top) -->
 <header class="mast" id="mast">
-  <a href="index.html" class="mark">
-    <span class="dots"><i></i><i></i><i></i><i></i></span>
-    <span>IDOP&nbsp;·&nbsp;Theory</span>
-  </a>
-  <nav class="ctr" id="navCtr">
-    <a href="#why"     class="sec" data-target="why">Why</a>
-    <span class="sep"></span>
-    <a href="#loop"    class="sec" data-target="loop">Loop</a>
-    <span class="sep"></span>
-    <a href="#input"   class="sec" data-target="input">Input</a>
-    <span class="sep"></span>
-    <a href="#deposit" class="sec" data-target="deposit">Deposit</a>
-    <span class="sep"></span>
-    <a href="#output"  class="sec" data-target="output">Output</a>
-    <span class="sep"></span>
-    <a href="#product" class="sec" data-target="product">Product</a>
-    <span class="sep"></span>
-    <a href="#fly"     class="sec" data-target="fly">Flywheel</a>
+  <div class="stamp-l">
+    <span class="crp"><i></i></span>
+    <span>DWG.&nbsp;<b style="color:var(--cyan)">IDOP-001</b></span>
+    <span style="color:var(--pap-3)">/</span>
+    <span>The Personal-IP Loop</span>
+  </div>
+  <nav class="stamp-c" id="navCtr">
+    <a href="#why"        class="sec" data-target="why">01·Why</a>
+    <a href="#loop"       class="sec" data-target="loop">02·Loop</a>
+    <a href="#input"      class="sec" data-target="input">03·I</a>
+    <a href="#deposit"    class="sec" data-target="deposit">04·D</a>
+    <a href="#output"     class="sec" data-target="output">05·O</a>
+    <a href="#product"    class="sec" data-target="product">06·P</a>
+    <a href="#fly"        class="sec" data-target="fly">07·Fly</a>
+    <a href="#ai"         class="sec" data-target="ai">08·AI</a>
+    <a href="#principles" class="sec" data-target="principles">09·Std</a>
+    <a href="#final"      class="sec" data-target="final">10·End</a>
   </nav>
-  <a href="index.html" class="home">← 返回主页</a>
+  <div class="stamp-r">
+    <span class="rev">REV&nbsp;2026.05</span>
+    <a href="index.html" class="home">← INDEX</a>
+  </div>
 </header>
 
 <!-- ============================================================
-     Hero
+     HERO · Patent drawing of I-D-O-P
      ============================================================ -->
 <section class="hero">
-  <div class="hero-orbit" aria-hidden="true">
-    <svg viewBox="0 0 1000 1000">
-      <defs>
-        <linearGradient id="goldGradHero" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"  stop-color="#FFE08A"/>
-          <stop offset="50%" stop-color="#F0C878"/>
-          <stop offset="100%" stop-color="#C99A4A"/>
-        </linearGradient>
-      </defs>
-      <circle cx="500" cy="500" r="420" class="orbit-line"/>
-      <circle cx="500" cy="500" r="340" class="orbit-line" style="opacity:.55"/>
-      <circle cx="500" cy="500" r="260" class="orbit-line" style="opacity:.32"/>
-      <g class="orbit-spark">
-        <circle cx="920" cy="500" r="3.6"/>
-      </g>
-      <g class="orbit-spark" style="animation-duration:38s">
-        <circle cx="500" cy="160" r="2.4"/>
-      </g>
-      <g class="orbit-spark" style="animation-duration:54s; animation-direction:reverse">
-        <circle cx="240" cy="500" r="2"/>
-      </g>
-    </svg>
-  </div>
+  <div class="wrap">
+    <div class="hero-frame">
+      <span class="crop-tr"></span>
+      <span class="crop-bl"></span>
 
-  <div class="hero-inner">
-    <span class="hero-tag"><span class="dot"></span>原创理论 · The Personal-IP Loop</span>
+      <!-- corner stamps -->
+      <div class="hero-stamp tl">
+        <div class="row"><span class="lbl">DWG</span><span class="val cy">IDOP-001</span></div>
+        <div class="row"><span class="lbl">SHEET</span><span class="val">01 / 10</span></div>
+        <div class="row"><span class="lbl">SCALE</span><span class="val">1 : 1</span></div>
+      </div>
+      <div class="hero-stamp br">
+        <div class="row"><span class="lbl">AUTHOR</span><span class="val">追光者</span></div>
+        <div class="row"><span class="lbl">DATE</span><span class="val">2026.05</span></div>
+        <div class="row"><span class="lbl">REV</span><span class="val am">A</span></div>
+      </div>
 
-    <div class="hero-letters" aria-label="IDOP">
-      <span class="L gold">I<span class="small">Input</span></span>
-      <span class="L do">D<span class="small">Deposit</span></span>
-      <span class="L do">O<span class="small">Output</span></span>
-      <span class="L gold">P<span class="small">Product</span></span>
+      <!-- OPVS ghost word -->
+      <div class="opus-ghost">OPVS</div>
+
+      <p class="hero-spec">A closed-loop system for the construction of personal IP.</p>
+
+      <!-- The 4 letterforms -->
+      <div class="hero-letters" data-cursor="DRAW">
+        <div class="hl-letter">
+          <span class="glyph">I</span>
+          <span class="dimline"></span>
+          <div class="meta">
+            <span class="name">INPUT</span>
+            <span class="cn">输入 · source</span>
+          </div>
+        </div>
+        <div class="hl-letter">
+          <span class="glyph">D</span>
+          <span class="dimline"></span>
+          <div class="meta">
+            <span class="name">DEPOSIT</span>
+            <span class="cn">沉淀 · asset</span>
+          </div>
+        </div>
+        <div class="hl-letter">
+          <span class="glyph">O</span>
+          <span class="dimline"></span>
+          <div class="meta">
+            <span class="name">OUTPUT</span>
+            <span class="cn">输出 · signal</span>
+          </div>
+        </div>
+        <div class="hl-letter">
+          <span class="glyph">P</span>
+          <span class="dimline"></span>
+          <div class="meta">
+            <span class="name">PRODUCT</span>
+            <span class="cn">产品 · delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IP / DO bracket annotations -->
+      <div class="hero-brackets">
+        <div class="hb-grp ip" style="grid-column: 1 / 2">
+          <div class="pair">I &nbsp;·&nbsp; P</div>
+          <div class="note">Edges · The Brand Frame</div>
+        </div>
+        <div class="hb-grp do" style="grid-column: 2 / 3; transform:translateX(0)">
+          <div class="pair">D &nbsp;·&nbsp; O</div>
+          <div class="note">Core · The Act, to make</div>
+        </div>
+      </div>
+
+      <p class="hero-title">
+        Personal <b>IP</b> is not <em>imagined</em><br/>
+        into existence. It is <em>made</em>.
+      </p>
+      <p class="hero-kicker">
+        <b>IDOP</b> ─ Input · Deposit · Output · Product. Four stages,<br/>
+        operating as <b>×</b> (not +). Edges spell IP, core spells DO.
+      </p>
+
+      <a href="#why" class="hero-scroll" data-cursor="GO →">
+        <span>Read drawing</span>
+        <span class="arr"></span>
+      </a>
     </div>
-
-    <p class="hero-equation" style="margin-top:74px">
-      <span class="seg i"><span class="ltr">I</span>Input · 输入</span>
-      <span class="sep">×</span>
-      <span class="seg d"><span class="ltr">D</span>Deposit · 沉淀</span>
-      <span class="sep">×</span>
-      <span class="seg o"><span class="ltr">O</span>Output · 输出</span>
-      <span class="sep">×</span>
-      <span class="seg p"><span class="ltr">P</span>Product · 产品</span>
-    </p>
-
-    <h1 class="hero-title">
-      个人 <em>IP</em> 的核心闭环 ——<br/>
-      不是想出来的，而是 <em>做</em> 出来的。
-    </h1>
-    <p class="hero-kicker">
-      首尾是 IP，中间是 DO。这不是缩写游戏，而是一句方法论：<br/>
-      个人 IP 不靠灵感、不靠流量、不靠包装，靠的是输入、沉淀、输出、产品的长期复利。
-    </p>
   </div>
-
-  <a href="#why" class="hero-scroll">
-    <span>scroll</span>
-    <span class="line"></span>
-  </a>
 </section>
 
 <!-- ============================================================
-     01 · Why
+     01 · WHY — AS-BUILT vs SPEC
      ============================================================ -->
 <section id="why">
   <div class="wrap">
-    <div class="reveal">
-      <span class="eyebrow">01 · Why IDOP</span>
-      <h2 class="h-title">"做个人 IP" 这四个字，<br/>已经被说得太浅。</h2>
-      <p class="h-sub">
-        多数人理解的个人 IP 是：发内容、拍视频、涨粉丝、接广告、卖课、变现。<br/>
-        这太表层了。真正可持续的个人 IP，不是单点动作，而是一整套<em style="color:var(--gold);font-style:normal">从源头到交付的价值生产系统</em>。
-      </p>
-    </div>
-
-    <div class="compare reveal d2">
-      <div class="compare-col naive">
-        <h4>普通做号思维</h4>
-        <div class="compare-list">
-          <div class="compare-row">想到什么发什么</div>
-          <div class="compare-row">追热点、追流量</div>
-          <div class="compare-row">内容发完就结束</div>
-          <div class="compare-row">有粉再想变现</div>
-          <div class="compare-row">靠爆款</div>
-          <div class="compare-row">把账号当窗口</div>
-          <div class="compare-row">短期数据决定一切</div>
-        </div>
+    <div class="sheet reveal">
+      <span class="crop-tr"></span>
+      <span class="crop-bl"></span>
+      <div class="sheet-tab">
+        <span class="num">SHEET 02 / 10</span>
+        <span class="div"></span>
+        <span class="ti">WHY · CASE FOR THE SYSTEM</span>
+        <span class="dot"></span>
       </div>
-      <div class="compare-col system">
-        <h4>IDOP 系统思维</h4>
-        <div class="compare-list">
-          <div class="compare-row">用高质量输入持续供能</div>
-          <div class="compare-row">沉淀长期认知资产</div>
-          <div class="compare-row">输出后进入反馈迭代</div>
-          <div class="compare-row">从一开始就考虑产品交付</div>
-          <div class="compare-row">靠系统</div>
-          <div class="compare-row">把自己当作品在打磨</div>
-          <div class="compare-row">长期复利决定结果</div>
-        </div>
-      </div>
-    </div>
+      <div class="sheet-meta"><b>VIEW:</b> COMPARISON · AS-BUILT × SPEC</div>
 
-    <div class="reveal d3" style="margin-top:48px;text-align:center">
-      <p class="lede">
-        高质量<em>输入</em> → 深度<em>沉淀</em> → 公开<em>输出</em> → <em>产品</em>交付 → 反馈反哺新一轮输入与沉淀。<br/>
-        这就是 IDOP 理论。
-      </p>
+      <div class="sec-head">
+        <div class="num">PROBLEM 01</div>
+        <h2>The phrase "personal IP" has been<br/>worn down by <em>shallow practice</em>.</h2>
+        <p class="spec">Common usage reduces it to: <b>post → grow → ad → sell</b>. This drawing specifies the actual machine that produces durable IP — a closed loop, not a content stream.</p>
+      </div>
+
+      <div class="spec-table">
+        <div class="hd"></div>
+        <div class="hd col-as">AS-BUILT &nbsp; · &nbsp; 普通做号思维</div>
+        <div class="hd col-sp">SPECIFICATION <span class="pill">IDOP</span></div>
+
+        <div class="cell idx">01</div>
+        <div class="cell as">想到什么发什么</div>
+        <div class="cell sp">用高质量输入持续供能</div>
+
+        <div class="cell idx">02</div>
+        <div class="cell as">追热点、追流量</div>
+        <div class="cell sp">沉淀长期认知资产</div>
+
+        <div class="cell idx">03</div>
+        <div class="cell as">内容发完就结束</div>
+        <div class="cell sp">输出后进入反馈迭代</div>
+
+        <div class="cell idx">04</div>
+        <div class="cell as">有粉再想变现</div>
+        <div class="cell sp">从一开始就考虑产品交付</div>
+
+        <div class="cell idx">05</div>
+        <div class="cell as">靠爆款</div>
+        <div class="cell sp">靠系统</div>
+
+        <div class="cell idx">06</div>
+        <div class="cell as">把账号当窗口</div>
+        <div class="cell sp">把自己当作品在打磨</div>
+
+        <div class="cell idx row-last">07</div>
+        <div class="cell as row-last">短期数据决定一切</div>
+        <div class="cell sp row-last">长期复利决定结果</div>
+      </div>
+
+      <div class="note-strip">
+        <span class="tag">SIGNAL FLOW</span>
+        <span>INPUT</span><span class="arr">→</span>
+        <span>DEPOSIT</span><span class="arr">→</span>
+        <span>OUTPUT</span><span class="arr">→</span>
+        <span>PRODUCT</span><span class="arr">→</span>
+        <span style="color:var(--amber)">FEEDBACK ⤴</span>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ============================================================
-     02 · The Loop
+     02 · LOOP — Mechanical assembly drawing
      ============================================================ -->
 <section id="loop">
   <div class="wrap">
-    <div class="reveal" style="text-align:center">
-      <span class="eyebrow center">02 · The Loop</span>
-      <h2 class="h-title">IDOP 是什么 ——<br/>个人 IP 的<span class="hl">核心闭环</span>。</h2>
-      <p class="h-sub center">
-        四个模块首尾相接，构成一个完整循环。<br/>
-        不是流程图，是一台可以持续运转的飞轮。
+    <div class="sheet reveal">
+      <span class="crop-tr"></span>
+      <span class="crop-bl"></span>
+      <div class="sheet-tab right">
+        <span class="dot"></span>
+        <span class="num">SHEET 03 / 10</span>
+        <span class="div"></span>
+        <span class="ti">CORE ASSEMBLY</span>
+      </div>
+      <div class="sheet-meta"><b>VIEW:</b> PLAN · 4-STAGE CLOSED LOOP</div>
+
+      <div class="sec-head">
+        <div class="num">PART 02</div>
+        <h2>The IDOP loop — a <em>mechanical</em><br/>view of personal IP.</h2>
+        <p class="spec">Four components rotate in series. Each output feeds the next input. The unit operates as <b>I × D × O × P</b> — any zero collapses the result. <b>Edges (I, P)</b> form the brand frame; <b>core (D, O)</b> is the act.</p>
+      </div>
+
+      <div class="loop-grid">
+        <!-- Assembly drawing -->
+        <div class="loop-asm">
+          <span class="view-label">VIEW · PLAN</span>
+          <svg viewBox="0 0 800 800" aria-hidden="true">
+            <defs>
+              <marker id="aHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#7DD3FC"/>
+              </marker>
+              <marker id="aHeadAm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#F5B14B"/>
+              </marker>
+            </defs>
+
+            <!-- inner sub-grid -->
+            <g stroke="rgba(125,211,252,0.06)" stroke-width="0.5">
+              <line x1="100" y1="400" x2="700" y2="400"/>
+              <line x1="400" y1="100" x2="400" y2="700"/>
+            </g>
+
+            <!-- main loop circle (visible top) -->
+            <circle cx="400" cy="400" r="240" fill="none" stroke="#7DD3FC" stroke-width="1" class="draw-line" style="--len: 1510"/>
+
+            <!-- arrows along the loop between stations -->
+            <path d="M 580 250 A 240 240 0 0 1 580 550" fill="none" stroke="#7DD3FC" stroke-width="1.2" marker-end="url(#aHead)" class="draw-line" style="--len: 380"/>
+            <path d="M 550 600 A 240 240 0 0 1 250 600" fill="none" stroke="#A7F3D0" stroke-width="1.2" marker-end="url(#aHead)" class="draw-line" style="--len: 380"/>
+            <path d="M 220 550 A 240 240 0 0 1 220 250" fill="none" stroke="#C4B5FD" stroke-width="1.2" marker-end="url(#aHead)" class="draw-line" style="--len: 380"/>
+            <path d="M 250 220 A 240 240 0 0 1 550 220" fill="none" stroke="#FDE68A" stroke-width="1.2" marker-end="url(#aHead)" class="draw-line" style="--len: 380"/>
+
+            <!-- hidden feedback path (dashed under the surface) -->
+            <path d="M 400 160 Q 250 280 250 400 Q 250 540 400 640" fill="none" stroke="#F5B14B" stroke-width="0.8" stroke-dasharray="5 5" opacity="0.55" marker-end="url(#aHeadAm)"/>
+            <text x="285" y="395" font-family="JetBrains Mono, monospace" font-size="11" fill="#F5B14B" opacity="0.85" letter-spacing="2">FEEDBACK ⤴</text>
+
+            <!-- Station 1 · I (top) -->
+            <g>
+              <circle cx="400" cy="160" r="32" fill="#0a1018" stroke="#7DD3FC" stroke-width="1.2"/>
+              <text x="400" y="170" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="700" font-size="28" fill="#7DD3FC">I</text>
+              <line x1="400" y1="116" x2="400" y2="60" stroke="#7DD3FC" stroke-width="0.6"/>
+              <text x="400" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E9EEF4" letter-spacing="2">① INPUT</text>
+              <text x="400" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.5)" letter-spacing="2">SOURCE</text>
+            </g>
+
+            <!-- Station 2 · D (right) -->
+            <g>
+              <circle cx="640" cy="400" r="32" fill="#0a1018" stroke="#A7F3D0" stroke-width="1.2"/>
+              <text x="640" y="410" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="700" font-size="28" fill="#A7F3D0">D</text>
+              <line x1="684" y1="400" x2="740" y2="400" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="750" y="395" font-family="JetBrains Mono, monospace" font-size="11" fill="#E9EEF4" letter-spacing="2">② DEPOSIT</text>
+              <text x="750" y="412" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.5)" letter-spacing="2">ASSET</text>
+            </g>
+
+            <!-- Station 3 · O (bottom) -->
+            <g>
+              <circle cx="400" cy="640" r="32" fill="#0a1018" stroke="#C4B5FD" stroke-width="1.2"/>
+              <text x="400" y="650" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="700" font-size="28" fill="#C4B5FD">O</text>
+              <line x1="400" y1="684" x2="400" y2="740" stroke="#C4B5FD" stroke-width="0.6"/>
+              <text x="400" y="762" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#E9EEF4" letter-spacing="2">③ OUTPUT</text>
+              <text x="400" y="780" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.5)" letter-spacing="2">SIGNAL</text>
+            </g>
+
+            <!-- Station 4 · P (left) -->
+            <g>
+              <circle cx="160" cy="400" r="32" fill="#0a1018" stroke="#FDE68A" stroke-width="1.2"/>
+              <text x="160" y="410" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="700" font-size="28" fill="#FDE68A">P</text>
+              <line x1="116" y1="400" x2="60" y2="400" stroke="#FDE68A" stroke-width="0.6"/>
+              <text x="50" y="395" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="#E9EEF4" letter-spacing="2">PRODUCT ④</text>
+              <text x="50" y="412" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.5)" letter-spacing="2">DELIVERY</text>
+            </g>
+
+            <!-- center hub -->
+            <circle cx="400" cy="400" r="48" fill="#0a1018" stroke="#F5B14B" stroke-width="1.2"/>
+            <text x="400" y="396" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="700" font-size="20" fill="#F5B14B" letter-spacing="2">DO</text>
+            <text x="400" y="416" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(245,177,75,0.7)" letter-spacing="2">CORE</text>
+
+            <!-- IP brackets outside the loop -->
+            <g stroke="#7DD3FC" stroke-width="0.7" fill="none">
+              <path d="M 80 200 L 60 200 L 60 600 L 80 600"/>
+            </g>
+            <text x="40" y="408" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#7DD3FC" letter-spacing="3" transform="rotate(-90 40 400)">EDGES · IP</text>
+
+            <!-- dimension tick marks -->
+            <g stroke="#7DD3FC" stroke-width="0.5" opacity="0.6">
+              <line x1="160" y1="760" x2="640" y2="760"/>
+              <line x1="160" y1="754" x2="160" y2="766"/>
+              <line x1="640" y1="754" x2="640" y2="766"/>
+            </g>
+            <text x="400" y="788" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(125,211,252,0.7)" letter-spacing="2">Ø 480 · OUTER STAGE PITCH</text>
+          </svg>
+          <span class="view-rev">REV · 2026.05 · A</span>
+        </div>
+
+        <!-- Parts list / BOM -->
+        <div class="bom">
+          <div class="bom-hd">
+            <span>BILL OF MATERIALS</span>
+            <span><b>DWG.</b> IDOP-001</span>
+          </div>
+          <table>
+            <thead>
+              <tr><th>NO.</th><th>CODE</th><th>DESCRIPTION</th><th>—</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="idx">01</td><td class="code">I</td><td class="desc">Input</td><td class="cn">输入 · 源头</td></tr>
+              <tr><td class="idx">02</td><td class="code">D</td><td class="desc">Deposit</td><td class="cn">沉淀 · 资产</td></tr>
+              <tr><td class="idx">03</td><td class="code">O</td><td class="desc">Output</td><td class="cn">输出 · 信任</td></tr>
+              <tr><td class="idx">04</td><td class="code">P</td><td class="desc">Product</td><td class="cn">产品 · 交付</td></tr>
+              <tr class="divider"><td class="idx">—</td><td class="code">—</td><td class="desc">—</td><td class="cn">—</td></tr>
+              <tr class="brand"><td class="idx">EDGES</td><td class="code">IP</td><td class="desc">Brand Frame</td><td class="cn">边框 · 长期信任</td></tr>
+              <tr class="core"><td class="idx">CORE</td><td class="code">DO</td><td class="desc">The Act</td><td class="cn">动作 · 做出来</td></tr>
+            </tbody>
+          </table>
+          <div class="bom-ft">
+            <span>OPERATION:</span>
+            <span><b>I × D × O × P</b> ─ ZERO COLLAPSES UNIT</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="copy" style="margin-top: 32px;">
+        闭环不是循环图——它是一台<em>装配机</em>。源头干净，沉淀厚实，输出有节奏，产品能交付。<b>缺任何一环，整机停摆</b>。
+        IP 不是包装出来的人设；它是这台机器持续运转之后，<em>自然结晶</em>下来的边框。
       </p>
     </div>
+  </div>
+</section>
 
-    <div class="loop-stage reveal d2">
-      <svg viewBox="0 0 800 800" aria-hidden="true">
-        <defs>
-          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"  stop-color="#FFE08A"/>
-            <stop offset="100%" stop-color="#D4A012"/>
-          </linearGradient>
-          <marker id="arrI" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#f5a45b"/></marker>
-          <marker id="arrD" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6fe1b3"/></marker>
-          <marker id="arrO" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7eb9f5"/></marker>
-          <marker id="arrP" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#c9a0ff"/></marker>
-        </defs>
-        <circle cx="400" cy="400" r="300" class="loop-ring"/>
-        <circle cx="400" cy="400" r="300" class="loop-ring-gold"/>
-        <circle cx="400" cy="400" r="200" class="loop-ring" style="opacity:.45"/>
-
-        <!-- arcs with arrowheads, between adjacent nodes (top→right→bottom→left→top) -->
-        <path d="M 580 220 A 280 280 0 0 1 600 420" class="loop-arrow a1" marker-end="url(#arrD)"/>
-        <path d="M 580 580 A 280 280 0 0 1 380 600" class="loop-arrow a2" marker-end="url(#arrO)"/>
-        <path d="M 220 580 A 280 280 0 0 1 200 380" class="loop-arrow a3" marker-end="url(#arrP)"/>
-        <path d="M 220 220 A 280 280 0 0 1 420 200" class="loop-arrow a4" marker-end="url(#arrI)"/>
-      </svg>
-
-      <div class="loop-node top">
-        <div class="badge">I</div>
-        <div class="ttl">输入</div>
-        <div class="ttl-en">Input</div>
-        <div class="desc">高质量源头，决定我有什么值得表达。</div>
-      </div>
-      <div class="loop-node right">
-        <div class="badge">D</div>
-        <div class="ttl">沉淀</div>
-        <div class="ttl-en">Deposit</div>
-        <div class="desc">把灵感、知识、经验沉淀成可复用资产。</div>
-      </div>
-      <div class="loop-node bottom">
-        <div class="badge">O</div>
-        <div class="ttl">输出</div>
-        <div class="ttl-en">Output</div>
-        <div class="desc">公开表达，积累信任，让世界看见。</div>
-      </div>
-      <div class="loop-node left">
-        <div class="badge">P</div>
-        <div class="ttl">产品</div>
-        <div class="ttl-en">Product</div>
-        <div class="desc">将能力封装为别人愿意付费的价值交付。</div>
-      </div>
-
-      <div class="loop-center">
-        <div class="word">
-          <span class="x">I</span><span class="y">D</span><span class="y">O</span><span class="x">P</span>
-        </div>
-        <div class="cap">首尾是 <b>IP</b>　·　中间是 <b>DO</b></div>
-      </div>
-    </div>
-
-    <div class="ipdo reveal d3">
-      <div class="ipdo-card" data-letters="IP">
-        <div class="lbl">首尾 · The Brand</div>
-        <div class="pair"><span class="a">I</span><span class="dim">D</span><span class="dim">O</span><span class="a">P</span></div>
-        <div class="narrative">
-          <em>I</em> 与 <em>P</em> 围出 <em>IP</em> ——<br/>
-          这不是流量账号，不是明星人设，更不是包装。<br/>
-          这是一个真实成长的人，正在被世界看见。
-        </div>
-      </div>
-      <div class="ipdo-card" data-letters="DO">
-        <div class="lbl">中间 · The Act</div>
-        <div class="pair"><span class="dim">I</span><span class="a">D</span><span class="a">O</span><span class="dim">P</span></div>
-        <div class="narrative">
-          <em>D</em> 与 <em>O</em> 拼出 <em>DO</em> ——<br/>
-          没有捷径，没有讨巧，没有靠想象。<br/>
-          每一次沉淀、每一次输出，都是在动手。
-        </div>
-      </div>
+<!-- ============================================================
+     PULL QUOTE 1
+     ============================================================ -->
+<section class="pq-section">
+  <div class="wrap-narrow">
+    <div class="pq-wrap reveal">
+      <p class="q">
+        没有沉淀，输入只是<em>信息消费</em>；<br/>
+        没有输出，沉淀只是<em>私人收藏</em>；<br/>
+        没有产品，影响力很难变成<em>价值交付</em>。
+      </p>
+      <p class="by">NOTE 01 · <b>IDOP DEPENDENCY CHAIN</b></p>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ============================================================
-     03 · Input
+     03 · INPUT — three-feed convergence
      ============================================================ -->
-<section id="input">
+<section id="input" class="mod-section m-i">
   <div class="wrap">
-    <div class="mod i">
-      <div class="mod-side reveal">
-        <div class="mod-num">01</div>
-        <div class="mod-en">Input</div>
-        <div class="mod-cn">输入</div>
-        <div class="mod-tag">Source decides ceiling</div>
-      </div>
-      <div class="mod-body">
-        <div class="reveal">
-          <h3>源头，决定<em>上限</em>。</h3>
-          <p class="lede">
-            没有源头活水，输出迟早会枯。<br/>
-            真正完整的 Input，至少包含<em>三类</em>：认知输入、审美输入、用户输入。
-          </p>
+    <div class="reveal">
+      <div class="mod-banner">
+        <div class="left">
+          <span class="big">I</span>
+          <div class="meta">
+            <span>STAGE 01</span>
+            <span class="en">INPUT</span>
+            <span class="cn">输入</span>
+          </div>
         </div>
+        <span class="tag">Source · Decides Ceiling</span>
+      </div>
 
-        <div class="pillars reveal d2">
-          <div class="pillar k">
-            <div class="pl-letter">K</div>
-            <div class="pl-en">Knowledge</div>
-            <div class="pl-cn">认知输入</div>
-            <div class="pl-q">"我有什么值得讲？"</div>
-            <div class="pl-desc">高质量课程、播客、书籍、AI 内容、真实项目，提供观点 / 模型 / 方法 / 判断与灵感。</div>
-            <div class="chip-set">
-              <span class="chip">浪前</span>
-              <span class="chip">无人知晓</span>
-              <span class="chip">数字生命卡兹克</span>
-              <span class="chip">财富自由之路</span>
-              <span class="chip">原则</span>
-              <span class="chip">反脆弱</span>
-              <span class="chip">纳瓦尔宝典</span>
+      <p class="mod-lead">
+        源头决定上限。完整的 Input 不是单一来源，<br/>
+        而是<b>K · H · R</b> 三类信号同时进料。
+      </p>
+
+      <div class="conv">
+        <span class="conv-title">VIEW · 3-FEED CONVERGENCE</span>
+        <div class="conv-grid">
+          <!-- feeds -->
+          <div class="conv-feeds">
+            <div class="conv-feed f-k">
+              <span class="ltr">K</span>
+              <div class="en">Knowledge</div>
+              <div class="cn">认知输入</div>
+              <div class="q">"我有什么值得讲？"</div>
+              <div class="desc">高质量课程、播客、书籍、AI 内容、真实项目，提供观点 / 模型 / 方法 / 判断与灵感。</div>
+              <div class="ratesp">
+                <span>浪前</span>
+                <span>无人知晓</span>
+                <span>卡兹克</span>
+                <span>财富自由之路</span>
+                <span>原则</span>
+                <span>反脆弱</span>
+                <span>纳瓦尔宝典</span>
+              </div>
+            </div>
+            <div class="conv-feed f-h">
+              <span class="ltr">H</span>
+              <div class="en">Happiness</div>
+              <div class="cn">审美输入</div>
+              <div class="q">"我如何讲得更好？"</div>
+              <div class="desc">AI 什么都能生成的时代，能判断 65 分与 85 分的距离，才是真正拉开差距的厚度。</div>
+              <div class="ratesp">
+                <span>好文章</span>
+                <span>好海报</span>
+                <span>好封面</span>
+                <span>好纪录片</span>
+                <span>好网站</span>
+                <span>好 PPT</span>
+                <span>好空间</span>
+              </div>
+            </div>
+            <div class="conv-feed f-r">
+              <span class="ltr">R</span>
+              <div class="en">Resonance</div>
+              <div class="cn">用户输入</div>
+              <div class="q">"别人到底需要什么？"</div>
+              <div class="desc">评论 / 私信 / 朋友的真实困惑 / 同龄人的痛点 / 市场的真实数据，是个人 IP 不自嗨的安全绳。</div>
+              <div class="ratesp">
+                <span>评论区</span>
+                <span>私信</span>
+                <span>同龄人困惑</span>
+                <span>爆款拆解</span>
+                <span>付费意愿</span>
+                <span>真实焦虑</span>
+              </div>
             </div>
           </div>
 
-          <div class="pillar h">
-            <div class="pl-letter">H</div>
-            <div class="pl-en">Happiness</div>
-            <div class="pl-cn">审美输入</div>
-            <div class="pl-q">"我如何讲得更好？"</div>
-            <div class="pl-desc">在 AI 什么都能生成的时代，能不能判断 65 分和 85 分，决定了拉开差距的厚度。</div>
-            <div class="chip-set">
-              <span class="chip">好文章</span>
-              <span class="chip">好海报</span>
-              <span class="chip">好封面</span>
-              <span class="chip">好纪录片</span>
-              <span class="chip">好网站</span>
-              <span class="chip">好 PPT</span>
-              <span class="chip">好排版</span>
-              <span class="chip">好空间</span>
+          <!-- junction svg -->
+          <div class="conv-junction">
+            <svg viewBox="0 0 90 200" preserveAspectRatio="none" aria-hidden="true">
+              <line x1="0" y1="30"  x2="80" y2="100" stroke="#7DD3FC" stroke-width="0.8" class="draw-line" style="--len: 105"/>
+              <line x1="0" y1="100" x2="80" y2="100" stroke="#F5B14B" stroke-width="0.8" class="draw-line" style="--len: 80"/>
+              <line x1="0" y1="170" x2="80" y2="100" stroke="#C4B5FD" stroke-width="0.8" class="draw-line" style="--len: 105"/>
+              <circle cx="80" cy="100" r="6" fill="#0a1018" stroke="#7DD3FC" stroke-width="1"/>
+              <line x1="86" y1="100" x2="90" y2="100" stroke="#7DD3FC" stroke-width="0.8" marker-end="url(#aHead)"/>
+            </svg>
+          </div>
+
+          <!-- output -->
+          <div class="conv-out">
+            <div class="lbl">→ INTO DEPOSIT</div>
+            <div class="ttl">Qualified Source</div>
+            <div class="note">
+              <em>认知输入</em>让我有东西可讲，<em>审美输入</em>让我把东西讲得更好，<em>用户输入</em>让我知道别人真正需要什么。
             </div>
-          </div>
-
-          <div class="pillar r">
-            <div class="pl-letter">R</div>
-            <div class="pl-en">Resonance</div>
-            <div class="pl-cn">用户输入</div>
-            <div class="pl-q">"别人到底需要什么？"</div>
-            <div class="pl-desc">评论 / 私信 / 朋友的真实困惑 / 同龄人的痛点 / 市场的真实数据，是个人 IP 不自嗨的安全绳。</div>
-            <div class="chip-set">
-              <span class="chip">评论区</span>
-              <span class="chip">私信</span>
-              <span class="chip">同龄人困惑</span>
-              <span class="chip">爆款拆解</span>
-              <span class="chip">付费意愿</span>
-              <span class="chip">真实焦虑</span>
-              <span class="chip">真实渴望</span>
-            </div>
+            <div class="leader" style="margin-top:14px"><b>SPEC</b> &nbsp; HKR · QUALITY GATING</div>
           </div>
         </div>
-
-        <div class="one-line reveal d3">
-          <em>认知输入</em>让我有东西可讲，<em>审美输入</em>让我把东西讲得更好，<em>用户输入</em>让我知道别人真正需要什么。
-        </div>
-
-        <p class="reveal d4">
-          所以源头不是单线供给，而是<em>三股共流</em>。<br/>
-          它们对应 HKRR 里的 <em>H · K · R</em>：有真东西、好看舒服、击中真实处境。<br/>
-          Input 端用 HKR 做筛选，源头一旦干净，后面整条链就有底气。
-        </p>
       </div>
-    </div>
-  </div>
-</section>
 
-<div class="divider"></div>
-
-<!-- ============================================================
-     04 · Deposit
-     ============================================================ -->
-<section id="deposit">
-  <div class="wrap">
-    <div class="mod d">
-      <div class="mod-side reveal">
-        <div class="mod-num">02</div>
-        <div class="mod-en">Deposit</div>
-        <div class="mod-cn">沉淀</div>
-        <div class="mod-tag">Information → Asset</div>
-      </div>
-      <div class="mod-body">
-        <div class="reveal">
-          <h3>把过眼云烟，<em>资产化</em>。</h3>
-          <p class="lede">
-            只有输入没有沉淀，就是<em>万花丛中过，片叶不沾身</em>。<br/>
-            沉淀不是记录，沉淀是<em>认知资产化</em>。
-          </p>
-        </div>
-
-        <div class="pipeline reveal d2">
-          <div class="pipe-step">
-            <div class="num">STEP 01</div>
-            <div class="ttl">产生灵感启发</div>
-            <div class="sub">在阅读、对话、思考、生活中捕捉那些不经意的火花。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 02</div>
-            <div class="ttl">找 AI 深聊拆解</div>
-            <div class="sub">把模糊的感觉拆成可表达的结构、对比与判断。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 03</div>
-            <div class="ttl">交叉验证补充</div>
-            <div class="sub">用案例、数据、反例打磨结论的边界与适用条件。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 04</div>
-            <div class="ttl">整理入素材库</div>
-            <div class="sub">归档到「灵感启发收获素材库」，等待周日大复盘分流。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 05</div>
-            <div class="ttl">周日大复盘</div>
-            <div class="sub">分流进入个人 IP 素材库 / 人生系统 / 暂存观察。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 06</div>
-            <div class="ttl">长期可复用</div>
-            <div class="sub">沉淀后的资产可以反复进入文章、视频、课程、产品。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 07</div>
-            <div class="ttl">高分样本库</div>
-            <div class="sub">审美层面的沉淀：把好的拆解透，让审美变成判断力。</div>
-          </div>
-          <div class="pipe-step">
-            <div class="num">STEP 08</div>
-            <div class="ttl">需求信号库</div>
-            <div class="sub">收集评论、问题与市场反馈，判断哪些值得长期服务。</div>
-          </div>
-        </div>
-
-        <div class="one-line reveal d3">
-          沉淀的本质，是把<em>过眼云烟式的信息</em>，转化为<em>可复用、可输出、可升级</em>的认知资产。
-        </div>
-
-        <p class="reveal d4">
-          认知资产化 ——把想法讲清楚、把感触结构化、把灵感变成素材、把素材变成选题、把选题变成内容、把内容变成产品模块。<br/>
-          审美标准化 ——建立高分样本、失败案例、审美词典，让"好"可以被复述。<br/>
-          需求结构化 ——记录市场信号、归类用户问题，让共鸣不靠运气。
-        </p>
-      </div>
+      <p class="copy" style="margin-top: 28px;">
+        三类输入对应 HKRR 里的 <em>H · K · R</em>。Input 端用 HKR 做<b>筛选</b>，源头一旦干净，后面整条链就有底气。
+      </p>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     PULL QUOTE
+     04 · DEPOSIT — exploded axonometric
      ============================================================ -->
-<section class="pull-quote">
-  <div class="wrap-narrow reveal">
-    <p class="q">
-      没有沉淀，输入只是<em>信息消费</em>；<br/>
-      没有输出，沉淀只是<em>私人收藏</em>；<br/>
-      没有产品，影响力很难变成<em>价值交付</em>。
-    </p>
-    <div class="cap">— IDOP 的底层逻辑</div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ============================================================
-     05 · Output
-     ============================================================ -->
-<section id="output">
+<section id="deposit" class="mod-section m-d">
   <div class="wrap">
-    <div class="mod o">
-      <div class="mod-side reveal">
-        <div class="mod-num">03</div>
-        <div class="mod-en">Output</div>
-        <div class="mod-cn">输出</div>
-        <div class="mod-tag">Show the black box</div>
-      </div>
-      <div class="mod-body">
-        <div class="reveal">
-          <h3>让世界，<em>看见我的黑箱</em>。</h3>
-          <p class="lede">
-            再好的想法，留在脑子里就只是想法。<br/>
-            <em>Output</em> 把沉淀后的内容公开表达出来 ——图文、文章、视频、网站、知识可视化。
-          </p>
-        </div>
-
-        <p class="reveal d2">
-          其中，<em>视频</em>是现阶段流量端最核心的表达形态。<br/>
-          但视频不是随便拍，而要遵循一套质量标准 ——<em>HKRR</em>。
-        </p>
-
-        <div class="hkrr-matrix reveal d3">
-          <h4>HKRR · 输出端的质量标准</h4>
-          <div class="hkrr-grid">
-            <div class="hkrr-cell h">
-              <div class="letter">H</div>
-              <div class="name">Happiness</div>
-              <div class="cn">愉悦感 / 希望感</div>
-              <div class="desc">不一定搞笑，但要让人愿意看、愿意分享、愿意靠近。</div>
-            </div>
-            <div class="hkrr-cell k">
-              <div class="letter">K</div>
-              <div class="name">Knowledge</div>
-              <div class="cn">有真东西</div>
-              <div class="desc">有信息量、方法、行动建议、真实价值，不是空洞鸡汤。</div>
-            </div>
-            <div class="hkrr-cell r1">
-              <div class="letter">R</div>
-              <div class="name">Resonance</div>
-              <div class="cn">击中真实处境</div>
-              <div class="desc">不是站在高处讲道理，而是让用户觉得：他说的是我。</div>
-            </div>
-            <div class="hkrr-cell r2">
-              <div class="letter">R</div>
-              <div class="name">Rhythm</div>
-              <div class="cn">叙事节奏</div>
-              <div class="desc">不是信息堆砌，而是叙事推进、情绪变化、观看留存。</div>
-            </div>
-          </div>
-
-          <div class="relation">
-            <div class="rel-card">
-              <div class="lbl">IDOP × HKRR · 关系一</div>
-              <div class="ttl">IDOP 管流程，HKRR 管质量。</div>
-              <p>IDOP 是个人 IP 的总闭环，HKRR 是贯穿其中的质量标尺。<br/>一个让它跑起来，一个让它跑得好。</p>
-            </div>
-            <div class="rel-card">
-              <div class="lbl">IDOP × HKRR · 关系二</div>
-              <div class="ttl">Input 用 HKR 选源头，Output 用 HKRR 打磨内容。</div>
-              <p>两端都要被质量标尺锁住 ——上游不进垃圾，下游不出次品。</p>
-            </div>
+    <div class="reveal">
+      <div class="mod-banner">
+        <div class="left">
+          <span class="big">D</span>
+          <div class="meta">
+            <span>STAGE 02</span>
+            <span class="en">DEPOSIT</span>
+            <span class="cn">沉淀</span>
           </div>
         </div>
+        <span class="tag">Information → Asset</span>
+      </div>
 
-        <div class="one-line reveal d4" style="--c: var(--o)">
-          Output 不是把脑子里的东西<em>倒出来</em>，而是让信任<em>慢慢长出来</em>。
+      <p class="mod-lead">
+        过眼云烟<b>资产化</b>。<br/>
+        沉淀不是记录，而是<b>把信息变成可复用件</b>。
+      </p>
+
+      <div class="expl">
+        <span class="view-tag">VIEW · EXPLODED AXONOMETRIC</span>
+
+        <!-- SVG: exploded stack -->
+        <div class="expl-svg">
+          <svg viewBox="0 0 360 460" aria-hidden="true">
+            <defs>
+              <marker id="dHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#A7F3D0"/>
+              </marker>
+            </defs>
+
+            <!-- isometric base -->
+            <g stroke="rgba(167,243,208,0.4)" stroke-width="0.5" fill="none">
+              <polygon points="60,420 280,400 280,440 60,460" fill="rgba(167,243,208,0.04)"/>
+            </g>
+            <text x="170" y="448" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.5)" letter-spacing="2">BASE · LONG-TERM ARCHIVE</text>
+
+            <!-- 8 stacked layers, exploded -->
+            <g font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">
+              <!-- 8 -->
+              <polygon points="80,40 240,30 250,52 90,62" fill="rgba(245,177,75,0.06)" stroke="#F5B14B" stroke-width="0.8"/>
+              <line x1="255" y1="46" x2="320" y2="40" stroke="#F5B14B" stroke-width="0.6"/>
+              <text x="324" y="44" fill="#F5B14B">08 · ARCHIVE</text>
+
+              <!-- 7 -->
+              <polygon points="78,80 242,70 252,92 88,102" fill="rgba(167,243,208,0.05)" stroke="#A7F3D0" stroke-width="0.8"/>
+              <line x1="257" y1="86" x2="320" y2="82" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="324" y="86" fill="#A7F3D0">07 · 需求信号</text>
+
+              <!-- 6 -->
+              <polygon points="76,120 244,110 254,132 86,142" fill="rgba(167,243,208,0.05)" stroke="#A7F3D0" stroke-width="0.8"/>
+              <line x1="259" y1="126" x2="320" y2="124" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="324" y="128" fill="#A7F3D0">06 · 审美高分库</text>
+
+              <!-- 5 -->
+              <polygon points="74,160 246,150 256,172 84,182" fill="rgba(167,243,208,0.05)" stroke="#A7F3D0" stroke-width="0.8"/>
+              <line x1="261" y1="166" x2="320" y2="166" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="324" y="170" fill="#A7F3D0">05 · 周日大复盘</text>
+
+              <!-- 4 -->
+              <polygon points="72,200 248,190 258,212 82,222" fill="rgba(167,243,208,0.05)" stroke="#A7F3D0" stroke-width="0.8"/>
+              <line x1="263" y1="206" x2="320" y2="208" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="324" y="212" fill="#A7F3D0">04 · 整理入库</text>
+
+              <!-- 3 -->
+              <polygon points="70,240 250,230 260,252 80,262" fill="rgba(167,243,208,0.05)" stroke="#A7F3D0" stroke-width="0.8"/>
+              <line x1="265" y1="246" x2="320" y2="250" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="324" y="254" fill="#A7F3D0">03 · 交叉验证</text>
+
+              <!-- 2 -->
+              <polygon points="68,280 252,270 262,292 78,302" fill="rgba(167,243,208,0.05)" stroke="#A7F3D0" stroke-width="0.8"/>
+              <line x1="267" y1="286" x2="320" y2="292" stroke="#A7F3D0" stroke-width="0.6"/>
+              <text x="324" y="296" fill="#A7F3D0">02 · AI 深聊</text>
+
+              <!-- 1 -->
+              <polygon points="66,320 254,310 264,332 76,342" fill="rgba(125,211,252,0.06)" stroke="#7DD3FC" stroke-width="0.8"/>
+              <line x1="269" y1="326" x2="320" y2="334" stroke="#7DD3FC" stroke-width="0.6"/>
+              <text x="324" y="338" fill="#7DD3FC">01 · 灵感启发</text>
+            </g>
+
+            <!-- explosion guideline -->
+            <line x1="170" y1="50" x2="170" y2="420" stroke="rgba(167,243,208,0.25)" stroke-width="0.5" stroke-dasharray="3 4"/>
+            <line x1="166" y1="50" x2="174" y2="50" stroke="rgba(167,243,208,0.4)" stroke-width="0.5"/>
+            <line x1="166" y1="420" x2="174" y2="420" stroke="rgba(167,243,208,0.4)" stroke-width="0.5"/>
+            <text x="190" y="240" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(167,243,208,0.7)" letter-spacing="2">8 · STAGES</text>
+
+            <!-- exit arrow at bottom -->
+            <line x1="160" y1="376" x2="160" y2="412" stroke="#F5B14B" stroke-width="0.8" marker-end="url(#dHead)"/>
+            <text x="166" y="400" font-family="JetBrains Mono, monospace" font-size="9" fill="#F5B14B" letter-spacing="2">→ OUTPUT</text>
+          </svg>
+        </div>
+
+        <!-- step list -->
+        <div>
+          <div class="expl-steps">
+            <div class="expl-step"><span class="num">STEP 01</span><div class="body"><span class="ttl">产生灵感启发</span><span class="sub">阅读 / 对话 / 思考 / 生活中捕捉不经意的火花。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 02</span><div class="body"><span class="ttl">找 AI 深聊拆解</span><span class="sub">把模糊感觉拆成可表达的结构、对比、判断。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 03</span><div class="body"><span class="ttl">交叉验证补充</span><span class="sub">用案例、数据、反例打磨结论的边界与适用条件。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 04</span><div class="body"><span class="ttl">整理入素材库</span><span class="sub">归档到「灵感启发收获素材库」等待分流。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 05</span><div class="body"><span class="ttl">周日大复盘</span><span class="sub">分流进入个人 IP 素材库 / 人生系统 / 暂存观察。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 06</span><div class="body"><span class="ttl">审美高分库</span><span class="sub">把好的拆解透，让审美变成可复述的判断力。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 07</span><div class="body"><span class="ttl">需求信号库</span><span class="sub">收集评论、问题与市场反馈，判断哪些值得长期服务。</span></div></div>
+            <div class="expl-step"><span class="num">STEP 08</span><div class="body"><span class="ttl">长期可复用资产</span><span class="sub">沉淀件反复进入文章、视频、课程、产品。</span></div></div>
+          </div>
         </div>
       </div>
+
+      <p class="copy" style="margin-top: 28px;">
+        沉淀的本质是<em>资产化</em>——把过眼云烟式的信息，转化成<b>可复用、可输出、可升级</b>的认知件。
+      </p>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ============================================================
-     06 · Product
+     05 · OUTPUT — signal-flow with HKRR inline quality gates
      ============================================================ -->
-<section id="product">
+<section id="output" class="mod-section m-o">
   <div class="wrap">
-    <div class="mod pp">
-      <div class="mod-side reveal">
-        <div class="mod-num">04</div>
-        <div class="mod-en">Product</div>
-        <div class="mod-cn">产品</div>
-        <div class="mod-tag">Trust → Delivery</div>
+    <div class="reveal">
+      <div class="mod-banner">
+        <div class="left">
+          <span class="big">O</span>
+          <div class="meta">
+            <span>STAGE 03</span>
+            <span class="en">OUTPUT</span>
+            <span class="cn">输出</span>
+          </div>
+        </div>
+        <span class="tag">Trust accrues here</span>
       </div>
-      <div class="mod-body">
-        <div class="reveal">
-          <h3>把信任，<em>变成交付</em>。</h3>
-          <p class="lede">
-            如果只发视频、只涨粉、只有播放量，个人 IP 永远停在<em>表层</em>。<br/>
-            产品的本质，是把方法、经验、能力封装成<em>别人能用、愿意付费</em>的价值交付。
-          </p>
+
+      <p class="mod-lead">
+        让世界看见我的<b>黑箱</b>。<br/>
+        Output 不是<em>倒出来</em>，是让信任<em>慢慢长出来</em>。
+      </p>
+
+      <div class="flow">
+        <span class="view-tag">VIEW · SIGNAL FLOW · HKRR INLINE GATES</span>
+
+        <div class="flow-chain">
+          <div class="flow-node src">
+            <span class="lbl">SOURCE</span>
+            <span class="ttl">DEPOSIT</span>
+          </div>
+          <div class="flow-arr"></div>
+          <div class="flow-gate">
+            <span class="gltr">H</span>
+            <span class="gname">HAPPINESS</span>
+            <span class="gcn">愉悦</span>
+          </div>
+          <div class="flow-arr"></div>
+          <div class="flow-gate">
+            <span class="gltr">K</span>
+            <span class="gname">KNOWLEDGE</span>
+            <span class="gcn">有真东西</span>
+          </div>
+          <div class="flow-arr"></div>
+          <div class="flow-gate">
+            <span class="gltr">R</span>
+            <span class="gname">RESONANCE</span>
+            <span class="gcn">共鸣</span>
+          </div>
+          <div class="flow-arr"></div>
+          <div class="flow-gate">
+            <span class="gltr">R</span>
+            <span class="gname">RHYTHM</span>
+            <span class="gcn">节奏</span>
+          </div>
+          <div class="flow-arr am"></div>
+          <div class="flow-node out">
+            <span class="lbl">EMIT</span>
+            <span class="ttl">SIGNAL</span>
+          </div>
         </div>
 
-        <p class="reveal d2">
-          <em>Output</em> 让别人看见我、理解我、信任我；<br/>
-          <em>Product</em> 让别人真正被我帮助，并愿意为这种价值付费。<br/>
-          产品不是割韭菜，也不是粗暴卖课 ——而是把无形的能力，做成有形的承诺。
+        <p class="anno" style="text-align:center; margin-top:8px;">
+          <b>4 GATES · IN SERIES</b> &nbsp;·&nbsp; ALL MUST PASS &nbsp;·&nbsp; ZERO GATE COLLAPSES OUTPUT
         </p>
 
-        <div class="prod-grid reveal d3">
-          <div class="prod-item">系统课程</div>
-          <div class="prod-item">资料包</div>
-          <div class="prod-item">训练营</div>
-          <div class="prod-item">咨询</div>
-          <div class="prod-item">AI 工作流</div>
-          <div class="prod-item">网站服务</div>
-          <div class="prod-item">视觉资产服务</div>
-          <div class="prod-item">个人 IP 诊断</div>
-          <div class="prod-item">提示词包</div>
-          <div class="prod-item">模板与工具</div>
-          <div class="prod-item">知识库</div>
-          <div class="prod-item">人生系统普适版</div>
-        </div>
-
-        <div class="one-line reveal d4" style="--c: var(--p)">
-          Input 决定<em>源头</em>，Deposit 决定<em>资产</em>，Output 决定<em>信任</em>，Product 决定<em>价值交付</em>。
+        <div class="flow-spec">
+          <div class="fs-card">
+            <span class="lbl">RELATION 01</span>
+            <p class="ttl"><b>IDOP</b> 管流程，<b>HKRR</b> 管质量。</p>
+            <p class="desc">IDOP 是个人 IP 的总闭环，HKRR 是贯穿其中的质量标尺。一个让它跑起来，一个让它跑得好。</p>
+          </div>
+          <div class="fs-card">
+            <span class="lbl">RELATION 02</span>
+            <p class="ttl">上游 <b>HKR</b> 筛源头，下游 <b>HKRR</b> 打磨内容。</p>
+            <p class="desc">两端都被质量标尺锁住——上游不进垃圾，下游不出次品。</p>
+          </div>
         </div>
       </div>
+
+      <p class="copy" style="margin-top: 28px;">
+        现阶段，<em>视频</em> 是流量端最核心的表达形态。<br/>
+        但视频不是随便拍——它要顺序通过 H / K / R / R 四道<b>质量门</b>。任意一门不及格，信号就发不出去。
+      </p>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- ============================================================
+     06 · PRODUCT — family tree
+     ============================================================ -->
+<section id="product" class="mod-section m-p">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="mod-banner">
+        <div class="left">
+          <span class="big">P</span>
+          <div class="meta">
+            <span>STAGE 04</span>
+            <span class="en">PRODUCT</span>
+            <span class="cn">产品</span>
+          </div>
+        </div>
+        <span class="tag">Trust → Delivery</span>
+      </div>
+
+      <p class="mod-lead">
+        把信任<b>变成交付</b>。<br/>
+        产品不是割韭菜，是把无形的能力<em>做成有形的承诺</em>。
+      </p>
+
+      <div class="tree">
+        <span class="view-tag">VIEW · PRODUCT FAMILY TREE</span>
+
+        <div class="tree-root">
+          <span class="lbl">TRUNK · CORE THESIS</span>
+          <p class="ttl">将<em>方法 / 经验 / 能力</em>封装成<br/>别人能用、愿意付费的<em>价值交付</em>。</p>
+        </div>
+
+        <div class="tree-trunk"></div>
+
+        <div class="tree-tier t1">
+          <div class="tier-lbl">TIER 01 · CORE</div>
+          <div class="tree-node core"><div class="nm am">系统课程</div><div class="ds">SYSTEM COURSE</div></div>
+          <div class="tree-node core"><div class="nm am">训练营</div><div class="ds">COHORT BOOTCAMP</div></div>
+          <div class="tree-node core"><div class="nm am">咨询</div><div class="ds">1:1 CONSULTING</div></div>
+        </div>
+
+        <div class="tree-tier t2">
+          <div class="tier-lbl">TIER 02 · TOOLS</div>
+          <div class="tree-node"><div class="nm">AI 工作流</div><div class="ds">WORKFLOW</div></div>
+          <div class="tree-node"><div class="nm">提示词包</div><div class="ds">PROMPT KIT</div></div>
+          <div class="tree-node"><div class="nm">模板</div><div class="ds">TEMPLATES</div></div>
+          <div class="tree-node"><div class="nm">小工具</div><div class="ds">UTILITY</div></div>
+        </div>
+
+        <div class="tree-tier t2">
+          <div class="tier-lbl">TIER 03 · ASSETS · SERVICES</div>
+          <div class="tree-node"><div class="nm">资料包</div><div class="ds">PACKAGE</div></div>
+          <div class="tree-node"><div class="nm">知识库</div><div class="ds">KB</div></div>
+          <div class="tree-node"><div class="nm">网站服务</div><div class="ds">WEB SERVICE</div></div>
+          <div class="tree-node"><div class="nm">视觉资产</div><div class="ds">VISUAL ASSET</div></div>
+          <div class="tree-node"><div class="nm">IP 诊断</div><div class="ds">DIAGNOSIS</div></div>
+          <div class="tree-node"><div class="nm">人生系统普适版</div><div class="ds">SYSTEM · PUBLIC</div></div>
+        </div>
+      </div>
+
+      <p class="copy" style="margin-top: 28px;">
+        <b>Output</b> 让别人看见我、理解我、信任我；<br/>
+        <b>Product</b> 让别人真正被我帮助，并愿意为这种价值付费。
+      </p>
+      <p class="copy" style="margin-top:14px">
+        <em>Input</em> 决定源头，<em>Deposit</em> 决定资产，<em>Output</em> 决定信任，<em>Product</em> 决定价值交付。
+      </p>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================
-     07 · Flywheel
+     07 · FLYWHEEL — exploded axonometric, ascending
      ============================================================ -->
 <section id="fly">
   <div class="wrap">
-    <div class="reveal" style="text-align:center">
-      <span class="eyebrow center">07 · The Flywheel</span>
-      <h2 class="h-title">IDOP 不是一条直线，<br/>而是一台<span class="hl">飞轮</span>。</h2>
-      <p class="h-sub center">
-        Feedback 不是单独一环。它是闭环本身的<em style="color:var(--gold);font-style:normal">回流机制</em>。<br/>
-        每一次输出和产品反馈，都要重新成为下一轮的输入与沉淀。
-      </p>
-    </div>
+    <div class="sheet reveal">
+      <span class="crop-tr"></span>
+      <span class="crop-bl"></span>
+      <div class="sheet-tab">
+        <span class="num">SHEET 07 / 10</span>
+        <span class="div"></span>
+        <span class="ti">FLYWHEEL · ASCENDING</span>
+        <span class="dot"></span>
+      </div>
+      <div class="sheet-meta"><b>VIEW:</b> AXONOMETRIC · FEEDBACK RE-ENTRY</div>
 
-    <div class="flywheel-stage">
-      <div class="fw-visual reveal d2">
-        <svg viewBox="0 0 600 600" aria-hidden="true">
-          <defs>
-            <linearGradient id="fwgrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"  stop-color="#f5a45b" stop-opacity=".5"/>
-              <stop offset="33%" stop-color="#6fe1b3" stop-opacity=".5"/>
-              <stop offset="66%" stop-color="#7eb9f5" stop-opacity=".5"/>
-              <stop offset="100%" stop-color="#c9a0ff" stop-opacity=".5"/>
-            </linearGradient>
-            <marker id="fwArr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M0 0 L10 5 L0 10 z" fill="#f0c878"/>
-            </marker>
-          </defs>
-          <g class="fw-spin">
-            <circle cx="300" cy="300" r="220" fill="none" stroke="url(#fwgrad)" stroke-width="22" stroke-dasharray="20 60" stroke-linecap="round" opacity=".6"/>
-            <circle cx="300" cy="300" r="220" fill="none" stroke="url(#fwgrad)" stroke-width="1.5" opacity=".7"/>
-          </g>
-          <circle cx="300" cy="300" r="150" fill="none" stroke="rgba(245,242,233,0.08)" stroke-dasharray="3 6"/>
-          <circle cx="300" cy="300" r="90"  fill="none" stroke="rgba(240,200,120,0.4)"/>
-          <circle cx="300" cy="300" r="90"  fill="rgba(240,200,120,0.04)"/>
-        </svg>
-        <div class="fw-node n1">Input</div>
-        <div class="fw-node n2">Deposit</div>
-        <div class="fw-node n3">Output</div>
-        <div class="fw-node n4">Product</div>
-        <div class="fw-center">
-          <div class="word">Feedback</div>
-          <div class="cap">回流 · Re-entry</div>
-        </div>
+      <div class="sec-head">
+        <div class="num">SYSTEM 03</div>
+        <h2>IDOP is not a circle — <br/>it's a <em>climbing loop</em>.</h2>
+        <p class="spec">Feedback is NOT a fifth stage. It's the loop's <b>re-entry path</b> — each cycle returns to a higher level. The wheel doesn't spin in place. <b>It climbs.</b></p>
       </div>
 
-      <div class="fw-side reveal d3">
-        <h3>爆款是<em>结果</em>，<br/>系统是<em>原因</em>。</h3>
-        <p>视频数据、评论反馈、私信问题、用户购买、产品使用、市场信号 ——这些反馈都不能浪费。它们要重新成为 Input 的素材、Deposit 的判断依据、Output 的下一次切口、Product 的迭代方向。</p>
-        <p>这也是为什么 IDOP 不需要写成 IDOPF。<br/>Feedback 不是新增的第五环，而是<em>整个闭环本身的回流</em>。</p>
+      <div class="fw">
+        <div class="fw-svg">
+          <span class="view-tag">VIEW · AXONOMETRIC</span>
+          <svg viewBox="0 0 500 500" aria-hidden="true">
+            <defs>
+              <marker id="fHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#F5B14B"/>
+              </marker>
+              <marker id="fHeadCy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 z" fill="#7DD3FC"/>
+              </marker>
+            </defs>
 
-        <div class="fw-feedback">
-          <span class="chip">视频数据</span>
-          <span class="chip">评论区</span>
-          <span class="chip">私信问题</span>
-          <span class="chip">真实需求</span>
-          <span class="chip">购买情况</span>
-          <span class="chip">使用反馈</span>
-          <span class="chip">市场信号</span>
-          <span class="chip">哪些爆了</span>
-          <span class="chip">哪些没人看</span>
-          <span class="chip">哪些卖不动</span>
+            <!-- ground plane -->
+            <g stroke="rgba(125,211,252,0.15)" stroke-width="0.4" fill="none">
+              <ellipse cx="250" cy="430" rx="180" ry="42"/>
+            </g>
+            <text x="250" y="488" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.4)" letter-spacing="2">CYCLE n</text>
+
+            <!-- lower ring -->
+            <ellipse cx="250" cy="380" rx="170" ry="40" fill="none" stroke="#7DD3FC" stroke-width="0.8" class="draw-line" style="--len: 700"/>
+
+            <!-- upper ring (ascended) -->
+            <ellipse cx="250" cy="160" rx="170" ry="40" fill="none" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="0" class="draw-line" style="--len: 700"/>
+            <text x="250" y="120" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(233,238,244,0.6)" letter-spacing="2">CYCLE n+1</text>
+
+            <!-- vertical connecting columns (axonometric tilt) -->
+            <line x1="80" y1="380" x2="80" y2="160" stroke="#A7F3D0" stroke-width="0.6" stroke-dasharray="3 4" opacity="0.5"/>
+            <line x1="420" y1="380" x2="420" y2="160" stroke="#A7F3D0" stroke-width="0.6" stroke-dasharray="3 4" opacity="0.5"/>
+
+            <!-- spiral ascent feedback arrow -->
+            <path d="M 420 380 C 460 320, 460 220, 420 160" fill="none" stroke="#F5B14B" stroke-width="1.4" marker-end="url(#fHead)" class="draw-line" style="--len: 320"/>
+            <text x="478" y="276" font-family="JetBrains Mono, monospace" font-size="10" fill="#F5B14B" letter-spacing="2">FEEDBACK</text>
+            <text x="478" y="292" font-family="JetBrains Mono, monospace" font-size="10" fill="#F5B14B" letter-spacing="2">⤴ RE-ENTRY</text>
+
+            <!-- station markers on each ring -->
+            <g font-family="Outfit, sans-serif" font-weight="700" font-size="16">
+              <!-- lower -->
+              <circle cx="250" cy="340" r="14" fill="#0a1018" stroke="#7DD3FC" stroke-width="1"/>
+              <text x="250" y="345" text-anchor="middle" fill="#7DD3FC">I</text>
+              <circle cx="420" cy="380" r="14" fill="#0a1018" stroke="#A7F3D0" stroke-width="1"/>
+              <text x="420" y="385" text-anchor="middle" fill="#A7F3D0">D</text>
+              <circle cx="250" cy="420" r="14" fill="#0a1018" stroke="#C4B5FD" stroke-width="1"/>
+              <text x="250" y="425" text-anchor="middle" fill="#C4B5FD">O</text>
+              <circle cx="80" cy="380" r="14" fill="#0a1018" stroke="#FDE68A" stroke-width="1"/>
+              <text x="80" y="385" text-anchor="middle" fill="#FDE68A">P</text>
+
+              <!-- upper -->
+              <circle cx="250" cy="120" r="14" fill="#0a1018" stroke="#7DD3FC" stroke-width="1.2"/>
+              <text x="250" y="125" text-anchor="middle" fill="#7DD3FC">I</text>
+              <circle cx="420" cy="160" r="14" fill="#0a1018" stroke="#A7F3D0" stroke-width="1.2"/>
+              <text x="420" y="165" text-anchor="middle" fill="#A7F3D0">D</text>
+              <circle cx="250" cy="200" r="14" fill="#0a1018" stroke="#C4B5FD" stroke-width="1.2"/>
+              <text x="250" y="205" text-anchor="middle" fill="#C4B5FD">O</text>
+              <circle cx="80" cy="160" r="14" fill="#0a1018" stroke="#FDE68A" stroke-width="1.2"/>
+              <text x="80" y="165" text-anchor="middle" fill="#FDE68A">P</text>
+            </g>
+
+            <!-- elevation dimension on left -->
+            <g stroke="#7DD3FC" stroke-width="0.5" opacity="0.65">
+              <line x1="30" y1="380" x2="30" y2="160"/>
+              <line x1="24" y1="380" x2="36" y2="380"/>
+              <line x1="24" y1="160" x2="36" y2="160"/>
+            </g>
+            <text x="18" y="276" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(125,211,252,0.75)" letter-spacing="2" transform="rotate(-90 18 270)">Δh · COMPOUNDING</text>
+          </svg>
+          <span class="rpm"><b>CYCLES/YR</b> · 52</span>
+        </div>
+
+        <div class="fw-side">
+          <p class="pq">
+            爆款是<em>结果</em>，<br/>系统是<em>原因</em>。
+          </p>
+          <p class="copy">
+            视频数据、评论、私信、用户购买、产品使用、市场信号——所有反馈都不能浪费。它们要重新成为 Input 的素材、Deposit 的判断依据、Output 的下一次切口、Product 的迭代方向。
+          </p>
+          <p class="copy" style="margin-top:14px">
+            这就是为什么 IDOP 不需要变成 IDOPF。<br/>
+            Feedback 不是新增的第五环，而是<em>整个闭环本身的回流</em>——每一圈都比上一圈站得更高。
+          </p>
+
+          <div class="fb-chips">
+            <span class="c">视频数据</span>
+            <span class="c">评论区</span>
+            <span class="c">私信问题</span>
+            <span class="c">真实需求</span>
+            <span class="c">购买情况</span>
+            <span class="c">使用反馈</span>
+            <span class="c">市场信号</span>
+            <span class="c am">→ NEXT CYCLE</span>
+          </div>
         </div>
       </div>
     </div>
@@ -2058,169 +2904,265 @@ footer a:hover { color: var(--pap-0); }
 <!-- ============================================================
      PULL QUOTE 2
      ============================================================ -->
-<section class="pull-quote">
-  <div class="wrap-narrow reveal">
-    <p class="q">
-      不是简单<em>发内容</em>，<br/>
-      而是让输入、沉淀、输出、产品<br/>
-      形成<em>长期复利</em>。
-    </p>
-    <div class="cap">— IDOP 的飞轮哲学</div>
+<section class="pq-section">
+  <div class="wrap-narrow">
+    <div class="pq-wrap reveal">
+      <p class="q">
+        不是简单<em>发内容</em>，<br/>
+        而是让输入、沉淀、输出、产品<br/>
+        形成<em>长期复利</em>。
+      </p>
+      <p class="by">NOTE 02 · <b>FLYWHEEL PRINCIPLE</b></p>
+    </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ============================================================
-     08 · AI & Evolvability
+     08 · AI × EVOLVABILITY — failure-cost analysis
      ============================================================ -->
 <section id="ai">
   <div class="wrap">
-    <div class="reveal" style="text-align:center">
-      <span class="eyebrow center">08 · AI × Evolvability</span>
-      <h2 class="h-title">AI 给<span class="hl">廉价变异</span>，<br/>IDOP 给<span class="hl">持续进化</span>。</h2>
-      <p class="h-sub center">
-        AI 最大的礼物，不是让你更容易<em style="color:var(--gold);font-style:normal">成功</em>，<br/>
-        而是让你更容易<em style="color:var(--gold);font-style:normal">失败</em>。
-      </p>
-    </div>
-
-    <div class="ai-grid">
-      <div class="ai-card cheap reveal d2">
-        <div class="lbl">廉价失败 · Cheap Failure</div>
-        <h4>AI 把试错的单位成本，大幅压低了。</h4>
-        <p>过去做产品、做项目、创业，一次失败可能意味着几个月时间、几十万成本、巨大心力消耗。今天，普通人可以更快做出一个网页、一段视频、一个 App 原型、一个产品雏形、一份文档、一个小工具。<em style="color:var(--o);font-style:normal">失败不再致命</em>。</p>
+    <div class="sheet reveal">
+      <span class="crop-tr"></span>
+      <span class="crop-bl"></span>
+      <div class="sheet-tab right">
+        <span class="dot"></span>
+        <span class="num">SHEET 08 / 10</span>
+        <span class="div"></span>
+        <span class="ti">FAILURE-COST ANALYSIS</span>
       </div>
-      <div class="ai-card evo reveal d3">
-        <div class="lbl">可演化性 · Evolvability</div>
-        <h4>但廉价失败本身没有意义，关键是<em style="color:var(--d);font-style:normal">把每一次失败都变成下一次的输入</em>。</h4>
-        <p>一个系统能否进化，不取决于它能产生多少变异，而取决于它能不能从环境中拿到反馈、记住有效经验、保留成功结构、把失败变成下一次输入、让新经验与旧经验重组。<em style="color:var(--d);font-style:normal">这正是 IDOP 飞轮的价值</em>。</p>
+      <div class="sheet-meta"><b>VIEW:</b> A · B COMPARISON · AI × EVOLVABILITY</div>
+
+      <div class="sec-head">
+        <div class="num">ANALYSIS 04</div>
+        <h2>AI gives <em>cheap variation</em>.<br/>IDOP gives <em>compounding evolution</em>.</h2>
+        <p class="spec">AI's largest gift is not making success easier — it's making <b>failure cheap</b>. But cheap failure alone has no value. The system must turn every failure into the <b>next cycle's input</b>.</p>
+      </div>
+
+      <div class="fca">
+        <span class="view-tag">VIEW · FCA · 2-COLUMN</span>
+        <div class="fca-grid">
+          <div class="fca-col cheap">
+            <span class="lbl">COL A · CHEAP FAILURE</span>
+            <p class="ttl"><em>AI</em> reduces the unit cost of every trial.</p>
+            <p class="desc">过去做产品、做项目、创业，一次失败可能意味着几个月时间、几十万成本、巨大心力。今天，普通人可以更快做出一个网页、一段视频、一份文档、一个原型。<b>失败不再致命</b>。</p>
+            <p class="unit">SPEC: <b>COST_PER_TRIAL</b> ↓↓↓</p>
+          </div>
+
+          <div class="fca-op">+</div>
+
+          <div class="fca-col evo">
+            <span class="lbl">COL B · EVOLVABILITY</span>
+            <p class="ttl">A system evolves when it can turn <em>variation into memory</em>.</p>
+            <p class="desc">一个系统能否进化，不取决于它能产生多少变异，而取决于它能否拿到反馈、记住有效经验、保留成功结构、把失败变成下一次输入。<b>这正是 IDOP 飞轮的价值</b>。</p>
+            <p class="unit">SPEC: <b>LEARNING_GAIN</b> ↑↑↑</p>
+          </div>
+        </div>
+
+        <div class="fca-eq">
+          <span class="lbl">RESULT · OUTPUT EQN.</span>
+          <p class="eq">
+            AI 降低 <b>失败成本</b> &nbsp;<b>+</b>&nbsp; IDOP 提高 <b>失败价值</b> &nbsp;<b>=</b>&nbsp; <em>持续进化</em>
+          </p>
+        </div>
       </div>
     </div>
-
-    <p class="ai-equation reveal d4">
-      AI 降低<em>失败成本</em>　<span class="plus">+</span>　IDOP 提高<em>失败价值</em>
-    </p>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ============================================================
-     09 · Principles
+     09 · PRINCIPLES — material standards
      ============================================================ -->
 <section id="principles">
   <div class="wrap">
-    <div class="reveal" style="text-align:center">
-      <span class="eyebrow center">09 · Principles</span>
-      <h2 class="h-title">不能为了目的，<br/>不择手段。</h2>
-      <p class="h-sub center">
-        流量、变现、产品都重要。<br/>
-        但<em style="color:var(--gold);font-style:normal">真正的个人 IP，是长期信任资产，不是短期流量机器</em>。
-      </p>
-    </div>
+    <div class="sheet reveal">
+      <span class="crop-tr"></span>
+      <span class="crop-bl"></span>
+      <div class="sheet-tab">
+        <span class="num">SHEET 09 / 10</span>
+        <span class="div"></span>
+        <span class="ti">MATERIAL STANDARDS</span>
+        <span class="dot"></span>
+      </div>
+      <div class="sheet-meta"><b>VIEW:</b> CODE COMPLIANCE · DO-NOT LIST</div>
 
-    <div class="principles">
-      <div class="principle reveal d2"><span class="x">✕</span><span class="t">不制造焦虑割韭菜</span></div>
-      <div class="principle reveal d2"><span class="x">✕</span><span class="t">不夸大承诺、不虚假包装</span></div>
-      <div class="principle reveal d3"><span class="x">✕</span><span class="t">不抄袭、不洗稿</span></div>
-      <div class="principle reveal d3"><span class="x">✕</span><span class="t">不为了流量背叛真实判断</span></div>
-      <div class="principle reveal d4"><span class="x">✕</span><span class="t">不做自己都不信的内容</span></div>
-      <div class="principle reveal d4"><span class="x">✕</span><span class="t">不赚违心的钱</span></div>
-      <div class="principle reveal d5"><span class="x">✕</span><span class="t">不为了短期结果破坏长期信任</span></div>
-      <div class="principle reveal d5"><span class="x">✕</span><span class="t">不把"个人 IP"做成明星包装</span></div>
-    </div>
+      <div class="sec-head">
+        <div class="num">STANDARDS 05</div>
+        <h2>Code compliance —<br/>not <em>everything</em> goes.</h2>
+        <p class="spec">Traffic / monetization / product all matter. But personal IP is a <b>long-term trust asset</b>, not a short-term traffic machine. These standards govern what may NOT be done.</p>
+      </div>
 
-    <div class="principle-credo reveal d5">
-      <span class="seal">原则 · Credo</span>
-      <p class="line1">慢一点没关系，<br/>但要<em style="color:var(--gold);font-style:italic">问心无愧</em>。</p>
-      <p class="line2">结果要好，过程也要对得起自己。</p>
+      <div class="std">
+        <div class="std-row"><span class="code">STD-01</span><span class="txt">不制造焦虑割韭菜</span></div>
+        <div class="std-row"><span class="code">STD-02</span><span class="txt">不夸大承诺、不虚假包装</span></div>
+        <div class="std-row"><span class="code">STD-03</span><span class="txt">不抄袭、不洗稿</span></div>
+        <div class="std-row"><span class="code">STD-04</span><span class="txt">不为流量背叛真实判断</span></div>
+        <div class="std-row"><span class="code">STD-05</span><span class="txt">不做自己都不信的内容</span></div>
+        <div class="std-row"><span class="code">STD-06</span><span class="txt">不赚违心的钱</span></div>
+        <div class="std-row"><span class="code">STD-07</span><span class="txt">不为短期结果破坏长期信任</span></div>
+        <div class="std-row"><span class="code">STD-08</span><span class="txt">不把"个人 IP"做成明星包装</span></div>
+      </div>
+
+      <div class="std-stamp">
+        <div class="seal">
+          <span class="lbl">CREDO · 自留</span>
+          <span class="ttl">慢一点没关系</span>
+          <span class="by"><em>但要问心无愧。结果要好，过程也要对得起自己。</em></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
 <!-- ============================================================
-     10 · Final
+     10 · FINAL — title block sign-off
      ============================================================ -->
 <section id="final">
-  <div class="wrap-narrow">
-    <div class="reveal" style="text-align:center">
-      <span class="eyebrow center">10 · The Final Definition</span>
-      <h2 class="h-title">IDOP 理论<br/><span class="hl">最终定义</span>。</h2>
-    </div>
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-head" style="text-align:left">
+        <div class="num">SIGN-OFF 10</div>
+        <h2>The drawing's <em>title block</em>.</h2>
+      </div>
 
-    <div class="final-def reveal d2">
-      <p class="blk">
-        <em>IDOP 理论</em>是我的个人 IP 核心闭环 ——<br/>
-        通过<em>认知输入</em>、<em>审美输入</em>与<em>用户输入</em>，持续获得高质量素材；<br/>
-        通过<em>AI 深聊</em>、<em>入库</em>与<em>周日复盘</em>完成沉淀；<br/>
-        通过<em>图文、文章、视频、网站</em>等形式公开输出，积累信任；<br/>
-        最终将<em>方法、经验、能力</em>产品化，完成价值交付，<br/>
-        并用真实反馈反哺下一轮输入与迭代。
-      </p>
-    </div>
+      <div class="title-block">
+        <div class="tb-defn">
+          <em>IDOP 理论</em>是我的个人 IP 核心闭环——<br/>
+          通过 <b>认知 / 审美 / 用户</b> 三类输入持续获得高质量素材；<br/>
+          通过 <b>AI 深聊 / 入库 / 周日复盘</b> 完成沉淀；<br/>
+          通过 <b>图文 / 文章 / 视频 / 网站</b> 等形式公开输出，积累信任；<br/>
+          最终将 <b>方法 / 经验 / 能力</b> 产品化，完成价值交付，<br/>
+          并用真实反馈反哺下一轮输入与迭代。
+        </div>
 
-    <div class="final-lines">
-      <div class="final-line i reveal d2">
-        <span class="ltr">I</span>
-        <span class="txt"><em>Input</em> 输入　决定源头。</span>
-      </div>
-      <div class="final-line d reveal d2">
-        <span class="ltr">D</span>
-        <span class="txt"><em>Deposit</em> 沉淀　形成资产。</span>
-      </div>
-      <div class="final-line o reveal d3">
-        <span class="ltr">O</span>
-        <span class="txt"><em>Output</em> 输出　积累信任。</span>
-      </div>
-      <div class="final-line p reveal d3">
-        <span class="ltr">P</span>
-        <span class="txt"><em>Product</em> 产品　完成交付。</span>
-      </div>
-    </div>
+        <div class="tb-summary">
+          <div class="tb-cell i">
+            <span class="ltr">I</span>
+            <span class="nm">INPUT</span>
+            <span class="cn">输入</span>
+            <span class="verb">决定 源头</span>
+          </div>
+          <div class="tb-cell d">
+            <span class="ltr">D</span>
+            <span class="nm">DEPOSIT</span>
+            <span class="cn">沉淀</span>
+            <span class="verb">形成 资产</span>
+          </div>
+          <div class="tb-cell o">
+            <span class="ltr">O</span>
+            <span class="nm">OUTPUT</span>
+            <span class="cn">输出</span>
+            <span class="verb">积累 信任</span>
+          </div>
+          <div class="tb-cell p">
+            <span class="ltr">P</span>
+            <span class="nm">PRODUCT</span>
+            <span class="cn">产品</span>
+            <span class="verb">完成 交付</span>
+          </div>
+        </div>
 
-    <div class="coda reveal d4">
-      <div class="seal">
-        <span class="L">I</span><span class="D">D</span><span class="D">O</span><span class="L">P</span>
+        <div class="tb-signoff">
+          <div>
+            <span class="lbl">DRAWING NO.</span>
+            <span class="val cy">IDOP-001</span>
+          </div>
+          <div>
+            <span class="lbl">REV / DATE</span>
+            <span class="val">A · 2026.05</span>
+          </div>
+          <div>
+            <span class="lbl">AUTHOR · SIGN</span>
+            <span class="val am">追光者 · The Light Chaser</span>
+          </div>
+        </div>
       </div>
-      <p class="cap">首尾是 <em>IP</em>，中间是 <em>DO</em>。<br/>个人 IP 不是<em>想</em>出来的，而是<em>做</em>出来的。</p>
-      <div class="stamp">— 追光者 · The Light Chaser</div>
+
+      <div class="coda">
+        <div class="wordmark" aria-label="IDOP">
+          <span class="ci">I</span>
+          <span class="cd">D</span>
+          <span class="co">O</span>
+          <span class="cp">P</span>
+        </div>
+        <div class="underline">
+          <span class="ln"></span>
+          <span>EDGES : IP &nbsp;·&nbsp; CORE : DO</span>
+          <span class="ln"></span>
+        </div>
+        <p class="closing">
+          个人 IP 不是 <em>想</em> 出来的，<br/>
+          而是 <em>做</em> 出来的。
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div style="opacity:.6">© IDOP Theory · Original by 追光者 · The Personal-IP Loop</div>
+  <div class="left">
+    <span class="crp"><i></i></span>
+    <span>DWG. <b>IDOP-001</b></span>
+    <span style="color:var(--pap-5)">/</span>
+    <span>REV A · 2026.05</span>
+    <span style="color:var(--pap-5)">/</span>
+    <span>追光者</span>
+  </div>
+  <div class="right">END · SHEET 10 / 10</div>
 </footer>
 
 <script>
 /* ============================================================
-   Reading progress
+   Crosshair cursor + data-cursor labels
    ============================================================ */
-const progress = document.getElementById('progress');
-function updateProgress() {
+const xh = document.getElementById('xhair');
+const xhLbl = document.getElementById('xhairLbl');
+let xPos = { x: 0, y: 0 };
+let xTarget = { x: 0, y: 0 };
+
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.addEventListener('mousemove', (e) => {
+    xTarget.x = e.clientX;
+    xTarget.y = e.clientY;
+  });
+  function rafXh() {
+    xPos.x += (xTarget.x - xPos.x) * 0.35;
+    xPos.y += (xTarget.y - xPos.y) * 0.35;
+    xh.style.setProperty('--x', xPos.x + 'px');
+    xh.style.setProperty('--y', xPos.y + 'px');
+    requestAnimationFrame(rafXh);
+  }
+  rafXh();
+
+  document.body.addEventListener('mouseover', (e) => {
+    const tgt = e.target.closest('[data-cursor], a, button');
+    if (tgt) {
+      xh.classList.add('hover');
+      xhLbl.textContent = tgt.dataset.cursor || (tgt.tagName === 'A' ? 'OPEN' : 'CLICK');
+    }
+  });
+  document.body.addEventListener('mouseout', (e) => {
+    const tgt = e.target.closest('[data-cursor], a, button');
+    if (tgt) xh.classList.remove('hover');
+  });
+}
+
+/* ============================================================
+   Line-counter progress
+   ============================================================ */
+const lcPos = document.getElementById('lcPos');
+function updateCounter() {
   const h = document.documentElement;
   const total = h.scrollHeight - h.clientHeight;
   const p = total > 0 ? (h.scrollTop / total) : 0;
-  progress.style.setProperty('--p', p);
+  const v = Math.round(p * 420);
+  lcPos.textContent = String(v).padStart(4, '0');
 }
-document.addEventListener('scroll', updateProgress, { passive: true });
-updateProgress();
+document.addEventListener('scroll', updateCounter, { passive: true });
+updateCounter();
 
 /* ============================================================
-   Masthead state
-   ============================================================ */
-const mast = document.getElementById('mast');
-function updateMast() {
-  mast.classList.toggle('lifted', window.scrollY > 40);
-}
-document.addEventListener('scroll', updateMast, { passive: true });
-updateMast();
-
-/* ============================================================
-   Section observer for nav highlight
+   Section / nav highlight
    ============================================================ */
 const sections = document.querySelectorAll('section[id]');
 const links = document.querySelectorAll('#navCtr .sec');
@@ -2235,21 +3177,32 @@ const navObs = new IntersectionObserver((entries) => {
       if (link) link.classList.add('active');
     }
   });
-}, { threshold: 0, rootMargin: '-40% 0px -55% 0px' });
+}, { threshold: 0, rootMargin: '-45% 0px -50% 0px' });
 sections.forEach(s => navObs.observe(s));
 
 /* ============================================================
-   Reveal on scroll
+   Reveal + draw-line on scroll
    ============================================================ */
 const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
+      // also kick stroke-dashoffset on enclosed lines
+      e.target.querySelectorAll('.draw-line').forEach(el => {
+        el.classList.add('drawn');
+      });
       revealObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+}, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* draw lines outside reveal containers (hero) */
+window.addEventListener('load', () => {
+  document.querySelectorAll('.hero .draw-line, .draw-line').forEach(el => {
+    if (!el.classList.contains('drawn')) el.classList.add('drawn');
+  });
+}, { once: true });
 </script>
 </body>
 </html>
