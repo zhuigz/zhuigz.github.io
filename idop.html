@@ -109,7 +109,7 @@ em, i { font-family: var(--serif); font-style: italic; }
 ::-webkit-scrollbar-thumb:hover { background: var(--cyan-d); }
 
 /* ============================================================
-   Crosshair cursor
+   Reticle cursor — small scope, no screen-spanning bars
    ============================================================ */
 .xhair {
   position: fixed;
@@ -121,26 +121,26 @@ em, i { font-family: var(--serif); font-style: italic; }
 @media (hover: hover) and (pointer: fine) {
   .xhair { display: block; }
 }
-.xhair .vbar, .xhair .hbar {
-  position: absolute;
-  background: rgba(245,177,75,0.32);
-}
-.xhair .vbar { width: 1px; top: 0; bottom: 0; left: var(--x, 0); }
-.xhair .hbar { height: 1px; left: 0; right: 0; top: var(--y, 0); }
-.xhair .dot {
+.xhair .scope {
   position: absolute;
   top: var(--y, 0); left: var(--x, 0);
-  width: 14px; height: 14px;
-  border: 1px solid var(--amber);
-  border-radius: 50%;
+  width: 26px; height: 26px;
   transform: translate(-50%, -50%);
-  background: transparent;
-  transition: width .25s var(--ease), height .25s var(--ease), background .2s;
+  color: var(--amber);
+  opacity: 0.62;
+  transition: width .3s var(--ease), height .3s var(--ease), opacity .25s, color .25s;
 }
+.xhair .scope svg {
+  width: 100%; height: 100%;
+  display: block;
+  overflow: visible;
+}
+.xhair .scope .ring { transition: r .3s var(--ease), stroke-width .3s var(--ease); }
+.xhair .scope .tick { transition: opacity .3s; }
 .xhair .lbl {
   position: absolute;
   top: var(--y, 0); left: var(--x, 0);
-  transform: translate(14px, 14px);
+  transform: translate(18px, 14px);
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -153,7 +153,12 @@ em, i { font-family: var(--serif); font-style: italic; }
   padding: 2px 6px;
   border: 1px solid var(--amber);
 }
-.xhair.hover .dot { width: 22px; height: 22px; background: var(--amber-glow); }
+.xhair.hover .scope {
+  width: 38px; height: 38px;
+  opacity: 1;
+}
+.xhair.hover .scope .ring { stroke-width: 1.4; }
+.xhair.hover .scope .tick { opacity: 1; }
 .xhair.hover .lbl { opacity: 1; }
 
 /* ============================================================
@@ -2037,11 +2042,18 @@ footer .right { opacity: 0.6; }
 </head>
 <body>
 
-<!-- crosshair cursor -->
+<!-- reticle cursor -->
 <div class="xhair" id="xhair" aria-hidden="true">
-  <div class="vbar"></div>
-  <div class="hbar"></div>
-  <div class="dot"></div>
+  <div class="scope">
+    <svg viewBox="0 0 40 40">
+      <circle class="ring" cx="20" cy="20" r="9" fill="none" stroke="currentColor" stroke-width="1"/>
+      <circle cx="20" cy="20" r="1.4" fill="currentColor"/>
+      <line class="tick" x1="20" y1="3"  x2="20" y2="8"  stroke="currentColor" stroke-width="1" opacity="0.85"/>
+      <line class="tick" x1="20" y1="32" x2="20" y2="37" stroke="currentColor" stroke-width="1" opacity="0.85"/>
+      <line class="tick" x1="3"  y1="20" x2="8"  y2="20" stroke="currentColor" stroke-width="1" opacity="0.85"/>
+      <line class="tick" x1="32" y1="20" x2="37" y2="20" stroke="currentColor" stroke-width="1" opacity="0.85"/>
+    </svg>
+  </div>
   <div class="lbl" id="xhairLbl">察看</div>
 </div>
 
