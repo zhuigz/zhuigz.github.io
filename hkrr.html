@@ -1913,6 +1913,41 @@ input[type=range]::-moz-range-thumb {
   animation: heroPulse 2s ease-in-out infinite;
 }
 
+/* Cross-reference to IDOP — sibling theory */
+.manifesto-xref {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  padding: 12px 22px;
+  border: 1px solid var(--pap-5);
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--pap-2);
+  background: color-mix(in oklab, var(--ink-2) 40%, transparent);
+  transition: color .25s, border-color .25s, background .25s, transform .25s;
+}
+.manifesto-xref:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: color-mix(in oklab, var(--gold) 8%, transparent);
+  transform: translateY(-2px);
+}
+.manifesto-xref b {
+  color: var(--gold);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+.manifesto-xref .m-ar {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 13px;
+  transition: transform .25s;
+}
+.manifesto-xref:hover .m-ar { transform: translate(2px, -2px); }
+
 /* ==========================================================================
    COLOPHON
    ========================================================================== */
@@ -2612,6 +2647,11 @@ input[type=range]::-moz-range-thumb {
         <span class="blink"></span>
         <span>命名之后 · 它就能被反复调用</span>
       </div>
+
+      <a class="manifesto-xref" href="idop.html">
+        <span class="m-ar">↗</span>
+        <span>HKRR 贯穿在 <b>IDOP</b> 闭环里作为输出端的质量标尺</span>
+      </a>
     </div>
   </section>
 
