@@ -334,6 +334,22 @@ section { padding: 120px 0 90px; position: relative; }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   filter: drop-shadow(0 0 16px color-mix(in oklab, var(--mc, var(--gold)) 30%, transparent));
 }
+/* 模块 → 专题页 出站深读链接（紧贴 section-title 之下，承袭模块色） */
+.section-title:has(+ .module-deep-link) { margin-bottom: 16px; }
+.module-deep-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 40px;
+  font-family: var(--serif-cn); font-size: 13px; letter-spacing: 1px;
+  color: rgba(var(--mcr, 232,184,122), 0.78);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(var(--mcr, 232,184,122), 0.3);
+  padding-bottom: 3px;
+  transition: color .3s ease, border-color .3s ease;
+}
+.module-deep-link:hover { color: rgb(var(--mcr, 232,184,122)); border-color: rgb(var(--mcr, 232,184,122)); }
+.module-deep-link .mdl-arrow { display: inline-block; transition: transform .3s ease; }
+.module-deep-link:hover .mdl-arrow { transform: translateX(4px); }
+.module-deep-link.compact { margin: 14px 0 0 0; font-size: 12px; letter-spacing: 0.5px; }
 /* 模块水印编号 — 罗马数字 italic */
 .section-watermark {
   position: absolute; top: 40px; right: 0;
@@ -872,6 +888,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <div class="reveal">
       <div class="section-label">Life Goals · Module 01</div>
       <div class="section-title">三级<span class="hl">人生目标</span></div>
+      <a class="module-deep-link" href="ideal.html">完整《三级人生目标 · 立己达人》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="goal-tiers reveal">
       <div class="goal-tier gt-1">
@@ -947,6 +964,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <div class="reveal">
       <div class="section-label">Prosperity Formula · Module 03</div>
       <div class="section-title">人生<span class="hl">繁荣公式</span></div>
+      <a class="module-deep-link" href="prosper.html">完整《人生繁荣公式》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="formula-wrap reveal">
       <div class="feq">
@@ -983,6 +1001,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <div class="reveal">
       <div class="section-label">FIRE Plan · Module 04</div>
       <div class="section-title">七年<span class="hl">FIRE计划</span></div>
+      <a class="module-deep-link" href="fire.html">完整《FIRE · 永续之道》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="fire-header reveal">
       <div class="fire-big">300万</div>
@@ -1013,6 +1032,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
           <li>记录成长，分享人生系统，输出AI方法论</li>
           <li>终身事业，注入灵魂，实现300万爆发</li>
         </ul>
+        <a class="module-deep-link compact" href="idop.html">展开 IDOP 闭环 · 输入·沉淀·输出·产品 <span class="mdl-arrow">→</span></a>
       </div>
     </div>
     <div class="fire-pillars reveal">
@@ -1100,6 +1120,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <div class="reveal">
       <div class="section-label">Growth System · Module 07</div>
       <div class="section-title">成长进步<span class="hl">体系</span></div>
+      <a class="module-deep-link" href="growth.html">完整《成长进步体系 · The Growth Machine》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="growth-engine reveal">
       <div class="gcard"><div class="gcard-top"><div class="gcard-ico" style="background:rgba(232,184,122,0.1)">🌅</div><div><div class="gcard-role">引擎 · Engine</div><h4>早起</h4></div></div><p>6:30起床 + 听前哨站。以最饱满的状态开启清醒的17个小时。</p></div>
@@ -1130,6 +1151,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <div class="reveal">
       <div class="section-label">Life Essence · Module 08</div>
       <div class="section-title">生命<span class="hl">底色</span></div>
+      <a class="module-deep-link" href="life_undertone.html">完整《生命底色 · Life Undertone》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="essence-intro reveal">
       生于 <em>2007年5月25日</em>（525·我爱我），山西朔州人，华中农业大学在读。<br>
