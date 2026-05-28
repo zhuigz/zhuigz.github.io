@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>不是替代你，是放大你 · 关于 AI 的一封信</title>
+  <title>先用 AI 赢一次 · 关于 AI 的一封信</title>
+  <meta name="description" content="写给刚打开 AI 的你：怎么在今晚,用一句话拿到第一次正向反馈,然后让它滚成一个越转越快的飞轮——输入、创造、被身边人定价、创造情绪价值、关系变好。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
 /* ============================================================
-   AI 重要性站点 — 全局样式
-   color: 暖奶白 + 墨黑 + 朱红 / 钴蓝 / 酸柠檬
-   type:  Space Grotesk + Sora + JetBrains Mono
-          Noto Serif SC + Noto Sans SC
+   关于 AI 的一封信 — 先用 AI 赢一次
+   palette: 暖奶白 + 墨黑 + 朱红 / 钴蓝 / 酸柠檬
+   type:    Instrument Serif + JetBrains Mono
+            Noto Serif SC + Noto Sans SC
    ============================================================ */
 
 :root {
@@ -28,21 +29,16 @@
   --acc-red: #FF4A1F;
   --acc-blue: #2C42F0;
   --acc-lime: #E6FF55;
-  --acc-blue-soft: #DDE2FF;
-  --acc-red-soft: #FFE0D6;
-  --acc-lime-soft: #F4FFB3;
 
   --serif: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
-  --sans-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --display: "Instrument Serif", "Noto Serif SC", serif;
-  --text: "Noto Sans SC", "PingFang SC", sans-serif;
+  --text: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --italic: "Instrument Serif", "Noto Serif SC", serif;
   --mono: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-html { background: var(--bg); }
+html { background: var(--bg); scroll-behavior: smooth; }
 body {
   font-family: var(--text);
   color: var(--ink);
@@ -53,7 +49,6 @@ body {
 }
 
 ::selection { background: var(--acc-lime); color: var(--ink); }
-
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 6px; }
@@ -70,38 +65,10 @@ body {
   z-index: 9998;
 }
 
-/* ============== Chrome / nav ============== */
-.topnav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 18px 32px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink);
-  mix-blend-mode: difference;
-  filter: invert(1);
-}
-.topnav .brand { display: flex; gap: 10px; align-items: center; }
-.topnav .brand .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--acc-red);
-  animation: pulse 2s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.6; }
-}
-.topnav .meta { display: flex; gap: 24px; }
-
-/* Side rail */
+/* ============== Side rail ============== */
 .rail {
   position: fixed;
-  right: 28px;
-  top: 50%;
+  right: 28px; top: 50%;
   transform: translateY(-50%);
   z-index: 90;
   display: flex; flex-direction: column; gap: 14px;
@@ -123,662 +90,315 @@ body {
   transition: width 0.25s, background 0.25s;
 }
 .rail a:hover, .rail a.active { color: var(--ink); }
-.rail a.active::before { width: 36px; background: var(--acc-red); }
+.rail a.active {
+  text-shadow: 0 0 14px rgba(255,74,31,0.45);
+}
+.rail a.active::before { width: 36px; background: var(--acc-red); box-shadow: 0 0 8px rgba(255,74,31,0.5); }
+.rail a.dark { color: rgba(251,250,245,0.45); }
+.rail a.dark::before { background: rgba(251,250,245,0.45); }
+.rail a.dark.active { color: var(--bg); }
+
+/* Chapter stamp */
+.chapter-stamp {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 80;
+  font-family: var(--italic);
+  font-style: italic;
+  font-size: clamp(28px, 3.5vw, 52px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,74,31,0.20);
+  pointer-events: none; user-select: none;
+  transition: opacity 0.4s ease, -webkit-text-stroke-color 0.4s ease;
+  letter-spacing: -0.02em; line-height: 1;
+}
+.chapter-stamp.on-dark { -webkit-text-stroke-color: rgba(230,255,85,0.32); }
 
 /* ============== Section base ============== */
 section.chapter {
   position: relative;
-  min-height: 100vh;
-  padding: 120px 8vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 150px 8vw;
 }
-
 .eyebrow {
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+  display: inline-flex; align-items: center; gap: 12px;
 }
-.eyebrow .num {
-  background: var(--ink);
-  color: var(--bg);
-  padding: 3px 8px;
-  font-weight: 600;
-}
-.eyebrow .bar {
-  display: inline-block;
-  width: 40px; height: 1px;
-  background: var(--ink-soft);
-}
+.eyebrow .num { background: var(--ink); color: var(--bg); padding: 3px 8px; font-weight: 600; }
 
-h1.display, h2.display {
+h2.display {
   font-family: var(--serif);
   font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 0.96;
-  margin: 0;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  margin: 18px 0 0;
   text-wrap: balance;
+  font-size: clamp(44px, 6.4vw, 104px);
 }
-h2.display { font-size: clamp(48px, 7vw, 112px); }
-h1.display { font-size: clamp(60px, 9vw, 160px); }
-
 .kicker {
-  font-family: var(--display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-family: var(--italic);
+  font-style: italic;
   font-size: clamp(22px, 2.4vw, 32px);
-  line-height: 1.2;
+  line-height: 1.25;
   color: var(--ink);
   max-width: 60ch;
   text-wrap: balance;
 }
 .body-lg {
   font-family: var(--text);
-  font-size: clamp(16px, 1.15vw, 20px);
-  line-height: 1.55;
+  font-size: clamp(16px, 1.15vw, 19px);
+  line-height: 1.65;
   color: var(--ink-soft);
   max-width: 64ch;
 }
-.body {
-  font-family: var(--text);
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
+.body-lg strong { color: var(--ink); font-weight: 600; }
 .label {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-soft);
 }
-
 .tag {
-  display: inline-block;
-  padding: 4px 10px;
+  display: inline-block; padding: 6px 10px;
   border: 1px solid var(--line-strong);
-  border-radius: 100px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft);
 }
 .tag.solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.tag.red { background: var(--acc-red); color: white; border-color: var(--acc-red); }
-.tag.blue { background: var(--acc-blue); color: white; border-color: var(--acc-blue); }
-.tag.lime { background: var(--acc-lime); color: var(--ink); border-color: var(--acc-lime); }
 
-.divider { height: 1px; background: var(--line); width: 100%; }
-
-/* Reveal animation */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
-}
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1); }
 .reveal.in { opacity: 1; transform: none; }
 .reveal.d1 { transition-delay: 0.08s; }
 .reveal.d2 { transition-delay: 0.16s; }
 .reveal.d3 { transition-delay: 0.24s; }
 .reveal.d4 { transition-delay: 0.32s; }
 .reveal.d5 { transition-delay: 0.40s; }
-.reveal.d6 { transition-delay: 0.48s; }
+@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.6; } }
 
-/* ============== HERO — editorial cover ============== */
+/* ============== HERO ============== */
 .hero {
   min-height: 100vh;
   position: relative;
-  padding: 28px 6vw 28px;
+  padding: 28px 6vw;
   display: grid;
   grid-template-rows: auto 1px 1fr 1px auto;
-  gap: 0;
   background: var(--bg);
+  z-index: 0; overflow: hidden;
 }
-
+.hero::after {
+  content: "AMPLIFICATIO";
+  position: absolute; left: 50%; bottom: -24px;
+  transform: translateX(-50%);
+  font-family: var(--italic); font-style: italic;
+  font-size: clamp(48px, 8.5vw, 128px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,74,31,0.10);
+  z-index: -1; pointer-events: none; user-select: none; white-space: nowrap; letter-spacing: -0.01em;
+}
 .hero-band {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 24px;
-  align-items: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  padding: 16px 0;
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft); padding: 16px 0;
 }
 .hero-band .band-l { display: flex; align-items: center; gap: 10px; }
 .hero-band .band-c { text-align: center; color: var(--ink); font-weight: 500; letter-spacing: 0.22em; }
 .hero-band .band-r { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
 .hero-band .sep { color: var(--line-strong); }
-.hero-band .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--acc-red);
-  animation: pulse 1.8s ease-in-out infinite;
-}
+.hero-band .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--acc-red); animation: pulse 1.8s ease-in-out infinite; }
+.hero-rule { height: 1px; background: linear-gradient(90deg, var(--acc-red) 0%, var(--ink) 30%, var(--line) 100%); opacity: 0.55; }
 
-.hero-rule { height: 1px; background: var(--ink); }
-
-.hero-main {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 64px;
-  align-items: start;
-  padding: 80px 0 60px;
-  align-content: center;
-}
-
-.hero-left {
-  display: flex;
-  flex-direction: column;
-  gap: 44px;
-  min-width: 0;
-}
-
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.hero-eyebrow .num {
-  background: var(--ink);
-  color: var(--bg);
-  padding: 4px 9px;
-  font-weight: 600;
-}
+.hero-main { display: grid; grid-template-columns: minmax(0,1fr) 260px; gap: 64px; align-items: center; padding: 60px 0; }
+.hero-left { display: flex; flex-direction: column; gap: 36px; min-width: 0; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); }
+.hero-eyebrow .num { background: var(--ink); color: var(--bg); padding: 4px 9px; font-weight: 600; }
 
 .hero-title {
-  font-family: var(--serif);
-  font-weight: 900;
-  font-size: clamp(56px, 10.5vw, 168px);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  margin: 0;
-  color: var(--ink);
-  text-wrap: balance;
+  font-family: var(--serif); font-weight: 900;
+  font-size: clamp(46px, 8.4vw, 132px);
+  line-height: 0.96; letter-spacing: -0.035em; margin: 0; color: var(--ink); text-wrap: balance;
 }
-.hero-title .strike {
-  position: relative;
-  display: inline-block;
-  color: var(--ink-mute);
-}
+.hero-title .strike { position: relative; display: inline-block; color: var(--ink-mute); }
 .hero-title .strike::after {
-  content: "";
-  position: absolute;
-  left: -2%; right: -2%;
-  top: 52%;
-  height: 5px;
-  background: var(--ink);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: drawIn 0.9s 0.7s cubic-bezier(.2,.7,.2,1) forwards;
+  content: ""; position: absolute; left: -2%; right: -2%; top: 52%; height: 5px; background: var(--ink);
+  transform: scaleX(0); transform-origin: left; animation: drawIn 0.9s 0.7s cubic-bezier(.2,.7,.2,1) forwards;
 }
 @keyframes drawIn { to { transform: scaleX(1); } }
-.hero-title .dash {
-  display: inline-block;
-  color: var(--ink-soft);
-  font-weight: 400;
-  margin: 0 0.05em;
-}
-.hero-title .accent {
-  color: var(--acc-red);
-  font-style: italic;
-}
+.hero-title .accent { color: var(--acc-red); font-family: var(--italic); font-style: italic; }
 
-.hero-sub {
-  font-family: var(--text);
-  font-size: clamp(16px, 1.35vw, 20px);
-  line-height: 1.6;
-  color: var(--ink-soft);
-  max-width: 52ch;
-  margin: 0;
-}
+.hero-sub { font-family: var(--text); font-size: clamp(16px, 1.35vw, 20px); line-height: 1.65; color: var(--ink-soft); max-width: 54ch; margin: 0; }
 .hero-sub strong { color: var(--ink); font-weight: 600; }
+.hero-sub .mark { background: var(--acc-lime); color: var(--ink); padding: 0 0.12em; font-weight: 600; }
 
 .hero-foot { display: flex; flex-wrap: wrap; gap: 8px; }
-.hero-foot .tag {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 6px 10px;
-  border: 1px solid var(--line-strong);
-  border-radius: 0;
-  color: var(--ink-soft);
-}
-.hero-foot .tag.solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-.hero-side {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  border-left: 1px solid var(--line-strong);
-  padding-left: 28px;
-  align-self: stretch;
-}
+.hero-side { display: flex; flex-direction: column; gap: 30px; border-left: 1px solid var(--line-strong); padding-left: 28px; align-self: stretch; justify-content: center; }
 .hero-side .side-block { display: flex; flex-direction: column; gap: 10px; }
-.hero-side .side-block .k {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.hero-side .side-block .v {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.45;
-  color: var(--ink);
-}
+.hero-side .side-block .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
+.hero-side .side-block .v { font-family: var(--serif); font-weight: 500; font-size: 16px; line-height: 1.5; color: var(--ink); }
 .hero-side .side-block .v em { font-style: italic; color: var(--acc-red); font-weight: 700; }
-.hero-side .side-block .v.mono {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
+.hero-side .side-block .v.mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; }
 
-.hero-toc {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 0;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.hero-toc .toc-left { display: flex; gap: 28px; flex-wrap: wrap; }
-.hero-toc .toc-left a {
-  display: inline-flex; align-items: baseline; gap: 8px;
-  color: var(--ink);
-  text-decoration: none;
-  transition: color 0.2s;
-}
+.hero-toc { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+.hero-toc .toc-left { display: flex; gap: 26px; flex-wrap: wrap; }
+.hero-toc .toc-left a { display: inline-flex; align-items: baseline; gap: 8px; color: var(--ink); text-decoration: none; transition: color 0.2s; }
 .hero-toc .toc-left a span:first-child { color: var(--ink-mute); font-size: 10.5px; }
-.hero-toc .toc-left a:hover { color: var(--acc-red); }
-.hero-toc .toc-left a:hover span:first-child { color: var(--acc-red); }
+.hero-toc .toc-left a:hover, .hero-toc .toc-left a:hover span:first-child { color: var(--acc-red); }
+.hero-toc .toc-scroll { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+.hero-toc .toc-scroll .arrow { display: inline-block; width: 26px; height: 1px; background: var(--ink); position: relative; animation: scrollPulse 2.2s ease-in-out infinite; }
+.hero-toc .toc-scroll .arrow::after { content: ""; position: absolute; right: 0; top: -3px; width: 7px; height: 7px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); transform: rotate(-45deg); }
+@keyframes scrollPulse { 0%,100% { transform: translateX(0); opacity: 1; } 50% { transform: translateX(6px); opacity: 0.4; } }
 
-.hero-toc .toc-scroll {
-  display: inline-flex; align-items: center; gap: 12px;
-  color: var(--ink);
-  text-decoration: none;
-}
-.hero-toc .toc-scroll .arrow {
-  display: inline-block;
-  width: 26px; height: 1px;
-  background: var(--ink);
-  position: relative;
-  animation: scrollPulse 2.2s ease-in-out infinite;
-}
-.hero-toc .toc-scroll .arrow::after {
-  content: "";
-  position: absolute;
-  right: 0; top: -3px;
-  width: 7px; height: 7px;
-  border-right: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  transform: rotate(-45deg);
-}
-@keyframes scrollPulse {
-  0%, 100% { transform: translateX(0); opacity: 1; }
-  50% { transform: translateX(6px); opacity: 0.4; }
-}
+/* generic head grid */
+.head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 80px; }
+.head .blurb { display: flex; flex-direction: column; gap: 18px; }
 
-/* ============== Chapter 1 — 分水岭 ============== */
-.ch1 { background: var(--bg); padding-top: 160px; padding-bottom: 160px; }
-.ch1 .head {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: end;
-  margin-bottom: 96px;
+/* ============== 01 · 第一次 (winsec) ============== */
+.winsec { background: var(--bg); }
+.win-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.win-card {
+  border: 1px solid var(--line); background: var(--bg-paper);
+  padding: 26px; display: flex; flex-direction: column; gap: 20px;
+  position: relative; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.3s, box-shadow 0.3s;
 }
+.win-card:hover { transform: translateY(-4px); border-color: var(--ink); box-shadow: 0 22px 46px -28px rgba(14,14,18,0.45); }
+.win-card .wc-top { display: flex; justify-content: space-between; align-items: center; }
+.win-card .wc-scene { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+.win-card .wc-scene .idx { color: var(--acc-red); font-weight: 700; margin-right: 8px; }
+.win-card .wc-time { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-mute); border: 1px solid var(--line-strong); padding: 4px 8px; white-space: nowrap; }
+.win-card .wc-title { font-family: var(--serif); font-weight: 700; font-size: 23px; line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); }
+.win-flow { display: flex; flex-direction: column; border-top: 1px solid var(--line); margin-top: auto; }
+.win-step { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.win-step .wk { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); padding-top: 3px; }
+.win-step .wv { font-family: var(--text); font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+.win-step.input .wk { color: var(--acc-blue); }
+.win-step.input .wv { color: var(--ink); font-family: var(--serif); font-style: italic; }
+.win-step.react { background: var(--ink); margin: 0 -26px -26px; padding: 18px 26px; border-bottom: none; }
+.win-step.react .wk { color: var(--acc-lime); }
+.win-step.react .wv { color: var(--bg); font-family: var(--serif); font-weight: 600; font-size: 15px; }
+.winsec .pullquote { margin-top: 80px; padding-top: 48px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
+.winsec .pullquote .label-col { display: flex; flex-direction: column; gap: 12px; }
+.winsec .pullquote q { font-family: var(--serif); font-weight: 700; font-size: clamp(32px, 4.2vw, 58px); line-height: 1.14; letter-spacing: -0.02em; color: var(--ink); quotes: none; display: block; text-wrap: balance; }
+.winsec .pullquote q::before, .winsec .pullquote q::after { content: ""; }
+.winsec .pullquote .hl { background: var(--acc-lime); padding: 0 0.1em; }
 
-.compare-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-}
-.compare-card {
-  border: 1px solid var(--line);
-  background: var(--bg-paper);
-  padding: 28px;
-  position: relative;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 22px;
-  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), border-color 0.3s;
-}
-.compare-card:hover { transform: translateY(-4px); border-color: var(--ink); }
-.compare-card .topline { display: flex; justify-content: space-between; align-items: center; }
-.compare-card .domain {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.compare-card .domain .idx { color: var(--acc-red); font-weight: 700; margin-right: 8px; }
-.compare-card .task {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 1.15;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-.compare-card .ba {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 16px;
-  align-items: stretch;
-}
-.compare-card .ba .side {
-  border: 1px dashed var(--line-strong);
-  padding: 16px 14px;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.compare-card .ba .side.after {
-  border: 1px solid var(--ink);
-  background: var(--ink);
-  color: var(--bg);
-}
-.compare-card .ba .side .when {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-.compare-card .ba .side .val {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 28px;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-.compare-card .ba .side .unit { font-family: var(--text); font-size: 12.5px; opacity: 0.8; }
-.compare-card .ba .arrow {
-  align-self: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--acc-red);
-  letter-spacing: 0.1em;
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-}
-.compare-card .ba .arrow .glyph {
-  display: inline-block;
-  width: 32px; height: 12px;
-  position: relative;
-}
-.compare-card .ba .arrow .glyph::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 50%;
-  width: 75%; height: 1.5px;
-  background: var(--acc-red);
-  transform: translateY(-50%);
-}
-.compare-card .ba .arrow .glyph::after {
-  content: "";
-  position: absolute;
-  right: 0; top: 50%;
-  width: 8px; height: 8px;
-  border-right: 1.5px solid var(--acc-red);
-  border-top: 1.5px solid var(--acc-red);
-  transform: translateY(-50%) rotate(45deg);
-}
-.compare-card .delta {
-  display: flex; justify-content: space-between; align-items: baseline;
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-}
-.compare-card .delta .x {
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 36px;
-  letter-spacing: -0.02em;
-  color: var(--acc-red);
-}
-.compare-card .delta .x sup { font-size: 14px; vertical-align: super; color: var(--ink-soft); }
-.compare-card .delta .note {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  text-align: right;
-  max-width: 22ch;
-}
-
-.ch1 .pullquote {
-  margin-top: 96px;
-  padding-top: 56px;
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 48px;
-  align-items: start;
-}
-.ch1 .pullquote .label-col .label { display: block; margin-bottom: 12px; }
-.ch1 .pullquote q {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(36px, 4.5vw, 64px);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  quotes: none;
-  display: block;
-  text-wrap: balance;
-}
-.ch1 .pullquote q::before, .ch1 .pullquote q::after { content: ""; }
-.ch1 .pullquote .hl { background: var(--acc-lime); padding: 0 0.1em; }
-
-/* ============== Chapter 2 — Abilities ============== */
-.ch2 {
-  background: var(--ink);
-  color: var(--bg);
-  padding-top: 160px;
-  padding-bottom: 160px;
-  position: relative;
-  overflow: hidden;
-}
-.ch2::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+/* ============== 02 · 飞轮 (loopsec) ============== */
+.loopsec { background: var(--ink); color: var(--bg); position: relative; overflow: hidden; }
+.loopsec::before {
+  content: ""; position: absolute; inset: 0;
   background-image:
     linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 80px 80px;
-  pointer-events: none;
+  background-size: 80px 80px; pointer-events: none;
 }
-.ch2 .head {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: end;
-  margin-bottom: 88px;
-  position: relative;
+.loopsec .inner { position: relative; z-index: 1; }
+.loopsec .head h2 { color: var(--bg); }
+.loopsec .head .eyebrow { color: rgba(251,250,245,0.6); }
+.loopsec .head .eyebrow .num { background: var(--bg); color: var(--ink); }
+.loopsec .head .kicker { color: var(--bg); }
+.loopsec .head .body-lg { color: rgba(251,250,245,0.72); }
+.loopsec .head .body-lg strong { color: var(--bg); }
+
+.fly-wrap { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 56px; align-items: center; position: relative; }
+.fly-stage { position: relative; width: 100%; max-width: 520px; aspect-ratio: 1/1; margin: 0 auto; }
+.fly-ring { position: absolute; inset: 9%; border: 1px dashed rgba(251,250,245,0.18); border-radius: 50%; animation: spin 64s linear infinite; }
+.fly-ring::before { content: ""; position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--acc-red); transform: translateX(-50%); box-shadow: 0 0 12px var(--acc-red); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fly-core {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 40%; height: 40%; border-radius: 50%;
+  background: #18181C; border: 1px solid rgba(251,250,245,0.18);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 14px;
 }
+.fly-core .fc-en { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.18em; color: var(--acc-red); text-transform: uppercase; }
+.fly-core .fc-zh { font-family: var(--serif); font-weight: 700; font-size: clamp(20px, 2.4vw, 30px); color: var(--bg); line-height: 1.05; }
+.fly-node {
+  position: absolute; transform: translate(-50%,-50%);
+  width: 76px; height: 76px; border-radius: 50%;
+  border: 1px solid rgba(251,250,245,0.22); background: #18181C;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  cursor: pointer; transition: transform 0.35s cubic-bezier(.2,.7,.2,1), background 0.35s, border-color 0.35s, box-shadow 0.35s; z-index: 3;
+}
+.fly-node .n-num { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; color: rgba(251,250,245,0.5); }
+.fly-node .n-zh { font-family: var(--serif); font-weight: 700; font-size: 15px; color: var(--bg); }
+.fly-node:hover { border-color: var(--bg); }
+.fly-node.active { background: var(--acc-red); border-color: var(--acc-red); transform: translate(-50%,-50%) scale(1.16); box-shadow: 0 0 0 6px rgba(255,74,31,0.18); }
+.fly-node.active .n-num { color: rgba(255,255,255,0.85); }
+.fly-node.active .n-zh { color: #fff; }
+
+.fly-panel { border: 1px solid rgba(251,250,245,0.18); background: #18181C; padding: 38px; min-height: 360px; display: flex; flex-direction: column; gap: 18px; position: relative; }
+.fly-panel .fp-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(251,250,245,0.5); }
+.fly-panel .fp-top .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--acc-lime); display: inline-block; margin-right: 8px; }
+.fly-panel .fp-step { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc-lime); }
+.fly-panel h3 { font-family: var(--serif); font-weight: 700; font-size: clamp(26px, 3vw, 40px); line-height: 1.1; letter-spacing: -0.02em; color: var(--bg); margin: 0; max-width: 16ch; }
+.fly-panel p { font-family: var(--text); font-size: 15px; line-height: 1.7; color: rgba(251,250,245,0.74); margin: 0; max-width: 46ch; }
+.fly-panel p strong { color: var(--bg); font-weight: 600; }
+.fly-panel .fp-body { display: flex; flex-direction: column; gap: 14px; transition: opacity 0.35s; }
+.fly-panel .fp-prog { margin-top: auto; display: flex; gap: 8px; padding-top: 20px; }
+.fly-panel .fp-prog span { flex: 1; height: 3px; background: rgba(251,250,245,0.15); cursor: pointer; transition: background 0.3s; }
+.fly-panel .fp-prog span.on { background: var(--acc-red); }
+.loopsec .fly-foot { margin-top: 64px; padding-top: 36px; border-top: 1px solid rgba(251,250,245,0.15); display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: baseline; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: rgba(251,250,245,0.6); }
+.loopsec .fly-foot .seq { color: var(--bg); }
+.loopsec .fly-foot .seq b { color: var(--acc-red); font-weight: 700; }
+
+/* ============== 03 · 能力 (ch2 dark abilities) ============== */
+.ch2 { background: var(--ink); color: var(--bg); position: relative; overflow: hidden; }
+.ch2::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 80px 80px; pointer-events: none;
+}
+.ch2 .inner { position: relative; z-index: 1; }
 .ch2 .head h2 { color: var(--bg); }
 .ch2 .head .eyebrow { color: rgba(251,250,245,0.6); }
 .ch2 .head .eyebrow .num { background: var(--bg); color: var(--ink); }
-.ch2 .head .eyebrow .bar { background: rgba(251,250,245,0.4); }
-.ch2 .head .blurb { color: rgba(251,250,245,0.7); }
+.ch2 .head .kicker { color: var(--bg); }
+.ch2 .head .body-lg { color: rgba(251,250,245,0.72); }
+.ch2 .head .body-lg strong { color: var(--bg); }
 
-.abilities {
-  position: relative;
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 56px;
-  align-items: start;
-}
-.ab-list {
-  display: flex; flex-direction: column;
-  border-top: 1px solid rgba(251,250,245,0.15);
-  position: sticky;
-  top: 100px;
-}
-.ab-list .item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 4px;
-  border-bottom: 1px solid rgba(251,250,245,0.15);
-  cursor: pointer;
-  transition: padding-left 0.3s, color 0.3s;
-  color: rgba(251,250,245,0.55);
-}
+.abilities { position: relative; display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: start; }
+.ab-list { display: flex; flex-direction: column; border-top: 1px solid rgba(251,250,245,0.15); position: sticky; top: 100px; }
+.ab-list .item { display: flex; align-items: center; justify-content: space-between; padding: 22px 4px; border-bottom: 1px solid rgba(251,250,245,0.15); cursor: pointer; transition: padding-left 0.3s, color 0.3s; color: rgba(251,250,245,0.55); }
 .ab-list .item:hover { color: var(--bg); }
-.ab-list .item.active {
-  color: var(--bg);
-  padding-left: 16px;
-  background: linear-gradient(to right, rgba(255,74,31,0.18), transparent);
-  border-left: 2px solid var(--acc-red);
-}
+.ab-list .item.active { color: var(--bg); padding-left: 16px; background: linear-gradient(to right, rgba(255,74,31,0.18), transparent); border-left: 2px solid var(--acc-red); }
 .ab-list .item .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; opacity: 0.7; }
-.ab-list .item .name { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; }
+.ab-list .item .name { font-family: var(--italic); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; }
 .ab-list .item .en { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; opacity: 0.5; text-transform: uppercase; }
 
-.ab-stage {
-  border: 1px solid rgba(251,250,245,0.18);
-  background: #18181C;
-  min-height: 600px;
-  position: relative;
-  overflow: hidden;
-}
-.ab-stage .frame {
-  position: absolute;
-  inset: 0;
-  padding: 36px;
-  display: flex; flex-direction: column; gap: 24px;
-  opacity: 0;
-  transition: opacity 0.5s;
-  pointer-events: none;
-}
+.ab-stage { border: 1px solid rgba(251,250,245,0.18); background: #18181C; min-height: 600px; position: relative; overflow: hidden; }
+.ab-stage .frame { position: absolute; inset: 0; padding: 36px; display: flex; flex-direction: column; gap: 22px; opacity: 0; transition: opacity 0.5s; pointer-events: none; }
 .ab-stage .frame.show { opacity: 1; pointer-events: auto; }
-
-.ab-stage .topbar {
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(251,250,245,0.5);
-}
+.ab-stage .topbar { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.5); }
 .ab-stage .topbar .right { display: flex; gap: 14px; align-items: center; }
 .ab-stage .topbar .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--acc-lime); }
+.ab-stage h3.fname { font-family: var(--serif); font-weight: 700; font-size: 38px; letter-spacing: -0.02em; line-height: 1.05; margin: 0; color: var(--bg); max-width: 18ch; }
+.ab-stage p.fdesc { font-family: var(--text); font-size: 15px; line-height: 1.6; color: rgba(251,250,245,0.72); max-width: 54ch; margin: 0; }
 
-.ab-stage h3.fname {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 42px;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  margin: 0;
-  color: var(--bg);
-  max-width: 18ch;
-}
-.ab-stage p.fdesc {
-  font-family: var(--text);
-  font-size: 15px;
-  line-height: 1.55;
-  color: rgba(251,250,245,0.7);
-  max-width: 52ch;
-  margin: 0;
-}
-
-/* Writing mock */
-.demo-write {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  flex: 1;
-  min-height: 280px;
-}
-.demo-write .col {
-  border: 1px solid rgba(251,250,245,0.12);
-  padding: 18px;
-  font-family: var(--text);
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: rgba(251,250,245,0.85);
-  position: relative;
-  overflow: hidden;
-}
-.demo-write .col .hd {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(251,250,245,0.5);
-  margin-bottom: 12px;
-  display: flex; justify-content: space-between;
-}
+.demo-write { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; min-height: 280px; }
+.demo-write .col { border: 1px solid rgba(251,250,245,0.12); padding: 18px; font-family: var(--text); font-size: 13.5px; line-height: 1.65; color: rgba(251,250,245,0.85); position: relative; overflow: hidden; }
+.demo-write .col .hd { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.5); margin-bottom: 12px; display: flex; justify-content: space-between; }
 .demo-write .col.before { color: rgba(251,250,245,0.55); font-family: var(--mono); font-size: 12.5px; }
+.demo-write .col.before pre { margin: 0; white-space: pre-wrap; font-family: inherit; font-size: inherit; }
 .demo-write .col.after { border-color: rgba(255,74,31,0.35); }
-.demo-write .col.after .cursor {
-  display: inline-block;
-  width: 8px; height: 16px;
-  background: var(--acc-red);
-  margin-left: 2px;
-  vertical-align: -3px;
-  animation: blink 1s steps(2) infinite;
-}
+.demo-write .col.after .typed { white-space: pre-wrap; }
+.demo-write .col.after .cursor { display: inline-block; width: 8px; height: 16px; background: var(--acc-red); margin-left: 2px; vertical-align: -3px; animation: blink 1s steps(2) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* Design mock */
-.demo-design {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 18px;
-  flex: 1;
-}
-.demo-design .prompt {
-  border: 1px solid rgba(251,250,245,0.12);
-  padding: 18px;
-  display: flex; flex-direction: column; gap: 14px;
-}
+.demo-design { display: grid; grid-template-columns: 1fr 1.3fr; gap: 18px; flex: 1; }
+.demo-design .prompt { border: 1px solid rgba(251,250,245,0.12); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
 .demo-design .prompt .hd { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.5); }
-.demo-design .prompt .text { font-family: var(--text); font-size: 14px; line-height: 1.6; color: var(--bg); }
-.demo-design .prompt .text .pill {
-  background: rgba(255,74,31,0.18);
-  color: var(--acc-red);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-family: var(--mono);
-  font-size: 12px;
-}
-.demo-design .preview {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 8px;
-}
-.demo-design .preview .slot {
-  border: 1px solid rgba(251,250,245,0.12);
-  background: #1F1F23;
-  padding: 14px;
-  display: flex; flex-direction: column; justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
+.demo-design .prompt .text { font-family: var(--text); font-size: 14px; line-height: 1.7; color: var(--bg); }
+.demo-design .prompt .text .pill { background: rgba(255,74,31,0.18); color: var(--acc-red); padding: 2px 8px; border-radius: 4px; font-family: var(--mono); font-size: 12px; }
+.demo-design .preview { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; }
+.demo-design .preview .slot { border: 1px solid rgba(251,250,245,0.12); background: #1F1F23; padding: 14px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; transition: border-color 0.25s; }
+.demo-design .preview .slot:hover { border-color: rgba(251,250,245,0.4); }
 .demo-design .preview .slot .num { font-family: var(--mono); font-size: 10px; color: rgba(251,250,245,0.4); letter-spacing: 0.1em; }
-.demo-design .preview .slot .stripe { height: 6px; background: linear-gradient(135deg, var(--acc-red), transparent 60%); }
+.demo-design .preview .slot .stripe { height: 6px; }
 .demo-design .preview .slot.s1 .stripe { background: linear-gradient(135deg, var(--acc-red), transparent 60%); }
 .demo-design .preview .slot.s2 .stripe { background: linear-gradient(135deg, var(--acc-blue), transparent 60%); }
 .demo-design .preview .slot.s3 .stripe { background: linear-gradient(135deg, var(--acc-lime), transparent 60%); }
@@ -789,32 +409,15 @@ h1.display { font-size: clamp(60px, 9vw, 160px); }
 .demo-design .preview .slot .lines span:nth-child(2) { width: 80%; }
 .demo-design .preview .slot .lines span:nth-child(3) { width: 60%; }
 
-/* Code mock */
 .demo-code { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
-.demo-code .editor {
-  border: 1px solid rgba(251,250,245,0.12);
-  background: #131318;
-  padding: 16px;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: rgba(251,250,245,0.85);
-  overflow: hidden;
-}
+.demo-code .editor { border: 1px solid rgba(251,250,245,0.12); background: #131318; padding: 16px; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; color: rgba(251,250,245,0.85); overflow: hidden; }
 .demo-code .editor .hd { font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.4); margin-bottom: 10px; display: flex; justify-content: space-between; }
 .demo-code .editor .ln { color: rgba(251,250,245,0.3); margin-right: 12px; user-select: none; display: inline-block; width: 18px; text-align: right; }
 .demo-code .editor .kw { color: var(--acc-lime); }
 .demo-code .editor .st { color: #FF9A7A; }
 .demo-code .editor .cm { color: rgba(251,250,245,0.4); font-style: italic; }
 .demo-code .editor .fn { color: #B8C7FF; }
-.demo-code .preview-app {
-  border: 1px solid rgba(251,250,245,0.12);
-  background: var(--bg);
-  color: var(--ink);
-  padding: 0;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-}
+.demo-code .preview-app { border: 1px solid rgba(251,250,245,0.12); background: var(--bg); color: var(--ink); display: flex; flex-direction: column; overflow: hidden; }
 .demo-code .preview-app .bar { display: flex; gap: 5px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--bg-2); }
 .demo-code .preview-app .bar .d { width: 9px; height: 9px; border-radius: 50%; background: var(--line-strong); }
 .demo-code .preview-app .bar .url { margin-left: 12px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); display: flex; align-items: center; }
@@ -825,19 +428,18 @@ h1.display { font-size: clamp(60px, 9vw, 160px); }
 .demo-code .preview-app .app-body .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .demo-code .preview-app .app-body .card-mini { border: 1px solid var(--line); padding: 10px; }
 .demo-code .preview-app .app-body .card-mini .lbl { font-family: var(--mono); font-size: 9.5px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; }
-.demo-code .preview-app .app-body .card-mini .val { font-family: var(--display); font-weight: 700; font-size: 20px; color: var(--ink); margin-top: 4px; }
+.demo-code .preview-app .app-body .card-mini .val { font-family: var(--italic); font-weight: 700; font-size: 20px; color: var(--ink); margin-top: 4px; }
 
-/* Agent mock */
 .demo-agent { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
 .demo-agent .order { border: 1px solid rgba(251,250,245,0.12); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
 .demo-agent .order .hd { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.5); }
-.demo-agent .order .ask { font-family: var(--serif); font-weight: 600; font-size: 22px; line-height: 1.25; color: var(--bg); }
+.demo-agent .order .ask { font-family: var(--serif); font-weight: 600; font-size: 21px; line-height: 1.3; color: var(--bg); }
 .demo-agent .order .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: auto; }
 .demo-agent .order .meta .m { border-top: 1px solid rgba(251,250,245,0.15); padding-top: 8px; }
 .demo-agent .order .meta .m .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(251,250,245,0.45); text-transform: uppercase; }
-.demo-agent .order .meta .m .v { font-family: var(--display); font-weight: 600; font-size: 16px; color: var(--bg); margin-top: 4px; }
-.demo-agent .timeline { border: 1px solid rgba(251,250,245,0.12); padding: 18px; display: flex; flex-direction: column; gap: 0; font-family: var(--mono); font-size: 12px; position: relative; }
-.demo-agent .timeline .step { display: grid; grid-template-columns: 60px 14px 1fr auto; gap: 10px; align-items: start; padding: 9px 0; border-bottom: 1px dashed rgba(251,250,245,0.1); }
+.demo-agent .order .meta .m .v { font-family: var(--italic); font-weight: 600; font-size: 16px; color: var(--bg); margin-top: 4px; }
+.demo-agent .timeline { border: 1px solid rgba(251,250,245,0.12); padding: 18px; display: flex; flex-direction: column; font-family: var(--mono); font-size: 12px; position: relative; }
+.demo-agent .timeline .step { display: grid; grid-template-columns: 56px 14px 1fr auto; gap: 10px; align-items: start; padding: 9px 0; border-bottom: 1px dashed rgba(251,250,245,0.1); }
 .demo-agent .timeline .step:last-child { border-bottom: none; }
 .demo-agent .timeline .step .t { color: rgba(251,250,245,0.4); font-size: 10.5px; }
 .demo-agent .timeline .step .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; background: var(--acc-lime); box-shadow: 0 0 0 3px rgba(230,255,85,0.15); }
@@ -846,53 +448,35 @@ h1.display { font-size: clamp(60px, 9vw, 160px); }
 .demo-agent .timeline .step .lbl { color: rgba(251,250,245,0.9); font-family: var(--text); font-size: 13px; }
 .demo-agent .timeline .step .tag-mini { font-size: 9.5px; padding: 2px 6px; background: rgba(251,250,245,0.08); color: rgba(251,250,245,0.7); letter-spacing: 0.08em; text-transform: uppercase; }
 
-/* Multimodal mock */
 .demo-mm { display: grid; grid-template-columns: 1fr 1.6fr; gap: 18px; flex: 1; }
 .demo-mm .input { border: 1px solid rgba(251,250,245,0.12); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
 .demo-mm .input .hd { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.5); }
-.demo-mm .input .seed { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 22px; line-height: 1.3; color: var(--bg); }
+.demo-mm .input .seed { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 21px; line-height: 1.35; color: var(--bg); }
 .demo-mm .input .modes { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
 .demo-mm .input .mode { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border: 1px solid rgba(251,250,245,0.25); color: rgba(251,250,245,0.8); }
 .demo-mm .outputs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .demo-mm .outputs .out { border: 1px solid rgba(251,250,245,0.12); position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .demo-mm .outputs .out .label-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid rgba(251,250,245,0.12); color: rgba(251,250,245,0.6); }
 .demo-mm .outputs .out .body { flex: 1; padding: 12px; position: relative; overflow: hidden; min-height: 120px; }
-.demo-mm .outputs .out.image .body {
-  background:
-    radial-gradient(circle at 30% 30%, var(--acc-red) 0%, transparent 50%),
-    radial-gradient(circle at 70% 70%, var(--acc-blue) 0%, transparent 55%),
-    radial-gradient(circle at 50% 50%, var(--acc-lime) 0%, transparent 30%),
-    #222;
-}
-.demo-mm .outputs .out.video .body {
-  background: repeating-linear-gradient(90deg, #1d1d22 0 6px, #222 6px 12px);
-  display: flex; align-items: center; justify-content: center;
-}
+.demo-mm .outputs .out.image .body { background: radial-gradient(circle at 30% 30%, var(--acc-red) 0%, transparent 50%), radial-gradient(circle at 70% 70%, var(--acc-blue) 0%, transparent 55%), radial-gradient(circle at 50% 50%, var(--acc-lime) 0%, transparent 30%), #222; }
+.demo-mm .outputs .out.video .body { background: repeating-linear-gradient(90deg, #1d1d22 0 6px, #222 6px 12px); display: flex; align-items: center; justify-content: center; }
 .demo-mm .outputs .out.video .play { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; color: var(--ink); font-size: 14px; }
 .demo-mm .outputs .out.audio .body { display: flex; align-items: center; justify-content: center; background: #1d1d22; }
 .demo-mm .outputs .out.audio .wave { display: flex; align-items: center; gap: 3px; height: 60px; }
 .demo-mm .outputs .out.audio .wave span { display: block; width: 4px; background: var(--acc-lime); border-radius: 2px; animation: wave 1.4s ease-in-out infinite; }
-@keyframes wave { 0%, 100% { height: 6px; } 50% { height: 40px; } }
+@keyframes wave { 0%,100% { height: 6px; } 50% { height: 40px; } }
 
 .ab-stage .footer-meta { margin-top: auto; border-top: 1px solid rgba(251,250,245,0.12); padding-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .ab-stage .footer-meta .cell .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(251,250,245,0.5); }
-.ab-stage .footer-meta .cell .v { font-family: var(--display); font-weight: 600; font-size: 16px; color: var(--bg); margin-top: 6px; line-height: 1.25; }
+.ab-stage .footer-meta .cell .v { font-family: var(--italic); font-weight: 600; font-size: 17px; color: var(--bg); margin-top: 6px; line-height: 1.25; }
 
-/* ============== Chapter 3 — Pathway ============== */
-.ch3 { background: var(--bg); padding-top: 160px; padding-bottom: 160px; }
-.ch3 .head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 100px; }
+/* ============== 04 · 台阶 (ch3 ladder) ============== */
+.ch3 { background: var(--bg); }
 .ladder { position: relative; display: flex; flex-direction: column; }
 .ladder::before { content: ""; position: absolute; left: 80px; top: 0; bottom: 0; width: 1px; background: var(--line-strong); }
-.step-row {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 0;
-  padding: 32px 0;
-  position: relative;
-  border-bottom: 1px solid var(--line);
-}
+.step-row { display: grid; grid-template-columns: 80px 1fr; padding: 32px 0; position: relative; border-bottom: 1px solid var(--line); }
 .step-row:first-child { border-top: 1px solid var(--ink); }
-.step-row .gutter { position: relative; padding-left: 0; }
+.step-row .gutter { position: relative; }
 .step-row .gutter .node { position: absolute; left: 72px; top: 38px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); z-index: 2; }
 .step-row.l4 .gutter .node, .step-row.l5 .gutter .node { background: var(--acc-blue); border-color: var(--acc-blue); }
 .step-row.l6 .gutter .node, .step-row.l7 .gutter .node { background: var(--acc-red); border-color: var(--acc-red); }
@@ -917,1312 +501,801 @@ h1.display { font-size: clamp(60px, 9vw, 160px); }
 .step-row.dark .row-body .desc strong { color: var(--bg); }
 .step-row.dark .row-body .tools .tools-label { color: rgba(251,250,245,0.55); }
 .step-row.dark .row-body .tools .chip { background: transparent; color: var(--bg); border-color: rgba(251,250,245,0.3); }
-
 .ch3 .floor { margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; padding-top: 36px; border-top: 1px solid var(--ink); }
-.ch3 .floor .col p { font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 1.8vw, 28px); line-height: 1.35; color: var(--ink); margin: 0; }
+.ch3 .floor .col p { font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 1.8vw, 28px); line-height: 1.4; color: var(--ink); margin: 0; }
+.ch3 .floor .col .mark { background: var(--acc-lime); padding: 0 0.1em; }
 
-/* ============== Chapter 4 — manifesto ============== */
-.ch4 { background: var(--bg-2); padding-top: 160px; padding-bottom: 160px; position: relative; overflow: hidden; }
+/* ============== 05 · 跟你的关系 (letter) ============== */
+.ch4 { background: var(--bg-2); position: relative; overflow: hidden; }
 .ch4 .mesh-soft { position: absolute; inset: -10%; z-index: 0; filter: blur(120px); opacity: 0.5; }
 .ch4 .mesh-soft .b { position: absolute; border-radius: 50%; }
 .ch4 .mesh-soft .b1 { background: var(--acc-blue); width: 30vw; height: 30vw; top: 10%; left: 5%; }
 .ch4 .mesh-soft .b2 { background: var(--acc-lime); width: 28vw; height: 28vw; top: 30%; right: 10%; }
 .ch4 .mesh-soft .b3 { background: var(--acc-red); width: 22vw; height: 22vw; bottom: -5%; left: 35%; }
 .ch4 .inner { position: relative; z-index: 1; }
-.ch4 .head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 88px; }
-
-.manifesto { display: flex; flex-direction: column; gap: 36px; max-width: 1100px; }
-.manifesto .line { display: grid; grid-template-columns: 90px 1fr; gap: 28px; align-items: baseline; padding-bottom: 28px; border-bottom: 1px solid var(--line-strong); }
-.manifesto .line .num { font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; color: var(--ink-soft); }
-.manifesto .line .text { font-family: var(--serif); font-weight: 700; font-size: clamp(28px, 3.8vw, 52px); line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
-.manifesto .line .text em { color: var(--acc-red); font-style: italic; font-weight: 700; }
-.manifesto .line .text .mark { background: var(--acc-lime); padding: 0 0.1em; font-style: normal; }
-.manifesto .line .text .blue { color: var(--acc-blue); }
-
-.ch4 .closing { margin-top: 100px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; }
-.ch4 .closing .big { font-family: var(--serif); font-weight: 900; font-size: clamp(56px, 9vw, 140px); line-height: 0.88; letter-spacing: -0.035em; color: var(--ink); text-wrap: balance; }
-.ch4 .closing .big .a { color: var(--acc-blue); font-style: italic; }
-.ch4 .closing .right { display: flex; flex-direction: column; gap: 18px; }
-.ch4 .closing .right .small { font-family: var(--text); font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
+.letter { max-width: 900px; display: flex; flex-direction: column; gap: 26px; }
+.letter p { font-family: var(--serif); font-weight: 500; font-size: clamp(20px, 2.3vw, 32px); line-height: 1.5; color: var(--ink); margin: 0; text-wrap: pretty; }
+.letter p em { font-family: var(--italic); font-style: italic; color: var(--acc-red); font-weight: 700; font-size: 1.05em; }
+.letter p .mark { background: var(--acc-lime); padding: 0 0.08em; }
+.letter p .blue { color: var(--acc-blue); }
+.letter .sig { margin-top: 30px; display: flex; gap: 16px; align-items: baseline; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+.letter .sig .name { font-family: var(--italic); font-style: italic; font-size: 26px; color: var(--acc-blue); text-transform: none; letter-spacing: 0; }
 
 /* ============== Coda ============== */
-.coda { background: var(--ink); color: var(--bg); padding: 120px 8vw 56px; position: relative; overflow: hidden; }
-.coda .grid-bg {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 80px 80px;
-  pointer-events: none;
-}
+.coda { background: var(--ink); color: var(--bg); padding: 130px 8vw 56px; position: relative; overflow: hidden; }
+.coda .grid-bg { position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 80px 80px; pointer-events: none; }
 .coda .inner { position: relative; z-index: 1; display: grid; gap: 80px; }
 .coda .signoff { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
-.coda .signoff .left h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(42px, 5.5vw, 84px); line-height: 1.0; letter-spacing: -0.02em; margin: 0; color: var(--bg); text-wrap: balance; }
-.coda .signoff .left h2 .blink { background: var(--acc-red); color: white; padding: 0 0.12em; }
+.coda .signoff .left h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(40px, 5.4vw, 82px); line-height: 1.02; letter-spacing: -0.02em; margin: 0; color: var(--bg); text-wrap: balance; }
+.coda .signoff .left h2 .blink { background: var(--acc-red); color: white; padding: 0 0.12em; font-style: italic; }
 .coda .signoff .right { display: flex; flex-direction: column; gap: 14px; }
-.coda .signoff .right .line { font-family: var(--text); font-size: 17px; line-height: 1.55; color: rgba(251,250,245,0.75); max-width: 36ch; }
+.coda .signoff .right .line { font-family: var(--text); font-size: 17px; line-height: 1.6; color: rgba(251,250,245,0.78); max-width: 40ch; }
+.coda .signoff .right .line strong { color: var(--bg); font-weight: 600; }
 .coda .author-card { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; padding-top: 36px; border-top: 1px solid rgba(251,250,245,0.15); }
 .coda .author-card .cell .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(251,250,245,0.55); }
-.coda .author-card .cell .v { font-family: var(--display); font-weight: 600; font-size: 22px; color: var(--bg); margin-top: 8px; letter-spacing: -0.01em; }
-.coda .author-card .cell .v.serif { font-family: var(--serif); font-weight: 700; font-size: 28px; }
+.coda .author-card .cell .v { font-family: var(--italic); font-style: italic; font-size: 22px; color: var(--bg); margin-top: 8px; letter-spacing: -0.01em; }
+.coda .author-card .cell .v.serif { font-family: var(--serif); font-style: normal; font-weight: 700; font-size: 28px; }
 .coda .legal { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,250,245,0.4); padding-top: 36px; border-top: 1px solid rgba(251,250,245,0.1); }
 
 /* ============== Responsive ============== */
 @media (max-width: 1024px) {
   .rail { display: none; }
-  .hero-main { grid-template-columns: 1fr; gap: 40px; padding: 56px 0 40px; }
+  .hero-main { grid-template-columns: 1fr; gap: 40px; padding: 48px 0; }
   .hero-side { border-left: none; border-top: 1px solid var(--line-strong); padding-left: 0; padding-top: 24px; flex-direction: row; flex-wrap: wrap; gap: 36px; }
   .hero-side .side-block { flex: 1; min-width: 180px; }
   .hero-band { grid-template-columns: 1fr; gap: 8px; text-align: center; }
   .hero-band .band-l, .hero-band .band-r { justify-content: center; }
   .hero-toc { flex-direction: column; gap: 16px; align-items: flex-start; }
-  .ch1 .head, .ch2 .head, .ch3 .head, .ch4 .head { grid-template-columns: 1fr; gap: 24px; }
-  .compare-grid { grid-template-columns: 1fr; }
+  .head { grid-template-columns: 1fr; gap: 24px; }
+  .win-grid { grid-template-columns: 1fr; }
+  .winsec .pullquote { grid-template-columns: 1fr; gap: 24px; }
+  .fly-wrap { grid-template-columns: 1fr; gap: 40px; }
   .abilities { grid-template-columns: 1fr; }
   .ab-list { position: relative; top: 0; }
   .step-row { grid-template-columns: 60px 1fr; }
   .step-row .gutter .node { left: 52px; }
   .step-row .row-body { grid-template-columns: 1fr; gap: 18px; padding-left: 20px; }
   .ch3 .floor { grid-template-columns: 1fr; }
-  .ch4 .closing { grid-template-columns: 1fr; }
   .coda .signoff { grid-template-columns: 1fr; }
   .coda .author-card { grid-template-columns: 1fr 1fr; }
   .demo-write, .demo-design, .demo-code, .demo-agent, .demo-mm { grid-template-columns: 1fr; }
-}
-@media (max-width: 640px) {
-  section.chapter { padding: 80px 5vw; }
-  .topnav { padding: 14px 18px; }
-  .topnav .meta { display: none; }
-  .hero { padding: 16px 5vw; }
-  .hero-toc .toc-left { gap: 14px; }
-  .manifesto .line { grid-template-columns: 60px 1fr; gap: 16px; }
-  .coda { padding: 80px 5vw 40px; }
-  .coda .author-card { grid-template-columns: 1fr; }
-  .coda .legal { flex-direction: column; gap: 12px; }
-}
-
-/* ============== Refinements: typography + ghost + stamp ============== */
-
-/* AMPLIFICATIO ghost — latin for amplification, echoing "放大你" */
-.hero { z-index: 0; overflow: hidden; }
-.hero::after {
-  content: "AMPLIFICATIO";
-  position: absolute;
-  left: 50%; bottom: -24px;
-  transform: translateX(-50%);
-  font-family: var(--italic);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(48px, 8.5vw, 128px);
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255,74,31,0.10);
-  z-index: -1;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  letter-spacing: -0.01em;
-}
-
-/* Hero rule — gradient fade instead of flat black */
-.hero-rule {
-  background: linear-gradient(90deg, var(--acc-red) 0%, var(--ink) 30%, var(--line) 100%);
-  opacity: 0.55;
-}
-
-/* Kicker — Instrument Serif italic, editorial weight */
-.kicker {
-  font-family: var(--italic);
-  font-style: italic;
-  font-weight: 400;
-}
-
-/* Hero accent inline — reinforce with italic display font */
-.hero-title .accent {
-  font-family: var(--italic);
-  font-style: italic;
-}
-
-/* Manifesto em — Instrument Serif italic for red-highlighted phrases */
-.manifesto .line .text em {
-  font-family: var(--italic);
-  font-size: 1.04em;
-}
-
-/* Rail active — stronger red presence */
-.rail a.active {
-  text-shadow: 0 0 14px rgba(255,74,31,0.45);
-}
-.rail a.active::before {
-  box-shadow: 0 0 8px rgba(255,74,31,0.5);
-}
-
-/* Coda blink text styling */
-.coda .signoff .left h2 .blink {
-  font-style: italic;
-}
-
-/* Author card value — Instrument Serif display */
-.coda .author-card .cell .v {
-  font-family: var(--italic);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 20px;
-  letter-spacing: -0.01em;
-}
-
-/* Chapter stamp — fixed editorial marker */
-.chapter-stamp {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  z-index: 80;
-  font-family: var(--italic);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(28px, 3.5vw, 52px);
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255,74,31,0.20);
-  pointer-events: none;
-  user-select: none;
-  transition: opacity 0.4s ease;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-@media (max-width: 768px) {
   .chapter-stamp { display: none; }
 }
-
-/* ============== Value Shift section ============== */
-.value-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border: 1px solid var(--line-strong);
-  margin: 48px 0;
-  overflow: hidden;
-}
-.vs-col {
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.vs-col.left { background: var(--bg-2); border-right: 1px solid var(--line-strong); }
-.vs-col.right { background: var(--bg-paper); }
-.vs-col .vs-head {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
-.vs-col.left .vs-head { color: var(--ink-mute); }
-.vs-col.right .vs-head { color: var(--acc-red); }
-.vs-item {
-  font-family: var(--text);
-  font-size: 14.5px;
-  line-height: 1.45;
-  color: var(--ink-soft);
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.vs-item:last-child { border-bottom: none; }
-.vs-col.right .vs-item { color: var(--ink); }
-.vs-col.right .vs-item::before {
-  content: "→";
-  color: var(--acc-red);
-  font-family: var(--mono);
-  font-size: 12px;
-  flex-shrink: 0;
-}
-.vs-col.left .vs-item::before {
-  content: "·";
-  color: var(--ink-mute);
-  font-family: var(--mono);
-  font-size: 20px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-.vs-divider {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 32px;
-  border-top: 1px solid var(--line-strong);
-  background: var(--bg);
-}
-.vs-divider .tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.vs-divider .tag.red { color: var(--acc-red); }
-.xinli-callout {
-  background: var(--ink);
-  color: var(--bg);
-  padding: 36px 40px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 48px;
-  align-items: center;
-}
-.xinli-model {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(251,250,245,0.4);
-  white-space: nowrap;
-}
-.xinli-model .tier {
-  padding: 8px 16px;
-  border: 1px solid;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  width: 100%;
-  text-align: center;
-}
-.xinli-model .tier.t3 { border-color: rgba(251,250,245,0.15); color: rgba(251,250,245,0.38); }
-.xinli-model .tier.t2 { border-color: rgba(251,250,245,0.28); color: rgba(251,250,245,0.6); margin-top: -1px; }
-.xinli-model .tier.t1 { border-color: var(--acc-red); color: var(--bg); background: var(--acc-red); margin-top: -1px; }
-.xinli-model .arrow-up { font-size: 11px; color: rgba(251,250,245,0.2); padding: 4px 0; }
-.xinli-body {
-  font-family: var(--serif);
-  font-size: clamp(15px, 1.4vw, 19px);
-  line-height: 1.7;
-  color: rgba(251,250,245,0.82);
-}
-.xinli-body strong { color: var(--bg); font-weight: 700; }
-@media (max-width: 768px) {
-  .value-split { grid-template-columns: 1fr; }
-  .vs-col.left { border-right: none; border-bottom: 1px solid var(--line-strong); }
-  .xinli-callout { grid-template-columns: 1fr; }
-  .xinli-model { flex-direction: row; }
-  .xinli-model .arrow-up { transform: rotate(90deg); }
-  .xinli-model .tier { width: auto; }
-  .xinli-model .tier.t2 { margin-top: 0; margin-left: -1px; }
-  .xinli-model .tier.t1 { margin-top: 0; margin-left: -1px; }
+@media (max-width: 640px) {
+  section.chapter { padding: 90px 6vw; }
+  .hero { padding: 16px 6vw; }
+  .hero-toc .toc-left { gap: 14px; }
+  .letter p { font-size: 19px; }
+  .coda { padding: 80px 6vw 40px; }
+  .coda .author-card { grid-template-columns: 1fr; }
+  .coda .legal { flex-direction: column; gap: 12px; }
+  .ab-stage { min-height: 0; }
+  .ab-stage .frame { position: relative; }
+  .ab-stage .frame:not(.show) { display: none; }
 }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+<div class="grain">
 
-  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.development.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+  <!-- side rail -->
+  <aside class="rail" id="rail">
+    <a href="#hero" data-id="hero">00 · 序</a>
+    <a href="#win" data-id="win">01 · 第一次</a>
+    <a href="#loop" data-id="loop">02 · 飞轮</a>
+    <a href="#power" data-id="power">03 · 能力</a>
+    <a href="#ladder" data-id="ladder">04 · 台阶</a>
+    <a href="#you" data-id="you">05 · 跟你</a>
+    <a href="#coda" data-id="coda">06 · 终</a>
+  </aside>
 
-  <!-- hooks -->
-  <script type="text/babel">
-const { useState, useEffect, useRef, useCallback, useMemo } = React;
+  <div class="chapter-stamp" id="stamp">FIELD NOTE</div>
 
-function useReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    el.querySelectorAll('.reveal').forEach((n) => io.observe(n));
-    return () => io.disconnect();
-  }, []);
-  return ref;
-}
+  <main>
 
-function useActiveSection(ids) {
-  const [active, setActive] = useState(ids[0]);
-  useEffect(() => {
-    const onScroll = () => {
-      const mid = window.innerHeight * 0.4;
-      let current = ids[0];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const r = el.getBoundingClientRect();
-        if (r.top <= mid) current = id;
-      }
-      setActive(current);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [ids.join(',')]);
-  return active;
-}
-
-function useClock() {
-  const [t, setT] = useState(() => new Date());
-  useEffect(() => {
-    const id = setInterval(() => setT(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  return t;
-}
-
-Object.assign(window, { useReveal, useActiveSection, useClock });
-  </script>
-
-  <!-- chrome -->
-  <script type="text/babel">
-function SideRail() {
-  const ids = ['hero', 'ch1', 'ch2', 'chvalue', 'ch3', 'ch4', 'coda'];
-  const labels = {
-    hero: '00 · 序',
-    ch1: '01 · 铝的时刻',
-    ch2: '02 · 基础设施',
-    chvalue: '03 · 价值重构',
-    ch3: '04 · 路径',
-    ch4: '05 · 宣言',
-    coda: '06 · 终',
-  };
-  const active = useActiveSection(ids);
-  return (
-    <aside className="rail">
-      {ids.map((id) => (
-        <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
-          {labels[id]}
-        </a>
-      ))}
-    </aside>
-  );
-}
-window.SideRail = SideRail;
-
-function ChapterStamp() {
-  const ids = ['hero', 'ch1', 'ch2', 'chvalue', 'ch3', 'ch4', 'coda'];
-  const stampMap = {
-    hero: 'FIELD NOTE', ch1: 'ALUMINUM', ch2: 'INFRA',
-    chvalue: 'VALUE', ch3: 'LADDER', ch4: 'MANIFESTO', coda: 'CODA'
-  };
-  const active = useActiveSection(ids);
-  return <div className="chapter-stamp">{stampMap[active] || 'FIELD NOTE'}</div>;
-}
-window.ChapterStamp = ChapterStamp;
-  </script>
-
-  <!-- hero -->
-  <script type="text/babel">
-function Hero() {
-  const ref = useReveal();
-  const t = useClock();
-  const dateStr = `${t.getFullYear()} · ${String(t.getMonth()+1).padStart(2,'0')} · ${String(t.getDate()).padStart(2,'0')}`;
-  return (
-    <section id="hero" className="hero" ref={ref}>
-      <div className="hero-band">
-        <div className="band-l">
-          <span className="dot"></span>
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero">
+      <div class="hero-band">
+        <div class="band-l">
+          <span class="dot"></span>
           <span>FIELD NOTE №01</span>
-          <span className="sep">·</span>
-          <span>致同行者</span>
+          <span class="sep">·</span>
+          <span>写给刚打开 AI 的你</span>
         </div>
-        <div className="band-c">关于 AI · A NOTE ON ARTIFICIAL INTELLIGENCE</div>
-        <div className="band-r">
-          <span>{dateStr}</span>
-          <span className="sep">·</span>
-          <span>v 1.0</span>
+        <div class="band-c">关于 AI · 不是替代你，是放大你</div>
+        <div class="band-r">
+          <span id="heroDate">2026 · — · —</span>
+          <span class="sep">·</span>
+          <span>v 2.0</span>
         </div>
       </div>
 
-      <div className="hero-rule"></div>
+      <div class="hero-rule"></div>
 
-      <div className="hero-main">
-        <div className="hero-left">
-          <div className="hero-eyebrow reveal">
-            <span className="num">00</span>
+      <div class="hero-main">
+        <div class="hero-left">
+          <div class="hero-eyebrow reveal">
+            <span class="num">00</span>
             <span>序 / The Opening</span>
           </div>
 
-          <h1 className="hero-title reveal d1">
-            AI 不是<br/>
-            <span className="strike">替代</span>你<span className="dash">—</span><br/>
-            是<span className="accent">放大</span>你。
+          <h1 class="hero-title reveal d1">
+            先别问 AI<br/>
+            会不会<span class="strike">取代</span>你。<br/>
+            先让它，帮你<span class="accent">赢一次</span>。
           </h1>
 
-          <p className="hero-sub reveal d3">
-            这不是一篇 AI 功能介绍。它想讲一件更本质的事：<strong>价值体系正在被重构</strong>。那些过去靠脑力稀缺性获得溢价的能力，正在像电解铝后的铝一样——从奢侈品变成基础设施。而真正稀缺的东西，是另一种。
+          <p class="hero-sub reveal d3">
+            它有多强，你一个人想象不出来。但只要<strong>今晚</strong>，你用一句话，做出一件让身边人「咦，这是你做的？」的小事——你就会立刻明白：这东西，<span class="mark">和你有关</span>，而且关系很大。
           </p>
 
-          <div className="hero-foot reveal d4">
-            <span className="tag">6 分钟读完</span>
-            <span className="tag">6 章 · ~2400 字</span>
-            <span className="tag solid">写给我在乎的朋友</span>
+          <div class="hero-foot reveal d4">
+            <span class="tag">5 分钟读完</span>
+            <span class="tag">一个飞轮 · 六章</span>
+            <span class="tag solid">不卖课 · 不引流</span>
           </div>
         </div>
 
-        <aside className="hero-side reveal d2">
-          <div className="side-block">
-            <div className="k">致 / for</div>
-            <div className="v">
-              那些<br/>
-              已经感到不安，<br/>
-              但还不知道该把<br/>
-              <em>力气放在哪里</em>的<br/>
+        <aside class="hero-side reveal d2">
+          <div class="side-block">
+            <div class="k">致 / for</div>
+            <div class="v">
+              那些还觉得<br/>
+              AI「是别人的事」、<br/>
+              <em>不知从哪下手</em>的<br/>
               朋友
             </div>
           </div>
-          <div className="side-block">
-            <div className="k">本期长度</div>
-            <div className="v mono">06 chapters<br/>~ 2,400 字</div>
+          <div class="side-block">
+            <div class="k">这一篇讲</div>
+            <div class="v mono">怎么最快<br/>拿到第一次<br/>正向反馈</div>
           </div>
-          <div className="side-block">
-            <div className="k">作者 / by</div>
-            <div className="v mono">追光者</div>
+          <div class="side-block">
+            <div class="k">作者 / by</div>
+            <div class="v mono">追光者</div>
           </div>
         </aside>
       </div>
 
-      <div className="hero-rule"></div>
+      <div class="hero-rule"></div>
 
-      <div className="hero-toc">
-        <div className="toc-left">
-          <a href="#ch1"><span>01</span><span>铝的时刻</span></a>
-          <a href="#ch2"><span>02</span><span>基础设施</span></a>
-          <a href="#chvalue"><span>03</span><span>价值重构</span></a>
-          <a href="#ch3"><span>04</span><span>路径</span></a>
-          <a href="#ch4"><span>05</span><span>宣言</span></a>
+      <div class="hero-toc">
+        <div class="toc-left">
+          <a href="#win"><span>01</span><span>第一次</span></a>
+          <a href="#loop"><span>02</span><span>飞轮</span></a>
+          <a href="#power"><span>03</span><span>能力</span></a>
+          <a href="#ladder"><span>04</span><span>台阶</span></a>
+          <a href="#you"><span>05</span><span>跟你的关系</span></a>
           <a href="#coda"><span>06</span><span>终</span></a>
         </div>
-        <a href="#ch1" className="toc-scroll">
+        <a href="#win" class="toc-scroll">
           <span>往下走</span>
-          <span className="arrow"></span>
+          <span class="arrow"></span>
         </a>
       </div>
     </section>
-  );
-}
-window.Hero = Hero;
-  </script>
 
-  <!-- chapter 1 -->
-  <script type="text/babel">
-const COMPARE_DATA = [
-  {
-    domain: '知识获取', en: 'Knowledge',
-    before: { when: '过去', val: '6', unit: '个月才入门' },
-    after: { when: '现在', val: '2', unit: '周做出第一个作品' },
-    delta: '12', note: '从"找资料"变成"被讲解"',
-  },
-  {
-    domain: '产品原型', en: 'Prototype',
-    before: { when: '过去', val: '￥30K+', unit: '外包 / 1–2 个月' },
-    after: { when: '现在', val: '1', unit: '个周末，1 杯咖啡' },
-    delta: '60', note: '一个人可以拥有"小团队"',
-  },
-  {
-    domain: '深度研究', en: 'Research',
-    before: { when: '过去', val: '14', unit: '天，反复查与改' },
-    after: { when: '现在', val: '6', unit: '小时，从大纲到成稿' },
-    delta: '30', note: 'AI 是研究员，不只是答题机',
-  },
-  {
-    domain: '视觉创作', en: 'Creation',
-    before: { when: '过去', val: '~3', unit: '个工具 + 设计基础' },
-    after: { when: '现在', val: '1', unit: '段描述 + 一点品味' },
-    delta: 'N/A', note: '门槛从工具，转移到判断',
-  },
-];
-
-function CompareCard({ item, i }) {
-  return (
-    <div className={`compare-card reveal d${(i % 4) + 1}`}>
-      <div className="topline">
-        <span className="domain">
-          <span className="idx">0{i + 1} /</span>{item.domain}
-        </span>
-        <span className="label">{item.en}</span>
-      </div>
-      <div className="middle">
-        <div className="ba">
-          <div className="side before">
-            <span className="when">{item.before.when}</span>
-            <span className="val">{item.before.val}</span>
-            <span className="unit">{item.before.unit}</span>
-          </div>
-          <div className="arrow">
-            <span className="glyph"></span>
-            <span>AI</span>
-          </div>
-          <div className="side after">
-            <span className="when">{item.after.when}</span>
-            <span className="val">{item.after.val}</span>
-            <span className="unit">{item.after.unit}</span>
-          </div>
+    <!-- ============ 01 · 第一次 ============ -->
+    <section id="win" class="chapter winsec">
+      <div class="head">
+        <div class="reveal">
+          <span class="eyebrow"><span class="num">01</span><span>第一次 / The First Win</span></span>
+          <h2 class="display">道理讲一万句，<br/>不如你今晚<br/>赢一次。</h2>
         </div>
-      </div>
-      <div className="delta">
-        <span className="x">
-          {item.delta === 'N/A' ? '·' : `${item.delta}×`}
-          {item.delta !== 'N/A' && <sup>&nbsp;更快</sup>}
-        </span>
-        <span className="note">{item.note}</span>
-      </div>
-      <div style={{ borderTop: '1px solid var(--line)', padding: '8px 20px', fontFamily: 'var(--mono)', fontSize: '9.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
-        正在基础设施化 ↓
-      </div>
-    </div>
-  );
-}
-
-function Chapter1() {
-  const ref = useReveal();
-  return (
-    <section id="ch1" className="chapter ch1" ref={ref}>
-      <div className="head">
-        <div className="title reveal">
-          <span className="eyebrow"><span className="num">01</span><span>铝的时刻 / The Aluminum Moment</span></span>
-          <h2 className="display" style={{ marginTop: 18 }}>
-            有一种稀缺，<br/>
-            正在消失。
-          </h2>
-        </div>
-        <div className="blurb reveal d2">
-          <p className="kicker">
-            1800 年代，铝比黄金贵。不是因为铝少，而是因为<strong>提炼它太难</strong>。拿破仑三世把铝餐具留给贵宾，把银器给普通客人。电解铝技术成熟之后，铝没有消失——它成了全球用量最大的工业基础材料。价值没有消失，只是被重新定价了。
+        <div class="blurb reveal d2">
+          <p class="kicker">
+            刚接触 AI 的人，最缺的不是道理，是<strong>第一次正向反馈</strong>。
           </p>
-          <p className="body-lg" style={{ marginTop: 18 }}>
-            今天，人类的标准化智力劳动，正在经历同样的时刻。翻译、文案、代码、分析、整理——这些能力过去之所以有溢价，根本原因不是它们有多神奇，而是<strong>供给端稀缺</strong>：掌握它们需要多年训练。AI 出现之后，这种稀缺性正在被打穿。下面四组数字，是证据。
+          <p class="body-lg">
+            一旦你亲手做出一件超出预期、还被身边人夸了的小事，「要不要学 AI」这个问题，就会自动变成「我下一个还能做什么」。下面四件事，都能在<strong>今晚、十分钟内</strong>完成——你只出一句话，剩下的交给它。重点不是它多神，是做完之后，那个发给同事、家人、朋友的瞬间。
           </p>
         </div>
       </div>
 
-      <div className="compare-grid">
-        {COMPARE_DATA.map((it, i) => (
-          <CompareCard key={i} i={i} item={it} />
-        ))}
+      <div class="win-grid">
+
+        <article class="win-card reveal d1">
+          <div class="wc-top">
+            <span class="wc-scene"><span class="idx">01 /</span>给爸妈</span>
+            <span class="wc-time">~ 5 min</span>
+          </div>
+          <div class="wc-title">把一件说不清的事，<br/>讲到他们真的听懂。</div>
+          <div class="win-flow">
+            <div class="win-step input"><span class="wk">你说的</span><span class="wv">"用我妈能懂的话，解释她体检报告里这三个指标，别吓她，给点实在建议。"</span></div>
+            <div class="win-step"><span class="wk">AI 给的</span><span class="wv">一段不带术语、有温度、能照着做的解释。</span></div>
+            <div class="win-step react"><span class="wk">反馈</span><span class="wv">我妈第一次说："这个我听懂了。"</span></div>
+          </div>
+        </article>
+
+        <article class="win-card reveal d2">
+          <div class="wc-top">
+            <span class="wc-scene"><span class="idx">02 /</span>救场工作</span>
+            <span class="wc-time">~ 8 min</span>
+          </div>
+          <div class="wc-title">明天要交的东西，<br/>今晚就稳稳交得出。</div>
+          <div class="win-flow">
+            <div class="win-step input"><span class="wk">你说的</span><span class="wv">"把这堆零散笔记，整理成能直接发给领导的周报，分三块，配一句总结。"</span></div>
+            <div class="win-step"><span class="wk">AI 给的</span><span class="wv">结构清楚、有重点、能直接复制走的一份周报。</span></div>
+            <div class="win-step react"><span class="wk">反馈</span><span class="wv">领导回了一句："这次写得清楚。"</span></div>
+          </div>
+        </article>
+
+        <article class="win-card reveal d3">
+          <div class="wc-top">
+            <span class="wc-scene"><span class="idx">03 /</span>给朋友</span>
+            <span class="wc-time">~ 4 min</span>
+          </div>
+          <div class="wc-title">一段走心的话，<br/>送到对的人心里。</div>
+          <div class="win-flow">
+            <div class="win-step input"><span class="wk">你说的</span><span class="wv">"给十年的好兄弟写段生日祝福，提一句我们大学通宵那次，真诚、别肉麻。"</span></div>
+            <div class="win-step"><span class="wk">AI 给的</span><span class="wv">一段有细节、有分寸、戳到点上的话。</span></div>
+            <div class="win-step react"><span class="wk">反馈</span><span class="wv">他截了图，发了朋友圈。</span></div>
+          </div>
+        </article>
+
+        <article class="win-card reveal d4">
+          <div class="wc-top">
+            <span class="wc-scene"><span class="idx">04 /</span>做点东西</span>
+            <span class="wc-time">~ 1 晚</span>
+          </div>
+          <div class="wc-title">把一个想法，<br/>变成能打开看的东西。</div>
+          <div class="win-flow">
+            <div class="win-step input"><span class="wk">你说的</span><span class="wv">"我想做个记录女儿成长的小网页，帮我搭一个能跑起来的雏形。"</span></div>
+            <div class="win-step"><span class="wk">AI 给的</span><span class="wv">一个真的能在手机上打开、能往里加照片的页面。</span></div>
+            <div class="win-step react"><span class="wk">反馈</span><span class="wv">全家围着一部手机看了半天。</span></div>
+          </div>
+        </article>
+
       </div>
 
-      <div className="pullquote reveal">
-        <div className="label-col">
-          <span className="label">Pull quote · 01</span>
-          <span className="tag solid">价值重构 · repricing</span>
+      <div class="pullquote reveal">
+        <div class="label-col">
+          <span class="label">Pull quote · 01</span>
+          <span class="tag solid">就在今晚</span>
         </div>
         <q>
-          这不是"AI 变强了"那么简单。<br/>
-          这是<span className="hl">一种稀缺性的结构性消失</span>。<br/>
-          就像青霉素量产后——从皇室专属，变成全民基础医疗能力。
+          AI 有多强，是 AI 的事。<br/>
+          <span class="hl">它跟你有没有关系，是你今晚的事。</span>
         </q>
       </div>
     </section>
-  );
-}
-window.Chapter1 = Chapter1;
-  </script>
 
-  <!-- chapter 2 -->
-  <script type="text/babel">
-const ABILITIES = [
-  {
-    key: 'write', num: '01', name: '写作', en: 'WRITING',
-    title: '把一段散乱的想法，变成能寄出去的东西。',
-    desc: '十分钟前还是几行 bullet，现在已经是一封带逻辑、有节奏、能直接发给客户的邮件——AI 是你随身的编辑、校对、改写者。',
-    meta: [
-      { k: '能做的', v: '草稿 → 精修 / 多版本 / 翻译 / 改语气' },
-      { k: '代表工具', v: 'GPT-5 · Claude · 文心一格 · 通义' },
-      { k: '难度', v: '★ — 开口就能用' },
-    ],
-  },
-  {
-    key: 'design', num: '02', name: '设计', en: 'DESIGN',
-    title: '把"想要的感觉"，直接变成图、PPT、海报。',
-    desc: '描述一个情绪、一个版式、一个用色，AI 在一分钟里给你 4 个方向。设计能力的天花板，第一次不再被工具卡住。',
-    meta: [
-      { k: '能做的', v: '海报 · PPT · 头像 · 网页风格图' },
-      { k: '代表工具', v: 'Midjourney · Sora · Nano Banana' },
-      { k: '难度', v: '★★ — 关键在描述与判断' },
-    ],
-  },
-  {
-    key: 'code', num: '03', name: '工程', en: 'ENGINEERING',
-    title: '不会写代码，也能搭出一个真实跑起来的产品。',
-    desc: '从"我有个想法"到"我有个在线 demo"，路径正在被压缩成一个晚上。代码不再是少数人的特权，它正在变成一种可被描述的素材。',
-    meta: [
-      { k: '能做的', v: '网站 · 工具 · 自动化脚本 · MVP' },
-      { k: '代表工具', v: 'Claude Code · Codex · v0 · Lovable' },
-      { k: '难度', v: '★★★ — 想清楚 = 成功一半' },
-    ],
-  },
-  {
-    key: 'agent', num: '04', name: 'Agent', en: 'AUTOMATION',
-    title: '把一件烦的事，整段交出去。',
-    desc: '从"你来问我答"到"你交代我去做"。Agent 会自己拆解、检索、调用工具、回头把结果交给你——你第一次拥有了"会做事"的下属。',
-    meta: [
-      { k: '能做的', v: '研究 · 比价 · 写作 · 订票 · 文件处理' },
-      { k: '代表工具', v: 'Claude Code · Devin · Manus · ChatGPT Agent' },
-      { k: '难度', v: '★★★★ — 学会"授权"与"验收"' },
-    ],
-  },
-  {
-    key: 'mm', num: '05', name: '多模态', en: 'MULTIMODAL',
-    title: '文字、图像、声音、视频——在同一个工具里互相变形。',
-    desc: '一段文字可以是一张图、一支短片、一段播客；一张图可以被讲清楚、被翻译、被剪进视频。表达的边界，已经不在某一种格式里。',
-    meta: [
-      { k: '能做的', v: '图生视频 · 视频转剧本 · 一键配音' },
-      { k: '代表工具', v: 'Sora · Veo · Suno · ElevenLabs' },
-      { k: '难度', v: '★★ — 主要是想象力的练习' },
-    ],
-  },
-];
-
-function AbilityList({ active, onSelect }) {
-  return (
-    <div className="ab-list">
-      {ABILITIES.map((a) => (
-        <div
-          key={a.key}
-          className={`item ${active === a.key ? 'active' : ''}`}
-          onClick={() => onSelect(a.key)}
-          onMouseEnter={() => onSelect(a.key)}
-        >
-          <div>
-            <div className="num">{a.num} · {a.en}</div>
-            <div className="name">{a.name}</div>
+    <!-- ============ 02 · 飞轮 ============ -->
+    <section id="loop" class="chapter loopsec">
+      <div class="inner">
+        <div class="head">
+          <div class="reveal">
+            <span class="eyebrow"><span class="num">02</span><span>飞轮 / The Loop</span></span>
+            <h2 class="display">一次反馈，<br/>不是终点。<br/>是飞轮的<br/>第一圈。</h2>
           </div>
-          <span className="en">→</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function DemoWrite({ active }) {
-  const [n, setN] = useState(0);
-  const target = '亲爱的张老师：\n\n上周提案的反馈我都收到了，特别是关于"目标用户太宽"那条，我后来又把数据捋了一遍——确实如此。我重做了三个版本，想请您看看哪个方向更合适，方便的话我们这周三上午聊 30 分钟？\n\n附件是更新后的 PDF，封面页就能看到三种走向的对比。\n\n祝好，\n林';
-  useEffect(() => {
-    if (!active) return;
-    setN(0);
-    const id = setInterval(() => setN((p) => (p >= target.length ? p : p + 2)), 28);
-    return () => clearInterval(id);
-  }, [active]);
-  return (
-    <div className={`frame ${active ? 'show' : ''}`}>
-      <div className="topbar">
-        <span>WRITE · 01</span>
-        <span className="right"><span className="dot"></span>generating · 12,400 tps</span>
-      </div>
-      <h3 className="fname">写作 — 从草稿到能寄出去</h3>
-      <p className="fdesc">同样三行 bullet，过去是写一封像样邮件的开始，现在 12 秒后就是一封可以直接发出的回信。</p>
-      <div className="demo-write">
-        <div className="col before">
-          <div className="hd"><span>INPUT · 我给的</span><span>3 lines</span></div>
-          <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 'inherit' }}>{`- 回复张老师上周的反馈\n- 承认目标用户太宽，已经改了\n- 约一个 30 分钟的会`}</pre>
-        </div>
-        <div className="col after">
-          <div className="hd"><span>OUTPUT · AI 写的</span><span style={{color:'var(--acc-lime)'}}>· draft v3</span></div>
-          <div style={{ whiteSpace: 'pre-wrap' }}>
-            {target.slice(0, n)}
-            <span className="cursor"></span>
+          <div class="blurb reveal d2">
+            <p class="kicker">真正改变一个人的，从来不是一次惊艳，而是一个<strong>越转越快的循环</strong>。</p>
+            <p class="body-lg">第一次正向反馈，会推着你做第二件、第三件。而每转一圈，你的<strong>经验</strong>、别人对你的<strong>评价</strong>、你和身边人的<strong>关系</strong>，都在变厚。点下面任意一环，看看这台飞轮是怎么转起来的。</p>
           </div>
         </div>
-      </div>
-      <div className="footer-meta">
-        <div className="cell"><div className="k">用时</div><div className="v">~12 秒</div></div>
-        <div className="cell"><div className="k">改写代价</div><div className="v">几乎为零</div></div>
-        <div className="cell"><div className="k">你做的</div><div className="v">说清楚要什么</div></div>
-      </div>
-    </div>
-  );
-}
 
-function DemoDesign({ active }) {
-  const variants = ['暖橙杂志风', '深蓝科技感', '酸柠檬青年志', '极简黑白派'];
-  const [hover, setHover] = useState(0);
-  return (
-    <div className={`frame ${active ? 'show' : ''}`}>
-      <div className="topbar">
-        <span>DESIGN · 02</span>
-        <span className="right"><span className="dot"></span>4 variants · ~38s</span>
-      </div>
-      <h3 className="fname">设计 — 想法 → 视觉</h3>
-      <p className="fdesc">用一段话描述"想要的感觉"，AI 在一分钟里给出四个方向。点选其一即可继续迭代。</p>
-      <div className="demo-design">
-        <div className="prompt">
-          <div className="hd">PROMPT · 我说的</div>
-          <div className="text">
-            做一张<span className="pill">关于 AI 的</span>主视觉，
-            年轻明亮，<span className="pill">浅色背景</span>，
-            带一点<span className="pill">未来宣言</span>感，
-            像独立杂志封面。
+        <div class="fly-wrap">
+          <div class="fly-stage">
+            <div class="fly-ring"></div>
+            <div class="fly-core">
+              <div class="fc-en">The Flywheel</div>
+              <div class="fc-zh">越转<br/>越快</div>
+            </div>
+            <div class="fly-node" data-i="0" style="left:50%;top:8%"><span class="n-num">01</span><span class="n-zh">输入</span></div>
+            <div class="fly-node" data-i="1" style="left:90%;top:37%"><span class="n-num">02</span><span class="n-zh">创造</span></div>
+            <div class="fly-node" data-i="2" style="left:74.7%;top:84%"><span class="n-num">03</span><span class="n-zh">定价</span></div>
+            <div class="fly-node" data-i="3" style="left:25.3%;top:84%"><span class="n-num">04</span><span class="n-zh">情绪</span></div>
+            <div class="fly-node" data-i="4" style="left:10%;top:37%"><span class="n-num">05</span><span class="n-zh">关系</span></div>
           </div>
-          <div className="hd" style={{ marginTop: 'auto' }}>方向 · {variants[hover]}</div>
+
+          <div class="fly-panel" id="flyPanel">
+            <div class="fp-top">
+              <span><span class="dot"></span><span id="fpTopEn">INPUT</span></span>
+              <span id="fpStep">环节 01 / 05</span>
+            </div>
+            <div class="fp-body" id="fpBody">
+              <span class="fp-step" id="fpZhStep">第一环</span>
+              <h3 id="fpTitle">你带着一个真实的问题来</h3>
+              <p id="fpDesc"></p>
+            </div>
+            <div class="fp-prog" id="fpProg">
+              <span class="on" data-i="0"></span><span data-i="1"></span><span data-i="2"></span><span data-i="3"></span><span data-i="4"></span>
+            </div>
+          </div>
         </div>
-        <div className="preview">
-          {variants.map((v, i) => (
-            <div key={i} className={`slot s${i+1}`} onMouseEnter={() => setHover(i)}>
-              <div className="num">var · {String(i+1).padStart(2,'0')}</div>
-              <div>
-                <div className="title-mock">FIELD<br/>NOTE 01</div>
-                <div className="lines"><span></span><span></span><span></span></div>
+
+        <div class="fly-foot reveal">
+          <span class="seq"><b>01</b> 输入 → <b>02</b> 创造 → <b>03</b> 定价 → <b>04</b> 情绪 → <b>05</b> 关系 → 再回到 <b>01</b></span>
+          <span>每一圈，你都更厉害一点，身边人也更靠近你一点。</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 · 能力 ============ -->
+    <section id="power" class="chapter ch2">
+      <div class="inner">
+        <div class="head">
+          <div class="reveal">
+            <span class="eyebrow"><span class="num">03</span><span>能力 / The Five Powers</span></span>
+            <h2 class="display">你能调用的，<br/>是五种原来<br/>要一个团队<br/>的能力。</h2>
+          </div>
+          <div class="blurb reveal d2">
+            <p class="kicker">写作、设计、工程、自动化、多模态——过去每一样都要请人、花钱、等很久。</p>
+            <p class="body-lg">现在它们都在你手边，一句话就能调用。这不是为了让你"什么都会"，而是为了让你<strong>有底气，对身边人说一声"这事交给我"</strong>。停在下面任意一栏，看看一个普通人能用它做出什么。</p>
+          </div>
+        </div>
+
+        <div class="abilities">
+          <div class="ab-list" id="abList">
+            <div class="item" data-key="write"><div><div class="num">01 · WRITING</div><div class="name">写作</div></div><span class="en">→</span></div>
+            <div class="item" data-key="design"><div><div class="num">02 · DESIGN</div><div class="name">设计</div></div><span class="en">→</span></div>
+            <div class="item" data-key="code"><div><div class="num">03 · ENGINEERING</div><div class="name">工程</div></div><span class="en">→</span></div>
+            <div class="item" data-key="agent"><div><div class="num">04 · AUTOMATION</div><div class="name">Agent</div></div><span class="en">→</span></div>
+            <div class="item" data-key="mm"><div><div class="num">05 · MULTIMODAL</div><div class="name">多模态</div></div><span class="en">→</span></div>
+          </div>
+
+          <div class="ab-stage" id="abStage">
+
+            <!-- write -->
+            <div class="frame" data-key="write">
+              <div class="topbar"><span>WRITE · 01</span><span class="right"><span class="dot"></span>generating · 12,400 tps</span></div>
+              <h3 class="fname">写作 — 从草稿到能寄出去</h3>
+              <p class="fdesc">同样三行 bullet，过去是写一封像样邮件的开始，现在十几秒后就是一封可以直接发出的回信。</p>
+              <div class="demo-write">
+                <div class="col before">
+                  <div class="hd"><span>INPUT · 我给的</span><span>3 lines</span></div>
+                  <pre>- 回复张老师上周的反馈
+- 承认目标用户太宽，已经改了
+- 约一个 30 分钟的会</pre>
+                </div>
+                <div class="col after">
+                  <div class="hd"><span>OUTPUT · AI 写的</span><span style="color:var(--acc-lime)">· draft v3</span></div>
+                  <div><span class="typed" data-target="亲爱的张老师：
+
+上周提案的反馈我都收到了，特别是&quot;目标用户太宽&quot;那条，我后来又把数据捋了一遍——确实如此。我重做了三个版本，想请您看看哪个方向更合适，方便的话这周三上午聊 30 分钟？
+
+附件是更新后的 PDF，封面页就能看到三种走向的对比。
+
+祝好，
+林"></span><span class="cursor"></span></div>
+                </div>
               </div>
-              <div className="stripe"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="footer-meta">
-        <div className="cell"><div className="k">用时</div><div className="v">~40 秒</div></div>
-        <div className="cell"><div className="k">迭代成本</div><div className="v">几乎为零</div></div>
-        <div className="cell"><div className="k">关键能力</div><div className="v">描述 · 品味</div></div>
-      </div>
-    </div>
-  );
-}
-
-function DemoCode({ active }) {
-  return (
-    <div className={`frame ${active ? 'show' : ''}`}>
-      <div className="topbar">
-        <span>CODE · 03</span>
-        <span className="right"><span className="dot"></span>build · running</span>
-      </div>
-      <h3 className="fname">工程 — 一句话，一个产品</h3>
-      <p className="fdesc">不会写代码？没关系。把"你想要什么"讲清楚，AI 把它写出来、跑起来、改给你看。</p>
-      <div className="demo-code">
-        <div className="editor">
-          <div className="hd"><span>app.jsx · GENERATED</span><span style={{color:'var(--acc-lime)'}}>● live</span></div>
-          <div><span className="ln">01</span><span className="cm">// 极简每日复盘 App</span></div>
-          <div><span className="ln">02</span><span className="kw">function</span> <span className="fn">DailyLog</span>() {'{'}</div>
-          <div><span className="ln">03</span>&nbsp;&nbsp;<span className="kw">const</span> [log, setLog] = useState(<span className="st">""</span>);</div>
-          <div><span className="ln">04</span>&nbsp;&nbsp;<span className="kw">return</span> (</div>
-          <div><span className="ln">05</span>&nbsp;&nbsp;&nbsp;&nbsp;{'<'}<span className="fn">Card</span> title=<span className="st">"今天怎么样"</span>{'>'}</div>
-          <div><span className="ln">06</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'<'}<span className="fn">Editor</span> value={'{log}'} /{'>'}</div>
-          <div><span className="ln">07</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'<'}<span className="fn">Stats</span> count={'{3}'} /{'>'}</div>
-          <div><span className="ln">08</span>&nbsp;&nbsp;&nbsp;&nbsp;{'</'}<span className="fn">Card</span>{'>'});</div>
-          <div><span className="ln">09</span>{'}'}</div>
-          <div><span className="ln">10</span><span className="cm">{'// 27 lines · 1 file · 1 deploy'}</span></div>
-        </div>
-        <div className="preview-app">
-          <div className="bar">
-            <span className="d"></span><span className="d"></span><span className="d"></span>
-            <span className="url">localhost:3000 · daily-log</span>
-          </div>
-          <div className="app-body">
-            <h4>今天怎么样？</h4>
-            <p>三个最重要的事，一句话总结。</p>
-            <div className="row">
-              <div className="card-mini"><div className="lbl">今日完成</div><div className="val">3</div></div>
-              <div className="card-mini"><div className="lbl">连续</div><div className="val">12 天</div></div>
-            </div>
-            <div className="btn">写今天的 →</div>
-          </div>
-        </div>
-      </div>
-      <div className="footer-meta">
-        <div className="cell"><div className="k">从想到跑起来</div><div className="v">~1 晚</div></div>
-        <div className="cell"><div className="k">你写的代码</div><div className="v">0 行</div></div>
-        <div className="cell"><div className="k">关键能力</div><div className="v">表达 · 调试 · 取舍</div></div>
-      </div>
-    </div>
-  );
-}
-
-function DemoAgent({ active }) {
-  const steps = [
-    { t: '14:02', l: '理解任务：找 5 个深圳团建场地', tag: 'PLAN', state: 'done' },
-    { t: '14:02', l: '检索 · 大众点评 / 小红书 / 官网', tag: 'SEARCH', state: 'done' },
-    { t: '14:04', l: '筛掉评分 < 4.5 与无周末档期', tag: 'FILTER', state: 'done' },
-    { t: '14:06', l: '逐个询价 · 已发出 7 封邮件', tag: 'OUTREACH', state: 'done' },
-    { t: '14:18', l: '汇总比价表 · 整理候选 5 家', tag: 'COMPILE', state: 'running' },
-    { t: '14:30', l: '生成给老板的 1 页推荐书', tag: 'WRITE', state: 'pending' },
-  ];
-  return (
-    <div className={`frame ${active ? 'show' : ''}`}>
-      <div className="topbar">
-        <span>AGENT · 04</span>
-        <span className="right"><span className="dot"></span>autonomous · step 5/6</span>
-      </div>
-      <h3 className="fname">Agent — 把任务整段交出去</h3>
-      <p className="fdesc">不是聊一句答一句，而是给它一个目标，让它自己规划、检索、调用工具，最后把结果交给你。</p>
-      <div className="demo-agent">
-        <div className="order">
-          <div className="hd">任务 · 你交代的</div>
-          <div className="ask">"帮我在深圳找 5 个适合 20 人团建的周末场地，<br/>预算 8000 以内，整理一份带价目的推荐表。"</div>
-          <div className="meta">
-            <div className="m"><div className="k">触发</div><div className="v">14:02</div></div>
-            <div className="m"><div className="k">预计交付</div><div className="v">14:35</div></div>
-            <div className="m"><div className="k">人工干预</div><div className="v">0 次</div></div>
-            <div className="m"><div className="k">你做的</div><div className="v">一句话</div></div>
-          </div>
-        </div>
-        <div className="timeline">
-          {steps.map((s, i) => (
-            <div key={i} className={`step ${s.state}`}>
-              <span className="t">{s.t}</span>
-              <span className="dot"></span>
-              <span className="lbl">{s.l}</span>
-              <span className="tag-mini">{s.tag}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="footer-meta">
-        <div className="cell"><div className="k">耗时</div><div className="v">~30 分钟</div></div>
-        <div className="cell"><div className="k">替代了</div><div className="v">2 小时秘书工作</div></div>
-        <div className="cell"><div className="k">关键转变</div><div className="v">Chat → Delegate</div></div>
-      </div>
-    </div>
-  );
-}
-
-function DemoMM({ active }) {
-  return (
-    <div className={`frame ${active ? 'show' : ''}`}>
-      <div className="topbar">
-        <span>MULTIMODAL · 05</span>
-        <span className="right"><span className="dot"></span>3 outputs · same seed</span>
-      </div>
-      <h3 className="fname">多模态 — 一个想法的所有形状</h3>
-      <p className="fdesc">同一句话，可以变成一张图、一段视频、一段播客。表达不再被某种格式锁死。</p>
-      <div className="demo-mm">
-        <div className="input">
-          <div className="hd">SEED · 一个念头</div>
-          <div className="seed">"夏天的傍晚，一个少年骑车，城市在他身后变软。"</div>
-          <div className="modes">
-            <span className="mode">→ 图像</span>
-            <span className="mode">→ 短片</span>
-            <span className="mode">→ 配乐</span>
-            <span className="mode">→ 文案</span>
-            <span className="mode">→ 海报</span>
-          </div>
-        </div>
-        <div className="outputs">
-          <div className="out image">
-            <div className="label-bar"><span>· image</span><span>4K · jpg</span></div>
-            <div className="body"></div>
-          </div>
-          <div className="out video">
-            <div className="label-bar"><span>· video</span><span>8s · mp4</span></div>
-            <div className="body"><div className="play">▶</div></div>
-          </div>
-          <div className="out audio">
-            <div className="label-bar"><span>· audio</span><span>0:18 · m4a</span></div>
-            <div className="body">
-              <div className="wave">
-                {Array.from({length: 18}).map((_,i)=>(
-                  <span key={i} style={{ animationDelay: `${i*0.07}s` }}></span>
-                ))}
+              <div class="footer-meta">
+                <div class="cell"><div class="k">用时</div><div class="v">~12 秒</div></div>
+                <div class="cell"><div class="k">改写代价</div><div class="v">几乎为零</div></div>
+                <div class="cell"><div class="k">你做的</div><div class="v">说清楚要什么</div></div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="footer-meta">
-        <div className="cell"><div className="k">同一个想法</div><div className="v">三种形状</div></div>
-        <div className="cell"><div className="k">额外成本</div><div className="v">≈ 0</div></div>
-        <div className="cell"><div className="k">关键能力</div><div className="v">想象 · 取舍</div></div>
-      </div>
-    </div>
-  );
-}
 
-function Chapter2() {
-  const ref = useReveal();
-  const [active, setActive] = useState('write');
-  useEffect(() => {
-    if (!ref.current) return;
-    let id;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          if (!id) {
-            id = setInterval(() => {
-              setActive((cur) => {
-                const i = ABILITIES.findIndex((a) => a.key === cur);
-                return ABILITIES[(i + 1) % ABILITIES.length].key;
-              });
-            }, 5200);
-          }
-        } else {
-          if (id) { clearInterval(id); id = null; }
-        }
-      });
-    }, { threshold: 0.3 });
-    io.observe(ref.current);
-    return () => { io.disconnect(); if (id) clearInterval(id); };
-  }, []);
-
-  return (
-    <section id="ch2" className="chapter ch2" ref={ref}>
-      <div className="head">
-        <div className="title reveal">
-          <span className="eyebrow"><span className="num">02</span><span>基础设施 / The New Infrastructure</span></span>
-          <h2 className="display" style={{ marginTop: 18, color: 'var(--bg)' }}>
-            这五件事，<br/>
-            已经不再稀缺。
-          </h2>
-        </div>
-        <div className="blurb reveal d2">
-          <p className="kicker" style={{ color: 'var(--bg)' }}>
-            写作、设计、工程、自动化、多模态——正在从「值钱的专业技能」，变成「人人可以调用的基础设施」。
-          </p>
-          <p className="body-lg" style={{ marginTop: 18, color: 'rgba(251,250,245,0.7)' }}>
-            就像计算器出现后，心算不再是竞争优势——但计算器没有让数学消失，它让真正的数学家去解更难的问题。这五个，是<strong style={{ color: 'var(--bg)' }}>铝</strong>，不是黄金。认清它们的位置，才能找到下一个位置。停留在任一栏，体感会自动开始。
-          </p>
-        </div>
-      </div>
-
-      <div className="abilities">
-        <AbilityList active={active} onSelect={setActive} />
-        <div className="ab-stage">
-          <DemoWrite active={active === 'write'} />
-          <DemoDesign active={active === 'design'} />
-          <DemoCode active={active === 'code'} />
-          <DemoAgent active={active === 'agent'} />
-          <DemoMM active={active === 'mm'} />
-        </div>
-      </div>
-    </section>
-  );
-}
-window.Chapter2 = Chapter2;
-  </script>
-
-  <!-- chapter value shift -->
-  <script type="text/babel">
-const INFRA_ITEMS = ['翻译 · 文案写作', '代码编写 · 调试', '数据分析 · 整理', '报告撰写 · 总结', '图像设计基础', '日程处理', '标准化逻辑推理', '资料检索 · 归纳'];
-const PREMIUM_ITEMS = ['定义问题 · 提出好问题', '判断方向 · 驾驭 AI', '系统整合 · 跨领域创新', '深度人性洞察', '审美品味 · 创意原点', '复杂战略决策', '信任关系 · 共情联结', '赋予意义 · 激励行动'];
-
-function ChapterValue() {
-  const ref = useReveal();
-  return (
-    <section id="chvalue" className="chapter" ref={ref}>
-      <div className="head">
-        <div className="title reveal">
-          <span className="eyebrow"><span className="num">03</span><span>价值重构 / The Value Shift</span></span>
-          <h2 className="display" style={{ marginTop: 18 }}>
-            真正稀缺的，<br/>
-            换了一批。
-          </h2>
-        </div>
-        <div className="blurb reveal d2">
-          <p className="kicker">
-            过去智力的高价值，来自知识掌握、标准输出和重复脑力劳动。未来真正的高价值，在 AI 难以替代的那一侧。
-          </p>
-        </div>
-      </div>
-
-      <div className="value-split reveal d2">
-        <div className="vs-divider">
-          <span className="tag">「铝」· 丰盛但不贵</span>
-          <span className="tag red">「黄金」· 依然稀缺 →</span>
-        </div>
-        <div className="vs-col left">
-          <div className="vs-head">正在基础设施化</div>
-          {INFRA_ITEMS.map((item, i) => (
-            <div key={i} className="vs-item">{item}</div>
-          ))}
-        </div>
-        <div className="vs-col right">
-          <div className="vs-head">依然高溢价</div>
-          {PREMIUM_ITEMS.map((item, i) => (
-            <div key={i} className="vs-item">{item}</div>
-          ))}
-        </div>
-      </div>
-
-      <div className="xinli-callout reveal d3">
-        <div className="xinli-model">
-          <div className="tier t3">体 力</div>
-          <div className="arrow-up">↑</div>
-          <div className="tier t2">脑 力</div>
-          <div className="arrow-up">↑</div>
-          <div className="tier t1">心 力</div>
-        </div>
-        <div className="xinli-body">
-          <strong>机器解放体力，AI 解放脑力，人回到心力。</strong>不是智力没用了，而是低层次脑力劳动不再稀缺。谁还停留在标准化智力劳动里，谁就会被基础设施化；谁能向问题定义、系统创造、AI 调度和<strong>心力价值</strong>迁移，谁就更可能获得新的时代溢价。
-        </div>
-      </div>
-    </section>
-  );
-}
-window.ChapterValue = ChapterValue;
-  </script>
-
-  <!-- chapter 3 -->
-  <script type="text/babel">
-const STEPS = [
-  {
-    lvl: 'L 01', en: 'AWARENESS', zh: '意识到',
-    desc: '不再把 AI 当成"听说过的东西"。开始相信：这一波是大事，而且和自己有关。',
-    tools: ['你现在在做的事'],
-  },
-  {
-    lvl: 'L 02', en: 'TRY', zh: '动手试',
-    desc: '打开任何一个国产基础模型，开始拿它问问题、写邮件、查资料。从"看别人用"到"自己用"。',
-    tools: ['豆包', 'Kimi', 'DeepSeek', '通义千问'],
-  },
-  {
-    lvl: 'L 03', en: 'UPGRADE', zh: '换好工具',
-    desc: '意识到：模型有代差。开始接触真正的顶级模型，第一次感受到"原来 AI 可以这么聪明"。',
-    tools: ['GPT-5', 'Claude 4.5', 'Gemini 3'],
-  },
-  {
-    lvl: 'L 04', en: 'COMMIT', zh: '愿意付费',
-    desc: '第一次为 AI 掏出 $20 / 月，这不是消费，是一次<strong>认知的跃迁</strong>——你开始把它当生产力，而不是玩具。',
-    tools: ['Pro 订阅', '每月一杯咖啡的钱'],
-    isBlue: true,
-  },
-  {
-    lvl: 'L 05', en: 'AGENT', zh: '从 Chat 到 Agent',
-    desc: '从"你问我答"，进化到"你交代一个目标，它自己去做"。你拥有了第一个"看不见但能干活的下属"。',
-    tools: ['Claude Code', 'ChatGPT Agent', 'Manus'],
-    isBlue: true,
-  },
-  {
-    lvl: 'L 06', en: 'BUILD', zh: '做出真东西',
-    desc: '做出第一个真实作品——一个网站、一支视频、一份让朋友刷屏的报告、一个有人付费的小工具。<strong>作品，是你和 AI 一起留下的脚印。</strong>',
-    tools: ['Cursor', 'v0', 'Lovable', 'Sora', 'Figma + AI'],
-    highlight: true,
-  },
-  {
-    lvl: 'L 07', en: 'LEVERAGE', zh: '撬动新的可能',
-    desc: 'AI 成为你能力的一部分，像母语、像工作记忆。你的护城河不是"会用 AI"，而是<strong>用 AI 放大了你不可复制的那部分</strong>：你的判断、你的审美、你的经历、你的信任关系、你的真实表达。',
-    tools: ['你 + AI = 一个新人'],
-    dark: true,
-  },
-];
-
-function StepRow({ s, i }) {
-  const cls = [
-    'step-row',
-    `l${i+1}`,
-    s.highlight ? 'highlight' : '',
-    s.dark ? 'dark' : '',
-    `reveal d${(i % 4) + 1}`,
-  ].filter(Boolean).join(' ');
-  return (
-    <div className={cls}>
-      <div className="gutter">
-        <span className="node"></span>
-        <div className="lvl">{s.lvl}</div>
-      </div>
-      <div className="row-body">
-        <div className="name-block">
-          <span className="en">{s.en}</span>
-          <span className="zh">{s.zh}</span>
-        </div>
-        <div className="desc" dangerouslySetInnerHTML={{ __html: s.desc }} />
-        <div className="tools">
-          <span className="tools-label">代表工具 / signals</span>
-          <div className="chips">
-            {s.tools.map((t, j) => <span key={j} className="chip">{t}</span>)}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Chapter3() {
-  const ref = useReveal();
-  return (
-    <section id="ch3" className="chapter ch3" ref={ref}>
-      <div className="head">
-        <div className="title reveal">
-          <span className="eyebrow"><span className="num">04</span><span>路径 / The Ladder</span></span>
-          <h2 className="display" style={{ marginTop: 18 }}>
-            你不需要<br/>
-            一步到位。<br/>
-            <em style={{ color: 'var(--acc-blue)', fontStyle: 'italic' }}>你只需要踏上去。</em>
-          </h2>
-        </div>
-        <div className="blurb reveal d2">
-          <p className="kicker">
-            真正拉开人差距的，不是"先用上 AI 的人 vs 没用上的人"——而是<strong>能不能向高阶能力攀升</strong>：从会用工具，到驾驭 AI，到用心力创造真正难以复制的价值。
-          </p>
-          <p className="body-lg" style={{ marginTop: 18 }}>
-            下面这条路，是这两年我见过最多人在走的真实台阶。它不需要天赋，不需要技术背景。它需要的只是——你愿意一格一格往上走，而不停在第一格说"我也试过"。
-          </p>
-        </div>
-      </div>
-
-      <div className="ladder">
-        {STEPS.map((s, i) => <StepRow key={i} s={s} i={i} />)}
-      </div>
-
-      <div className="floor">
-        <div className="col">
-          <p>大部分人，会在 L02 停下来。<br/>少部分人，会走到 L04。</p>
-        </div>
-        <div className="col">
-          <p>真正打开新人生的人，<br/>是那些<span style={{ background: 'var(--acc-lime)', padding: '0 0.1em' }}>愿意一直再多走一格</span>的人。</p>
-        </div>
-      </div>
-    </section>
-  );
-}
-window.Chapter3 = Chapter3;
-  </script>
-
-  <!-- chapter 4 -->
-  <script type="text/babel">
-const LINES = [
-  { num: '§ 01', html: '<strong>不是 AI 会取代你。</strong>是<em>用好 AI 的人</em>会跑得比你快。这两句听起来像，意思完全不一样。' },
-  { num: '§ 02', html: '焦虑没有用。<span class="mark">动手</span>有用。' },
-  { num: '§ 03', html: '不必"一步到位"，<br/>不必"系统学完再开始"。<br/>明天打开它，<em>问一个真实的问题</em>，就是开始。' },
-  { num: '§ 04', html: 'AI 不是少数人的专利。<br/>它是这个时代<span class="mark">递到每个人手里</span>的一把钥匙。' },
-  { num: '§ 05', html: '过去稀缺的是<em>"会做"</em>。<br/>现在稀缺的是<em>"定义问题"</em>、<em>"有判断"</em>、<em>"有审美"</em>、<em>"能建立信任"</em>。' },
-  { num: '§ 06', html: '你不必追上任何人。<br/>你只需要<span class="mark">追上昨天的自己</span>。' },
-  { num: '§ 07', html: 'AI 时代，人不会消失。<strong>只是低层次脑力劳动，不再天然稀缺。</strong><br/>懂这件事的人，是清醒的。只焦虑这件事的人，还不够清醒。' },
-];
-
-function Chapter4() {
-  const ref = useReveal();
-  return (
-    <section id="ch4" className="chapter ch4" ref={ref}>
-      <div className="mesh-soft">
-        <div className="b b1"></div>
-        <div className="b b2"></div>
-        <div className="b b3"></div>
-      </div>
-      <div className="inner">
-        <div className="head">
-          <div className="title reveal">
-            <span className="eyebrow"><span className="num">05</span><span>宣言 / Manifesto</span></span>
-            <h2 className="display" style={{ marginTop: 18 }}>
-              这不是<br/>
-              一份焦虑书。<br/>
-              <span style={{ background: 'var(--acc-lime)', padding: '0 0.08em' }}>是一份希望书。</span>
-            </h2>
-          </div>
-          <div className="blurb reveal d2">
-            <p className="kicker">
-              如果你看到这里，只记得一件事——
-              <br/>我希望是这件 ↓
-            </p>
-            <p className="body-lg" style={{ marginTop: 18 }}>
-              下面七条，是我自己反复在心里说，也希望你能听见的话。它们不是结论，更像一些可以贴在墙上、在你犹豫的时候帮你一把的句子。
-            </p>
-          </div>
-        </div>
-
-        <div className="manifesto">
-          {LINES.map((l, i) => (
-            <div className={`line reveal d${(i % 4) + 1}`} key={i}>
-              <span className="num">{l.num}</span>
-              <span className="text" dangerouslySetInnerHTML={{ __html: l.html }} />
+            <!-- design -->
+            <div class="frame" data-key="design">
+              <div class="topbar"><span>DESIGN · 02</span><span class="right"><span class="dot"></span>4 variants · ~38s</span></div>
+              <h3 class="fname">设计 — 想法 → 视觉</h3>
+              <p class="fdesc">用一段话描述"想要的感觉"，AI 在一分钟里给出四个方向。点选其一即可继续迭代。</p>
+              <div class="demo-design">
+                <div class="prompt">
+                  <div class="hd">PROMPT · 我说的</div>
+                  <div class="text">做一张<span class="pill">关于 AI 的</span>主视觉，年轻明亮，<span class="pill">浅色背景</span>，带一点<span class="pill">未来宣言</span>感，像独立杂志封面。</div>
+                  <div class="hd" style="margin-top:auto">方向 · <span id="dgVariant">暖橙杂志风</span></div>
+                </div>
+                <div class="preview" id="dgPreview">
+                  <div class="slot s1" data-v="暖橙杂志风"><div class="num">var · 01</div><div><div class="title-mock">FIELD<br/>NOTE 01</div><div class="lines"><span></span><span></span><span></span></div></div><div class="stripe"></div></div>
+                  <div class="slot s2" data-v="深蓝科技感"><div class="num">var · 02</div><div><div class="title-mock">FIELD<br/>NOTE 01</div><div class="lines"><span></span><span></span><span></span></div></div><div class="stripe"></div></div>
+                  <div class="slot s3" data-v="酸柠檬青年志"><div class="num">var · 03</div><div><div class="title-mock">FIELD<br/>NOTE 01</div><div class="lines"><span></span><span></span><span></span></div></div><div class="stripe"></div></div>
+                  <div class="slot s4" data-v="极简黑白派"><div class="num">var · 04</div><div><div class="title-mock">FIELD<br/>NOTE 01</div><div class="lines"><span></span><span></span><span></span></div></div><div class="stripe"></div></div>
+                </div>
+              </div>
+              <div class="footer-meta">
+                <div class="cell"><div class="k">用时</div><div class="v">~40 秒</div></div>
+                <div class="cell"><div class="k">迭代成本</div><div class="v">几乎为零</div></div>
+                <div class="cell"><div class="k">关键能力</div><div class="v">描述 · 品味</div></div>
+              </div>
             </div>
-          ))}
-        </div>
 
-        <div className="closing">
-          <div className="big reveal">
-            现在，<br/>
-            就是<span className="a">最早</span>的<br/>
-            那个时刻。
-          </div>
-          <div className="right reveal d2">
-            <span className="label">a note · 给现在看到这里的你</span>
-            <p className="small">
-              五年后回头看 2026 这一年，你会发现它是<strong>标准智力劳动被电解的那一年</strong>。那些做了选择的人，不是跑赢了别人，而是走上了一条不同的路：向问题定义、系统创造、AI 调度和心力价值迁移的路。
-            </p>
-            <p className="small">
-              这次，你可以从今天开始。
-            </p>
+            <!-- code -->
+            <div class="frame" data-key="code">
+              <div class="topbar"><span>CODE · 03</span><span class="right"><span class="dot"></span>build · running</span></div>
+              <h3 class="fname">工程 — 一句话，一个产品</h3>
+              <p class="fdesc">不会写代码？没关系。把"你想要什么"讲清楚，AI 把它写出来、跑起来、改给你看。</p>
+              <div class="demo-code">
+                <div class="editor">
+                  <div class="hd"><span>app.jsx · GENERATED</span><span style="color:var(--acc-lime)">● live</span></div>
+                  <div><span class="ln">01</span><span class="cm">// 极简每日复盘 App</span></div>
+                  <div><span class="ln">02</span><span class="kw">function</span> <span class="fn">DailyLog</span>() {</div>
+                  <div><span class="ln">03</span>&nbsp;&nbsp;<span class="kw">const</span> [log, setLog] = useState(<span class="st">""</span>);</div>
+                  <div><span class="ln">04</span>&nbsp;&nbsp;<span class="kw">return</span> (</div>
+                  <div><span class="ln">05</span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="fn">Card</span> title=<span class="st">"今天怎么样"</span>&gt;</div>
+                  <div><span class="ln">06</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="fn">Editor</span> value={log} /&gt;</div>
+                  <div><span class="ln">07</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="fn">Stats</span> count={3} /&gt;</div>
+                  <div><span class="ln">08</span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="fn">Card</span>&gt;);</div>
+                  <div><span class="ln">09</span>}</div>
+                  <div><span class="ln">10</span><span class="cm">// 27 lines · 1 file · 1 deploy</span></div>
+                </div>
+                <div class="preview-app">
+                  <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="url">localhost:3000 · daily-log</span></div>
+                  <div class="app-body">
+                    <h4>今天怎么样？</h4>
+                    <p>三个最重要的事，一句话总结。</p>
+                    <div class="row">
+                      <div class="card-mini"><div class="lbl">今日完成</div><div class="val">3</div></div>
+                      <div class="card-mini"><div class="lbl">连续</div><div class="val">12 天</div></div>
+                    </div>
+                    <div class="btn">写今天的 →</div>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-meta">
+                <div class="cell"><div class="k">从想到跑起来</div><div class="v">~1 晚</div></div>
+                <div class="cell"><div class="k">你写的代码</div><div class="v">0 行</div></div>
+                <div class="cell"><div class="k">关键能力</div><div class="v">表达 · 调试 · 取舍</div></div>
+              </div>
+            </div>
+
+            <!-- agent -->
+            <div class="frame" data-key="agent">
+              <div class="topbar"><span>AGENT · 04</span><span class="right"><span class="dot"></span>autonomous · step 5/6</span></div>
+              <h3 class="fname">Agent — 把任务整段交出去</h3>
+              <p class="fdesc">不是聊一句答一句，而是给它一个目标，让它自己规划、检索、调用工具，最后把结果交给你。</p>
+              <div class="demo-agent">
+                <div class="order">
+                  <div class="hd">任务 · 你交代的</div>
+                  <div class="ask">"帮我在深圳找 5 个适合 20 人团建的周末场地，预算 8000 以内，整理一份带价目的推荐表。"</div>
+                  <div class="meta">
+                    <div class="m"><div class="k">触发</div><div class="v">14:02</div></div>
+                    <div class="m"><div class="k">预计交付</div><div class="v">14:35</div></div>
+                    <div class="m"><div class="k">人工干预</div><div class="v">0 次</div></div>
+                    <div class="m"><div class="k">你做的</div><div class="v">一句话</div></div>
+                  </div>
+                </div>
+                <div class="timeline">
+                  <div class="step done"><span class="t">14:02</span><span class="dot"></span><span class="lbl">理解任务：找 5 个深圳团建场地</span><span class="tag-mini">PLAN</span></div>
+                  <div class="step done"><span class="t">14:02</span><span class="dot"></span><span class="lbl">检索 · 大众点评 / 小红书 / 官网</span><span class="tag-mini">SEARCH</span></div>
+                  <div class="step done"><span class="t">14:04</span><span class="dot"></span><span class="lbl">筛掉评分 &lt; 4.5 与无周末档期</span><span class="tag-mini">FILTER</span></div>
+                  <div class="step done"><span class="t">14:06</span><span class="dot"></span><span class="lbl">逐个询价 · 已发出 7 封邮件</span><span class="tag-mini">OUTREACH</span></div>
+                  <div class="step running"><span class="t">14:18</span><span class="dot"></span><span class="lbl">汇总比价表 · 整理候选 5 家</span><span class="tag-mini">COMPILE</span></div>
+                  <div class="step"><span class="t">14:30</span><span class="dot"></span><span class="lbl">生成给老板的 1 页推荐书</span><span class="tag-mini">WRITE</span></div>
+                </div>
+              </div>
+              <div class="footer-meta">
+                <div class="cell"><div class="k">耗时</div><div class="v">~30 分钟</div></div>
+                <div class="cell"><div class="k">替代了</div><div class="v">2 小时秘书工作</div></div>
+                <div class="cell"><div class="k">关键转变</div><div class="v">Chat → Delegate</div></div>
+              </div>
+            </div>
+
+            <!-- multimodal -->
+            <div class="frame" data-key="mm">
+              <div class="topbar"><span>MULTIMODAL · 05</span><span class="right"><span class="dot"></span>3 outputs · same seed</span></div>
+              <h3 class="fname">多模态 — 一个想法的所有形状</h3>
+              <p class="fdesc">同一句话，可以变成一张图、一段视频、一段播客。表达不再被某种格式锁死。</p>
+              <div class="demo-mm">
+                <div class="input">
+                  <div class="hd">SEED · 一个念头</div>
+                  <div class="seed">"夏天的傍晚，一个少年骑车，城市在他身后变软。"</div>
+                  <div class="modes">
+                    <span class="mode">→ 图像</span><span class="mode">→ 短片</span><span class="mode">→ 配乐</span><span class="mode">→ 文案</span><span class="mode">→ 海报</span>
+                  </div>
+                </div>
+                <div class="outputs">
+                  <div class="out image"><div class="label-bar"><span>· image</span><span>4K · jpg</span></div><div class="body"></div></div>
+                  <div class="out video"><div class="label-bar"><span>· video</span><span>8s · mp4</span></div><div class="body"><div class="play">▶</div></div></div>
+                  <div class="out audio"><div class="label-bar"><span>· audio</span><span>0:18 · m4a</span></div><div class="body"><div class="wave" id="mmWave"></div></div></div>
+                </div>
+              </div>
+              <div class="footer-meta">
+                <div class="cell"><div class="k">同一个想法</div><div class="v">三种形状</div></div>
+                <div class="cell"><div class="k">额外成本</div><div class="v">≈ 0</div></div>
+                <div class="cell"><div class="k">关键能力</div><div class="v">想象 · 取舍</div></div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </section>
-  );
-}
-window.Chapter4 = Chapter4;
-  </script>
 
-  <!-- coda -->
-  <script type="text/babel">
-function Coda() {
-  const ref = useReveal();
-  return (
-    <section id="coda" className="coda" ref={ref}>
-      <div className="grid-bg"></div>
-      <div className="inner">
-        <div className="signoff">
-          <div className="left reveal">
-            <h2>
-              如果这页让你<br/>
-              心里动了一下——<br/>
-              <span className="blink">那就去打开它。</span>
-            </h2>
+    <!-- ============ 04 · 台阶 ============ -->
+    <section id="ladder" class="chapter ch3">
+      <div class="head">
+        <div class="reveal">
+          <span class="eyebrow"><span class="num">04</span><span>台阶 / The Ladder</span></span>
+          <h2 class="display">你不需要<br/>一步到位。<br/>你只需要，<br/>踏上第一格。</h2>
+        </div>
+        <div class="blurb reveal d2">
+          <p class="kicker">真正拉开人差距的，不是"用没用上 AI"——而是<strong>愿不愿意再往上多走一格</strong>。</p>
+          <p class="body-lg">下面这条路，是这两年我见过最多人在走的真实台阶。它不需要天赋，不需要技术背景，每一格都对应着飞轮多转一圈。你要做的，只是别停在第一格说"我也试过"。</p>
+        </div>
+      </div>
+
+      <div class="ladder">
+        <div class="step-row l1 reveal d1">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 01</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">AWARENESS</span><span class="zh">意识到</span></div>
+            <div class="desc">不再把 AI 当成"听说过的东西"。开始相信：这一波是大事，而且<strong>和自己有关</strong>。</div>
+            <div class="tools"><span class="tools-label">信号 / signal</span><div class="chips"><span class="chip">你现在在做的事</span></div></div>
           </div>
-          <div className="right reveal d2">
-            <span className="line">
-              这份页面没有 CTA、没有报名、没有群二维码。
-            </span>
-            <span className="line">
-              铝的时代，真正贵的不再是铝，而是知道铝能做什么、能做成什么形状的那个人。我只希望，你关掉这一页之后，能去打开任何一个 AI，问一个真实的、属于你今天的问题。
-            </span>
-            <span className="line">
-              那一刻，向高阶能力迁移的路，就已经开始了。
-            </span>
+        </div>
+        <div class="step-row l2 reveal d2">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 02</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">TRY</span><span class="zh">动手试</span></div>
+            <div class="desc">打开任何一个国产模型，拿它问问题、写邮件、查资料。<strong>从"看别人用"到"自己用"</strong>，第一圈飞轮就在这里启动。</div>
+            <div class="tools"><span class="tools-label">代表工具</span><div class="chips"><span class="chip">豆包</span><span class="chip">Kimi</span><span class="chip">DeepSeek</span><span class="chip">通义千问</span></div></div>
+          </div>
+        </div>
+        <div class="step-row l3 reveal d3">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 03</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">UPGRADE</span><span class="zh">换好工具</span></div>
+            <div class="desc">意识到：模型有代差。开始接触真正的顶级模型，第一次感受到"原来 AI 可以这么聪明"。</div>
+            <div class="tools"><span class="tools-label">代表工具</span><div class="chips"><span class="chip">GPT-5</span><span class="chip">Claude 4.x</span><span class="chip">Gemini 3</span></div></div>
+          </div>
+        </div>
+        <div class="step-row l4 reveal d4">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 04</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">COMMIT</span><span class="zh">愿意付费</span></div>
+            <div class="desc">第一次为 AI 掏出每月一杯咖啡的钱。这不是消费，是一次<strong>认知的跃迁</strong>——你开始把它当生产力，而不是玩具。</div>
+            <div class="tools"><span class="tools-label">代表动作</span><div class="chips"><span class="chip">Pro 订阅</span><span class="chip">一杯咖啡 / 月</span></div></div>
+          </div>
+        </div>
+        <div class="step-row l5 reveal d1">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 05</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">AGENT</span><span class="zh">从 Chat 到 Agent</span></div>
+            <div class="desc">从"你问我答"，进化到"你交代一个目标，它自己去做"。你拥有了第一个<strong>看不见、但能干活的下属</strong>。</div>
+            <div class="tools"><span class="tools-label">代表工具</span><div class="chips"><span class="chip">Claude Code</span><span class="chip">ChatGPT Agent</span><span class="chip">Manus</span></div></div>
+          </div>
+        </div>
+        <div class="step-row l6 highlight reveal d2">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 06</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">BUILD</span><span class="zh">做出真东西</span></div>
+            <div class="desc">做出第一个真实作品——一个网站、一支视频、一份让朋友刷屏的报告、一个有人愿意付费的小工具。<strong>作品，就是你和 AI 一起留下的脚印，也是别人给你定价的开始。</strong></div>
+            <div class="tools"><span class="tools-label">代表工具</span><div class="chips"><span class="chip">Cursor</span><span class="chip">v0</span><span class="chip">Lovable</span><span class="chip">Sora</span></div></div>
+          </div>
+        </div>
+        <div class="step-row l7 dark reveal d3">
+          <div class="gutter"><span class="node"></span><div class="lvl">L 07</div></div>
+          <div class="row-body">
+            <div class="name-block"><span class="en">LEVERAGE</span><span class="zh">撬动新的可能</span></div>
+            <div class="desc">AI 成为你能力的一部分，像母语、像工作记忆。你的护城河不是"会用 AI"，而是<strong>用 AI 放大了你不可复制的那部分</strong>：你的判断、你的审美、你的经历、你和身边人的信任。</div>
+            <div class="tools"><span class="tools-label">这时的你</span><div class="chips"><span class="chip">你 + AI = 一个新人</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="floor">
+        <div class="col reveal"><p>大部分人，会在 L02 停下来。<br/>少部分人，会走到 L04。</p></div>
+        <div class="col reveal d2"><p>真正打开新人生的人，<br/>是那些<span class="mark">愿意一直再多走一格</span>的人。</p></div>
+      </div>
+    </section>
+
+    <!-- ============ 05 · 跟你的关系 ============ -->
+    <section id="you" class="chapter ch4">
+      <div class="mesh-soft"><div class="b b1"></div><div class="b b2"></div><div class="b b3"></div></div>
+      <div class="inner">
+        <div class="head">
+          <div class="reveal">
+            <span class="eyebrow"><span class="num">05</span><span>跟你的关系 / It's About You</span></span>
+            <h2 class="display">我已经走到<br/>比较靠后的地方了。<br/>回头，喊你一声。</h2>
+          </div>
+          <div class="blurb reveal d2">
+            <p class="kicker">如果这一整页，你只记住一段话——<br/>我希望是下面这段。</p>
           </div>
         </div>
 
-        <div className="author-card">
-          <div className="cell">
-            <div className="k">作者 / by</div>
-            <div className="v serif">追光者</div>
+        <div class="letter">
+          <p class="reveal">说实话，我用 AI 已经走了挺远——做出过没人付钱也愿意熬夜做的东西，也靠它接住过一些<em>原本接不住</em>的机会。</p>
+          <p class="reveal d1">但我最想告诉你的，不是我走多远。是一件更朴素的事：<br/>这东西的强大，跟你不是「<span class="blue">迟早的关系</span>」，是「<span class="mark">今晚的关系</span>」。</p>
+          <p class="reveal d2">你不用懂技术，不用看懂任何一篇评测。你只要在某个具体的、属于你的时刻——想帮爸妈把一件事弄明白、想把工作里那件烦事甩掉、想给在乎的人一个惊喜——<em>把这件事，交给它一次</em>。</p>
+          <p class="reveal d3">那一刻你会发现：它帮你提升的，从来不只是效率。<br/>是你<strong>被身边人看见的方式</strong>，是你和他们之间的<strong>关系</strong>。</p>
+          <p class="reveal d4">我在前面等你。不是等你追上我，<br/>是等你<span class="mark">追上昨天的自己</span>。</p>
+          <div class="sig reveal d4"><span>—— 写在前面的人</span><span class="name">追光者</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CODA ============ -->
+    <section id="coda" class="coda">
+      <div class="grid-bg"></div>
+      <div class="inner">
+        <div class="signoff">
+          <div class="left reveal">
+            <h2>如果这一页，<br/>让你心里动了一下——<br/><span class="blink">那就今晚去用它一次。</span></h2>
           </div>
-          <div className="cell">
-            <div className="k">写于 / written</div>
-            <div className="v">2026 · 一个普通的周末</div>
-          </div>
-          <div className="cell">
-            <div className="k">给 / for</div>
-            <div className="v">那些值得被多说一句的朋友</div>
+          <div class="right reveal d2">
+            <span class="line">这份页面没有 CTA、没有报名、没有群二维码。</span>
+            <span class="line">我只希望你关掉这页之后，就去打开任何一个 AI，<strong>替一个你在乎的人，做一件具体的小事</strong>。</span>
+            <span class="line">那一刻，飞轮的第一圈，就转起来了。</span>
           </div>
         </div>
 
-        <div className="legal">
-          <span>FIELD NOTE №01 · v1.0</span>
+        <div class="author-card">
+          <div class="cell"><div class="k">作者 / by</div><div class="v serif">追光者</div></div>
+          <div class="cell"><div class="k">写于 / written</div><div class="v">2026 · 一个普通的周末</div></div>
+          <div class="cell"><div class="k">给 / for</div><div class="v">那些值得被多说一句的朋友</div></div>
+        </div>
+
+        <div class="legal">
+          <span>FIELD NOTE №01 · v2.0</span>
           <span>不卖课 · 不引流 · 不贩焦虑</span>
           <span>欢迎转给一个你在乎的人</span>
         </div>
       </div>
     </section>
-  );
-}
-window.Coda = Coda;
-  </script>
 
-  <!-- app -->
-  <script type="text/babel">
-function App() {
-  return (
-    <div className="grain">
-      <SideRail />
-      <ChapterStamp />
-      <main>
-        <Hero />
-        <Chapter1 />
-        <Chapter2 />
-        <ChapterValue />
-        <Chapter3 />
-        <Chapter4 />
-        <Coda />
-      </main>
-    </div>
-  );
-}
+  </main>
+</div>
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
-  </script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- reveal ---------- */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function (n) { io.observe(n); });
+
+  /* ---------- hero date ---------- */
+  var d = new Date();
+  var dateEl = document.getElementById('heroDate');
+  if (dateEl) {
+    dateEl.textContent = d.getFullYear() + ' · ' + String(d.getMonth() + 1).padStart(2, '0') + ' · ' + String(d.getDate()).padStart(2, '0');
+  }
+
+  /* ---------- active section: rail + stamp ---------- */
+  var SECTIONS = ['hero', 'win', 'loop', 'power', 'ladder', 'you', 'coda'];
+  var DARK = { loop: 1, power: 1, coda: 1 };
+  var STAMP = { hero: 'FIELD NOTE', win: 'FIRST WIN', loop: 'FLYWHEEL', power: 'FIVE POWERS', ladder: 'THE LADDER', you: 'FOR YOU', coda: 'TONIGHT' };
+  var railLinks = {};
+  document.querySelectorAll('#rail a').forEach(function (a) { railLinks[a.dataset.id] = a; });
+  var stampEl = document.getElementById('stamp');
+  var railEl = document.getElementById('rail');
+
+  function onScroll() {
+    var mid = window.innerHeight * 0.4;
+    var current = SECTIONS[0];
+    for (var i = 0; i < SECTIONS.length; i++) {
+      var el = document.getElementById(SECTIONS[i]);
+      if (!el) continue;
+      if (el.getBoundingClientRect().top <= mid) current = SECTIONS[i];
+    }
+    SECTIONS.forEach(function (id) { if (railLinks[id]) railLinks[id].classList.toggle('active', id === current); });
+    var dark = !!DARK[current];
+    if (railEl) railEl.querySelectorAll('a').forEach(function (a) { a.classList.toggle('dark', dark); });
+    if (stampEl) { stampEl.textContent = STAMP[current] || 'FIELD NOTE'; stampEl.classList.toggle('on-dark', dark); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- flywheel ---------- */
+  var FLY = [
+    { en: 'INPUT', step: '第一环', title: '你带着一个真实的问题来',
+      desc: '不是为了练 AI，是因为你真的需要解决点什么：一封难写的邮件、一个不懂的概念、一份想送出去的心意。<strong>真实，是飞轮的燃料。</strong>' },
+    { en: 'CREATE', step: '第二环', title: '你和 AI 一起，做出超出预期的东西',
+      desc: '十分钟前你还做不到，现在你手里有了一个真实的产出、一段新的经验。<strong>能力不是被替代，是被放大。</strong>' },
+    { en: 'PRICED', step: '第三环', title: '身边的人，开始高看你一眼',
+      desc: '同事来找你帮忙、领导记住了你、有人愿意为你的产出买单。你创造的价值，第一次被身边人<strong>「定价」</strong>。' },
+    { en: 'EMOTION', step: '第四环', title: '你给身边人，带来惊喜和被在乎的感觉',
+      desc: '你做的东西让人开心、被帮到、被记得。你提供的不只是结果，是<strong>情绪价值</strong>——这是最难被替代的东西。' },
+    { en: 'RELATION', step: '第五环', title: '你和家人、朋友、同事的关系，更近了',
+      desc: '关系变好，又让你更愿意为他们做事、更有底气去输入下一个问题。<strong>飞轮回到起点，但这次转得更快。</strong>' }
+  ];
+  var flyNodes = Array.prototype.slice.call(document.querySelectorAll('.fly-node'));
+  var flyProg = Array.prototype.slice.call(document.querySelectorAll('#fpProg span'));
+  var fpTopEn = document.getElementById('fpTopEn');
+  var fpStep = document.getElementById('fpStep');
+  var fpZhStep = document.getElementById('fpZhStep');
+  var fpTitle = document.getElementById('fpTitle');
+  var fpDesc = document.getElementById('fpDesc');
+  var fpBody = document.getElementById('fpBody');
+  var flyActive = 0, flyTimer = null;
+
+  function setFly(i) {
+    flyActive = i;
+    var s = FLY[i];
+    if (fpBody) {
+      fpBody.style.opacity = 0;
+      setTimeout(function () {
+        fpTopEn.textContent = s.en;
+        fpStep.textContent = '环节 0' + (i + 1) + ' / 05';
+        fpZhStep.textContent = s.step;
+        fpTitle.textContent = s.title;
+        fpDesc.innerHTML = s.desc;
+        fpBody.style.opacity = 1;
+      }, 180);
+    }
+    flyNodes.forEach(function (n) { n.classList.toggle('active', +n.dataset.i === i); });
+    flyProg.forEach(function (p) { p.classList.toggle('on', +p.dataset.i === i); });
+  }
+  function flyNext() { setFly((flyActive + 1) % FLY.length); }
+  function flyStart() { if (!flyTimer) flyTimer = setInterval(flyNext, 4200); }
+  function flyStop() { if (flyTimer) { clearInterval(flyTimer); flyTimer = null; } }
+
+  flyNodes.forEach(function (n) {
+    n.addEventListener('click', function () { setFly(+n.dataset.i); flyStop(); flyStart(); });
+    n.addEventListener('mouseenter', function () { setFly(+n.dataset.i); });
+  });
+  flyProg.forEach(function (p) {
+    p.addEventListener('click', function () { setFly(+p.dataset.i); flyStop(); flyStart(); });
+  });
+  setFly(0);
+  var loopSec = document.getElementById('loop');
+  if (loopSec) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { e.isIntersecting ? flyStart() : flyStop(); });
+    }, { threshold: 0.3 }).observe(loopSec);
+  }
+
+  /* ---------- abilities ---------- */
+  var ABKEYS = ['write', 'design', 'code', 'agent', 'mm'];
+  var abItems = {}, abFrames = {};
+  document.querySelectorAll('#abList .item').forEach(function (it) { abItems[it.dataset.key] = it; });
+  document.querySelectorAll('#abStage .frame').forEach(function (f) { abFrames[f.dataset.key] = f; });
+  var abActive = 'write', abTimer = null, writeTimer = null;
+
+  function typeWrite() {
+    if (writeTimer) clearInterval(writeTimer);
+    var el = document.querySelector('.frame[data-key="write"] .typed');
+    if (!el) return;
+    var target = el.getAttribute('data-target') || '';
+    var n = 0;
+    el.textContent = '';
+    writeTimer = setInterval(function () {
+      if (n >= target.length) { clearInterval(writeTimer); writeTimer = null; return; }
+      n += 2;
+      el.textContent = target.slice(0, n);
+    }, 30);
+  }
+
+  function setAb(key) {
+    abActive = key;
+    ABKEYS.forEach(function (k) {
+      if (abItems[k]) abItems[k].classList.toggle('active', k === key);
+      if (abFrames[k]) abFrames[k].classList.toggle('show', k === key);
+    });
+    if (key === 'write') typeWrite();
+  }
+  function abNext() { setAb(ABKEYS[(ABKEYS.indexOf(abActive) + 1) % ABKEYS.length]); }
+  function abStart() { if (!abTimer) abTimer = setInterval(abNext, 5200); }
+  function abStop() { if (abTimer) { clearInterval(abTimer); abTimer = null; } }
+
+  Object.keys(abItems).forEach(function (k) {
+    abItems[k].addEventListener('click', function () { setAb(k); abStop(); abStart(); });
+    abItems[k].addEventListener('mouseenter', function () { setAb(k); });
+  });
+  setAb('write');
+  var powerSec = document.getElementById('power');
+  if (powerSec) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { abStart(); if (abActive === 'write') typeWrite(); }
+        else abStop();
+      });
+    }, { threshold: 0.3 }).observe(powerSec);
+  }
+
+  /* design variant label ---------- */
+  var dgVariant = document.getElementById('dgVariant');
+  document.querySelectorAll('#dgPreview .slot').forEach(function (slot) {
+    slot.addEventListener('mouseenter', function () { if (dgVariant) dgVariant.textContent = slot.dataset.v; });
+  });
+
+  /* multimodal wave bars ---------- */
+  var wave = document.getElementById('mmWave');
+  if (wave) {
+    for (var i = 0; i < 18; i++) {
+      var s = document.createElement('span');
+      s.style.animationDelay = (i * 0.07) + 's';
+      wave.appendChild(s);
+    }
+  }
+})();
+</script>
 </body>
 </html>
