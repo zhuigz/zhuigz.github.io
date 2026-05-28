@@ -1090,6 +1090,128 @@ h1.display { font-size: clamp(60px, 9vw, 160px); }
 @media (max-width: 768px) {
   .chapter-stamp { display: none; }
 }
+
+/* ============== Value Shift section ============== */
+.value-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line-strong);
+  margin: 48px 0;
+  overflow: hidden;
+}
+.vs-col {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.vs-col.left { background: var(--bg-2); border-right: 1px solid var(--line-strong); }
+.vs-col.right { background: var(--bg-paper); }
+.vs-col .vs-head {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.vs-col.left .vs-head { color: var(--ink-mute); }
+.vs-col.right .vs-head { color: var(--acc-red); }
+.vs-item {
+  font-family: var(--text);
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vs-item:last-child { border-bottom: none; }
+.vs-col.right .vs-item { color: var(--ink); }
+.vs-col.right .vs-item::before {
+  content: "→";
+  color: var(--acc-red);
+  font-family: var(--mono);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.vs-col.left .vs-item::before {
+  content: "·";
+  color: var(--ink-mute);
+  font-family: var(--mono);
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.vs-divider {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  border-top: 1px solid var(--line-strong);
+  background: var(--bg);
+}
+.vs-divider .tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.vs-divider .tag.red { color: var(--acc-red); }
+.xinli-callout {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 36px 40px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.xinli-model {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(251,250,245,0.4);
+  white-space: nowrap;
+}
+.xinli-model .tier {
+  padding: 8px 16px;
+  border: 1px solid;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  width: 100%;
+  text-align: center;
+}
+.xinli-model .tier.t3 { border-color: rgba(251,250,245,0.15); color: rgba(251,250,245,0.38); }
+.xinli-model .tier.t2 { border-color: rgba(251,250,245,0.28); color: rgba(251,250,245,0.6); margin-top: -1px; }
+.xinli-model .tier.t1 { border-color: var(--acc-red); color: var(--bg); background: var(--acc-red); margin-top: -1px; }
+.xinli-model .arrow-up { font-size: 11px; color: rgba(251,250,245,0.2); padding: 4px 0; }
+.xinli-body {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.4vw, 19px);
+  line-height: 1.7;
+  color: rgba(251,250,245,0.82);
+}
+.xinli-body strong { color: var(--bg); font-weight: 700; }
+@media (max-width: 768px) {
+  .value-split { grid-template-columns: 1fr; }
+  .vs-col.left { border-right: none; border-bottom: 1px solid var(--line-strong); }
+  .xinli-callout { grid-template-columns: 1fr; }
+  .xinli-model { flex-direction: row; }
+  .xinli-model .arrow-up { transform: rotate(90deg); }
+  .xinli-model .tier { width: auto; }
+  .xinli-model .tier.t2 { margin-top: 0; margin-left: -1px; }
+  .xinli-model .tier.t1 { margin-top: 0; margin-left: -1px; }
+}
   </style>
 </head>
 <body>
@@ -1161,14 +1283,15 @@ Object.assign(window, { useReveal, useActiveSection, useClock });
   <!-- chrome -->
   <script type="text/babel">
 function SideRail() {
-  const ids = ['hero', 'ch1', 'ch2', 'ch3', 'ch4', 'coda'];
+  const ids = ['hero', 'ch1', 'ch2', 'chvalue', 'ch3', 'ch4', 'coda'];
   const labels = {
     hero: '00 · 序',
-    ch1: '01 · 分水岭',
-    ch2: '02 · 能力',
-    ch3: '03 · 路径',
-    ch4: '04 · 宣言',
-    coda: '05 · 终',
+    ch1: '01 · 铝的时刻',
+    ch2: '02 · 基础设施',
+    chvalue: '03 · 价值重构',
+    ch3: '04 · 路径',
+    ch4: '05 · 宣言',
+    coda: '06 · 终',
   };
   const active = useActiveSection(ids);
   return (
@@ -1184,10 +1307,10 @@ function SideRail() {
 window.SideRail = SideRail;
 
 function ChapterStamp() {
-  const ids = ['hero', 'ch1', 'ch2', 'ch3', 'ch4', 'coda'];
+  const ids = ['hero', 'ch1', 'ch2', 'chvalue', 'ch3', 'ch4', 'coda'];
   const stampMap = {
-    hero: 'FIELD NOTE', ch1: 'WATERSHED', ch2: 'CAPABILITY',
-    ch3: 'BEGINNER', ch4: 'MANIFESTO', coda: 'CODA'
+    hero: 'FIELD NOTE', ch1: 'ALUMINUM', ch2: 'INFRA',
+    chvalue: 'VALUE', ch3: 'LADDER', ch4: 'MANIFESTO', coda: 'CODA'
   };
   const active = useActiveSection(ids);
   return <div className="chapter-stamp">{stampMap[active] || 'FIELD NOTE'}</div>;
@@ -1234,14 +1357,12 @@ function Hero() {
           </h1>
 
           <p className="hero-sub reveal d3">
-            这页不卖课、不引流、不贩焦虑。<br/>
-            它只想做一件事：<strong>让你真切地感到，AI 正在重新分配普通人的能力。</strong>
-            <br/>那扇门，并没有关上——而且，它正对着你开。
+            这不是一篇 AI 功能介绍。它想讲一件更本质的事：<strong>价值体系正在被重构</strong>。那些过去靠脑力稀缺性获得溢价的能力，正在像电解铝后的铝一样——从奢侈品变成基础设施。而真正稀缺的东西，是另一种。
           </p>
 
           <div className="hero-foot reveal d4">
-            <span className="tag">5 分钟读完</span>
-            <span className="tag">5 章 · ~1900 字</span>
+            <span className="tag">6 分钟读完</span>
+            <span className="tag">6 章 · ~2400 字</span>
             <span className="tag solid">写给我在乎的朋友</span>
           </div>
         </div>
@@ -1251,15 +1372,15 @@ function Hero() {
             <div className="k">致 / for</div>
             <div className="v">
               那些<br/>
-              对 AI 听说过<br/>
-              但还没<em>真正用上</em>的<br/>
-              朋友、同学、<br/>
-              同行者
+              已经感到不安，<br/>
+              但还不知道该把<br/>
+              <em>力气放在哪里</em>的<br/>
+              朋友
             </div>
           </div>
           <div className="side-block">
             <div className="k">本期长度</div>
-            <div className="v mono">05 chapters<br/>~ 1,900 字</div>
+            <div className="v mono">06 chapters<br/>~ 2,400 字</div>
           </div>
           <div className="side-block">
             <div className="k">作者 / by</div>
@@ -1272,11 +1393,12 @@ function Hero() {
 
       <div className="hero-toc">
         <div className="toc-left">
-          <a href="#ch1"><span>01</span><span>分水岭</span></a>
-          <a href="#ch2"><span>02</span><span>能力</span></a>
-          <a href="#ch3"><span>03</span><span>路径</span></a>
-          <a href="#ch4"><span>04</span><span>宣言</span></a>
-          <a href="#coda"><span>05</span><span>终</span></a>
+          <a href="#ch1"><span>01</span><span>铝的时刻</span></a>
+          <a href="#ch2"><span>02</span><span>基础设施</span></a>
+          <a href="#chvalue"><span>03</span><span>价值重构</span></a>
+          <a href="#ch3"><span>04</span><span>路径</span></a>
+          <a href="#ch4"><span>05</span><span>宣言</span></a>
+          <a href="#coda"><span>06</span><span>终</span></a>
         </div>
         <a href="#ch1" className="toc-scroll">
           <span>往下走</span>
@@ -1293,25 +1415,25 @@ window.Hero = Hero;
   <script type="text/babel">
 const COMPARE_DATA = [
   {
-    domain: '学习一门新东西', en: 'Learning',
+    domain: '知识获取', en: 'Knowledge',
     before: { when: '过去', val: '6', unit: '个月才入门' },
     after: { when: '现在', val: '2', unit: '周做出第一个作品' },
     delta: '12', note: '从"找资料"变成"被讲解"',
   },
   {
-    domain: '做一个能跑的产品原型', en: 'Prototyping',
+    domain: '产品原型', en: 'Prototype',
     before: { when: '过去', val: '￥30K+', unit: '外包 / 1–2 个月' },
     after: { when: '现在', val: '1', unit: '个周末，1 杯咖啡' },
     delta: '60', note: '一个人可以拥有"小团队"',
   },
   {
-    domain: '写一份严肃的研究报告', en: 'Research',
+    domain: '深度研究', en: 'Research',
     before: { when: '过去', val: '14', unit: '天，反复查与改' },
     after: { when: '现在', val: '6', unit: '小时，从大纲到成稿' },
     delta: '30', note: 'AI 是研究员，不只是答题机',
   },
   {
-    domain: '把一个想法做成视觉作品', en: 'Creating',
+    domain: '视觉创作', en: 'Creation',
     before: { when: '过去', val: '~3', unit: '个工具 + 设计基础' },
     after: { when: '现在', val: '1', unit: '段描述 + 一点品味' },
     delta: 'N/A', note: '门槛从工具，转移到判断',
@@ -1352,6 +1474,9 @@ function CompareCard({ item, i }) {
         </span>
         <span className="note">{item.note}</span>
       </div>
+      <div style={{ borderTop: '1px solid var(--line)', padding: '8px 20px', fontFamily: 'var(--mono)', fontSize: '9.5px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>
+        正在基础设施化 ↓
+      </div>
     </div>
   );
 }
@@ -1362,20 +1487,18 @@ function Chapter1() {
     <section id="ch1" className="chapter ch1" ref={ref}>
       <div className="head">
         <div className="title reveal">
-          <span className="eyebrow"><span className="num">01</span><span>分水岭 / The Watershed</span></span>
+          <span className="eyebrow"><span className="num">01</span><span>铝的时刻 / The Aluminum Moment</span></span>
           <h2 className="display" style={{ marginTop: 18 }}>
-            你正站在<br/>
-            一个十年一遇的<br/>
-            入场口。
+            有一种稀缺，<br/>
+            正在消失。
           </h2>
         </div>
         <div className="blurb reveal d2">
           <p className="kicker">
-            过去十年最重要的事，不是某个 App、某个芯片或某次发布会 ——
-            而是一件事被改写了：<strong>把一个想法变成现实的成本。</strong>
+            1800 年代，铝比黄金贵。不是因为铝少，而是因为<strong>提炼它太难</strong>。拿破仑三世把铝餐具留给贵宾，把银器给普通客人。电解铝技术成熟之后，铝没有消失——它成了全球用量最大的工业基础材料。价值没有消失，只是被重新定价了。
           </p>
           <p className="body-lg" style={{ marginTop: 18 }}>
-            下面四组，不是预测、不是吹捧，是 2024-2026 这两年里，无数普通人在自己的电脑上已经走过的真实路径。它们看起来很小，加在一起，就是一次寂静的革命。
+            今天，人类的标准化智力劳动，正在经历同样的时刻。翻译、文案、代码、分析、整理——这些能力过去之所以有溢价，根本原因不是它们有多神奇，而是<strong>供给端稀缺</strong>：掌握它们需要多年训练。AI 出现之后，这种稀缺性正在被打穿。下面四组数字，是证据。
           </p>
         </div>
       </div>
@@ -1389,12 +1512,12 @@ function Chapter1() {
       <div className="pullquote reveal">
         <div className="label-col">
           <span className="label">Pull quote · 01</span>
-          <span className="tag solid">已经发生 · happening now</span>
+          <span className="tag solid">价值重构 · repricing</span>
         </div>
         <q>
-          这些不是预言。<br/>
-          是<span className="hl">已经发生</span>、<br/>
-          只是还没均匀分布的事。
+          这不是"AI 变强了"那么简单。<br/>
+          这是<span className="hl">一种稀缺性的结构性消失</span>。<br/>
+          就像青霉素量产后——从皇室专属，变成全民基础医疗能力。
         </q>
       </div>
     </section>
@@ -1739,19 +1862,18 @@ function Chapter2() {
     <section id="ch2" className="chapter ch2" ref={ref}>
       <div className="head">
         <div className="title reveal">
-          <span className="eyebrow"><span className="num">02</span><span>能力 / What Changed</span></span>
+          <span className="eyebrow"><span className="num">02</span><span>基础设施 / The New Infrastructure</span></span>
           <h2 className="display" style={{ marginTop: 18, color: 'var(--bg)' }}>
-            它不只是<br/>
-            一个更聪明的<br/>
-            搜索框。
+            这五件事，<br/>
+            已经不再稀缺。
           </h2>
         </div>
         <div className="blurb reveal d2">
           <p className="kicker" style={{ color: 'var(--bg)' }}>
-            如果你只把 AI 当聊天工具，你看到的就只是 1%。
+            写作、设计、工程、自动化、多模态——正在从「值钱的专业技能」，变成「人人可以调用的基础设施」。
           </p>
           <p className="body-lg" style={{ marginTop: 18, color: 'rgba(251,250,245,0.7)' }}>
-            真正发生的，是写作、设计、工程、自动化、多模态这五件事——同时被压平、被打通、被打开。下面这五个，是你今天打开任何一个主流模型就能做到的事。停留在任一栏，体感会自动开始。
+            就像计算器出现后，心算不再是竞争优势——但计算器没有让数学消失，它让真正的数学家去解更难的问题。这五个，是<strong style={{ color: 'var(--bg)' }}>铝</strong>，不是黄金。认清它们的位置，才能找到下一个位置。停留在任一栏，体感会自动开始。
           </p>
         </div>
       </div>
@@ -1770,6 +1892,67 @@ function Chapter2() {
   );
 }
 window.Chapter2 = Chapter2;
+  </script>
+
+  <!-- chapter value shift -->
+  <script type="text/babel">
+const INFRA_ITEMS = ['翻译 · 文案写作', '代码编写 · 调试', '数据分析 · 整理', '报告撰写 · 总结', '图像设计基础', '日程处理', '标准化逻辑推理', '资料检索 · 归纳'];
+const PREMIUM_ITEMS = ['定义问题 · 提出好问题', '判断方向 · 驾驭 AI', '系统整合 · 跨领域创新', '深度人性洞察', '审美品味 · 创意原点', '复杂战略决策', '信任关系 · 共情联结', '赋予意义 · 激励行动'];
+
+function ChapterValue() {
+  const ref = useReveal();
+  return (
+    <section id="chvalue" className="chapter" ref={ref}>
+      <div className="head">
+        <div className="title reveal">
+          <span className="eyebrow"><span className="num">03</span><span>价值重构 / The Value Shift</span></span>
+          <h2 className="display" style={{ marginTop: 18 }}>
+            真正稀缺的，<br/>
+            换了一批。
+          </h2>
+        </div>
+        <div className="blurb reveal d2">
+          <p className="kicker">
+            过去智力的高价值，来自知识掌握、标准输出和重复脑力劳动。未来真正的高价值，在 AI 难以替代的那一侧。
+          </p>
+        </div>
+      </div>
+
+      <div className="value-split reveal d2">
+        <div className="vs-divider">
+          <span className="tag">「铝」· 丰盛但不贵</span>
+          <span className="tag red">「黄金」· 依然稀缺 →</span>
+        </div>
+        <div className="vs-col left">
+          <div className="vs-head">正在基础设施化</div>
+          {INFRA_ITEMS.map((item, i) => (
+            <div key={i} className="vs-item">{item}</div>
+          ))}
+        </div>
+        <div className="vs-col right">
+          <div className="vs-head">依然高溢价</div>
+          {PREMIUM_ITEMS.map((item, i) => (
+            <div key={i} className="vs-item">{item}</div>
+          ))}
+        </div>
+      </div>
+
+      <div className="xinli-callout reveal d3">
+        <div className="xinli-model">
+          <div className="tier t3">体 力</div>
+          <div className="arrow-up">↑</div>
+          <div className="tier t2">脑 力</div>
+          <div className="arrow-up">↑</div>
+          <div className="tier t1">心 力</div>
+        </div>
+        <div className="xinli-body">
+          <strong>机器解放体力，AI 解放脑力，人回到心力。</strong>不是智力没用了，而是低层次脑力劳动不再稀缺。谁还停留在标准化智力劳动里，谁就会被基础设施化；谁能向问题定义、系统创造、AI 调度和<strong>心力价值</strong>迁移，谁就更可能获得新的时代溢价。
+        </div>
+      </div>
+    </section>
+  );
+}
+window.ChapterValue = ChapterValue;
   </script>
 
   <!-- chapter 3 -->
@@ -1810,7 +1993,7 @@ const STEPS = [
   },
   {
     lvl: 'L 07', en: 'LEVERAGE', zh: '撬动新的可能',
-    desc: 'AI 成为你能力的一部分，像母语、像工作记忆。它放大你的判断、审美、行动力——开始换来收入、影响力、新的人生选项。',
+    desc: 'AI 成为你能力的一部分，像母语、像工作记忆。你的护城河不是"会用 AI"，而是<strong>用 AI 放大了你不可复制的那部分</strong>：你的判断、你的审美、你的经历、你的信任关系、你的真实表达。',
     tools: ['你 + AI = 一个新人'],
     dark: true,
   },
@@ -1853,7 +2036,7 @@ function Chapter3() {
     <section id="ch3" className="chapter ch3" ref={ref}>
       <div className="head">
         <div className="title reveal">
-          <span className="eyebrow"><span className="num">03</span><span>路径 / The Ladder</span></span>
+          <span className="eyebrow"><span className="num">04</span><span>路径 / The Ladder</span></span>
           <h2 className="display" style={{ marginTop: 18 }}>
             你不需要<br/>
             一步到位。<br/>
@@ -1862,11 +2045,10 @@ function Chapter3() {
         </div>
         <div className="blurb reveal d2">
           <p className="kicker">
-            真正拉开人差距的，不是"先用上 AI 的人 vs 没用上的人"——
-            而是<strong>能爬到第几格</strong>。
+            真正拉开人差距的，不是"先用上 AI 的人 vs 没用上的人"——而是<strong>能不能向高阶能力攀升</strong>：从会用工具，到驾驭 AI，到用心力创造真正难以复制的价值。
           </p>
           <p className="body-lg" style={{ marginTop: 18 }}>
-            下面这条路，是这两年我见过最多人在走的真实台阶。它不需要天赋，不需要技术背景。它需要的只是——你愿意一格一格往上走，而不是停在第一格说"我也试过"。
+            下面这条路，是这两年我见过最多人在走的真实台阶。它不需要天赋，不需要技术背景。它需要的只是——你愿意一格一格往上走，而不停在第一格说"我也试过"。
           </p>
         </div>
       </div>
@@ -1896,8 +2078,9 @@ const LINES = [
   { num: '§ 02', html: '焦虑没有用。<span class="mark">动手</span>有用。' },
   { num: '§ 03', html: '不必"一步到位"，<br/>不必"系统学完再开始"。<br/>明天打开它，<em>问一个真实的问题</em>，就是开始。' },
   { num: '§ 04', html: 'AI 不是少数人的专利。<br/>它是这个时代<span class="mark">递到每个人手里</span>的一把钥匙。' },
-  { num: '§ 05', html: '过去稀缺的是"会做"。<br/>现在稀缺的是<em>"有目标"</em>、<em>"有判断"</em>、<em>"有审美"</em>。' },
+  { num: '§ 05', html: '过去稀缺的是<em>"会做"</em>。<br/>现在稀缺的是<em>"定义问题"</em>、<em>"有判断"</em>、<em>"有审美"</em>、<em>"能建立信任"</em>。' },
   { num: '§ 06', html: '你不必追上任何人。<br/>你只需要<span class="mark">追上昨天的自己</span>。' },
+  { num: '§ 07', html: 'AI 时代，人不会消失。<strong>只是低层次脑力劳动，不再天然稀缺。</strong><br/>懂这件事的人，是清醒的。只焦虑这件事的人，还不够清醒。' },
 ];
 
 function Chapter4() {
@@ -1912,7 +2095,7 @@ function Chapter4() {
       <div className="inner">
         <div className="head">
           <div className="title reveal">
-            <span className="eyebrow"><span className="num">04</span><span>宣言 / Manifesto</span></span>
+            <span className="eyebrow"><span className="num">05</span><span>宣言 / Manifesto</span></span>
             <h2 className="display" style={{ marginTop: 18 }}>
               这不是<br/>
               一份焦虑书。<br/>
@@ -1925,7 +2108,7 @@ function Chapter4() {
               <br/>我希望是这件 ↓
             </p>
             <p className="body-lg" style={{ marginTop: 18 }}>
-              下面六条，是我自己反复在心里说，也希望你能听见的话。它们不是结论，更像一些可以贴在墙上、在你犹豫的时候帮你一把的句子。
+              下面七条，是我自己反复在心里说，也希望你能听见的话。它们不是结论，更像一些可以贴在墙上、在你犹豫的时候帮你一把的句子。
             </p>
           </div>
         </div>
@@ -1948,10 +2131,10 @@ function Chapter4() {
           <div className="right reveal d2">
             <span className="label">a note · 给现在看到这里的你</span>
             <p className="small">
-              五年后回头看 2026 这一年，你会发现——它和 1999 年决定要不要做个人网站、2010 年决定要不要做 App、2020 年决定要不要做内容的那几个夏天，没什么不一样。
+              五年后回头看 2026 这一年，你会发现它是<strong>标准智力劳动被电解的那一年</strong>。那些做了选择的人，不是跑赢了别人，而是走上了一条不同的路：向问题定义、系统创造、AI 调度和心力价值迁移的路。
             </p>
             <p className="small">
-              区别只在于：那时候你"还没开始"。<br/>这次，你可以从今天开始。
+              这次，你可以从今天开始。
             </p>
           </div>
         </div>
@@ -1983,11 +2166,10 @@ function Coda() {
               这份页面没有 CTA、没有报名、没有群二维码。
             </span>
             <span className="line">
-              我只希望，你关掉这一页之后，能去打开 ChatGPT、Claude 或者你信任的任何一个 AI，
-              问一个真实的、属于你今天的问题。
+              铝的时代，真正贵的不再是铝，而是知道铝能做什么、能做成什么形状的那个人。我只希望，你关掉这一页之后，能去打开任何一个 AI，问一个真实的、属于你今天的问题。
             </span>
             <span className="line">
-              那一刻，路就已经开始了。
+              那一刻，向高阶能力迁移的路，就已经开始了。
             </span>
           </div>
         </div>
@@ -2030,6 +2212,7 @@ function App() {
         <Hero />
         <Chapter1 />
         <Chapter2 />
+        <ChapterValue />
         <Chapter3 />
         <Chapter4 />
         <Coda />
