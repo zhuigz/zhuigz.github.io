@@ -6,7 +6,7 @@
   <title>不是替代你，是放大你 · 关于 AI 的一封信</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
 /* ============================================================
    AI 重要性站点 — 全局样式
@@ -34,8 +34,9 @@
 
   --serif: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
   --sans-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --display: "Space Grotesk", "Noto Sans SC", sans-serif;
-  --text: "Sora", "Noto Sans SC", sans-serif;
+  --display: "Instrument Serif", "Noto Serif SC", serif;
+  --text: "Noto Sans SC", "PingFang SC", sans-serif;
+  --italic: "Instrument Serif", "Noto Serif SC", serif;
   --mono: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
 }
 
@@ -999,6 +1000,96 @@ h1.display { font-size: clamp(60px, 9vw, 160px); }
   .coda .author-card { grid-template-columns: 1fr; }
   .coda .legal { flex-direction: column; gap: 12px; }
 }
+
+/* ============== Refinements: typography + ghost + stamp ============== */
+
+/* AMPLIFICATIO ghost — latin for amplification, echoing "放大你" */
+.hero { z-index: 0; overflow: hidden; }
+.hero::after {
+  content: "AMPLIFICATIO";
+  position: absolute;
+  left: 50%; bottom: -24px;
+  transform: translateX(-50%);
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(48px, 8.5vw, 128px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,74,31,0.10);
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+/* Hero rule — gradient fade instead of flat black */
+.hero-rule {
+  background: linear-gradient(90deg, var(--acc-red) 0%, var(--ink) 30%, var(--line) 100%);
+  opacity: 0.55;
+}
+
+/* Kicker — Instrument Serif italic, editorial weight */
+.kicker {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Hero accent inline — reinforce with italic display font */
+.hero-title .accent {
+  font-family: var(--italic);
+  font-style: italic;
+}
+
+/* Manifesto em — Instrument Serif italic for red-highlighted phrases */
+.manifesto .line .text em {
+  font-family: var(--italic);
+  font-size: 1.04em;
+}
+
+/* Rail active — stronger red presence */
+.rail a.active {
+  text-shadow: 0 0 14px rgba(255,74,31,0.45);
+}
+.rail a.active::before {
+  box-shadow: 0 0 8px rgba(255,74,31,0.5);
+}
+
+/* Coda blink text styling */
+.coda .signoff .left h2 .blink {
+  font-style: italic;
+}
+
+/* Author card value — Instrument Serif display */
+.coda .author-card .cell .v {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* Chapter stamp — fixed editorial marker */
+.chapter-stamp {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 80;
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 3.5vw, 52px);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,74,31,0.20);
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.4s ease;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+@media (max-width: 768px) {
+  .chapter-stamp { display: none; }
+}
   </style>
 </head>
 <body>
@@ -1091,6 +1182,17 @@ function SideRail() {
   );
 }
 window.SideRail = SideRail;
+
+function ChapterStamp() {
+  const ids = ['hero', 'ch1', 'ch2', 'ch3', 'ch4', 'coda'];
+  const stampMap = {
+    hero: 'FIELD NOTE', ch1: 'WATERSHED', ch2: 'CAPABILITY',
+    ch3: 'BEGINNER', ch4: 'MANIFESTO', coda: 'CODA'
+  };
+  const active = useActiveSection(ids);
+  return <div className="chapter-stamp">{stampMap[active] || 'FIELD NOTE'}</div>;
+}
+window.ChapterStamp = ChapterStamp;
   </script>
 
   <!-- hero -->
@@ -1923,6 +2025,7 @@ function App() {
   return (
     <div className="grain">
       <SideRail />
+      <ChapterStamp />
       <main>
         <Hero />
         <Chapter1 />
