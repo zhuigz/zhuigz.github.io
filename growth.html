@@ -9,18 +9,19 @@
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
 :root{
-  --paper:#F4EFE3;          /* cream */
-  --paper-2:#EAE3D2;
+  --paper:#EBE5D3;          /* cream，降一档明度，与全站东方调性相融 */
+  --paper-2:#DCD3BC;
   --ink:#13131A;            /* almost black */
   --ink-2:#3A3A48;
   --ink-3:#7A7A88;
   --line:#13131A;
 
-  --c-coral:#FF5C39;        /* engine */
-  --c-blue:#2E5AAC;         /* fuel */
-  --c-lime:#C8E03D;         /* wheels */
-  --c-yellow:#FFC93C;       /* turbo */
-  --c-pink:#FF7AB8;         /* steering */
+  /* 5 子系统调色板 — 调和后接入站点 m1-m8 / accent palette */
+  --c-coral:#C36B5E;        /* engine — ember 琥珀红（was candy #FF5C39） */
+  --c-blue:#7FA8AD;         /* fuel — accent-teal 静青（was ultramarine #2E5AAC） */
+  --c-lime:#88A878;         /* wheels — accent-sage 薄荷（was lime #C8E03D） */
+  --c-yellow:#E8B87A;       /* turbo — gold 柔金（was marigold #FFC93C） */
+  --c-pink:#8E7AB8;         /* steering — accent-violet 柔紫（was candy pink #FF7AB8） */
   --c-purple:#5B2A86;
   --c-mint:#A8E6CF;
 }
@@ -207,7 +208,7 @@ a{ color:inherit; text-decoration:none; }
   font-size:clamp(80px,12vw,180px); line-height:.8; color:var(--ink);
 }
 .section-head .title{
-  font-family:'Inter',sans-serif; font-weight:900; text-transform:uppercase;
+  font-family:'Inter','Noto Serif SC',sans-serif; font-weight:900; text-transform:uppercase;
   font-size:clamp(28px,3.5vw,56px); line-height:.95; letter-spacing:-.02em;
 }
 .section-head .title small{
@@ -279,7 +280,7 @@ a{ color:inherit; text-decoration:none; }
   text-transform:uppercase; opacity:.7; margin-bottom:14px;
 }
 .module-head .h-right .name{
-  font-family:'Inter',sans-serif; font-weight:900; font-size:clamp(36px,5vw,80px);
+  font-family:'Inter','Noto Serif SC',sans-serif; font-weight:900; font-size:clamp(36px,5vw,80px);
   line-height:1; text-transform:uppercase; letter-spacing:-.02em;
 }
 .module-head .h-right .name em{
@@ -604,7 +605,7 @@ a{ color:inherit; text-decoration:none; }
         </div>
       </a>
 
-      <a href="#fuel" class="dash-cell" style="--dc:var(--c-blue); --dt:#fff;" data-cursor="fuel">
+      <a href="#fuel" class="dash-cell" style="--dc:var(--c-blue);" data-cursor="fuel">
         <div class="dn"><span>02 · FUEL</span><span class="num">燃料</span></div>
         <div class="icon-wrap">
           <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2">
@@ -655,7 +656,7 @@ a{ color:inherit; text-decoration:none; }
         </div>
       </a>
 
-      <a href="#steering" class="dash-cell" style="--dc:var(--c-pink);" data-cursor="review">
+      <a href="#steering" class="dash-cell" style="--dc:var(--c-pink); --dt:#fff;" data-cursor="review">
         <div class="dn"><span>05 · STEER</span><span class="num">方向盘</span></div>
         <div class="icon-wrap">
           <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2">
@@ -786,7 +787,7 @@ a{ color:inherit; text-decoration:none; }
 </section>
 
 <!-- ====== MODULE 02: FUEL 认知输入 ====== -->
-<section class="module" id="fuel" style="--mc:var(--c-blue); --mt:#F2F5FB;">
+<section class="module" id="fuel" style="--mc:var(--c-blue); --mt:var(--ink);">
   <div class="module-inner">
     <div class="module-head reveal">
       <div class="sysnum">02</div>
@@ -887,7 +888,7 @@ a{ color:inherit; text-decoration:none; }
 </section>
 
 <!-- ====== MODULE 05: STEERING 复盘迭代 ====== -->
-<section class="module" id="steering" style="--mc:var(--c-pink); --mt:var(--ink);">
+<section class="module" id="steering" style="--mc:var(--c-pink); --mt:#F4F0FB;">
   <div class="module-inner">
     <div class="module-head reveal">
       <div class="sysnum">05</div>
