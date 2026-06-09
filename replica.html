@@ -374,49 +374,68 @@ body::-webkit-scrollbar { width: 0; height: 0; }
 }
 .s__work-scene {
   position: absolute; inset: 0;
-  display: flex; align-items: center;
+  perspective: 40rem;
   will-change: transform;
 }
 /* 巨字逐字母（背景透视炸开） */
 .s__scene-letters {
+  --state: 0;
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   display: flex; gap: .02em;
-  font: 900 min(40vw, 26rem)/.8 var(--font-bigger-cn);
+  font: 700 min(18.75rem, 25lvh)/1 var(--font-bigger-cn);
   pointer-events: none; user-select: none;
 }
 .s__scene-letter {
   --head: calc((var(--progress, .5) - .5) * -2);
   --ahead: calc(var(--head) * var(--head));
   position: relative; display: block;
+  line-height: .85;
   color: var(--color-primary);
   transform:
-    rotateY(calc(var(--head) * -14deg))
-    translate3d(calc(var(--head) * var(--ix, 0) * 28vw), calc(var(--iy, 0) * 30% * var(--ahead)), 0);
+    rotateY(calc(var(--head) * -10deg * var(--state)))
+    translate3d(
+      calc(var(--head) * 50vw * var(--state)),
+      calc(var(--iy, 0) * 50% * var(--ahead) * var(--state)),
+      0);
   transition: transform .9s var(--ease-elastic-1);
   will-change: transform;
 }
 .s__scene-letter::before {
   content: attr(data-letter);
   position: absolute; top: 0; left: 0; z-index: -1;
-  color: var(--color-shadow); opacity: .5;
-  transform: scale(1.05, 1.02) translate3d(calc(var(--head) * .18em), 0, 0);
+  color: var(--color-shadow);
+  opacity: min(calc(var(--state) * 2), 1);
+  transform: scale(1.05, 1.02) translate3d(calc(var(--head) * .1rem * var(--state) * var(--state)), 0, 0);
   transform-origin: calc(50% - var(--head) * 50%) -50%;
 }
 
-/* 横向滚动的作品卡轨道 */
+/* 作品卡轨道容器 */
 .s__work-track {
-  position: relative; z-index: 2;
-  display: flex; align-items: center; gap: 2.5rem;
-  padding: 0 12vw; height: 100%;
+  position: absolute; inset: 0; z-index: 2;
   will-change: transform;
 }
+/* 逐卡 3D 透视推进 */
 .s__work-card {
-  flex: 0 0 auto; width: 22rem; min-height: 16rem;
+  position: absolute; top: 50%; left: 50%; z-index: 2;
+  --progress: .5; --y: .5; --size: 1;
+  width: 22rem; min-height: 16rem;
   border: 1px solid var(--color-primary);
   background: var(--color-secondary);
   padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;
-  transition: background .4s var(--ease-elastic-1), color .4s var(--ease-elastic-1);
+  transform:
+    rotateY(calc(var(--progress) * -20deg))
+    translate3d(
+      calc(var(--progress) * (50vw + 100%) - 50%),
+      calc(var(--y) * 50% - 50%),
+      calc(var(--progress) * var(--progress) * -5rem))
+    scale(var(--size));
+  transition:
+    translate 1s cubic-bezier(.23,1,.32,1),
+    scale 1.5s cubic-bezier(.86,0,.07,1),
+    background .4s var(--ease-elastic-1),
+    color .4s var(--ease-elastic-1);
+  will-change: transform;
 }
 .s__work-card:hover { background: var(--color-primary); color: var(--color-secondary); }
 .s__work-card .idx {
@@ -440,7 +459,10 @@ body::-webkit-scrollbar { width: 0; height: 0; }
     display: grid; grid-template-columns: 1fr; gap: 1rem;
     padding: 3rem 1.5rem 5rem;
   }
-  .s__work-list .s__work-card { width: 100%; min-height: auto; }
+  .s__work-list .s__work-card {
+    position: relative; top: auto; left: auto;
+    width: 100%; min-height: auto; transform: none;
+  }
   .s__mobile-bigtitle {
     font: 900 28vw/.85 var(--font-bigger-cn);
     text-align: center; padding: 2rem 0; letter-spacing: -0.01em;
@@ -477,15 +499,25 @@ body::-webkit-scrollbar { width: 0; height: 0; }
 .s__catcher {
   position: absolute; bottom: 0; left: 0; z-index: 2;
   width: 100%;
-  perspective: calc(var(--distortion, 12) * .85em);
+  perspective: calc(var(--distortion, 0.05) * 800px);
+  --amplitude: 50%; --offset: 15%;
   user-select: none; pointer-events: none;
-  font: 900 var(--padding)/1 var(--font-bigger-cn);
+  font: 700 var(--padding)/1 var(--font-bigger-cn);
   color: var(--color-primary);
   text-align: center;
 }
 .s__catcher__distorted {
   transform-origin: 50% 100%;
-  transform: matrix3d(1,0,0,0, 0,1,calc(var(--distortion, 12) / 100),0, 0,0,1,0, 0,0,0,1);
+  transform: matrix3d(1,0,0,0, 0,1,var(--distortion, 0.05),0, 0,0,1,0, 0,0,0,1);
+}
+/* P2: 旋转小圆标 */
+@keyframes rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.s__rotate-badge {
+  position: absolute; z-index: 4; right: 8%; bottom: 22%;
+  width: 3.4rem; height: 3.4rem; line-height: 3.4rem; text-align: center;
+  border: 1px solid var(--color-primary); border-radius: 999rem;
+  color: var(--color-primary); font-size: 1.2rem;
+  animation: rotate 10s linear infinite; will-change: transform;
 }
 
 /* ============================================================
@@ -555,7 +587,7 @@ body::-webkit-scrollbar { width: 0; height: 0; }
 
 /* 巨字「追光」 */
 .s__cta__big {
-  font: 900 clamp(60px, 16vw, 12rem)/.9 var(--font-bigger-cn);
+  font: 700 calc(var(--size) * .3743)/.9 var(--font-bigger-cn);
   letter-spacing: -0.01em; margin-bottom: 1.4rem; position: relative; z-index: 2;
 }
 /* 逐字跳动「加我微信」 */
@@ -845,6 +877,8 @@ body::-webkit-scrollbar { width: 0; height: 0; }
       <span class="s__floater" style="top:70%;left:14%">自我对话</span>
     </div>
   </div>
+  <!-- 旋转小圆标 -->
+  <div class="s__rotate-badge" aria-hidden="true">✦</div>
   <!-- 躺倒透视巨字「追光」 -->
   <div class="s__catcher js-catcher" aria-hidden="true">
     <div class="s__catcher__distorted">追光</div>
@@ -1041,24 +1075,36 @@ body::-webkit-scrollbar { width: 0; height: 0; }
     const stage = document.querySelector('.js-work-stage');
     const track = document.querySelector('.js-work-track');
     const letters = document.querySelector('.js-scene-letters');
-    if (stage && track) {
-      const getDist = () => Math.max(0, track.scrollWidth - window.innerWidth + window.innerWidth * 0.2);
-      gsap.to(track, {
-        x: () => -getDist(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: stage,
-          start: 'top top',
-          end: () => '+=' + getDist(),
-          scrub: 1,
-          pin: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            // 把进度映射到 CSS 变量 --progress（巨字逐字母透视炸开）
-            if (letters) letters.style.setProperty('--progress', self.progress.toFixed(4));
-            document.querySelectorAll('.js-scene-letters .s__scene-letter')
-              .forEach((l) => l.style.setProperty('--progress', self.progress.toFixed(4)));
-          },
+    const sceneLetterEls = [...document.querySelectorAll('.js-scene-letters .s__scene-letter')];
+    const cards = [...document.querySelectorAll('.js-work-track .s__work-card')];
+    // --size / --y 只初始化一次，不每帧重随机
+    cards.forEach((c) => {
+      c.style.setProperty('--size', (0.6 + Math.random() * 0.9).toFixed(3));
+      c.style.setProperty('--y', (0.5 + Math.random()).toFixed(3));
+    });
+    if (stage && track && cards.length) {
+      const span = cards.length;
+      ScrollTrigger.create({
+        trigger: stage,
+        start: 'top top',
+        end: () => '+=' + (window.innerHeight * span),
+        scrub: 1,
+        pin: true,
+        invalidateOnRefresh: true,
+        onToggle: (self) => {
+          // section 激活时巨字炸开（--state 门控）
+          if (letters) letters.style.setProperty('--state', self.isActive ? '1' : '0');
+        },
+        onUpdate: (self) => {
+          // 巨字逐字母透视炸开：喂 --progress
+          const p = self.progress.toFixed(4);
+          if (letters) letters.style.setProperty('--progress', p);
+          sceneLetterEls.forEach((l) => l.style.setProperty('--progress', p));
+          // 逐卡 3D 推进：中心=0，右侧>0，左侧<0
+          cards.forEach((c, i) => {
+            const local = self.progress * span - i;
+            c.style.setProperty('--progress', local.toFixed(4));
+          });
         },
       });
     }
@@ -1076,9 +1122,9 @@ body::-webkit-scrollbar { width: 0; height: 0; }
       const vh = window.innerHeight;
       // 0(进入) → 1(底部贴合视口底)
       let p = 1 - Math.min(Math.max(rect.bottom / (vh + rect.height), 0), 1);
-      // distortion：从近乎平躺(大值)收敛到立起(小值)
-      const distortion = 30 - p * 24; // 30 → 6
-      cat.style.setProperty('--distortion', distortion.toFixed(2));
+      // distortion：raw 值，p:0→1 ⇒ 0.45→0.02（平躺→立起）
+      const distortion = 0.45 - p * 0.43;
+      cat.style.setProperty('--distortion', distortion.toFixed(4));
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
