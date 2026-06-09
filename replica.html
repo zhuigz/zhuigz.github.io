@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>追光者 · 曹宗昱 | The Light Chaser</title>
+<meta name="description" content="追光者 · 曹宗昱的个人作品集。一个 ENFJ 追光少年的成长印记、信念与 AI 原生工作流 —— Editorial 杂志风滚动叙事复刻。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- 字体：Fraunces(衬线 display) / Anton·Archivo(超大无衬线) / Space Mono(等宽) + 中文 Noto -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=Anton&family=Archivo:wght@600;700;900&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet" />
+
+<!-- GSAP + ScrollTrigger + Lenis (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<style>
+/* ============================================================
+   追光者 · 复刻 —— Editorial / Swiss 杂志风 + scrollytelling
+   暖奶油纸张 + 深棕墨色，超大 display 标题 + mono 旁注
+   ============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* —— 核心配色令牌（精确照搬源码） —— */
+  --color-primary: #eee7d8;   /* 主背景 / 深块反白字 */
+  --color-secondary: #1a0b08; /* 主文字 / 深块底 */
+  --color-shadow: #c8bda9;    /* 次级灰 / 描边投影 */
+  --color-white: #fff8ea;     /* 亮反白 */
+
+  /* —— 字体栈（付费字 → 免费替代 + 中文回退） —— */
+  --font-editorial: "Fraunces", "Songti SC", "Noto Serif SC", "Microsoft YaHei", serif;
+  --font-bigger: "Anton", "Archivo", "Noto Sans SC", sans-serif;
+  --font-bigger-cn: "Noto Sans SC", "Anton", sans-serif;
+  --font-fraktion: "Space Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  --font-size-base: 16px;
+  --font-height-base: 1.48;
+  --font-spacing-base: -0.025em;
+
+  /* —— 缓动指纹 —— */
+  --ease-drama-1: cubic-bezier(.86, 0, .07, 1);
+  --ease-drama-2: cubic-bezier(1, 0, 0, 1);
+  --ease-elastic-1: cubic-bezier(.23, 1, .32, 1);
+  --ease-elastic-2: cubic-bezier(.215, .61, .355, 1);
+}
+
+/* —— 换肤彩蛋：切换对比度 —— */
+.theme-contrasted {
+  --color-primary: #f40c3f;
+  --color-secondary: #160000;
+  --color-shadow: #540000;
+  --color-white: #fff0eb;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  font: var(--font-weight-base, 400) var(--font-size-base) / var(--font-height-base) var(--font-editorial);
+  letter-spacing: var(--font-spacing-base);
+  /* 原生滚动（不引 Lenis 接管 body 高度，避免冲突；Lenis 仅平滑 window 滚动） */
+  overflow-x: hidden;
+  transition: background .6s var(--ease-drama-1), color .6s var(--ease-drama-1);
+  cursor: none;
+}
+@media (pointer: coarse) { body { cursor: auto; } }
+
+::selection { background: var(--color-secondary); color: var(--color-primary); }
+
+a { color: inherit; }
+
+/* 隐藏原生滚动条（用自定义） */
+body::-webkit-scrollbar { width: 0; height: 0; }
+@media (pointer: coarse) {
+  body::-webkit-scrollbar { width: 6px; }
+  body::-webkit-scrollbar-thumb { background: var(--color-secondary); }
+}
+
+.u-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================
+   0. 站头 site-head（控制台 + 菜单 + caret）
+   ============================================================ */
+.site-head {
+  position: sticky; top: 0; z-index: 50;
+  width: 100%;
+  border-bottom: 1px solid var(--color-secondary);
+  background: var(--color-primary);
+  transition: background .6s var(--ease-drama-1);
+}
+.site-head__container {
+  display: flex; align-items: stretch; justify-content: space-between;
+  width: 100%; height: 6rem;
+}
+.sb-logo {
+  padding: 1.5rem; width: 6rem; height: 6rem;
+  border-right: 1px solid var(--color-secondary);
+  display: flex; align-items: center; justify-content: center;
+}
+.sb-logo svg { width: 3rem; height: 3rem; }
+.sb-logo svg rect { fill: var(--color-secondary); }
+
+/* 控制台启动日志 */
+.sb-console {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  margin: 0 auto 0 0; padding: 1.5rem;
+  font: 400 9px/1.5 var(--font-fraktion);
+  text-transform: uppercase; white-space: pre-line;
+  color: var(--color-secondary);
+}
+.sb-console__inner {
+  height: 6em; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+}
+.sb-console .caret { display: inline-block; animation: site-head-caret 1s steps(1) infinite; }
+@keyframes site-head-caret { 0%, to { opacity: 1; } 50% { opacity: 0; } }
+@media (max-width: 767px) { .sb-console { display: none; } }
+
+/* 菜单 */
+.sb-menu { border-left: 1px solid var(--color-secondary); }
+.sb-menu .sb__list { display: flex; align-items: center; height: 100%; list-style: none; }
+.sb-menu a {
+  display: block; padding: 2rem;
+  font: 400 13px/1 var(--font-fraktion);
+  letter-spacing: .08em; text-decoration: none; text-transform: uppercase;
+  color: var(--color-secondary); background: none; border: 0; cursor: none;
+}
+@media (pointer: coarse) { .sb-menu a, .sb-contrast { cursor: pointer; } }
+.sb-menu .sb__text { position: relative; display: inline-block; }
+.sb-menu .sb__text::before {
+  position: absolute; top: calc(50% - 3px); left: -13px;
+  border-top: 3px solid transparent; border-left: 6px solid currentColor;
+  border-bottom: 3px solid transparent; opacity: 0; content: "";
+}
+.sb-menu a:hover .sb__text::before { animation: blink-in .3s var(--ease-drama-2) forwards; }
+.sb-menu a:hover { text-shadow: 0 0 1px currentColor; }
+@keyframes blink-in { 0%,30%,60% { opacity: 0; } 15%,45%,75%,to { opacity: 1; } }
+@media (max-width: 987px) { .sb-menu { display: none; } }
+
+/* 切换对比度按钮 */
+.sb-contrast {
+  border-left: 1px solid var(--color-secondary);
+  width: 6rem; background: none; cursor: none;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-secondary);
+  font: 400 11px/1.3 var(--font-fraktion);
+  text-transform: uppercase; letter-spacing: .06em; text-align: center;
+  transition: background .3s var(--ease-elastic-1);
+}
+.sb-contrast:hover { background: var(--color-secondary); color: var(--color-primary); }
+.sb-contrast .dot {
+  display: inline-block; width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid currentColor; margin-bottom: 6px;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+@media (max-width: 767px) { .sb-contrast { width: 4rem; padding: 0 .5rem; } .sb-contrast span.txt { display: none; } }
+@media (max-width: 767px) { .site-head__container { height: 4rem; } .sb-logo { width: 4rem; height: 4rem; padding: 1rem; } .sb-logo svg { width: 1.875rem; height: 1.875rem; } }
+
+/* ============================================================
+   1. HERO —— 二进制网格 + 居中巨字
+   ============================================================ */
+.s-hero {
+  position: relative; z-index: 4;
+  min-height: calc(100svh - 6rem - 1px);
+  display: flex; flex-direction: column;
+  align-items: stretch; justify-content: stretch;
+  overflow: hidden;
+}
+@media (max-width: 767px) { .s-hero { min-height: calc(100svh - 4rem - 1px); } }
+
+/* 二进制 0/1 背景网格 */
+.s__waves {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+  font: 700 14px/1.1 var(--font-fraktion);
+  color: var(--color-shadow);
+  opacity: .55; user-select: none; pointer-events: none;
+  word-break: break-all; letter-spacing: .25em;
+  padding: 1rem;
+}
+.s__waves b { color: var(--color-secondary); font-weight: 700; }
+
+.s__hero-inner {
+  position: relative; z-index: 2; flex-grow: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 3rem 1.5rem;
+}
+.s__eyebrow {
+  font: 400 12px/1 var(--font-fraktion);
+  text-transform: uppercase; letter-spacing: .25em;
+  color: var(--color-secondary); margin-bottom: 1.5rem;
+}
+/* 超大巨字标题：中文用 Noto Sans SC 900 */
+.s__title {
+  display: flex; align-items: center; justify-content: center;
+  cursor: default;
+  font: 900 min(34vw, 22rem)/.82 var(--font-bigger-cn);
+  letter-spacing: -0.01em;
+  color: var(--color-secondary);
+}
+.s__title .glyph {
+  position: relative; display: inline-block;
+}
+/* 错位投影 */
+.s__title .glyph::before {
+  content: attr(data-char);
+  position: absolute; top: 0; left: 0; z-index: -1;
+  color: var(--color-shadow);
+  transform: translate3d(.05em, .05em, 0);
+}
+/* Hero 飞出离场（点击巨字触发，纯彩蛋） */
+.s__title.is-leaving .glyph:nth-child(1) { animation: s-hero-move-to-left 1s var(--ease-drama-1) forwards; }
+.s__title.is-leaving .glyph:nth-child(2) { animation: s-hero-move-to-top 1s var(--ease-drama-1) forwards; }
+.s__title.is-leaving .glyph:nth-child(3) { animation: s-hero-move-to-right 1s var(--ease-drama-1) forwards; }
+@keyframes s-hero-move-to-left   { 0% { transform: translateZ(0); } to { transform: translate3d(-100%,0,0); } }
+@keyframes s-hero-move-to-right  { 0% { transform: translateZ(0); } to { transform: translate3d(100%,0,0); } }
+@keyframes s-hero-move-to-top    { 0% { transform: translateZ(0); } to { transform: translate3d(0,-100%,0); } }
+@keyframes s-hero-move-to-bottom { 0% { transform: translateZ(0); } to { transform: translate3d(0,100%,0); } }
+
+.s__alias {
+  margin-top: 2rem;
+  font: 500 italic clamp(15px, 2.4vw, 24px)/1.2 var(--font-editorial);
+  letter-spacing: .04em; color: var(--color-secondary);
+}
+.s__alias .sep { margin: 0 .6em; }
+.s__mission {
+  margin-top: 1.6rem; max-width: 40rem;
+  font: 400 clamp(13px, 1.6vw, 17px)/1.6 var(--font-editorial);
+  color: var(--color-secondary);
+}
+.s__mission em { font-style: normal; text-decoration: underline; text-underline-offset: .25em; text-decoration-thickness: 1.5px; }
+
+.s__scroll-hint {
+  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  font: 400 11px/1 var(--font-fraktion);
+  text-transform: uppercase; letter-spacing: .2em; color: var(--color-secondary);
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+}
+.s__scroll-hint .ln {
+  width: 1px; height: 2.4rem; background: var(--color-secondary);
+  transform-origin: top; animation: scroll-line 2.2s ease-in-out infinite;
+}
+@keyframes scroll-line {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ============================================================
+   2. ABOUT —— 自述 + Signals 标签矩阵 + 二进制 awards 行
+   ============================================================ */
+.s-section { position: relative; z-index: 4; background: var(--color-primary); }
+.s-about {
+  border-top: 1px solid var(--color-secondary);
+  padding: 7rem 0;
+}
+.wrap { width: 100%; max-width: 84rem; margin: 0 auto; padding: 0 2rem; }
+.kicker {
+  font: 400 12px/1 var(--font-fraktion);
+  text-transform: uppercase; letter-spacing: .2em;
+  margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;
+}
+.kicker::before { content: ""; width: 3rem; height: 1px; background: var(--color-secondary); }
+
+.s-about__grid {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem;
+}
+@media (max-width: 1080px) { .s-about__grid { grid-template-columns: 1fr; gap: 3rem; } }
+
+.s-about__lede {
+  font: 500 clamp(22px, 3.4vw, 44px)/1.15 var(--font-editorial);
+  letter-spacing: -0.02em;
+}
+.s-about__lede em {
+  font-style: italic;
+  background: linear-gradient(transparent 70%, var(--color-shadow) 0);
+}
+.s-about__body {
+  margin-top: 1.6rem;
+  font: 400 clamp(14px, 1.5vw, 17px)/1.7 var(--font-editorial);
+  max-width: 34rem;
+}
+
+/* Signals 标签矩阵 */
+.s__signals { display: flex; flex-direction: column; gap: 0; }
+.s__signal-row {
+  display: grid; grid-template-columns: 7rem 1fr;
+  align-items: baseline; gap: 1.2rem;
+  padding: 1.1rem 0; border-top: 1px solid var(--color-secondary);
+}
+.s__signal-row:last-child { border-bottom: 1px solid var(--color-secondary); }
+.s__signal-key {
+  font: 400 11px/1.3 var(--font-fraktion);
+  text-transform: uppercase; letter-spacing: .12em; opacity: .7;
+}
+.s__signal-val {
+  font: 500 clamp(14px, 1.6vw, 18px)/1.4 var(--font-editorial);
+}
+.s__signal-val .pill {
+  display: inline-block; padding: .15em .6em;
+  border: 1px solid var(--color-secondary);
+  font: 700 12px/1 var(--font-fraktion); text-transform: uppercase;
+  letter-spacing: .05em; vertical-align: middle; margin-right: .4em;
+}
+
+/* 二进制 awards 行 + KEY METRICS */
+.s__awards {
+  margin-top: 3rem; padding: 1.4rem 0;
+  border-top: 1px solid var(--color-secondary);
+  border-bottom: 1px solid var(--color-secondary);
+  font: 700 12px/1.4 var(--font-fraktion);
+  color: var(--color-shadow);
+  word-break: break-all; overflow: hidden; height: 3.6em;
+  letter-spacing: .2em;
+}
+.s__awards b { color: var(--color-secondary); }
+
+.s__metrics {
+  margin-top: 4rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border: 1px solid var(--color-secondary);
+}
+@media (max-width: 767px) { .s__metrics { grid-template-columns: repeat(2, 1fr); } }
+.s__metric {
+  padding: 2rem 1.4rem;
+  border-right: 1px solid var(--color-secondary);
+  position: relative;
+}
+.s__metric:last-child { border-right: 0; }
+@media (max-width: 767px) {
+  .s__metric:nth-child(2n) { border-right: 0; }
+  .s__metric:nth-child(-n+2) { border-bottom: 1px solid var(--color-secondary); }
+}
+.s__metric .num {
+  font: 900 clamp(40px, 6vw, 76px)/.85 var(--font-bigger);
+  letter-spacing: -0.02em;
+}
+.s__metric .num .u { font-size: .42em; vertical-align: super; }
+.s__metric .lab {
+  margin-top: .8rem; font: 400 12px/1.4 var(--font-fraktion);
+  text-transform: uppercase; letter-spacing: .08em; opacity: .75;
+}
+
+/* ============================================================
+   3. WORK —— 横向 scrub 巨字逐字母炸开
+   ============================================================ */
+.s-work {
+  position: relative; z-index: 3;
+  background: var(--color-secondary); color: var(--color-primary);
+}
+.s-work .wrap-head { padding: 6rem 2rem 0; max-width: 84rem; margin: 0 auto; }
+.s-work .kicker::before { background: var(--color-primary); }
+.s-work .s__work-title {
+  font: 500 clamp(26px, 4vw, 54px)/1.05 var(--font-editorial);
+  letter-spacing: -0.02em; margin-bottom: 1rem;
+}
+.s-work .s__work-sub {
+  font: 400 14px/1.6 var(--font-fraktion); text-transform: uppercase;
+  letter-spacing: .1em; opacity: .65; max-width: 30rem;
+}
+
+/* 钉住的横向舞台（桌面） */
+.s__work-stage {
+  position: relative; height: 100vh; overflow: hidden;
+  perspective: 40rem;
+}
+.s__work-scene {
+  position: absolute; inset: 0;
+  display: flex; align-items: center;
+  will-change: transform;
+}
+/* 巨字逐字母（背景透视炸开） */
+.s__scene-letters {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; gap: .02em;
+  font: 900 min(40vw, 26rem)/.8 var(--font-bigger-cn);
+  pointer-events: none; user-select: none;
+}
+.s__scene-letter {
+  --head: calc((var(--progress, .5) - .5) * -2);
+  --ahead: calc(var(--head) * var(--head));
+  position: relative; display: block;
+  color: var(--color-primary);
+  transform:
+    rotateY(calc(var(--head) * -14deg))
+    translate3d(calc(var(--head) * var(--ix, 0) * 28vw), calc(var(--iy, 0) * 30% * var(--ahead)), 0);
+  transition: transform .9s var(--ease-elastic-1);
+  will-change: transform;
+}
+.s__scene-letter::before {
+  content: attr(data-letter);
+  position: absolute; top: 0; left: 0; z-index: -1;
+  color: var(--color-shadow); opacity: .5;
+  transform: scale(1.05, 1.02) translate3d(calc(var(--head) * .18em), 0, 0);
+  transform-origin: calc(50% - var(--head) * 50%) -50%;
+}
+
+/* 横向滚动的作品卡轨道 */
+.s__work-track {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 2.5rem;
+  padding: 0 12vw; height: 100%;
+  will-change: transform;
+}
+.s__work-card {
+  flex: 0 0 auto; width: 22rem; min-height: 16rem;
+  border: 1px solid var(--color-primary);
+  background: var(--color-secondary);
+  padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;
+  transition: background .4s var(--ease-elastic-1), color .4s var(--ease-elastic-1);
+}
+.s__work-card:hover { background: var(--color-primary); color: var(--color-secondary); }
+.s__work-card .idx {
+  font: 400 12px/1 var(--font-fraktion); text-transform: uppercase;
+  letter-spacing: .12em; opacity: .75; margin-bottom: 1.4rem;
+}
+.s__work-card .ttl {
+  font: 500 clamp(20px, 2.4vw, 28px)/1.1 var(--font-editorial);
+  letter-spacing: -0.02em; margin-bottom: .8rem;
+}
+.s__work-card .desc {
+  font: 400 13px/1.55 var(--font-editorial); opacity: .85;
+}
+.s__work-card .num { font-weight: 600; font-style: italic; }
+
+/* 移动端降级：纵向卡片列表 */
+.s__work-list { display: none; }
+@media (max-width: 767px) {
+  .s__work-stage { display: none; }
+  .s__work-list {
+    display: grid; grid-template-columns: 1fr; gap: 1rem;
+    padding: 3rem 1.5rem 5rem;
+  }
+  .s__work-list .s__work-card { width: 100%; min-height: auto; }
+  .s__mobile-bigtitle {
+    font: 900 28vw/.85 var(--font-bigger-cn);
+    text-align: center; padding: 2rem 0; letter-spacing: -0.01em;
+  }
+}
+
+/* ============================================================
+   4. MY WAY —— catcher 巨字 matrix3d 地平线变形
+   ============================================================ */
+.s-my-way {
+  position: relative; z-index: 3;
+  background: var(--color-secondary); color: var(--color-primary);
+  min-height: 80vh; overflow: hidden;
+  --padding: clamp(8rem, 22vw, 20rem);
+}
+.s-my-way .wrap-head { padding: 5rem 2rem 0; max-width: 84rem; margin: 0 auto; }
+.s-my-way .kicker::before { background: var(--color-primary); }
+.s-my-way .myway-lede {
+  font: 500 clamp(20px, 3vw, 40px)/1.2 var(--font-editorial);
+  letter-spacing: -0.02em; max-width: 38rem;
+}
+/* 漂浮关键词缩略 */
+.s__floaters {
+  position: relative; height: 30vh; margin-top: 3rem;
+}
+.s__floater {
+  position: absolute;
+  font: 400 italic clamp(13px, 1.6vw, 20px)/1 var(--font-editorial);
+  border: 1px solid var(--color-primary); padding: .5em 1em; border-radius: 999rem;
+  white-space: nowrap; will-change: transform;
+}
+
+/* catcher：底部躺倒透视巨字 */
+.s__catcher {
+  position: absolute; bottom: 0; left: 0; z-index: 2;
+  width: 100%;
+  perspective: calc(var(--distortion, 12) * .85em);
+  user-select: none; pointer-events: none;
+  font: 900 var(--padding)/1 var(--font-bigger-cn);
+  color: var(--color-primary);
+  text-align: center;
+}
+.s__catcher__distorted {
+  transform-origin: 50% 100%;
+  transform: matrix3d(1,0,0,0, 0,1,calc(var(--distortion, 12) / 100),0, 0,0,1,0, 0,0,0,1);
+}
+
+/* ============================================================
+   5. CTA —— 圆形揭示 + 巨字 + 逐字跳动 + 星星 + 复制微信
+   ============================================================ */
+.s-cta {
+  position: relative; z-index: 2;
+  background: var(--color-primary);
+  padding: 18rem 0; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+@media (max-width: 767px) { .s-cta { padding: 9rem 0; } }
+.s__hover {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+/* 中央按钮（默认态：小圆 + GO） */
+.s__button {
+  position: relative; z-index: 1;
+  width: 6rem; height: 6rem; cursor: none;
+  color: var(--color-primary);
+  font: 900 2.4rem/6rem var(--font-bigger);
+  text-align: center; text-transform: uppercase; letter-spacing: .05em;
+}
+@media (pointer: coarse) { .s__button { cursor: pointer; } }
+.s__button__inner {
+  position: absolute; inset: 0;
+  background: var(--color-secondary); border-radius: 999rem;
+  transition: scale 1s var(--ease-elastic-1) .2s; will-change: scale; z-index: -1;
+}
+.s__button__text { position: relative; transition: scale 1.2s var(--ease-elastic-1) .2s; }
+.s__hover.is-active .s__button__inner { scale: 1.5; transition: scale .6s cubic-bezier(.755,.05,.855,.06) 0s; }
+.s__hover.is-active .s__button__text { scale: 2; transition: scale .6s cubic-bezier(.55,.055,.675,.19) 0s; }
+
+/* 圆形揭示面板 */
+.s__cta {
+  --size: 64rem;
+  position: absolute;
+  top: calc(50% - var(--size) / 2); left: calc(50% - var(--size) / 2);
+  z-index: 2; width: var(--size); height: var(--size);
+  background: var(--color-secondary); border-radius: 999rem;
+  clip-path: circle(0 at 50% 50%); overflow: hidden;
+  color: var(--color-primary); pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  transition: clip-path 1s var(--ease-drama-2) .2s;
+}
+@media (max-width: 767px) { .s__cta { --size: 44rem; } }
+.s__hover.is-active .s__cta { clip-path: circle(50% at 50% 50%); pointer-events: auto; }
+
+/* 星星 */
+.s__cta__stars {
+  position: absolute; inset: 0; z-index: 1; scale: 1.25;
+  transition: scale .8s cubic-bezier(.55,.055,.675,.19); will-change: scale;
+  font-size: 18rem; pointer-events: none;
+}
+.s__hover.is-active .s__cta__stars { scale: 1; transition: scale 2s var(--ease-elastic-1) .4s; }
+.s__cta__star {
+  position: absolute; color: var(--color-primary);
+  animation: s-cta-star-float 10s infinite cubic-bezier(.455,.03,.515,.955); will-change: transform;
+}
+.s__cta__star:nth-child(1) { top: 12%; left: 25%; font-size: .15em; animation-duration: 8s; }
+.s__cta__star:nth-child(2) { top: 33%; left: 80%; font-size: .12em; animation-duration: 9s; }
+.s__cta__star:nth-child(3) { top: 60%; left: 11%; font-size: .12em; animation-duration: 7s; }
+.s__cta__star:nth-child(4) { top: 80%; left: 74%; font-size: .15em; }
+@keyframes s-cta-star-float { 0% { transform: translateZ(0); } 50% { transform: translate3d(0,-15%,0) scale(.5); } to { transform: translateZ(0); } }
+
+/* 巨字「追光」 */
+.s__cta__big {
+  font: 900 clamp(60px, 16vw, 12rem)/.9 var(--font-bigger-cn);
+  letter-spacing: -0.01em; margin-bottom: 1.4rem; position: relative; z-index: 2;
+}
+/* 逐字跳动「加我微信」 */
+.s__cta__text {
+  display: flex; flex-direction: row; align-items: flex-start; justify-content: center;
+  height: 1.1em; overflow: hidden; position: relative; z-index: 2;
+  font: 400 clamp(20px, 4vw, 40px)/1 var(--font-bigger-cn);
+}
+.s__cta__char { position: relative; height: 100%; display: inline-block; }
+.s__cta__char:nth-child(1) { --delay: .1s; }
+.s__cta__char:nth-child(2) { --delay: .2s; }
+.s__cta__char:nth-child(3) { --delay: .3s; }
+.s__cta__char:nth-child(4) { --delay: .4s; }
+.s__cta__char__slice {
+  --offset: 0s; --move-delay: calc(var(--delay) + var(--offset));
+  display: block; height: 100%;
+  animation: s-cta-char-up-down 2s infinite var(--move-delay); will-change: transform;
+}
+@keyframes s-cta-char-up-down {
+  0% { transform: translateZ(0); animation-timing-function: cubic-bezier(.215,.61,.355,1); }
+  25% { transform: translate3d(0,-52%,0); animation-timing-function: cubic-bezier(.645,.045,.355,1); }
+  75% { transform: translate3d(0,52%,0); animation-timing-function: cubic-bezier(.55,.055,.675,.19); }
+  to { transform: translateZ(0); }
+}
+/* 复制微信号 */
+.s__cta__wechat {
+  margin-top: 2.2rem; position: relative; z-index: 2;
+  display: inline-flex; flex-direction: column; align-items: center; gap: .6rem;
+}
+.s__cta__wechat .code {
+  font: 700 clamp(18px, 3vw, 30px)/1 var(--font-fraktion);
+  letter-spacing: .02em; padding: .5em 1em;
+  border: 1px solid var(--color-primary); cursor: none;
+  transition: background .3s var(--ease-elastic-1), color .3s var(--ease-elastic-1);
+}
+@media (pointer: coarse) { .s__cta__wechat .code { cursor: pointer; } }
+.s__cta__wechat .code:hover { background: var(--color-primary); color: var(--color-secondary); }
+.s__cta__wechat .hint { font: 400 12px/1 var(--font-fraktion); text-transform: uppercase; letter-spacing: .12em; opacity: .7; }
+
+/* ============================================================
+   6. FOOTER + 信念 manifesto
+   ============================================================ */
+.s-beliefs {
+  background: var(--color-primary); border-top: 1px solid var(--color-secondary);
+  padding: 7rem 0;
+}
+.manifesto { max-width: 60rem; margin: 0 auto; }
+.m-row {
+  display: grid; grid-template-columns: 5rem 1fr auto; align-items: baseline;
+  gap: 1.5rem; padding: 1.8rem 0;
+  border-top: 1px solid var(--color-secondary);
+  transition: padding .4s var(--ease-elastic-1);
+}
+.m-row:hover { padding-left: 1rem; }
+.m-row .m-num { font: 400 clamp(28px, 4vw, 48px)/1 var(--font-bigger); opacity: .25; }
+.m-row .m-text { font: 500 clamp(16px, 2vw, 22px)/1.4 var(--font-editorial); }
+.m-row .m-meta { font: 400 10px/1 var(--font-fraktion); text-transform: uppercase; letter-spacing: .12em; opacity: .5; white-space: nowrap; }
+@media (max-width: 767px) { .m-row { grid-template-columns: 3rem 1fr; } .m-row .m-meta { display: none; } }
+.m-row.is-final {
+  margin-top: 1.5rem; background: var(--color-secondary); color: var(--color-primary);
+  padding: 2rem 1.5rem; border: 0;
+}
+.m-row.is-final .m-num { opacity: .5; }
+.m-row.is-final .m-text { font-weight: 600; }
+
+.s-footer {
+  background: var(--color-secondary); color: var(--color-primary);
+  text-align: center; padding: 6rem 2rem 4rem;
+}
+.s-footer .f-logo {
+  font: 900 clamp(40px, 9vw, 9rem)/.9 var(--font-bigger-cn);
+  letter-spacing: -0.01em;
+}
+.s-footer .f-sub { margin-top: 1.4rem; font: 400 12px/1.6 var(--font-fraktion); text-transform: uppercase; letter-spacing: .18em; opacity: .8; }
+.s-footer .f-line { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid var(--color-primary); opacity: .4; font: 400 11px/1 var(--font-fraktion); letter-spacing: .08em; }
+
+/* ============================================================
+   滚动揭示 reveal（IntersectionObserver 三态）
+   ============================================================ */
+.reveal { opacity: 0; transform: translateY(2.5rem); transition: opacity .9s var(--ease-elastic-1), transform .9s var(--ease-elastic-1); }
+.reveal.is-in-view { opacity: 1; transform: none; }
+.reveal-stagger > * { opacity: 0; transform: translateY(1.8rem); transition: opacity .8s var(--ease-elastic-1), transform .8s var(--ease-elastic-1); }
+.reveal-stagger.is-in-view > * { opacity: 1; transform: none; }
+.reveal-stagger.is-in-view > *:nth-child(1){transition-delay:.05s}
+.reveal-stagger.is-in-view > *:nth-child(2){transition-delay:.1s}
+.reveal-stagger.is-in-view > *:nth-child(3){transition-delay:.15s}
+.reveal-stagger.is-in-view > *:nth-child(4){transition-delay:.2s}
+.reveal-stagger.is-in-view > *:nth-child(5){transition-delay:.25s}
+.reveal-stagger.is-in-view > *:nth-child(6){transition-delay:.3s}
+.reveal-stagger.is-in-view > *:nth-child(7){transition-delay:.35s}
+.reveal-stagger.is-in-view > *:nth-child(n+8){transition-delay:.4s}
+
+/* ============================================================
+   自定义光标
+   ============================================================ */
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--color-secondary); pointer-events: none;
+  transform: translate(-50%, -50%); mix-blend-mode: difference;
+  transition: width .3s var(--ease-elastic-1), height .3s var(--ease-elastic-1);
+}
+.cursor.is-big { width: 48px; height: 48px; }
+@media (pointer: coarse) { .cursor { display: none; } }
+
+/* 自定义滚动条（fixed 右侧） */
+.scrollbar {
+  position: fixed; top: 0; right: 0; width: 4px; height: 100vh; z-index: 9998;
+  background: transparent;
+}
+.scrollbar__thumb {
+  position: absolute; right: 0; width: 4px;
+  background: var(--color-secondary);
+  transition: background .3s;
+}
+@media (max-width: 987px) { .scrollbar { width: 3px; } .scrollbar__thumb { width: 3px; } }
+@media (pointer: coarse) { .scrollbar { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .1s !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- 自定义光标 + 滚动条 -->
+<div class="cursor" aria-hidden="true"></div>
+<div class="scrollbar" aria-hidden="true"><div class="scrollbar__thumb"></div></div>
+
+<!-- ===== 0. 站头 ===== -->
+<header class="site-head">
+  <div class="site-head__container">
+    <a class="sb-logo" href="#top" aria-label="追光者 CZY">
+      <!-- 「光」笔画化方块 logo（与源码同构的 brutalist mark） -->
+      <svg viewBox="0 0 280 280" aria-hidden="true">
+        <rect x="120" y="20" width="40" height="40"/>
+        <rect x="40" y="86" width="200" height="22"/>
+        <rect x="62" y="130" width="60" height="22"/>
+        <rect x="158" y="130" width="60" height="22"/>
+        <rect x="40" y="172" width="200" height="22"/>
+        <rect x="120" y="172" width="22" height="88"/>
+        <rect x="160" y="172" width="22" height="60"/>
+        <rect x="160" y="232" width="58" height="22"/>
+      </svg>
+      <span class="u-sr-only">追光者 CZY</span>
+    </a>
+
+    <div class="sb-console" role="presentation">
+      <div class="sb-console__inner js-console"></div>
+    </div>
+
+    <nav class="sb-menu">
+      <ul class="sb__list">
+        <li><a class="js-anchor" href="#about"><span class="sb__text">关于</span></a></li>
+        <li><a class="js-anchor" href="#work"><span class="sb__text">成长印记</span></a></li>
+        <li><a class="js-anchor" href="#beliefs"><span class="sb__text">信念</span></a></li>
+        <li><a class="js-anchor" href="#contact"><span class="sb__text">联系</span></a></li>
+      </ul>
+    </nav>
+
+    <button class="sb-contrast js-contrast" type="button" aria-label="切换对比度">
+      <span class="dot"></span>
+      <span class="txt">切换<br>对比度</span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== 1. HERO ===== -->
+<section class="s-hero" id="top">
+  <div class="s__waves js-waves" aria-hidden="true"></div>
+  <div class="s__hero-inner">
+    <div class="s__eyebrow">A young ENFJ chasing light</div>
+    <h1 class="s__title js-hero-title" aria-label="追光者">
+      <span class="glyph" data-char="追">追</span><span class="glyph" data-char="光">光</span><span class="glyph" data-char="者">者</span>
+    </h1>
+    <p class="s__alias">曹宗昱 <span class="sep">·</span> The Light Chaser</p>
+    <p class="s__mission">帮助更多年轻人<em>打破思维钢印</em>，看见人生的无限可能。</p>
+  </div>
+  <div class="s__scroll-hint" aria-hidden="true">
+    <span>SCROLL</span>
+    <span class="ln"></span>
+  </div>
+</section>
+
+<!-- ===== 2. ABOUT ===== -->
+<section class="s-section s-about" id="about">
+  <div class="wrap">
+    <div class="kicker reveal">About · 关于我</div>
+    <div class="s-about__grid">
+      <div class="reveal">
+        <p class="s-about__lede">一个 <em>ENFJ 追光少年</em>，把 AI 当放大器，把成长当复利，相信道阻且长，行则将至。</p>
+        <p class="s-about__body">
+          来自山西朔州，求学于湖北武汉的华中农业大学（在读）。
+          个人成长探索者、AI 原生实践者、FIRE 理念践行者。
+          座右铭：道阻且长，行则将至；行而不辍，未来可期。
+        </p>
+      </div>
+
+      <div class="s__signals reveal-stagger">
+        <div class="s__signal-row"><span class="s__signal-key">MBTI</span><span class="s__signal-val"><span class="pill">ENFJ-A</span>主人公</span></div>
+        <div class="s__signal-row"><span class="s__signal-key">Origin</span><span class="s__signal-val">山西朔州 · 求学武汉</span></div>
+        <div class="s__signal-row"><span class="s__signal-key">School</span><span class="s__signal-val">华中农业大学（在读）</span></div>
+        <div class="s__signal-row"><span class="s__signal-key">Hobbies</span><span class="s__signal-val">羽毛球 · 口琴 · 摄影 · 阅读 · 电影</span></div>
+        <div class="s__signal-row"><span class="s__signal-key">Roles</span><span class="s__signal-val">个人成长探索者 / AI 原生实践者 / FIRE 践行者</span></div>
+      </div>
+    </div>
+
+    <!-- 二进制 awards 行 -->
+    <div class="s__awards js-awards reveal" aria-hidden="true"></div>
+
+    <!-- KEY METRICS -->
+    <div class="s__metrics reveal-stagger">
+      <div class="s__metric"><div class="num" data-num="300">0<span class="u">W+</span></div><div class="lab">AI 对话字数</div></div>
+      <div class="s__metric"><div class="num" data-num="90">0<span class="u">W+</span></div><div class="lab">公众号阅读</div></div>
+      <div class="s__metric"><div class="num" data-num="780">0<span class="u">H+</span></div><div class="lab">成长课程时长</div></div>
+      <div class="s__metric"><div class="num" data-num="30">0<span class="u">W+</span></div><div class="lab">连续复盘字数</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. WORK 横向 scrub ===== -->
+<section class="s-work" id="work">
+  <div class="wrap-head reveal">
+    <div class="kicker">Work · 成长印记</div>
+    <h2 class="s__work-title">我确实做过的事 —— 不是为了好看，而是「我做了」。</h2>
+    <p class="s__work-sub">#light-0001 / 13 · scroll to traverse</p>
+  </div>
+
+  <!-- 桌面：钉住横向舞台 + 巨字逐字母炸开 -->
+  <div class="s__work-stage js-work-stage">
+    <div class="s__work-scene js-work-scene">
+      <div class="s__scene-letters js-scene-letters" aria-hidden="true">
+        <span class="s__scene-letter" data-letter="W" style="--ix:-2;--iy:-1">W</span>
+        <span class="s__scene-letter" data-letter="O" style="--ix:-1;--iy:1">O</span>
+        <span class="s__scene-letter" data-letter="R" style="--ix:1;--iy:1">R</span>
+        <span class="s__scene-letter" data-letter="K" style="--ix:2;--iy:-1">K</span>
+      </div>
+      <div class="s__work-track js-work-track">
+        <!-- 13 条成长印记作品卡 -->
+        <div class="s__work-card"><div class="idx">#light-0001 / 13</div><div class="ttl">AI 深度沟通</div><div class="desc">跟 Gemini / GPT / Claude 深度对话 <span class="num">300w+</span> 字，搭起个人 AI 原生工作流。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0002 / 13</div><div class="ttl">视觉创作</div><div class="desc">熟练驾驭 GPT-Image-2，原创图像 <span class="num">500+</span> 张。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0003 / 13</div><div class="ttl">Coding Agent 实战</div><div class="desc">用 Claude Code / Codex，把「想法 → 网站」压缩到一晚。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0004 / 13</div><div class="ttl">独立建站</div><div class="desc">独立做出 <span class="num">10+</span> 个网站：说明书、回忆录、工作流、FIRE 计算器。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0005 / 13</div><div class="ttl">公众号运营</div><div class="desc">总阅读 <span class="num">90w+</span>，累计变现 <span class="num">4500+</span>。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0006 / 13</div><div class="ttl">成长课程</div><div class="desc">系统学习成长类课程 <span class="num">780h+</span>，把自学结构化成体系。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0007 / 13</div><div class="ttl">高强度阅读</div><div class="desc">3 个月读完 <span class="num">20</span> 本高质量非虚构书籍。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0008 / 13</div><div class="ttl">连续复盘</div><div class="desc">连续复盘超百天，累计 <span class="num">30w+</span> 字，每天一次自我对话。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0009 / 13</div><div class="ttl">大一经济独立</div><div class="desc">开源节流叠加公众号创收，大一即实现经济独立。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0010 / 13</div><div class="ttl">定投美股纳指</div><div class="desc">FIRE 理念实践，累计投入 1000+，收益率保持 4%+。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0011 / 13</div><div class="ttl">深度链接</div><div class="desc">与 <span class="num">20+</span> 位认知同频的战友约电话、做深度沟通。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0012 / 13</div><div class="ttl">AI 峰会</div><div class="desc">参加 2025 企业 AI 落地应用百人峰会（武汉站）。</div></div>
+        <div class="s__work-card"><div class="idx">#light-0013 / 13</div><div class="ttl">线下活动策划</div><div class="desc">策划并举办多次 30+ 人参与的线下活动。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 移动端：纵向卡片列表降级 -->
+  <div class="s__work-list">
+    <div class="s__mobile-bigtitle">WORK</div>
+    <div class="s__work-card"><div class="idx">#light-0001 / 13</div><div class="ttl">AI 深度沟通</div><div class="desc">跟 Gemini / GPT / Claude 深度对话 <span class="num">300w+</span> 字。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0002 / 13</div><div class="ttl">视觉创作</div><div class="desc">GPT-Image-2 原创图像 <span class="num">500+</span> 张。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0003 / 13</div><div class="ttl">Coding Agent 实战</div><div class="desc">Claude Code / Codex，把想法压缩到一晚成站。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0004 / 13</div><div class="ttl">独立建站</div><div class="desc">独立做出 <span class="num">10+</span> 个网站。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0005 / 13</div><div class="ttl">公众号运营</div><div class="desc">总阅读 <span class="num">90w+</span>，变现 <span class="num">4500+</span>。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0006 / 13</div><div class="ttl">成长课程</div><div class="desc">系统学习 <span class="num">780h+</span>。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0007 / 13</div><div class="ttl">高强度阅读</div><div class="desc">3 个月读完 <span class="num">20</span> 本书。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0008 / 13</div><div class="ttl">连续复盘</div><div class="desc">累计 <span class="num">30w+</span> 字。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0009 / 13</div><div class="ttl">大一经济独立</div><div class="desc">大一即实现经济独立。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0010 / 13</div><div class="ttl">定投美股纳指</div><div class="desc">FIRE 实践，收益率 4%+。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0011 / 13</div><div class="ttl">深度链接</div><div class="desc">与 <span class="num">20+</span> 位战友深度沟通。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0012 / 13</div><div class="ttl">AI 峰会</div><div class="desc">2025 武汉百人峰会。</div></div>
+    <div class="s__work-card"><div class="idx">#light-0013 / 13</div><div class="ttl">线下活动策划</div><div class="desc">多次 30+ 人线下活动。</div></div>
+  </div>
+</section>
+
+<!-- ===== 4. MY WAY catcher ===== -->
+<section class="s-my-way js-myway" id="myway">
+  <div class="wrap-head reveal">
+    <div class="kicker">My Way · 我的路</div>
+    <p class="myway-lede">一个终身成长者 —— 我知道现在还不够好，但只要还在不断变好，总有一天会足够好。</p>
+    <div class="s__floaters js-floaters" aria-hidden="true">
+      <span class="s__floater" style="top:10%;left:6%">复利</span>
+      <span class="s__floater" style="top:40%;left:22%">输入·沉淀·输出</span>
+      <span class="s__floater" style="top:18%;left:55%">向光生长</span>
+      <span class="s__floater" style="top:62%;left:48%">长期主义</span>
+      <span class="s__floater" style="top:30%;left:80%">FIRE</span>
+      <span class="s__floater" style="top:70%;left:14%">自我对话</span>
+    </div>
+  </div>
+  <!-- 躺倒透视巨字「追光」 -->
+  <div class="s__catcher js-catcher" aria-hidden="true">
+    <div class="s__catcher__distorted">追光</div>
+  </div>
+</section>
+
+<!-- ===== 5. CTA ===== -->
+<section class="s-cta" id="contact">
+  <div class="s__hover js-cta-hover">
+    <!-- 默认态按钮 -->
+    <div class="s__button js-cta-button">
+      <span class="s__button__inner"></span>
+      <span class="s__button__text">GO</span>
+    </div>
+    <!-- 圆形揭示面板 -->
+    <div class="s__cta">
+      <div class="s__cta__stars" aria-hidden="true">
+        <span class="s__cta__star">✦</span>
+        <span class="s__cta__star">✦</span>
+        <span class="s__cta__star">✦</span>
+        <span class="s__cta__star">✦</span>
+      </div>
+      <div class="s__cta__big">追光</div>
+      <div class="s__cta__text" aria-label="加我微信">
+        <span class="s__cta__char"><span class="s__cta__char__slice">加</span></span>
+        <span class="s__cta__char"><span class="s__cta__char__slice">我</span></span>
+        <span class="s__cta__char"><span class="s__cta__char__slice">微</span></span>
+        <span class="s__cta__char"><span class="s__cta__char__slice">信</span></span>
+      </div>
+      <div class="s__cta__wechat">
+        <span class="code js-copy" data-code="czy18534901307">czy18534901307</span>
+        <span class="hint js-copy-hint">点击复制 · 添加请备注「追光」</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 信念 manifesto ===== -->
+<section class="s-beliefs" id="beliefs">
+  <div class="wrap">
+    <div class="kicker reveal">Credo · 信念</div>
+    <div class="manifesto reveal-stagger">
+      <div class="m-row"><span class="m-num">01</span><span class="m-text">世界不死，理想不灭。</span><span class="m-meta">CREDO · 01</span></div>
+      <div class="m-row"><span class="m-num">02</span><span class="m-text">生命是一棵长满可能的树 🌳</span><span class="m-meta">CREDO · 02</span></div>
+      <div class="m-row"><span class="m-num">03</span><span class="m-text">凡事发生，必有利于我。</span><span class="m-meta">CREDO · 03</span></div>
+      <div class="m-row"><span class="m-num">04</span><span class="m-text">思维决定想法，想法决定选择，选择决定行动，行动决定命运。</span><span class="m-meta">CREDO · 04</span></div>
+      <div class="m-row"><span class="m-num">05</span><span class="m-text">尽管繁荣，莫问前程。</span><span class="m-meta">CREDO · 05</span></div>
+      <div class="m-row"><span class="m-num">06</span><span class="m-text">一个人可以走得很快，一群人可以走得更远。</span><span class="m-meta">CREDO · 06</span></div>
+      <div class="m-row"><span class="m-num">07</span><span class="m-text">主动真的会有故事 —— 勇敢的人先享受世界。</span><span class="m-meta">CREDO · 07</span></div>
+      <div class="m-row is-final"><span class="m-num">08</span><span class="m-text">追光的人，终将光芒万丈 ✨</span><span class="m-meta">CREDO · FINAL</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. FOOTER ===== -->
+<footer class="s-footer">
+  <div class="f-logo">追光者 CZY</div>
+  <div class="f-sub">The Light Chaser · 道阻且长，行则将至</div>
+  <div class="f-line">追光者 · 曹宗昱 · 个人说明书 · 2026</div>
+</footer>
+
+<script>
+/* ============================================================
+   追光者 · 复刻 —— 交互脚本（vanilla + GSAP + Lenis）
+   ============================================================ */
+(function () {
+  'use strict';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = matchMedia('(pointer: coarse)').matches;
+
+  /* —— Lenis 平滑滚动（仅平滑 window，不接管 body 高度，保证原生可滚） —— */
+  let lenis = null;
+  if (window.Lenis && !reduce) {
+    lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    if (window.gsap && window.ScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((t) => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+  }
+  // 菜单锚点：用 Lenis 平滑滚动到目标
+  document.querySelectorAll('.js-anchor').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      const el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(el, { offset: -96 });
+      else el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* —— 控制台启动日志（逐行打字 + caret） —— */
+  (function consoleBoot() {
+    const el = document.querySelector('.js-console');
+    if (!el) return;
+    const lines = [
+      '初始化追光者说明书…',
+      '正在点亮信念与印记…',
+      '加载 AI 原生工作流…',
+      '准备就绪 ✦',
+    ];
+    let li = 0, out = '';
+    function typeLine() {
+      if (li >= lines.length) {
+        el.innerHTML = lines.slice(-3).join('\n') + '<span class="caret">▍</span>';
+        return;
+      }
+      const line = lines[li];
+      let ci = 0;
+      const tick = setInterval(() => {
+        ci++;
+        const shown = (out + line.slice(0, ci));
+        el.innerHTML = shown + '<span class="caret">▍</span>';
+        if (ci >= line.length) {
+          clearInterval(tick);
+          out += line + '\n';
+          li++;
+          setTimeout(typeLine, 350);
+        }
+      }, 45);
+    }
+    typeLine();
+  })();
+
+  /* —— 二进制网格背景（hero waves + about awards） —— */
+  function fillBinary(el, rows, cols, density) {
+    if (!el) return;
+    let html = '';
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const bit = Math.random() < density ? 1 : 0;
+        html += bit ? '<b>1</b>' : '0';
+      }
+      html += ' ';
+    }
+    el.innerHTML = html;
+  }
+  fillBinary(document.querySelector('.js-waves'), 30, 60, 0.18);
+  fillBinary(document.querySelector('.js-awards'), 3, 120, 0.12);
+
+  /* —— 换肤彩蛋 —— */
+  document.querySelector('.js-contrast').addEventListener('click', () => {
+    document.documentElement.classList.toggle('theme-contrasted');
+  });
+
+  /* —— 滚动揭示 IntersectionObserver（三态同构 is-in-view） —— */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) {
+        en.target.classList.add('is-in-view');
+        en.target.classList.remove('is-out-of-view');
+        en.target.querySelectorAll('[data-num]').forEach(animateCount);
+      } else {
+        en.target.classList.add('is-out-of-view');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => io.observe(el));
+
+  /* —— 数字计数 —— */
+  function animateCount(el) {
+    if (el.dataset.done) return;
+    el.dataset.done = '1';
+    const target = parseInt(el.dataset.num, 10);
+    const unit = el.querySelector('.u') ? el.querySelector('.u').textContent : '';
+    if (!Number.isFinite(target)) return;
+    const dur = 1400, start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const v = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+      el.innerHTML = v + '<span class="u">' + unit + '</span>';
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* —— Hero 巨字点击飞出彩蛋 —— */
+  const heroTitle = document.querySelector('.js-hero-title');
+  if (heroTitle) {
+    heroTitle.addEventListener('click', () => {
+      heroTitle.classList.add('is-leaving');
+      setTimeout(() => heroTitle.classList.remove('is-leaving'), 1100);
+    });
+  }
+
+  /* ============================================================
+     WORK 横向 scrub：ScrollTrigger 把滚动映射到横移 + --progress
+     ============================================================ */
+  if (window.gsap && window.ScrollTrigger && !coarse) {
+    gsap.registerPlugin(ScrollTrigger);
+    const stage = document.querySelector('.js-work-stage');
+    const track = document.querySelector('.js-work-track');
+    const letters = document.querySelector('.js-scene-letters');
+    if (stage && track) {
+      const getDist = () => Math.max(0, track.scrollWidth - window.innerWidth + window.innerWidth * 0.2);
+      gsap.to(track, {
+        x: () => -getDist(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: stage,
+          start: 'top top',
+          end: () => '+=' + getDist(),
+          scrub: 1,
+          pin: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            // 把进度映射到 CSS 变量 --progress（巨字逐字母透视炸开）
+            if (letters) letters.style.setProperty('--progress', self.progress.toFixed(4));
+            document.querySelectorAll('.js-scene-letters .s__scene-letter')
+              .forEach((l) => l.style.setProperty('--progress', self.progress.toFixed(4)));
+          },
+        },
+      });
+    }
+  }
+
+  /* ============================================================
+     MY WAY catcher：随滚动更新 --distortion（地平线躺倒透视）
+     ============================================================ */
+  (function catcher() {
+    const myway = document.querySelector('.js-myway');
+    const cat = document.querySelector('.js-catcher');
+    if (!myway || !cat) return;
+    function onScroll() {
+      const rect = myway.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // 0(进入) → 1(底部贴合视口底)
+      let p = 1 - Math.min(Math.max(rect.bottom / (vh + rect.height), 0), 1);
+      // distortion：从近乎平躺(大值)收敛到立起(小值)
+      const distortion = 30 - p * 24; // 30 → 6
+      cat.style.setProperty('--distortion', distortion.toFixed(2));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // 漂浮关键词缓慢视差
+    const floaters = document.querySelectorAll('.js-floaters .s__floater');
+    function parallax() {
+      const rect = myway.getBoundingClientRect();
+      const t = -rect.top * 0.04;
+      floaters.forEach((f, i) => {
+        const dir = i % 2 ? 1 : -1;
+        f.style.transform = 'translate3d(' + (t * dir * (0.4 + i * 0.12)).toFixed(1) + 'px,' + (t * 0.6).toFixed(1) + 'px,0)';
+      });
+    }
+    window.addEventListener('scroll', parallax, { passive: true });
+    parallax();
+  })();
+
+  /* ============================================================
+     CTA 圆形揭示：hover / click 切 is-active
+     ============================================================ */
+  (function cta() {
+    const hover = document.querySelector('.js-cta-hover');
+    const btn = document.querySelector('.js-cta-button');
+    if (!hover || !btn) return;
+    function open() { hover.classList.add('is-active'); }
+    function close(e) {
+      // 离开整个 hover 区域才收起
+      if (e && hover.contains(e.relatedTarget)) return;
+      hover.classList.remove('is-active');
+    }
+    btn.addEventListener('mouseenter', open);
+    hover.addEventListener('mouseleave', close);
+    btn.addEventListener('click', open);
+    // 触屏：点击切换
+    if (coarse) {
+      btn.addEventListener('click', () => hover.classList.toggle('is-active'));
+    }
+  })();
+
+  /* —— 复制微信号 —— */
+  (function copyWechat() {
+    const code = document.querySelector('.js-copy');
+    const hint = document.querySelector('.js-copy-hint');
+    if (!code) return;
+    code.addEventListener('click', () => {
+      const txt = code.dataset.code;
+      const done = () => { if (hint) { const o = hint.textContent; hint.textContent = '已复制 ✓ 备注「追光」'; setTimeout(() => hint.textContent = o, 1800); } };
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done).catch(done);
+      else done();
+    });
+  })();
+
+  /* ============================================================
+     自定义光标（RAF 插值跟随 + hover 放大）
+     ============================================================ */
+  if (!coarse && !reduce) {
+    const cursor = document.querySelector('.cursor');
+    let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+    addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+    (function loop() {
+      cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
+      cursor.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a, button, .js-copy, .s__work-card, .js-hero-title, .sb-contrast')
+      .forEach((el) => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('is-big'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('is-big'));
+      });
+  }
+
+  /* ============================================================
+     自定义滚动条（fixed 右侧 thumb）
+     ============================================================ */
+  if (!coarse) {
+    const thumb = document.querySelector('.scrollbar__thumb');
+    function updateBar() {
+      const doc = document.documentElement;
+      const scrollH = doc.scrollHeight - innerHeight;
+      const ratio = innerHeight / doc.scrollHeight;
+      const th = Math.max(innerHeight * ratio, 40);
+      const top = scrollH > 0 ? (scrollY / scrollH) * (innerHeight - th) : 0;
+      thumb.style.height = th + 'px';
+      thumb.style.top = top + 'px';
+    }
+    addEventListener('scroll', updateBar, { passive: true });
+    addEventListener('resize', updateBar);
+    updateBar();
+  }
+})();
+</script>
+</body>
+</html>
