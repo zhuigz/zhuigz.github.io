@@ -53,20 +53,27 @@ Each `*.html` file is **fully self-contained**: HTML + embedded `<style>` + inli
 | Fonts      | Google Fonts — `Noto Serif SC`, `Noto Sans SC`, `Outfit` (most pages; `hkrr.html` differs) |
 | Hosting    | GitHub Pages (auto-deploys `main` branch)                           |
 
-## `index.html` Page Sections
+## `index.html` Page Sections (v4.0)
 
 The home page is a single scrolling layout with these sections (in order):
 
 | Anchor        | Chinese Label | Content |
 |---------------|---------------|---------|
-| *(hero, no anchor)* | — | Name, alias, motto, scroll indicator |
-| `#about`      | 关于我        | Info cards: name, alias, MBTI, location, school, hobbies, roles |
-| `#roles`      | 身份标签      | Identity tag list + 4-column stats bar |
-| `#achievements` | 成长印记    | Achievement cards + growth-banner quote block |
-| `#beliefs`    | 信念          | Core beliefs, numbered list |
+| *(preloader)* | — | Brief light-dot intro; adds `body.loaded` which triggers hero entrance animations |
+| *(hero, no anchor)* | — | Name (per-glyph reveal), alias, identity tags, mission, motto, god-ray beams, particle canvas |
+| *(marquee)*   | — | Giant outlined-text marquee strip (`.giant-marquee`) |
+| `#intro`      | 一句话介绍me  | Big serif statement + growth-slope SVG animation (`.slope-box`) |
+| `#about`      | 基本信息      | Info cards: MBTI, location, school, campus roles, interests, keywords |
+| `#metrics`    | 关键数据      | 9-cell data wall (`.metrics-grid`) with count-up numbers |
+| `#practice`   | 我做过什么    | 7 numbered practice rows (`.practice-row`) incl. IDOP flow animation + growth-banner quote |
+| `#beliefs`    | 信念          | Core beliefs manifesto, numbered rows |
+| `#topics`     | 聊什么        | Topic chip cloud (`.topics-cloud`) |
+| `#become`     | 想成为怎样的人 | Centered poem lines (`.become-poem`) |
+| `#universe`   | 追光宇宙      | Link cards to every other page on the site (`.uni-grid`) |
+| `#connect`    | 联系          | WeChat card with copy-to-clipboard button |
 | *(footer)*    | —             | Tagline + copyright line |
 
-Nav links (`<nav class="nav">`) on the home page mirror these anchors. Other pages have their own page-specific navigation.
+Nav links (`<nav class="nav">`) on the home page mirror the main anchors. Other pages have their own page-specific navigation.
 
 ## CSS Conventions
 
@@ -77,51 +84,63 @@ Most pages share the same design language (dark background + gold accents + seri
 Never rename these on `index.html` — they are used extensively throughout. Reuse them on new pages where it makes sense:
 
 ```css
-/* Gold palette */
---gold: #F6C445
---gold-light: #FFE08A
---gold-dark: #D4A012
+/* Warm gold palette */
+--gold: #E8B87A
+--gold-light: #F4D9A8
+--gold-deep: #C99A56
+
+/* Ember (phoenix-fire) accent */
+--ember: #C36B5E
+
+/* Restrained accents */
+--accent-violet: #8E7AB8
+--accent-teal: #7FA8AD
+--accent-sage: #88A878
 
 /* Backgrounds */
---bg-deep: #0A0A0F          /* page background */
---bg-card: rgba(255,255,255,0.03)
---bg-card-hover: rgba(255,255,255,0.06)
+--bg-deep: #07070C          /* page background */
+--bg-card: rgba(255,255,255,0.025)
+--bg-card-hi: rgba(255,255,255,0.055)
 
-/* Text */
---text-primary: #F0EDE6
---text-secondary: rgba(240,237,230,0.6)
---text-dim: rgba(240,237,230,0.35)
+/* Text ("ink") */
+--ink: #F2EFEB
+--ink-soft: rgba(242,239,235,0.62)
+--ink-dim: rgba(242,239,235,0.34)
 
-/* Accent colors */
---accent-blue: #4A9EF5
---accent-coral: #F57A6A
---accent-green: #5ECE8A
---accent-purple: #A580F0
+/* Lines */
+--line: rgba(255,255,255,0.06)
+--line-strong: rgba(232,184,122,0.18)
 ```
+
+Note: older pages may still use the previous palette (`--gold: #F6C445`, `--text-primary`, etc.). When editing an existing page, follow whatever variables that page already defines.
 
 ### Component Classes (used on `index.html` and reused widely)
 
 | Class | Purpose |
 |-------|---------|
 | `.info-card` | About section cards |
-| `.ach-card` | Achievement cards |
-| `.role-item` | Identity tag rows |
-| `.belief-item` | Core belief rows |
-| `.stat-item` | Stats bar columns |
-| `.section-label` | Small uppercase eyebrow text (Outfit font, gold) |
+| `.metric-cell` | Data-wall cells with `data-num` / `data-suffix` count-up numbers |
+| `.practice-row` | Numbered "what I've done" rows (`data-ghost` sets hover ghost text) |
+| `.manifesto-row` | Core belief rows |
+| `.topic-chip` | Topic pill in the topics cloud |
+| `.uni-card` | Link card to another site page (`#universe`) |
+| `.section-label` | Small uppercase eyebrow text (Outfit font, gold) with mono `.idx` index |
 | `.section-title` | Large serif heading; use `.hl` span for gradient highlight |
 | `.divider` | Thin horizontal separator between sections |
 | `.gold-num` | Outfit bold gradient number highlight inline |
 | `.fire-badge` | Green inline badge (used for FIRE financial label) |
-| `.reveal` | Scroll-reveal trigger — JS adds `.visible` when in viewport |
+| `.reveal` / `.reveal-stagger` | Scroll-reveal triggers — JS adds `.visible` when in viewport |
+| `.tilt` | 3D mouse-tilt card with cursor-tracked light spot (`--mx` / `--my`) |
 
 ### Animations (defined keyframes on `index.html`)
 
-`fadeUp`, `fadeDown`, `pulse`, `orbFloat`, `scrollLine`, `glow`
+`fadeUp`, `fadeDown`, `glyphIn`, `nameShine`, `beamSway`, `marquee`, `slopeDraw`, `idopPulse`, `pulseDot`, `orbFloat`, `scrollLine`, `glow`, `preDot`/`preRing`/`preText` (preloader)
 
-### Responsive Breakpoint
+All motion respects `@media (prefers-reduced-motion: reduce)` — keep that block updated when adding animations.
 
-Single breakpoint: `@media (max-width: 768px)`. Mobile adjustments include hiding `.nav-links`, collapsing `.stats-bar` to 2 columns, and single-column `.achievements`.
+### Responsive Breakpoints
+
+`@media (max-width: 1024px)` (metrics grid → 2 cols, intro belief stacks), `880px` (practice rows stack, IDOP flow goes vertical), `768px` (nav links hidden, single-column grids, cursor glow disabled).
 
 ## JavaScript Conventions
 
@@ -172,8 +191,11 @@ const observer = new IntersectionObserver((entries) => {
 4. If the page has a nav, add a matching anchor link
 5. Add matching CSS inside the existing `<style>` block
 
-### New card in achievements (on `index.html`)
-Duplicate an `.ach-card` div. Use the existing accent color rgba values for `.ach-icon` background. Use `.gold-num` for highlighted numbers.
+### New practice row (on `index.html`)
+Duplicate a `.practice-row` div inside `.practice-list`. Set `data-ghost` (short hover ghost text), the `.p-idx` number, a `.p-tag` mono label, and optionally a `.p-quote` line. Use `.gold-num` for highlighted numbers.
 
-### Updating stats (on `index.html`)
-Stats are hardcoded in `.stats-bar` — update the `.stat-number` text and `.stat-label` text directly.
+### Updating key data (on `index.html`)
+Numbers are hardcoded in `.metrics-grid` — update `data-num` / `data-suffix` on the `.num` element (the count-up script reads them) plus the `.m-label` / `.m-sub` text.
+
+### New page link in 追光宇宙 (on `index.html`)
+Duplicate a `.uni-card` anchor inside `.uni-grid` and bump the `PAGE · NN` index.

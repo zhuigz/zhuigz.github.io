@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>追光者 · 曹宗昱 | 个人说明书</title>
-<meta name="description" content="追光者 · 曹宗昱的个人说明书。一个 ENFJ 追光少年的成长印记 · 信念 · 工作流。">
+<title>追光者 · 曹宗昱 | 个人说明书 v4.0</title>
+<meta name="description" content="追光者 · 曹宗昱的个人说明书 v4.0。一个正在用 AI、内容、个人IP 和长期主义，主动重构人生的大一学生。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  /* 调色后的暖金主色系 */
+  /* 暖金主色系 */
   --gold: #E8B87A;
   --gold-light: #F4D9A8;
   --gold-deep: #C99A56;
   --gold-pale: rgba(232,184,122,0.06);
   --gold-glow: rgba(232,184,122,0.25);
 
-  /* 余烬/赤色辅助 */
+  /* 余烬/赤色辅助（凤凰涅槃的火） */
   --ember: #C36B5E;
   --ember-soft: rgba(195,107,94,0.18);
 
@@ -29,10 +29,10 @@
   --accent-sage: #88A878;
 
   /* 底色与文字 */
-  --bg-deep: #0A0A0F;
+  --bg-deep: #07070C;
   --bg-elev: #11111A;
   --bg-card: rgba(255,255,255,0.025);
-  --bg-card-hi: rgba(255,255,255,0.05);
+  --bg-card-hi: rgba(255,255,255,0.055);
   --ink: #F2EFEB;
   --ink-soft: rgba(242,239,235,0.62);
   --ink-dim: rgba(242,239,235,0.34);
@@ -56,14 +56,45 @@ body {
   overflow-x: hidden;
 }
 
-/* —— 颗粒噪点贴图 —— */
+/* ===================== PRELOADER（开场：一点光，破暗而生） ===================== */
+.preloader {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg-deep);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.9s ease, visibility 0.9s;
+}
+.preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.pre-core { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.pre-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 24px var(--gold), 0 0 80px rgba(232,184,122,0.5);
+  animation: preDot 1.4s ease-in-out infinite;
+}
+.pre-ring {
+  position: absolute; top: -25px; left: 50%; margin-left: -30px;
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 1px solid rgba(232,184,122,0.4);
+  animation: preRing 1.4s ease-out infinite;
+}
+.pre-text {
+  font-family: var(--serif-cn); font-weight: 900; font-size: 17px;
+  letter-spacing: 12px; text-indent: 12px; color: var(--ink-dim);
+  animation: preText 1.6s ease-in-out infinite alternate;
+}
+@keyframes preDot { 0%,100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+@keyframes preRing { from { transform: scale(0.3); opacity: 1; } to { transform: scale(2.1); opacity: 0; } }
+@keyframes preText { from { color: var(--ink-dim); } to { color: var(--gold); } }
+
+/* ===================== 全局贴层 ===================== */
+/* 颗粒噪点 */
 .grain {
   position: fixed; inset: 0; z-index: 9999; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* —— 滚动进度 —— */
+/* 滚动进度 */
 .scroll-progress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
   background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
@@ -71,14 +102,26 @@ body {
   transition: width 0.08s linear;
 }
 
-/* —— 背景光晕 —— */
+/* 光标即是光：跟随鼠标的柔光（追光者签名交互） */
+.cursor-glow {
+  position: fixed; left: 0; top: 0; z-index: 3;
+  width: 380px; height: 380px; margin: -190px 0 0 -190px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(232,184,122,0.10), rgba(195,107,94,0.04) 45%, transparent 65%);
+  mix-blend-mode: screen;
+  opacity: 0; transition: opacity 0.5s;
+  will-change: transform;
+}
+.cursor-glow.on { opacity: 1; }
+
+/* 背景光晕 */
 .bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .bg-glow .orb {
   position: absolute; border-radius: 50%; filter: blur(130px);
   animation: orbFloat 26s ease-in-out infinite;
 }
-.bg-glow .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, rgba(232,184,122,0.12), transparent 70%); top: -12%; left: -10%; }
-.bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(195,107,94,0.07), transparent 70%); top: 38%; right: -12%; animation-delay: -8s; }
+.bg-glow .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, rgba(232,184,122,0.13), transparent 70%); top: -12%; left: -10%; }
+.bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(195,107,94,0.08), transparent 70%); top: 38%; right: -12%; animation-delay: -8s; }
 .bg-glow .orb-3 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(142,122,184,0.05), transparent 70%); bottom: -8%; left: 26%; animation-delay: -16s; }
 @keyframes orbFloat {
   0%, 100% { transform: translate(0,0) scale(1); }
@@ -86,7 +129,7 @@ body {
   66% { transform: translate(-40px,60px) scale(0.92); }
 }
 
-/* —— 向光金粉 canvas（追光者签名画面） —— */
+/* 向光金粉 canvas */
 .light-canvas {
   position: absolute; inset: 0; width: 100%; height: 100%;
   pointer-events: none; display: block;
@@ -94,12 +137,12 @@ body {
   transition: opacity .35s linear;
 }
 
-/* —— 状态徽章（顶部右上） —— */
+/* 状态徽章 */
 .status-pill {
   position: fixed; top: 80px; right: 28px; z-index: 90;
   display: inline-flex; align-items: center; gap: 10px;
   padding: 8px 14px; border-radius: 999px;
-  background: rgba(10,10,15,0.6); backdrop-filter: blur(14px);
+  background: rgba(7,7,12,0.6); backdrop-filter: blur(14px);
   border: 1px solid var(--line);
   font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px;
   color: var(--ink-soft);
@@ -114,11 +157,11 @@ body {
   100% { box-shadow: 0 0 0 8px rgba(136,168,120,0); }
 }
 
-/* —— 导航 —— */
+/* ===================== 导航 ===================== */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 18px 32px; display: flex; justify-content: space-between; align-items: center;
-  background: rgba(10,10,15,0.72); backdrop-filter: blur(20px);
+  padding: 16px 32px; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(7,7,12,0.72); backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--line);
 }
 .nav-logo {
@@ -132,7 +175,8 @@ body {
   display: inline-block;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-.nav-links { display: flex; gap: 30px; list-style: none; }
+.nav-right { display: flex; align-items: center; gap: 28px; }
+.nav-links { display: flex; gap: 26px; list-style: none; }
 .nav-links a {
   position: relative;
   color: var(--ink-soft); text-decoration: none; font-size: 13px;
@@ -144,8 +188,21 @@ body {
 }
 .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-cta {
+  font-family: var(--sans-en); font-size: 12px; letter-spacing: 2px;
+  color: var(--gold); text-decoration: none;
+  border: 1px solid rgba(232,184,122,0.35); border-radius: 999px;
+  padding: 8px 20px;
+  transition: all 0.35s ease;
+  white-space: nowrap;
+}
+.nav-cta:hover {
+  background: rgba(232,184,122,0.12);
+  box-shadow: 0 0 24px rgba(232,184,122,0.2);
+  transform: translateY(-1px);
+}
 
-/* —— 滚动条 / 选区 —— */
+/* 滚动条 / 选区 */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
 ::-webkit-scrollbar-thumb { background: rgba(232,184,122,0.28); border-radius: 3px; }
@@ -156,8 +213,29 @@ section[id] { scroll-margin-top: 90px; }
 /* ===================== HERO ===================== */
 .hero {
   min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
-  align-items: center; text-align: center; position: relative; padding: 110px 24px 60px;
+  align-items: center; text-align: center; position: relative; padding: 120px 24px 70px;
+  overflow: hidden;
 }
+.hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; will-change: transform, opacity; }
+
+/* 顶光束（god rays） */
+.hero-beams { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.beam {
+  position: absolute; top: -20%; left: 50%; height: 130%; width: 160px;
+  background: linear-gradient(180deg, rgba(232,184,122,0.10), rgba(232,184,122,0.025) 55%, transparent);
+  filter: blur(28px);
+  transform-origin: top center;
+  animation: beamSway 11s ease-in-out infinite alternate;
+}
+.beam-1 { margin-left: -340px; transform: rotate(-16deg); animation-delay: 0s; }
+.beam-2 { margin-left: -80px; width: 220px; transform: rotate(-2deg); animation-delay: -3.5s; }
+.beam-3 { margin-left: 200px; transform: rotate(13deg); animation-delay: -7s; }
+@keyframes beamSway {
+  from { opacity: 0.5; transform: rotate(var(--r, -2deg)) translateX(-14px); }
+  to { opacity: 1; transform: rotate(var(--r, -2deg)) translateX(14px); }
+}
+.beam-1 { --r: -16deg; } .beam-2 { --r: -2deg; } .beam-3 { --r: 13deg; }
+
 .hero-badge {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 8px 22px; border-radius: 999px;
@@ -165,8 +243,7 @@ section[id] { scroll-margin-top: 90px; }
   background-size: 300% auto;
   border: 1px solid rgba(232,184,122,0.18); color: var(--gold);
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-  margin-bottom: 44px;
-  animation: fadeDown 1s ease 0.2s both, badgeShimmer 7s ease-in-out 2s infinite;
+  margin-bottom: 40px;
 }
 .hero-badge::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
@@ -177,54 +254,74 @@ section[id] { scroll-margin-top: 90px; }
 
 .hero-eyebrow {
   font-family: var(--serif-en); font-style: italic; font-size: clamp(14px,2vw,18px);
-  color: var(--ink-dim); letter-spacing: 4px; margin-bottom: 14px;
-  animation: fadeDown 1s ease 0.35s both;
+  color: var(--ink-dim); letter-spacing: 4px; margin-bottom: 16px;
 }
 
 .hero-name {
   position: relative;
   font-family: var(--serif-cn);
-  font-size: clamp(76px, 16vw, 200px);
+  font-size: clamp(78px, 16vw, 210px);
   font-weight: 900; line-height: 0.95;
-  letter-spacing: clamp(4px, 1.4vw, 10px);
-  background: linear-gradient(135deg, #fff 0%, var(--gold-light) 40%, var(--gold) 60%, var(--gold-deep) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: fadeUp 1.2s ease 0.5s both;
-  text-shadow: 0 0 60px rgba(232,184,122,0.05);
+  letter-spacing: clamp(4px, 1.4vw, 12px);
 }
 .hero-name .glyph {
   display: inline-block;
+  background: linear-gradient(120deg, #fff 0%, var(--gold-light) 28%, var(--gold) 48%, var(--gold-deep) 62%, var(--gold-light) 80%, #fff 100%);
+  background-size: 260% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-name::after {
   content: '追光者'; position: absolute; inset: 0;
   font: inherit; letter-spacing: inherit;
   -webkit-text-stroke: 1px rgba(232,184,122,0.18); color: transparent;
-  -webkit-background-clip: initial; -webkit-text-fill-color: transparent;
-  transform: translate(6px,6px); z-index: -1; opacity: 0.6;
-  animation: fadeUp 1.2s ease 0.5s both;
+  transform: translate(7px,7px); z-index: -1; opacity: 0.6;
 }
 
 .hero-alias {
   display: inline-flex; align-items: center; gap: 16px;
   font-family: var(--serif-en); font-size: clamp(16px,2.4vw,22px); font-weight: 400;
   color: var(--ink-soft); margin-top: 36px; letter-spacing: 6px;
-  animation: fadeUp 1s ease 0.7s both;
 }
 .hero-alias .sep { color: var(--gold); }
 .hero-alias .cn { font-family: var(--serif-cn); color: var(--ink); letter-spacing: 8px; }
 
+.hero-meta {
+  margin-top: 18px;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 2px;
+  color: var(--ink-dim);
+}
+.hero-meta .arrow { color: var(--gold); }
+
+.hero-tags {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-top: 28px;
+}
+.hero-tags .tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg-card);
+  font-size: 13px; letter-spacing: 1.5px; color: var(--ink-soft);
+  transition: all 0.35s ease;
+}
+.hero-tags .tag::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 8px var(--gold);
+}
+.hero-tags .tag:nth-child(2)::before { background: var(--ember); box-shadow: 0 0 8px var(--ember); }
+.hero-tags .tag:nth-child(3)::before { background: var(--accent-sage); box-shadow: 0 0 8px var(--accent-sage); }
+.hero-tags .tag:nth-child(4)::before { background: var(--accent-violet); box-shadow: 0 0 8px var(--accent-violet); }
+.hero-tags .tag:hover { color: var(--gold); border-color: var(--line-strong); transform: translateY(-2px); }
+
 .hero-mission {
   font-family: var(--serif-cn);
-  font-size: clamp(14px,2vw,17px); color: var(--ink-soft);
-  margin-top: 26px; letter-spacing: 1px;
-  animation: fadeUp 1s ease 0.9s both; max-width: 620px;
+  font-size: clamp(15px,2vw,18px); color: var(--ink-soft);
+  margin-top: 30px; letter-spacing: 1px; max-width: 640px; line-height: 2;
 }
 .hero-mission em { font-style: normal; color: var(--gold); font-weight: 500; }
 
 .hero-motto {
   font-family: var(--serif-cn); font-size: clamp(16px,2.3vw,22px);
-  color: var(--ink); margin-top: 56px; line-height: 2.1;
-  animation: fadeUp 1s ease 1.1s both;
+  color: var(--ink); margin-top: 48px; line-height: 2.1;
   position: relative; padding: 28px 60px;
 }
 .hero-motto::before, .hero-motto::after {
@@ -237,10 +334,10 @@ section[id] { scroll-margin-top: 90px; }
 .hero-motto em { font-style: normal; color: var(--gold); font-weight: 600; }
 
 .hero-scroll {
-  position: absolute; bottom: 40px;
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
   color: var(--ink-dim); font-size: 11px; letter-spacing: 4px;
-  font-family: var(--sans-en); animation: fadeUp 1s ease 1.4s both;
+  font-family: var(--sans-en);
 }
 .hero-scroll .line {
   width: 1px; height: 44px;
@@ -253,34 +350,91 @@ section[id] { scroll-margin-top: 90px; }
   51% { transform: scaleY(1); transform-origin: bottom; }
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* —— hero 装饰角标 —— */
 .hero-corner {
-  position: absolute; font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
-  letter-spacing: 2px; opacity: 0;
-  animation: fadeDown 1s ease 1.6s both;
+  position: absolute; z-index: 2; font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+  letter-spacing: 2px; line-height: 1.8;
 }
-.hero-corner.tl { top: 100px; left: 32px; }
+.hero-corner.tl { top: 100px; left: 32px; text-align: left; }
 .hero-corner.tr { top: 100px; right: 32px; text-align: right; }
 .hero-corner .v { color: var(--gold); }
 
-/* ===================== CONTAINER ===================== */
+/* —— hero 入场编排（preloader 结束后逐层点亮） —— */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes glyphIn {
+  from { opacity: 0; transform: translateY(70px) scale(0.94); filter: blur(14px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes nameShine { 0% { background-position: 0% center; } 100% { background-position: -260% center; } }
+
+body.js .hero-badge, body.js .hero-eyebrow, body.js .hero-alias, body.js .hero-meta,
+body.js .hero-tags, body.js .hero-mission, body.js .hero-motto, body.js .hero-scroll,
+body.js .hero-corner, body.js .hero-name::after { opacity: 0; }
+body.js .hero-name .glyph { opacity: 0; }
+
+body.loaded .hero-badge { animation: fadeDown 1s ease 0.1s both, badgeShimmer 7s ease-in-out 2.5s infinite; }
+body.loaded .hero-eyebrow { animation: fadeDown 1s ease 0.25s both; }
+body.loaded .hero-name .glyph { animation: glyphIn 1s cubic-bezier(0.16,1,0.3,1) both, nameShine 9s ease-in-out 2.6s infinite; }
+body.loaded .hero-name .glyph:nth-child(1) { animation-delay: 0.4s, 2.6s; }
+body.loaded .hero-name .glyph:nth-child(2) { animation-delay: 0.55s, 2.6s; }
+body.loaded .hero-name .glyph:nth-child(3) { animation-delay: 0.7s, 2.6s; }
+body.loaded .hero-name::after { animation: fadeUp 1.2s ease 0.8s both; }
+body.loaded .hero-alias { animation: fadeUp 1s ease 0.95s both; }
+body.loaded .hero-meta { animation: fadeUp 1s ease 1.05s both; }
+body.loaded .hero-tags { animation: fadeUp 1s ease 1.15s both; }
+body.loaded .hero-mission { animation: fadeUp 1s ease 1.3s both; }
+body.loaded .hero-motto { animation: fadeUp 1s ease 1.45s both; }
+body.loaded .hero-scroll { animation: fadeUp 1s ease 1.7s both; }
+body.loaded .hero-corner { animation: fadeDown 1s ease 1.8s both; }
+
+/* ===================== 巨型描边跑马灯 ===================== */
+.giant-marquee {
+  position: relative; z-index: 1;
+  overflow: hidden; padding: 40px 0 24px;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.giant-track {
+  display: flex; align-items: baseline; gap: 64px;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+.giant-item {
+  font-family: var(--serif-cn); font-weight: 900;
+  font-size: clamp(56px, 9vw, 128px); line-height: 1.15;
+  white-space: nowrap; letter-spacing: 6px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(232,184,122,0.22);
+}
+.giant-item.en { font-family: var(--sans-en); letter-spacing: 2px; font-weight: 800; }
+.giant-item .solid {
+  -webkit-text-stroke: 0;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.giant-item .star { -webkit-text-stroke: 0; color: var(--gold); font-size: 0.4em; vertical-align: middle; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===================== CONTAINER / SECTION 基础 ===================== */
 .container { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 
-section { padding: 140px 0 100px; position: relative; }
+section { padding: 130px 0 100px; position: relative; }
 .section-head { margin-bottom: 64px; }
 .section-label {
   display: inline-flex; align-items: center; gap: 12px;
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 5px;
   text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
 }
+.section-label .idx { font-family: var(--mono); color: var(--ink-dim); letter-spacing: 1px; }
 .section-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); opacity: 0.6; }
 .section-label::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); }
 .section-title {
   font-family: var(--serif-cn); font-size: clamp(34px, 5.6vw, 54px);
-  font-weight: 700; line-height: 1.2; letter-spacing: 1px;
+  font-weight: 700; line-height: 1.25; letter-spacing: 1px;
 }
 .section-title .hl {
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
@@ -288,8 +442,9 @@ section { padding: 140px 0 100px; position: relative; }
 }
 .section-sub {
   margin-top: 14px; color: var(--ink-soft);
-  font-family: var(--serif-cn); font-size: 15px; max-width: 640px; line-height: 1.9;
+  font-family: var(--serif-cn); font-size: 15px; max-width: 660px; line-height: 1.9;
 }
+.section-sub strong { color: var(--gold); font-weight: 600; }
 
 .divider {
   height: 1px;
@@ -311,13 +466,11 @@ section { padding: 140px 0 100px; position: relative; }
 .reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.47s; }
 .reveal-stagger.visible > *:nth-child(8) { transition-delay: 0.54s; }
 .reveal-stagger.visible > *:nth-child(9) { transition-delay: 0.61s; }
-.reveal-stagger.visible > *:nth-child(n+10) { transition-delay: 0.68s; }
+.reveal-stagger.visible > *:nth-child(10) { transition-delay: 0.68s; }
+.reveal-stagger.visible > *:nth-child(11) { transition-delay: 0.75s; }
+.reveal-stagger.visible > *:nth-child(n+12) { transition-delay: 0.82s; }
 
-/* ===================== ABOUT ===================== */
-.info-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-}
+/* —— 3D tilt —— */
 .tilt {
   position: relative;
   transform-style: preserve-3d;
@@ -331,6 +484,73 @@ section { padding: 140px 0 100px; position: relative; }
 }
 .tilt:hover::after { opacity: 1; }
 
+/* ===================== INTRO（一句话介绍 + 成长斜率） ===================== */
+.intro-statement {
+  font-family: var(--serif-cn);
+  font-size: clamp(24px, 4.2vw, 42px);
+  font-weight: 700; line-height: 1.9; letter-spacing: 1px;
+  max-width: 920px;
+}
+.intro-statement em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.intro-belief {
+  margin-top: 52px;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;
+}
+.intro-belief .text {
+  font-family: var(--serif-cn); font-size: clamp(17px, 2.4vw, 23px);
+  line-height: 2.1; color: var(--ink-soft);
+}
+.intro-belief .text em { font-style: normal; color: var(--gold); font-weight: 700; }
+.slope-box {
+  position: relative;
+  border: 1px solid var(--line); border-radius: 20px;
+  background:
+    radial-gradient(500px circle at 90% 0%, rgba(232,184,122,0.06), transparent 55%),
+    var(--bg-card);
+  padding: 26px 26px 18px;
+  overflow: hidden;
+}
+.slope-box .slope-tag {
+  position: absolute; top: 16px; left: 22px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 3px; color: var(--ink-dim);
+}
+.slope-box .slope-formula {
+  position: absolute; top: 14px; right: 22px;
+  font-family: var(--mono); font-size: 12px; color: var(--gold); letter-spacing: 1px;
+  opacity: 0.85;
+}
+.slope-svg { width: 100%; height: auto; display: block; margin-top: 18px; }
+.slope-axis { stroke: rgba(242,239,235,0.14); stroke-width: 1; }
+.slope-grid { stroke: rgba(242,239,235,0.05); stroke-width: 1; stroke-dasharray: 3 6; }
+.slope-path {
+  fill: none; stroke: url(#slopeGrad); stroke-width: 2.5; stroke-linecap: round;
+  stroke-dasharray: 560; stroke-dashoffset: 560;
+}
+.slope-box.draw .slope-path { animation: slopeDraw 2.2s cubic-bezier(0.4,0,0.2,1) 0.3s forwards; }
+@keyframes slopeDraw { to { stroke-dashoffset: 0; } }
+.slope-dot { opacity: 0; }
+.slope-box.draw .slope-dot { animation: slopeDot 0.6s ease 2.3s forwards; }
+@keyframes slopeDot { to { opacity: 1; } }
+.slope-dot-pulse { opacity: 0; transform-origin: 372px 26px; }
+.slope-box.draw .slope-dot-pulse { animation: slopePulse 2s ease-out 2.5s infinite; }
+@keyframes slopePulse {
+  0% { opacity: 0.7; transform: scale(0.4); }
+  100% { opacity: 0; transform: scale(2.4); }
+}
+.slope-caption {
+  margin-top: 10px; text-align: right;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim);
+}
+
+/* ===================== ABOUT ===================== */
+.info-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
 .info-card {
   background: var(--bg-card); border: 1px solid var(--line);
   border-radius: 18px; padding: 28px; overflow: hidden;
@@ -351,7 +571,7 @@ section { padding: 140px 0 100px; position: relative; }
 }
 .info-card:hover .icon { background: rgba(232,184,122,0.14); border-color: rgba(232,184,122,0.22); transform: translateZ(10px); }
 .info-card .label { font-family: var(--sans-en); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
-.info-card .value { font-size: 16px; font-weight: 500; line-height: 1.6; }
+.info-card .value { font-size: 15.5px; font-weight: 500; line-height: 1.75; }
 .info-card .value small { font-size: 13px; color: var(--ink-soft); font-weight: 300; }
 .info-card .value-italic-gold { font-family: var(--serif-cn); font-style: italic; color: var(--gold); }
 .mbti-pill {
@@ -362,159 +582,117 @@ section { padding: 140px 0 100px; position: relative; }
   font-family: var(--sans-en); font-weight: 700; font-size: 14px;
   color: var(--accent-sage);
 }
+.kw-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.kw-chips span {
+  font-size: 12.5px; padding: 4px 13px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--ink-soft);
+  transition: all 0.3s;
+}
+.info-card:hover .kw-chips span { border-color: var(--line-strong); color: var(--gold); }
 
-/* ===================== STATS (大编辑级数字) ===================== */
-.stats {
-  margin: 0 auto; max-width: 1080px;
-  border: 1px solid var(--line); border-radius: 22px;
-  background:
-    radial-gradient(900px circle at 80% -10%, rgba(232,184,122,0.07), transparent 50%),
-    linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.001));
-  padding: 28px 36px;
-  overflow: hidden; position: relative;
+/* ===================== METRICS（九宫格数据墙） ===================== */
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.001));
 }
-.stats::before {
-  content: 'KEY · METRICS · 2026';
-  position: absolute; top: 16px; right: 24px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 3px;
-  color: var(--ink-dim);
-}
-.stats-row {
-  display: grid; grid-template-columns: minmax(180px, 0.85fr) 1.4fr;
-  align-items: center; gap: 36px;
-  padding: 36px 6px; border-top: 1px solid var(--line);
+.metric-cell {
   position: relative;
+  padding: 44px 36px 38px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.45s ease;
+  overflow: hidden;
 }
-.stats-row:first-of-type { border-top: 0; padding-top: 56px; }
-.stats-row:last-of-type { padding-bottom: 24px; }
-.stats-row::after {
-  content: ''; position: absolute; right: 6px; bottom: -1px;
-  width: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold));
-  transition: width 0.7s ease;
+.metric-cell:nth-child(3n) { border-right: 0; }
+.metric-cell:nth-child(n+7) { border-bottom: 0; }
+.metric-cell::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(420px circle at 50% 110%, rgba(232,184,122,0.10), transparent 60%);
+  opacity: 0; transition: opacity 0.5s;
 }
-.stats-row:hover::after { width: 40%; }
-.stats-row .num {
+.metric-cell:hover { background: var(--bg-card-hi); }
+.metric-cell:hover::before { opacity: 1; }
+.metric-cell .m-idx {
+  position: absolute; top: 16px; right: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim);
+}
+.metric-cell .num {
   font-family: var(--sans-en); font-weight: 800;
-  font-size: clamp(56px, 9vw, 116px); line-height: 0.92;
+  font-size: clamp(44px, 6vw, 72px); line-height: 1;
   background: linear-gradient(160deg, #fff 0%, var(--gold-light) 35%, var(--gold) 60%, var(--gold-deep) 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  letter-spacing: -3px;
+  letter-spacing: -2px;
+  position: relative; z-index: 1;
 }
-.stats-row .num .unit { font-size: 0.5em; margin-left: 4px; font-weight: 600; -webkit-text-fill-color: var(--gold); }
-.stats-row .label {
-  font-family: var(--serif-cn); font-size: clamp(18px, 2.3vw, 24px); font-weight: 700;
-  color: var(--ink); line-height: 1.4;
+.metric-cell .num .unit { font-size: 0.46em; margin-left: 3px; font-weight: 600; -webkit-text-fill-color: var(--gold); }
+.metric-cell .m-label {
+  margin-top: 14px;
+  font-family: var(--serif-cn); font-size: 16px; font-weight: 700; color: var(--ink);
+  position: relative; z-index: 1;
 }
-.stats-row .label small {
-  display: block; margin-top: 6px; font-weight: 300;
-  font-family: var(--sans-cn); color: var(--ink-soft); font-size: 13px;
-  letter-spacing: 1px;
-}
-@media (max-width: 720px) {
-  .stats-row { grid-template-columns: 1fr; gap: 6px; padding: 28px 6px; }
-}
-
-/* ===================== ROLES (跑马灯) ===================== */
-.role-marquee {
-  margin: 56px 0 0; padding: 6px 0; overflow: hidden;
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-  position: relative;
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.role-track {
-  display: flex; gap: 14px; padding: 22px 0;
-  width: max-content;
-  animation: marquee 44s linear infinite;
-}
-.role-marquee:hover .role-track { animation-play-state: paused; }
-.role-chip {
-  flex: 0 0 auto;
-  display: inline-flex; align-items: center; gap: 12px;
-  padding: 10px 22px; border-radius: 999px;
-  background: var(--bg-card); border: 1px solid var(--line);
-  font-family: var(--serif-cn); font-size: 15px; color: var(--ink);
-  white-space: nowrap; transition: all 0.3s;
-}
-.role-chip:hover { background: var(--bg-card-hi); border-color: var(--line-strong); color: var(--gold); }
-.role-chip .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--gold); box-shadow: 0 0 8px var(--gold);
-}
-.role-chip .dot.coral { background: var(--ember); box-shadow: 0 0 8px var(--ember); }
-.role-chip .dot.violet { background: var(--accent-violet); box-shadow: 0 0 8px var(--accent-violet); }
-.role-chip .dot.sage { background: var(--accent-sage); box-shadow: 0 0 8px var(--accent-sage); }
-.role-chip .dot.teal { background: var(--accent-teal); box-shadow: 0 0 8px var(--accent-teal); }
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+.metric-cell .m-sub {
+  margin-top: 4px; font-size: 12.5px; color: var(--ink-soft); font-weight: 300;
+  letter-spacing: 0.5px;
+  position: relative; z-index: 1;
 }
 
-/* ===================== ACHIEVEMENTS (时间线) ===================== */
-.timeline {
+/* ===================== PRACTICE（我做过什么） ===================== */
+.practice-list { border-top: 1px solid var(--line); }
+.practice-row {
   position: relative;
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 36px;
-  padding: 12px 0;
+  display: grid; grid-template-columns: 110px 1fr;
+  gap: 28px;
+  padding: 48px 8px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.45s ease, padding 0.45s ease;
+  overflow: hidden;
 }
-.timeline::before {
-  content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
-  width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(232,184,122,0.22) 10%, rgba(232,184,122,0.22) 90%, transparent);
-  transform: translateX(-0.5px);
-}
-.ach-card {
-  background: linear-gradient(140deg, rgba(255,255,255,0.022) 0%, rgba(255,255,255,0.005) 100%);
-  border: 1px solid var(--line); border-radius: 18px;
-  padding: 28px 26px; position: relative; overflow: hidden;
-  transition: border-color 0.4s, background 0.4s;
-}
-.ach-card:hover { background: var(--bg-card-hi); border-color: var(--line-strong); }
-.ach-card::before {
+.practice-row::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
   width: 2px; background: linear-gradient(180deg, transparent, var(--gold), transparent);
-  opacity: 0; transition: opacity 0.4s;
+  opacity: 0; transition: opacity 0.45s;
 }
-.ach-card:hover::before { opacity: 1; }
-.ach-head {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 18px;
+.practice-row::after {
+  content: attr(data-ghost); position: absolute; right: -10px; bottom: -34px;
+  font-family: var(--sans-en); font-weight: 900; font-size: 150px; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(232,184,122,0.10);
+  pointer-events: none; opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.ach-icon {
-  flex-shrink: 0;
-  width: 38px; height: 38px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 11px; font-size: 18px;
-  background: rgba(232,184,122,0.08);
-  border: 1px solid rgba(232,184,122,0.15);
-  transition: transform 0.4s, background 0.4s, border-color 0.4s;
+.practice-row:hover { background: rgba(255,255,255,0.018); padding-left: 22px; }
+.practice-row:hover::before { opacity: 1; }
+.practice-row:hover::after { opacity: 1; transform: translateY(0); }
+.practice-row .p-idx {
+  font-family: var(--sans-en); font-weight: 200;
+  font-size: clamp(40px, 5vw, 60px); line-height: 1;
+  color: rgba(232,184,122,0.22); transition: color 0.45s;
+  padding-top: 4px;
 }
-.ach-card:hover .ach-icon { transform: translateZ(12px) scale(1.05); background: rgba(232,184,122,0.14); border-color: rgba(232,184,122,0.25); }
-.ach-icon.coral { background: rgba(195,107,94,0.1); border-color: rgba(195,107,94,0.18); }
-.ach-icon.violet { background: rgba(142,122,184,0.1); border-color: rgba(142,122,184,0.18); }
-.ach-icon.teal { background: rgba(127,168,173,0.1); border-color: rgba(127,168,173,0.18); }
-.ach-icon.sage { background: rgba(136,168,120,0.1); border-color: rgba(136,168,120,0.18); }
-.ach-index {
-  font-family: var(--sans-en); font-weight: 800; font-size: 22px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  letter-spacing: 0; line-height: 1;
+.practice-row:hover .p-idx { color: var(--gold); }
+.p-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.p-head h3 {
+  font-family: var(--serif-cn); font-size: clamp(20px, 2.6vw, 26px); font-weight: 700;
+  letter-spacing: 1px;
 }
-.ach-tag {
-  margin-left: auto;
+.p-tag {
   font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
-  color: var(--ink-dim); padding: 5px 10px;
+  color: var(--ink-dim); padding: 5px 12px;
   border: 1px solid var(--line); border-radius: 999px;
-  white-space: nowrap;
+  white-space: nowrap; transition: all 0.4s;
 }
-.ach-card h4 {
-  font-family: var(--serif-cn); font-size: 18px; font-weight: 700; line-height: 1.4;
-  margin-bottom: 8px;
-}
-.ach-card p {
-  font-size: 13.5px; color: var(--ink-soft); line-height: 1.75;
+.practice-row:hover .p-tag { color: var(--gold); border-color: var(--line-strong); }
+.p-body p { font-size: 14.5px; color: var(--ink-soft); line-height: 2; max-width: 760px; }
+.p-body p strong { color: var(--ink); font-weight: 600; }
+.p-quote {
+  margin-top: 16px; padding-left: 18px;
+  border-left: 2px solid rgba(232,184,122,0.4);
+  font-family: var(--serif-cn); font-style: italic;
+  font-size: 15px !important; color: var(--gold) !important;
+  letter-spacing: 1px;
 }
 .gold-num {
-  font-family: var(--sans-en); font-weight: 800; font-size: 18px;
+  font-family: var(--sans-en); font-weight: 800; font-size: 17px;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   margin: 0 2px;
@@ -526,12 +704,64 @@ section { padding: 140px 0 100px; position: relative; }
   color: var(--accent-sage); font-size: 11px; font-family: var(--sans-en); font-weight: 700;
   letter-spacing: 1px; margin-left: 4px;
 }
-.image-badge { color: var(--accent-violet); background: rgba(142,122,184,0.1); border-color: rgba(142,122,184,0.22); }
-.code-badge { color: var(--accent-teal); background: rgba(127,168,173,0.1); border-color: rgba(127,168,173,0.22); }
+
+/* —— IDOP 闭环动效 —— */
+.idop-flow {
+  display: flex; align-items: stretch; gap: 0;
+  margin-top: 24px; max-width: 760px;
+}
+.idop-node {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 18px 8px;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: var(--bg-card);
+  transition: all 0.4s ease;
+  position: relative;
+}
+.idop-node:hover {
+  border-color: var(--line-strong); background: var(--bg-card-hi);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.35), 0 0 24px rgba(232,184,122,0.08);
+}
+.idop-node .en { font-family: var(--sans-en); font-weight: 800; font-size: 14px; letter-spacing: 2px; color: var(--gold); }
+.idop-node .cn { font-family: var(--serif-cn); font-size: 13px; color: var(--ink-soft); }
+.idop-node.product { border-color: rgba(232,184,122,0.35); background: linear-gradient(135deg, rgba(232,184,122,0.10), rgba(232,184,122,0.02)); }
+.idop-node.product .en { color: var(--gold-light); }
+.idop-arrow {
+  flex: 0 0 34px; position: relative; align-self: center; height: 2px;
+  background: rgba(232,184,122,0.18); margin: 0 2px;
+  overflow: hidden;
+}
+.idop-arrow::before {
+  content: ''; position: absolute; top: 0; left: -40%;
+  width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, var(--gold));
+  animation: idopPulse 1.8s linear infinite;
+}
+.idop-arrow:nth-of-type(4)::before { animation-delay: 0.6s; }
+.idop-arrow:nth-of-type(6)::before { animation-delay: 1.2s; }
+@keyframes idopPulse { from { left: -40%; } to { left: 110%; } }
+.idop-note {
+  margin-top: 14px;
+  font-family: var(--serif-cn); font-size: 13.5px; color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+.idop-note em { font-style: normal; color: var(--gold); }
+
+/* —— 成长系统 chips —— */
+.sys-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; max-width: 760px; }
+.sys-chips span {
+  font-size: 13px; padding: 8px 18px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg-card);
+  color: var(--ink-soft); letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.sys-chips span:hover { color: var(--gold); border-color: var(--line-strong); transform: translateY(-2px); }
 
 /* —— 成长引言 banner —— */
 .growth-banner {
-  margin: 80px 0 0;
+  margin: 90px 0 0;
   padding: 56px 44px;
   border-radius: 24px;
   background:
@@ -597,6 +827,112 @@ section { padding: 140px 0 100px; position: relative; }
   font-size: clamp(19px, 2.4vw, 23px);
 }
 
+/* ===================== TOPICS（可以和我聊什么） ===================== */
+.topics-cloud { display: flex; flex-wrap: wrap; gap: 14px; max-width: 900px; }
+.topic-chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 26px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg-card);
+  font-family: var(--serif-cn); font-size: 15px; color: var(--ink);
+  letter-spacing: 1px;
+  transition: all 0.35s ease;
+  cursor: default;
+}
+.topic-chip .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 8px var(--gold);
+  transition: transform 0.35s;
+}
+.topic-chip:nth-child(3n) .dot { background: var(--ember); box-shadow: 0 0 8px var(--ember); }
+.topic-chip:nth-child(3n+2) .dot { background: var(--accent-violet); box-shadow: 0 0 8px var(--accent-violet); }
+.topic-chip:hover {
+  border-color: var(--line-strong); background: var(--bg-card-hi);
+  color: var(--gold); transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.3);
+}
+.topic-chip:hover .dot { transform: scale(1.5); }
+.topics-foot {
+  margin-top: 36px;
+  font-family: var(--serif-cn); font-size: 14.5px; color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+.topics-foot em { font-style: normal; color: var(--gold); }
+
+/* ===================== BECOME（我想成为怎样的人） ===================== */
+#become { text-align: center; }
+.become-poem { max-width: 760px; margin: 0 auto; }
+.become-poem .b-line {
+  font-family: var(--serif-cn);
+  font-size: clamp(17px, 2.6vw, 24px);
+  line-height: 2.3; letter-spacing: 2px;
+  color: var(--ink-soft);
+}
+.become-poem .b-line em {
+  font-style: normal; font-weight: 700;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.become-poem .b-line.lead {
+  font-size: clamp(22px, 3.6vw, 34px); font-weight: 700; color: var(--ink);
+  margin-bottom: 28px;
+}
+.become-poem .b-gap { height: 26px; }
+.become-poem .b-line.final {
+  margin-top: 8px; font-weight: 700; color: var(--ink);
+}
+.become-seal {
+  margin-top: 56px;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.become-seal .seal-line { width: 1px; height: 44px; background: linear-gradient(180deg, transparent, var(--gold)); }
+.become-seal .seal-text {
+  font-family: var(--serif-en); font-style: italic; font-size: 14px;
+  letter-spacing: 5px; color: var(--ink-dim);
+}
+
+/* ===================== UNIVERSE（追光宇宙 · 全站导航） ===================== */
+.uni-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+.uni-card {
+  position: relative; display: block;
+  padding: 26px 24px 22px;
+  border: 1px solid var(--line); border-radius: 18px;
+  background: var(--bg-card);
+  text-decoration: none; color: var(--ink);
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.uni-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(300px circle at 100% 0%, rgba(232,184,122,0.10), transparent 55%);
+  opacity: 0; transition: opacity 0.45s;
+}
+.uni-card:hover {
+  border-color: var(--line-strong); background: var(--bg-card-hi);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 44px rgba(0,0,0,0.4);
+}
+.uni-card:hover::before { opacity: 1; }
+.uni-card .u-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.uni-card .u-idx { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim); }
+.uni-card .u-arrow {
+  font-family: var(--sans-en); font-size: 16px; color: var(--ink-dim);
+  transition: all 0.35s ease;
+}
+.uni-card:hover .u-arrow { color: var(--gold); transform: translate(4px, -4px); }
+.uni-card h4 {
+  font-family: var(--serif-cn); font-size: 17px; font-weight: 700; letter-spacing: 1px;
+  line-height: 1.5; position: relative; z-index: 1;
+}
+.uni-card .u-en {
+  display: block; margin-top: 5px;
+  font-family: var(--sans-en); font-size: 10.5px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--ink-dim); transition: color 0.35s;
+}
+.uni-card:hover .u-en { color: var(--gold); }
+
 /* ===================== CONNECT ===================== */
 .connect-wrap { display: flex; justify-content: center; }
 .connect-card {
@@ -606,7 +942,7 @@ section { padding: 140px 0 100px; position: relative; }
     rgba(255,255,255,0.02);
   border: 1px solid var(--line-strong);
   border-radius: 22px; padding: 48px 56px;
-  text-align: center; min-width: 320px; max-width: 460px;
+  text-align: center; min-width: 320px; max-width: 480px;
   overflow: hidden;
 }
 .connect-card::before {
@@ -629,17 +965,34 @@ section { padding: 140px 0 100px; position: relative; }
   text-transform: uppercase; color: var(--ink-dim); margin-bottom: 12px;
 }
 .connect-card .value {
-  font-family: var(--sans-en); font-size: 22px; font-weight: 700; color: var(--gold);
-  letter-spacing: 1px; user-select: all; cursor: text;
+  font-family: var(--sans-en); font-size: 22px; font-weight: 700;
+  letter-spacing: 1px; user-select: all;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .connect-card .hint {
   font-family: var(--serif-cn); font-size: 13px; color: var(--ink-soft); margin-top: 14px;
   letter-spacing: 1px;
 }
+.copy-btn {
+  margin-top: 22px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 28px; border-radius: 999px;
+  background: transparent; border: 1px solid rgba(232,184,122,0.35);
+  color: var(--gold); font-family: var(--sans-cn); font-size: 13px; letter-spacing: 2px;
+  cursor: pointer; transition: all 0.35s ease;
+  position: relative; z-index: 1;
+}
+.copy-btn:hover { background: rgba(232,184,122,0.12); box-shadow: 0 0 24px rgba(232,184,122,0.2); transform: translateY(-1px); }
+.connect-foot {
+  margin-top: 44px; text-align: center;
+  font-family: var(--serif-cn); font-size: clamp(15px, 2vw, 17px);
+  color: var(--ink-soft); line-height: 2.1; letter-spacing: 1px;
+}
+.connect-foot em { font-style: normal; color: var(--gold); }
+
 /* ===================== FOOTER ===================== */
-.footer { text-align: center; padding: 100px 24px 56px; position: relative; }
+.footer { text-align: center; padding: 100px 24px 56px; position: relative; z-index: 1; }
 .footer-light {
   width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 36px;
   display: flex; align-items: center; justify-content: center; font-size: 48px;
@@ -669,49 +1022,64 @@ section { padding: 140px 0 100px; position: relative; }
 }
 
 /* ===================== RESPONSIVE ===================== */
-/* 中段断点：iPad / 小笔记本 (768–960px) — 避免 stats / info-grid 拥挤 */
-@media (max-width: 960px) {
-  .stats-row .num { font-size: clamp(48px, 7vw, 92px); }
-  .info-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-  .role-track { animation-duration: 56s; }
+@media (max-width: 1024px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .metric-cell:nth-child(3n) { border-right: 1px solid var(--line); }
+  .metric-cell:nth-child(2n) { border-right: 0; }
+  .metric-cell:nth-child(n+7) { border-bottom: 1px solid var(--line); }
+  .metric-cell:nth-child(n+8) { border-bottom: 0; }
+  .intro-belief { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 880px) {
-  .timeline { grid-template-columns: 1fr; gap: 18px; }
-  .timeline::before { display: none; }
-  /* 移动端时间脊柱：让每张 ach-card 左侧持续显示一道渐变金线，
-     补偿失去的 timeline::before 中央分界线 */
-  .ach-card::before { opacity: 0.45; width: 3px; }
+  .practice-row { grid-template-columns: 1fr; gap: 10px; padding: 38px 4px; }
+  .practice-row:hover { padding-left: 14px; }
+  .practice-row .p-idx { font-size: 32px; }
+  .practice-row::after { font-size: 100px; bottom: -22px; }
+  .idop-flow { flex-direction: column; gap: 0; }
+  .idop-arrow {
+    flex: 0 0 26px; width: 2px; height: 26px; align-self: center; margin: 2px 0;
+  }
+  .idop-arrow::before {
+    width: 100%; height: 40%; left: 0; top: -40%;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    animation: idopPulseV 1.8s linear infinite;
+  }
+  @keyframes idopPulseV { from { top: -40%; } to { top: 110%; } }
 }
 @media (max-width: 768px) {
   .nav { padding: 14px 20px; }
   .nav-links { display: none; }
   .status-pill { display: none; }
-  .hero { padding: 90px 20px 60px; }
-  /* 角标不再消失，改成顶部居中的极小一行 */
+  .hero { padding: 90px 20px 70px; }
   .hero-corner.tl {
-    top: 76px; left: 50%; right: auto;
+    top: 70px; left: 50%; right: auto;
     transform: translateX(-50%);
     text-align: center;
     font-size: 9px; letter-spacing: 1.4px;
-    opacity: 0.3; line-height: 1.5;
+    opacity: 0.4; line-height: 1.6;
   }
   .hero-corner.tr { display: none; }
+  .hero-motto { padding: 22px 34px; }
   section { padding: 90px 0 60px; }
   .section-head { margin-bottom: 40px; }
   .info-grid { grid-template-columns: 1fr; }
-  .stats { padding: 20px 22px; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .metric-cell { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; padding: 34px 26px 30px; }
+  .metric-cell:last-child { border-bottom: 0 !important; }
   .growth-banner { padding: 36px 22px; }
   .manifesto-row { grid-template-columns: 60px 1fr; gap: 14px; padding: 22px 0; }
   .manifesto-row .m-meta { display: none; }
+  .topic-chip { padding: 11px 20px; font-size: 14px; }
   .connect-card { padding: 36px 28px; min-width: auto; width: 100%; }
+  .cursor-glow { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.1s !important; }
-  .role-track { animation: none; }
+  .preloader { display: none; }
+  .giant-track { animation: none; }
   .bg-glow .orb { animation: none !important; }
-  .light-canvas { display: none; }
-  /* canvas 不画时，给 hero 一张静态径向金光替代 */
+  .light-canvas, .cursor-glow, .hero-beams { display: none; }
   .hero {
     background: radial-gradient(ellipse 900px 600px at 50% 32%, rgba(232,184,122,0.07), transparent 70%);
   }
@@ -719,8 +1087,18 @@ section { padding: 140px 0 100px; position: relative; }
 </style>
 </head>
 <body>
+
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pre-core">
+    <div class="pre-ring"></div>
+    <div class="pre-dot"></div>
+    <div class="pre-text">追光者</div>
+  </div>
+</div>
+
 <div class="grain"></div>
 <div class="scroll-progress"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
 
 <div class="bg-glow">
   <div class="orb orb-1"></div>
@@ -731,49 +1109,121 @@ section { padding: 140px 0 100px; position: relative; }
 
 <div class="status-pill" aria-hidden="true">
   <span class="pulse-dot"></span>
-  <span>NOW · 2026.05 · 武汉</span>
+  <span>NOW · 2026.06 · 武汉</span>
 </div>
 
 <nav class="nav">
   <div class="nav-logo">追光者</div>
-  <ul class="nav-links">
-    <li><a href="#about">关于</a></li>
-    <li><a href="#roles">标签</a></li>
-    <li><a href="#achievements">印记</a></li>
-    <li><a href="#beliefs">信念</a></li>
-    <li><a href="#connect">联系</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#intro">介绍</a></li>
+      <li><a href="#about">关于</a></li>
+      <li><a href="#metrics">数据</a></li>
+      <li><a href="#practice">实践</a></li>
+      <li><a href="#beliefs">信念</a></li>
+      <li><a href="#universe">宇宙</a></li>
+    </ul>
+    <a class="nav-cta" href="#connect">和我聊聊 →</a>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-corner tl">INDEX · 003<br>个人说明书 · v3.0</div>
-  <div class="hero-corner tr">CHASING THE LIGHT<br><span class="v">since 2007 · 朔州</span></div>
-
-  <div class="hero-badge">Personal Manual · v3.0</div>
-  <div class="hero-eyebrow">A young ENFJ chasing light, on the road</div>
-  <h1 class="hero-name">追光者</h1>
-  <p class="hero-alias">
-    <span class="cn">曹宗昱</span>
-    <span class="sep">·</span>
-    <span>The Light Chaser</span>
-  </p>
-  <p class="hero-mission">帮助更多年轻人<em>打破思维钢印</em>，看见人生的无限可能</p>
-  <div class="hero-motto">
-    <em>道阻且长</em>，行则将至<br>
-    行而不辍，<em>未来可期</em>
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="hero-beams" aria-hidden="true">
+    <div class="beam beam-1"></div>
+    <div class="beam beam-2"></div>
+    <div class="beam beam-3"></div>
   </div>
+
+  <div class="hero-corner tl">INDEX · 004<br>个人说明书 · v4.0 · REBORN</div>
+  <div class="hero-corner tr">CHASING THE LIGHT<br><span class="v">since 2007 · 朔州 → 武汉</span></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">Personal Manual · v4.0</div>
+    <div class="hero-eyebrow">Reborn in light, still on the road</div>
+    <h1 class="hero-name"><span class="glyph">追</span><span class="glyph">光</span><span class="glyph">者</span></h1>
+    <p class="hero-alias">
+      <span class="cn">曹宗昱</span>
+      <span class="sep">·</span>
+      <span>The Light Chaser</span>
+    </p>
+    <p class="hero-meta">2007 · 山西朔州 <span class="arrow">→</span> 湖北武汉 ┊ 华中农业大学 · 公共管理类在读</p>
+    <div class="hero-tags">
+      <span class="tag">AI 原生实践者</span>
+      <span class="tag">个人IP起步者</span>
+      <span class="tag">FIRE 长期主义者</span>
+      <span class="tag">终身成长者</span>
+    </div>
+    <p class="hero-mission">帮助更多年轻人用 AI <em>打破思维钢印</em>，看见人生更多可能</p>
+    <div class="hero-motto">
+      <em>道阻且长</em>，行则将至<br>
+      行而不辍，<em>未来可期</em>
+    </div>
+  </div>
+
   <div class="hero-scroll">
     <span>SCROLL</span>
     <div class="line"></div>
   </div>
-</section>
+</header>
+
+<!-- 巨型描边跑马灯 -->
+<div class="giant-marquee" aria-hidden="true">
+  <div class="giant-track">
+    <span class="giant-item">追<span class="solid">光</span>者</span>
+    <span class="giant-item en">THE LIGHT CHASER</span>
+    <span class="giant-item">道阻且长 <span class="star">✦</span> 行则将至</span>
+    <span class="giant-item en"><span class="solid">REBORN</span> 2026</span>
+    <span class="giant-item">追<span class="solid">光</span>者</span>
+    <span class="giant-item en">THE LIGHT CHASER</span>
+    <span class="giant-item">道阻且长 <span class="star">✦</span> 行则将至</span>
+    <span class="giant-item en"><span class="solid">REBORN</span> 2026</span>
+  </div>
+</div>
 
 <div class="container">
+
+  <!-- INTRO · 一句话介绍 -->
+  <section id="intro">
+    <div class="section-head reveal">
+      <div class="section-label"><span class="idx">01</span> One Sentence</div>
+      <h2 class="section-title">一句话<span class="hl">介绍我</span></h2>
+    </div>
+    <p class="intro-statement reveal">我是追光者，一个正在用 <em>AI、内容、个人IP 和长期主义</em>，主动重构人生的大一学生。</p>
+    <div class="intro-belief reveal">
+      <div class="text">我相信：这个时代最重要的，不是你现在在哪里，<br>而是你<em>成长的斜率</em>有多高。</div>
+      <div class="slope-box">
+        <span class="slope-tag">GROWTH · CURVE</span>
+        <span class="slope-formula">dy/dx ↗</span>
+        <svg class="slope-svg" viewBox="0 0 400 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="slopeGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="rgba(232,184,122,0.25)"/>
+              <stop offset="60%" stop-color="#E8B87A"/>
+              <stop offset="100%" stop-color="#F4D9A8"/>
+            </linearGradient>
+          </defs>
+          <line class="slope-grid" x1="20" y1="130" x2="385" y2="130"/>
+          <line class="slope-grid" x1="20" y1="80" x2="385" y2="80"/>
+          <line class="slope-grid" x1="140" y1="20" x2="140" y2="178"/>
+          <line class="slope-grid" x1="260" y1="20" x2="260" y2="178"/>
+          <line class="slope-axis" x1="20" y1="178" x2="385" y2="178"/>
+          <line class="slope-axis" x1="20" y1="178" x2="20" y2="15"/>
+          <path class="slope-path" d="M22,174 C110,170 180,158 250,118 C300,88 345,55 372,26"/>
+          <circle class="slope-dot" cx="372" cy="26" r="4" fill="#F4D9A8"/>
+          <circle class="slope-dot-pulse" cx="372" cy="26" r="9" fill="none" stroke="#E8B87A" stroke-width="1.5"/>
+        </svg>
+        <div class="slope-caption">X = TIME · Y = ME</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
 
   <!-- ABOUT -->
   <section id="about">
     <div class="section-head reveal">
-      <div class="section-label">About Me</div>
+      <div class="section-label"><span class="idx">02</span> About Me</div>
       <h2 class="section-title">一些<span class="hl">基本信息</span></h2>
       <p class="section-sub">关于这个人的几条事实——他从哪里来、在哪里、靠什么活着、相信什么。</p>
     </div>
@@ -790,218 +1240,202 @@ section { padding: 140px 0 100px; position: relative; }
       </div>
       <div class="info-card tilt">
         <span class="icon">🎓</span>
-        <div class="label">学校</div>
-        <div class="value">华中农业大学 <small>/ 在读</small></div>
-      </div>
-      <div class="info-card tilt">
-        <span class="icon">🎯</span>
-        <div class="label">爱好</div>
-        <div class="value">打羽毛球 · 吹口琴 · 摄影 · 阅读 · 看电影</div>
+        <div class="label">学校 · 专业</div>
+        <div class="value">华中农业大学 · 公共管理学院 <small>/ 公共管理类在读 · 未来分流行政管理</small></div>
       </div>
       <div class="info-card tilt">
         <span class="icon">⚡</span>
-        <div class="label">身份</div>
-        <div class="value">个人成长探索者 / AI 原生实践者 / FIRE 理念践行者</div>
+        <div class="label">校园身份</div>
+        <div class="value">团支书 / 入党积极分子 / 理研会会员 / 浪前 6.1 湖北分浪负责人</div>
+      </div>
+      <div class="info-card tilt">
+        <span class="icon">🎯</span>
+        <div class="label">兴趣</div>
+        <div class="value">AI · 个人IP · FIRE · 公共管理 · 摄影 · 羽毛球 · 阅读 · 电影 · 猫</div>
       </div>
       <div class="info-card tilt">
         <span class="icon">✦</span>
-        <div class="label">座右铭</div>
-        <div class="value value-italic-gold">道阻且长，行则将至；行而不辍，未来可期。</div>
+        <div class="label">长期关键词</div>
+        <div class="value kw-chips">
+          <span>AI 原生</span><span>个人IP</span><span>终身成长</span><span>财富自由</span><span>主体性</span><span>良知</span><span>理想主义</span>
+        </div>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ROLES + STATS -->
-  <section id="roles">
+  <!-- METRICS · 关键数据 -->
+  <section id="metrics">
     <div class="section-head reveal">
-      <div class="section-label">Key Metrics & Tags</div>
-      <h2 class="section-title">我的<span class="hl">标签</span></h2>
-      <p class="section-sub">先看四个数字，再看七个标签——这是我目前的样子，会一直更新。</p>
+      <div class="section-label"><span class="idx">03</span> Key Data</div>
+      <h2 class="section-title">关键<span class="hl">数据</span></h2>
+      <p class="section-sub"><strong>以下不是包装，是我已经真实做过的事。</strong>每一个数字背后，都有一段具体的时间和故事。</p>
     </div>
 
-    <div class="stats reveal">
-      <div class="stats-row">
-        <div class="num" data-num="300" data-suffix="W+">0<span class="unit">W+</span></div>
-        <div class="label">AI 对话累计字数<small>与 Claude / GPT / Gemini 协作的语料</small></div>
+    <div class="metrics-grid reveal-stagger">
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 01</span>
+        <div class="num" data-num="100" data-suffix="W+">0<span class="unit">W+</span></div>
+        <div class="m-label">公众号矩阵累计阅读量</div>
+        <div class="m-sub">文字带来的覆盖与影响力</div>
       </div>
-      <div class="stats-row">
-        <div class="num" data-num="90" data-suffix="W+">0<span class="unit">W+</span></div>
-        <div class="label">公众号阅读总量<small>文字带来的覆盖与影响力</small></div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 02</span>
+        <div class="num" data-num="5000" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">AI 内容生产第一桶金</div>
+        <div class="m-sub">公众号与 AI 内容变现</div>
       </div>
-      <div class="stats-row">
-        <div class="num" data-num="780" data-suffix="H+">0<span class="unit">H+</span></div>
-        <div class="label">成长课程学习时长<small>主动学习的总投入时间</small></div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 03</span>
+        <div class="num" data-num="820" data-suffix="H+">0<span class="unit">H+</span></div>
+        <div class="m-label">成长认知类学习时长</div>
+        <div class="m-sub">课程 · 播客 · 直播累计</div>
       </div>
-      <div class="stats-row">
-        <div class="num" data-num="30" data-suffix="W+">0<span class="unit">W+</span></div>
-        <div class="label">连续复盘文字累计<small>每天一次的自我对话</small></div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 04</span>
+        <div class="num" data-num="500" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">AI 视觉作品</div>
+        <div class="m-sub">GPT-Image / Image-2 生成</div>
       </div>
-    </div>
-
-    <div class="role-marquee reveal" aria-label="身份标签跑马灯">
-      <div class="role-track">
-        <span class="role-chip"><span class="dot"></span>AI 原生实践者（Claude / GPT / Gemini 深度用户）</span>
-        <span class="role-chip"><span class="dot coral"></span>7 年 FIRE 计划执行者</span>
-        <span class="role-chip"><span class="dot violet"></span>GPT-Image-2 视觉创作者</span>
-        <span class="role-chip"><span class="dot teal"></span>Claude Code / Codex Agent 实战者</span>
-        <span class="role-chip"><span class="dot sage"></span>全栈 AI 独立开发者</span>
-        <span class="role-chip"><span class="dot"></span>浪前 6.1 鄂浪负责人</span>
-        <span class="role-chip"><span class="dot coral"></span>大一实现经济独立</span>
-        <span class="role-chip"><span class="dot violet"></span>终身成长者</span>
-        <!-- 镜像复制一份保证无缝循环 -->
-        <span class="role-chip" aria-hidden="true"><span class="dot"></span>AI 原生实践者（Claude / GPT / Gemini 深度用户）</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot coral"></span>7 年 FIRE 计划执行者</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot violet"></span>GPT-Image-2 视觉创作者</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot teal"></span>Claude Code / Codex Agent 实战者</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot sage"></span>全栈 AI 独立开发者</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot"></span>浪前 6.1 鄂浪负责人</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot coral"></span>大一实现经济独立</span>
-        <span class="role-chip" aria-hidden="true"><span class="dot violet"></span>终身成长者</span>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 05</span>
+        <div class="num" data-num="10" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">独立搭建的网站</div>
+        <div class="m-sub">Vibe Coding · 想法到上线</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 06</span>
+        <div class="num" data-num="100" data-suffix="天+">0<span class="unit">天+</span></div>
+        <div class="m-label">连续复盘与自我记录</div>
+        <div class="m-sub">每天一次的自我对话</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 07</span>
+        <div class="num" data-num="20" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">高质量非虚构书籍</div>
+        <div class="m-sub">深读而非翻完</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 08</span>
+        <div class="num" data-num="7" data-suffix="条+">0<span class="unit">条+</span></div>
+        <div class="m-label">个人IP口播视频</div>
+        <div class="m-sub">已发布 · 持续更新中</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 09</span>
+        <div class="num" data-num="30" data-suffix="次+">0<span class="unit">次+</span></div>
+        <div class="m-label">本学期健身训练</div>
+        <div class="m-sub">身体也是长期资产</div>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- ACHIEVEMENTS -->
-  <section id="achievements">
+  <!-- PRACTICE · 我做过什么 -->
+  <section id="practice">
     <div class="section-head reveal">
-      <div class="section-label">Milestones · 成长印记</div>
-      <h2 class="section-title">我做过的<span class="hl">事情</span></h2>
-      <p class="section-sub">这些不是为了好看，而是「我确实做了」。每一条背后都有一段具体的时间和故事。</p>
+      <div class="section-label"><span class="idx">04</span> What I've Done</div>
+      <h2 class="section-title">我做过<span class="hl">什么</span></h2>
+      <p class="section-sub">七件正在进行的事——它们不是简历上的一行字，而是我每天真实在做的事情。</p>
     </div>
 
-    <div class="timeline reveal-stagger">
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon">🤖</div>
-          <span class="ach-index">01</span>
-          <span class="ach-tag">AI · LANG</span>
+    <div class="practice-list reveal-stagger">
+      <div class="practice-row" data-ghost="AI">
+        <div class="p-idx">01</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>AI 深度实践</h3>
+            <span class="p-tag">AI · NATIVE</span>
+          </div>
+          <p>深度使用 <strong>GPT、Claude、Gemini、Claude Code、Codex、Image-2</strong> 等工具，长期探索 AI 在学习、写作、复盘、代码、视觉、个人IP、项目推进中的实际应用。</p>
+          <p class="p-quote">我不把 AI 当玩具——它是外接大脑、生产力杠杆和时代入口。</p>
         </div>
-        <h4>AI 深度沟通</h4>
-        <p>跟 Gemini / GPT / Claude 深度沟通 <span class="gold-num">300w+</span> 字，构建个人的 AI 原生工作流。</p>
       </div>
 
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon violet">🎨</div>
-          <span class="ach-index">02</span>
-          <span class="ach-tag">VISUAL · IMG</span>
+      <div class="practice-row" data-ghost="100W">
+        <div class="p-idx">02</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>公众号矩阵</h3>
+            <span class="p-tag">WRITE · MONETIZE</span>
+          </div>
+          <p>用 AI 辅助内容生产，运营公众号矩阵，累计阅读量超过 <span class="gold-num">100W</span>，累计变现 <span class="gold-num">5000+</span>。这是我人生中第一段真实的线上变现经历。</p>
+          <p class="p-quote">它让我第一次确认：AI 不是消费，而是投资。</p>
         </div>
-        <h4>GPT-Image-2 视觉创作</h4>
-        <p>熟练使用 GPT-Image-2，已生成原创作品 <span class="gold-num">500+</span> 张<span class="fire-badge image-badge">IMAGE</span></p>
       </div>
 
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon teal">💻</div>
-          <span class="ach-index">03</span>
-          <span class="ach-tag">AGENT · CODE</span>
+      <div class="practice-row" data-ghost="IDOP">
+        <div class="p-idx">03</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>个人IP起步</h3>
+            <span class="p-tag">IP · IDOP</span>
+          </div>
+          <p>核心方向是<strong>成长、AI、认知、长期主义和年轻人的人生可能性</strong>。已完成从 0 到 1：稳定拍口播视频，逐步训练选题、口播、拍摄、剪辑、封面、BGM、分发和复盘能力。底层方法论是我原创的 <strong>IDOP 理论</strong>：</p>
+          <div class="idop-flow" aria-label="IDOP 闭环：输入、沉淀、输出、产品">
+            <div class="idop-node"><span class="en">INPUT</span><span class="cn">输入</span></div>
+            <div class="idop-arrow"></div>
+            <div class="idop-node"><span class="en">DEPOSIT</span><span class="cn">沉淀</span></div>
+            <div class="idop-arrow"></div>
+            <div class="idop-node"><span class="en">OUTPUT</span><span class="cn">输出</span></div>
+            <div class="idop-arrow"></div>
+            <div class="idop-node product"><span class="en">PRODUCT</span><span class="cn">产品</span></div>
+          </div>
+          <div class="idop-note">输入不是目的，输出不是终点，<em>产品化才是长期价值沉淀</em>。</div>
         </div>
-        <h4>顶级 Coding Agent 实战</h4>
-        <p>熟练使用 <strong>Claude Code</strong> 与 <strong>Codex</strong> 等顶级 Coding Agent，把"想法 → 网站"的链路压缩到一晚<span class="fire-badge code-badge">AGENT</span></p>
       </div>
 
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon sage">🌐</div>
-          <span class="ach-index">04</span>
-          <span class="ach-tag">BUILD · SHIP</span>
+      <div class="practice-row" data-ghost="SHIP">
+        <div class="p-idx">04</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>Vibe Coding 建站</h3>
+            <span class="p-tag">CODE · AGENT</span>
+          </div>
+          <p>熟练使用 <strong>Claude Code、Codex</strong> 等 Coding Agent，把「一个想法 → 一个网站」的链路压缩到很短时间。已独立做出 <span class="gold-num">10+</span> 个网站，覆盖个人说明书、人生系统、IDOP理论、FIRE计算器、纪念网站、视觉展示等多个场景。</p>
+          <p class="p-quote">未来的年轻人都应该拥有自己的数字资产，而不只是把内容发在平台上。</p>
         </div>
-        <h4>独立建站</h4>
-        <p>独立做出 <span class="gold-num">10+</span> 个网站，覆盖个人说明书、人生回忆录、工作流、FIRE 计算器等场景。</p>
       </div>
 
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon">📱</div>
-          <span class="ach-index">05</span>
-          <span class="ach-tag">WRITE · WECHAT</span>
+      <div class="practice-row" data-ghost="500+">
+        <div class="p-idx">05</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>视觉创作</h3>
+            <span class="p-tag">VISUAL · IMG</span>
+          </div>
+          <p>熟练使用 <strong>GPT-Image / Image-2</strong> 进行视觉创作，已生成 <span class="gold-num">500+</span> 张图像作品。长期审美方向：高级、电影感、光影、秩序、远方感、理想主义、AI 时代感、东方气质、成长感。</p>
+          <p class="p-quote">视觉不是装饰，而是表达能力的一部分。</p>
         </div>
-        <h4>公众号运营</h4>
-        <p>总阅读量超 <span class="gold-num">90w+</span>，累计变现 <span class="gold-num">4500+</span>。</p>
       </div>
 
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon violet">🎧</div>
-          <span class="ach-index">06</span>
-          <span class="ach-tag">LEARN · HOURS</span>
+      <div class="practice-row" data-ghost="FIRE">
+        <div class="p-idx">06</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>FIRE 长期计划</h3>
+            <span class="p-tag">FIRE · 7 YEARS</span>
+          </div>
+          <p>正在执行<strong>七年 FIRE 计划</strong>，核心路径：<strong>开源 + 节流 + 定投</strong> <span class="fire-badge">FIRE 践行中</span></p>
+          <p class="p-quote">追求财富自由不是为了躺平，而是为了更高的人生选择权——保护自己和爱的人，把时间投入真正重要的事。</p>
         </div>
-        <h4>成长课程</h4>
-        <p>听成长类课程累计 <span class="gold-num">780h+</span>，把自学时间结构化成体系。</p>
       </div>
 
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon coral">📚</div>
-          <span class="ach-index">07</span>
-          <span class="ach-tag">READ · BOOKS</span>
+      <div class="practice-row" data-ghost="OS">
+        <div class="p-idx">07</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>成长系统</h3>
+            <span class="p-tag">SYSTEM · OS</span>
+          </div>
+          <p>过去一年，我持续搭建自己的「人生操作系统」：</p>
+          <div class="sys-chips">
+            <span>成长进步体系</span><span>七年 FIRE 计划</span><span>三级人生目标</span><span>双轨制战略</span><span>S 级人生策略</span><span>AI 分层使用战略</span><span>周复盘 · 人生月报</span><span>IDOP 方法论</span>
+          </div>
+          <p class="p-quote">我不只是想变好，而是在系统化地让自己变好。</p>
         </div>
-        <h4>阅读</h4>
-        <p>3 个月读完 <span class="gold-num">20</span> 本高质量非虚构类书籍。</p>
-      </div>
-
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon teal">📝</div>
-          <span class="ach-index">08</span>
-          <span class="ach-tag">REVIEW · DAILY</span>
-        </div>
-        <h4>连续复盘</h4>
-        <p>连续复盘超百天，累计 <span class="gold-num">30w+</span> 字——每天一次自我对话。</p>
-      </div>
-
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon coral">💰</div>
-          <span class="ach-index">09</span>
-          <span class="ach-tag">FREEDOM</span>
-        </div>
-        <h4>大一经济独立</h4>
-        <p>通过开源节流以及公众号创收，在大一已实现经济独立。</p>
-      </div>
-
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon">📈</div>
-          <span class="ach-index">10</span>
-          <span class="ach-tag">FIRE · INDEX</span>
-        </div>
-        <h4>定投美股纳指</h4>
-        <p>FIRE 理念实践：累计投入 1000+，收益率保持 4%+ <span class="fire-badge">FIRE 践行中</span></p>
-      </div>
-
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon sage">📞</div>
-          <span class="ach-index">11</span>
-          <span class="ach-tag">CONNECT</span>
-        </div>
-        <h4>深度链接</h4>
-        <p>跟 <span class="gold-num">20+</span> 位认知同频、志同道合的战友约过电话，做过深度沟通。</p>
-      </div>
-
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon violet">🏛️</div>
-          <span class="ach-index">12</span>
-          <span class="ach-tag">EVENT · 2025</span>
-        </div>
-        <h4>AI 峰会</h4>
-        <p>参加 2025 企业 AI 落地应用百人峰会（武汉站）。</p>
-      </div>
-
-      <div class="ach-card tilt">
-        <div class="ach-head">
-          <div class="ach-icon coral">🎪</div>
-          <span class="ach-index">13</span>
-          <span class="ach-tag">EVENT · OFFLINE</span>
-        </div>
-        <h4>线下活动策划</h4>
-        <p>策划并举办多次 30+ 人参与的线下活动。</p>
       </div>
     </div>
 
@@ -1021,7 +1455,7 @@ section { padding: 140px 0 100px; position: relative; }
   <!-- BELIEFS -->
   <section id="beliefs">
     <div class="section-head reveal">
-      <div class="section-label">Core Beliefs · 信念</div>
+      <div class="section-label"><span class="idx">05</span> Core Beliefs</div>
       <h2 class="section-title">一些我坚信的<span class="hl">道理</span></h2>
       <p class="section-sub">不是哲学命题，是被自己反复用过的句子。每一条都帮我做过决定。</p>
     </div>
@@ -1072,21 +1506,144 @@ section { padding: 140px 0 100px; position: relative; }
 
   <div class="divider"></div>
 
+  <!-- TOPICS -->
+  <section id="topics">
+    <div class="section-head reveal">
+      <div class="section-label"><span class="idx">06</span> Let's Talk</div>
+      <h2 class="section-title">你可以和我<span class="hl">聊什么</span></h2>
+      <p class="section-sub">如果你也对这些话题感兴趣，我们大概率能聊得很开心。</p>
+    </div>
+    <div class="topics-cloud reveal-stagger">
+      <span class="topic-chip"><span class="dot"></span>AI 工具与 AI 时代机会</span>
+      <span class="topic-chip"><span class="dot"></span>个人IP 和内容创作</span>
+      <span class="topic-chip"><span class="dot"></span>FIRE 与财富自由</span>
+      <span class="topic-chip"><span class="dot"></span>公众号 · 自媒体 · 轻资产项目</span>
+      <span class="topic-chip"><span class="dot"></span>Vibe Coding 和个人网站</span>
+      <span class="topic-chip"><span class="dot"></span>成长系统与长期主义</span>
+      <span class="topic-chip"><span class="dot"></span>公共管理 · 行政管理 · 考公路径</span>
+      <span class="topic-chip"><span class="dot"></span>摄影 · 电影 · 阅读 · 猫</span>
+      <span class="topic-chip"><span class="dot"></span>年轻人如何主动设计自己的人生</span>
+    </div>
+    <p class="topics-foot reveal">也可以只是约一杯咖啡、打一通电话，<em>交换一下最近的思考</em>。</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BECOME · 我想成为怎样的人 -->
+  <section id="become">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="section-label" style="justify-content:center;"><span class="idx">07</span> Who I Want To Be</div>
+      <h2 class="section-title">我想成为<span class="hl">怎样的人</span></h2>
+    </div>
+    <div class="become-poem reveal-stagger">
+      <p class="b-line lead">我想成为一个<em>既清醒又热烈</em>的人。</p>
+      <p class="b-line">有能力赚钱，也有能力生活；</p>
+      <p class="b-line">有理性系统，也有感性底色；</p>
+      <p class="b-line">能长期奋斗，也能认真感受日落、电影、和猫；</p>
+      <p class="b-line">能用 AI 放大自己，也能始终守住<em>人的温度和良知</em>。</p>
+      <div class="b-gap"></div>
+      <p class="b-line">我现在还不够强，</p>
+      <p class="b-line">但我已经在<em>正确的路上</em>。</p>
+      <p class="b-line final">而只要行而不辍，未来一定<em>可期</em>。</p>
+    </div>
+    <div class="become-seal reveal">
+      <div class="seal-line"></div>
+      <div class="seal-text">CLEAR-EYED &amp; BURNING</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- UNIVERSE · 追光宇宙 -->
+  <section id="universe">
+    <div class="section-head reveal">
+      <div class="section-label"><span class="idx">08</span> Constellation</div>
+      <h2 class="section-title">追光<span class="hl">宇宙</span></h2>
+      <p class="section-sub">这不只是一个主页。每一个页面，都是我用 Vibe Coding 亲手搭建的一块<strong>数字资产</strong>。</p>
+    </div>
+    <div class="uni-grid reveal-stagger">
+      <a class="uni-card" href="life.html">
+        <div class="u-top"><span class="u-idx">PAGE · 01</span><span class="u-arrow">↗</span></div>
+        <h4>追光者的人生回忆录</h4>
+        <span class="u-en">Memoir</span>
+      </a>
+      <a class="uni-card" href="life_undertone.html">
+        <div class="u-top"><span class="u-idx">PAGE · 02</span><span class="u-arrow">↗</span></div>
+        <h4>生命底色</h4>
+        <span class="u-en">Life Undertone</span>
+      </a>
+      <a class="uni-card" href="ideal.html">
+        <div class="u-top"><span class="u-idx">PAGE · 03</span><span class="u-arrow">↗</span></div>
+        <h4>三级人生目标 · 立己达人</h4>
+        <span class="u-en">Ideal</span>
+      </a>
+      <a class="uni-card" href="fire.html">
+        <div class="u-top"><span class="u-idx">PAGE · 04</span><span class="u-arrow">↗</span></div>
+        <h4>FIRE · 永续之道</h4>
+        <span class="u-en">Financial Freedom</span>
+      </a>
+      <a class="uni-card" href="growth.html">
+        <div class="u-top"><span class="u-idx">PAGE · 05</span><span class="u-arrow">↗</span></div>
+        <h4>成长进步体系</h4>
+        <span class="u-en">The Growth Machine</span>
+      </a>
+      <a class="uni-card" href="system.html">
+        <div class="u-top"><span class="u-idx">PAGE · 06</span><span class="u-arrow">↗</span></div>
+        <h4>人生系统 · 私人仪表盘</h4>
+        <span class="u-en">Life System</span>
+      </a>
+      <a class="uni-card" href="prosper.html">
+        <div class="u-top"><span class="u-idx">PAGE · 07</span><span class="u-arrow">↗</span></div>
+        <h4>人生繁荣公式</h4>
+        <span class="u-en">The Prosperity Formula</span>
+      </a>
+      <a class="uni-card" href="idop.html">
+        <div class="u-top"><span class="u-idx">PAGE · 08</span><span class="u-arrow">↗</span></div>
+        <h4>IDOP · 个人IP核心闭环</h4>
+        <span class="u-en">Input · Deposit · Output · Product</span>
+      </a>
+      <a class="uni-card" href="workflow.html">
+        <div class="u-top"><span class="u-idx">PAGE · 09</span><span class="u-arrow">↗</span></div>
+        <h4>LSA · 个人IP工作流</h4>
+        <span class="u-en">Workflow Dashboard</span>
+      </a>
+      <a class="uni-card" href="hkrr.html">
+        <div class="u-top"><span class="u-idx">PAGE · 10</span><span class="u-arrow">↗</span></div>
+        <h4>HKRR · 好内容的四个变量</h4>
+        <span class="u-en">Content Theory</span>
+      </a>
+      <a class="uni-card" href="know-ai.html">
+        <div class="u-top"><span class="u-idx">PAGE · 11</span><span class="u-arrow">↗</span></div>
+        <h4>关于 AI 的一封信</h4>
+        <span class="u-en">Not Replace, But Amplify</span>
+      </a>
+      <a class="uni-card" href="playground.html">
+        <div class="u-top"><span class="u-idx">PAGE · 12</span><span class="u-arrow">↗</span></div>
+        <h4>前端动效试验场</h4>
+        <span class="u-en">Playground</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- CONNECT -->
   <section id="connect">
     <div class="section-head reveal">
-      <div class="section-label">Connect</div>
+      <div class="section-label"><span class="idx">09</span> Connect</div>
       <h2 class="section-title">如果你也想<span class="hl">追光</span></h2>
-      <p class="section-sub">愿意聊聊任何关于成长、AI、FIRE、写作的话题。一个电话、一杯咖啡，或者一条微信，都行。</p>
+      <p class="section-sub">可以聊 AI，聊成长，聊个人IP，聊 FIRE，聊人生选择——也可以只是约一杯咖啡，打一通电话。</p>
     </div>
     <div class="connect-wrap reveal">
       <div class="connect-card tilt">
         <span class="icon">💬</span>
         <div class="label">WeChat</div>
-        <div class="value">czy18534901307</div>
+        <div class="value" id="wechatId">czy18534901307</div>
         <div class="hint">添加时请备注「追光」</div>
+        <button class="copy-btn" id="copyBtn" type="button">复制微信号</button>
       </div>
     </div>
+    <p class="connect-foot reveal"><em>追光的人，终将光芒万丈。</em></p>
   </section>
 
 </div>
@@ -1095,10 +1652,49 @@ section { padding: 140px 0 100px; position: relative; }
   <div class="footer-light">☀️</div>
   <div class="footer-text">追光的人，终将光芒万丈</div>
   <div class="footer-sub">THE LIGHT CHASER</div>
-  <div class="footer-line">追光者 · 曹宗昱 · 个人说明书 v3.0 · 2026</div>
+  <div class="footer-line">追光者 · 曹宗昱 · 个人说明书 v4.0 · REBORN · 2026</div>
 </footer>
 
 <script>
+// —— 标记 JS 已启用（hero 入场编排依赖此类） ——
+document.body.classList.add('js');
+
+// —— Preloader：一点光破暗，随后整页点亮 ——
+(function preloader() {
+  const pre = document.getElementById('preloader');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const delay = reduced ? 0 : 1100;
+  setTimeout(() => {
+    if (pre) pre.classList.add('done');
+    document.body.classList.add('loaded');
+  }, delay);
+})();
+
+// —— 光标即是光：跟随鼠标的柔光 ——
+(function cursorGlow() {
+  const glow = document.querySelector('.cursor-glow');
+  if (!glow) return;
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let tx = -400, ty = -400, x = -400, y = -400, active = false, rafId = 0;
+  function loop() {
+    x += (tx - x) * 0.1;
+    y += (ty - y) * 0.1;
+    glow.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+    rafId = requestAnimationFrame(loop);
+  }
+  document.addEventListener('mousemove', (e) => {
+    tx = e.clientX; ty = e.clientY;
+    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); loop(); }
+  });
+  document.addEventListener('mouseleave', () => {
+    glow.classList.remove('on');
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && rafId) { cancelAnimationFrame(rafId); rafId = 0; active = false; }
+  });
+})();
+
 // —— 3D 卡片倾斜 + 光斑追踪 ——
 (function () {
   if (matchMedia('(hover: none)').matches) return;
@@ -1120,11 +1716,17 @@ section { padding: 140px 0 100px; position: relative; }
   });
 })();
 
-// —— 滚动进度 ——
+// —— 滚动进度 + hero 视差 ——
 const progressBar = document.querySelector('.scroll-progress');
+const heroInner = document.querySelector('.hero-inner');
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
   progressBar.style.width = (scrolled * 100) + '%';
+  if (heroInner && window.scrollY < window.innerHeight) {
+    const y = window.scrollY;
+    heroInner.style.transform = 'translateY(' + (y * 0.22) + 'px)';
+    heroInner.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.85)).toFixed(3);
+  }
 }, { passive: true });
 
 // —— 数字计数 ——
@@ -1132,7 +1734,7 @@ function animateCount(el) {
   const target = parseInt(el.dataset.num, 10);
   const suffix = el.dataset.suffix || '';
   if (!Number.isFinite(target)) return;
-  const duration = 1500;
+  const duration = 1600;
   const start = performance.now();
   function tick(now) {
     const p = Math.min((now - start) / duration, 1);
@@ -1144,13 +1746,16 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
-// —— Reveal & stagger 触发 ——
+// —— Reveal & stagger 触发（含数字计数 / 斜率曲线绘制） ——
 const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
       entry.target.querySelectorAll('[data-num]').forEach(animateCount);
+      const slope = entry.target.querySelector('.slope-box') ||
+        (entry.target.classList.contains('slope-box') ? entry.target : null);
+      if (slope) slope.classList.add('draw');
       obs.unobserve(entry.target);
     }
   });
@@ -1166,8 +1771,35 @@ const navObs = new IntersectionObserver((entries) => {
       navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
     }
   });
-}, { threshold: 0.35 });
+}, { threshold: 0.3 });
 sections.forEach(s => navObs.observe(s));
+
+// —— 复制微信号 ——
+(function copyWechat() {
+  const btn = document.getElementById('copyBtn');
+  const idEl = document.getElementById('wechatId');
+  if (!btn || !idEl) return;
+  btn.addEventListener('click', () => {
+    const text = idEl.textContent.trim();
+    const done = () => {
+      btn.textContent = '已复制 ✓ 备注「追光」';
+      setTimeout(() => { btn.textContent = '复制微信号'; }, 2200);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(idEl);
+        sel.removeAllRanges(); sel.addRange(range);
+      });
+    } else {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(idEl);
+      sel.removeAllRanges(); sel.addRange(range);
+    }
+  });
+})();
 
 // —— 向光金粉 canvas（追光者签名画面） ——
 (function lightCanvas() {
@@ -1186,7 +1818,7 @@ sections.forEach(s => navObs.observe(s));
   let running = false;
   let rafId = 0;
 
-  // 70% 金 · 20% 琥珀 · 10% 浅金（rgba 前缀，alpha 在 frame 内拼）
+  // 70% 金 · 20% 余烬 · 10% 浅金
   const colors = [
     'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
     'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
@@ -1195,19 +1827,19 @@ sections.forEach(s => navObs.observe(s));
   ];
 
   function particleCount() {
-    if (w < 480) return 18;
-    if (w < 768) return 24;
-    return 40;
+    if (w < 480) return 22;
+    if (w < 768) return 30;
+    return 52;
   }
 
   function spawn(initial) {
     return {
       x: Math.random() * w,
       y: initial ? Math.random() * h : h + Math.random() * 30,
-      r: 0.6 + Math.pow(Math.random(), 2) * 1.6,
+      r: 0.6 + Math.pow(Math.random(), 2) * 1.7,
       vx: (Math.random() - 0.5) * 0.1,
-      vy: -(0.12 + Math.random() * 0.28),
-      a: 0.32 + Math.random() * 0.4,
+      vy: -(0.12 + Math.random() * 0.3),
+      a: 0.32 + Math.random() * 0.42,
       phase: Math.random() * Math.PI * 2,
       freq: 0.0015 + Math.random() * 0.002,
       color: colors[Math.floor(Math.random() * colors.length)]
@@ -1248,7 +1880,7 @@ sections.forEach(s => navObs.observe(s));
         const dx = targetX - p.x;
         const dy = targetY - p.y;
         const d2 = dx * dx + dy * dy;
-        if (d2 < 40000) { // 200^2 attraction radius
+        if (d2 < 40000) { // 200^2 吸附半径
           const d = Math.sqrt(d2) + 0.01;
           p.vx += (dx / d) * 0.018;
           p.vy += (dy / d) * 0.018;
