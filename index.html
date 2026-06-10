@@ -890,49 +890,6 @@ section { padding: 130px 0 100px; position: relative; }
   letter-spacing: 5px; color: var(--ink-dim);
 }
 
-/* ===================== UNIVERSE（追光宇宙 · 全站导航） ===================== */
-.uni-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
-}
-.uni-card {
-  position: relative; display: block;
-  padding: 26px 24px 22px;
-  border: 1px solid var(--line); border-radius: 18px;
-  background: var(--bg-card);
-  text-decoration: none; color: var(--ink);
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-.uni-card::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(300px circle at 100% 0%, rgba(232,184,122,0.10), transparent 55%);
-  opacity: 0; transition: opacity 0.45s;
-}
-.uni-card:hover {
-  border-color: var(--line-strong); background: var(--bg-card-hi);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 44px rgba(0,0,0,0.4);
-}
-.uni-card:hover::before { opacity: 1; }
-.uni-card .u-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.uni-card .u-idx { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim); }
-.uni-card .u-arrow {
-  font-family: var(--sans-en); font-size: 16px; color: var(--ink-dim);
-  transition: all 0.35s ease;
-}
-.uni-card:hover .u-arrow { color: var(--gold); transform: translate(4px, -4px); }
-.uni-card h4 {
-  font-family: var(--serif-cn); font-size: 17px; font-weight: 700; letter-spacing: 1px;
-  line-height: 1.5; position: relative; z-index: 1;
-}
-.uni-card .u-en {
-  display: block; margin-top: 5px;
-  font-family: var(--sans-en); font-size: 10.5px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--ink-dim); transition: color 0.35s;
-}
-.uni-card:hover .u-en { color: var(--gold); }
-
 /* ===================== CONNECT ===================== */
 .connect-wrap { display: flex; justify-content: center; }
 .connect-card {
@@ -1121,7 +1078,6 @@ section { padding: 130px 0 100px; position: relative; }
       <li><a href="#metrics">数据</a></li>
       <li><a href="#practice">实践</a></li>
       <li><a href="#beliefs">信念</a></li>
-      <li><a href="#universe">宇宙</a></li>
     </ul>
     <a class="nav-cta" href="#connect">和我聊聊 →</a>
   </div>
@@ -1554,83 +1510,10 @@ section { padding: 130px 0 100px; position: relative; }
 
   <div class="divider"></div>
 
-  <!-- UNIVERSE · 追光宇宙 -->
-  <section id="universe">
-    <div class="section-head reveal">
-      <div class="section-label"><span class="idx">08</span> Constellation</div>
-      <h2 class="section-title">追光<span class="hl">宇宙</span></h2>
-      <p class="section-sub">这不只是一个主页。每一个页面，都是我用 Vibe Coding 亲手搭建的一块<strong>数字资产</strong>。</p>
-    </div>
-    <div class="uni-grid reveal-stagger">
-      <a class="uni-card" href="life.html">
-        <div class="u-top"><span class="u-idx">PAGE · 01</span><span class="u-arrow">↗</span></div>
-        <h4>追光者的人生回忆录</h4>
-        <span class="u-en">Memoir</span>
-      </a>
-      <a class="uni-card" href="life_undertone.html">
-        <div class="u-top"><span class="u-idx">PAGE · 02</span><span class="u-arrow">↗</span></div>
-        <h4>生命底色</h4>
-        <span class="u-en">Life Undertone</span>
-      </a>
-      <a class="uni-card" href="ideal.html">
-        <div class="u-top"><span class="u-idx">PAGE · 03</span><span class="u-arrow">↗</span></div>
-        <h4>三级人生目标 · 立己达人</h4>
-        <span class="u-en">Ideal</span>
-      </a>
-      <a class="uni-card" href="fire.html">
-        <div class="u-top"><span class="u-idx">PAGE · 04</span><span class="u-arrow">↗</span></div>
-        <h4>FIRE · 永续之道</h4>
-        <span class="u-en">Financial Freedom</span>
-      </a>
-      <a class="uni-card" href="growth.html">
-        <div class="u-top"><span class="u-idx">PAGE · 05</span><span class="u-arrow">↗</span></div>
-        <h4>成长进步体系</h4>
-        <span class="u-en">The Growth Machine</span>
-      </a>
-      <a class="uni-card" href="system.html">
-        <div class="u-top"><span class="u-idx">PAGE · 06</span><span class="u-arrow">↗</span></div>
-        <h4>人生系统 · 私人仪表盘</h4>
-        <span class="u-en">Life System</span>
-      </a>
-      <a class="uni-card" href="prosper.html">
-        <div class="u-top"><span class="u-idx">PAGE · 07</span><span class="u-arrow">↗</span></div>
-        <h4>人生繁荣公式</h4>
-        <span class="u-en">The Prosperity Formula</span>
-      </a>
-      <a class="uni-card" href="idop.html">
-        <div class="u-top"><span class="u-idx">PAGE · 08</span><span class="u-arrow">↗</span></div>
-        <h4>IDOP · 个人IP核心闭环</h4>
-        <span class="u-en">Input · Deposit · Output · Product</span>
-      </a>
-      <a class="uni-card" href="workflow.html">
-        <div class="u-top"><span class="u-idx">PAGE · 09</span><span class="u-arrow">↗</span></div>
-        <h4>LSA · 个人IP工作流</h4>
-        <span class="u-en">Workflow Dashboard</span>
-      </a>
-      <a class="uni-card" href="hkrr.html">
-        <div class="u-top"><span class="u-idx">PAGE · 10</span><span class="u-arrow">↗</span></div>
-        <h4>HKRR · 好内容的四个变量</h4>
-        <span class="u-en">Content Theory</span>
-      </a>
-      <a class="uni-card" href="know-ai.html">
-        <div class="u-top"><span class="u-idx">PAGE · 11</span><span class="u-arrow">↗</span></div>
-        <h4>关于 AI 的一封信</h4>
-        <span class="u-en">Not Replace, But Amplify</span>
-      </a>
-      <a class="uni-card" href="playground.html">
-        <div class="u-top"><span class="u-idx">PAGE · 12</span><span class="u-arrow">↗</span></div>
-        <h4>前端动效试验场</h4>
-        <span class="u-en">Playground</span>
-      </a>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- CONNECT -->
   <section id="connect">
     <div class="section-head reveal">
-      <div class="section-label"><span class="idx">09</span> Connect</div>
+      <div class="section-label"><span class="idx">08</span> Connect</div>
       <h2 class="section-title">如果你也想<span class="hl">追光</span></h2>
       <p class="section-sub">可以聊 AI，聊成长，聊个人IP，聊 FIRE，聊人生选择——也可以只是约一杯咖啡，打一通电话。</p>
     </div>

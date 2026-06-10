@@ -69,7 +69,6 @@ The home page is a single scrolling layout with these sections (in order):
 | `#beliefs`    | 信念          | Core beliefs manifesto, numbered rows |
 | `#topics`     | 聊什么        | Topic chip cloud (`.topics-cloud`) |
 | `#become`     | 想成为怎样的人 | Centered poem lines (`.become-poem`) |
-| `#universe`   | 追光宇宙      | Link cards to every other page on the site (`.uni-grid`) |
 | `#connect`    | 联系          | WeChat card with copy-to-clipboard button |
 | *(footer)*    | —             | Tagline + copyright line |
 
@@ -123,7 +122,6 @@ Note: older pages may still use the previous palette (`--gold: #F6C445`, `--text
 | `.practice-row` | Numbered "what I've done" rows (`data-ghost` sets hover ghost text) |
 | `.manifesto-row` | Core belief rows |
 | `.topic-chip` | Topic pill in the topics cloud |
-| `.uni-card` | Link card to another site page (`#universe`) |
 | `.section-label` | Small uppercase eyebrow text (Outfit font, gold) with mono `.idx` index |
 | `.section-title` | Large serif heading; use `.hl` span for gradient highlight |
 | `.divider` | Thin horizontal separator between sections |
@@ -197,5 +195,4 @@ Duplicate a `.practice-row` div inside `.practice-list`. Set `data-ghost` (short
 ### Updating key data (on `index.html`)
 Numbers are hardcoded in `.metrics-grid` — update `data-num` / `data-suffix` on the `.num` element (the count-up script reads them) plus the `.m-label` / `.m-sub` text.
 
-### New page link in 追光宇宙 (on `index.html`)
-Duplicate a `.uni-card` anchor inside `.uni-grid` and bump the `PAGE · NN` index.
+Note: `index.html` deliberately does **not** link to the other pages on the site — they are private personal assets. Do not add navigation/link sections to them on the home page.
