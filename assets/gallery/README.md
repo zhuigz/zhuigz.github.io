@@ -20,9 +20,9 @@
 | 03 | 汤圆 · Tangyuan | 英短蓝白猫联名周边 |
 | 04 | 利剑 · The Sword | 公正·廉洁·为民主题海报 |
 | 05 | 地球 Online · Earth Online | 人生模拟游戏海报 |
-| 06 | 机器之梦 · Machine Dream | （待放图，占位中） |
-| 07 | 山海 · Mountains & Seas | （待放图，占位中） |
-| 08 | 向上 · Ascent | （待放图，占位中） |
+| 06 | 江城 · Wuhan | 水墨风武汉城市海报 |
+| 07 | 一人公司 · OPC | One Person Company 海报 |
+| 08 | 狮子山下 · HZAU | 华中农业大学校园海报 |
 
 ## 图片规格建议（防卡顿的关键）
 
