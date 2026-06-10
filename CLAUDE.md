@@ -66,6 +66,7 @@ The home page is a single scrolling layout with these sections (in order):
 | `#about`      | 基本信息      | Info cards: MBTI, location, school, campus roles, interests, keywords |
 | `#metrics`    | 关键数据      | 9-cell data wall (`.metrics-grid`) with count-up numbers |
 | `#practice`   | 我做过什么    | 7 numbered practice rows (`.practice-row`) incl. IDOP flow animation + growth-banner quote |
+| `#gallery`    | 视觉作品      | Folding accordion gallery (`.fold-gallery`, 8 panels) + fullscreen lightbox; images in `assets/gallery/`, styled placeholders shown when images are missing |
 | `#beliefs`    | 信念          | Core beliefs manifesto, numbered rows |
 | `#topics`     | 聊什么        | Topic chip cloud (`.topics-cloud`) |
 | `#become`     | 想成为怎样的人 | Centered poem lines (`.become-poem`) |
@@ -120,6 +121,8 @@ Note: older pages may still use the previous palette (`--gold: #F6C445`, `--text
 | `.info-card` | About section cards |
 | `.metric-cell` | Data-wall cells with `data-num` / `data-suffix` count-up numbers |
 | `.practice-row` | Numbered "what I've done" rows (`data-ghost` sets hover ghost text) |
+| `.fold-panel` | Gallery accordion panel (`data-title` sets lightbox caption; `.ph.ph-N` with `data-glyph` is the placeholder visual) |
+| `.lightbox` | Fullscreen image viewer (prev/next/ESC, opened by clicking a `.fold-panel`) |
 | `.manifesto-row` | Core belief rows |
 | `.topic-chip` | Topic pill in the topics cloud |
 | `.section-label` | Small uppercase eyebrow text (Outfit font, gold) with mono `.idx` index |
@@ -196,3 +199,6 @@ Duplicate a `.practice-row` div inside `.practice-list`. Set `data-ghost` (short
 Numbers are hardcoded in `.metrics-grid` — update `data-num` / `data-suffix` on the `.num` element (the count-up script reads them) plus the `.m-label` / `.m-sub` text.
 
 Note: `index.html` deliberately does **not** link to the other pages on the site — they are private personal assets. Do not add navigation/link sections to them on the home page.
+
+### Gallery images (on `index.html`)
+Drop WebP files named `01.webp`–`08.webp` into `assets/gallery/` (long edge ~1600px, ≤400KB each — see `assets/gallery/README.md`). Missing files fall back to styled `.ph` placeholders via the `onerror` handler on each `<img>`. Keep the accordion at ≤12 panels.

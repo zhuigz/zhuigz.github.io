@@ -781,6 +781,152 @@ section { padding: 130px 0 100px; position: relative; }
   font-size: 14px; color: var(--ink-dim); letter-spacing: 4px;
 }
 
+/* ===================== GALLERY（视觉作品 · 折叠画廊） ===================== */
+.fold-gallery {
+  display: flex; gap: 10px;
+  height: min(540px, 64vh);
+}
+.fold-panel {
+  position: relative; flex: 1; min-width: 0;
+  border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  cursor: pointer;
+  transition: flex 0.85s cubic-bezier(0.22,1,0.3,1), border-color 0.4s, box-shadow 0.4s;
+}
+.fold-panel:hover, .fold-panel.active {
+  flex: 4.2;
+  border-color: var(--line-strong);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.5), 0 0 40px rgba(232,184,122,0.06);
+}
+.fold-panel img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) brightness(0.88);
+  transform: scale(1.08);
+  transition: transform 1.1s cubic-bezier(0.22,1,0.3,1), filter 0.6s;
+}
+.fold-panel:hover img, .fold-panel.active img { transform: scale(1.01); filter: saturate(1.05) brightness(1); }
+
+/* 占位视觉：图片缺失时显示（onerror 移除 img 后露出），图片就位后被盖住 */
+.ph { display: flex; align-items: center; justify-content: center; }
+.ph::after {
+  content: attr(data-glyph);
+  font-family: var(--serif-cn); font-weight: 900;
+  font-size: clamp(64px, 9vw, 130px);
+  color: transparent; -webkit-text-stroke: 1px rgba(232,184,122,0.3);
+  opacity: 0.85;
+  transition: transform 0.9s cubic-bezier(0.22,1,0.3,1);
+}
+.fold-panel .ph { position: absolute; inset: 0; }
+.fold-panel:hover .ph::after, .fold-panel.active .ph::after { transform: scale(1.12); }
+.ph-1 { background: radial-gradient(420px circle at 50% 96%, rgba(244,217,168,0.5), rgba(201,122,76,0.16) 45%, transparent 72%), linear-gradient(180deg, #0B0B14 0%, #1A1426 45%, #3A2B33 78%, #6E4A34 100%); }
+.ph-2 { background: radial-gradient(600px circle at 50% 112%, rgba(127,168,173,0.32), transparent 62%), linear-gradient(180deg, #07070C, #0D1420 58%, #16263A); }
+.ph-3 { background: repeating-linear-gradient(90deg, rgba(142,122,184,0.09) 0 2px, transparent 2px 30px), linear-gradient(160deg, #0D0A18, #181030); }
+.ph-4 { background: radial-gradient(380px circle at 70% 28%, rgba(232,184,122,0.22), transparent 62%), linear-gradient(180deg, #0C0A08, #1C150C); }
+.ph-5 { background: radial-gradient(460px circle at 50% 102%, rgba(195,107,94,0.5), rgba(195,107,94,0.14) 50%, transparent 76%), linear-gradient(180deg, #0A0708, #221110); }
+.ph-6 { background: repeating-linear-gradient(0deg, rgba(127,168,173,0.07) 0 1px, transparent 1px 26px), repeating-linear-gradient(90deg, rgba(127,168,173,0.07) 0 1px, transparent 1px 26px), linear-gradient(160deg, #070B0D, #0E1B20); }
+.ph-7 { background: radial-gradient(200px circle at 72% 20%, rgba(244,217,168,0.38), transparent 62%), linear-gradient(180deg, #0A0D14 0%, #131A28 55%, #2B2620 82%, #463826 100%); }
+.ph-8 { background: conic-gradient(from 200deg at 50% 120%, transparent 40%, rgba(232,184,122,0.24) 50%, transparent 60%), linear-gradient(180deg, #0A0A12, #14101C); }
+
+.fold-panel .shade {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(7,7,12,0.8));
+  opacity: 0.9; pointer-events: none;
+}
+.fold-panel .v-label {
+  position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--serif-cn); font-size: 14px; letter-spacing: 6px; color: var(--ink-soft);
+  transition: opacity 0.4s; white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(7,7,12,0.8);
+}
+.fold-panel:hover .v-label, .fold-panel.active .v-label { opacity: 0; }
+.fold-cap {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 22px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.55s ease 0.15s, transform 0.55s ease 0.15s;
+}
+.fold-panel:hover .fold-cap, .fold-panel.active .fold-cap { opacity: 1; transform: translateY(0); }
+.fold-cap .t { font-family: var(--serif-cn); font-weight: 700; font-size: 17px; letter-spacing: 2px; white-space: nowrap; }
+.fold-cap .t small {
+  display: block; font-family: var(--sans-en); font-weight: 400; font-size: 10px;
+  letter-spacing: 3px; color: var(--ink-dim); text-transform: uppercase; margin-top: 3px;
+}
+.fold-cap .zoom {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--gold);
+  border: 1px solid rgba(232,184,122,0.35); border-radius: 999px; padding: 5px 12px;
+  white-space: nowrap;
+}
+.gallery-note {
+  margin-top: 18px;
+  display: flex; justify-content: space-between; gap: 12px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 2px; color: var(--ink-dim);
+}
+
+/* —— 灯箱 —— */
+.lightbox {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(7,7,12,0.93);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity 0.45s ease, visibility 0.45s;
+}
+.lightbox.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.lb-stage { display: flex; align-items: center; justify-content: center; }
+.lb-stage img, .lb-stage .ph {
+  max-width: 88vw; max-height: 74vh;
+  border-radius: 14px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 60px rgba(232,184,122,0.08);
+}
+.lb-stage .ph { width: min(88vw, 860px); aspect-ratio: 16/10; }
+.lightbox.open .lb-stage > * { animation: lbIn 0.55s cubic-bezier(0.22,1,0.3,1); }
+@keyframes lbIn { from { opacity: 0; transform: scale(0.92) translateY(16px); } to { opacity: 1; transform: none; } }
+.lb-cap {
+  margin-top: 22px; text-align: center;
+  font-family: var(--serif-cn); font-size: 15px; letter-spacing: 2px; color: var(--ink);
+}
+.lb-cap .lb-idx { font-family: var(--mono); font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-right: 14px; }
+.lb-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+  color: var(--ink-soft); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans-en);
+  transition: all 0.3s;
+}
+.lb-btn:hover { color: var(--gold); border-color: var(--line-strong); background: rgba(232,184,122,0.08); }
+.lb-prev { left: 28px; }
+.lb-next { right: 28px; }
+.lb-close {
+  position: absolute; top: 24px; right: 28px;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line);
+  color: var(--ink-soft); font-size: 16px; cursor: pointer;
+  transition: all 0.3s;
+}
+.lb-close:hover { color: var(--gold); border-color: var(--line-strong); transform: rotate(90deg); }
+
+@media (max-width: 880px) {
+  .fold-gallery { flex-direction: column; height: auto; gap: 8px; }
+  .fold-panel { flex: none; height: 64px; transition: height 0.7s cubic-bezier(0.22,1,0.3,1), border-color 0.4s; }
+  .fold-panel:hover { flex: none; }
+  .fold-panel.active { height: 340px; }
+  .fold-panel .v-label {
+    writing-mode: horizontal-tb; top: 50%; left: 20px; transform: translateY(-50%);
+    letter-spacing: 4px; opacity: 1;
+  }
+  .fold-panel.active .v-label { opacity: 0; }
+  .ph::after { font-size: 52px; }
+  .gallery-note { flex-direction: column; gap: 4px; }
+  .lb-btn { width: 44px; height: 44px; }
+  .lb-prev { left: 10px; }
+  .lb-next { right: 10px; }
+}
+
 /* ===================== BELIEFS (manifesto) ===================== */
 .manifesto { max-width: 880px; margin: 0 auto; }
 .manifesto-row {
@@ -1077,6 +1223,7 @@ section { padding: 130px 0 100px; position: relative; }
       <li><a href="#about">关于</a></li>
       <li><a href="#metrics">数据</a></li>
       <li><a href="#practice">实践</a></li>
+      <li><a href="#gallery">视觉</a></li>
       <li><a href="#beliefs">信念</a></li>
     </ul>
     <a class="nav-cta" href="#connect">和我聊聊 →</a>
@@ -1408,10 +1555,109 @@ section { padding: 130px 0 100px; position: relative; }
 
   <div class="divider"></div>
 
+  <!-- GALLERY · 视觉作品 -->
+  <section id="gallery">
+    <div class="section-head reveal">
+      <div class="section-label"><span class="idx">05</span> Visual Works</div>
+      <h2 class="section-title">视觉<span class="hl">作品</span></h2>
+      <p class="section-sub">从 <strong>500+</strong> 张 AI 生成作品里，选出最能代表我审美方向的八张：高级、电影感、光影、秩序、远方感。悬停展开折叠条，点击任意一张全屏观看。</p>
+    </div>
+
+    <div class="fold-gallery reveal" aria-label="AI 视觉作品折叠画廊">
+      <figure class="fold-panel" data-title="破晓 · Dawn">
+        <div class="ph ph-1" data-glyph="晓"></div>
+        <img src="assets/gallery/01.webp" alt="破晓 · Dawn" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">破晓</span>
+        <figcaption class="fold-cap">
+          <span class="t">破晓<small>Dawn · Light</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="远方 · Faraway">
+        <div class="ph ph-2" data-glyph="远"></div>
+        <img src="assets/gallery/02.webp" alt="远方 · Faraway" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">远方</span>
+        <figcaption class="fold-cap">
+          <span class="t">远方<small>Faraway · Distance</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="秩序 · Order">
+        <div class="ph ph-3" data-glyph="序"></div>
+        <img src="assets/gallery/03.webp" alt="秩序 · Order" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">秩序</span>
+        <figcaption class="fold-cap">
+          <span class="t">秩序<small>Order · Structure</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="东方 · Orient">
+        <div class="ph ph-4" data-glyph="东"></div>
+        <img src="assets/gallery/04.webp" alt="东方 · Orient" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">东方</span>
+        <figcaption class="fold-cap">
+          <span class="t">东方<small>Orient · Heritage</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="燃烧 · Ember">
+        <div class="ph ph-5" data-glyph="燃"></div>
+        <img src="assets/gallery/05.webp" alt="燃烧 · Ember" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">燃烧</span>
+        <figcaption class="fold-cap">
+          <span class="t">燃烧<small>Ember · Idealism</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="机器之梦 · Machine Dream">
+        <div class="ph ph-6" data-glyph="梦"></div>
+        <img src="assets/gallery/06.webp" alt="机器之梦 · Machine Dream" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">机器之梦</span>
+        <figcaption class="fold-cap">
+          <span class="t">机器之梦<small>Machine Dream · AI Era</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="山海 · Mountains and Seas">
+        <div class="ph ph-7" data-glyph="海"></div>
+        <img src="assets/gallery/07.webp" alt="山海 · Mountains and Seas" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">山海</span>
+        <figcaption class="fold-cap">
+          <span class="t">山海<small>Mountains &amp; Seas · Cinema</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+      <figure class="fold-panel" data-title="向上 · Ascent">
+        <div class="ph ph-8" data-glyph="升"></div>
+        <img src="assets/gallery/08.webp" alt="向上 · Ascent" loading="lazy" onerror="this.remove()">
+        <div class="shade"></div>
+        <span class="v-label">向上</span>
+        <figcaption class="fold-cap">
+          <span class="t">向上<small>Ascent · Growth</small></span>
+          <span class="zoom">点击查看 ↗</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="gallery-note">
+      <span>GPT-IMAGE / IMAGE-2 · ORIGINAL WORKS</span>
+      <span>500+ GENERATED · 8 SELECTED</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- BELIEFS -->
   <section id="beliefs">
     <div class="section-head reveal">
-      <div class="section-label"><span class="idx">05</span> Core Beliefs</div>
+      <div class="section-label"><span class="idx">06</span> Core Beliefs</div>
       <h2 class="section-title">一些我坚信的<span class="hl">道理</span></h2>
       <p class="section-sub">不是哲学命题，是被自己反复用过的句子。每一条都帮我做过决定。</p>
     </div>
@@ -1465,7 +1711,7 @@ section { padding: 130px 0 100px; position: relative; }
   <!-- TOPICS -->
   <section id="topics">
     <div class="section-head reveal">
-      <div class="section-label"><span class="idx">06</span> Let's Talk</div>
+      <div class="section-label"><span class="idx">07</span> Let's Talk</div>
       <h2 class="section-title">你可以和我<span class="hl">聊什么</span></h2>
       <p class="section-sub">如果你也对这些话题感兴趣，我们大概率能聊得很开心。</p>
     </div>
@@ -1488,7 +1734,7 @@ section { padding: 130px 0 100px; position: relative; }
   <!-- BECOME · 我想成为怎样的人 -->
   <section id="become">
     <div class="section-head reveal" style="text-align:center;">
-      <div class="section-label" style="justify-content:center;"><span class="idx">07</span> Who I Want To Be</div>
+      <div class="section-label" style="justify-content:center;"><span class="idx">08</span> Who I Want To Be</div>
       <h2 class="section-title">我想成为<span class="hl">怎样的人</span></h2>
     </div>
     <div class="become-poem reveal-stagger">
@@ -1513,7 +1759,7 @@ section { padding: 130px 0 100px; position: relative; }
   <!-- CONNECT -->
   <section id="connect">
     <div class="section-head reveal">
-      <div class="section-label"><span class="idx">08</span> Connect</div>
+      <div class="section-label"><span class="idx">09</span> Connect</div>
       <h2 class="section-title">如果你也想<span class="hl">追光</span></h2>
       <p class="section-sub">可以聊 AI，聊成长，聊个人IP，聊 FIRE，聊人生选择——也可以只是约一杯咖啡，打一通电话。</p>
     </div>
@@ -1529,6 +1775,14 @@ section { padding: 130px 0 100px; position: relative; }
     <p class="connect-foot reveal"><em>追光的人，终将光芒万丈。</em></p>
   </section>
 
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="作品大图">
+  <button class="lb-close" type="button" aria-label="关闭">✕</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="上一张">←</button>
+  <div class="lb-stage"></div>
+  <button class="lb-btn lb-next" type="button" aria-label="下一张">→</button>
+  <div class="lb-cap"></div>
 </div>
 
 <footer class="footer">
@@ -1682,6 +1936,71 @@ sections.forEach(s => navObs.observe(s));
       sel.removeAllRanges(); sel.addRange(range);
     }
   });
+})();
+
+// —— 折叠画廊 + 灯箱 ——
+(function foldGallery() {
+  const gallery = document.querySelector('.fold-gallery');
+  const lb = document.getElementById('lightbox');
+  if (!gallery || !lb) return;
+  const panels = Array.from(gallery.querySelectorAll('.fold-panel'));
+  const touch = matchMedia('(hover: none)').matches;
+  const stage = lb.querySelector('.lb-stage');
+  const cap = lb.querySelector('.lb-cap');
+  let cur = 0;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function render(i) {
+    cur = (i + panels.length) % panels.length;
+    const p = panels[cur];
+    stage.innerHTML = '';
+    const img = p.querySelector('img');
+    if (img) {
+      const big = new Image();
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      stage.appendChild(big);
+    } else {
+      // 图片缺失时灯箱也展示占位视觉
+      stage.appendChild(p.querySelector('.ph').cloneNode(true));
+    }
+    cap.innerHTML = '<span class="lb-idx">' + pad(cur + 1) + ' / ' + pad(panels.length) + '</span>' + (p.dataset.title || '');
+  }
+  function open(i) {
+    render(i);
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  panels.forEach((p, i) => {
+    p.addEventListener('click', () => {
+      // 触屏：第一次点按展开折叠条，再点打开大图
+      if (touch && !p.classList.contains('active')) {
+        panels.forEach(q => q.classList.remove('active'));
+        p.classList.add('active');
+        return;
+      }
+      open(i);
+    });
+  });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); render(cur - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); render(cur + 1); });
+  lb.addEventListener('click', (e) => { if (e.target === lb || e.target === stage) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') render(cur - 1);
+    if (e.key === 'ArrowRight') render(cur + 1);
+  });
+  if (touch && panels[0]) panels[0].classList.add('active');
 })();
 
 // —— 向光金粉 canvas（追光者签名画面） ——
