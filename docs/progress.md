@@ -4,12 +4,12 @@
 
 ## Now
 
-**REQ-001 集大成网站** — `draft` — 需求已登记,等待 PM 启动 designing 阶段(用 `/pm` 讨论并产出 PRD)。
+**REQ-001 集大成网站** — `designing`(已收敛)— PRD 已产出(`docs/requirements/REQ-001-unified-site/prd.md`),四项关键决策已由 PM 拍板:新建独立页 `opus.html` / 精华融合 / 人生叙事弧(10 章)/ 沉浸式滚动叙事。designing 退出条件已满足,等 Conductor 推进至 `planning`。
 
 ## Next
 
-1. PM(用户)调用 `/pm`,围绕 REQ-001 讨论收敛:载体形态(新页面 vs 重构 index)、内容取舍、叙事顺序、视觉野心的具体边界 → 产出 `docs/requirements/REQ-001-unified-site/prd.md`
-2. PRD 落盘后,Conductor 将 REQ-001 推进至 `planning`,委派 Architect(opus)做探索 + 设计
+1. 调用 `/conductor`:确认 PRD 后将 REQ-001 推进至 `planning`,委派 Architect(opus)做探索 + 设计 → 产出 `tech-design.md`
+2. planning 后续:UX 设计审查(本需求 ux_surface 必为 yes)→ 暂停判断 → 技术快审 → 执行计划拆解
 3. planning 出口条件齐备后,等 PM 授权进入 `executing`
 
 ## Current Plan
