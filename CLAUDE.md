@@ -177,6 +177,21 @@ const observer = new IntersectionObserver((entries) => {
 - `main` — production branch, auto-deployed by GitHub Pages
 - `claude/*` — AI development branches (one per task)
 
+## Conductor Runtime (multi-agent workflow)
+
+For larger, multi-session requirements this repo runs a Conductor orchestration system. **For any non-trivial task, start by reading `docs/progress.md` (current state) and `docs/backlog.csv` (requirement pipeline).**
+
+- `/conductor` — scheduler + quality gatekeeper; delegates to worker roles, never implements directly
+- `/pm` — product discussion & PRD writing (user-invoked only)
+- `/architect`, `/dev`, `/ux-evaluator` — worker roles (normally delegated by Conductor)
+- `.claude/agents/code-reviewer.md`, `.claude/agents/architecture-guard.md` — review subagents (findings only)
+- Specs: `docs/process/*.md` (backlog / progress / handoff / design-doc contracts); architecture baseline: `docs/architecture.md`
+- Pipeline: `draft → designing → planning → executing → acceptance → done`; PM authorization required for `planning → executing`, and `acceptance` always pauses for PM
+
+Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
+
+**Current status**: REQ-001 (集大成网站, L, P0) is in `draft` — awaiting PM to start designing via `/pm`.
+
 ## Adding New Content
 
 ### New page
