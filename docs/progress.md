@@ -23,11 +23,11 @@
 - [x] T1.4 场景引擎 IIFE(单 observer 中带判定 + 150ms 去抖;`.chapter` min-height 100svh/vh 兜底;11 组章色板)
 - [x] T1.5 序章 `#ch0`(破暗开场,重新演绎不复制 index hero DOM)
 
-### Phase 2:前段叙事 一·底色 / 二·来路 / 三·此身(出口:场景演变 ≥3 处可见)
-- [ ] T2.1 章壳模板 + reveal/count-up 移植
-- [ ] T2.2 一·底色 `#ch1`(七色光谱单 conic-gradient;≤24KB)
-- [ ] T2.3 二·来路 `#ch2` 四幕垂直时间线(≤28KB)
-- [ ] T2.4 三·此身 `#ch3` 信息卡 + 9 宫数据墙 + 7 实践行(≤26KB)
+### Phase 2:前段叙事 一·底色 / 二·来路 / 三·此身 ✅(code-review 通过 2026-06-12,findings 见 docs/review-notes/REQ-001-phase2.md)
+- [x] T2.1 章壳模板 + reveal/count-up 移植(+ Phase1 F1–F4 修复)
+- [x] T2.2 一·底色 `#ch1`(七色光谱单 conic-gradient;≤24KB)
+- [x] T2.3 二·来路 `#ch2` 四幕垂直时间线(≤28KB)
+- [x] T2.4 三·此身 `#ch3` 信息卡 + 9 宫数据墙 + 7 实践行(≤26KB)
 
 ### Phase 3:中段叙事 四·信念 / 五·远方 / 六·系统(出口:七章可读,场景级变换累计 ≥5 处)
 - [ ] T3.1 四·信念 `#ch4` 8 条信念逐字宣言行(≤16KB)
