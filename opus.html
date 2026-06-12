@@ -542,6 +542,7 @@ body[data-chapter="9"] {
   letter-spacing: 1px; margin-left: 4px;
 }
 /* 成长系统 chips（实践行第 7 件内嵌，逐字移植 index 第 753–758 行）。 */
+/* 列名 teaser，非 ch6 架构重复（Conductor 裁定）：此处系统名是成果展示 chip，与 ch6 八模块骨架（架构信息载体）同名不同功能。 */
 .sys-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; max-width: 760px; }
 .sys-chips span {
   font-size: 13px; padding: 8px 18px; border-radius: 999px;
@@ -1007,8 +1008,8 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   color: var(--ink-soft); max-width: 720px; margin: -28px 0 44px;
 }
 .ch4-lead em { font-style: normal; color: var(--gold); }
-/* 宣言行容器(移植 index .manifesto 第 931 行)。 */
-.manifesto { max-width: 880px; margin: 0 auto; }
+/* 宣言行容器(移植 index .manifesto 第 931 行；F16:加章级前缀 .ch4-manifesto 避免与 index 同名)。 */
+.ch4-manifesto { max-width: 880px; margin: 0 auto; }
 /* 编号宣言行(逐字移植 index .manifesto-row 第 932–960 行；
    硬编码 rgba 改派生变量、hover tick 着色随赤焰章用 --ember 提色)。 */
 .manifesto-row {
@@ -1097,7 +1098,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border-radius: 18px;
   background: linear-gradient(135deg,
     color-mix(in srgb, var(--accent-violet) 6%, transparent),
-    rgba(255,255,255,0.012));
+    var(--bg-card-lo));   /* F15:裸 rgba → --bg-card-lo 派生 */
   transition: border-color 0.4s ease, transform 0.4s ease, background 0.4s ease;
 }
 .tier-step:hover {
@@ -1141,7 +1142,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border-left-color: var(--gold-deep);
   background: linear-gradient(135deg,
     color-mix(in srgb, var(--gold) 7%, transparent),
-    rgba(255,255,255,0.012));
+    var(--bg-card-lo));   /* F15:裸 rgba → --bg-card-lo 派生 */
 }
 .tier-step.t1 .tier-mark .t-tier { color: var(--gold); }
 .tier-step.t1 .tier-mark .t-anchor { color: color-mix(in srgb, var(--gold) 60%, var(--ink)); }
@@ -1157,7 +1158,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   padding: 38px 28px 32px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: rgba(255,255,255,0.018);
+  background: color-mix(in srgb, var(--bg-card-lo) 120%, transparent);   /* F15:裸 rgba(…0.018) → 略提亮的 --bg-card-lo 派生 */
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .fire-cell:hover { transform: translateY(-3px); border-color: var(--line-strong); }
@@ -1256,7 +1257,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch6-formula {
   position: relative; padding: 48px 40px 44px; border-radius: 22px;
   border: 1px solid color-mix(in srgb, var(--accent-teal) 20%, var(--line));
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 6%, transparent), rgba(255,255,255,0.012));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 6%, transparent), var(--bg-card-lo));   /* F15 同款:裸 rgba → --bg-card-lo 派生(与 F15 六处同章一并归并，保持 ch5/ch6 全章无裸 rgba) */
   overflow: hidden;
 }
 /* 细线网格底纹（仪表辉气质，纯 CSS 单层贴层、不参与逐帧）。 */
@@ -1296,7 +1297,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   padding: 20px 18px; border-radius: 14px;
   border: 1px solid var(--line);
   border-top: 2px solid color-mix(in srgb, var(--accent-teal) 38%, transparent);
-  background: rgba(255,255,255,0.014);
+  background: color-mix(in srgb, var(--bg-card-lo) 93%, transparent);   /* F15:裸 rgba(…0.014) → --bg-card-lo 派生 */
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .fvar:hover { transform: translateY(-3px); border-color: var(--line-strong); }
@@ -1319,7 +1320,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .sub-card {
   padding: 26px 22px 24px; border-radius: 16px;
   border: 1px solid var(--line);
-  background: rgba(255,255,255,0.016);
+  background: color-mix(in srgb, var(--bg-card-lo) 107%, transparent);   /* F15:裸 rgba(…0.016) → --bg-card-lo 派生 */
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .sub-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent-teal) 28%, var(--line-strong)); }
@@ -1350,7 +1351,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   position: relative; display: flex; flex-direction: column; gap: 6px;
   padding: 22px 20px; border-radius: 14px;
   border: 1px solid var(--line);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 4%, transparent), rgba(255,255,255,0.01));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 4%, transparent), color-mix(in srgb, var(--bg-card-lo) 67%, transparent));   /* F15:裸 rgba(…0.01) → --bg-card-lo 派生 */
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .mod-cell:hover { transform: translateY(-3px); border-color: var(--line-strong); }
@@ -1377,6 +1378,243 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   50% { opacity: 0.9; transform: scale(1.15); }
 }
 
+/* —— #ch7 七·造物 · The Forge（IDOP 四阶段飞轮 + HKRR 四变量质量门 + LSA 三格式/分层）——
+   三源精华重组（T4.1）：idop.html（IDOP 四阶段 + ★两条金句）+ hkrr.html（四变量·相乘关系）
+   + workflow.html（三格式 + 80/85/90 分层；★18 步短视频流程整段舍弃，过程性细节非叙事必需）。
+   金橙工坊「流光」气质纯由场景引擎 body[data-chapter="7"]（--scene-glow gold 50%+ember 22% / --light-hue:33，[03] 已预定义）
+   着色固定光层实现，本章不写新 canvas(KD-4)；新增装饰只用 transform/opacity（idopSpin 飞轮旋转 + forgeGlow），[11] 降级。
+   ★金句两条逐字以 idop.html 源为准：「IDOP 管流程，HKRR 管质量」(idop 第 2722 行)、「AI 提供廉价变异，IDOP 提供复利进化」(idop 第 2963 行)。
+   D2/D4 去重：本章只谈 IDOP/HKRR/AI 的「廉价变异·复利进化」，不下「AI 是杠杆」定义性论断(D2)；IDOP↔HKRR 分工金句为全页唯一落点(D4)。 */
+.ch7 { padding: 140px 0 130px; }
+/* 章引子：从「系统骨架」转入「造物本身」——把自己当作品来打磨（重写，非源页长文搬运）。 */
+.ch7-lead {
+  font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
+  color: var(--ink-soft); max-width: 720px; margin: -28px 0 56px;
+}
+.ch7-lead em { font-style: normal; color: var(--gold-light); }
+/* 区块小标题（与各章 -sub 同手感，本章金橙眉题）。 */
+.ch7-sub {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
+}
+
+/* —— IDOP 四阶段飞轮（主体一）——
+   左：旋转飞轮（CSS @keyframes idopSpin，纯 transform，不用 JS / KD-4·T4.1）——一个环 + 四颗站点光点；
+   右：四阶段定义列（输入·沉淀·输出·产品，静态文本承载信息，不依赖旋转，[11] 停转仍完整可读）。
+   880/768 飞轮上、定义列下纵向堆叠。 */
+.ch7-flywheel {
+  display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: center;
+  max-width: 980px;
+}
+/* —— 飞轮可视化（装饰母题，信息在右侧列，飞轮停转不丢信息）—— */
+.idop-wheel {
+  position: relative; width: 240px; height: 240px; margin: 0 auto;
+  justify-self: center;
+}
+/* 旋转环：渐变描边 + 缓慢自转（transform 限定，[11] 停）。 */
+.idop-wheel .wheel-ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--gold) 26%, transparent);
+  background:
+    conic-gradient(from 0deg,
+      color-mix(in srgb, var(--gold) 30%, transparent),
+      color-mix(in srgb, var(--ember) 24%, transparent),
+      color-mix(in srgb, var(--gold-light) 30%, transparent),
+      color-mix(in srgb, var(--gold) 30%, transparent));
+  -webkit-mask: radial-gradient(circle, transparent 0 60%, #000 61%);
+  mask: radial-gradient(circle, transparent 0 60%, #000 61%);
+  animation: idopSpin 26s linear infinite;
+}
+/* 四颗站点光点（I/D/O/P）外层 .wheel-spin 整体随环旋转；
+   每个 .w-node 用 translate 定位在环上 12/3/6/9 点钟方向（定位 transform，不带动画）；
+   内层 .w-glyph 反向自转抵消母环旋转，保持字面始终正立可读（动画 transform 在内层，与外层定位 transform 解耦，互不覆盖）。 */
+.idop-wheel .wheel-spin {
+  position: absolute; inset: 0; animation: idopSpin 26s linear infinite;
+}
+.idop-wheel .w-node {
+  position: absolute; top: 50%; left: 50%;
+  width: 46px; height: 46px; margin: -23px 0 0 -23px;
+}
+.idop-wheel .w-node.n1 { transform: translateY(-104px); }   /* I · 顶 */
+.idop-wheel .w-node.n2 { transform: translateX(104px); }    /* D · 右 */
+.idop-wheel .w-node.n3 { transform: translateY(104px); }    /* O · 底 */
+.idop-wheel .w-node.n4 { transform: translateX(-104px); }   /* P · 左 */
+.idop-wheel .w-glyph {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-family: var(--sans-en); font-weight: 700; font-size: 17px; color: var(--gold-light);
+  background: radial-gradient(circle, color-mix(in srgb, var(--gold-deep) 38%, var(--bg-deep)), var(--bg-deep));
+  border: 1px solid color-mix(in srgb, var(--gold) 36%, transparent);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 22%, transparent);
+  animation: idopSpin 26s linear infinite reverse;
+}
+/* 飞轮中心标识：I × D × O × P 整机相乘语义。 */
+.idop-wheel .wheel-hub {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  text-align: center; width: 120px;
+}
+.idop-wheel .wheel-hub .hub-mark {
+  font-family: var(--sans-en); font-weight: 700; font-size: 19px; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.idop-wheel .wheel-hub .hub-sub {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--ink-dim); margin-top: 6px;
+}
+/* 右侧四阶段定义列（静态文本=信息载体）。 */
+.idop-stages { display: flex; flex-direction: column; gap: 14px; }
+.idop-stage {
+  display: grid; grid-template-columns: 52px 1fr; gap: 18px; align-items: baseline;
+  padding: 16px 0; border-top: 1px solid var(--line);
+}
+.idop-stage:first-child { border-top: 0; }
+.idop-stage .s-code {
+  font-family: var(--sans-en); font-weight: 200; font-size: clamp(34px, 4vw, 44px);
+  line-height: 1; color: color-mix(in srgb, var(--gold) 55%, var(--ink));
+}
+.idop-stage .s-name { font-family: var(--serif-cn); font-size: 18px; font-weight: 700; color: var(--ink); }
+.idop-stage .s-name b { color: var(--gold); font-weight: 700; }
+.idop-stage .s-desc { font-family: var(--serif-cn); font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); margin-top: 4px; }
+/* 飞轮注脚：首尾是 IP，中间是 DO；I×D×O×P 任一为零结果归零。 */
+.ch7-flywheel-note {
+  margin-top: 32px; font-family: var(--serif-cn); font-size: 15px;
+  line-height: 1.9; color: var(--ink-soft); max-width: 880px;
+}
+.ch7-flywheel-note strong { color: var(--gold); font-weight: 700; }
+
+/* —— HKRR 四变量质量门（主体二）——
+   四列等宽卡（快乐/知识/共鸣/节奏），列间「×」连接符强调相乘关系；卡内 变量名 + 英文 + 一句定位。
+   1024 → 两列、880 → 两列、768 → 单列（× 连接符在堆叠态隐藏）。 */
+.ch7-hkrr { margin-top: 96px; }
+.hkrr-grid {
+  display: flex; align-items: stretch; gap: 0;
+  max-width: 980px;
+}
+.hkrr-cell {
+  flex: 1; min-width: 0;
+  padding: 28px 22px 26px; border-radius: 16px;
+  border: 1px solid var(--line);
+  border-top: 2px solid color-mix(in srgb, var(--gold) 40%, transparent);
+  background: color-mix(in srgb, var(--bg-card-lo) 107%, transparent);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+.hkrr-cell:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--gold) 30%, var(--line-strong)); }
+.hkrr-cell .hk-letter {
+  font-family: var(--sans-en); font-weight: 700; font-size: 30px; line-height: 1;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hkrr-cell .hk-en { font-family: var(--sans-en); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-dim); margin: 8px 0 14px; }
+.hkrr-cell .hk-name { font-family: var(--serif-cn); font-size: 17px; font-weight: 700; color: var(--ink); }
+.hkrr-cell .hk-role { font-family: var(--serif-cn); font-size: 13px; line-height: 1.7; color: var(--ink-soft); margin-top: 8px; }
+/* 相乘连接符（×）：卡间分隔，强调「相乘不是相加」。 */
+.hkrr-x {
+  display: flex; align-items: center; padding: 0 10px;
+  font-family: var(--sans-en); font-weight: 200; font-size: 22px; color: color-mix(in srgb, var(--gold) 50%, var(--ink-dim));
+}
+/* 四变量收口注脚：相乘·任一为零则崩塌（HKRR 作质量门语义）。 */
+.ch7-hkrr-note {
+  margin-top: 28px; font-family: var(--serif-cn); font-size: 15px;
+  line-height: 1.9; color: var(--ink-soft); max-width: 880px;
+}
+.ch7-hkrr-note strong { color: var(--gold); font-weight: 700; }
+
+/* —— ★IDOP↔HKRR 关系金句卡（D4 全页唯一落点）+ ★AI 廉价变异金句（D2 不下杠杆论断）——
+   两条★金句逐字突出处理：金橙底纹卡，呼应工坊气质。 */
+.ch7-creed {
+  margin-top: 56px; padding: 44px 38px; border-radius: 22px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--gold) 9%, transparent),
+    color-mix(in srgb, var(--ember) 5%, transparent));
+  border: 1px solid color-mix(in srgb, var(--gold) 26%, var(--line-strong));
+  position: relative; overflow: hidden;
+}
+/* 流光装饰：缓慢横扫的暖光带（transform/opacity，[11] 停、不承载信息）。 */
+.ch7-creed::before {
+  content: ''; position: absolute; top: 0; left: -40%;
+  width: 40%; height: 100%;
+  background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--gold-light) 12%, transparent), transparent);
+  animation: forgeGlow 7s ease-in-out infinite;
+  pointer-events: none;
+}
+.ch7-creed .creed-lead { position: relative; z-index: 1; }
+.ch7-creed blockquote {
+  position: relative; z-index: 1; margin: 0;
+  font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(20px, 3vw, 28px); line-height: 1.55; color: var(--gold-light);
+}
+.ch7-creed blockquote + blockquote {
+  margin-top: 22px; padding-top: 22px;
+  border-top: 1px solid color-mix(in srgb, var(--gold) 18%, transparent);
+}
+.ch7-creed blockquote em { font-style: normal; color: var(--gold); }
+.ch7-creed .creed-desc {
+  position: relative; z-index: 1; margin-top: 16px;
+  font-family: var(--serif-cn); font-size: 14px; line-height: 1.85; color: var(--ink-soft);
+}
+
+/* —— LSA 工作流·三格式 + 质量分层（主体三）——
+   上：三格式 chip 行（图文·文章·短视频，LSA 工作流覆盖的三种成品形态）；
+   下：质量梯（75/80/85/90 四级 rung，★「80 分发布，85 分复盘，90 分长期打磨」分层心法逐字）。
+   880/768 质量梯纵向堆叠。 */
+.ch7-lsa { margin-top: 96px; }
+.lsa-formats { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+.lsa-formats .fmt {
+  font-family: var(--serif-cn); font-size: 14px; padding: 9px 20px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg-card);
+  color: var(--ink-soft); letter-spacing: 1px;
+  transition: border-color 0.3s, color 0.3s;
+}
+.lsa-formats .fmt:hover { border-color: var(--line-strong); color: var(--gold); }
+.lsa-formats .fmt b { color: var(--gold); font-weight: 700; }
+/* ★分层心法金句（80/85/90，逐字以 workflow 第 787/997 行为准）。 */
+.ch7-lsa-credo {
+  font-family: var(--serif-cn); font-size: clamp(17px, 2.2vw, 21px); font-weight: 700;
+  line-height: 1.6; color: var(--gold-light); margin: 8px 0 30px; max-width: 720px;
+}
+/* 质量梯：四级 rung，分数 + 标签 + 一句说明，当前/目标级高亮。 */
+.lsa-ladder { display: flex; flex-direction: column; gap: 12px; max-width: 880px; }
+.rung {
+  display: grid; grid-template-columns: 92px 1fr; gap: 24px; align-items: center;
+  padding: 22px 28px; border-radius: 16px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg-card-lo) 93%, transparent);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+.rung:hover { transform: translateY(-2px); border-color: var(--line-strong); }
+.rung .rung-score {
+  font-family: var(--sans-en); font-weight: 200; font-size: clamp(38px, 5vw, 50px); line-height: 1;
+  color: color-mix(in srgb, var(--gold) 50%, var(--ink));
+}
+.rung .rung-title { font-family: var(--serif-cn); font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.rung .rung-pill {
+  display: inline-block; margin-left: 10px; vertical-align: middle;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 1px; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent); color: var(--gold);
+}
+.rung .rung-desc { font-family: var(--serif-cn); font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); }
+/* 当前级（80）实色描边强调，目标级（85）金线左缘。 */
+.rung.is-now {
+  border-color: color-mix(in srgb, var(--gold) 36%, var(--line-strong));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--gold) 8%, transparent), color-mix(in srgb, var(--bg-card-lo) 80%, transparent));
+}
+.rung.is-now .rung-score { color: var(--gold); }
+.rung.is-target { border-left: 2px solid var(--gold-deep); }
+
+/* IDOP 飞轮自转 keyframe（transform 限定，[11] 停）。 */
+@keyframes idopSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+/* 流光横扫 keyframe（金句卡装饰，transform/opacity 限定，[11] 停）。 */
+@keyframes forgeGlow {
+  0%   { transform: translateX(0); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(360%); opacity: 0; }
+}
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
@@ -1398,6 +1636,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .formula-vars { grid-template-columns: repeat(2, 1fr); }
   .engine-grid { grid-template-columns: repeat(3, 1fr); }
   .module-board { grid-template-columns: repeat(3, 1fr); }
+
+  /* —— #ch7 造物（T4.1）：HKRR 四变量横排在中间档换行成 2×2 网格（× 连接符隐藏，
+     用网格 gap 表达并置）；飞轮列间距收一档。中间档收一次，避免 880 才落更陡。 —— */
+  .ch7-flywheel { gap: 40px; }
+  .hkrr-grid { flex-wrap: wrap; }
+  .hkrr-cell { flex: 1 1 calc(50% - 7px); }
+  .hkrr-x { display: none; }
 }
 
 /* —— 880px：#ch1 三大理想卡纵向堆叠（3 列 → 1 列），呼应叙事弧后续阶梯/台阶的堆叠约定。 —— */
@@ -1419,8 +1664,10 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .practice-row .p-idx { font-size: 32px; }
   .practice-row::after { font-size: 100px; bottom: -22px; }
 
-  /* #ch4 信念（T3.1）：章上下留白收敛，宣言行间距略缩。 */
+  /* #ch4 信念（T3.1）：章上下留白收敛，宣言行间距略缩。
+     F17:880px 提前一档收窄 .manifesto-row（序号列缩窄、行距略收），避免 880–768 间宣言行偏宽。 */
   .ch4 { padding: 110px 0 100px; }
+  .manifesto-row { grid-template-columns: 68px 1fr auto; padding: 26px 0; }
 
   /* #ch5 远方（T3.2）：三级阶梯桌面错落缩进归零（纵向堆叠不再「拾级」横移，避免窄屏溢出）；
      FIRE 数字三列 → 两列（72 落第二行居中由 nth-child 兜底）；章留白收敛。 */
@@ -1438,6 +1685,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch6-engine, .ch6-modules { margin-top: 68px; }
   .engine-grid { grid-template-columns: repeat(2, 1fr); }
   .module-board { grid-template-columns: repeat(2, 1fr); }
+
+  /* —— #ch7 造物（T4.1）：章留白收敛；IDOP 飞轮与四阶段定义列纵向堆叠（飞轮在上、定义列在下）；
+     HKRR 四变量维持 2×2；质量梯各级章块上下间距收一档。 —— */
+  .ch7 { padding: 110px 0 100px; }
+  .ch7-flywheel { grid-template-columns: 1fr; gap: 40px; }
+  .ch7-hkrr, .ch7-lsa { margin-top: 76px; }
+  .ch7-creed { padding: 38px 30px; }
 }
 
 /* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
@@ -1499,6 +1753,22 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch6-engine, .ch6-modules { margin-top: 56px; }
   .engine-grid { grid-template-columns: 1fr; gap: 12px; }
   .module-board { grid-template-columns: 1fr; gap: 10px; }
+
+  /* —— #ch7 造物收紧（T4.1）：章留白收敛；飞轮缩尺、四阶段定义行序号列收窄；
+     HKRR 四变量单列纵向堆叠（× 连接符已隐藏）；质量梯级卡左右列纵向堆叠（分数在上、说明在下），
+     小屏纵向阅读不裁切；金句卡内边距收敛。 —— */
+  .ch7 { padding: 90px 0 84px; }
+  .ch7-lead { font-size: 16px; margin-bottom: 44px; }
+  .idop-wheel { width: 200px; height: 200px; }
+  .idop-wheel .w-node.n1 { transform: translateY(-86px); }
+  .idop-wheel .w-node.n2 { transform: translateX(86px); }
+  .idop-wheel .w-node.n3 { transform: translateY(86px); }
+  .idop-wheel .w-node.n4 { transform: translateX(-86px); }
+  .idop-stage { grid-template-columns: 44px 1fr; gap: 14px; }
+  .hkrr-cell { flex: 1 1 100%; }
+  .rung { grid-template-columns: 1fr; gap: 10px; padding: 22px 22px; }
+  .ch7-creed { padding: 32px 22px; }
+  .ch7-creed blockquote + blockquote { margin-top: 18px; padding-top: 18px; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -1575,6 +1845,15 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      formula 卡的网格底纹与 mask 是静态贴层（无 animation，无需覆盖）；fvar/sub-card/mod-cell 的 hover 位移为增强非依赖；
      仪表辉气质由场景引擎 --scene-glow teal 着色固定光层承载，无本章专属粒子/canvas。 */
   .mod-cell::after { animation: none !important; }
+
+  /* —— [08] 七·造物 #ch7 降级（T4.1 / 自检 4）：IDOP 飞轮自转停（idopSpin：环 + 站点外环 + 字形反转）、
+     ★金句卡流光横扫停（forgeGlow）。飞轮是纯装饰母题，停转后环静止、I/D/O/P 四颗站点光点固定在 12/3/6/9 点钟、
+     字形归正立——四阶段信息真正由右侧 .idop-stages 静态定义列承载，飞轮停转不丢任何信息（验收第 7 条）。
+     ★两条金句、HKRR 四变量、LSA 三格式/质量梯均为静态文本，入场仅依赖 .reveal/.reveal-stagger
+     （上方已置可见态、transition 归零），降级下完整可读；hkrr-cell/rung 的 hover 位移为增强非依赖；
+     流光气质由场景引擎 --scene-glow gold/ember 着色固定光层承载，无本章专属粒子/canvas。 */
+  .idop-wheel .wheel-ring, .idop-wheel .wheel-spin, .idop-wheel .w-glyph { animation: none !important; }
+  .ch7-creed::before { animation: none !important; opacity: 0 !important; }
 }
 </style>
 </head>
@@ -2076,7 +2355,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
     </p>
 
     <!-- 8 条信念编号宣言行（逐字移植 index #beliefs 第 1666–1705 行，含 emoji 🌳✨，PRD 溯源抽查点） -->
-    <div class="manifesto reveal-stagger">
+    <div class="ch4-manifesto reveal-stagger">
       <div class="manifesto-row">
         <div class="m-num">01</div>
         <div class="m-text">世界不死，理想不灭。</div>
@@ -2337,6 +2616,181 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
         八个模块互为齿轮——目标定向、策略排程、公式定增长、FIRE 托底、双轨防守、AI 提效、成长供能、底色压舱。
         一台机器，昼夜运转。
       </p>
+    </div>
+  </div>
+</section>
+
+<!-- 七 · 造物 —— 金橙工坊（流光，暖金橙锻造感）。三源精华重组（T4.1）：
+     idop.html（IDOP 四阶段飞轮 + ★两条金句）+ hkrr.html（HKRR 四变量·相乘质量门）+ workflow.html（LSA 三格式 + 80/85/90 分层）。
+     data-chapter="7" 接入场景引擎（色温金橙 --light-hue:33 / --scene-glow gold 50%+ember 22%，[03] 已预定义，光效「流光」）。
+     —— 取舍（T4.1 注意事项）——
+     ★workflow 的 18 步短视频流程「整段舍弃」：过程性细节非叙事必需，不照搬；只取「三格式 + 80/85/90 分层」结论。
+     —— 三源去重（对照 tech-design 禁止重复项清单 D2 / D4，逐条落实）——
+     D2 AI 杠杆：本章只谈 IDOP/HKRR/AI 的「廉价变异·复利进化」，不下「AI 是杠杆」定义性论断（杠杆定义仅 #ch6）；
+     D4 IDOP↔HKRR 分工：★「IDOP 管流程，HKRR 管质量」为全页唯一落点 = 本章，逐字以 idop 第 2722 行为准。
+     流光气质：金句卡 forgeGlow 横扫 + IDOP 飞轮 idopSpin 自转，纯 transform/opacity 动画，[11] 已降级、不承载信息。 -->
+<section class="chapter ch7" id="ch7" data-chapter="7" data-temp="forge">
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label"><span class="idx">07</span> Chapter VII · The Forge</p>
+      <h2 class="section-title">造<span class="hl">物</span></h2>
+    </div>
+
+    <!-- 章引子：从「系统骨架」转入「造物本身」——把账号当窗口 → 把自己当作品打磨（重写，非源页长文搬运）。 -->
+    <p class="ch7-lead reveal">
+      系统在运转，接下来是<em>造物</em>——<br>
+      不把账号当窗口，而把<em>自己当一件作品</em>来打磨：一台飞轮管流程，一把标尺管质量，一道梯子定取舍。
+    </p>
+
+    <!-- IDOP 四阶段飞轮（D 清单不触；逐字取 idop.html 四阶段名/定位 第 2140–2166 / 2226–2240 行）。
+         飞轮可视化是装饰母题，四阶段信息由右侧 .idop-stages 静态定义列承载，[11] 停转不丢信息。 -->
+    <div class="ch7-flywheel reveal">
+      <!-- 飞轮可视化：环 + 四颗站点（I/D/O/P） + 中心 I×D×O×P 整机标识。 -->
+      <div class="idop-wheel" aria-hidden="true">
+        <div class="wheel-ring"></div>
+        <div class="wheel-spin">
+          <div class="w-node n1"><span class="w-glyph">I</span></div>
+          <div class="w-node n2"><span class="w-glyph">D</span></div>
+          <div class="w-node n3"><span class="w-glyph">O</span></div>
+          <div class="w-node n4"><span class="w-glyph">P</span></div>
+        </div>
+        <div class="wheel-hub">
+          <span class="hub-mark">I × D × O × P</span>
+          <span class="hub-sub">FLYWHEEL</span>
+        </div>
+      </div>
+      <!-- 右侧四阶段定义（信息载体，静态文本，不依赖飞轮旋转）。 -->
+      <div class="idop-stages reveal-stagger">
+        <div class="idop-stage">
+          <span class="s-code">I</span>
+          <div>
+            <p class="s-name"><b>输入</b> · 源头</p>
+            <p class="s-desc">用高质量输入持续供能——源头决定上限，输入端先用 HKR 筛一遍，不进垃圾。</p>
+          </div>
+        </div>
+        <div class="idop-stage">
+          <span class="s-code">D</span>
+          <div>
+            <p class="s-name"><b>沉淀</b> · 资产</p>
+            <p class="s-desc">沉淀长期认知资产——没有沉淀，输入只是信息消费。把消化过的东西攒成可复用的认知。</p>
+          </div>
+        </div>
+        <div class="idop-stage">
+          <span class="s-code">O</span>
+          <div>
+            <p class="s-name"><b>输出</b> · 信号</p>
+            <p class="s-desc">输出后进入反馈迭代——没有输出，沉淀只是私人收藏。公开表达，把信任造成资产。</p>
+          </div>
+        </div>
+        <div class="idop-stage">
+          <span class="s-code">P</span>
+          <div>
+            <p class="s-name"><b>产品</b> · 交付</p>
+            <p class="s-desc">从一开始就考虑产品交付——没有产品，影响力很难变成价值。首尾是 IP，中间是 DO。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="ch7-flywheel-note reveal">
+      四个零件依次旋转，每一站的输出喂给下一站的输入。整机以 <strong>I × D × O × P</strong> 运行——<strong>任何一项为零，结果归零</strong>。它不是循环图，是一台装配机。
+    </p>
+
+    <!-- HKRR 四变量质量门（逐字取 hkrr.html 四变量名/定位 第 2091–2097 行；★相乘关系 第 2146 行）。
+         四列横排 + 「×」连接符强调「相乘不是相加」。 -->
+    <div class="ch7-hkrr reveal">
+      <p class="ch7-sub">HKRR · 好内容的四个变量 · 相乘质量门</p>
+      <div class="hkrr-grid reveal-stagger">
+        <div class="hkrr-cell">
+          <p class="hk-letter">H</p>
+          <p class="hk-en">Happiness</p>
+          <p class="hk-name">快乐</p>
+          <p class="hk-role">传播动力——让人开心，内容才有被转出去的引擎。</p>
+        </div>
+        <div class="hkrr-x">×</div>
+        <div class="hkrr-cell">
+          <p class="hk-letter">K</p>
+          <p class="hk-en">Knowledge</p>
+          <p class="hk-name">知识</p>
+          <p class="hk-role">价值密度——让人有所得，内容才值得被认真对待。</p>
+        </div>
+        <div class="hkrr-x">×</div>
+        <div class="hkrr-cell">
+          <p class="hk-letter">R</p>
+          <p class="hk-en">Resonance</p>
+          <p class="hk-name">共鸣</p>
+          <p class="hk-role">信任穿透——让人觉得被看见，内容才能与人产生连接。</p>
+        </div>
+        <div class="hkrr-x">×</div>
+        <div class="hkrr-cell">
+          <p class="hk-letter">R</p>
+          <p class="hk-en">Rhythm</p>
+          <p class="hk-name">节奏</p>
+          <p class="hk-role">注意力留存——让人愿意看完，内容才有机会发挥作用。</p>
+        </div>
+      </div>
+      <p class="ch7-hkrr-note reveal">
+        四个变量，是<strong>相乘不是相加</strong>：任何一项接近零，整条内容的「好」也就趋近于零。它既是创作前的定调坐标，也是发布前的<strong>审稿标尺</strong>。
+      </p>
+    </div>
+
+    <!-- ★两条金句卡（D4 全页唯一落点 + D2 不下杠杆论断）。
+         ★金句一逐字 idop 第 2722 行;★金句二逐字 idop 第 2963 行。 -->
+    <figure class="ch7-creed reveal">
+      <figcaption class="creed-lead ch7-sub">The Two Laws · 两条法则</figcaption>
+      <!-- ★金句一(D4 全页唯一):IDOP↔HKRR 分工 -->
+      <blockquote><em>IDOP 管流程</em>，<em>HKRR 管质量</em>。</blockquote>
+      <!-- ★金句二(D2:只谈廉价变异·复利进化,不下「AI 是杠杆」定义) -->
+      <blockquote>AI 提供 <em>廉价变异</em>，IDOP 提供 <em>复利进化</em>。</blockquote>
+      <p class="creed-desc">
+        IDOP 是个人 IP 的总闭环，HKRR 是贯穿其中的质量标尺——一个让它跑起来，一个让它跑得好。
+        AI 让试错变廉价，但廉价失败本身没有意义；系统必须把每一次失败，都变成下一圈的输入。
+      </p>
+    </figure>
+
+    <!-- LSA 工作流·三格式 + 质量分层（逐字取 workflow 三格式 + ★80/85/90 心法 第 787/997 行 + 质量梯 第 1003–1006 行）。
+         ★workflow 18 步短视频流程整段舍弃(过程性细节非叙事必需),只取「三格式 + 分层」结论。 -->
+    <div class="ch7-lsa reveal">
+      <p class="ch7-sub">LSA · 个人 IP 工作流 · 质量分层</p>
+      <!-- 三格式 chip:LSA 工作流覆盖的三种成品形态。 -->
+      <div class="lsa-formats">
+        <span class="fmt"><b>图文</b> · 一个核心判断</span>
+        <span class="fmt"><b>文章</b> · 把一个问题讲完整</span>
+        <span class="fmt"><b>短视频</b> · 一眼抓人</span>
+      </div>
+      <!-- ★分层心法金句(逐字 workflow 第 787/997 行):80/85/90。 -->
+      <p class="ch7-lsa-credo">80分发布，85分复盘，90分长期打磨。</p>
+      <!-- 质量梯:四级 rung(75/80/85/90),当前级 80、目标级 85 高亮(逐字 workflow 第 1003–1006 行)。 -->
+      <div class="lsa-ladder reveal-stagger">
+        <div class="rung">
+          <span class="rung-score">75</span>
+          <div>
+            <p class="rung-title">短视频可发<span class="rung-pill">VIDEO</span></p>
+            <p class="rung-desc">第一阶段短视频可发布标准——先把形态跑通。</p>
+          </div>
+        </div>
+        <div class="rung is-now">
+          <span class="rung-score">80</span>
+          <div>
+            <p class="rung-title">图文 / 文章可发<span class="rung-pill">NOW</span></p>
+            <p class="rung-desc">主题清楚 · 表达有用 · 图能撑住 · 无明显硬伤。先把内容生产闭环跑通，不为一篇死磕而耽误系统启动。</p>
+          </div>
+        </div>
+        <div class="rung is-target">
+          <span class="rung-score">85</span>
+          <div>
+            <p class="rung-title">阶段目标</p>
+            <p class="rung-desc">更像自己 · 图片更稳 · 选题更精准 · 价值更明显。</p>
+          </div>
+        </div>
+        <div class="rung">
+          <span class="rung-score">90</span>
+          <div>
+            <p class="rung-title">长期追求</p>
+            <p class="rung-desc">穿透力 · 辨识度 · 传播力——成为长期内容资产。</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
