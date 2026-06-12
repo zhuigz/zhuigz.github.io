@@ -653,6 +653,122 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 /* —— #ch1 专属 keyframe（仅 transform/opacity；reduced-motion 降级见 [11]）—— */
 @keyframes spectrumSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+/* —— #ch2 二·来路 · The Road（垂直时间线：光点串 · 四幕节点）——
+   源 life：把 18 年来路收束为一条垂直光线，四幕节点沿线逐点入场。
+   色温黎明渐暖（body[data-chapter="2"]：--light-hue:44，[03] 已预定义，挂 data-chapter="2" 即生效）。
+   形态约束（T2.3）：节点入场只用 .reveal/.reveal-stagger（opacity/translateY），
+   **禁止 scroll 比例驱动连线绘制的逐帧动画**；「光点沿线下行」用 CSS @keyframes + transform（tl2Comet）。
+   分组约束：四幕各自包一层 .reveal-stagger（每幕 ≤4 子节点），nth-child 延迟不触 n+12 兜底（index 第 471 行），
+   末节点延迟不被前序累积拖长（技术快审注意事项）。 */
+.ch2 { padding: 140px 0 130px; }
+
+/* 时间线主轴：居中一条竖向光线（左侧承载光点串，右侧承载节点卡）。
+   --rail-x 是轴线水平位置，统一供线、光点、节点圆点定位引用，断点处只改这一个变量。 */
+.ch2-timeline { --rail-x: 26px; position: relative; margin-top: 8px; }
+/* 竖向光轴：一条自上而下的渐隐金线（纯渐变背景，非 JS 逐帧绘制） */
+.ch2-timeline::before {
+  content: ''; position: absolute; top: 6px; bottom: 6px; left: var(--rail-x);
+  width: 2px; transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    transparent 0%, var(--gold-deep) 6%, color-mix(in srgb, var(--gold), transparent 30%) 50%,
+    var(--gold-deep) 94%, transparent 100%);
+  opacity: 0.55;
+}
+/* 「光点沿线下行」：一颗沿轴线循环下落的彗星光点（CSS @keyframes + transform，不用 JS 算滚动） */
+.ch2-timeline::after {
+  content: ''; position: absolute; left: var(--rail-x); top: 0;
+  width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 12px 3px var(--gold-glow), 0 0 4px 1px var(--gold-light);
+  animation: tl2Comet 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* —— 一幕（.tl-act）：一段来路（萌芽/群星/月亮/密度），各自一个 .reveal-stagger 分组 ——
+   --act-pad（幕左缩进）/ --node-pad-x（节点水平内边距）抽成变量，供 ::before 光点定位引用，
+   断点收窄时只改这两个变量 + --rail-x，圆点定位自动跟随对齐轴线（避免硬编码 64/22 在断点失配）。 */
+.tl-act { --act-pad: 64px; position: relative; padding-left: var(--act-pad); padding-bottom: 8px; }
+.tl-act + .tl-act { margin-top: 18px; }
+
+/* 幕头：年代区段 + 幕名（沿轴线挂一颗较大的「幕节点」光点） */
+.tl-act-head { position: relative; margin-bottom: 18px; }
+.tl-act-head::before {
+  content: ''; position: absolute; left: calc(var(--rail-x) - var(--act-pad) - 7px); top: 4px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-light) 0%, var(--gold) 55%, transparent 72%);
+  box-shadow: 0 0 16px 4px var(--gold-glow); z-index: 2;
+}
+.tl-range {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 2px;
+  color: var(--gold); opacity: 0.85;
+}
+.tl-act-name {
+  font-family: var(--serif-cn); font-size: clamp(22px, 3.2vw, 30px);
+  font-weight: 700; color: var(--ink); margin-top: 8px; line-height: 1.35;
+}
+.tl-act-name .hl {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.tl-act-sub {
+  font-family: var(--serif-cn); font-size: 14px; color: var(--ink-soft);
+  margin-top: 8px; line-height: 1.8;
+}
+
+/* 子节点（一幕内的关键事件卡）：沿轴挂一颗小光点 + 一段内容 */
+.tl-node { --node-pad-x: 22px; position: relative; padding: 16px var(--node-pad-x); margin-bottom: 12px;
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
+}
+.tl-node:hover { border-color: var(--line-strong); background: var(--bg-card-hi); transform: translateX(3px); }
+/* 节点光点：绝对定位相对节点 padding-box 左缘（= 距时间线左缘 --act-pad），
+   故偏移只需扣 --act-pad，不含 --node-pad-x；-5px ≈ 半个点宽(4.5)+1px 边框，让点心落在 --rail-x 轴上。 */
+.tl-node::before {
+  content: ''; position: absolute; left: calc(var(--rail-x) - var(--act-pad) - 5px); top: 24px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 9px 2px var(--gold-glow); z-index: 2;
+}
+.tl-node .n-title {
+  font-family: var(--serif-cn); font-size: clamp(16px, 2vw, 18px);
+  font-weight: 600; color: var(--ink); margin-bottom: 7px; line-height: 1.5;
+}
+.tl-node .n-title em { font-style: normal; color: var(--gold); font-weight: 600; }
+.tl-node .n-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
+.tl-node .n-desc em { font-style: normal; color: var(--gold); font-weight: 500; }
+/* 节点内的强调数字（高考 567 / 90万 等），引用既有金色高亮手感 */
+.tl-node .n-num {
+  font-family: var(--sans-en); font-weight: 700; letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* —— ★金句「把目标定在月亮，最差也不过迷失在星辰之间」——
+   本章唯一落点（PRD 溯源项，逐字保留）。归在「月亮与星辰」幕末，作整条来路的星空注脚。 */
+.tl-credo {
+  position: relative; margin: 26px 0 4px 64px; padding: 26px 30px;
+  border-radius: 16px; border: 1px solid var(--line-strong);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--gold-deep) 10%, transparent), transparent);
+  text-align: center;
+}
+.tl-credo .credo-mark { color: var(--gold); font-size: 0.8em; letter-spacing: 6px; }
+.tl-credo blockquote {
+  font-family: var(--serif-cn); font-size: clamp(18px, 2.6vw, 24px);
+  font-weight: 700; line-height: 1.7; letter-spacing: 1px; margin: 10px 0 0;
+  background: linear-gradient(120deg, var(--gold-light), var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* —— #ch2 专属 keyframe（仅 transform/opacity；reduced-motion 降级见 [11]）——
+   tl2Comet：光点沿轴线自上而下循环（translateY 表达「光沿来路下行」），纯 CSS 不依赖滚动。 */
+@keyframes tl2Comet {
+  0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translateY(50vh) scale(1); opacity: 0.95; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(100vh) scale(0.6); opacity: 0; }
+}
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
@@ -664,6 +780,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch1 { padding: 110px 0 100px; }
   .ideal-grid { grid-template-columns: 1fr; gap: 16px; }
   .ch1-block { margin-top: 64px; }
+
+  /* #ch2 来路时间线（T2.3）：章上下留白收敛，幕间距略缩，时间线整体上移更紧凑。 */
+  .ch2 { padding: 110px 0 100px; }
+  .ch2-timeline { margin-top: 0; }
+  .tl-act + .tl-act { margin-top: 14px; }
 }
 
 /* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
@@ -676,6 +797,16 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .cipher-525 { gap: 18px; padding: 26px 24px; }
   .cipher-525 .c-num { font-size: clamp(52px, 22vw, 80px); }
   .cipher-525 .c-body { min-width: 100%; }
+
+  /* —— #ch2 来路时间线收窄（T2.3）：轴线左移、幕/节点/金句左缩进同步收敛，小屏正文宽度够读。
+     只改 --rail-x（轴位）与 --act-pad（幕左缩进）两个变量，幕头/节点光点 ::before 的定位公式
+     仅依赖这两者，自动跟随对齐到新轴位；--node-pad-x 仅影响节点内边距、不影响光点位置。
+     .tl-credo 左缩进随 --act-pad 同步降到 44px。 */
+  .ch2 { padding: 90px 0 84px; }
+  .ch2-timeline { --rail-x: 18px; }
+  .tl-act { --act-pad: 44px; }
+  .tl-node { --node-pad-x: 16px; padding-top: 14px; padding-bottom: 14px; }
+  .tl-credo { margin-left: 44px; padding: 22px 20px; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -721,6 +852,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      渐变本身静止仍完整呈现七色，信息不丢（光谱是静态可读的色相弧，非动画承载信息）。
      ideal-card 的 transition 是 hover 增强，非入场依赖，降级下不影响信息可读，无需覆盖。 */
   .spectrum { animation: none !important; }
+
+  /* —— [08] 二·来路 #ch2 降级（T2.3 / 自检 4）：时间线「光点沿线下行」彗星停（tl2Comet）。
+     该光点是装饰性母题，非信息载体——停后光轴静线 + 四幕节点 + ★金句仍完整可读，信息不丢。
+     节点入场仅用 .reveal/.reveal-stagger（上方已置可见态、transition 归零），tl-node hover 是增强非依赖，无需覆盖。 */
+  .ch2-timeline::after { animation: none !important; }
 }
 </style>
 </head>
@@ -847,6 +983,142 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
           <p class="c-desc">农历四月初九，公历 525——谐音「我爱我」。<em>爱自己，是终身浪漫的开始。</em></p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- 二 · 来路 —— 黎明渐暖 · The Road（垂直时间线：光点串 · 四幕节点）。
+     源 life：把近 19 年来路收束为一条竖向光线，四幕（萌芽/群星闪耀/月亮与星辰/密度迸发）沿线逐点入场。
+     data-chapter="2" 接入场景引擎（[03] 色温黎明渐暖 --light-hue:44）。
+     形态约束（T2.3）：节点入场只用 .reveal / .reveal-stagger（opacity/translateY），无 scroll 比例驱动逐帧连线；
+     「光点沿线下行」由 .ch2-timeline::after 的 tl2Comet（CSS @keyframes + transform）承载。
+     分组约束：每幕各包一层 .reveal-stagger（子节点 ≤4），nth-child 延迟不触 n+12 兜底，末节点不被前序累积拖长。 -->
+<section class="chapter ch2" id="ch2" data-chapter="2" data-temp="dawn">
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label"><span class="idx">02</span> Chapter II · The Road</p>
+      <h2 class="section-title">来<span class="hl">路</span></h2>
+    </div>
+
+    <!-- 一句话引子：把整条时间线的语义点出（取自 life 尾声「从未停下来好好回头看一眼」，压缩重写） -->
+    <p class="ch1-lead reveal">
+      从 2007 年的<em>朔州</em>，到此刻的<em>武汉</em>——<br>
+      近十九年的来路，第一次被我从头到尾、不疾不徐地走了一遍。
+    </p>
+
+    <!-- 垂直光轴时间线：四幕沿线逐点入场 -->
+    <div class="ch2-timeline" aria-hidden="false">
+
+      <!-- 一幕 · 萌芽（2007–2019）：空白世界慢慢有了颜色 -->
+      <div class="tl-act">
+        <div class="tl-act-head reveal">
+          <p class="tl-range">2007 — 2019</p>
+          <h3 class="tl-act-name"><span class="hl">萌芽</span> · 一个空白的世界，慢慢有了颜色</h3>
+          <p class="tl-act-sub">山西朔州一座五线小城，记忆从七岁太原的小学开始。</p>
+        </div>
+        <div class="reveal-stagger">
+          <div class="tl-node">
+            <p class="n-title">2007.05.25 · 山西朔州出生</p>
+            <p class="n-desc">一座五线小城。最早的几年记忆一片空白，<em>真正的记忆从七岁太原南上庄小学一年级开始</em>。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">小学 · 一段轻快明亮的尾声</p>
+            <p class="n-desc">太原的郭鹏程、王法乃，回朔州后的<em>邸启、胡泽浩、王卓民</em>——疯玩、没压力，这份友谊延续至今。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">2019 · 小升初的岔路口</p>
+            <p class="n-desc">私立入学考 500 人里第 9，本可直接进尖子班，最终却选了公立——<em>这个「不够漂亮」的决定，让我遇见了生命中第一位恩师</em>。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 二幕 · 群星闪耀（2019–2022）：一所「考砸」的初中 · 209 班 · 李青老师 -->
+      <div class="tl-act">
+        <div class="tl-act-head reveal">
+          <p class="tl-range">2019 — 2022</p>
+          <h3 class="tl-act-name"><span class="hl">群星闪耀</span> · 209 班 · 李青老师</h3>
+          <p class="tl-act-sub">一所被「托关系塞进去」的中等班，却成了整个青春最闪亮的开端。</p>
+        </div>
+        <div class="reveal-stagger">
+          <div class="tl-node">
+            <p class="n-title">朔城区第七中学 · <em>209 班</em></p>
+            <p class="n-desc">爸爸以为塞进中等偏下的班是吃了亏。班级整体一般，我反而稳定<em>全班第一</em>，最好考过全校第十。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">5:30 的操场</p>
+            <p class="n-desc">住校，22:10 熄灯、5:30 起床。每天准时到空无一人的操场背书，<em>夏天迎着第一缕日出，冬天在路灯下</em>。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">班主任李青 · 班名「群星闪耀」</p>
+            <p class="n-desc">取自茨威格《人类群星闪耀时》。他说：「三百六十行，行行出状元——<em>要在自己选定的道路上，做最闪耀的那颗星</em>。」从不只用成绩评判人，这件事我一辈子都记得。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">一颗种子 · 政治底色</p>
+            <p class="n-desc">「少年有梦不应止于心动，更应付诸行动」——初三入团，操场上朗读讲话。<em>这颗种子后来长成了我整个人生的底色</em>。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三幕 · 月亮与星辰（2022–2025）：白月光 · 人大梦 · 高考 567 · ★金句落点 -->
+      <div class="tl-act">
+        <div class="tl-act-head reveal">
+          <p class="tl-range">2022 — 2025</p>
+          <h3 class="tl-act-name"><span class="hl">月亮与星辰</span> · 人大梦 · 高考</h3>
+          <p class="tl-act-sub">山河四省苦乐交织的三年，把目标定在了月亮。</p>
+        </div>
+        <div class="reveal-stagger">
+          <div class="tl-node">
+            <p class="n-title">2022.08.01 · 西山 · 第一缕霞光</p>
+            <p class="n-desc">和元鑫、王泽雄凌晨骑车摸黑爬上西山，看太阳把霞光铺满天空。<em>那一刻，此生无憾</em>。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">两座灯塔 · 马婧 / 赵晓萍</p>
+            <p class="n-desc">最喜欢的老师马婧，与初中李青老师，是我心中的<em>两座灯塔</em>;也有白月光司梦琪、第 5 位挚友安炳兆。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">梦中情校 · <em>中国人民大学</em></p>
+            <p class="n-desc">建团百年大会上读到陕北公学题词——1937 年正是人大建校之年。自那之后，<em>人大成了整个高中挥之不去的目标</em>，妈妈还专程陪我去北京看了一眼。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">2025 · 高考 <span class="n-num">567</span></p>
+            <p class="n-desc">语英政一门比一门好,数理化一门比一门差;总分 <span class="n-num">567</span>，距人大约差 70–100 分。差了很多很多，但我从不后悔。</p>
+          </div>
+        </div>
+        <!-- ★金句：本章唯一落点（PRD 溯源项，逐字保留），作整条来路的星空注脚 -->
+        <figure class="tl-credo reveal">
+          <span class="credo-mark">★</span>
+          <blockquote>把目标定在月亮，最差也不过迷失在星辰之间。</blockquote>
+        </figure>
+      </div>
+
+      <!-- 四幕 · 密度迸发（2025–现在）：华农 · 公众号 90 万 · 汤圆 -->
+      <div class="tl-act">
+        <div class="tl-act-head reveal">
+          <p class="tl-range">2025 — 现在</p>
+          <h3 class="tl-act-name"><span class="hl">密度迸发</span> · 华农 · 个人 IP 启动</h3>
+          <p class="tl-act-sub">高考完这一年的密度，比此前 18 年都要多。</p>
+        </div>
+        <div class="reveal-stagger">
+          <div class="tl-node">
+            <p class="n-title"><em>华中农业大学</em> · 211 · 公共管理类</p>
+            <p class="n-desc">捡到性价比最高的位置:全国第 41 的 211。45 个志愿里，唯有华农那栏填成公共管理类——<em>离政治最近的那一个</em>，和当年「误进 209 班」如出一辙。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">命运把我送到了武汉 · 黄鹤楼</p>
+            <p class="n-desc">《长安三万里》四刷，印象最深的是黄鹤楼。<em>万万没想到，命运把我送到武汉，让我亲眼站在了它面前</em>。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">公众号起步 · <span class="n-num">90 万+</span> 阅读</p>
+            <p class="n-desc">从 2025.10 起步到拓展为矩阵：<span class="n-num">90 万+</span> 阅读、<span class="n-num">300 万字</span>与 AI 的对话、链接 20+ 战友;团支书 · 鄂浪负责人 · 入党积极分子。</p>
+          </div>
+          <div class="tl-node">
+            <p class="n-title">家里的新成员 · <em>汤圆</em>🐱 · 此刻</p>
+            <p class="n-desc">2026 寒假，妈妈把汤圆抱回了家。个人 IP 正式启动，19 岁生日将至——<em>来路仍在向前延伸</em>。</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
