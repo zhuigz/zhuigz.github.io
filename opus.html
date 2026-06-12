@@ -1060,6 +1060,175 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   font-size: clamp(19px, 2.4vw, 23px);
 }
 
+/* —— #ch5 五·远方 · The Distance（三级目标阶梯 + FIRE 数字底座 + ★长期主义金句）——
+   源 ideal.html(三级人生目标) + fire.html(FIRE 数字/金句)，精华提取重组(T3.2)。
+   叙述角度 vs #ch1：ch1 是「底色陈列」(理想名 + 一句诗)，ch5 是「路线图」——按三级阶梯结构
+   组织（一级立己 FIRE → 二级达人复兴 → 三级终极奇点），带时间锚点 + 硬指标，避免与 ch1 逐句重复(D 清单)。
+   叙事关系：目标是方向(三级阶梯)、FIRE 是底座(25×/4%/72 数字组)，互为表里。
+   星空气质纯由场景引擎 body[data-chapter="5"]（--scene-glow violet 55% / --light-hue:264，[03] 已预定义）
+   着色固定光层实现，本章不写新 canvas(KD-4)；新增装饰只用 transform/opacity(starTwinkle)，[11] 降级。 */
+.ch5 { padding: 140px 0 130px; }
+/* 章引子：目标↔FIRE 互为表里的叙事关系一句话（重写，非源页长文搬运）。 */
+.ch5-lead {
+  font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
+  color: var(--ink-soft); max-width: 720px; margin: -28px 0 56px;
+}
+.ch5-lead em { font-style: normal; color: var(--gold-light); }
+
+/* 区块小标题（与 ch1-sub 同手感，本章局部派生，紫调眉题）。 */
+.ch5-sub {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--accent-violet); margin-bottom: 22px;
+}
+
+/* —— 三级目标阶梯（路线图主体）——
+   桌面：三级竖向堆叠，自上而下 三级(∞) → 二级(2050) → 一级(FIRE)，每级逐层右缩进作「拾级而上」错落；
+   每级一张 .tier-step，左侧大号「级数 + 时间锚点」、右侧 名/硬指标。880/768 缩回零缩进纵向堆叠。 */
+.ch5-ladder { display: flex; flex-direction: column; gap: 18px; max-width: 940px; }
+/* 阶梯级卡：左 .tier-mark(级数/锚点) + 右 .tier-body(名/指标)。--step 控制桌面错落缩进。 */
+.tier-step {
+  --step: 0px;
+  display: grid; grid-template-columns: 168px 1fr;
+  gap: 26px; align-items: center;
+  margin-left: var(--step);
+  padding: 30px 32px;
+  border: 1px solid var(--line);
+  border-left: 2px solid color-mix(in srgb, var(--accent-violet) 40%, transparent);
+  border-radius: 18px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent-violet) 6%, transparent),
+    rgba(255,255,255,0.012));
+  transition: border-color 0.4s ease, transform 0.4s ease, background 0.4s ease;
+}
+.tier-step:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent-violet) 30%, var(--line-strong));
+}
+/* 拾级而上的桌面错落：三级最高(缩进最大) → 一级落地(零缩进，作「底座」视觉) */
+.tier-step.t3 { --step: 0px; }
+.tier-step.t2 { --step: 56px; }
+.tier-step.t1 { --step: 112px; }
+/* 左列：级数 + 时间锚点（∞ / 2050 / 时间起点） */
+.tier-mark { text-align: left; }
+.tier-mark .t-tier {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--accent-violet); margin-bottom: 8px;
+}
+.tier-mark .t-anchor {
+  font-family: var(--sans-en); font-weight: 200;
+  font-size: clamp(40px, 5.4vw, 58px); line-height: 1;
+  color: color-mix(in srgb, var(--accent-violet) 55%, var(--ink));
+}
+.tier-mark .t-anchor-sub {
+  display: block; margin-top: 8px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim);
+}
+/* 右列：目标名 + 硬指标说明 */
+.tier-body .t-name {
+  font-family: var(--serif-cn); font-size: clamp(19px, 2.4vw, 24px);
+  font-weight: 700; line-height: 1.4; color: var(--ink); margin-bottom: 10px;
+}
+.tier-body .t-name .hl {
+  background: linear-gradient(135deg, var(--accent-violet), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.tier-body .t-spec {
+  font-family: var(--serif-cn); font-size: 15px; line-height: 1.85; color: var(--ink-soft);
+}
+.tier-body .t-spec strong { color: var(--gold); font-weight: 700; }
+/* 一级「底座」强调：落地级用更实的描边，呼应「FIRE 是底座」叙事 */
+.tier-step.t1 {
+  border-left-color: var(--gold-deep);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--gold) 7%, transparent),
+    rgba(255,255,255,0.012));
+}
+.tier-step.t1 .tier-mark .t-tier { color: var(--gold); }
+.tier-step.t1 .tier-mark .t-anchor { color: color-mix(in srgb, var(--gold) 60%, var(--ink)); }
+
+/* —— FIRE 数字底座（25× / 4% / 72）——
+   ★T3.2：定值非增量，用静态强调字，不 count-up（无 data-num，避免「涨到」语义误导）。
+   D7 去重清单：FIRE 数字组(25×/4%/72/300–1000万)全页唯一落点 = 本章。 */
+.ch5-fire { margin-top: 80px; }
+.fire-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+}
+.fire-cell {
+  padding: 38px 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.018);
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+.fire-cell:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+/* 静态强调数字（非 count-up）：大号衬线，金光高亮。sub 为单位/记号。 */
+.fire-cell .f-num {
+  font-family: var(--sans-en); font-weight: 200;
+  font-size: clamp(56px, 8vw, 84px); line-height: 1;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.fire-cell .f-num sub { font-size: 0.42em; vertical-align: baseline; margin-left: 2px; }
+.fire-cell .f-label {
+  margin-top: 16px; font-family: var(--serif-cn); font-size: 16px;
+  font-weight: 700; color: var(--ink);
+}
+.fire-cell .f-en {
+  margin-top: 6px; font-family: var(--mono); font-size: 10px;
+  letter-spacing: 2px; color: var(--ink-dim);
+}
+.fire-cell .f-desc {
+  margin-top: 12px; font-family: var(--serif-cn); font-size: 13.5px;
+  line-height: 1.8; color: var(--ink-soft);
+}
+/* FIRE 一句注脚：把数字底座与「底座」叙事收口（300–1000万 落点也在此，D7 全页唯一） */
+.ch5-fire-note {
+  margin-top: 24px; font-family: var(--serif-cn); font-size: 15px;
+  line-height: 1.9; color: var(--ink-soft); max-width: 760px;
+}
+.ch5-fire-note strong { color: var(--gold); font-weight: 700; }
+
+/* —— ★长期主义金句（逐字取 fire.html footer-motto 第 2290–2293 行）——
+   D3 清单：诗化金句非定义陈述，允许在 ch5 保留为唯一落点。星空气质装饰用 starTwinkle(transform/opacity)，[11] 降级。 */
+.ch5-creed {
+  margin-top: 80px; position: relative;
+  padding: 56px 40px; text-align: center;
+  border-radius: 24px;
+  border: 1px solid color-mix(in srgb, var(--accent-violet) 22%, var(--line));
+  background: radial-gradient(ellipse 120% 100% at 50% 0%,
+    color-mix(in srgb, var(--accent-violet) 10%, transparent), transparent 70%);
+  overflow: hidden;
+}
+/* 星点装饰：纯 transform/opacity 闪烁（starTwinkle），不承载信息，[11] 停。 */
+.ch5-creed::before,
+.ch5-creed::after {
+  content: ''; position: absolute; border-radius: 50%;
+  background: var(--gold-light); pointer-events: none;
+  box-shadow: 0 0 6px var(--gold-light);
+  animation: starTwinkle 4.5s ease-in-out infinite;
+}
+.ch5-creed::before { width: 3px; height: 3px; top: 26px; left: 14%; }
+.ch5-creed::after { width: 2px; height: 2px; bottom: 30px; right: 18%; animation-delay: 2.2s; }
+.ch5-creed .creed-quote {
+  font-family: var(--serif-cn); font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700; line-height: 2; color: var(--ink);
+  position: relative; z-index: 1;
+}
+.ch5-creed .creed-quote em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ch5-creed .creed-sig {
+  margin-top: 22px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 2px; color: var(--ink-dim); position: relative; z-index: 1;
+}
+/* 星点闪烁 keyframe（transform/opacity 限定，[11] 停）。 */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
@@ -1098,6 +1267,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 
   /* #ch4 信念（T3.1）：章上下留白收敛，宣言行间距略缩。 */
   .ch4 { padding: 110px 0 100px; }
+
+  /* #ch5 远方（T3.2）：三级阶梯桌面错落缩进归零（纵向堆叠不再「拾级」横移，避免窄屏溢出）；
+     FIRE 数字三列 → 两列（72 落第二行居中由 nth-child 兜底）；章留白收敛。 */
+  .ch5 { padding: 110px 0 100px; }
+  .ch5-ladder { gap: 16px; }
+  .tier-step.t1, .tier-step.t2, .tier-step.t3 { --step: 0px; }
+  .fire-grid { grid-template-columns: repeat(2, 1fr); }
+  .fire-cell:last-child { grid-column: 1 / -1; }
 }
 
 /* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
@@ -1136,6 +1313,18 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .manifesto-row { grid-template-columns: 60px 1fr; gap: 14px; padding: 22px 0; }
   .manifesto-row .m-meta { display: none; }
   .manifesto-row.is-final { padding: 30px 22px; }
+
+  /* —— #ch5 收紧（T3.2）：三级阶梯级卡左右列纵向堆叠（级数/锚点在上、名/指标在下）；
+     FIRE 数字单列堆叠；金句卡内边距收敛。三级阶梯在小屏纵向阅读、不裁切。 —— */
+  .ch5 { padding: 90px 0 84px; }
+  .ch5-lead { font-size: 16px; margin-bottom: 44px; }
+  .tier-step { grid-template-columns: 1fr; gap: 16px; padding: 26px 22px; }
+  .tier-mark .t-anchor { font-size: clamp(44px, 16vw, 56px); }
+  .ch5-fire { margin-top: 60px; }
+  .fire-grid { grid-template-columns: 1fr; gap: 14px; }
+  .fire-cell:last-child { grid-column: auto; }
+  .fire-cell { padding: 32px 24px 28px; }
+  .ch5-creed { margin-top: 60px; padding: 44px 24px; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -1197,6 +1386,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      8 条信念 + 收束金句入场仅依赖 .reveal/.reveal-stagger（上方已置可见态、transition 归零），
      文字直接完整可见；.manifesto-row 的 hover 缩进/短金线/序号着色均为 hover 增强（非信息载体）；
      赤焰气质由场景引擎 --scene-glow 着色固定光层承载，无本章专属粒子/火焰动画——故无需额外覆盖。 */
+
+  /* —— [08] 五·远方 #ch5 降级（T3.2 / 自检 4）：金句卡星点闪烁停（starTwinkle）。
+     星点是纯装饰母题（transform/opacity），停后仍为静态金点、不承载任何信息——
+     三级阶梯 + FIRE 数字(25×/4%/72，静态强调字非 count-up) + ★金句均为静态文本，入场仅依赖
+     .reveal/.reveal-stagger（上方已置可见态、transition 归零），降级下完整可读，信息不丢；
+     tier-step/fire-cell 的 hover 位移为增强非依赖；星空气质由场景引擎着色固定光层承载，无本章专属粒子。 */
+  .ch5-creed::before, .ch5-creed::after { animation: none !important; }
 }
 </style>
 </head>
@@ -1741,6 +1937,118 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
         <div class="m-meta">CREDO · FINAL</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ===== 五·远方 #ch5（T3.2）=====
+     源 ideal.html(三级人生目标·立己达人) + fire.html(FIRE 永续之道)，精华提取重组。data-chapter="5" 接入场景引擎
+     （色温靛紫深空 --light-hue:264 / --scene-glow violet 55%，[03] 已预定义，光效转「星空」）。
+     叙事关系：目标是方向(三级阶梯)，FIRE 是底座(25×/4%/72)，互为表里。
+     去重(D 清单)：
+       · 叙述角度刻意区别于 #ch1 理想卡——ch1 是「底色陈列」(理想名 + 一句诗)，ch5 是「路线图」
+         (三级阶梯结构 + 时间锚点 + 硬指标)，避免与 ch1 逐句重复；2050/复兴、共产主义·AI 奇点不重述 ch1 卡面诗句。
+       · D7：FIRE 数字组(25×/4%/72/300–1000万)全页唯一落点 = 本章，静态强调字、不 count-up。
+       · D3：★「以时间为舟…长期主义为帆」为诗化金句(非定义陈述)，允许在本章作唯一落点。
+     ★金句逐字取自 fire.html footer-motto(第 2290–2293 行)；FIRE 三数字/标签逐字取自 fire.html hero-stats(第 1729–1748 行)。
+     星空气质纯由场景引擎着色固定光层承载，本章不写新 canvas(KD-4)；新增装饰仅 starTwinkle(transform/opacity)，[11] 已降级。 -->
+<section class="chapter ch5" id="ch5" data-chapter="5" data-temp="indigo">
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label"><span class="idx">05</span> Chapter V · The Distance</p>
+      <h2 class="section-title">远<span class="hl">方</span></h2>
+    </div>
+
+    <!-- 章引子：目标↔FIRE 互为表里的叙事关系（重写，不搬运两源过程性长文） -->
+    <p class="ch5-lead reveal">
+      远方不是一个点，是一道<em>拾级而上</em>的阶梯——<br>
+      三级目标定下方向，<em>FIRE</em> 是托住一切的底座。<br>
+      先买断自己的时间，才谈得上奔赴更大的远方。
+    </p>
+
+    <!-- 三级目标阶梯（路线图主体：三级 → 二级 → 一级，自上而下，桌面拾级缩进，880/768 纵向堆叠）。
+         区别于 ch1 理想卡：此处带「级数 + 时间锚点 + 硬指标」结构，是路线图而非诗化陈列。 -->
+    <div class="ch5-block reveal">
+      <p class="ch5-sub">Three-Tier Goals · 三级阶梯</p>
+      <div class="ch5-ladder reveal-stagger">
+        <!-- 三级 · 终极 · 共产主义 · AI 奇点（时间锚点 ∞，源 ideal TIER THREE） -->
+        <div class="tier-step t3">
+          <div class="tier-mark">
+            <p class="t-tier">Tier Ⅲ · 终极</p>
+            <p class="t-anchor">∞<span class="t-anchor-sub">AI 奇点 · Singularity</span></p>
+          </div>
+          <div class="tier-body">
+            <h3 class="t-name"><span class="hl">共产主义</span> · AI 奇点</h3>
+            <p class="t-spec">物种层面的终局——<strong>AI 极致生产力</strong> → 物质极大丰富 → 按需分配。保持健康、活得够久，亲眼见证那一刻到来。</p>
+          </div>
+        </div>
+        <!-- 二级 · 达人 · 中华民族伟大复兴（时间锚点 2050，源 ideal TIER TWO） -->
+        <div class="tier-step t2">
+          <div class="tier-mark">
+            <p class="t-tier">Tier Ⅱ · 达人</p>
+            <p class="t-anchor">2050<span class="t-anchor-sub">社会主义现代化强国</span></p>
+          </div>
+          <div class="tier-body">
+            <h3 class="t-name">中华民族<span class="hl">伟大复兴</span></h3>
+            <p class="t-spec">在国家上升周期里贡献一份力量——<strong>不做旁观者，要做历史进程的参与者</strong>。以 AI 普惠撬动民生，以制度守住每一分红利。</p>
+          </div>
+        </div>
+        <!-- 一级 · 立己 · FIRE 财富自由（底座，硬指标 300万—1000万，源 ideal TIER ONE）。
+             D7：300–1000万 落点在本章；此处作阶梯落地的「底座」级，承接下方 FIRE 数字组。 -->
+        <div class="tier-step t1">
+          <div class="tier-mark">
+            <p class="t-tier">Tier Ⅰ · 立己 · 底座</p>
+            <p class="t-anchor">300<span class="t-anchor-sub">万 — 1000 万 · 资产积累</span></p>
+          </div>
+          <div class="tier-body">
+            <h3 class="t-name"><span class="hl">FIRE</span> · 财富自由</h3>
+            <p class="t-spec">个人层面的解放——彻底<strong>买断自己的时间所有权</strong>，不再为别人卖命，把生命还给自己。这是登上更高远方的第一级。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIRE 数字底座（25× / 4% / 72）：★T3.2 定值非增量，静态强调字、不 count-up（无 data-num）。
+         逐字取 fire.html hero-stats(第 1729–1748 行)：25×=年支出倍数 / 4%=安全提取率 / 72=复利翻倍法则。 -->
+    <div class="ch5-fire reveal">
+      <p class="ch5-sub">The Math of FIRE · 底座的算术</p>
+      <div class="fire-grid reveal-stagger">
+        <div class="fire-cell">
+          <p class="f-num">25<sub>×</sub></p>
+          <p class="f-label">年支出倍数</p>
+          <p class="f-en">Expense Multiplier</p>
+          <p class="f-desc">攒够年支出的 25 倍，就攒够了一生的自由本金。</p>
+        </div>
+        <div class="fire-cell">
+          <p class="f-num">4<sub>%</sub></p>
+          <p class="f-label">安全提取率</p>
+          <p class="f-en">Safe Withdrawal</p>
+          <p class="f-desc">每年只取 4%，本金生生不息，永续之道由此而来。</p>
+        </div>
+        <div class="fire-cell">
+          <p class="f-num">72</p>
+          <p class="f-label">复利翻倍法则</p>
+          <p class="f-en">Rule of Seventy-Two</p>
+          <p class="f-desc">72 除以年化收益率，便是财富翻一番所需的年数。</p>
+        </div>
+      </div>
+      <!-- FIRE 注脚：把数字底座与「底座」叙事收口（300×4%=12 万/年 落点亦在本章，D7 唯一）。 -->
+      <p class="ch5-fire-note reveal">
+        以 <strong>300 万 × 4% = 12 万/年</strong> 计，约合 <strong>1 万/月</strong>——二三线城市，已是完全自由。
+        底座一旦立稳，方向便不再为生计所困。
+      </p>
+    </div>
+
+    <!-- ★长期主义金句（逐字取 fire.html footer-motto 第 2290–2293 行）：D3 允许的唯一诗化落点。
+         星空气质装饰用 ::before/::after starTwinkle（transform/opacity），[11] 已降级，不承载信息。 -->
+    <figure class="ch5-creed reveal">
+      <blockquote class="creed-quote">
+        以<em>时间</em>为舟，以<em>复利</em>为舵，<br>
+        以<em>长期主义</em>为帆。<br>
+        道阻且长 · <em>行则将至</em>。
+      </blockquote>
+      <figcaption class="creed-sig">— FIRE · 永续之道</figcaption>
+    </figure>
   </div>
 </section>
 
