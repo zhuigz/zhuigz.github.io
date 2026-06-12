@@ -190,7 +190,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: REQ-001 (集大成网站, L, P0) is in `draft` — awaiting PM to start designing via `/pm`.
+**Current status**: REQ-001 (集大成网站 `opus.html`, L, P0) is in `executing` — Phase 1/5 complete (skeleton + scene engine + prologue, code-review passed). Next: Phase 2 starting with T2.1 (must carry review-notes F1–F4 fixes). See `docs/progress.md` for the live plan.
 
 ## Adding New Content
 

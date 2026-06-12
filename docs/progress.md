@@ -4,24 +4,24 @@
 
 ## Now
 
-**REQ-001 集大成网站** — `executing` — PM 已确认三处 scope 取舍并授权开工(2026-06-12)。Phase 1 进行中,从 T1.1 开始逐 task 委派 Dev(opus)。
+**REQ-001 集大成网站** — `executing` — Phase 1 完成且 code-review 通过(无 CRITICAL/HIGH;4 MEDIUM + 3 LOW 落盘 review-notes)。opus.html 当前 39.3KB:骨架 + token + 全局光层 + 场景引擎 + 序章,页面可独立打开。下一步 Phase 2。
 
 ## Next
 
-1. Phase 1:T1.1 → T1.5 逐个委派 Dev,每 task 交付须含自检清单结果
-2. Phase 1 完成后委派 code-reviewer 审查累计 diff(review→fix ≤2 轮)
-3. 后续 Phase 依 Current Plan 顺序推进;全部完成后 architecture-guard + UX Evaluator(模式 B)最终审查 → 硬门槛 → acceptance
+1. Phase 2 / T2.1(章壳模板 + reveal 移植):委派 Dev(opus),**prompt 必须附带 review-notes F1–F4 修复指令**(选择器合并 / ink-tint 对齐 / canvas R4 临时缓解 / 贴层色值变量化)
+2. T2.2 底色 → T2.3 来路 → T2.4 此身,每 task 附技术快审注意事项
+3. Phase 2 完成 → code-reviewer 审查(出口:场景演变 ≥3 处可见)
 
 ## Current Plan
 
 依据:`docs/requirements/REQ-001-unified-site/tech-design.md`(rev.1)。每 task 委派时附带方案中对应的"注意事项"。
 
-### Phase 1:骨架 + 设计系统 + 场景引擎 + 序章(出口:页面可独立打开,完整光层 + 序章可读)
-- [ ] T1.1 文件骨架与 `<head>`(字体 link、CSS 分区注释骨架 [00]–[11])
-- [ ] T1.2 移植 `:root` token + 新增 `--scene-*` 动态层
-- [ ] T1.3 全局贴层移植(preloader / grain / scroll-progress / orb / lightCanvas / cursor-glow)
-- [ ] T1.4 场景引擎 IIFE(单 observer 中带判定 + 150ms 去抖;`.chapter` min-height 100svh/vh 兜底;11 组章色板)
-- [ ] T1.5 序章 `#ch0`(破暗开场,重新演绎不复制 index hero DOM)
+### Phase 1:骨架 + 设计系统 + 场景引擎 + 序章 ✅(code-review 通过 2026-06-12,findings 见 docs/review-notes/REQ-001-phase1.md)
+- [x] T1.1 文件骨架与 `<head>`(字体 link、CSS 分区注释骨架 [00]–[11])
+- [x] T1.2 移植 `:root` token + 新增 `--scene-*` 动态层
+- [x] T1.3 全局贴层移植(preloader / grain / scroll-progress / orb / lightCanvas / cursor-glow)
+- [x] T1.4 场景引擎 IIFE(单 observer 中带判定 + 150ms 去抖;`.chapter` min-height 100svh/vh 兜底;11 组章色板)
+- [x] T1.5 序章 `#ch0`(破暗开场,重新演绎不复制 index hero DOM)
 
 ### Phase 2:前段叙事 一·底色 / 二·来路 / 三·此身(出口:场景演变 ≥3 处可见)
 - [ ] T2.1 章壳模板 + reveal/count-up 移植
@@ -47,22 +47,24 @@
 
 ## Latest Handoff
 
-**日期**:2026-06-12
+**日期**:2026-06-12(第二次 handoff,Phase 1 边界收尾)
 
 **1. 本次完成**
-- REQ-001 designing → planning;Architect(opus)交付 `tech-design.md`(场景引擎 / 10 章预算表 / 5 Phase 19 Task / 8 风险)
-- UX Evaluator 模式 A 设计审查:8 条 findings(1 blocker)→ Architect rev.1 修订消解 UX-001~005(blocker:移动端导航锁定为顶部固定章名条)
-- 技术快审:以方案内逐 task 注意事项覆盖(协议允许的简化);Conductor 对照 architecture.md 自审通过
-- 执行计划已写入上方 Current Plan
+- PM 确认三处 scope 取舍 + 授权 executing(阻塞原因已清空)
+- Phase 1 全部 5 task 完成并逐 task 提交(commit 4c909db…5df386a):opus.html 39.3KB,含骨架/token+scene 层/全局光层四 IIFE/场景引擎(10 组章色板,色相弧 222→…→46)/序章 #ch0
+- Phase 1 code-review 完成:无 CRITICAL/HIGH,硬门槛通过;4 MEDIUM + 3 LOW 落盘 `docs/review-notes/REQ-001-phase1.md`
 
 **2. 当前状态**
-- REQ-001 `planning`,阻塞原因列已填写(等 PM 两项决策);Current Plan 19 task 全部未勾选
-- UX minor 项 UX-006~008 未吸收进方案,留待执行期(见 workplace/ux-design-review.md)
+- REQ-001 `executing`,Phase 1 ✅ / Phase 2–5 未开始;Current Plan 勾选状态与本文档一致
+- Phase 1 的 review→fix 循环未消耗(0/2 轮);需求级返工 0/2 轮
+- 已知异常:执行期 Dev task 边界泄漏(T1.2/T1.3 多写),审查确认无实质遗留(唯一遗留为 F1 重复定义)
 
 **3. 下一步**
-- 等 PM:① 确认三处 scope 取舍(精华提取非全文 / 单 canvas 复用非每章独立 / 变量切换场景非多 fixed 层)② 授权 executing。两项均过 → 清空阻塞原因,推进 executing,委派 Dev(opus)做 T1.1
+- 委派 Dev(opus)做 Phase 2 / T2.1(章壳模板 + reveal/count-up 移植),prompt 必须附带:① review-notes F1–F4 修复指令 ② tech-design T2.1 注意事项(revealObserver 必须 unobserve / count-up data-num 属性约定)
+- 后续 T2.2/T2.3/T2.4 → Phase 2 code-review
 
 **4. 风险与注意事项**
-- 返工轮次余额:Phase 级 review→fix 各 2 轮;需求级返工 2 轮,均未消耗
-- 体量(R1)是头号执行风险,Phase 5 有 `wc -c` 硬审计;六/七章三源去重按 D1–D8 清单勾验
-- 本 session context 消耗已偏高,若 PM 授权后继续执行,注意 80% 收尾线
+- F3(canvas R4)不修复则 Phase 2 加入第二章后粒子滚过首屏永久消失——T2.1 必须先做临时缓解
+- 后续 Dev 委派要在 prompt 中强调"严格按 task 边界,不提前实现后续 task"(本次泄漏教训)
+- 体量基线:Phase 1 后 39.3KB,预算余量充足;六/七章(D1–D8 去重清单)仍是后续重点
+- UX minor 项 UX-006~008 留待执行期(workplace/ux-design-review.md)
