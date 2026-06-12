@@ -362,6 +362,194 @@ body[data-chapter="9"] {
 /* ===== [07] SHARED COMPONENTS ===== */
 /* .info-card / .metric-cell / .practice-row / .tilt / .manifesto-row 等跨章复用组件。 */
 
+/* —— .tilt 3D 卡片倾斜 + 光斑追踪（逐字移植 index 第 474–485 行）——
+   tilt IIFE（[JS] 末段）在 hover:none 直接 return，移动端不生效是预期（T2.4 注意事项）；
+   --mx/--my 由 IIFE 写入，光斑 ::after 仅 opacity 过渡，reduced-motion 下无信息依赖。 */
+.tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s;
+  will-change: transform;
+}
+.tilt::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(360px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--gold) 13%, transparent), transparent 50%);
+  pointer-events: none; opacity: 0; transition: opacity 0.35s;
+}
+.tilt:hover::after { opacity: 1; }
+
+/* —— 信息卡 .info-grid / .info-card（逐字移植 index 第 550–591 行；硬编码 rgba → 调色板派生）——
+   三·此身用于 ENFJ-A / 华农公管 / 团支书等身份事实卡（T2.4 ① 身份卡）。 */
+.info-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+.info-card {
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 18px; padding: 28px; overflow: hidden;
+  position: relative;
+}
+.info-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.info-card:hover { background: var(--bg-card-hi); border-color: color-mix(in srgb, var(--gold) 16%, transparent); }
+.info-card:hover::before { opacity: 1; }
+.info-card .icon {
+  font-size: 22px; width: 50px; height: 50px;
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--gold) 7%, transparent); border: 1px solid color-mix(in srgb, var(--gold) 12%, transparent);
+  border-radius: 14px; margin-bottom: 18px; transition: all 0.4s;
+}
+.info-card:hover .icon { background: color-mix(in srgb, var(--gold) 14%, transparent); border-color: color-mix(in srgb, var(--gold) 22%, transparent); transform: translateZ(10px); }
+.info-card .label { font-family: var(--sans-en); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+.info-card .value { font-size: 15.5px; font-weight: 500; line-height: 1.75; }
+.info-card .value small { font-size: 13px; color: var(--ink-soft); font-weight: 300; }
+.mbti-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-sage) 12%, transparent), color-mix(in srgb, var(--accent-teal) 12%, transparent));
+  border: 1px solid color-mix(in srgb, var(--accent-sage) 22%, transparent);
+  border-radius: 8px; padding: 4px 12px;
+  font-family: var(--sans-en); font-weight: 700; font-size: 14px;
+  color: var(--accent-sage);
+}
+.kw-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.kw-chips span {
+  font-size: 12.5px; padding: 4px 13px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--ink-soft);
+  transition: all 0.3s;
+}
+.info-card:hover .kw-chips span { border-color: var(--line-strong); color: var(--gold); }
+
+/* —— 九宫数据墙 .metrics-grid / .metric-cell（逐字移植 index 第 594–638 行；硬编码 rgba → 调色板派生）——
+   count-up 由 revealObserver 触发（[JS] animateCount 读 data-num/data-suffix → .unit 后缀）。
+   9 个 data-num 与 index 数据墙逐项一致（可溯源硬要求，T2.4 ②）。 */
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.001));
+}
+.metric-cell {
+  position: relative;
+  padding: 44px 36px 38px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.45s ease;
+  overflow: hidden;
+}
+.metric-cell:nth-child(3n) { border-right: 0; }
+.metric-cell:nth-child(n+7) { border-bottom: 0; }
+.metric-cell::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(420px circle at 50% 110%, color-mix(in srgb, var(--gold) 10%, transparent), transparent 60%);
+  opacity: 0; transition: opacity 0.5s;
+}
+.metric-cell:hover { background: var(--bg-card-hi); }
+.metric-cell:hover::before { opacity: 1; }
+.metric-cell .m-idx {
+  position: absolute; top: 16px; right: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim);
+}
+.metric-cell .num {
+  font-family: var(--sans-en); font-weight: 800;
+  font-size: clamp(44px, 6vw, 72px); line-height: 1;
+  background: linear-gradient(160deg, #fff 0%, var(--gold-light) 35%, var(--gold) 60%, var(--gold-deep) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  letter-spacing: -2px;
+  position: relative; z-index: 1;
+}
+.metric-cell .num .unit { font-size: 0.46em; margin-left: 3px; font-weight: 600; -webkit-text-fill-color: var(--gold); }
+.metric-cell .m-label {
+  margin-top: 14px;
+  font-family: var(--serif-cn); font-size: 16px; font-weight: 700; color: var(--ink);
+  position: relative; z-index: 1;
+}
+.metric-cell .m-sub {
+  margin-top: 4px; font-size: 12.5px; color: var(--ink-soft); font-weight: 300;
+  letter-spacing: 0.5px;
+  position: relative; z-index: 1;
+}
+
+/* —— 实践行 .practice-list / .practice-row（逐字移植 index 第 641–706 行；硬编码 rgba → 调色板派生）——
+   data-ghost 仅悬停浮现的巨型描边水印（装饰，不承载关键信息——验收第 7 条精神，T2.4）。
+   7 件实践行（T2.4 ③）。 */
+.practice-list { border-top: 1px solid var(--line); }
+.practice-row {
+  position: relative;
+  display: grid; grid-template-columns: 110px 1fr;
+  gap: 28px;
+  padding: 48px 8px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.45s ease, padding 0.45s ease;
+  overflow: hidden;
+}
+.practice-row::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: linear-gradient(180deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.45s;
+}
+.practice-row::after {
+  content: attr(data-ghost); position: absolute; right: -10px; bottom: -34px;
+  font-family: var(--sans-en); font-weight: 900; font-size: 150px; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--gold) 10%, transparent);
+  pointer-events: none; opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.practice-row:hover { background: rgba(255,255,255,0.018); padding-left: 22px; }
+.practice-row:hover::before { opacity: 1; }
+.practice-row:hover::after { opacity: 1; transform: translateY(0); }
+.practice-row .p-idx {
+  font-family: var(--sans-en); font-weight: 200;
+  font-size: clamp(40px, 5vw, 60px); line-height: 1;
+  color: color-mix(in srgb, var(--gold) 22%, transparent); transition: color 0.45s;
+  padding-top: 4px;
+}
+.practice-row:hover .p-idx { color: var(--gold); }
+.p-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.p-head h3 {
+  font-family: var(--serif-cn); font-size: clamp(20px, 2.6vw, 26px); font-weight: 700;
+  letter-spacing: 1px;
+}
+.p-tag {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
+  color: var(--ink-dim); padding: 5px 12px;
+  border: 1px solid var(--line); border-radius: 999px;
+  white-space: nowrap; transition: all 0.4s;
+}
+.practice-row:hover .p-tag { color: var(--gold); border-color: var(--line-strong); }
+.p-body p { font-size: 14.5px; color: var(--ink-soft); line-height: 2; max-width: 760px; }
+.p-body p strong { color: var(--ink); font-weight: 600; }
+.p-quote {
+  margin-top: 16px; padding-left: 18px;
+  border-left: 2px solid color-mix(in srgb, var(--gold) 40%, transparent);
+  font-family: var(--serif-cn); font-style: italic;
+  font-size: 15px !important; color: var(--gold) !important;
+  letter-spacing: 1px;
+}
+.gold-num {
+  font-family: var(--sans-en); font-weight: 800; font-size: 17px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin: 0 2px;
+}
+.fire-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: color-mix(in srgb, var(--accent-sage) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent-sage) 22%, transparent);
+  border-radius: 6px; padding: 2px 10px;
+  color: var(--accent-sage); font-size: 11px; font-family: var(--sans-en); font-weight: 700;
+  letter-spacing: 1px; margin-left: 4px;
+}
+/* 成长系统 chips（实践行第 7 件内嵌，逐字移植 index 第 753–758 行）。 */
+.sys-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; max-width: 760px; }
+.sys-chips span {
+  font-size: 13px; padding: 8px 18px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg-card);
+  color: var(--ink-soft); letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.practice-row:hover .sys-chips span { border-color: var(--line-strong); color: var(--gold); }
+
 /* ===== [08] CHAPTERS ===== */
 /* 各章节专属样式（#ch0 序章 … #ch9 终章），按章号顺序排列。 */
 
@@ -769,11 +957,57 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   100% { transform: translateY(100vh) scale(0.6); opacity: 0; }
 }
 
+/* —— #ch3 三·此身 · This Self（身份卡 + 9 宫数据墙 + 7 实践行）——
+   源 index about / metrics / practice 三区精华提取（T2.4）：
+   info-card/metric-cell/practice-row/tilt 等组件类在 [07] 已跨章移植，本段只做章内编排。
+   色温正午金（body[data-chapter="3"]：--light-hue:48，[03] 已预定义，挂 data-chapter="3" 即生效）。
+   data-ghost 悬停水印为装饰，不承载关键信息（验收第 7 条精神）。 */
+.ch3 { padding: 140px 0 130px; }
+
+/* 章内三区块间距 + 小节副标题（数据墙/实践行的英文眉题，复用 .section-label 气质但更轻量）。 */
+.ch3-block { margin-top: 84px; }
+.ch3-sub {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ch3-sub::before { content: ''; width: 24px; height: 1px; background: var(--gold); opacity: 0.6; }
+/* 章引子一句话（取自 index about/metrics section-sub，压缩重写）。 */
+.ch3-lead {
+  font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
+  color: var(--ink-soft); max-width: 720px; margin: -28px 0 4px;
+}
+.ch3-lead em { font-style: normal; color: var(--gold); }
+/* 实践行尾的成长宣言（移植 index .growth-banner 精华，作本章收束）。 */
+.ch3-credo {
+  margin-top: 56px; padding: 40px 36px; text-align: center;
+  border-radius: 20px; border: 1px solid var(--line-strong);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--gold) 8%, transparent), transparent);
+}
+.ch3-credo .quote {
+  font-family: var(--serif-cn); font-size: clamp(18px, 2.6vw, 23px);
+  font-weight: 700; line-height: 1.9; color: var(--ink);
+}
+.ch3-credo .quote em { font-style: normal; color: var(--gold); }
+.ch3-credo .signature {
+  margin-top: 18px; font-family: var(--mono); font-size: 11px;
+  letter-spacing: 2px; color: var(--ink-dim);
+}
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
 /* ===== [10] RESPONSIVE ===== */
 /* @media 1024px / 880px / 768px 断点。 */
+
+/* —— 1024px：#ch3 数据墙 3 列 → 2 列（对照 index 第 1129–1133 行的边框补偿规则）。 —— */
+@media (max-width: 1024px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .metric-cell:nth-child(3n) { border-right: 1px solid var(--line); }
+  .metric-cell:nth-child(2n) { border-right: 0; }
+  .metric-cell:nth-child(n+7) { border-bottom: 1px solid var(--line); }
+  .metric-cell:nth-child(n+8) { border-bottom: 0; }
+}
 
 /* —— 880px：#ch1 三大理想卡纵向堆叠（3 列 → 1 列），呼应叙事弧后续阶梯/台阶的堆叠约定。 —— */
 @media (max-width: 880px) {
@@ -785,6 +1019,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch2 { padding: 110px 0 100px; }
   .ch2-timeline { margin-top: 0; }
   .tl-act + .tl-act { margin-top: 14px; }
+
+  /* #ch3 实践行（T2.4）：双列网格 → 单列堆叠，序号缩小、悬停水印缩小（对照 index 第 1137–1140 行）。 */
+  .ch3 { padding: 110px 0 100px; }
+  .ch3-block { margin-top: 64px; }
+  .practice-row { grid-template-columns: 1fr; gap: 10px; padding: 38px 4px; }
+  .practice-row:hover { padding-left: 14px; }
+  .practice-row .p-idx { font-size: 32px; }
+  .practice-row::after { font-size: 100px; bottom: -22px; }
 }
 
 /* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
@@ -807,6 +1049,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .tl-act { --act-pad: 44px; }
   .tl-node { --node-pad-x: 16px; padding-top: 14px; padding-bottom: 14px; }
   .tl-credo { margin-left: 44px; padding: 22px 20px; }
+
+  /* —— #ch3 收紧（T2.4）：身份卡单列、数据墙单列（边框逐格补偿，对照 index 第 1168–1171 行）。 —— */
+  .ch3 { padding: 90px 0 84px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .metric-cell { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; padding: 34px 26px 30px; }
+  .metric-cell:last-child { border-bottom: 0 !important; }
+  .ch3-credo { padding: 32px 22px; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -857,6 +1107,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      该光点是装饰性母题，非信息载体——停后光轴静线 + 四幕节点 + ★金句仍完整可读，信息不丢。
      节点入场仅用 .reveal/.reveal-stagger（上方已置可见态、transition 归零），tl-node hover 是增强非依赖，无需覆盖。 */
   .ch2-timeline::after { animation: none !important; }
+
+  /* —— [08] 三·此身 #ch3 降级（T2.4 / 自检 4）：本章未新增任何 keyframe，无逐帧动画需停。
+     入场依赖 .reveal/.reveal-stagger（上方已置可见态、transition 归零）；
+     count-up 由 revealObserver 触发、直接落到 data-num 目标值，不依赖 transition；
+     info-card/metric-cell/practice-row 的 ::before/::after 与 .tilt 光斑均为 hover 增强（非信息载体），
+     data-ghost 水印是装饰水印不承载关键信息（验收第 7 条精神）——故无信息只在动画末态可见，无需额外覆盖。 */
 }
 </style>
 </head>
@@ -1120,6 +1376,220 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- 三 · 此身 —— 正午金 · This Self（身份卡 + 9 宫数据墙 + 7 实践行）。
+     源 index about/metrics/practice 三区精华提取（T2.4）：组件类（info-card/metric-cell/practice-row/tilt）
+     在 [07] 已跨章移植，此处只做章内编排。
+     data-chapter="3" 接入场景引擎（[03] 色温正午金 --light-hue:48 已预定义，挂 data-chapter="3" 即生效）。
+     可溯源硬要求：9 宫 data-num/data-suffix 与 index 数据墙逐项一致（100W+/5000+/820H+/500+/10+/100天+/20+/7条+/30次+）。
+     count-up 由 [JS] revealObserver→animateCount 触发；.tilt 倾斜由 [JS] tilt IIFE 驱动（hover:none 直接 return）。 -->
+<section class="chapter ch3" id="ch3" data-chapter="3" data-temp="noon">
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label"><span class="idx">03</span> Chapter III · This Self</p>
+      <h2 class="section-title">此<span class="hl">身</span></h2>
+    </div>
+
+    <!-- ① 身份卡：关于这个人的几条事实（ENFJ-A / 华农公管 / 团支书 …），.tilt 3D 倾斜 -->
+    <p class="ch3-lead reveal">他从哪里来、在哪里、靠什么活着、相信什么——<em>几条最朴素的事实</em>。</p>
+    <div class="info-grid reveal-stagger">
+      <div class="info-card tilt">
+        <span class="icon">🧬</span>
+        <div class="label">MBTI</div>
+        <div class="value"><span class="mbti-pill">ENFJ-A</span> 主人公</div>
+      </div>
+      <div class="info-card tilt">
+        <span class="icon">🏠</span>
+        <div class="label">籍贯 · 城市</div>
+        <div class="value">山西朔州 <small>/ 求学于湖北武汉</small></div>
+      </div>
+      <div class="info-card tilt">
+        <span class="icon">🎓</span>
+        <div class="label">学校 · 专业</div>
+        <div class="value">华中农业大学 · 公共管理学院 <small>/ 公共管理类在读</small></div>
+      </div>
+      <div class="info-card tilt">
+        <span class="icon">⚡</span>
+        <div class="label">校园身份</div>
+        <div class="value">团支书 / 入党积极分子 / 理研会会员 / 鄂浪负责人</div>
+      </div>
+      <div class="info-card tilt">
+        <span class="icon">🎯</span>
+        <div class="label">兴趣</div>
+        <div class="value">AI · 个人IP · FIRE · 公共管理 · 摄影 · 阅读 · 电影 · 猫</div>
+      </div>
+      <div class="info-card tilt">
+        <span class="icon">✦</span>
+        <div class="label">长期关键词</div>
+        <div class="value kw-chips">
+          <span>AI 原生</span><span>个人IP</span><span>终身成长</span><span>财富自由</span><span>主体性</span><span>良知</span><span>理想主义</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 9 宫数据墙：count-up（data-num/data-suffix 与 index 逐项一致，可溯源） -->
+    <div class="ch3-block reveal">
+      <p class="ch3-sub">Key Data · 关键数据</p>
+      <p class="ch3-lead"><strong>以下不是包装，是我已经真实做过的事。</strong>每个数字背后都有一段具体的时间和故事。</p>
+    </div>
+    <div class="metrics-grid reveal-stagger">
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 01</span>
+        <div class="num" data-num="100" data-suffix="W+">0<span class="unit">W+</span></div>
+        <div class="m-label">公众号矩阵累计阅读量</div>
+        <div class="m-sub">文字带来的覆盖与影响力</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 02</span>
+        <div class="num" data-num="5000" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">AI 内容生产第一桶金</div>
+        <div class="m-sub">公众号与 AI 内容变现</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 03</span>
+        <div class="num" data-num="820" data-suffix="H+">0<span class="unit">H+</span></div>
+        <div class="m-label">成长认知类学习时长</div>
+        <div class="m-sub">课程 · 播客 · 直播累计</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 04</span>
+        <div class="num" data-num="500" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">AI 视觉作品</div>
+        <div class="m-sub">GPT-Image / Image-2 生成</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 05</span>
+        <div class="num" data-num="10" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">独立搭建的网站</div>
+        <div class="m-sub">Vibe Coding · 想法到上线</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 06</span>
+        <div class="num" data-num="100" data-suffix="天+">0<span class="unit">天+</span></div>
+        <div class="m-label">连续复盘与自我记录</div>
+        <div class="m-sub">每天一次的自我对话</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 07</span>
+        <div class="num" data-num="20" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="m-label">高质量非虚构书籍</div>
+        <div class="m-sub">深读而非翻完</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 08</span>
+        <div class="num" data-num="7" data-suffix="条+">0<span class="unit">条+</span></div>
+        <div class="m-label">个人IP口播视频</div>
+        <div class="m-sub">已发布 · 持续更新中</div>
+      </div>
+      <div class="metric-cell">
+        <span class="m-idx">DATA · 09</span>
+        <div class="num" data-num="30" data-suffix="次+">0<span class="unit">次+</span></div>
+        <div class="m-label">本学期健身训练</div>
+        <div class="m-sub">身体也是长期资产</div>
+      </div>
+    </div>
+
+    <!-- ③ 7 件实践行：data-ghost 仅装饰水印，关键信息全在正文（验收第 7 条精神） -->
+    <div class="ch3-block reveal">
+      <p class="ch3-sub">What I'm Doing · 我做过什么</p>
+      <p class="ch3-lead">七件正在进行的事——不是简历上的一行字，而是<em>我每天真实在做的事情</em>。</p>
+    </div>
+    <div class="practice-list reveal-stagger">
+      <div class="practice-row" data-ghost="AI">
+        <div class="p-idx">01</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>AI 深度实践</h3>
+            <span class="p-tag">AI · NATIVE</span>
+          </div>
+          <p>深度使用 <strong>GPT、Claude、Gemini、Claude Code、Codex、Image-2</strong> 等工具，长期探索 AI 在学习、写作、复盘、代码、视觉与项目推进中的实际应用。</p>
+          <p class="p-quote">我不把 AI 当玩具——它是外接大脑、生产力杠杆和时代入口。</p>
+        </div>
+      </div>
+      <div class="practice-row" data-ghost="100W">
+        <div class="p-idx">02</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>公众号矩阵</h3>
+            <span class="p-tag">WRITE · MONETIZE</span>
+          </div>
+          <p>用 AI 辅助内容生产，运营公众号矩阵，累计阅读量超过 <span class="gold-num">100W</span>，累计变现 <span class="gold-num">5000+</span>。这是我人生中第一段真实的线上变现经历。</p>
+          <p class="p-quote">它让我第一次确认：AI 不是消费，而是投资。</p>
+        </div>
+      </div>
+      <div class="practice-row" data-ghost="IP">
+        <div class="p-idx">03</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>个人IP起步</h3>
+            <span class="p-tag">IP · IDOP</span>
+          </div>
+          <p>核心方向是<strong>成长、AI、认知、长期主义和年轻人的人生可能性</strong>。已完成从 0 到 1：稳定拍口播视频，逐步训练选题、口播、拍摄、剪辑、封面、分发与复盘能力。</p>
+          <p class="p-quote">输入不是目的，输出不是终点，产品化才是长期价值沉淀。</p>
+        </div>
+      </div>
+      <div class="practice-row" data-ghost="SHIP">
+        <div class="p-idx">04</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>Vibe Coding 建站</h3>
+            <span class="p-tag">CODE · AGENT</span>
+          </div>
+          <p>熟练使用 <strong>Claude Code、Codex</strong> 等 Coding Agent，把「一个想法 → 一个网站」的链路压缩到很短时间。已独立做出 <span class="gold-num">10+</span> 个网站，覆盖说明书、人生系统、FIRE 计算器、视觉展示等多个场景。</p>
+          <p class="p-quote">未来的年轻人都应该拥有自己的数字资产，而不只是把内容发在平台上。</p>
+        </div>
+      </div>
+      <div class="practice-row" data-ghost="500+">
+        <div class="p-idx">05</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>视觉创作</h3>
+            <span class="p-tag">VISUAL · IMG</span>
+          </div>
+          <p>熟练使用 <strong>GPT-Image / Image-2</strong> 进行视觉创作，已生成 <span class="gold-num">500+</span> 张图像作品。审美方向：电影感、光影、秩序、远方感、理想主义、AI 时代感、东方气质。</p>
+          <p class="p-quote">视觉不是装饰，而是表达能力的一部分。</p>
+        </div>
+      </div>
+      <div class="practice-row" data-ghost="FIRE">
+        <div class="p-idx">06</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>FIRE 长期计划</h3>
+            <span class="p-tag">FIRE · 7 YEARS</span>
+          </div>
+          <p>正在执行<strong>七年 FIRE 计划</strong>，核心路径：<strong>开源 + 节流 + 定投</strong> <span class="fire-badge">FIRE 践行中</span></p>
+          <p class="p-quote">追求财富自由不是为了躺平，而是为了更高的人生选择权——把时间投入真正重要的事。</p>
+        </div>
+      </div>
+      <div class="practice-row" data-ghost="OS">
+        <div class="p-idx">07</div>
+        <div class="p-body">
+          <div class="p-head">
+            <h3>成长系统</h3>
+            <span class="p-tag">SYSTEM · OS</span>
+          </div>
+          <p>过去一年，我持续搭建自己的「人生操作系统」：</p>
+          <div class="sys-chips">
+            <span>成长进步体系</span><span>七年 FIRE 计划</span><span>三级人生目标</span><span>双轨制战略</span><span>S 级人生策略</span><span>AI 分层使用战略</span><span>周复盘 · 人生月报</span>
+          </div>
+          <p class="p-quote">我不只是想变好，而是在系统化地让自己变好。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 本章收束：成长宣言（移植 index .growth-banner 精华） -->
+    <figure class="ch3-credo reveal">
+      <div class="quote">
+        一个终身成长者——<br>
+        我知道自己现在还不够好，<br>
+        但只要我在<em>不断变好</em>，<br>
+        那就总有一天会变得<em>足够好</em>。
+      </div>
+      <div class="signature">— THE LIGHT CHASER · 自我宣言</div>
+    </figure>
   </div>
 </section>
 
@@ -1440,6 +1910,30 @@ function animateCount(el) {
   resize();
   updateOpacity();
   start();
+})();
+
+/* —— tilt：3D 卡片倾斜 + 光斑追踪（逐字移植 index 第 1836–1854 行，T2.4）——
+   依赖：.tilt 元素（三·此身 info-card 带 .tilt）+ [07] 的 --mx/--my CSS 变量。
+   hover:none（移动端/触屏）直接 return，不绑事件——移动端不生效是预期（T2.4 注意事项）；
+   仅写 transform 与 --mx/--my（transform/opacity 级开销），无逐帧 scroll 监听。 */
+(function tilt() {
+  if (matchMedia('(hover: none)').matches) return;
+  const tilts = document.querySelectorAll('.tilt');
+  tilts.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+      const rx = (0.5 - py) * 8;
+      const ry = (px - 0.5) * 10;
+      card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      card.style.setProperty('--mx', (px * 100) + '%');
+      card.style.setProperty('--my', (py * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
 })();
 </script>
 </body>
