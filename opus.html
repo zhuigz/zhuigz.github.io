@@ -10,10 +10,69 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ===== [00] TOKENS ===== */
-/* :root 调色板（移植 index）+ --scene-* 动态场景层。详见 T1.2。 */
+/* :root 调色板（逐字移植 index，变量名一字不改 · architecture 硬约束 #3）
+   + --scene-* 动态场景层（场景引擎按章切换的色温变量）。详见 T1.2 / KD-1。 */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 暖金主色系 */
+  --gold: #E8B87A;
+  --gold-light: #F4D9A8;
+  --gold-deep: #C99A56;
+  --gold-pale: rgba(232,184,122,0.06);
+  --gold-glow: rgba(232,184,122,0.25);
+
+  /* 余烬/赤色辅助（凤凰涅槃的火） */
+  --ember: #C36B5E;
+  --ember-soft: rgba(195,107,94,0.18);
+
+  /* 紫蓝绿点缀（克制使用） */
+  --accent-violet: #8E7AB8;
+  --accent-teal: #7FA8AD;
+  --accent-sage: #88A878;
+
+  /* 底色与文字 */
+  --bg-deep: #07070C;
+  --bg-elev: #11111A;
+  --bg-card: rgba(255,255,255,0.025);
+  --bg-card-hi: rgba(255,255,255,0.055);
+  --ink: #F2EFEB;
+  --ink-soft: rgba(242,239,235,0.62);
+  --ink-dim: rgba(242,239,235,0.34);
+
+  --line: rgba(255,255,255,0.06);
+  --line-strong: rgba(232,184,122,0.18);
+
+  --serif-cn: 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --serif-en: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --sans-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --sans-en: 'Outfit', 'Noto Sans SC', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* --- 场景动态层（叠加在上方静态调色板之上，由场景引擎按章改写）---
+     默认值 = 序章「冷夜微光 deep night」色板，即色温弧起点，
+     与 body[data-chapter="0"] 一致，避免 JS 未跑/首帧闪色。
+     具体着色规则集中在 [03] SCENE ENGINE，此处仅定义初值与过渡时长。 */
+  --scene-bg: radial-gradient(ellipse 120% 90% at 50% -10%, #0B0C16 0%, var(--bg-deep) 60%, #050509 100%);
+  --scene-glow: rgba(126,138,178,0.12);   /* 冷夜微光：一点冷蓝光 */
+  --scene-ink-tint: rgba(214,221,238,0.05); /* 近中性偏冷的墨色微调 */
+  --light-hue: 222;                         /* 深夜冷蓝色相起点 */
+  --scene-tr: 1.2s;                         /* 场景过渡时长；reduced-motion 下归零（[11]，见 R2） */
+}
 
 /* ===== [01] BASE & RESET ===== */
 /* 全局 reset、body 基底、排版基线、链接/选区等。 */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--scene-bg);
+  color: var(--ink);
+  font-family: var(--sans-cn);
+  line-height: 1.8;
+  overflow-x: hidden;
+  /* transition 只加在 body 背景（及未来固定光层），不给 :root 整体加 —— T1.2 注意事项。
+     时长引用 --scene-tr，reduced-motion 下归零仍切换、只是瞬时（R2）。 */
+  transition: background var(--scene-tr) ease;
+}
 
 /* ===== [02] GLOBAL LIGHT LAYERS ===== */
 /* preloader / .grain / .scroll-progress / .bg-glow(orb×3) / lightCanvas / .cursor-glow。详见 T1.3。 */
@@ -44,6 +103,11 @@
 
 /* ===== [11] REDUCED-MOTION ===== */
 /* @media (prefers-reduced-motion: reduce)：动画降级 + --scene-* transition 时长归零。 */
+@media (prefers-reduced-motion: reduce) {
+  /* R2 消解措施：把场景过渡时长归零，章号切换仍发生但瞬时（信息不丢、背景不"动"）。
+     这是本 task 在 body 背景上引入的 transition 的配套降级。 */
+  :root { --scene-tr: 0s; }
+}
 </style>
 </head>
 <body data-chapter="0">
