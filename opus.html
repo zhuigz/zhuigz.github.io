@@ -164,7 +164,116 @@ body {
 }
 
 /* ===== [03] SCENE ENGINE ===== */
-/* body[data-chapter="N"] 各章色板（--scene-bg/--light-hue 等）+ 背景与光层的 transition。详见 T1.4。 */
+/* body[data-chapter="N"] 各章色板（--scene-bg/--scene-glow/--scene-ink-tint/--light-hue）
+   + 背景与光层的 transition + .chapter 通用 min-height。详见 T1.4 / KD-1 / KD-2。
+
+   机制：sceneEngine IIFE 单 observer 判定当前章 → 写 body.dataset.chapter；
+   下方 11 组规则把每章色板集中定义；body 背景在 [01] 已对 --scene-bg 做 transition，
+   固定光层（orb/scene-tint）在此对 --scene-glow/--scene-ink-tint 做 transition。
+   所有色值从既有调色板派生（color-mix / 低透明度叠加），不引入调色板外的硬编码新色相。 */
+
+/* —— .chapter 通用骨架（min-height 章高保障，应对短章双命中 UX-002）——
+   svh 在旧 Safari/旧 Android WebView 不支持；CSS 同属性后写覆盖前写：
+   支持 svh 的取 svh、不支持的回落 vh，无需 @supports。
+   用 min-height（非 height）：横屏矮屏内容超一屏时仍可撑高、不裁切（与 T5.3 一致）。 */
+.chapter {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* —— 固定光层随章过渡：orb 的色相来自 --scene-glow，
+   故对 --scene-glow 派生的 background 做 transition；--scene-ink-tint 叠层同理。
+   transition 时长统一引用 --scene-tr（reduced-motion 下 [11] 归零，切换瞬时不"动"，R2）。 */
+.bg-glow .orb { transition: background var(--scene-tr) ease; }
+
+/* 场景墨色微调叠层（--scene-ink-tint）：一层极淡的全屏覆盖，随章微调整体冷暖。
+   固定贴层、不挡交互、不参与合成开销热点（单层 radial，opacity 级）。 */
+.scene-tint {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 140% 100% at 50% 0%, var(--scene-ink-tint), transparent 70%);
+  transition: background var(--scene-tr) ease;
+}
+
+/* —— 11 组章色板（色温弧：序章冷夜 → 暖土黄 → 黎明 → 正午金 → 赤焰
+   → 靛紫深空 → 青银 → 金橙 → 紫金交汇 → 满金）——
+   每组改写 --scene-bg / --scene-glow / --scene-ink-tint / --light-hue 四个动态变量；
+   body 背景与固定光层对其 transition，JS 只切 data-chapter（KD-1）。
+   色值全部从既有调色板派生：--gold/--gold-light/--gold-deep/--ember/
+   --accent-violet/--accent-teal/--accent-sage + --bg-deep，
+   用 color-mix 插值或低透明度叠加，不写调色板外的裸色相。
+   data-chapter="0" 与 :root 默认值一致（[00]），保证 JS 未跑/首帧不闪色。 */
+
+/* 序章 · 追光者 —— 冷夜微光 deep night（色温弧起点，最冷一点光） */
+body[data-chapter="0"] {
+  --scene-bg: radial-gradient(ellipse 120% 90% at 50% -10%, #0B0C16 0%, var(--bg-deep) 60%, #050509 100%);
+  --scene-glow: rgba(126,138,178,0.12);
+  --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 14%, transparent);
+  --light-hue: 222;
+}
+/* 一 · 底色 —— 暖土黄（暖意初生，土黄基底） */
+body[data-chapter="1"] {
+  --scene-bg: radial-gradient(ellipse 120% 90% at 50% -8%, color-mix(in srgb, var(--gold-deep) 24%, var(--bg-deep)) 0%, var(--bg-deep) 62%, #06060B 100%);
+  --scene-glow: color-mix(in srgb, var(--gold-deep) 55%, transparent);
+  --scene-ink-tint: color-mix(in srgb, var(--gold-deep) 12%, transparent);
+  --light-hue: 38;
+}
+/* 二 · 来路 —— 黎明渐暖（地平线初光，暖金上扬） */
+body[data-chapter="2"] {
+  --scene-bg: radial-gradient(ellipse 120% 95% at 50% 4%, color-mix(in srgb, var(--gold) 18%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #07060A 100%);
+  --scene-glow: color-mix(in srgb, var(--gold) 50%, var(--ember) 10%);
+  --scene-ink-tint: color-mix(in srgb, var(--gold) 10%, transparent);
+  --light-hue: 44;
+}
+/* 三 · 此身 —— 正午金（最盛的暖金，光线最强） */
+body[data-chapter="3"] {
+  --scene-bg: radial-gradient(ellipse 110% 90% at 50% -6%, color-mix(in srgb, var(--gold) 26%, var(--bg-deep)) 0%, var(--bg-deep) 60%, #08070C 100%);
+  --scene-glow: color-mix(in srgb, var(--gold) 62%, var(--gold-light) 18%);
+  --scene-ink-tint: color-mix(in srgb, var(--gold-light) 12%, transparent);
+  --light-hue: 48;
+}
+/* 四 · 信念 —— 赤焰（ember 提亮，光效最"热"，凤凰之火） */
+body[data-chapter="4"] {
+  --scene-bg: radial-gradient(ellipse 115% 92% at 50% -4%, color-mix(in srgb, var(--ember) 30%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #0A0608 100%);
+  --scene-glow: color-mix(in srgb, var(--ember) 60%, var(--gold) 20%);
+  --scene-ink-tint: color-mix(in srgb, var(--ember) 16%, transparent);
+  --light-hue: 14;
+}
+/* 五 · 远方 —— 靛紫深空（光效转星空，冷紫深邃） */
+body[data-chapter="5"] {
+  --scene-bg: radial-gradient(ellipse 120% 95% at 50% -10%, color-mix(in srgb, var(--accent-violet) 26%, var(--bg-deep)) 0%, var(--bg-deep) 56%, #050410 100%);
+  --scene-glow: color-mix(in srgb, var(--accent-violet) 55%, transparent);
+  --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 18%, transparent);
+  --light-hue: 264;
+}
+/* 六 · 系统 —— 青银冷静（仪表辉，青银工程感） */
+body[data-chapter="6"] {
+  --scene-bg: radial-gradient(ellipse 120% 92% at 50% -8%, color-mix(in srgb, var(--accent-teal) 22%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #04090C 100%);
+  --scene-glow: color-mix(in srgb, var(--accent-teal) 52%, transparent);
+  --scene-ink-tint: color-mix(in srgb, var(--accent-teal) 14%, transparent);
+  --light-hue: 188;
+}
+/* 七 · 造物 —— 金橙工坊（流光，暖金橙锻造感） */
+body[data-chapter="7"] {
+  --scene-bg: radial-gradient(ellipse 115% 90% at 50% -6%, color-mix(in srgb, var(--gold-deep) 30%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #0A0705 100%);
+  --scene-glow: color-mix(in srgb, var(--gold) 50%, var(--ember) 22%);
+  --scene-ink-tint: color-mix(in srgb, var(--gold-deep) 14%, transparent);
+  --light-hue: 33;
+}
+/* 八 · 同行 —— 紫金交汇（双色光效交汇，呼应"同行"） */
+body[data-chapter="8"] {
+  --scene-bg: radial-gradient(ellipse 120% 95% at 50% -8%, color-mix(in srgb, var(--accent-violet) 20%, var(--bg-deep)) 0%, color-mix(in srgb, var(--gold-deep) 8%, var(--bg-deep)) 55%, #07060E 100%);
+  --scene-glow: color-mix(in srgb, var(--accent-violet) 40%, var(--gold) 28%);
+  --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 12%, transparent);
+  --light-hue: 286;
+}
+/* 终章 · 成为 —— 满金收束（万丈光，最盛满金，色温弧终点） */
+body[data-chapter="9"] {
+  --scene-bg: radial-gradient(ellipse 120% 100% at 50% -4%, color-mix(in srgb, var(--gold) 34%, var(--bg-deep)) 0%, color-mix(in srgb, var(--gold-deep) 14%, var(--bg-deep)) 52%, #0A0805 100%);
+  --scene-glow: color-mix(in srgb, var(--gold-light) 60%, var(--gold) 30%);
+  --scene-ink-tint: color-mix(in srgb, var(--gold-light) 16%, transparent);
+  --light-hue: 46;
+}
 
 /* ===== [04] NAVIGATION ===== */
 /* 桌面 .chapter-rail 圆点列 + 顶部进度条 + 移动端 .chapter-bar 章名条。详见 KD-5。 */
@@ -207,6 +316,10 @@ body {
   .bg-glow .orb { animation: none !important; }
   .light-canvas, .cursor-glow { display: none; }
   /* scroll-progress 无动画，仅 width 过渡；此处放任其极短过渡，不影响可读性。 */
+
+  /* [03] 场景引擎新增的 transition（.bg-glow .orb / .scene-tint 的 background）均引用
+     --scene-tr，已随上方归零 → 章号切换时背景/光层瞬时变色、不"动"，信息不丢（R2）。
+     sceneEngine 的 150ms 去抖逻辑保留（只是过渡瞬时），无新增 keyframe 需在此覆盖。 */
 }
 </style>
 </head>
@@ -224,6 +337,8 @@ body {
 <div class="grain"></div>
 <div class="scroll-progress"></div>
 <div class="cursor-glow" aria-hidden="true"></div>
+<!-- 场景墨色微调叠层（--scene-ink-tint）：随章微调整体冷暖，纯 CSS transition，sceneEngine 只改变量。 -->
+<div class="scene-tint" aria-hidden="true"></div>
 
 <div class="bg-glow">
   <div class="orb orb-1"></div>
@@ -247,6 +362,65 @@ body {
     if (pre) pre.classList.add('done');
     document.body.classList.add('loaded');
   }, delay);
+})();
+
+/* —— sceneEngine：chapter-driven 场景引擎（全页技术核心，KD-1 / KD-2 / T1.4）——
+   职责：单个 IntersectionObserver 监听全部 .chapter，判定"当前章"，
+   只把章号写到 body.dataset.chapter；所有视觉变换由 CSS 对 --scene-* 做 transition 完成。
+   依赖：.chapter 元素（带 data-chapter）+ [03] 的 body[data-chapter="N"] 色板规则。
+
+   判定机制：
+   · rootMargin '-45% 0px -45% 0px' → 只有穿过视口中线（屏幕中带）的 section 命中，避免边界抖动。
+   · 回调里维护"当前所有 isIntersecting 的 .chapter"集合，取 intersectionRatio 最大者为候选章号
+     （同帧多 entry 命中时必须选 ratio 最大者，否则边界抖动）。
+   · 150ms 尾沿去抖（trailing debounce）：候选暂存 + 清上一个 setTimeout，150ms 后若与已写入值
+     不同才真正写 dataset.chapter —— 同帧/短时连续命中只触发一次写入、一次 1.2s transition，
+     杜绝背景在过渡期内连跳两个色温值的闪烁（UX-002 / R3）。
+
+   安全性：当前页面尚无 .chapter（序章 T1.5 才建），observer 监听 0 个目标不抛错；
+   data-chapter 维持 HTML 初值 0，背景仍呈现序章色板（JS 未跑也有背景，KD-1）。
+   reduced-motion 下逻辑不变（去抖保留），仅 CSS transition 时长在 [11] 归零、切换瞬时（R2）。 */
+(function sceneEngine() {
+  const chapters = document.querySelectorAll('.chapter');
+  if (!chapters.length) return; // 零监听目标：安全退出，data-chapter 维持初值 0
+
+  // 记录每个 .chapter 当前的 intersectionRatio（仅 isIntersecting 者计入候选）
+  const ratios = new Map();
+  let debounceId = 0;
+
+  function commit() {
+    debounceId = 0;
+    // 在当前所有 isIntersecting 的章里取 ratio 最大者
+    let bestCh = null, bestRatio = -1;
+    ratios.forEach((ratio, ch) => {
+      if (ratio > bestRatio) { bestRatio = ratio; bestCh = ch; }
+    });
+    if (bestCh == null) return; // 中带内暂无命中章（例如章间空隙），保持上一章
+    if (document.body.dataset.chapter !== bestCh) {
+      document.body.dataset.chapter = bestCh; // O(1) 写入，视觉变换交给 CSS transition
+    }
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const ch = entry.target.dataset.chapter;
+      if (ch == null) return;
+      if (entry.isIntersecting) {
+        ratios.set(ch, entry.intersectionRatio);
+      } else {
+        ratios.delete(ch); // 移出中带 → 退出候选集合
+      }
+    });
+    // 尾沿去抖：清上一个待提交，150ms 后只提交一次（吞掉同帧/边界连续命中）
+    if (debounceId) clearTimeout(debounceId);
+    debounceId = setTimeout(commit, 150);
+  }, {
+    // 只命中穿过视口中线者，避免相邻章在边界反复抖动（KD-2）
+    rootMargin: '-45% 0px -45% 0px',
+    // 多档阈值让 ratio 在中带内有足够分辨率，选最大者更稳
+    threshold: [0, 0.25, 0.5, 0.75, 1]
+  });
+  chapters.forEach((ch) => obs.observe(ch));
 })();
 
 /* —— cursorGlow：光标即是光，跟随鼠标的柔光（追光者签名交互）——
