@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>追光者 · 曹宗昱 | 光的长廊 · 集大成之书</title>
+<meta name="description" content="追光者 · 曹宗昱的集大成长篇：一条从冷夜微光到万丈光的「光的长廊」，以底色、来路、此身、信念、远方、系统、造物、同行、成为十章串起一个人的人生叙事弧。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== [00] TOKENS ===== */
+/* :root 调色板（移植 index）+ --scene-* 动态场景层。详见 T1.2。 */
+
+/* ===== [01] BASE & RESET ===== */
+/* 全局 reset、body 基底、排版基线、链接/选区等。 */
+
+/* ===== [02] GLOBAL LIGHT LAYERS ===== */
+/* preloader / .grain / .scroll-progress / .bg-glow(orb×3) / lightCanvas / .cursor-glow。详见 T1.3。 */
+
+/* ===== [03] SCENE ENGINE ===== */
+/* body[data-chapter="N"] 各章色板（--scene-bg/--light-hue 等）+ 背景与光层的 transition。详见 T1.4。 */
+
+/* ===== [04] NAVIGATION ===== */
+/* 桌面 .chapter-rail 圆点列 + 顶部进度条 + 移动端 .chapter-bar 章名条。详见 KD-5。 */
+
+/* ===== [05] CHAPTER SHELL ===== */
+/* .chapter 通用骨架（min-height、章号眉题 .section-label + .section-title + .divider）。详见 T2.1。 */
+
+/* ===== [06] REVEAL & ANIMATIONS ===== */
+/* .reveal / .reveal-stagger 入场 + 共享 @keyframes 定义。 */
+
+/* ===== [07] SHARED COMPONENTS ===== */
+/* .info-card / .metric-cell / .practice-row / .tilt / .manifesto-row 等跨章复用组件。 */
+
+/* ===== [08] CHAPTERS ===== */
+/* 各章节专属样式（#ch0 序章 … #ch9 终章），按章号顺序排列。 */
+
+/* ===== [09] FOOTER ===== */
+/* 页脚 tagline + 版权行。 */
+
+/* ===== [10] RESPONSIVE ===== */
+/* @media 1024px / 880px / 768px 断点。 */
+
+/* ===== [11] REDUCED-MOTION ===== */
+/* @media (prefers-reduced-motion: reduce)：动画降级 + --scene-* transition 时长归零。 */
+</style>
+</head>
+<body data-chapter="0">
+
+<script>
+/* 各功能拆为独立自启 IIFE 模块（沿用 index 风格，无统一 init()）：
+   preloader / sceneEngine / revealObserver / chapterRail / lightCanvas / countUp / timeline / copyWechat。
+   详见 tech-design KD-6。后续 task 在此填充。 */
+</script>
+</body>
+</html>
