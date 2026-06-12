@@ -1777,6 +1777,148 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   50%      { transform: scale(1.15) translate(6%, 4%); opacity: 0.95; }
 }
 
+/* —— #ch9 终章·成为 · Become（★「我想成为…」全诗逐字 + 微信联系卡 + 满金收束）——
+   双源精华(T4.3)：index #become(全诗逐字) + index #connect(微信卡 czy18534901307 + 复制按钮)。
+   满金「万丈光」气质由场景引擎 body[data-chapter="9"]（--scene-glow gold-light 60%+gold 30% / --light-hue:46，[03] 已预定义）
+   着色固定光层承载，本章额外叠一层纯 CSS 径向「光收束」动画（sealConverge：transform/opacity），
+   收束整条叙事弧——[11] 降级、收束动画停后静止仍是满金底（T4.3 注意事项原话）。
+   诗逐字取自 index 第 1741–1749 行 .become-poem；联系卡逐字取自 index 第 1767–1772 行；copyWechat IIFE 移植 index 第 1915 行。 */
+.ch9 { padding: 140px 0 130px; text-align: center; position: relative; }
+
+/* 满金径向光收束：覆盖式纯装饰层，光环由外向内收束（transform/opacity，仅作用于本章背景气质，不挡正文）。
+   收束层不承载信息（终章诗/联系卡静态可读），[11] 停后保留静态满金径向底，不熄灭（T4.3 注意事项）。 */
+.ch9-seal {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.ch9-seal::before {
+  content: ''; position: absolute;
+  width: min(120vw, 1100px); aspect-ratio: 1 / 1; border-radius: 50%;
+  background: radial-gradient(circle,
+    transparent 38%,
+    color-mix(in srgb, var(--gold-light) 26%, transparent) 50%,
+    color-mix(in srgb, var(--gold) 18%, transparent) 64%,
+    transparent 76%);
+  animation: sealConverge 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.ch9-seal::after {
+  content: ''; position: absolute;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 28px 10px color-mix(in srgb, var(--gold-light) 60%, transparent);
+  opacity: 0.85;
+}
+
+/* 终章内容容器置于收束层之上 */
+.ch9 .ch-inner { position: relative; z-index: 2; }
+
+/* —— ★全诗逐字（index #become .become-poem，逐行取全）——
+   .b-line/.lead/.final/.b-gap 手感移植 index 第 1010–1028 行；em 满金渐变高亮。 */
+.ch9-poem { max-width: 760px; margin: 0 auto; }
+.ch9-poem .b-line {
+  font-family: var(--serif-cn);
+  font-size: clamp(17px, 2.6vw, 24px);
+  line-height: 2.3; letter-spacing: 2px;
+  color: var(--ink-soft);
+}
+.ch9-poem .b-line em {
+  font-style: normal; font-weight: 700;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ch9-poem .b-line.lead {
+  font-size: clamp(22px, 3.6vw, 34px); font-weight: 700; color: var(--ink);
+  margin-bottom: 28px;
+}
+.ch9-poem .b-gap { height: 26px; }
+.ch9-poem .b-line.final {
+  margin-top: 8px; font-weight: 700; color: var(--ink);
+}
+
+/* 诗后印鉴（与 index .become-seal 同手感）——满金收束的一道封线 */
+.ch9-seal-mark {
+  margin-top: 56px;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.ch9-seal-mark .seal-line { width: 1px; height: 44px; background: linear-gradient(180deg, transparent, var(--gold)); }
+.ch9-seal-mark .seal-text {
+  font-family: var(--serif-en); font-style: italic; font-size: 14px;
+  letter-spacing: 5px; color: var(--ink-dim);
+}
+
+/* —— 微信联系卡（index #connect 精华：czy18534901307 + 复制按钮）——
+   .connect-card/.copy-btn 手感移植 index 第 1041–1089 行（含 connectSheen 微光横扫）。 */
+.ch9-connect { margin-top: 72px; display: flex; justify-content: center; }
+.ch9-connect .connect-card {
+  position: relative;
+  background:
+    radial-gradient(600px circle at 50% 0%, rgba(232,184,122,0.12), transparent 60%),
+    rgba(255,255,255,0.02);
+  border: 1px solid var(--line-strong);
+  border-radius: 22px; padding: 48px 56px;
+  text-align: center; min-width: 320px; max-width: 480px;
+  overflow: hidden;
+}
+.ch9-connect .connect-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(232,184,122,0.05) 50%, transparent 60%);
+  background-size: 200% 200%; opacity: 0;
+  transition: opacity 0.6s; pointer-events: none;
+  animation: connectSheen 6s linear infinite;
+}
+.ch9-connect .connect-card:hover::before { opacity: 1; }
+@keyframes connectSheen { from { background-position: 0% 0%; } to { background-position: -200% -200%; } }
+.ch9-connect .icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border-radius: 18px;
+  background: rgba(232,184,122,0.1); border: 1px solid rgba(232,184,122,0.22);
+  font-size: 28px; margin-bottom: 22px;
+}
+.ch9-connect .label {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--ink-dim); margin-bottom: 12px;
+}
+.ch9-connect .value {
+  font-family: var(--sans-en); font-size: 22px; font-weight: 700;
+  letter-spacing: 1px; user-select: all;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ch9-connect .hint {
+  font-family: var(--serif-cn); font-size: 13px; color: var(--ink-soft); margin-top: 14px;
+  letter-spacing: 1px;
+}
+.ch9-connect .copy-btn {
+  margin-top: 22px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 28px; border-radius: 999px;
+  background: transparent; border: 1px solid rgba(232,184,122,0.35);
+  color: var(--gold); font-family: var(--sans-cn); font-size: 13px; letter-spacing: 2px;
+  cursor: pointer; transition: all 0.35s ease;
+  position: relative; z-index: 1;
+}
+.ch9-connect .copy-btn:hover { background: rgba(232,184,122,0.12); box-shadow: 0 0 24px rgba(232,184,122,0.2); transform: translateY(-1px); }
+
+/* 终章呼应序章座右铭（非整句重复：仅取「行则将至」一段，D 清单不冲突）——长廊尽头的一行小字 */
+.ch9-echo {
+  margin-top: 56px;
+  font-family: var(--serif-cn); font-size: clamp(15px, 2vw, 17px);
+  color: var(--ink-soft); line-height: 2.1; letter-spacing: 2px;
+}
+.ch9-echo em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* 满金光收束 keyframe（径向光环由外向内呼吸收束，transform/opacity 限定，[11] 停后静止满金底）。 */
+@keyframes sealConverge {
+  0%, 100% { transform: scale(1.18); opacity: 0.35; }
+  50%      { transform: scale(0.62); opacity: 0.9; }
+}
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
@@ -1861,6 +2003,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch8-fusion { padding: 52px clamp(24px, 4.5vw, 48px) 48px; }
   .ch8-creed { padding: 38px 30px; }
   .ch8-ladder { margin-top: 72px; }
+
+  /* —— #ch9 终章·成为（T4.3）：章留白收敛；联系卡上间距收一档；收束光环缩尺避免溢出。 —— */
+  .ch9 { padding: 110px 0 100px; }
+  .ch9-connect { margin-top: 60px; }
+  .ch9-seal::before { width: min(130vw, 880px); }
 }
 
 /* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
@@ -1954,6 +2101,16 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   }
   .ladder-step::before { left: 0; top: 28px; }
   .ch8-coda { margin-top: 56px; }
+
+  /* —— #ch9 终章·成为收紧（T4.3）：章留白收敛；联系卡内边距与最小宽度收敛(窄屏不溢出)；
+     诗后印鉴与呼应小字上间距略收；收束光环进一步缩尺，纵向阅读不裁切。 —— */
+  .ch9 { padding: 90px 0 84px; }
+  .ch9-poem .b-line { line-height: 2.15; }
+  .ch9-seal-mark { margin-top: 44px; }
+  .ch9-connect { margin-top: 52px; }
+  .ch9-connect .connect-card { min-width: 0; width: 100%; padding: 40px 28px; }
+  .ch9-echo { margin-top: 44px; }
+  .ch9-seal::before { width: 150vw; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -2046,6 +2203,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      （上方已置可见态、transition 归零），降级下完整可读（验收第 7 条）；台阶节点光点/级号为静态视觉，无依赖动画。
      紫金交汇气质由场景引擎 --scene-glow violet/gold 着色固定光层承载，无本章专属粒子/canvas。 */
   .ch8-fusion::before, .ch8-fusion::after { animation: none !important; }
+
+  /* —— [08] 终章·成为 #ch9 降级（T4.3 / 自检 4 · T4.3 注意事项原话「收束动画也要进 reduced-motion 降级」）：
+     满金径向光收束停（sealConverge）——收束光环停后定格在中间收束态、保留静态满金径向底，不熄灭、不裁切（静止仍是满金底）。
+     收束层不承载信息（★全诗逐字、微信联系卡 czy18534901307 + 复制按钮、呼应小字均为静态文本与可交互按钮，
+     入场仅依赖 .reveal/.reveal-stagger，上方已置可见态、transition 归零），降级下完整可读（验收第 7 条）；
+     联系卡 connectSheen 微光横扫 + copy-btn hover 均为增强非依赖；满金气质由场景引擎 --scene-glow gold-light 着色固定光层承载。 */
+  .ch9-seal::before { animation: none !important; transform: scale(0.9) !important; opacity: 0.7 !important; }
 }
 </style>
 </head>
@@ -3100,6 +3264,67 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
+<!-- 终章 · 成为 —— 满金收束 · 长廊尽头（整条叙事弧在此闭合，色温弧终点：满金「万丈光」）。
+     data-chapter="9" 接入场景引擎（色温满金 --light-hue:46 / --scene-glow gold-light 60%+gold 30%，[03] 已预定义，光效「万丈光收束」）。
+     —— 必取精华（章节内容预算表「终章 成为」行）——
+     · ★「我想成为一个既清醒又热烈的人…」全诗逐字（index 第 1741–1749 行 .become-poem，逐行取全，PRD 溯源重点）；
+     · 微信联系卡 czy18534901307 + 复制按钮（index 第 1767–1772 行精华）；
+     · 满金收束——整条叙事弧在此闭合。
+     —— 形态（T4.3 注意事项）——
+     · ★全诗逐字居中（.ch9-poem 移植 index .become-poem 手感）；
+     · 微信卡 + 复制按钮（copyWechat IIFE 移植 index 第 1915 行，依赖固定 id copyBtn/wechatId，本页无 id 冲突已核）；
+     · 满金收束叠一层纯 CSS 径向光收束动画（.ch9-seal / sealConverge：transform/opacity），[11] 已降级（停后静止仍是满金底，T4.3 注意事项原话）。
+     —— 去重（对照 D 清单）——
+     D8「追光的人，终将光芒万丈」已归 #ch4 唯一落点，本章不重复同句；
+     呼应序章座右铭仅取「行则将至」一段（非整句重复，D 清单不冲突）。 -->
+<section class="chapter ch9" id="ch9" data-chapter="9" data-temp="gold">
+  <!-- 满金径向光收束层（纯 CSS 装饰，覆盖式置于正文之下；sealConverge 由外向内收束，呼应「万丈光收束」）。
+       不承载信息，[11] 停后定格静态满金径向底、不熄灭（T4.3 注意事项原话）。 -->
+  <div class="ch9-seal" aria-hidden="true"></div>
+
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label" style="justify-content:center;"><span class="idx">09</span> Chapter IX · Become</p>
+      <h2 class="section-title">成<span class="hl">为</span></h2>
+    </div>
+
+    <!-- ★全诗逐字（逐行取自 index 第 1741–1749 行 .become-poem，一字不改，PRD 溯源重点） -->
+    <div class="ch9-poem reveal-stagger">
+      <p class="b-line lead">我想成为一个<em>既清醒又热烈</em>的人。</p>
+      <p class="b-line">有能力赚钱，也有能力生活；</p>
+      <p class="b-line">有理性系统，也有感性底色；</p>
+      <p class="b-line">能长期奋斗，也能认真感受日落、电影、和猫；</p>
+      <p class="b-line">能用 AI 放大自己，也能始终守住<em>人的温度和良知</em>。</p>
+      <div class="b-gap"></div>
+      <p class="b-line">我现在还不够强，</p>
+      <p class="b-line">但我已经在<em>正确的路上</em>。</p>
+      <p class="b-line final">而只要行而不辍，未来一定<em>可期</em>。</p>
+    </div>
+
+    <!-- 诗后印鉴：满金收束的一道封线（与 index .become-seal 同手感） -->
+    <div class="ch9-seal-mark reveal">
+      <div class="seal-line"></div>
+      <div class="seal-text">CLEAR-EYED &amp; BURNING</div>
+    </div>
+
+    <!-- 微信联系卡（index #connect 精华：czy18534901307 + 复制按钮）——长廊尽头的一声招呼。
+         copyWechat IIFE（文末移植 index 第 1915 行）依赖固定 id copyBtn / wechatId（本页唯一）。 -->
+    <div class="ch9-connect reveal">
+      <div class="connect-card">
+        <span class="icon">💬</span>
+        <div class="label">WeChat</div>
+        <div class="value" id="wechatId">czy18534901307</div>
+        <div class="hint">添加时请备注「追光」</div>
+        <button class="copy-btn" id="copyBtn" type="button">复制微信号</button>
+      </div>
+    </div>
+
+    <!-- 叙事呼应：呼应序章座右铭，仅取「行则将至」一段（非整句重复，D 清单不冲突）——光在前方，长廊未尽。 -->
+    <p class="ch9-echo reveal">沿着光走到这里，<em>行则将至</em>；而长廊，仍在前方。</p>
+  </div>
+</section>
+
 <script>
 /* 各功能拆为独立自启 IIFE 模块（沿用 index 风格，无统一 init()）：
    preloader / sceneEngine / revealObserver / chapterRail / lightCanvas / countUp / timeline / copyWechat。
@@ -3440,6 +3665,36 @@ function animateCount(el) {
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
     });
+  });
+})();
+
+/* —— copyWechat：终章 #ch9 联系卡复制微信号（逐字移植 index 第 1915–1939 行，T4.3）——
+   依赖固定 id：copyBtn（按钮）/ wechatId（微信号文本，全页唯一，已核无冲突）。
+   clipboard API 不可用时降级到选中文本（getSelection + Range）——降级分支一并保留（T4.3 注意事项）。
+   全页第一处交互 JS 移植；不存在依赖元素时直接 return,不报错。 */
+(function copyWechat() {
+  const btn = document.getElementById('copyBtn');
+  const idEl = document.getElementById('wechatId');
+  if (!btn || !idEl) return;
+  btn.addEventListener('click', () => {
+    const text = idEl.textContent.trim();
+    const done = () => {
+      btn.textContent = '已复制 ✓ 备注「追光」';
+      setTimeout(() => { btn.textContent = '复制微信号'; }, 2200);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(idEl);
+        sel.removeAllRanges(); sel.addRange(range);
+      });
+    } else {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(idEl);
+      sel.removeAllRanges(); sel.addRange(range);
+    }
   });
 })();
 </script>
