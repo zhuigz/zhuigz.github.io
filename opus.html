@@ -518,14 +518,164 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
+/* —— #ch1 一·底色 · Undertone（七色光谱 + 3 大理想 + ★金句 + 525 数字密码）——
+   源 life_undertone：把「构成我的所有微光」收束为一条可见光谱。
+   色温暖土黄（body[data-chapter="1"]：--light-hue:38，[03] 已预定义，挂 data-chapter="1" 即生效）。
+   ★UX-005 锁定：七色光谱用单个 conic-gradient 元素实现，禁止 7 个色块 div；
+   色标全部引用既有调色板变量（--ember/--gold/--gold-light/--gold-deep/--accent-*），
+   中间过渡色用 color-mix 对上述变量插值得到，不写调色板外裸 hex。 */
+.ch1 { padding: 140px 0 130px; }
+
+/* —— 中心隐喻：七色光谱（单元素 conic-gradient · 一团旋转的光，即「底色」）——
+   .spectrum 是唯一着色元素：conic-gradient 七个色标连续过渡成「红橙黄绿青蓝紫」光谱观感；
+   中央 ::after 是暗芯，把渐变切成一道环（「所有微光汇成的一团底色」语义）；
+   ::before 是同色谱的外溢柔光（blur），不增加可着色 DOM。 */
+.spectrum-wrap { position: relative; display: flex; justify-content: center; margin: 8px 0 4px; }
+.spectrum {
+  position: relative;
+  width: clamp(200px, 34vw, 300px); aspect-ratio: 1; border-radius: 50%;
+  /* 七色一圈：暖端 ember(红橙) → gold/gold-light(黄金) → sage(绿) → teal(青) → violet(蓝紫)，
+     中间过渡色由相邻变量 color-mix 插值，全程不引入调色板外硬编码色（T2.2 取色约束）。 */
+  background: conic-gradient(from -90deg,
+    var(--ember) 0deg,
+    color-mix(in srgb, var(--ember), var(--gold-light)) 42deg,
+    var(--gold-light) 84deg,
+    var(--gold) 124deg,
+    var(--gold-deep) 158deg,
+    color-mix(in srgb, var(--gold-deep), var(--accent-sage)) 196deg,
+    var(--accent-sage) 232deg,
+    var(--accent-teal) 276deg,
+    var(--accent-violet) 320deg,
+    var(--ember) 360deg);
+  animation: spectrumSpin 48s linear infinite;
+}
+/* 外溢柔光：同色谱模糊扩散，作底色「漫开」的氛围（纯 filter，无新 DOM 着色源） */
+.spectrum::before {
+  content: ''; position: absolute; inset: -14%; border-radius: 50%; z-index: -1;
+  background: inherit; filter: blur(34px); opacity: 0.5;
+}
+/* 暗芯：把渐变切成光环，并在环心留出「底色」标签位 */
+.spectrum::after {
+  content: ''; position: absolute; inset: 26%; border-radius: 50%;
+  background: radial-gradient(circle, #0A0A12 55%, color-mix(in srgb, var(--bg-deep), transparent 30%) 100%);
+  box-shadow: inset 0 0 24px rgba(0,0,0,0.7);
+}
+/* 环心的「底色」二字（绝对居中于暗芯，不随光谱旋转） */
+.spectrum-core {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  text-align: center; z-index: 2; pointer-events: none;
+}
+.spectrum-core .core-cn {
+  display: block; font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(22px, 3.4vw, 32px); letter-spacing: 4px; color: var(--ink);
+}
+.spectrum-core .core-en {
+  display: block; font-family: var(--sans-en); font-size: 10px;
+  letter-spacing: 4px; color: var(--gold); margin-top: 6px; text-transform: uppercase;
+}
+
+/* 光谱引语：中心隐喻的一句话注脚（取自源 hero-lead，压缩重写） */
+.ch1-lead {
+  font-family: var(--serif-cn); text-align: center;
+  font-size: clamp(16px, 2.1vw, 20px); line-height: 2.1; color: var(--ink-soft);
+  max-width: 600px; margin: 40px auto 0; letter-spacing: 1px;
+}
+.ch1-lead em { font-style: normal; color: var(--gold); font-weight: 500; }
+
+/* 子区眉题（章内小标题，对齐 index .subsection-label 手感） */
+.ch1-sub {
+  font-family: var(--sans-en); font-size: 12px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ch1-sub::before { content: ''; width: 22px; height: 1px; background: var(--gold); opacity: 0.5; }
+.ch1-block { margin-top: 84px; }
+
+/* —— 3 大理想（FIRE / 复兴 / 共产主义·AI 奇点）：三张并列卡 —— */
+.ideal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.ideal-card {
+  position: relative; padding: 30px 26px 32px;
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 16px; overflow: hidden;
+  transition: border-color 0.4s ease, transform 0.4s ease, background 0.4s ease;
+}
+.ideal-card:hover {
+  border-color: var(--line-strong); transform: translateY(-4px);
+  background: var(--bg-card-hi);
+}
+/* 卡顶一道渐变弧，呼应光谱（每张取光谱不同区段，颜色全引用调色板变量） */
+.ideal-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--c-a), var(--c-b), transparent);
+  opacity: 0.7;
+}
+.ideal-card.i1 { --c-a: var(--ember); --c-b: var(--gold); }
+.ideal-card.i2 { --c-a: var(--gold); --c-b: var(--accent-teal); }
+.ideal-card.i3 { --c-a: var(--accent-teal); --c-b: var(--accent-violet); }
+.ideal-card .i-idx {
+  font-family: var(--mono); font-size: 13px; color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+.ideal-card .i-name {
+  font-family: var(--serif-cn); font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 700; color: var(--ink); margin: 12px 0 14px; line-height: 1.4;
+}
+.ideal-card .i-name .hl {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ideal-card .i-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
+
+/* —— ★金句「追光的人，终会光芒万丈」（D8：择 #ch4 信念为权威落点；此处不重复同句）——
+   故 #ch1 不放该金句整句；中心隐喻+理想已承载本章。详见 tech-design D8。 */
+
+/* —— 数字密码 525「我爱我」（本章只取 525 一项，源页另 3 项不在叙事弧必取范围）—— */
+.cipher-525 {
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+  padding: 34px 36px; border-radius: 18px;
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+}
+.cipher-525 .c-num {
+  font-family: var(--sans-en); font-weight: 700; line-height: 1;
+  font-size: clamp(58px, 12vw, 104px); letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--ember));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.cipher-525 .c-body { flex: 1; min-width: 220px; }
+.cipher-525 .c-title {
+  font-family: var(--serif-cn); font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 700; color: var(--ink); margin-bottom: 10px;
+}
+.cipher-525 .c-title .echo { color: var(--gold); }
+.cipher-525 .c-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.9; }
+.cipher-525 .c-desc em { font-style: normal; color: var(--gold); font-weight: 500; }
+
+/* —— #ch1 专属 keyframe（仅 transform/opacity；reduced-motion 降级见 [11]）—— */
+@keyframes spectrumSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
 /* ===== [10] RESPONSIVE ===== */
 /* @media 1024px / 880px / 768px 断点。 */
+
+/* —— 880px：#ch1 三大理想卡纵向堆叠（3 列 → 1 列），呼应叙事弧后续阶梯/台阶的堆叠约定。 —— */
+@media (max-width: 880px) {
+  .ch1 { padding: 110px 0 100px; }
+  .ideal-grid { grid-template-columns: 1fr; gap: 16px; }
+  .ch1-block { margin-top: 64px; }
+}
+
+/* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
 @media (max-width: 768px) {
   /* 768px 关闭光标光晕（移植 index 既有断点行为）。 */
   .cursor-glow { display: none; }
+
+  .spectrum { width: clamp(180px, 60vw, 240px); }
+  .ch1-lead { font-size: 16px; margin-top: 32px; }
+  .cipher-525 { gap: 18px; padding: 26px 24px; }
+  .cipher-525 .c-num { font-size: clamp(52px, 22vw, 80px); }
+  .cipher-525 .c-body { min-width: 100%; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -566,6 +716,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   }
   /* glyphIn 末态含 transform/blur，停动画后显式归位，确保姓名清晰可见。 */
   .ch0-name .glyph { transform: none !important; filter: none !important; }
+
+  /* —— [08] 一·底色 #ch1 降级（T2.2 / 自检 4）：七色光谱旋转停（spectrumSpin），
+     渐变本身静止仍完整呈现七色，信息不丢（光谱是静态可读的色相弧，非动画承载信息）。
+     ideal-card 的 transition 是 hover 增强，非入场依赖，降级下不影响信息可读，无需覆盖。 */
+  .spectrum { animation: none !important; }
 }
 </style>
 </head>
@@ -628,6 +783,70 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
     <div class="ch0-enter" aria-hidden="true">
       <span>ENTER</span>
       <div class="line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 一 · 底色 —— 构成我的所有微光，收束为一条可见光谱（源 life_undertone）。
+     data-chapter="1" 接入场景引擎（色温暖土黄 --light-hue:38，[03] 已预定义）。
+     中心隐喻=七色光谱（单元素 conic-gradient，UX-005）→ 3 大理想 → 525 数字密码。
+     ★「追光的人，终会光芒万丈」按 D8 归 #ch4 信念为唯一权威落点，此章不重复同句。 -->
+<section class="chapter ch1" id="ch1" data-chapter="1" data-temp="earth">
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label"><span class="idx">01</span> Chapter I · Undertone</p>
+      <h2 class="section-title">生命<span class="hl">底色</span></h2>
+    </div>
+
+    <!-- 中心隐喻：七色光谱（单元素 conic-gradient，环心嵌「底色」二字） -->
+    <div class="spectrum-wrap reveal">
+      <div class="spectrum" aria-hidden="true"></div>
+      <div class="spectrum-core">
+        <span class="core-cn">底色</span>
+        <span class="core-en">The Colors That Make Me</span>
+      </div>
+    </div>
+
+    <!-- 光谱注脚：中心隐喻的一句话（取自源 hero-lead，压缩重写） -->
+    <p class="ch1-lead reveal">
+      构成我整个人生的<em>所有微光</em>——<br>
+      我相信的、走过的、看过的、爱过的一切，<br>
+      一起拼出了我之为我的<em>底色</em>。
+    </p>
+
+    <!-- 3 大理想（FIRE / 复兴 / 共产主义·AI 奇点）：三张并列卡，卡顶渐变弧呼应光谱区段 -->
+    <div class="ch1-block reveal">
+      <p class="ch1-sub">Ideals · 三大理想</p>
+      <div class="ideal-grid reveal-stagger">
+        <div class="ideal-card i1">
+          <p class="i-idx">01</p>
+          <h3 class="i-name"><span class="hl">FIRE</span> · 财富自由</h3>
+          <p class="i-desc">用一辈子时间，把人生主导权牢牢握在自己手里。</p>
+        </div>
+        <div class="ideal-card i2">
+          <p class="i-idx">02</p>
+          <h3 class="i-name">中华民族<span class="hl">伟大复兴</span> · 中国梦</h3>
+          <p class="i-desc">这片土地值得，也必将站在世界之巅。</p>
+        </div>
+        <div class="ideal-card i3">
+          <p class="i-idx">03</p>
+          <h3 class="i-name"><span class="hl">共产主义</span> · AI 奇点</h3>
+          <p class="i-desc">当生产力被彻底解放，人类终于自由。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数字密码 525「我爱我」（525 为定值生日码，静态强调字，不 count-up） -->
+    <div class="ch1-block reveal">
+      <p class="ch1-sub">Secret Number · 数字密码</p>
+      <div class="cipher-525">
+        <div class="c-num" aria-label="525">525</div>
+        <div class="c-body">
+          <p class="c-title">生日 · <span class="echo">525「我爱我」</span></p>
+          <p class="c-desc">农历四月初九，公历 525——谐音「我爱我」。<em>爱自己，是终身浪漫的开始。</em></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
