@@ -4,13 +4,13 @@
 
 ## Now
 
-**REQ-001 集大成网站** — `planning`(出口条件已齐,**暂停等 PM**)— 技术方案 rev.1 已落盘(吸收 UX 审查 5 条 findings,blocker 已消解),执行计划已拆解。等 PM:① 确认三处 scope 取舍 ② 授权 `executing`。
+**REQ-001 集大成网站** — `executing` — PM 已确认三处 scope 取舍并授权开工(2026-06-12)。Phase 1 进行中,从 T1.1 开始逐 task 委派 Dev(opus)。
 
 ## Next
 
-1. PM 确认取舍 + 授权后:REQ-001 → `executing`,从 Phase 1 / T1.1 开始逐 task 委派 Dev(L 级 → opus)
-2. 每个 Phase 结束委派 code-reviewer 审查该 Phase 累计 diff
-3. 全部 Phase 完成后:architecture-guard + UX Evaluator(模式 B)并行最终审查 → 硬门槛检查 → acceptance
+1. Phase 1:T1.1 → T1.5 逐个委派 Dev,每 task 交付须含自检清单结果
+2. Phase 1 完成后委派 code-reviewer 审查累计 diff(review→fix ≤2 轮)
+3. 后续 Phase 依 Current Plan 顺序推进;全部完成后 architecture-guard + UX Evaluator(模式 B)最终审查 → 硬门槛 → acceptance
 
 ## Current Plan
 

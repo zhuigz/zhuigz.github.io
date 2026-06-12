@@ -1,2 +1,2 @@
 id,标题,类型,复杂度,优先级,pipeline_status,版本,文档,阻塞原因,备注
-REQ-001,集大成网站:整合全站内容为单一沉浸式作品,feature,L,P0,planning,v1,docs/requirements/REQ-001-unified-site/,"等 PM:①确认 scope_tradeoff 三处取舍 ②授权 planning→executing","将 index/life/life_undertone/ideal/fire/growth/system/prosper/idop/workflow/hkrr/know-ai 等页面的内容融合为一个统一作品,非链接跳转而是内容级整合;内容丰富度与视觉震撼度均要超越既有所有单页。待 designing 阶段决策:载体是新页面还是重构 index.html;与""index 不链接私密页面""约定的关系;各页内容的取舍与叙事顺序"
+REQ-001,集大成网站:整合全站内容为单一沉浸式作品,feature,L,P0,executing,v1,docs/requirements/REQ-001-unified-site/,,"将 index/life/life_undertone/ideal/fire/growth/system/prosper/idop/workflow/hkrr/know-ai 等页面的内容融合为一个统一作品,非链接跳转而是内容级整合;内容丰富度与视觉震撼度均要超越既有所有单页。待 designing 阶段决策:载体是新页面还是重构 index.html;与""index 不链接私密页面""约定的关系;各页内容的取舍与叙事顺序"
