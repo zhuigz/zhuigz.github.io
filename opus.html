@@ -55,7 +55,8 @@
      具体着色规则集中在 [03] SCENE ENGINE，此处仅定义初值与过渡时长。 */
   --scene-bg: radial-gradient(ellipse 120% 90% at 50% -10%, #0B0C16 0%, var(--bg-deep) 60%, #050509 100%);
   --scene-glow: rgba(126,138,178,0.12);   /* 冷夜微光：一点冷蓝光 */
-  --scene-ink-tint: rgba(214,221,238,0.05); /* 近中性偏冷的墨色微调 */
+  /* F2：与 body[data-chapter="0"]（[03]）取同一 color-mix 值，消除首帧闪色（首帧不闪色原则）。 */
+  --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 14%, transparent);
   --light-hue: 222;                         /* 深夜冷蓝色相起点 */
   --scene-tr: 1.2s;                         /* 场景过渡时长；reduced-motion 下归零（[11]，见 R2） */
 }
@@ -92,13 +93,14 @@ body {
 .pre-dot {
   width: 10px; height: 10px; border-radius: 50%;
   background: var(--gold);
-  box-shadow: 0 0 24px var(--gold), 0 0 80px rgba(232,184,122,0.5);
+  /* F4：硬编码 rgba(232,184,122,…) → var(--gold) 派生（232,184,122 即 --gold #E8B87A）。 */
+  box-shadow: 0 0 24px var(--gold), 0 0 80px color-mix(in srgb, var(--gold) 50%, transparent);
   animation: preDot 1.4s ease-in-out infinite;
 }
 .pre-ring {
   position: absolute; top: -25px; left: 50%; margin-left: -30px;
   width: 60px; height: 60px; border-radius: 50%;
-  border: 1px solid rgba(232,184,122,0.4);
+  border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); /* F4：var(--gold) 派生 */
   animation: preRing 1.4s ease-out infinite;
 }
 .pre-text {
@@ -121,7 +123,8 @@ body {
 .scroll-progress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
   background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
-  box-shadow: 0 0 14px rgba(232,184,122,0.55);
+  /* F4：硬编码 rgba(232,184,122,0.55) → var(--gold) 派生（color-mix 取 55% 不透明）。 */
+  box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 55%, transparent);
   transition: width 0.08s linear;
 }
 
@@ -130,7 +133,8 @@ body {
   position: fixed; left: 0; top: 0; z-index: 3;
   width: 380px; height: 380px; margin: -190px 0 0 -190px;
   border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle, rgba(232,184,122,0.10), rgba(195,107,94,0.04) 45%, transparent 65%);
+  /* F4：硬编码 rgba(232,184,122,…)/rgba(195,107,94,…) → var(--gold)/var(--ember) 派生。 */
+  background: radial-gradient(circle, color-mix(in srgb, var(--gold) 10%, transparent), color-mix(in srgb, var(--ember) 4%, transparent) 45%, transparent 65%);
   mix-blend-mode: screen;
   opacity: 0; transition: opacity 0.5s;
   will-change: transform;
@@ -142,9 +146,13 @@ body {
    orb-2/orb-3 在 --scene-glow 基础上 color-mix 进 --ember/--accent-violet，
    既随场景重着色，又保留三色层次。 */
 .bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+/* orb 单一定义（F1：合并原 [02] 动画 + [03] transition 两处声明为一处）。
+   随章过渡：orb 色相来自 --scene-glow，故对 background 做 transition（时长引用 --scene-tr，
+   reduced-motion 下 [11] 归零 → 切换瞬时不"动"，R2）。 */
 .bg-glow .orb {
   position: absolute; border-radius: 50%; filter: blur(130px);
   animation: orbFloat 26s ease-in-out infinite;
+  transition: background var(--scene-tr) ease;
 }
 .bg-glow .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, var(--scene-glow), transparent 70%); top: -12%; left: -10%; }
 .bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, color-mix(in srgb, var(--scene-glow) 70%, var(--ember)), transparent 70%); top: 38%; right: -12%; animation-delay: -8s; }
@@ -182,10 +190,8 @@ body {
   min-height: 100svh;
 }
 
-/* —— 固定光层随章过渡：orb 的色相来自 --scene-glow，
-   故对 --scene-glow 派生的 background 做 transition；--scene-ink-tint 叠层同理。
-   transition 时长统一引用 --scene-tr（reduced-motion 下 [11] 归零，切换瞬时不"动"，R2）。 */
-.bg-glow .orb { transition: background var(--scene-tr) ease; }
+/* 固定光层随章过渡说明：orb 的 background transition 已并入 [02] 单一 .bg-glow .orb 定义（F1）；
+   --scene-ink-tint 叠层的 transition 见下方 .scene-tint。两者时长均引用 --scene-tr。 */
 
 /* 场景墨色微调叠层（--scene-ink-tint）：一层极淡的全屏覆盖，随章微调整体冷暖。
    固定贴层、不挡交互、不参与合成开销热点（单层 radial，opacity 级）。 */
@@ -279,18 +285,79 @@ body[data-chapter="9"] {
 /* 桌面 .chapter-rail 圆点列 + 顶部进度条 + 移动端 .chapter-bar 章名条。详见 KD-5。 */
 
 /* ===== [05] CHAPTER SHELL ===== */
-/* .chapter 通用骨架（min-height、章号眉题 .section-label + .section-title + .divider）。详见 T2.1。 */
+/* .chapter 通用骨架（min-height 已在 [03] 定义）+ 章号眉题 .section-label
+   + .section-title（衬线大标题，.hl 渐变高亮）+ .divider。详见 T2.1。
+   三组件类逐字移植 index（变量名/手感一致，Dev 心智零迁移）；本 task 只建骨架/机制，
+   不写任何章节正文（T2.2–T2.4 范围）。 */
+
+/* 章内容容器：每章正文的居中栅格基底（对齐 index .container），各章在此基础上扩展。 */
+.ch-inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* 章号眉题区：英文眉题 + 衬线大标题成组（对齐 index .section-head 间距）。 */
+.ch-head { margin-bottom: 64px; }
+
+/* 章号眉题（英文 + mono 序号）—— 逐字移植 index .section-label（第 427–434 行）。 */
+.section-label {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+}
+.section-label .idx { font-family: var(--mono); color: var(--ink-dim); letter-spacing: 1px; }
+.section-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); opacity: 0.6; }
+.section-label::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+/* 衬线大标题（.hl 渐变高亮）—— 逐字移植 index .section-title（第 435–442 行）。 */
+.section-title {
+  font-family: var(--serif-cn); font-size: clamp(34px, 5.6vw, 54px);
+  font-weight: 700; line-height: 1.25; letter-spacing: 1px;
+}
+.section-title .hl {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* 章间分隔细线 —— 逐字移植 index .divider（第 449–453 行）。 */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,184,122,0.22), transparent);
+  margin: 0 auto; max-width: 640px;
+}
 
 /* ===== [06] REVEAL & ANIMATIONS ===== */
 /* .reveal / .reveal-stagger 入场 + 共享 @keyframes 定义。
-   .reveal/.reveal-stagger 移植留给 T2.1；此处先放跨章共享的入场 keyframes
-   （逐字复制 index：fadeUp/fadeDown/glyphIn），序章 [08] 与后续各章入场编排复用。 */
+   跨章共享的入场 keyframes（逐字复制 index：fadeUp/fadeDown/glyphIn），
+   序章 [08] 与后续各章入场编排复用。 */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes glyphIn {
   from { opacity: 0; transform: translateY(70px) scale(0.94); filter: blur(14px); }
   to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
+
+/* —— reveal / reveal-stagger 滚动入场（逐字移植 index 第 456–471 行）——
+   revealObserver IIFE 在元素入视口时加 .visible 触发；nth-child 延迟做错落入场，
+   超过 11 个走 n+12 兜底（长时间线分组包裹避免末节点延迟过久 —— T2.3 注意事项）。
+   reduced-motion 降级见 [11]：直接置为可见态、transition 归零（无依赖动画才呈现的信息，验收第 7 条）。 */
+.reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(36px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+.reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.12s; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.19s; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.26s; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.33s; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.40s; }
+.reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.47s; }
+.reveal-stagger.visible > *:nth-child(8) { transition-delay: 0.54s; }
+.reveal-stagger.visible > *:nth-child(9) { transition-delay: 0.61s; }
+.reveal-stagger.visible > *:nth-child(10) { transition-delay: 0.68s; }
+.reveal-stagger.visible > *:nth-child(11) { transition-delay: 0.75s; }
+.reveal-stagger.visible > *:nth-child(n+12) { transition-delay: 0.82s; }
+
+/* count-up 数字单位后缀 span（animateCount 注入 <span class="unit">…</span>）。
+   三章数据墙（T2.4）依赖此约定：data-num/data-suffix → 计数 + .unit 后缀。 */
+.unit { font-family: var(--sans-en); font-weight: 600; }
 
 /* ===== [07] SHARED COMPONENTS ===== */
 /* .info-card / .metric-cell / .practice-row / .tilt / .manifesto-row 等跨章复用组件。 */
@@ -326,7 +393,8 @@ body[data-chapter="9"] {
 .ch0-spark::before {
   content: ''; position: absolute; top: 50%; left: 50%;
   width: 64px; height: 64px; margin: -32px 0 0 -32px;
-  border-radius: 50%; border: 1px solid rgba(232,184,122,0.28);
+  /* F4：硬编码 rgba(232,184,122,0.28) → var(--gold) 派生。 */
+  border-radius: 50%; border: 1px solid color-mix(in srgb, var(--gold) 28%, transparent);
   animation: ch0Ripple 4.5s ease-out infinite;
 }
 /* 从光点垂落的一束细光，把视线引入长廊（纯 transform 的 scaleY 呼吸） */
@@ -480,6 +548,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   /* [03] 场景引擎新增的 transition（.bg-glow .orb / .scene-tint 的 background）均引用
      --scene-tr，已随上方归零 → 章号切换时背景/光层瞬时变色、不"动"，信息不丢（R2）。
      sceneEngine 的 150ms 去抖逻辑保留（只是过渡瞬时），无新增 keyframe 需在此覆盖。 */
+
+  /* —— [06] reveal / reveal-stagger 降级（验收第 7 条：无依赖动画才呈现的信息）——
+     直接置为可见态、入场 transition 归零；count-up 仍由 revealObserver 触发计数，
+     不依赖 transition，数字照常显示（target 值最终落地）。 */
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
 
   /* —— [08] 序章 #ch0 降级（T1.5 / 自检 4）：所有 ch0 入场/光点 keyframe 停，
      文字必须直接完整可见（覆盖 body.js 设的 opacity:0 隐藏态 → opacity:1）。 */
@@ -636,6 +710,49 @@ document.body.classList.add('js');
     threshold: [0, 0.25, 0.5, 0.75, 1]
   });
   chapters.forEach((ch) => obs.observe(ch));
+})();
+
+/* —— animateCount：数据墙数字计数（逐字移植 index 第 1870–1884 行）——
+   读 data-num（目标整数）/ data-suffix（单位后缀），三次缓出动画到目标值，
+   注入 <span class="unit"> 后缀。由 revealObserver 在元素入场时触发（只跑一次）。
+   三章数据墙（T2.4）将依赖这套 data-num/data-suffix 约定。 */
+function animateCount(el) {
+  const target = parseInt(el.dataset.num, 10);
+  const suffix = el.dataset.suffix || '';
+  if (!Number.isFinite(target)) return;
+  const duration = 1600;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const v = Math.floor(eased * target);
+    el.innerHTML = v + '<span class="unit">' + suffix + '</span>';
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* —— revealObserver：滚动入场 + count-up 触发（移植 index 第 1887–1900 行）——
+   依赖：.reveal / .reveal-stagger 元素 + [data-num] count-up 节点（[06] CSS）。
+   入视口即加 .visible（CSS transition 完成入场）并触发该元素内所有 [data-num] 计数；
+   **必须 unobserve 已触发元素**（index 第 1896 行）—— 长页 reveal 元素很多，
+   不解绑会持续回调（技术快审注意事项）。每个元素只入场/计数一次。
+   index 原有的 .slope-box 绘制分支为 index 专属（opus 无 slope-box），此处不移植。
+   当前页尚无 .reveal（T2.2+ 才建）：监听 0 个目标不抛错，安全退出。
+   reduced-motion 下逻辑不变，仅 [11] 把 .reveal/.reveal-stagger 置为可见态、transition 归零。 */
+(function revealObserver() {
+  const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+  if (!reveals.length) return; // 零监听目标：安全退出
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.querySelectorAll('[data-num]').forEach(animateCount);
+        obs.unobserve(entry.target); // 触发后解绑，长页不持续回调
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach((el) => obs.observe(el));
 })();
 
 /* —— cursorGlow：光标即是光，跟随鼠标的柔光（追光者签名交互）——
@@ -806,17 +923,26 @@ document.body.classList.add('js');
     }
   }
 
+  /* F3（最重要）临时缓解 = tech-design R4：
+     废除 index"滚过首屏后 opacity→0 永久 stop()"行为（长页加章后粒子会永久消失）。
+     改为：序章内 opacity 由高（1）随首屏滚动平滑降到一个**基础低透明度地板** MIN_OP，
+     之后恒保持 ≥MIN_OP 持续运行——保证 Phase 2 加章后粒子不消失、光母题贯穿。
+     仅当页面整体不可见（切后台/最小化）时才 stop() 省电；任何叙事章节都不 stop()。
+     正式的「按章三级密度 + 按章着色」逻辑仍归 T5.2（UX-004），本次只保运行不熄灭。 */
+  const MIN_OP = 0.32; // 基础低透明度地板：滚过首屏后粒子仍可见（不再归零）
   function updateOpacity() {
     const heroH = window.innerHeight;
     const scrolled = window.scrollY;
-    opacity = Math.max(0, 1 - scrolled / heroH);
+    // 序章内由 1 平滑降到 MIN_OP；过首屏后恒为 MIN_OP（不再趋零、不再永久停机）
+    opacity = Math.max(MIN_OP, 1 - scrolled / heroH);
     document.documentElement.style.setProperty('--light-opacity', opacity.toFixed(3));
-    if (opacity < 0.02) stop(); else start();
+    start(); // 始终保持运行（页面可见时），不在滚动路径上 stop()
   }
   window.addEventListener('scroll', updateOpacity, { passive: true });
   document.addEventListener('visibilitychange', () => {
+    // 仅页面整体不可见时停机省电；恢复可见即重新运行
     if (document.visibilityState === 'hidden') stop();
-    else updateOpacity();
+    else { updateOpacity(); start(); }
   });
   window.addEventListener('resize', resize);
 
