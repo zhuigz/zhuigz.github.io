@@ -75,7 +75,93 @@ body {
 }
 
 /* ===== [02] GLOBAL LIGHT LAYERS ===== */
-/* preloader / .grain / .scroll-progress / .bg-glow(orb×3) / lightCanvas / .cursor-glow。详见 T1.3。 */
+/* preloader / .grain / .scroll-progress / .bg-glow(orb×3) / lightCanvas / .cursor-glow。详见 T1.3。
+   从 index.html 全局贴层移植：preloader 触发 body.loaded（序章 per-glyph 入场依赖，R7）；
+   orb 色值由 index 的硬编码 rgba 改为引用 --scene-glow，随章变色（T1.3 注意事项 / KD-4）；
+   lightCanvas 本 task 原样移植，colors 按章着色留给 T5.2。 */
+
+/* —— PRELOADER（开场：一点光，破暗而生）—— */
+.preloader {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg-deep);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.9s ease, visibility 0.9s;
+}
+.preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.pre-core { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.pre-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 24px var(--gold), 0 0 80px rgba(232,184,122,0.5);
+  animation: preDot 1.4s ease-in-out infinite;
+}
+.pre-ring {
+  position: absolute; top: -25px; left: 50%; margin-left: -30px;
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 1px solid rgba(232,184,122,0.4);
+  animation: preRing 1.4s ease-out infinite;
+}
+.pre-text {
+  font-family: var(--serif-cn); font-weight: 900; font-size: 17px;
+  letter-spacing: 12px; text-indent: 12px; color: var(--ink-dim);
+  animation: preText 1.6s ease-in-out infinite alternate;
+}
+@keyframes preDot { 0%,100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+@keyframes preRing { from { transform: scale(0.3); opacity: 1; } to { transform: scale(2.1); opacity: 0; } }
+@keyframes preText { from { color: var(--ink-dim); } to { color: var(--gold); } }
+
+/* —— 颗粒噪点（base64 SVG ~0.5KB，原样保留）—— */
+.grain {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* —— 顶部滚动进度细条 —— */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
+  box-shadow: 0 0 14px rgba(232,184,122,0.55);
+  transition: width 0.08s linear;
+}
+
+/* —— 光标即是光：跟随鼠标的柔光（追光者签名交互）—— */
+.cursor-glow {
+  position: fixed; left: 0; top: 0; z-index: 3;
+  width: 380px; height: 380px; margin: -190px 0 0 -190px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(232,184,122,0.10), rgba(195,107,94,0.04) 45%, transparent 65%);
+  mix-blend-mode: screen;
+  opacity: 0; transition: opacity 0.5s;
+  will-change: transform;
+}
+.cursor-glow.on { opacity: 1; }
+
+/* —— 背景光晕 orb×3：色值引用 --scene-glow，随章变色（T1.3）——
+   三球保留 index 的暖金/余烬/紫的气质差异：orb-1 直接用 --scene-glow，
+   orb-2/orb-3 在 --scene-glow 基础上 color-mix 进 --ember/--accent-violet，
+   既随场景重着色，又保留三色层次。 */
+.bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.bg-glow .orb {
+  position: absolute; border-radius: 50%; filter: blur(130px);
+  animation: orbFloat 26s ease-in-out infinite;
+}
+.bg-glow .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, var(--scene-glow), transparent 70%); top: -12%; left: -10%; }
+.bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, color-mix(in srgb, var(--scene-glow) 70%, var(--ember)), transparent 70%); top: 38%; right: -12%; animation-delay: -8s; }
+.bg-glow .orb-3 { width: 480px; height: 480px; background: radial-gradient(circle, color-mix(in srgb, var(--scene-glow) 70%, var(--accent-violet)), transparent 70%); bottom: -8%; left: 26%; animation-delay: -16s; }
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(70px,-50px) scale(1.1); }
+  66% { transform: translate(-40px,60px) scale(0.92); }
+}
+
+/* —— 向光金粉 canvas —— */
+.light-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; display: block;
+  opacity: var(--light-opacity, 1);
+  transition: opacity .35s linear;
+}
 
 /* ===== [03] SCENE ENGINE ===== */
 /* body[data-chapter="N"] 各章色板（--scene-bg/--light-hue 等）+ 背景与光层的 transition。详见 T1.4。 */
@@ -100,6 +186,10 @@ body {
 
 /* ===== [10] RESPONSIVE ===== */
 /* @media 1024px / 880px / 768px 断点。 */
+@media (max-width: 768px) {
+  /* 768px 关闭光标光晕（移植 index 既有断点行为）。 */
+  .cursor-glow { display: none; }
+}
 
 /* ===== [11] REDUCED-MOTION ===== */
 /* @media (prefers-reduced-motion: reduce)：动画降级 + --scene-* transition 时长归零。 */
@@ -107,15 +197,244 @@ body {
   /* R2 消解措施：把场景过渡时长归零，章号切换仍发生但瞬时（信息不丢、背景不"动"）。
      这是本 task 在 body 背景上引入的 transition 的配套降级。 */
   :root { --scene-tr: 0s; }
+
+  /* 全局贴层降级（对照 index 既有 reduced-motion 块）：
+     - preloader 直接隐藏（JS 端 delay 也置 0，body.loaded 立即添加，序章入场不丢）；
+     - orb 漂浮动画关停（保留静态光晕，仍随章变色）；
+     - lightCanvas / cursor-glow 整体隐藏（JS 端 reduced-motion 已 return，不跑粒子/光标追踪）；
+     - preloader 的 preDot/preRing/preText 三组 keyframe 随元素隐藏一并失效，无需逐条覆盖。 */
+  .preloader { display: none; }
+  .bg-glow .orb { animation: none !important; }
+  .light-canvas, .cursor-glow { display: none; }
+  /* scroll-progress 无动画，仅 width 过渡；此处放任其极短过渡，不影响可读性。 */
 }
 </style>
 </head>
 <body data-chapter="0">
 
+<!-- ===== [02] GLOBAL LIGHT LAYERS（preloader / grain / 进度条 / 光标光晕 / 背景光晕 + 金粉 canvas）===== -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pre-core">
+    <div class="pre-ring"></div>
+    <div class="pre-dot"></div>
+    <div class="pre-text">追光者</div>
+  </div>
+</div>
+
+<div class="grain"></div>
+<div class="scroll-progress"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<div class="bg-glow">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
+</div>
+
 <script>
 /* 各功能拆为独立自启 IIFE 模块（沿用 index 风格，无统一 init()）：
    preloader / sceneEngine / revealObserver / chapterRail / lightCanvas / countUp / timeline / copyWechat。
    详见 tech-design KD-6。后续 task 在此填充。 */
+
+/* —— preloader：一点光开场 → body.loaded（序章 per-glyph 入场依赖此机制，R7）——
+   依赖：#preloader。reduced-motion 下 delay 归零，body.loaded 立即添加，入场不丢。 */
+(function preloader() {
+  const pre = document.getElementById('preloader');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const delay = reduced ? 0 : 1100;
+  setTimeout(() => {
+    if (pre) pre.classList.add('done');
+    document.body.classList.add('loaded');
+  }, delay);
+})();
+
+/* —— cursorGlow：光标即是光，跟随鼠标的柔光（追光者签名交互）——
+   依赖：.cursor-glow。仅 hover+fine 指针生效；reduced-motion / 触屏直接 return。 */
+(function cursorGlow() {
+  const glow = document.querySelector('.cursor-glow');
+  if (!glow) return;
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let tx = -400, ty = -400, x = -400, y = -400, active = false, rafId = 0;
+  function loop() {
+    x += (tx - x) * 0.1;
+    y += (ty - y) * 0.1;
+    glow.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+    rafId = requestAnimationFrame(loop);
+  }
+  document.addEventListener('mousemove', (e) => {
+    tx = e.clientX; ty = e.clientY;
+    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); loop(); }
+  });
+  document.addEventListener('mouseleave', () => {
+    glow.classList.remove('on');
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && rafId) { cancelAnimationFrame(rafId); rafId = 0; active = false; }
+  });
+})();
+
+/* —— scrollProgress：顶部细进度条宽度跟随滚动（全页唯一 scroll 监听，passive）——
+   依赖：.scroll-progress。heroInner 视差仅在序章元素存在时生效（T1.5 前为空 → 守卫跳过）。 */
+(function scrollProgress() {
+  const progressBar = document.querySelector('.scroll-progress');
+  if (!progressBar) return;
+  const heroInner = document.querySelector('.hero-inner');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    progressBar.style.width = (scrolled * 100) + '%';
+    if (heroInner && window.scrollY < window.innerHeight) {
+      const y = window.scrollY;
+      heroInner.style.transform = 'translateY(' + (y * 0.22) + 'px)';
+      heroInner.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.85)).toFixed(3);
+    }
+  }, { passive: true });
+})();
+
+/* —— lightCanvas：向光金粉粒子（追光者签名画面）——
+   依赖：#lightCanvas。本 task 原样移植；colors 按章着色 + 密度分级停机留给 T5.2。
+   reduced-motion 整体 return（保留既有降级逻辑）。 */
+(function lightCanvas() {
+  const c = document.getElementById('lightCanvas');
+  if (!c) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = c.getContext('2d');
+  const hover = !matchMedia('(hover: none)').matches;
+  let w = 0, h = 0, dpr = 1;
+  let particles = [];
+  let mouseX = 0, mouseY = 0;
+  let targetX = -9999, targetY = -9999;
+  let mouseActive = false;
+  let opacity = 1;
+  let running = false;
+  let rafId = 0;
+
+  // 70% 金 · 20% 余烬 · 10% 浅金（T5.2 将改为按章着色）
+  const colors = [
+    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
+    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
+    'rgba(195,107,94,','rgba(195,107,94,',
+    'rgba(244,217,168,'
+  ];
+
+  function particleCount() {
+    if (w < 480) return 22;
+    if (w < 768) return 30;
+    return 52;
+  }
+
+  function spawn(initial) {
+    return {
+      x: Math.random() * w,
+      y: initial ? Math.random() * h : h + Math.random() * 30,
+      r: 0.6 + Math.pow(Math.random(), 2) * 1.7,
+      vx: (Math.random() - 0.5) * 0.1,
+      vy: -(0.12 + Math.random() * 0.3),
+      a: 0.32 + Math.random() * 0.42,
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.0015 + Math.random() * 0.002,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    };
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    c.width = Math.floor(w * dpr);
+    c.height = Math.floor(h * dpr);
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+
+    const n = particleCount();
+    if (particles.length !== n) {
+      particles = Array.from({ length: n }, () => spawn(true));
+    }
+  }
+
+  function frame(t) {
+    if (!running) { rafId = 0; return; }
+    ctx.clearRect(0, 0, w, h);
+    if (opacity < 0.02) { rafId = requestAnimationFrame(frame); return; }
+    ctx.globalCompositeOperation = 'lighter';
+
+    if (mouseActive) {
+      targetX += (mouseX - targetX) * 0.12;
+      targetY += (mouseY - targetY) * 0.12;
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      if (hover && mouseActive && targetX > -9000) {
+        const dx = targetX - p.x;
+        const dy = targetY - p.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 40000) { // 200^2 吸附半径
+          const d = Math.sqrt(d2) + 0.01;
+          p.vx += (dx / d) * 0.018;
+          p.vy += (dy / d) * 0.018;
+        }
+      }
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      if (p.vy > -0.05) p.vy = -0.05; // 维持向上漂
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -12 || p.x < -50 || p.x > w + 50) {
+        Object.assign(p, spawn(false));
+      }
+      const alpha = (p.a * (0.6 + 0.4 * Math.sin(t * p.freq + p.phase))).toFixed(3);
+      ctx.fillStyle = p.color + alpha + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (!running) {
+      running = true;
+      if (!rafId) rafId = requestAnimationFrame(frame);
+    }
+  }
+  function stop() { running = false; }
+
+  if (hover) {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!mouseActive) { targetX = mouseX; targetY = mouseY; }
+        mouseActive = true;
+      });
+      hero.addEventListener('mouseleave', () => { mouseActive = false; });
+    }
+  }
+
+  function updateOpacity() {
+    const heroH = window.innerHeight;
+    const scrolled = window.scrollY;
+    opacity = Math.max(0, 1 - scrolled / heroH);
+    document.documentElement.style.setProperty('--light-opacity', opacity.toFixed(3));
+    if (opacity < 0.02) stop(); else start();
+  }
+  window.addEventListener('scroll', updateOpacity, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') stop();
+    else updateOpacity();
+  });
+  window.addEventListener('resize', resize);
+
+  resize();
+  updateOpacity();
+  start();
+})();
 </script>
 </body>
 </html>
