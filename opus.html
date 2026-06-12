@@ -1615,6 +1615,168 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   100% { transform: translateX(360%); opacity: 0; }
 }
 
+/* —— #ch8 八·同行 · Walk With You（书信体「放大而非替代」+ ★两条金句 + 7 级台阶）——
+   单源精华(T4.2)：know-ai.html（书信体）。
+   紫金交汇「双色光效交汇」气质纯由场景引擎 body[data-chapter="8"]（--scene-glow violet 40%+gold 28% / --light-hue:286，[03] 已预定义）
+   着色固定光层实现，本章不写新 canvas(KD-4)；新增装饰仅 transform/opacity（fusionBreath 双光源对置呼吸），[11] 降级、不承载信息。
+   ★金句两条逐字以 know-ai.html 源为准：「用 AI 放大了你不可复制的那部分：判断/审美/经历/信任」(know-ai 第 1063 行)、
+   「我在前面等你。不是等你追上我，是等你追上昨天的自己」(know-ai 第 1094 行)。
+   D2 去重：本章只谈「放大而非替代」，不下「AI 是杠杆」定义性论断（杠杆定义仅 #ch6）。 */
+.ch8 { padding: 140px 0 130px; }
+/* 区块小标题（与各章 -sub 同手感，本章紫金双色由具体元素就近着色）。 */
+.ch8-sub {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--accent-violet); margin-bottom: 22px;
+}
+
+/* —— 双光源对置版式（紫光左上 + 金光右下交汇，呼应「同行」）——
+   包裹中心论点 + 书信体；两束光由 ::before/::after 缓动呼吸（fusionBreath：transform/opacity），
+   纯装饰、不承载信息，[11] 停。overflow:hidden 把光束裁在卡内，不溢出影响布局。 */
+.ch8-fusion {
+  position: relative; overflow: hidden;
+  padding: 64px clamp(28px, 5vw, 64px) 60px;
+  border: 1px solid color-mix(in srgb, var(--accent-violet) 22%, var(--line-strong));
+  background: linear-gradient(125deg,
+    color-mix(in srgb, var(--accent-violet) 8%, transparent),
+    transparent 46%,
+    color-mix(in srgb, var(--gold) 7%, transparent));
+}
+/* 紫光：左上对置光源（缓动呼吸，transform/opacity，[11] 停）。 */
+.ch8-fusion::before {
+  content: ''; position: absolute; top: -30%; left: -12%;
+  width: 56%; height: 90%; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-violet) 30%, transparent), transparent 68%);
+  filter: blur(8px); pointer-events: none;
+  animation: fusionBreath 9s ease-in-out infinite;
+}
+/* 金光：右下对置光源（与紫光反相呼吸，交汇于中带，transform/opacity，[11] 停）。 */
+.ch8-fusion::after {
+  content: ''; position: absolute; bottom: -30%; right: -12%;
+  width: 56%; height: 90%; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--gold) 26%, transparent), transparent 68%);
+  filter: blur(8px); pointer-events: none;
+  animation: fusionBreath 9s ease-in-out infinite reverse;
+}
+/* 中心论点（know-ai 第 605 行逐字）：紫金交汇处定调一句。 */
+.ch8-thesis {
+  position: relative; z-index: 1;
+  font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(26px, 4.4vw, 42px); line-height: 1.4;
+  color: var(--ink); margin: 0 0 36px;
+}
+.ch8-thesis em { font-style: normal; }
+.ch8-thesis .vio { color: var(--accent-violet); }
+.ch8-thesis .gld { color: var(--gold); }
+/* 书信体长段落：行宽 ~62ch 控制可读（T4.2 注意事项），衬线行距宽松。 */
+.ch8-letter {
+  position: relative; z-index: 1; max-width: 62ch;
+}
+.ch8-letter p {
+  font-family: var(--serif-cn); font-size: 16.5px; line-height: 2;
+  color: var(--ink-soft); margin: 0 0 20px;
+}
+.ch8-letter p:last-child { margin-bottom: 0; }
+.ch8-letter em { font-style: normal; color: var(--gold-light); font-weight: 600; }
+
+/* —— ★金句一卡（护城河；逐字 know-ai 第 1063 行）——紫金双色边框，居中强调。 */
+.ch8-creed {
+  margin: 56px 0 0; padding: 44px clamp(28px, 5vw, 52px);
+  border: 1px solid color-mix(in srgb, var(--gold) 22%, var(--accent-violet) 16%);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent-violet) 7%, transparent),
+    color-mix(in srgb, var(--gold) 6%, transparent));
+}
+.ch8-creed .ch8-sub { color: var(--gold); }
+.ch8-creed blockquote {
+  margin: 0; font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(19px, 2.8vw, 26px); line-height: 1.6; color: var(--gold-light);
+}
+.ch8-creed blockquote em { font-style: normal; color: var(--gold); }
+
+/* —— 7 级台阶（know-ai 第 1011–1066 行 L01–L07）——
+   垂直阶梯：左侧轴线（::before）+ 每级节点光点 + 级号；右侧名/说明。
+   L06/L07 高潮级（is-build 金高亮 / is-peak 紫金交汇高亮）。768px 序号列收窄、行内纵向堆叠。 */
+.ch8-ladder { margin-top: 88px; }
+.ladder-list {
+  position: relative; margin-top: 28px;
+}
+/* 左轴线（贯穿七级，纯装饰）。 */
+.ladder-list::before {
+  content: ''; position: absolute; left: 7px; top: 12px; bottom: 12px;
+  width: 1px; background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--accent-violet) 40%, transparent),
+    color-mix(in srgb, var(--gold) 40%, transparent));
+}
+.ladder-step {
+  position: relative; display: grid;
+  grid-template-columns: 64px 1fr; gap: 28px; align-items: baseline;
+  padding: 22px 0 22px 28px;
+  border-bottom: 1px solid var(--line);
+}
+.ladder-step:first-child { border-top: 1px solid var(--line); }
+/* 节点光点（贴在左轴上，每级一颗）。 */
+.ladder-step::before {
+  content: ''; position: absolute; left: 2px; top: 30px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg-deep); border: 2px solid var(--ink-dim);
+}
+.ladder-step.is-build::before { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 40%, var(--bg-deep)); }
+.ladder-step.is-peak::before { border-color: var(--accent-violet); background: color-mix(in srgb, var(--accent-violet) 45%, var(--gold)); }
+.ladder-step .ls-lvl {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 1px;
+  color: var(--ink-dim);
+}
+.ladder-step .ls-name {
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  margin: 0 0 8px;
+}
+.ladder-step .ls-name .ls-en {
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--ink-dim);
+}
+.ladder-step .ls-name b {
+  font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(20px, 2.6vw, 26px); color: var(--ink);
+}
+.ladder-step.is-build .ls-name b { color: var(--gold-light); }
+.ladder-step.is-peak .ls-name b { color: var(--accent-violet); }
+.ladder-step .ls-desc {
+  font-family: var(--serif-cn); font-size: 14.5px; line-height: 1.8;
+  color: var(--ink-soft); margin: 0;
+}
+.ladder-step .ls-desc em { font-style: normal; color: var(--ink); font-weight: 600; }
+/* 台阶尾注（精华一句，与 ch7 -note 同手感）。 */
+.ch8-ladder-note {
+  font-family: var(--serif-cn); font-size: 15px; line-height: 1.9;
+  color: var(--ink-soft); max-width: 720px; margin: 36px 0 0;
+}
+.ch8-ladder-note strong { color: var(--gold-light); font-weight: 700; }
+
+/* —— ★金句二收束卡（逐字 know-ai 第 1094 行）——居中诗化，本章收束。 */
+.ch8-coda {
+  margin: 72px auto 0; max-width: 720px; text-align: center;
+}
+.ch8-coda blockquote {
+  margin: 0; font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(22px, 3.4vw, 32px); line-height: 1.6; color: var(--ink);
+}
+.ch8-coda blockquote em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--accent-violet), var(--gold-light));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ch8-coda figcaption {
+  margin-top: 24px; font-family: var(--sans-en); font-size: 12px;
+  letter-spacing: 2px; color: var(--ink-dim);
+}
+.ch8-coda .sig-name { font-family: var(--serif-cn); color: var(--accent-violet); letter-spacing: 1px; }
+
+/* 双光源对置呼吸 keyframe（紫/金交汇装饰，transform/opacity 限定，[11] 停）。 */
+@keyframes fusionBreath {
+  0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+  50%      { transform: scale(1.15) translate(6%, 4%); opacity: 0.95; }
+}
+
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
 
@@ -1692,6 +1854,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch7-flywheel { grid-template-columns: 1fr; gap: 40px; }
   .ch7-hkrr, .ch7-lsa { margin-top: 76px; }
   .ch7-creed { padding: 38px 30px; }
+
+  /* —— #ch8 同行（T4.2）：章留白收敛；双光源版式内边距收一档；台阶级间距略缩；
+     金句卡内边距收一档。书信体行宽 62ch 在此档仍适配（窄于容器自然收口）。 —— */
+  .ch8 { padding: 110px 0 100px; }
+  .ch8-fusion { padding: 52px clamp(24px, 4.5vw, 48px) 48px; }
+  .ch8-creed { padding: 38px 30px; }
+  .ch8-ladder { margin-top: 72px; }
 }
 
 /* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
@@ -1769,6 +1938,22 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .rung { grid-template-columns: 1fr; gap: 10px; padding: 22px 22px; }
   .ch7-creed { padding: 32px 22px; }
   .ch7-creed blockquote + blockquote { margin-top: 18px; padding-top: 18px; }
+
+  /* —— #ch8 同行收紧（T4.2）：章留白收敛；双光源版式内边距收敛；书信体段距略收；
+     7 级台阶序号列与名/说明纵向堆叠（级号在上、内容在下），左轴/节点光点同步左移对齐，
+     小屏纵向阅读不裁切；两张金句卡内边距收敛。 —— */
+  .ch8 { padding: 90px 0 84px; }
+  .ch8-fusion { padding: 40px 22px 36px; }
+  .ch8-letter p { font-size: 15.5px; line-height: 1.95; }
+  .ch8-creed { padding: 32px 22px; margin-top: 48px; }
+  .ch8-ladder { margin-top: 60px; }
+  .ladder-list::before { left: 5px; }
+  .ladder-step {
+    grid-template-columns: 1fr; gap: 8px;
+    padding: 22px 0 22px 24px;
+  }
+  .ladder-step::before { left: 0; top: 28px; }
+  .ch8-coda { margin-top: 56px; }
 }
 
 /* ===== [11] REDUCED-MOTION ===== */
@@ -1854,6 +2039,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      流光气质由场景引擎 --scene-glow gold/ember 着色固定光层承载，无本章专属粒子/canvas。 */
   .idop-wheel .wheel-ring, .idop-wheel .wheel-spin, .idop-wheel .w-glyph { animation: none !important; }
   .ch7-creed::before { animation: none !important; opacity: 0 !important; }
+
+  /* —— [08] 八·同行 #ch8 降级（T4.2 / 自检 4）：双光源对置呼吸停（fusionBreath：紫光 ::before / 金光 ::after）。
+     双光晕是纯装饰母题，停后两束光静止呈现（保留紫金交汇的静态版式底，不熄灭、信息不依赖呼吸动效）。
+     中心论点、书信体三段、★两条金句、7 级台阶均为静态文本，入场仅依赖 .reveal/.reveal-stagger
+     （上方已置可见态、transition 归零），降级下完整可读（验收第 7 条）；台阶节点光点/级号为静态视觉，无依赖动画。
+     紫金交汇气质由场景引擎 --scene-glow violet/gold 着色固定光层承载，无本章专属粒子/canvas。 */
+  .ch8-fusion::before, .ch8-fusion::after { animation: none !important; }
 }
 </style>
 </head>
@@ -2792,6 +2984,119 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- 八 · 同行 —— 紫金交汇（双色光效交汇，呼应「同行」）。单源精华(T4.2)：know-ai.html（书信体）。
+     data-chapter="8" 接入场景引擎（色温紫金 --light-hue:286 / --scene-glow violet 40%+gold 28%，[03] 已预定义，光效「双色交汇」）。
+     —— 必取精华（章节内容预算表「八 同行」行）——
+     · 中心论点「不是替代你，是放大你」（know-ai 第 605 行 band-c 逐字）；
+     · ★金句一逐字 know-ai 第 1063 行 L07 desc：「用 AI 放大了你不可复制的那部分：判断 / 审美 / 经历 / 信任」；
+     · ★金句二逐字 know-ai 第 1094 行：「我在前面等你。不是等你追上我，是等你追上昨天的自己。」（引用截断处忠实源文）；
+     · 7 级台阶（know-ai 第 1011–1066 行 L01–L07：意识到 / 动手试 / 换好工具 / 愿意付费 / 从 Chat 到 Agent / 做出真东西 / 撬动新的可能）。
+     —— 形态（T4.2 注意事项）——
+     · 书信体长段落行宽控制 max-width ~62ch（.ch8-letter 用 ch 单位）保可读；
+     · 7 级台阶移动端纵向堆叠（768px 序号列收窄、行内纵堆）；
+     · 双色光交汇：场景引擎 --scene-glow 同时混 violet+gold（[03] 已预定义），本章额外在 .ch8-fusion 用「双光源对置」纯 CSS 版式（::before 紫光左上 / ::after 金光右下，transform/opacity 缓动呼吸），呼应「同行」——验收第 4 条亮点，[11] 已降级、不承载信息。
+     —— 去重（对照 D 清单）——
+     D2 AI 杠杆：本章只谈「放大而非替代」，不下「AI 是杠杆」定义性论断（杠杆定义仅 #ch6）。 -->
+<section class="chapter ch8" id="ch8" data-chapter="8" data-temp="fusion">
+  <div class="ch-inner">
+    <!-- 章号眉题 + 衬线大标题（T2.1 章壳模板：.section-label 英文 + .section-title 中文） -->
+    <div class="ch-head reveal">
+      <p class="section-label"><span class="idx">08</span> Chapter VIII · Walk With You</p>
+      <h2 class="section-title">同<span class="hl">行</span></h2>
+    </div>
+
+    <!-- 双光源对置版式（紫光 + 金光交汇，呼应「同行」）：包裹书信体与中心论点。
+         紫/金两光晕由 ::before/::after 纯 CSS 缓动呼吸（fusionBreath，transform/opacity），不承载信息，[11] 停。 -->
+    <div class="ch8-fusion reveal">
+      <!-- 中心论点（know-ai 第 605 行逐字）：紫金交汇处的一句话定调。 -->
+      <p class="ch8-thesis">关于 AI——<br><em class="vio">不是替代你</em>，<em class="gld">是放大你</em>。</p>
+
+      <!-- 书信体长段落（行宽 ~62ch 控制可读；know-ai 书信体精华重写压缩，非全文搬运）。 -->
+      <div class="ch8-letter">
+        <p>说实话，我用 AI 已经走了挺远——做出过没人付钱也愿意熬夜做的东西，也靠它接住过一些原本接不住的机会。但我最想告诉你的，不是我走多远。</p>
+        <p>是一件更朴素的事：这东西的强大，跟你不是「迟早的关系」，是「<em>今晚的关系</em>」。你不用懂技术，不用看懂任何一篇评测。你只要在某个具体的、属于你的时刻，把一件事交给它一次。</p>
+        <p>那一刻你会发现：它帮你提升的，从来不只是效率，是你被身边人看见的方式，是你和他们之间的<em>关系</em>。它不是来取代你的，它来放大你——放大你身上那部分，机器永远学不会、也复制不走的东西。</p>
+      </div>
+    </div>
+
+    <!-- ★金句一（逐字 know-ai 第 1063 行 L07 desc 核心句）：放大你不可复制的那部分。
+         以 .ch8-creed 双色卡承载，紫金交汇配色。 -->
+    <figure class="ch8-creed reveal">
+      <figcaption class="ch8-sub">The Moat · 你的护城河</figcaption>
+      <!-- ★金句一逐字（引用截断处忠实源文：源句为「用 AI 放大了你不可复制的那部分：你的判断、你的审美、你的经历、你和身边人的信任」） -->
+      <blockquote>用 AI 放大了你<em>不可复制的那部分</em>：你的判断、你的审美、你的经历、你和身边人的信任。</blockquote>
+    </figure>
+
+    <!-- 7 级台阶（know-ai 第 1011–1066 行 L01–L07 逐字取名；desc 精华压缩重写）。
+         垂直阶梯（左轴 + 节点光点），桌面递进、移动端纵向堆叠。L06/L07 为高潮级，紫金高亮。 -->
+    <div class="ch8-ladder reveal">
+      <p class="ch8-sub">The Ladder · 七级台阶 · 别停在第一格</p>
+      <div class="ladder-list reveal-stagger">
+        <div class="ladder-step">
+          <span class="ls-lvl">L 01</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Awareness</span><b>意识到</b></p>
+            <p class="ls-desc">不再把 AI 当成「听说过的东西」，开始相信：这一波是大事，而且<em>和自己有关</em>。</p>
+          </div>
+        </div>
+        <div class="ladder-step">
+          <span class="ls-lvl">L 02</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Try</span><b>动手试</b></p>
+            <p class="ls-desc">打开任何一个模型，拿它问问题、写邮件、查资料。从「看别人用」到<em>自己用</em>，第一圈飞轮就此启动。</p>
+          </div>
+        </div>
+        <div class="ladder-step">
+          <span class="ls-lvl">L 03</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Upgrade</span><b>换好工具</b></p>
+            <p class="ls-desc">意识到模型有代差，开始接触真正的顶级模型，第一次感受到「原来 AI 可以这么聪明」。</p>
+          </div>
+        </div>
+        <div class="ladder-step">
+          <span class="ls-lvl">L 04</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Commit</span><b>愿意付费</b></p>
+            <p class="ls-desc">第一次为 AI 掏出每月一杯咖啡的钱。这不是消费，是一次<em>认知的跃迁</em>——把它当生产力，而不是玩具。</p>
+          </div>
+        </div>
+        <div class="ladder-step">
+          <span class="ls-lvl">L 05</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Agent</span><b>从 Chat 到 Agent</b></p>
+            <p class="ls-desc">从「你问我答」，进化到「你交代一个目标，它自己去做」。你拥有了第一个<em>看不见、但能干活的下属</em>。</p>
+          </div>
+        </div>
+        <div class="ladder-step is-build">
+          <span class="ls-lvl">L 06</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Build</span><b>做出真东西</b></p>
+            <p class="ls-desc">做出第一个真实作品——一个网站、一支视频、一份让朋友刷屏的报告。<em>作品，就是你和 AI 一起留下的脚印，也是别人给你定价的开始。</em></p>
+          </div>
+        </div>
+        <div class="ladder-step is-peak">
+          <span class="ls-lvl">L 07</span>
+          <div class="ls-body">
+            <p class="ls-name"><span class="ls-en">Leverage</span><b>撬动新的可能</b></p>
+            <p class="ls-desc">AI 成为你能力的一部分，像母语、像工作记忆。你的护城河不是「会用 AI」，而是用 AI 放大了你不可复制的那部分。<em>你 + AI = 一个新人。</em></p>
+          </div>
+        </div>
+      </div>
+      <!-- 台阶尾注（know-ai 第 1070–1071 行精华）：大部分人停在前几格，真正打开新人生的是愿意再多走一格的人。 -->
+      <p class="ch8-ladder-note">
+        大部分人会在第二格停下来，少部分人走到第四格。真正打开新人生的，是那些<strong>愿意一直再多走一格</strong>的人。
+      </p>
+    </div>
+
+    <!-- ★金句二（逐字 know-ai 第 1094 行；引用截断处忠实源文：原句「我在前面等你。不是等你追上我，是等你追上昨天的自己。」）。
+         作本章收束，与序章「光在前方」呼应——同行者回头喊一声。 -->
+    <figure class="ch8-coda reveal">
+      <blockquote>我在前面等你。不是等你追上我，<br>是等你<em>追上昨天的自己</em>。</blockquote>
+      <figcaption>—— 写在前面的人 · <span class="sig-name">追光者</span></figcaption>
+    </figure>
   </div>
 </section>
 
