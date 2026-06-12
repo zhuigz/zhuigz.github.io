@@ -282,13 +282,173 @@ body[data-chapter="9"] {
 /* .chapter 通用骨架（min-height、章号眉题 .section-label + .section-title + .divider）。详见 T2.1。 */
 
 /* ===== [06] REVEAL & ANIMATIONS ===== */
-/* .reveal / .reveal-stagger 入场 + 共享 @keyframes 定义。 */
+/* .reveal / .reveal-stagger 入场 + 共享 @keyframes 定义。
+   .reveal/.reveal-stagger 移植留给 T2.1；此处先放跨章共享的入场 keyframes
+   （逐字复制 index：fadeUp/fadeDown/glyphIn），序章 [08] 与后续各章入场编排复用。 */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes glyphIn {
+  from { opacity: 0; transform: translateY(70px) scale(0.94); filter: blur(14px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
 
 /* ===== [07] SHARED COMPONENTS ===== */
 /* .info-card / .metric-cell / .practice-row / .tilt / .manifesto-row 等跨章复用组件。 */
 
 /* ===== [08] CHAPTERS ===== */
 /* 各章节专属样式（#ch0 序章 … #ch9 终章），按章号顺序排列。 */
+
+/* —— #ch0 序章 · 追光者（破暗开场 · 长廊入口）——
+   重新演绎，不复制 index hero 的 DOM（PRD 序章行硬约束）：
+   文案取自 index hero（姓名/别名/使命/★座右铭），但版式是新的「长廊入口」气质——
+   纵向门轴构图：一点光（放大 preloader 光点语汇）→ 姓名 per-glyph 自下破暗渐显
+   → 别名/使命作门内引语 → ★座右铭嵌入「门楣」框线，作为走进长廊的第一道门。
+   入场依赖 body.loaded（preloader IIFE 已移植，R7）；data-temp="night" = 色温弧最冷起点。 */
+.ch0 {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 120px 24px 96px; overflow: hidden;
+}
+.ch0-inner {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%; max-width: 760px;
+}
+
+/* 破暗的一点光：放大 preloader .pre-dot 语汇，作为长廊入口的源点 */
+.ch0-spark {
+  position: relative; width: 14px; height: 14px; margin-bottom: 54px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 26px var(--gold), 0 0 90px var(--gold-glow), 0 0 150px var(--gold-glow);
+  animation: ch0Spark 4.5s ease-in-out infinite;
+}
+.ch0-spark::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 64px; height: 64px; margin: -32px 0 0 -32px;
+  border-radius: 50%; border: 1px solid rgba(232,184,122,0.28);
+  animation: ch0Ripple 4.5s ease-out infinite;
+}
+/* 从光点垂落的一束细光，把视线引入长廊（纯 transform 的 scaleY 呼吸） */
+.ch0-spark::after {
+  content: ''; position: absolute; top: 14px; left: 50%; margin-left: -0.5px;
+  width: 1px; height: 46px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  transform-origin: top; opacity: 0.7;
+}
+
+/* 入口眉题：长廊的门牌号（英文眉题规约） */
+.ch0-eyebrow {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: clamp(13px, 1.8vw, 17px);
+  color: var(--ink-dim); letter-spacing: 5px; margin-bottom: 26px;
+}
+.ch0-eyebrow .ord { color: var(--gold); font-style: normal; letter-spacing: 3px; }
+
+/* 姓名：per-glyph 自下破暗渐显（长廊气质——逐字像被一束束光点亮，非 index 的横排大字） */
+.ch0-name {
+  font-family: var(--serif-cn);
+  font-size: clamp(64px, 14vw, 168px);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: clamp(6px, 2vw, 22px);
+  display: flex; gap: 0.04em;
+}
+.ch0-name .glyph {
+  display: inline-block;
+  background: linear-gradient(150deg, #fff 0%, var(--gold-light) 30%, var(--gold) 50%, var(--gold-deep) 66%, var(--gold-light) 84%, #fff 100%);
+  background-size: 240% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* 别名：作门内的一行落款 */
+.ch0-alias {
+  display: inline-flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  justify-content: center;
+  font-family: var(--serif-en); font-size: clamp(15px, 2.2vw, 21px);
+  color: var(--ink-soft); margin-top: 34px; letter-spacing: 5px;
+}
+.ch0-alias .cn { font-family: var(--serif-cn); color: var(--ink); letter-spacing: 7px; }
+.ch0-alias .sep { color: var(--gold); }
+
+/* 使命：门内的引语，宽度收窄保证可读 */
+.ch0-mission {
+  font-family: var(--serif-cn);
+  font-size: clamp(15px, 1.9vw, 18px); color: var(--ink-soft);
+  margin-top: 30px; letter-spacing: 1px; max-width: 560px; line-height: 2;
+}
+.ch0-mission em { font-style: normal; color: var(--gold); font-weight: 500; }
+
+/* ★座右铭：长廊入口的「门楣」——上下两道金线夹住，像一道要跨过的门 */
+.ch0-motto {
+  position: relative;
+  font-family: var(--serif-cn);
+  font-size: clamp(17px, 2.4vw, 25px);
+  color: var(--ink); line-height: 2.1; letter-spacing: 2px;
+  margin-top: 56px; padding: 30px 8px;
+}
+.ch0-motto::before, .ch0-motto::after {
+  content: ''; position: absolute; left: 50%; width: clamp(140px, 40%, 280px);
+  height: 1px; margin-left: calc(clamp(140px, 40%, 280px) / -2);
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.55;
+}
+.ch0-motto::before { top: 0; }
+.ch0-motto::after { bottom: 0; }
+.ch0-motto em { font-style: normal; color: var(--gold); font-weight: 600; }
+.ch0-motto .star { color: var(--gold); font-size: 0.7em; vertical-align: middle; padding: 0 0.4em; }
+
+/* 入口提示：走进长廊（替代 index 的 SCROLL，语义为「沿光前行」） */
+.ch0-enter {
+  margin-top: 70px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  color: var(--ink-dim); font-family: var(--sans-en);
+  font-size: 11px; letter-spacing: 5px;
+}
+.ch0-enter .line {
+  width: 1px; height: 50px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  animation: ch0Enter 2.4s ease-in-out infinite;
+}
+
+/* —— 入场编排（依赖 body.loaded；preloader 结束后逐层点亮，R7）——
+   per-glyph animation-delay 逐字递增总时长 ≤0.8s（T1.5：开场不拖沓）：
+   末字「者」起步 0.62s + 动画 0.9s 在 1.5s 收尾，整段在 ~2.4s 内安定。 */
+body.js .ch0-spark, body.js .ch0-eyebrow, body.js .ch0-alias,
+body.js .ch0-mission, body.js .ch0-motto, body.js .ch0-enter { opacity: 0; }
+body.js .ch0-name .glyph { opacity: 0; }
+
+body.loaded .ch0-spark { animation: ch0SparkIn 1.1s ease 0.05s both, ch0Spark 4.5s ease-in-out 1.2s infinite; }
+body.loaded .ch0-spark::before { animation: ch0Ripple 4.5s ease-out 1.2s infinite; }
+body.loaded .ch0-eyebrow { animation: fadeDown 1s ease 0.25s both; }
+body.loaded .ch0-name .glyph { animation: glyphIn 0.9s cubic-bezier(0.16,1,0.3,1) both, ch0NameShine 9s ease-in-out 2.6s infinite; }
+body.loaded .ch0-name .glyph:nth-child(1) { animation-delay: 0.38s, 2.6s; }
+body.loaded .ch0-name .glyph:nth-child(2) { animation-delay: 0.50s, 2.6s; }
+body.loaded .ch0-name .glyph:nth-child(3) { animation-delay: 0.62s, 2.6s; }
+body.loaded .ch0-alias { animation: fadeUp 1s ease 0.95s both; }
+body.loaded .ch0-mission { animation: fadeUp 1s ease 1.1s both; }
+body.loaded .ch0-motto { animation: fadeUp 1.1s ease 1.3s both; }
+body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
+
+/* 序章专属 keyframes（共享 fadeUp/fadeDown/glyphIn 复用 [06]，此处仅放 ch0 独有的） */
+@keyframes ch0Spark {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 26px var(--gold), 0 0 90px var(--gold-glow), 0 0 150px var(--gold-glow); }
+  50% { transform: scale(1.35); box-shadow: 0 0 36px var(--gold-light), 0 0 120px var(--gold-glow), 0 0 200px var(--gold-glow); }
+}
+@keyframes ch0SparkIn {
+  from { opacity: 0; transform: scale(0.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes ch0Ripple {
+  0% { transform: scale(0.3); opacity: 0.9; }
+  70% { opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes ch0NameShine { 0% { background-position: 0% center; } 100% { background-position: -240% center; } }
+@keyframes ch0Enter {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
 
 /* ===== [09] FOOTER ===== */
 /* 页脚 tagline + 版权行。 */
@@ -320,6 +480,18 @@ body[data-chapter="9"] {
   /* [03] 场景引擎新增的 transition（.bg-glow .orb / .scene-tint 的 background）均引用
      --scene-tr，已随上方归零 → 章号切换时背景/光层瞬时变色、不"动"，信息不丢（R2）。
      sceneEngine 的 150ms 去抖逻辑保留（只是过渡瞬时），无新增 keyframe 需在此覆盖。 */
+
+  /* —— [08] 序章 #ch0 降级（T1.5 / 自检 4）：所有 ch0 入场/光点 keyframe 停，
+     文字必须直接完整可见（覆盖 body.js 设的 opacity:0 隐藏态 → opacity:1）。 */
+  body.js .ch0-spark, body.js .ch0-eyebrow, body.js .ch0-alias,
+  body.js .ch0-mission, body.js .ch0-motto, body.js .ch0-enter,
+  body.js .ch0-name .glyph { opacity: 1 !important; }
+  .ch0-spark, .ch0-spark::before, .ch0-eyebrow, .ch0-name .glyph,
+  .ch0-alias, .ch0-mission, .ch0-motto, .ch0-enter .line {
+    animation: none !important;
+  }
+  /* glyphIn 末态含 transform/blur，停动画后显式归位，确保姓名清晰可见。 */
+  .ch0-name .glyph { transform: none !important; filter: none !important; }
 }
 </style>
 </head>
@@ -347,10 +519,53 @@ body[data-chapter="9"] {
   <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
 </div>
 
+<!-- ===== [08] CHAPTERS ===== -->
+
+<!-- 序章 · 追光者 —— 破暗开场 · 长廊入口（重新演绎，非 index hero 版式；色温弧最冷起点）。
+     data-chapter="0" 接入场景引擎；data-temp="night" 语义为色温弧最冷一点光。 -->
+<section class="chapter ch0" id="ch0" data-chapter="0" data-temp="night">
+  <div class="ch0-inner">
+    <!-- 破暗的一点光：放大 preloader 光点语汇，作长廊入口源点 -->
+    <div class="ch0-spark" aria-hidden="true"></div>
+
+    <p class="ch0-eyebrow"><span class="ord">0 ·</span> Prologue — The Light Chaser</p>
+
+    <!-- 姓名 per-glyph 自下破暗渐显（animation-delay 逐字递增，总时长 ≤0.8s） -->
+    <h1 class="ch0-name" aria-label="曹宗昱">
+      <span class="glyph">曹</span><span class="glyph">宗</span><span class="glyph">昱</span>
+    </h1>
+
+    <!-- 别名（取自 index hero 文案） -->
+    <p class="ch0-alias">
+      <span>追光者</span>
+      <span class="sep">·</span>
+      <span class="cn">The Light Chaser</span>
+    </p>
+
+    <!-- 使命（取自 index hero） -->
+    <p class="ch0-mission">帮助更多年轻人用 AI <em>打破思维钢印</em>，看见人生更多可能。</p>
+
+    <!-- ★座右铭（PRD 溯源项，逐字保留）——嵌入门楣框线，作走进长廊的第一道门 -->
+    <p class="ch0-motto">
+      <em>道阻且长</em>，行则将至<span class="star">✦</span>行而不辍，<em>未来可期</em>
+    </p>
+
+    <!-- 入口提示：沿光走进长廊 -->
+    <div class="ch0-enter" aria-hidden="true">
+      <span>ENTER</span>
+      <div class="line"></div>
+    </div>
+  </div>
+</section>
+
 <script>
 /* 各功能拆为独立自启 IIFE 模块（沿用 index 风格，无统一 init()）：
    preloader / sceneEngine / revealObserver / chapterRail / lightCanvas / countUp / timeline / copyWechat。
    详见 tech-design KD-6。后续 task 在此填充。 */
+
+/* —— 标记 JS 已启用（序章 per-glyph 入场编排依赖 body.js 设初始隐藏态，沿用 index 第 1797 行）——
+   reduced-motion 不影响此标记：降级在 [11] 把隐藏态/动画覆盖为直接可见。 */
+document.body.classList.add('js');
 
 /* —— preloader：一点光开场 → body.loaded（序章 per-glyph 入场依赖此机制，R7）——
    依赖：#preloader。reduced-motion 下 delay 归零，body.loaded 立即添加，入场不丢。 */
