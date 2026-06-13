@@ -80,7 +80,7 @@ body {
 /* preloader / .grain / .scroll-progress / .bg-glow(orb×3) / lightCanvas / .cursor-glow。详见 T1.3。
    从 index.html 全局贴层移植：preloader 触发 body.loaded（序章 per-glyph 入场依赖，R7）；
    orb 色值由 index 的硬编码 rgba 改为引用 --scene-glow，随章变色（T1.3 注意事项 / KD-4）；
-   lightCanvas 本 task 原样移植，colors 按章着色留给 T5.2。 */
+   lightCanvas colors 按章着色 + 三级密度已落地（T5.2，见 [12] JS lightCanvas IIFE）。 */
 
 /* —— PRELOADER（开场：一点光，破暗而生）—— */
 .preloader {
@@ -3725,9 +3725,21 @@ function animateCount(el) {
   });
 })();
 
-/* —— lightCanvas：向光金粉粒子（追光者签名画面）——
-   依赖：#lightCanvas。本 task 原样移植；colors 按章着色 + 密度分级停机留给 T5.2。
-   reduced-motion 整体 return（保留既有降级逻辑）。 */
+/* —— lightCanvas：向光金粉粒子（追光者签名画面）· 三级密度 + 按章着色（T5.2 / UX-004 / KD-4）——
+   依赖：#lightCanvas + body[data-chapter] + [03] 各章 --light-hue。
+   reduced-motion 整体 return（保留既有降级逻辑：JS 不跑、[11] CSS 隐藏 canvas，光母题靠静态光晕承载）。
+
+   三级密度（UX-004 锁定，保住终章高潮）——事件循环始终运行，仅按当前章调"目标粒子数 + 目标透明度"：
+   · 高密度档：序章 ch0 或终章 ch9 可见 → 满密度（桌面 ~80 / 平板 ≤30 / 移动 ≤22），透明度 1。
+   · 低密度档：中间章 ch1–ch8 可见 → 低密度不全停（桌面 ≤24 / 平板 ≤12 / 移动 ≤10），透明度地板 0.5。
+   · 完全停机档：仅 document.visibilityState==='hidden'（切后台/最小化）才 stop() 省电；任何叙事章都不停。
+   终章必然点亮：中间章只降密度、循环从不停 → 从中部跳 rail 到 ch9 时，data-chapter 一变即把目标拉回高密度，
+   粒子数每帧平滑逼近补满，"满金收束"必然呈现（杜绝"跳章到终章光效缺席"R4）。
+
+   按章着色：新生成粒子按当前 --light-hue 取色（hsla 色相 = 当前章色温，与 10 章色弧一致：冷夜蓝→暖金→…→满金）；
+   切章时只换"新粒子"的色，存量粒子自然衰减/复位时替换为新色，不瞬时全量换色（避免突兀）。
+
+   data-chapter 变化用 MutationObserver（attributes，轻量、零逐帧轮询）监听，不侵入 sceneEngine。 */
 (function lightCanvas() {
   const c = document.getElementById('lightCanvas');
   if (!c) return;
@@ -3740,22 +3752,45 @@ function animateCount(el) {
   let mouseX = 0, mouseY = 0;
   let targetX = -9999, targetY = -9999;
   let mouseActive = false;
-  let opacity = 1;
+  let opacity = 1;          // 当前透明度（向 targetOpacity 每帧平滑逼近）
+  let targetOpacity = 1;
   let running = false;
   let rafId = 0;
+  let curHue = 222;         // 当前章色相（按章着色，默认序章冷夜蓝 222）
 
-  // 70% 金 · 20% 余烬 · 10% 浅金（T5.2 将改为按章着色）
-  const colors = [
-    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
-    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
-    'rgba(195,107,94,','rgba(195,107,94,',
-    'rgba(244,217,168,'
-  ];
+  // 当前章号（HTML 初值 0；sceneEngine 改 body.dataset.chapter 后由 MutationObserver 同步）
+  function currentChapter() {
+    const n = parseInt(document.body.dataset.chapter, 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+  // 高密度档：序章 ch0 或终章 ch9（两处光效高潮）；其余为低密度档
+  function isHighDensity() {
+    const ch = currentChapter();
+    return ch === 0 || ch === 9;
+  }
 
-  function particleCount() {
-    if (w < 480) return 22;
-    if (w < 768) return 30;
-    return 52;
+  // 目标粒子数：三级密度按"当前档 × 视口宽度"取值（移动端整体更保守，≤30）
+  function targetCount() {
+    const high = isHighDensity();
+    if (w < 480) return high ? 22 : 10;   // 移动
+    if (w < 768) return high ? 30 : 12;   // 平板
+    return high ? 80 : 24;                // 桌面
+  }
+
+  // 从当前 --light-hue 读章色相（按章着色源；读不到则保持上一值，避免首帧/读失败闪色）
+  function readHue() {
+    const raw = getComputedStyle(document.body).getPropertyValue('--light-hue').trim();
+    const n = parseFloat(raw);
+    if (Number.isFinite(n)) curHue = n;
+    return curHue;
+  }
+
+  // 按当前章色相生成一个 hsla 前缀（色相微抖 + 饱和/明度区间，呈现金粉质感而非纯单色）
+  function pickColor() {
+    const hue = curHue + (Math.random() * 16 - 8);      // ±8° 微抖，色相不死板
+    const sat = 58 + Math.random() * 26;                // 58–84%
+    const lig = 62 + Math.random() * 16;                // 62–78%（偏亮，金粉感）
+    return 'hsla(' + hue.toFixed(1) + ',' + sat.toFixed(0) + '%,' + lig.toFixed(0) + '%,';
   }
 
   function spawn(initial) {
@@ -3768,7 +3803,7 @@ function animateCount(el) {
       a: 0.32 + Math.random() * 0.42,
       phase: Math.random() * Math.PI * 2,
       freq: 0.0015 + Math.random() * 0.002,
-      color: colors[Math.floor(Math.random() * colors.length)]
+      color: pickColor()   // 按当前章色相着色（新粒子用新色）
     };
   }
 
@@ -3782,15 +3817,27 @@ function animateCount(el) {
     c.style.height = h + 'px';
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
+    // 不在 resize 里重建全部粒子：交给 frame() 每帧平滑逼近 targetCount（避免突变）
+  }
 
-    const n = particleCount();
-    if (particles.length !== n) {
-      particles = Array.from({ length: n }, () => spawn(true));
+  // 每帧把粒子数平滑逼近目标（增：每帧补 ≤2 个；减：每帧裁 ≤1 个）——跳章不突变（UX-004）
+  function approachCount() {
+    const target = targetCount();
+    if (particles.length < target) {
+      const add = Math.min(2, target - particles.length);
+      for (let i = 0; i < add; i++) particles.push(spawn(false)); // 从底部生（新色）
+    } else if (particles.length > target) {
+      particles.length -= Math.min(1, particles.length - target);
     }
   }
 
   function frame(t) {
     if (!running) { rafId = 0; return; }
+    approachCount();
+    // 透明度向目标每帧平滑逼近（与 .light-canvas 的 CSS opacity transition 协同，双重柔化）
+    opacity += (targetOpacity - opacity) * 0.06;
+    document.documentElement.style.setProperty('--light-opacity', opacity.toFixed(3));
+
     ctx.clearRect(0, 0, w, h);
     if (opacity < 0.02) { rafId = requestAnimationFrame(frame); return; }
     ctx.globalCompositeOperation = 'lighter';
@@ -3818,7 +3865,7 @@ function animateCount(el) {
       p.x += p.vx;
       p.y += p.vy;
       if (p.y < -12 || p.x < -50 || p.x > w + 50) {
-        Object.assign(p, spawn(false));
+        Object.assign(p, spawn(false)); // 复位时取当前章新色 → 存量粒子自然换色（不瞬时全换）
       }
       const alpha = (p.a * (0.6 + 0.4 * Math.sin(t * p.freq + p.phase))).toFixed(3);
       ctx.fillStyle = p.color + alpha + ')';
@@ -3837,44 +3884,40 @@ function animateCount(el) {
   }
   function stop() { running = false; }
 
+  // 切章：刷新色相 + 目标透明度（高密度档 1 / 低密度档地板 0.5）；目标粒子数由 frame() 平滑逼近
+  function syncToChapter() {
+    readHue();
+    targetOpacity = isHighDensity() ? 1 : 0.5;
+  }
+
+  // F6 处置：鼠标吸附原绑 .hero（本页不存在 → 死绑定）；按 rev.1 决定改绑序章 .ch0。
   if (hover) {
-    const hero = document.querySelector('.hero');
-    if (hero) {
-      hero.addEventListener('mousemove', (e) => {
+    const ch0 = document.querySelector('.ch0');
+    if (ch0) {
+      ch0.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         if (!mouseActive) { targetX = mouseX; targetY = mouseY; }
         mouseActive = true;
       });
-      hero.addEventListener('mouseleave', () => { mouseActive = false; });
+      ch0.addEventListener('mouseleave', () => { mouseActive = false; });
     }
   }
 
-  /* F3（最重要）临时缓解 = tech-design R4：
-     废除 index"滚过首屏后 opacity→0 永久 stop()"行为（长页加章后粒子会永久消失）。
-     改为：序章内 opacity 由高（1）随首屏滚动平滑降到一个**基础低透明度地板** MIN_OP，
-     之后恒保持 ≥MIN_OP 持续运行——保证 Phase 2 加章后粒子不消失、光母题贯穿。
-     仅当页面整体不可见（切后台/最小化）时才 stop() 省电；任何叙事章节都不 stop()。
-     正式的「按章三级密度 + 按章着色」逻辑仍归 T5.2（UX-004），本次只保运行不熄灭。 */
-  const MIN_OP = 0.32; // 基础低透明度地板：滚过首屏后粒子仍可见（不再归零）
-  function updateOpacity() {
-    const heroH = window.innerHeight;
-    const scrolled = window.scrollY;
-    // 序章内由 1 平滑降到 MIN_OP；过首屏后恒为 MIN_OP（不再趋零、不再永久停机）
-    opacity = Math.max(MIN_OP, 1 - scrolled / heroH);
-    document.documentElement.style.setProperty('--light-opacity', opacity.toFixed(3));
-    start(); // 始终保持运行（页面可见时），不在滚动路径上 stop()
-  }
-  window.addEventListener('scroll', updateOpacity, { passive: true });
+  // 监听 body[data-chapter] 变化（attributes 轻量；零逐帧轮询，不侵入 sceneEngine）——切章即同步色相/透明度档
+  const chapterObs = new MutationObserver(syncToChapter);
+  chapterObs.observe(document.body, { attributes: true, attributeFilter: ['data-chapter'] });
+
+  // 完全停机档：仅页面整体不可见时停 raf 省电；恢复可见即重新运行（事件循环不在叙事路径上停）
   document.addEventListener('visibilitychange', () => {
-    // 仅页面整体不可见时停机省电；恢复可见即重新运行
     if (document.visibilityState === 'hidden') stop();
-    else { updateOpacity(); start(); }
+    else { syncToChapter(); start(); }
   });
   window.addEventListener('resize', resize);
 
   resize();
-  updateOpacity();
+  syncToChapter();
+  opacity = targetOpacity; // 首帧直接落在目标透明度，避免开场从 0 渐入造成首屏闪烁
   start();
 })();
 
