@@ -419,9 +419,10 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 
 /* ===== [05] CHAPTER SHELL ===== */
 /* .chapter 通用骨架（min-height 已在 [03] 定义）+ 章号眉题 .section-label
-   + .section-title（衬线大标题，.hl 渐变高亮）+ .divider。详见 T2.1。
-   三组件类逐字移植 index（变量名/手感一致，Dev 心智零迁移）；本 task 只建骨架/机制，
-   不写任何章节正文（T2.2–T2.4 范围）。 */
+   + .section-title（衬线大标题，.hl 渐变高亮）。详见 T2.1。
+   组件类逐字移植 index（变量名/手感一致，Dev 心智零迁移）；本 task 只建骨架/机制，
+   不写任何章节正文（T2.2–T2.4 范围）。
+   注：index 的 .divider 章间分隔细线在本页未使用——全宽 .chapter 段本身即天然分隔（T5.4 体量审计清理）。 */
 
 /* 章内容容器：每章正文的居中栅格基底（对齐 index .container），各章在此基础上扩展。 */
 .ch-inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
@@ -447,13 +448,6 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 .section-title .hl {
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-
-/* 章间分隔细线 —— 逐字移植 index .divider（第 449–453 行）。 */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(232,184,122,0.22), transparent);
-  margin: 0 auto; max-width: 640px;
 }
 
 /* ===== [06] REVEAL & ANIMATIONS ===== */
@@ -2076,7 +2070,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      而 .ch-inner 正文此档已收到约 W−48px、与桌面满宽全宽栅格（数据墙/五子/八模块/HKRR）右缘
      落在 W−24px，恰落入 rail（right:26px、高亮态 scale1.35 + 光晕约伸至 W−53px）的横向带内 → 重叠。
      在此档把左右内边距对称收到 62px（非仅右侧 62px），把全宽栅格右缘推到 W−62px 清出 rail 及其光晕；
-     对称收窄保证章内居中内容（终章诗/各章 lead/公式/divider，text-align:center + margin:auto）
+     对称收窄保证章内居中内容（终章诗/各章 lead/公式，text-align:center + margin:auto）
      仍以 padding-box 居中 = 视觉居中，不因单侧右 pad 而左偏（T5.3 复检修：避免居中内容偏移）；
      768px 处 rail 隐藏后此预留在下方断点对称复位回 24px。 —— */
   .ch-inner { padding-left: 62px; padding-right: 62px; }
