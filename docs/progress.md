@@ -4,13 +4,13 @@
 
 ## Now
 
-**REQ-001 集大成网站** — `executing` — Phase 1 完成且 code-review 通过(无 CRITICAL/HIGH;4 MEDIUM + 3 LOW 落盘 review-notes)。opus.html 当前 39.3KB:骨架 + token + 全局光层 + 场景引擎 + 序章,页面可独立打开。下一步 Phase 2。
+**REQ-001 集大成网站** — `acceptance`(**暂停,等 PM 验收**)— 19/19 task 完成,5 轮 Phase 审查 + architecture-guard + UX 模式 B 全部通过,六项硬门槛 PASS。验收包:`docs/requirements/REQ-001-unified-site/acceptance.md`(十条验收标准逐条证据 + 5 条已知限制)。
 
 ## Next
 
-1. Phase 2 / T2.1(章壳模板 + reveal 移植):委派 Dev(opus),**prompt 必须附带 review-notes F1–F4 修复指令**(选择器合并 / ink-tint 对齐 / canvas R4 临时缓解 / 贴层色值变量化)
-2. T2.2 底色 → T2.3 来路 → T2.4 此身,每 task 附技术快审注意事项
-3. Phase 2 完成 → code-reviewer 审查(出口:场景演变 ≥3 处可见)
+1. **PM 验收**:浏览器打开 opus.html 实际走一遍十章,对照 acceptance.md 验收清单逐条打勾,在「PM 验收记录」填写结论
+2. 验收通过 → Conductor 推进 `done`,回写 docs/architecture.md(整合页新形态,tech-design 已预告);PM 决定是否合并 main 上线
+3. 验收返工 → 按返工路径回 executing(需求级返工余额 2/2 轮未消耗)
 
 ## Current Plan
 
@@ -47,7 +47,29 @@
 
 ## Latest Handoff
 
-**日期**:2026-06-12(第二次 handoff,Phase 1 边界收尾)
+**日期**:2026-06-13(第三次 handoff,acceptance 暂停点)
+
+**1. 本次完成**
+- Phase 2–5 全部执行完毕(T2.1–T5.4 共 14 task,含两次额度中断的 partial 恢复),每 Phase 过 code-review(0 CRITICAL/HIGH 全程)
+- 最终审查:architecture-guard 零 finding;UX 模式 B 零 blocker/major(UX-001~008 回溯完成)
+- 六项硬门槛全 PASS,验收包写入 acceptance.md;backlog → `acceptance`
+- opus.html 最终态:225,846B,十章 + 双导航 + 场景引擎 + 三级密度 canvas,全部 ★金句逐字溯源
+
+**2. 当前状态**
+- REQ-001 `acceptance`,暂停等 PM;需求级返工余额 2/2 未消耗
+- 全部 findings 闭环或入已知限制(acceptance.md);review-notes 五份完整
+- 分支 claude/friendly-euler-sdhwcq 未合 main(等验收通过后 PM 决定上线)
+
+**3. 下一步**
+- 等 PM 验收(浏览器实走 + acceptance.md 清单打勾);通过则推进 done + 回写 architecture.md
+
+**4. 风险与注意事项**
+- PM 验收是首次真人浏览器实测——自动化审查覆盖不了真实滚动手感/动画节奏,如发现体感问题属正常返工路径
+- git 历史 3 个 WIP 快照提交已标注;若 PM 介意可在合 main 时 squash
+
+---
+
+**(归档)第二次 handoff · 2026-06-12 · Phase 1 边界收尾**
 
 **1. 本次完成**
 - PM 确认三处 scope 取舍 + 授权 executing(阻塞原因已清空)
