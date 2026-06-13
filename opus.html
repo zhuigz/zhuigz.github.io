@@ -2068,9 +2068,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   /* —— rail↔正文不重叠(T5.3 / R6 复检)：769–1024px 区间 rail 仍在场（768px 才隐藏），
      而 .ch-inner 正文此档已收到约 W−48px、与桌面满宽全宽栅格（数据墙/五子/八模块/HKRR）右缘
      落在 W−24px，恰落入 rail（right:26px、高亮态 scale1.35 + 光晕约伸至 W−53px）的横向带内 → 重叠。
-     在此档为正文右侧预留 rail 通道（右内边距 24→62px），把全宽栅格右缘推到 W−62px，
-     清出 rail 及其光晕；768px 处 rail 隐藏后此预留在下方断点复位。 —— */
-  .ch-inner { padding-right: 62px; }
+     在此档把左右内边距对称收到 62px（非仅右侧 62px），把全宽栅格右缘推到 W−62px 清出 rail 及其光晕；
+     对称收窄保证章内居中内容（终章诗/各章 lead/公式/divider，text-align:center + margin:auto）
+     仍以 padding-box 居中 = 视觉居中，不因单侧右 pad 而左偏（T5.3 复检修：避免居中内容偏移）；
+     768px 处 rail 隐藏后此预留在下方断点对称复位回 24px。 —— */
+  .ch-inner { padding-left: 62px; padding-right: 62px; }
 
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .metric-cell:nth-child(3n) { border-right: 1px solid var(--line); }
@@ -2165,8 +2167,9 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .chapter-rail { display: none; }
   .chapter-bar { display: flex; }
   html { scroll-padding-top: 52px; }
-  /* rail 已隐藏 → 复位 1024 档为 rail 预留的右通道（padding-right 62→24px，左右对称） */
-  .ch-inner { padding-right: 24px; }
+  /* rail 已隐藏 → 对称复位 1024 档为 rail 预留的左右通道（62→24px 两侧；
+     1024 档现为左右各 62px 对称收窄，故此处两侧一并复位，回到基底 24px 对称内边距） */
+  .ch-inner { padding-left: 24px; padding-right: 24px; }
 
   .spectrum { width: clamp(180px, 60vw, 240px); }
   .ch1-lead { font-size: 16px; margin-top: 32px; }
