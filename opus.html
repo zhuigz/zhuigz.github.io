@@ -832,6 +832,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   70% { opacity: 0; }
   100% { transform: scale(2.4); opacity: 0; }
 }
+/* F7(Phase 1 遗留 · T5.4 性能重评)：ch0NameShine 用 background-position 动画(background-clip:text 流光)，
+   理论上是 paint 层操作(非 GPU 合成)。重评判定「保留」而非改 transform 流光，理由：
+   ① 作用面极小——仅序章姓名 3 个 glyph(曹宗昱)，且只在 #ch0 单屏序章生效，是全页最性能宽容的破暗开场时刻；
+   ② 改 transform 流光需为 clip-text 叠 translateX 渐变伪元素，增 DOM/复杂度且易在 background-clip:text 上视觉回归，
+      收益与 3 字小面积 paint 不成比例；
+   ③ 已被 [11] reduced-motion 完全停(.ch0-name .glyph animation:none → 静态金渐变姓名仍完整清晰)。
+   结论：保留现状，性能可接受、降级已覆盖。 */
 @keyframes ch0NameShine { 0% { background-position: 0% center; } 100% { background-position: -240% center; } }
 @keyframes ch0Enter {
   0% { transform: scaleY(0); transform-origin: top; }
@@ -2312,11 +2319,15 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   body.js .ch0-mission, body.js .ch0-motto, body.js .ch0-enter,
   body.js .ch0-name .glyph { opacity: 1 !important; }
   .ch0-spark, .ch0-spark::before, .ch0-eyebrow, .ch0-name .glyph,
-  .ch0-alias, .ch0-mission, .ch0-motto, .ch0-enter .line {
+  .ch0-alias, .ch0-mission, .ch0-motto, .ch0-enter, .ch0-enter .line {
     animation: none !important;
   }
   /* glyphIn 末态含 transform/blur，停动画后显式归位，确保姓名清晰可见。 */
   .ch0-name .glyph { transform: none !important; filter: none !important; }
+  /* F14(Phase 1 遗留修复):.ch0-enter 此前漏入上方 animation:none 列,其 fadeUp(fill:both)在
+     1.6s delay 期间会以 from 态 translateY(36px) 定格 → reduce 下可感知位移。停动画后显式归位
+     transform，与 .ch0-alias/.ch0-mission/.ch0-motto(已在列)对齐,确保入口提示静止完整可见。 */
+  .ch0-enter { transform: none !important; }
 
   /* —— [08] 一·底色 #ch1 降级（T2.2 / 自检 4）：七色光谱旋转停（spectrumSpin），
      渐变本身静止仍完整呈现七色，信息不丢（光谱是静态可读的色相弧，非动画承载信息）。
@@ -3683,19 +3694,15 @@ function animateCount(el) {
 })();
 
 /* —— scrollProgress：顶部细进度条宽度跟随滚动（全页唯一 scroll 监听，passive）——
-   依赖：.scroll-progress。heroInner 视差仅在序章元素存在时生效（T1.5 前为空 → 守卫跳过）。 */
+   依赖：.scroll-progress。F5(Phase 1 遗留)清理：原 index 的 .hero-inner 视差死引用已删除
+   （opus 序章用 .ch0 重新演绎、无 .hero-inner 元素，分支永不执行）→ 唯一 scroll 监听只剩
+   进度条宽度更新，handler 更轻、零无效 DOM 查询。 */
 (function scrollProgress() {
   const progressBar = document.querySelector('.scroll-progress');
   if (!progressBar) return;
-  const heroInner = document.querySelector('.hero-inner');
   window.addEventListener('scroll', () => {
     const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
     progressBar.style.width = (scrolled * 100) + '%';
-    if (heroInner && window.scrollY < window.innerHeight) {
-      const y = window.scrollY;
-      heroInner.style.transform = 'translateY(' + (y * 0.22) + 'px)';
-      heroInner.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.85)).toFixed(3);
-    }
   }, { passive: true });
 })();
 
