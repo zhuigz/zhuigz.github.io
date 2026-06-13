@@ -283,7 +283,139 @@ body[data-chapter="9"] {
 }
 
 /* ===== [04] NAVIGATION ===== */
-/* 桌面 .chapter-rail 圆点列 + 顶部进度条 + 移动端 .chapter-bar 章名条。详见 KD-5。 */
+/* 桌面 .chapter-rail 圆点列 + 顶部进度条 + 移动端 .chapter-bar 章名条。详见 KD-5 / T5.1。
+   两套导航的"当前章"全程 CSS 驱动(body[data-chapter="N"] …),与场景引擎同源、零 toggle JS;
+   唯一新增 JS 是 .chapter-bar 展开/收起(chapterRail IIFE)。
+   互斥交接:rail 桌面在场(>768px),bar 移动端在场(≤768px);768px 断点切换在 [10] 落规则。 */
+
+/* —— 桌面章节 rail:右侧固定一列 10 个圆点(ch0–ch9)——
+   当前章高亮全程 CSS:body[data-chapter="N"] .rail-dot[data-go="N"]{…},禁止 JS 逐点 toggle。 */
+.chapter-rail {
+  position: fixed; top: 50%; right: 26px; transform: translateY(-50%);
+  z-index: 180; display: flex; flex-direction: column; gap: 16px;
+  padding: 0; margin: 0; list-style: none;
+}
+.rail-dot {
+  position: relative; display: block;
+  width: 11px; height: 11px; border-radius: 50%;
+  /* 静息态:极淡描边空心点,不喧宾夺主 */
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+.rail-dot:hover { border-color: var(--gold); transform: scale(1.25); }
+/* hover 章名气泡:文本由 data-name 提供(纯 CSS content,不写 JS) */
+.rail-dot::after {
+  content: attr(data-name);
+  position: absolute; right: 24px; top: 50%; transform: translateY(-50%) translateX(6px);
+  white-space: nowrap; pointer-events: none;
+  font-family: var(--serif-cn); font-size: 12px; letter-spacing: 2px;
+  color: var(--ink); background: color-mix(in srgb, var(--bg-deep) 86%, transparent);
+  border: 1px solid var(--line-strong); border-radius: 999px;
+  padding: 5px 14px; opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.rail-dot:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+/* 当前章高亮(全程 CSS by body[data-chapter]):实心金点 + 光晕 + 放大,与场景引擎同源 */
+body[data-chapter="0"] .rail-dot[data-go="0"],
+body[data-chapter="1"] .rail-dot[data-go="1"],
+body[data-chapter="2"] .rail-dot[data-go="2"],
+body[data-chapter="3"] .rail-dot[data-go="3"],
+body[data-chapter="4"] .rail-dot[data-go="4"],
+body[data-chapter="5"] .rail-dot[data-go="5"],
+body[data-chapter="6"] .rail-dot[data-go="6"],
+body[data-chapter="7"] .rail-dot[data-go="7"],
+body[data-chapter="8"] .rail-dot[data-go="8"],
+body[data-chapter="9"] .rail-dot[data-go="9"] {
+  background: var(--gold); border-color: var(--gold);
+  transform: scale(1.35);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--gold) 60%, transparent);
+}
+
+/* —— 移动端顶部固定章名条(.chapter-bar,UX-001 消解方案)——
+   桌面默认隐藏,768px 由 [10] 切为 display:flex(rail↔bar 互斥交接)。
+   贴在顶部进度条之下,常驻显示当前章名(纯 CSS content 切换),▾ 展开为章节清单。 */
+.chapter-bar {
+  display: none; /* >768px 隐藏;≤768px 在 [10] 切 display:flex */
+  position: fixed; top: 0; left: 0; right: 0; z-index: 190;
+  align-items: center; justify-content: space-between;
+  height: 44px; padding: 0 16px;
+  background: color-mix(in srgb, var(--bg-deep) 90%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+/* 左侧当前章名:文本由 body[data-chapter="N"] …::after content 切换(11 组规则,零同步 JS)。 */
+.chapter-bar .bar-name {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  font-family: var(--serif-cn); font-size: 14px; letter-spacing: 2px; color: var(--ink);
+  min-width: 0; overflow: hidden;
+}
+.chapter-bar .bar-name::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; flex: none;
+  background: var(--gold); box-shadow: 0 0 8px var(--gold);
+}
+.chapter-bar .bar-name::after { content: '追光者 · 序章'; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 当前章名 content 切换(与 rail 高亮、场景引擎同一 body[data-chapter] 驱动)。 */
+body[data-chapter="0"] .chapter-bar .bar-name::after { content: '序章 · 追光者'; }
+body[data-chapter="1"] .chapter-bar .bar-name::after { content: '一 · 底色'; }
+body[data-chapter="2"] .chapter-bar .bar-name::after { content: '二 · 来路'; }
+body[data-chapter="3"] .chapter-bar .bar-name::after { content: '三 · 此身'; }
+body[data-chapter="4"] .chapter-bar .bar-name::after { content: '四 · 信念'; }
+body[data-chapter="5"] .chapter-bar .bar-name::after { content: '五 · 远方'; }
+body[data-chapter="6"] .chapter-bar .bar-name::after { content: '六 · 系统'; }
+body[data-chapter="7"] .chapter-bar .bar-name::after { content: '七 · 造物'; }
+body[data-chapter="8"] .chapter-bar .bar-name::after { content: '八 · 同行'; }
+body[data-chapter="9"] .chapter-bar .bar-name::after { content: '终章 · 成为'; }
+/* 右侧展开按钮(▾):点击给 .chapter-bar 加 .open 类(唯一 toggle JS) */
+.chapter-bar .bar-toggle {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 30px; padding: 0; margin: 0;
+  background: transparent; border: 1px solid var(--line-strong); border-radius: 8px;
+  color: var(--gold); cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.chapter-bar .bar-toggle .chev { display: inline-block; transition: transform 0.3s ease; font-size: 12px; line-height: 1; }
+.chapter-bar.open .bar-toggle .chev { transform: rotate(180deg); }
+/* 覆盖式章节清单:默认折叠(max-height 0),.open 展开。绝对定位贴在条下方,不挤压正文。 */
+.chapter-bar .bar-list {
+  position: absolute; top: 100%; left: 0; right: 0;
+  margin: 0; padding: 0; list-style: none;
+  background: color-mix(in srgb, var(--bg-deep) 96%, transparent);
+  border-bottom: 1px solid var(--line);
+  max-height: 0; overflow: hidden;
+  opacity: 0; pointer-events: none;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+.chapter-bar.open .bar-list { max-height: 80vh; opacity: 1; pointer-events: auto; }
+.chapter-bar .bar-list a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px; text-decoration: none;
+  font-family: var(--serif-cn); font-size: 14px; letter-spacing: 1px;
+  color: var(--ink-soft); border-top: 1px solid var(--line);
+}
+.chapter-bar .bar-list a .li-idx { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+.chapter-bar .bar-list a:hover { color: var(--gold); background: var(--bg-card); }
+/* 当前章在清单里也高亮(全程 CSS,同 body[data-chapter] 驱动) */
+body[data-chapter="0"] .bar-list a[data-go="0"],
+body[data-chapter="1"] .bar-list a[data-go="1"],
+body[data-chapter="2"] .bar-list a[data-go="2"],
+body[data-chapter="3"] .bar-list a[data-go="3"],
+body[data-chapter="4"] .bar-list a[data-go="4"],
+body[data-chapter="5"] .bar-list a[data-go="5"],
+body[data-chapter="6"] .bar-list a[data-go="6"],
+body[data-chapter="7"] .bar-list a[data-go="7"],
+body[data-chapter="8"] .bar-list a[data-go="8"],
+body[data-chapter="9"] .bar-list a[data-go="9"] { color: var(--gold); }
+body[data-chapter="0"] .bar-list a[data-go="0"] .li-idx,
+body[data-chapter="1"] .bar-list a[data-go="1"] .li-idx,
+body[data-chapter="2"] .bar-list a[data-go="2"] .li-idx,
+body[data-chapter="3"] .bar-list a[data-go="3"] .li-idx,
+body[data-chapter="4"] .bar-list a[data-go="4"] .li-idx,
+body[data-chapter="5"] .bar-list a[data-go="5"] .li-idx,
+body[data-chapter="6"] .bar-list a[data-go="6"] .li-idx,
+body[data-chapter="7"] .bar-list a[data-go="7"] .li-idx,
+body[data-chapter="8"] .bar-list a[data-go="8"] .li-idx,
+body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 
 /* ===== [05] CHAPTER SHELL ===== */
 /* .chapter 通用骨架（min-height 已在 [03] 定义）+ 章号眉题 .section-label
@@ -1853,9 +1985,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch9-connect { margin-top: 72px; display: flex; justify-content: center; }
 .ch9-connect .connect-card {
   position: relative;
+  /* F18:radial 顶光裸金 rgba(232,184,122,0.12) → var(--gold) 派生（color-mix 12%）。
+     F21:卡底裸 rgba(255,255,255,0.02) → --bg-card-lo 派生（与 --bg-card 取中即 0.02）。 */
   background:
-    radial-gradient(600px circle at 50% 0%, rgba(232,184,122,0.12), transparent 60%),
-    rgba(255,255,255,0.02);
+    radial-gradient(600px circle at 50% 0%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 60%),
+    color-mix(in srgb, var(--bg-card) 50%, var(--bg-card-lo));
   border: 1px solid var(--line-strong);
   border-radius: 22px; padding: 48px 56px;
   text-align: center; min-width: 320px; max-width: 480px;
@@ -1863,7 +1997,8 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch9-connect .connect-card::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, transparent 40%, rgba(232,184,122,0.05) 50%, transparent 60%);
+  /* F18:横扫微光裸金 rgba(232,184,122,0.05) → var(--gold) 派生（color-mix 5%）。 */
+  background: linear-gradient(135deg, transparent 40%, color-mix(in srgb, var(--gold) 5%, transparent) 50%, transparent 60%);
   background-size: 200% 200%; opacity: 0;
   transition: opacity 0.6s; pointer-events: none;
   animation: connectSheen 6s linear infinite;
@@ -1873,7 +2008,8 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch9-connect .icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 64px; height: 64px; border-radius: 18px;
-  background: rgba(232,184,122,0.1); border: 1px solid rgba(232,184,122,0.22);
+  /* F18:图标底/边裸金 rgba → var(--gold) 派生（color-mix 10% / 22%）。 */
+  background: color-mix(in srgb, var(--gold) 10%, transparent); border: 1px solid color-mix(in srgb, var(--gold) 22%, transparent);
   font-size: 28px; margin-bottom: 22px;
 }
 .ch9-connect .label {
@@ -1894,12 +2030,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   margin-top: 22px;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 28px; border-radius: 999px;
-  background: transparent; border: 1px solid rgba(232,184,122,0.35);
+  /* F18:按钮边/悬停底/悬停辉裸金 rgba → var(--gold) 派生（color-mix 35% / 12% / 20%）。 */
+  background: transparent; border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
   color: var(--gold); font-family: var(--sans-cn); font-size: 13px; letter-spacing: 2px;
   cursor: pointer; transition: all 0.35s ease;
   position: relative; z-index: 1;
 }
-.ch9-connect .copy-btn:hover { background: rgba(232,184,122,0.12); box-shadow: 0 0 24px rgba(232,184,122,0.2); transform: translateY(-1px); }
+.ch9-connect .copy-btn:hover { background: color-mix(in srgb, var(--gold) 12%, transparent); box-shadow: 0 0 24px color-mix(in srgb, var(--gold) 20%, transparent); transform: translateY(-1px); }
 
 /* 终章呼应序章座右铭（非整句重复：仅取「行则将至」一段，D 清单不冲突）——长廊尽头的一行小字 */
 .ch9-echo {
@@ -2014,6 +2151,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 @media (max-width: 768px) {
   /* 768px 关闭光标光晕（移植 index 既有断点行为）。 */
   .cursor-glow { display: none; }
+
+  /* —— rail↔bar 互斥交接(T5.1 / UX-001 / R6):桌面 rail 隐藏,移动端章名条在场。
+     任一断点恰有一种导航,杜绝"两者皆无"。bar 高 44px fixed 贴顶,
+     用 scroll-padding-top 让锚点跳转落点下移、不被条遮挡(配合 scroll-behavior:smooth)。 —— */
+  .chapter-rail { display: none; }
+  .chapter-bar { display: flex; }
+  html { scroll-padding-top: 52px; }
 
   .spectrum { width: clamp(180px, 60vw, 240px); }
   .ch1-lead { font-size: 16px; margin-top: 32px; }
@@ -2130,6 +2274,16 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .light-canvas, .cursor-glow { display: none; }
   /* scroll-progress 无动画，仅 width 过渡；此处放任其极短过渡，不影响可读性。 */
 
+  /* —— [04] 导航降级(T5.1):rail 圆点 / 章名气泡 / 章名条展开 / ▾ 旋转的 transition 归零。
+     当前章高亮、章名 content、清单展开均为 CSS 状态切换(by body[data-chapter] / .open),
+     降级下仍生效、只是瞬时——"可见当前章 + 可跳任意章"信息零丢失(验收第 5 条)。
+     transform/opacity 级动效降级,符合 [11] 通则。 */
+  .rail-dot, .rail-dot::after,
+  .chapter-bar .bar-toggle, .chapter-bar .bar-toggle .chev,
+  .chapter-bar .bar-list { transition: none !important; }
+  /* 当前章 rail 点降级仍高亮(去掉放大动效,保留实心金点 + 光晕,信息可见)。 */
+  body[data-chapter] .rail-dot[data-go] { transform: none !important; }
+
   /* [03] 场景引擎新增的 transition（.bg-glow .orb / .scene-tint 的 background）均引用
      --scene-tr，已随上方归零 → 章号切换时背景/光层瞬时变色、不"动"，信息不丢（R2）。
      sceneEngine 的 150ms 去抖逻辑保留（只是过渡瞬时），无新增 keyframe 需在此覆盖。 */
@@ -2210,6 +2364,9 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
      入场仅依赖 .reveal/.reveal-stagger，上方已置可见态、transition 归零），降级下完整可读（验收第 7 条）；
      联系卡 connectSheen 微光横扫 + copy-btn hover 均为增强非依赖；满金气质由场景引擎 --scene-glow gold-light 着色固定光层承载。 */
   .ch9-seal::before { animation: none !important; transform: scale(0.9) !important; opacity: 0.7 !important; }
+  /* F19(必修):connectSheen 持续动画补降级——全页 21 keyframes 唯一缺口，停后联系卡静止满金底，
+     微光横扫本就 opacity:0(非 hover 态),停动画不丢任何信息。 */
+  .ch9-connect .connect-card::before { animation: none !important; }
 }
 </style>
 </head>
@@ -2236,6 +2393,45 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   <div class="orb orb-3"></div>
   <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
 </div>
+
+<!-- ===== [04] NAVIGATION ===== -->
+
+<!-- 桌面章节 rail:右侧 10 个圆点(ch0–ch9)。当前章高亮全程 CSS(body[data-chapter])。
+     每点 <a> 锚点跳转 + scroll-behavior:smooth(html 已有);aria-label 提供无障碍可读名;
+     data-name 供 hover 章名气泡(纯 CSS content);data-go 供高亮选择器。 -->
+<nav class="chapter-rail" aria-label="章节导航">
+  <a class="rail-dot" href="#ch0" data-go="0" data-name="序章 · 追光者" aria-label="跳到序章 · 追光者"></a>
+  <a class="rail-dot" href="#ch1" data-go="1" data-name="一 · 底色" aria-label="跳到第一章 · 底色"></a>
+  <a class="rail-dot" href="#ch2" data-go="2" data-name="二 · 来路" aria-label="跳到第二章 · 来路"></a>
+  <a class="rail-dot" href="#ch3" data-go="3" data-name="三 · 此身" aria-label="跳到第三章 · 此身"></a>
+  <a class="rail-dot" href="#ch4" data-go="4" data-name="四 · 信念" aria-label="跳到第四章 · 信念"></a>
+  <a class="rail-dot" href="#ch5" data-go="5" data-name="五 · 远方" aria-label="跳到第五章 · 远方"></a>
+  <a class="rail-dot" href="#ch6" data-go="6" data-name="六 · 系统" aria-label="跳到第六章 · 系统"></a>
+  <a class="rail-dot" href="#ch7" data-go="7" data-name="七 · 造物" aria-label="跳到第七章 · 造物"></a>
+  <a class="rail-dot" href="#ch8" data-go="8" data-name="八 · 同行" aria-label="跳到第八章 · 同行"></a>
+  <a class="rail-dot" href="#ch9" data-go="9" data-name="终章 · 成为" aria-label="跳到终章 · 成为"></a>
+</nav>
+
+<!-- 移动端顶部固定章名条(≤768px 在场,UX-001)。左侧当前章名由 body[data-chapter] CSS content 切换;
+     右侧 ▾ 按钮展开覆盖式 10 锚点清单(chapterRail IIFE 唯一 toggle JS)。 -->
+<nav class="chapter-bar" aria-label="章节导航">
+  <span class="bar-name" aria-live="polite"></span>
+  <button class="bar-toggle" type="button" id="barToggle" aria-expanded="false" aria-controls="barList" aria-label="展开章节列表">
+    <span class="chev" aria-hidden="true">▾</span>
+  </button>
+  <ul class="bar-list" id="barList">
+    <li><a href="#ch0" data-go="0"><span class="li-idx">00</span> 序章 · 追光者</a></li>
+    <li><a href="#ch1" data-go="1"><span class="li-idx">01</span> 一 · 底色</a></li>
+    <li><a href="#ch2" data-go="2"><span class="li-idx">02</span> 二 · 来路</a></li>
+    <li><a href="#ch3" data-go="3"><span class="li-idx">03</span> 三 · 此身</a></li>
+    <li><a href="#ch4" data-go="4"><span class="li-idx">04</span> 四 · 信念</a></li>
+    <li><a href="#ch5" data-go="5"><span class="li-idx">05</span> 五 · 远方</a></li>
+    <li><a href="#ch6" data-go="6"><span class="li-idx">06</span> 六 · 系统</a></li>
+    <li><a href="#ch7" data-go="7"><span class="li-idx">07</span> 七 · 造物</a></li>
+    <li><a href="#ch8" data-go="8"><span class="li-idx">08</span> 八 · 同行</a></li>
+    <li><a href="#ch9" data-go="9"><span class="li-idx">09</span> 终章 · 成为</a></li>
+  </ul>
+</nav>
 
 <!-- ===== [08] CHAPTERS ===== -->
 
@@ -3491,6 +3687,44 @@ function animateCount(el) {
   }, { passive: true });
 })();
 
+/* —— chapterRail：移动端章名条展开/收起（KD-5 / T5.1 唯一新增 toggle JS）——
+   依赖:#barToggle(▾ 按钮)/ .chapter-bar / .bar-list a。
+   rail 高亮与 bar 章名均由 CSS body[data-chapter] 驱动,本 IIFE 只管 .open 展开态:
+   · 点 ▾ 给 .chapter-bar 加/去 .open + 同步 aria-expanded;
+   · 点清单内任一锚点(html scroll-behavior:smooth 跳转)后移除 .open;
+   · 点条外区域(其余文档)收起,避免清单滞留。
+   不存在依赖元素时直接 return,不报错(rail/进度条仍工作)。 */
+(function chapterRail() {
+  const bar = document.querySelector('.chapter-bar');
+  const toggle = document.getElementById('barToggle');
+  if (!bar || !toggle) return;
+
+  function close() {
+    if (!bar.classList.contains('open')) return;
+    bar.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+  function open() {
+    bar.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    bar.classList.contains('open') ? close() : open();
+  });
+
+  // 点清单锚点:跳转交给原生锚点 + scroll-behavior:smooth,这里只收起展开态
+  bar.querySelectorAll('.bar-list a').forEach((a) => {
+    a.addEventListener('click', close);
+  });
+
+  // 点条外任意处收起(展开态时);条内点击已 stopPropagation/由锚点处理
+  document.addEventListener('click', (e) => {
+    if (bar.classList.contains('open') && !bar.contains(e.target)) close();
+  });
+})();
+
 /* —— lightCanvas：向光金粉粒子（追光者签名画面）——
    依赖：#lightCanvas。本 task 原样移植；colors 按章着色 + 密度分级停机留给 T5.2。
    reduced-motion 整体 return（保留既有降级逻辑）。 */
@@ -3682,18 +3916,22 @@ function animateCount(el) {
       btn.textContent = '已复制 ✓ 备注「追光」';
       setTimeout(() => { btn.textContent = '复制微信号'; }, 2200);
     };
+    /* F20:clipboard 失败 catch 与无 API else 两条降级分支均补 done() ——
+       选中文本后给用户同样的「已复制」反馈,杜绝降级路径下点击无响应。 */
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done).catch(() => {
         const sel = window.getSelection();
         const range = document.createRange();
         range.selectNodeContents(idEl);
         sel.removeAllRanges(); sel.addRange(range);
+        done();
       });
     } else {
       const sel = window.getSelection();
       const range = document.createRange();
       range.selectNodeContents(idEl);
       sel.removeAllRanges(); sel.addRange(range);
+      done();
     }
   });
 })();
