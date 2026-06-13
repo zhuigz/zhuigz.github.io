@@ -3736,6 +3736,14 @@ function animateCount(el) {
   document.addEventListener('click', (e) => {
     if (bar.classList.contains('open') && !bar.contains(e.target)) close();
   });
+
+  // Escape 键关闭展开列表,并将焦点归还触发按钮(WCAG disclosure widget 键盘可达性)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && bar.classList.contains('open')) {
+      close();
+      toggle.focus();
+    }
+  });
 })();
 
 /* —— lightCanvas：向光金粉粒子（追光者签名画面）· 三级密度 + 按章着色（T5.2 / UX-004 / KD-4）——

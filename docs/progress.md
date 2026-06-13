@@ -39,11 +39,11 @@
 - [x] T4.2 八·同行 `#ch8` 书信体 + 7 级台阶(双色光交汇;≤22KB)
 - [x] T4.3 终章·成为 `#ch9` 全诗 + 联系卡 + 满金收束(≤16KB)
 
-### Phase 5:全局打磨(出口:三档断点完整、reduced-motion 全可读、≤400KB、双导航可用)
-- [ ] T5.1 chapter-rail(桌面)+ 顶部固定章名条(移动)+ 进度条
-- [ ] T5.2 lightCanvas 三级密度(序/终章高密度,中间章低密度,仅页面隐藏时停)
-- [ ] T5.3 三档断点逐章检查(768px 处 rail↔章名条互斥交接)
-- [ ] T5.4 reduced-motion 全量降级 + `wc -c` 体量审计
+### Phase 5:全局打磨 ✅(code-review 通过 2026-06-13,findings 见 docs/review-notes/REQ-001-phase5.md;19/19 task 完成)
+- [x] T5.1 chapter-rail(桌面)+ 顶部固定章名条(移动)+ 进度条
+- [x] T5.2 lightCanvas 三级密度(序/终章高密度,中间章低密度,仅页面隐藏时停)
+- [x] T5.3 三档断点逐章检查(768px 处 rail↔章名条互斥交接)
+- [x] T5.4 reduced-motion 全量降级 + `wc -c` 体量审计
 
 ## Latest Handoff
 
