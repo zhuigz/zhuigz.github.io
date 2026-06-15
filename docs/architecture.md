@@ -19,4 +19,14 @@
 
 ## 站点构成
 
-页面清单与分类见 `CLAUDE.md` 的 Repository Structure。当前均为独立单页;REQ-001 将引入"全站内容整合页"形态,其信息架构由该需求的 `tech-design.md` 定义,落定后回写本文档。
+页面清单与分类见 `CLAUDE.md` 的 Repository Structure。除独立单页外,站点新增**"全站内容整合页"形态**:
+
+- `opus.html`(REQ-001,2026-06-15 PM 验收通过):将 12 个内容源精华融合为单一沉浸式滚动叙事(10 章人生叙事弧),非链接跳转而是内容级整合。
+  - **场景引擎**:`body[data-chapter="N"]` + `:root` `--scene-*` 自定义属性,单 `IntersectionObserver`(中带判定 + 150ms 去抖)驱动章节级背景色温/光晕/粒子色相演变,全程 CSS transition 过渡(零逐帧 JS)。
+  - **章色板**:10 章色温弧 `--light-hue` 222→38→44→48→14→264→188→33→286→46(冷夜→暖土→黎明→正午金→赤焰→靛紫→青银→金橙→紫金→满金)。
+  - **双导航**:桌面 `.chapter-rail`(纯 CSS 高亮)+ 移动端 `.chapter-bar`(CSS `content` 切章名 + 展开列表),768px 互斥交接。
+  - **lightCanvas 三级密度**:序/终章高密度、中间章低密度、仅页面隐藏停机;`MutationObserver` 监听 `data-chapter` 着色。
+  - 仍遵守全部硬约束(自包含、零构建、设计系统、三档断点、reduced-motion 全覆盖);体量 220.5KB。
+  - 信息架构沿用"index.html 不链接私密页面"约定:**站内无任何页面链接到 opus.html**,保持半私密(详见该需求 `prd.md`)。
+
+后续整合页/新页面可参照此形态;场景引擎模式可复用。

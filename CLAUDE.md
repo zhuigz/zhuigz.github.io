@@ -190,7 +190,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: REQ-001 (集大成网站 `opus.html`, L, P0) is in `acceptance` — all 19 tasks + 5 phase reviews + final review (architecture-guard, UX mode B) passed, six hard gates PASS. Awaiting PM acceptance against `docs/requirements/REQ-001-unified-site/acceptance.md`. See `docs/progress.md`.
+**Current status**: REQ-001 (集大成网站 `opus.html`, L, P0) is **done** — PM-accepted 2026-06-15. `opus.html` (220.5KB, 10-chapter immersive scroll narrative: scene engine + dual nav + tri-tier canvas) delivered, six hard gates PASS. On branch `claude/friendly-euler-sdhwcq`, PR #30 open (not yet merged to `main`). No active requirement — backlog clear.
 
 ## Adding New Content
 

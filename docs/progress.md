@@ -4,13 +4,12 @@
 
 ## Now
 
-**REQ-001 集大成网站** — `acceptance`(**暂停,等 PM 验收**)— 19/19 task 完成,5 轮 Phase 审查 + architecture-guard + UX 模式 B 全部通过,六项硬门槛 PASS。验收包:`docs/requirements/REQ-001-unified-site/acceptance.md`(十条验收标准逐条证据 + 5 条已知限制)。
+**REQ-001 集大成网站** — `done`(PM 验收通过 2026-06-15)— `opus.html` 交付完成,六项硬门槛 PASS,验收记录见 `acceptance.md`,架构基线已回写整合页形态。**无活跃需求**,backlog 已清。
 
 ## Next
 
-1. **PM 验收**:浏览器打开 opus.html 实际走一遍十章,对照 acceptance.md 验收清单逐条打勾,在「PM 验收记录」填写结论
-2. 验收通过 → Conductor 推进 `done`,回写 docs/architecture.md(整合页新形态,tech-design 已预告);PM 决定是否合并 main 上线
-3. 验收返工 → 按返工路径回 executing(需求级返工余额 2/2 轮未消耗)
+1. **上线决策(待 PM)**:分支 `claude/friendly-euler-sdhwcq` 已开 PR #30,未合 main。PM 决定何时合并(合并即 GitHub Pages 自动发布 opus.html);若介意 WIP 快照提交可 squash merge
+2. 新需求:PM 可用 `/pm` 启动下一条需求的 designing
 
 ## Current Plan
 
@@ -47,29 +46,23 @@
 
 ## Latest Handoff
 
-**日期**:2026-06-13(第三次 handoff,acceptance 暂停点)
+**日期**:2026-06-15(第四次 handoff,REQ-001 done)
 
 **1. 本次完成**
-- Phase 2–5 全部执行完毕(T2.1–T5.4 共 14 task,含两次额度中断的 partial 恢复),每 Phase 过 code-review(0 CRITICAL/HIGH 全程)
-- 最终审查:architecture-guard 零 finding;UX 模式 B 零 blocker/major(UX-001~008 回溯完成)
-- 六项硬门槛全 PASS,验收包写入 acceptance.md;backlog → `acceptance`
-- opus.html 最终态:225,846B,十章 + 双导航 + 场景引擎 + 三级密度 canvas,全部 ★金句逐字溯源
+- PM 验收通过 → REQ-001 `acceptance → done`;acceptance.md 填 PM 验收记录;backlog 该行 → done
+- 回写 `docs/architecture.md`:正式落定"全站内容整合页"形态(opus.html 场景引擎 / 章色板 / 双导航 / 三级密度 canvas)
+- progress / CLAUDE 同步;PR #30 已开,未合 main
 
 **2. 当前状态**
-- REQ-001 `acceptance`,暂停等 PM;需求级返工余额 2/2 未消耗
-- 全部 findings 闭环或入已知限制(acceptance.md);review-notes 五份完整
-- 分支 claude/friendly-euler-sdhwcq 未合 main(等验收通过后 PM 决定上线)
+- 无活跃需求(backlog 仅 REQ-001 = done);分支 claude/friendly-euler-sdhwcq 含全部交付,PR #30 待 PM 合并决策
+- 五份 review-notes + acceptance.md + tech-design rev.1 完整存档
 
 **3. 下一步**
-- 等 PM 验收(浏览器实走 + acceptance.md 清单打勾);通过则推进 done + 回写 architecture.md
+- 等 PM 上线决策(合并 PR #30 → main 即自动发布);或 PM 用 `/pm` 启动新需求
 
 **4. 风险与注意事项**
-- PM 验收是首次真人浏览器实测——自动化审查覆盖不了真实滚动手感/动画节奏,如发现体感问题属正常返工路径
-- git 历史 3 个 WIP 快照提交已标注;若 PM 介意可在合 main 时 squash
-
----
-
-**(归档)第二次 handoff · 2026-06-12 · Phase 1 边界收尾**
+- 合并 main = 生产发布(GitHub Pages 自动部署),outward-facing 不可逆,需 PM 明确授权
+- git 历史 3 个 WIP 快照提交;若介意可 squash merge
 
 **1. 本次完成**
 - PM 确认三处 scope 取舍 + 授权 executing(阻塞原因已清空)
