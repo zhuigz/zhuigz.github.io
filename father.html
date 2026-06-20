@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>致父亲 · 父亲节快乐</title>
+<meta name="description" content="父亲节快乐 —— 写给爸爸的一封信。愿你身体康健、生意兴隆、少些劳累、笑口常开。点亮一灶炉火，把祝福递给灶台前最辛苦的人。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 暖金主色系 */
+  --gold: #E8B87A;
+  --gold-light: #F4D9A8;
+  --gold-deep: #C99A56;
+  --gold-pale: rgba(232,184,122,0.06);
+  --gold-glow: rgba(232,184,122,0.25);
+
+  /* 炉火 / 余烬（暖焰强调） */
+  --flame: #E8843A;
+  --flame-soft: rgba(232,132,58,0.18);
+  --ember: #C36B5E;
+  --ember-soft: rgba(195,107,94,0.18);
+
+  /* 底色与文字 */
+  --bg-deep: #07070C;
+  --bg-elev: #11111A;
+  --bg-card: rgba(255,255,255,0.025);
+  --bg-card-hi: rgba(255,255,255,0.055);
+  --ink: #F2EFEB;
+  --ink-soft: rgba(242,239,235,0.62);
+  --ink-dim: rgba(242,239,235,0.34);
+
+  --line: rgba(255,255,255,0.06);
+  --line-strong: rgba(232,184,122,0.18);
+
+  --serif-cn: 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --serif-en: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --sans-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --sans-en: 'Outfit', 'Noto Sans SC', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-deep);
+  color: var(--ink);
+  font-family: var(--sans-cn);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: rgba(232,184,122,0.28); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(232,184,122,0.5); }
+::selection { background: rgba(232,184,122,0.25); color: var(--ink); }
+
+/* ===================== PRELOADER（一星灶火，破暗而生） ===================== */
+.preloader {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg-deep);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.9s ease, visibility 0.9s;
+}
+.preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.pre-core { position: relative; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.pre-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--flame);
+  box-shadow: 0 0 24px var(--flame), 0 0 80px rgba(232,132,58,0.5);
+  animation: preDot 1.4s ease-in-out infinite;
+}
+.pre-ring {
+  position: absolute; top: -25px; left: 50%; margin-left: -30px;
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 1px solid rgba(232,168,90,0.4);
+  animation: preRing 1.4s ease-out infinite;
+}
+.pre-text {
+  font-family: var(--serif-cn); font-weight: 900; font-size: 17px;
+  letter-spacing: 12px; text-indent: 12px; color: var(--ink-dim);
+  animation: preText 1.6s ease-in-out infinite alternate;
+}
+@keyframes preDot { 0%,100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+@keyframes preRing { from { transform: scale(0.3); opacity: 1; } to { transform: scale(2.1); opacity: 0; } }
+@keyframes preText { from { color: var(--ink-dim); } to { color: var(--flame); } }
+
+/* ===================== 全局贴层 ===================== */
+.grain {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
+  background: linear-gradient(90deg, var(--ember), var(--flame), var(--gold-light));
+  box-shadow: 0 0 14px rgba(232,132,58,0.55);
+  transition: width 0.08s linear;
+}
+.cursor-glow {
+  position: fixed; left: 0; top: 0; z-index: 3;
+  width: 380px; height: 380px; margin: -190px 0 0 -190px;
+  border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(232,168,90,0.10), rgba(195,107,94,0.04) 45%, transparent 65%);
+  mix-blend-mode: screen;
+  opacity: 0; transition: opacity 0.5s;
+  will-change: transform;
+}
+.cursor-glow.on { opacity: 1; }
+
+/* 背景光晕（暖橘 + 余烬） */
+.bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.bg-glow .orb {
+  position: absolute; border-radius: 50%; filter: blur(130px);
+  animation: orbFloat 26s ease-in-out infinite;
+}
+.bg-glow .orb-1 { width: 640px; height: 640px; background: radial-gradient(circle, rgba(232,168,90,0.13), transparent 70%); top: -12%; left: -10%; }
+.bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(195,107,94,0.09), transparent 70%); top: 40%; right: -12%; animation-delay: -8s; }
+.bg-glow .orb-3 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(232,132,58,0.06), transparent 70%); bottom: -8%; left: 28%; animation-delay: -16s; }
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(70px,-50px) scale(1.1); }
+  66% { transform: translate(-40px,60px) scale(0.92); }
+}
+
+/* 上升的火星 canvas */
+.light-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; display: block;
+  opacity: var(--light-opacity, 1);
+  transition: opacity .35s linear;
+}
+
+/* ===================== HERO ===================== */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center; position: relative; padding: 120px 24px 90px;
+  overflow: hidden;
+}
+.hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; will-change: transform, opacity; }
+
+/* 顶光束（god rays，调暖） */
+.hero-beams { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.beam {
+  position: absolute; top: -20%; left: 50%; height: 130%; width: 160px;
+  background: linear-gradient(180deg, rgba(232,168,90,0.11), rgba(232,132,58,0.03) 55%, transparent);
+  filter: blur(28px);
+  transform-origin: top center;
+  animation: beamSway 11s ease-in-out infinite alternate;
+}
+.beam-1 { margin-left: -340px; --r: -16deg; transform: rotate(-16deg); animation-delay: 0s; }
+.beam-2 { margin-left: -80px; width: 220px; --r: -2deg; transform: rotate(-2deg); animation-delay: -3.5s; }
+.beam-3 { margin-left: 200px; --r: 13deg; transform: rotate(13deg); animation-delay: -7s; }
+@keyframes beamSway {
+  from { opacity: 0.5; transform: rotate(var(--r, -2deg)) translateX(-14px); }
+  to { opacity: 1; transform: rotate(var(--r, -2deg)) translateX(14px); }
+}
+
+/* 底部"灶台"暖光 */
+.hearth-glow {
+  position: absolute; bottom: -22%; left: 50%; transform: translateX(-50%);
+  width: 900px; max-width: 130vw; height: 480px; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center bottom, rgba(232,168,90,0.20), rgba(195,107,94,0.06) 45%, transparent 72%);
+  filter: blur(18px);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 22px; border-radius: 999px;
+  background: linear-gradient(105deg, rgba(232,168,90,0.04) 0%, rgba(232,168,90,0.04) 40%, rgba(244,217,168,0.18) 50%, rgba(232,168,90,0.04) 60%, rgba(232,168,90,0.04) 100%);
+  background-size: 300% auto;
+  border: 1px solid rgba(232,168,90,0.18); color: var(--gold);
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 40px;
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--flame);
+  box-shadow: 0 0 10px var(--flame); animation: pulseDotSmall 2s infinite;
+}
+@keyframes pulseDotSmall { 0%,100% { opacity:1; transform:scale(1);} 50% { opacity:0.4; transform:scale(0.65);} }
+@keyframes badgeShimmer { 0%,100% { background-position: 0% center; } 50% { background-position: 200% center; } }
+
+.hero-eyebrow {
+  font-family: var(--serif-en); font-style: italic; font-size: clamp(14px,2vw,18px);
+  color: var(--ink-dim); letter-spacing: 4px; margin-bottom: 18px;
+}
+
+.hero-name {
+  position: relative;
+  font-family: var(--serif-cn);
+  font-size: clamp(54px, 12vw, 118px);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: clamp(2px, 0.9vw, 9px);
+}
+.hero-name .glyph {
+  display: inline-block;
+  background: linear-gradient(120deg, #fff 0%, var(--gold-light) 26%, var(--gold) 46%, var(--flame) 64%, var(--gold-light) 82%, #fff 100%);
+  background-size: 260% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-name::after {
+  content: '父亲节快乐'; position: absolute; inset: 0;
+  font: inherit; letter-spacing: inherit;
+  -webkit-text-stroke: 1px rgba(232,168,90,0.18); color: transparent;
+  transform: translate(6px,6px); z-index: -1; opacity: 0.55;
+}
+
+.hero-alias {
+  display: inline-flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
+  font-family: var(--serif-cn); font-size: clamp(16px,2.4vw,22px); font-weight: 400;
+  color: var(--ink-soft); margin-top: 34px; letter-spacing: 4px;
+}
+.hero-alias .sep { color: var(--flame); }
+.hero-alias .cn { font-family: var(--serif-cn); color: var(--ink); letter-spacing: 8px; font-weight: 700; }
+
+.hero-motto {
+  font-family: var(--serif-cn); font-size: clamp(16px,2.3vw,22px);
+  color: var(--ink); margin-top: 46px; line-height: 2.1;
+  position: relative; padding: 28px 60px;
+}
+.hero-motto::before, .hero-motto::after {
+  content: ''; position: absolute; width: 24px; height: 24px;
+  border: 1px solid var(--gold); opacity: 0.4;
+}
+.hero-motto::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+.hero-motto::after { bottom: 0; right: 0; border-left: none; border-top: none; }
+.hero-motto em { font-style: normal; color: var(--flame); font-weight: 600; }
+
+.hero-scroll {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--ink-dim); font-size: 11px; letter-spacing: 4px; font-family: var(--sans-en);
+}
+.hero-scroll .line {
+  width: 1px; height: 44px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  animation: scrollLine 2.2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.hero-corner {
+  position: absolute; z-index: 2; font-family: var(--mono); font-size: 11px; color: var(--ink-dim);
+  letter-spacing: 2px; line-height: 1.8;
+}
+.hero-corner.tl { top: 40px; left: 32px; text-align: left; }
+.hero-corner.tr { top: 40px; right: 32px; text-align: right; }
+.hero-corner .v { color: var(--gold); }
+
+/* —— hero 入场编排 —— */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes glyphIn {
+  from { opacity: 0; transform: translateY(70px) scale(0.94); filter: blur(14px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes nameShine { 0% { background-position: 0% center; } 100% { background-position: -260% center; } }
+
+body.js .hero-badge, body.js .hero-eyebrow, body.js .hero-alias,
+body.js .hero-motto, body.js .hero-scroll, body.js .hero-corner, body.js .hero-name::after { opacity: 0; }
+body.js .hero-name .glyph { opacity: 0; }
+
+body.loaded .hero-badge { animation: fadeDown 1s ease 0.1s both, badgeShimmer 7s ease-in-out 2.6s infinite; }
+body.loaded .hero-eyebrow { animation: fadeDown 1s ease 0.25s both; }
+body.loaded .hero-name .glyph { animation: glyphIn 1s cubic-bezier(0.16,1,0.3,1) both, nameShine 9s ease-in-out 2.8s infinite; }
+body.loaded .hero-name .glyph:nth-child(1) { animation-delay: 0.40s, 2.8s; }
+body.loaded .hero-name .glyph:nth-child(2) { animation-delay: 0.52s, 2.8s; }
+body.loaded .hero-name .glyph:nth-child(3) { animation-delay: 0.64s, 2.8s; }
+body.loaded .hero-name .glyph:nth-child(4) { animation-delay: 0.76s, 2.8s; }
+body.loaded .hero-name .glyph:nth-child(5) { animation-delay: 0.88s, 2.8s; }
+body.loaded .hero-name::after { animation: fadeUp 1.2s ease 1.0s both; }
+body.loaded .hero-alias { animation: fadeUp 1s ease 1.1s both; }
+body.loaded .hero-motto { animation: fadeUp 1s ease 1.3s both; }
+body.loaded .hero-scroll { animation: fadeUp 1s ease 1.6s both; }
+body.loaded .hero-corner { animation: fadeDown 1s ease 1.7s both; }
+
+/* ===================== 通用排版 ===================== */
+.container { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+section { padding: 120px 0 100px; position: relative; }
+.section-head { margin-bottom: 56px; }
+.section-label {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--sans-en); font-size: 11px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
+}
+.section-label .idx { font-family: var(--mono); color: var(--ink-dim); letter-spacing: 1px; }
+.section-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); opacity: 0.6; }
+.section-label::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+.section-title {
+  font-family: var(--serif-cn); font-size: clamp(30px, 5vw, 50px);
+  font-weight: 700; line-height: 1.3; letter-spacing: 1px;
+}
+.section-title .hl {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section-sub {
+  margin-top: 16px; color: var(--ink-soft);
+  font-family: var(--serif-cn); font-size: 15.5px; max-width: 640px; line-height: 1.95;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,184,122,0.22), transparent);
+  margin: 0 auto; max-width: 640px;
+}
+
+/* —— reveal —— */
+.reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-stagger > * { opacity: 0; transform: translateY(36px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+.reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.14s; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.23s; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.32s; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.41s; }
+
+/* —— 3D tilt —— */
+.tilt {
+  position: relative; transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s; will-change: transform;
+}
+.tilt::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(360px circle at var(--mx,50%) var(--my,50%), rgba(232,168,90,0.14), transparent 50%);
+  pointer-events: none; opacity: 0; transition: opacity 0.35s;
+}
+.tilt:hover::after { opacity: 1; }
+
+/* ===================== 一封信 ===================== */
+.letter { max-width: 760px; margin: 0 auto; }
+.letter .salut {
+  font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(22px, 3vw, 30px); color: var(--ink); margin-bottom: 28px;
+}
+.letter p {
+  font-family: var(--serif-cn); font-weight: 400;
+  font-size: clamp(17px, 2vw, 21px); line-height: 1.95;
+  color: var(--ink-soft); margin-bottom: 24px; text-wrap: pretty;
+}
+.letter p:last-child { margin-bottom: 0; }
+.letter em { font-style: normal; color: var(--gold); font-weight: 600; }
+.letter .warm { color: var(--ink); }
+
+/* ===================== 拿手菜 ===================== */
+.dishes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; max-width: 860px; margin: 0 auto; }
+.dish-card {
+  background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 18px; padding: 30px 30px 32px; overflow: hidden; position: relative;
+}
+.dish-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--flame), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.dish-card:hover { background: var(--bg-card-hi); border-color: rgba(232,168,90,0.18); }
+.dish-card:hover::before { opacity: 1; }
+.dish-card .dish-emoji {
+  font-size: 26px; width: 54px; height: 54px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(232,168,90,0.08); border: 1px solid rgba(232,168,90,0.14);
+  border-radius: 14px; margin-bottom: 20px; transition: all 0.4s;
+}
+.dish-card:hover .dish-emoji { background: rgba(232,168,90,0.15); transform: translateZ(12px); }
+.dish-card .dish-name { font-family: var(--serif-cn); font-size: 23px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
+.dish-card .dish-en { font-family: var(--sans-en); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-dim); margin-top: 6px; }
+.dish-card .dish-note { font-size: 15px; line-height: 1.85; color: var(--ink-soft); margin-top: 16px; font-family: var(--serif-cn); }
+
+/* ===================== 点亮灶火 + 祝福 ===================== */
+.wishes { text-align: center; }
+.wishes .section-head { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.hearth { position: relative; display: flex; flex-direction: column; align-items: center; margin: 44px auto 0; }
+.flame-stage {
+  position: relative; width: 120px; height: 170px;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.halo {
+  position: absolute; left: 50%; top: 52%; transform: translate(-50%,-50%) scale(0.7);
+  width: 320px; height: 320px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(232,168,90,0.28), rgba(195,107,94,0.10) 42%, transparent 70%);
+  filter: blur(10px); opacity: 0.18; transition: opacity 1.1s ease, transform 1.1s cubic-bezier(0.16,1,0.3,1);
+}
+.flame-svg {
+  position: relative; width: 86px; height: 130px; z-index: 1;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 0 16px rgba(232,132,58,0.55));
+}
+body.js .flame-svg { animation: flicker 1.7s ease-in-out infinite; }
+.fl-inner { transform-origin: 50% 100%; }
+body.js .fl-inner { animation: flickerInner 1.05s ease-in-out infinite; }
+@keyframes flicker {
+  0%,100% { transform: scaleY(1) scaleX(1) skewX(0deg); }
+  25% { transform: scaleY(1.06) scaleX(0.97) skewX(2.5deg) translateX(1px); }
+  50% { transform: scaleY(0.95) scaleX(1.03) skewX(-2.5deg) translateX(-1px); }
+  75% { transform: scaleY(1.04) scaleX(0.98) skewX(1.5deg); }
+}
+@keyframes flickerInner {
+  0%,100% { transform: scaleY(1) translateY(0); opacity: 1; }
+  50% { transform: scaleY(0.9) translateY(2px); opacity: 0.85; }
+}
+
+/* 上升的小火星 */
+.spark {
+  position: absolute; bottom: 56px; left: 50%; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold-light); box-shadow: 0 0 8px var(--flame); opacity: 0;
+}
+.spark.s1 { margin-left: -22px; }
+.spark.s2 { margin-left: 0px; }
+.spark.s3 { margin-left: 18px; }
+.spark.s4 { margin-left: -8px; }
+@keyframes emberRise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translateY(-100px) translateX(var(--dx, 0)) scale(0.2); opacity: 0; }
+}
+
+.stove-base {
+  position: relative; width: 150px; height: 30px; margin-top: -2px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center top, rgba(232,168,90,0.20), rgba(0,0,0,0) 70%);
+}
+.stove-base::before {
+  content: ''; position: absolute; left: 50%; top: 4px; transform: translateX(-50%);
+  width: 110px; height: 14px; border-radius: 50%;
+  background: linear-gradient(180deg, rgba(232,184,122,0.35), rgba(232,184,122,0.05));
+  box-shadow: 0 0 18px rgba(232,132,58,0.25);
+}
+
+/* 未点亮 / 已点亮 状态 */
+body.js .flame-stage { opacity: 0; transform: scale(0.55) translateY(22px); transform-origin: 50% 100%; transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+body.js .wishes.lit .flame-stage { opacity: 1; transform: scale(1) translateY(0); }
+body.js .wishes.lit .halo { opacity: 1; transform: translate(-50%,-50%) scale(1.1); }
+body.js .wishes.lit .spark { animation: emberRise 2.6s ease-in infinite; }
+.spark.s1 { --dx: -10px; animation-delay: 0s !important; }
+.spark.s2 { --dx: 6px; }
+.spark.s3 { --dx: 12px; }
+.spark.s4 { --dx: -6px; }
+body.js .wishes.lit .spark.s2 { animation-delay: 0.7s; }
+body.js .wishes.lit .spark.s3 { animation-delay: 1.3s; }
+body.js .wishes.lit .spark.s4 { animation-delay: 1.9s; }
+
+.ignite-btn {
+  display: none;
+  margin-top: 34px; cursor: pointer;
+  font-family: var(--sans-cn); font-size: 14px; letter-spacing: 3px; color: var(--gold);
+  background: rgba(232,168,90,0.06); border: 1px solid rgba(232,168,90,0.30);
+  border-radius: 999px; padding: 13px 32px; transition: all 0.35s ease;
+  position: relative; overflow: hidden;
+}
+body.js .ignite-btn { display: inline-flex; align-items: center; gap: 10px; }
+.ignite-btn::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--flame); box-shadow: 0 0 10px var(--flame); animation: pulseDotSmall 1.8s infinite;
+}
+.ignite-btn:hover { background: rgba(232,168,90,0.14); border-color: var(--flame); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,132,58,0.18); }
+.ignite-btn:disabled { cursor: default; color: var(--ink-soft); border-color: var(--line-strong); transform: none; box-shadow: none; }
+.ignite-btn:disabled::before { animation: none; }
+.ignite-btn:disabled:hover { background: rgba(232,168,90,0.06); }
+
+/* 祝福卡片 */
+.wish-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 800px; margin: 64px auto 0; text-align: left; }
+.wish-card {
+  position: relative; background: var(--bg-card); border: 1px solid var(--line);
+  border-radius: 18px; padding: 30px 30px 32px; overflow: hidden;
+}
+.wish-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(232,168,90,0.05), transparent 60%);
+  opacity: 0; transition: opacity 0.5s;
+}
+.wish-card:hover::before { opacity: 1; }
+.wish-card:hover { border-color: rgba(232,168,90,0.18); }
+.wish-no {
+  font-family: var(--serif-cn); font-weight: 700; font-size: 26px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  display: block; margin-bottom: 14px;
+}
+.wish-head { font-family: var(--serif-cn); font-size: 21px; font-weight: 700; color: var(--ink); letter-spacing: 2px; }
+.wish-text { font-family: var(--serif-cn); font-size: 15.5px; line-height: 1.9; color: var(--ink-soft); margin-top: 12px; }
+
+/* 点亮后才浮现 */
+body.js .wishes .wish-card { opacity: 0; transform: translateY(26px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+body.js .wishes.lit .wish-card { opacity: 1; transform: none; }
+body.js .wishes.lit .wish-card:nth-child(1) { transition-delay: 0.15s; }
+body.js .wishes.lit .wish-card:nth-child(2) { transition-delay: 0.32s; }
+body.js .wishes.lit .wish-card:nth-child(3) { transition-delay: 0.49s; }
+body.js .wishes.lit .wish-card:nth-child(4) { transition-delay: 0.66s; }
+.wish-hint { display: none; margin-top: 22px; font-size: 12.5px; letter-spacing: 1px; color: var(--ink-dim); font-family: var(--sans-en); }
+body.js .wish-hint { display: block; }
+body.js .wishes.lit .wish-hint { opacity: 0; transition: opacity 0.5s; }
+
+/* ===================== 落款 ===================== */
+.sign { text-align: center; }
+.closing {
+  font-family: var(--serif-cn); font-weight: 700;
+  font-size: clamp(26px, 4.4vw, 42px); line-height: 1.6; color: var(--ink); letter-spacing: 2px;
+}
+.closing .hl {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.sig {
+  display: inline-flex; align-items: baseline; gap: 14px; justify-content: center;
+  margin-top: 46px; font-family: var(--mono); font-size: 13px; letter-spacing: 3px; color: var(--ink-soft);
+}
+.sig .sig-name {
+  font-family: var(--serif-cn); font-weight: 700; font-size: 26px; letter-spacing: 4px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.sig-date { margin-top: 16px; font-family: var(--mono); font-size: 12px; letter-spacing: 3px; color: var(--ink-dim); }
+
+/* ===================== 页脚 ===================== */
+.foot { text-align: center; padding: 70px 24px 90px; border-top: 1px solid var(--line); position: relative; z-index: 1; }
+.foot-line { font-family: var(--serif-cn); font-size: 16px; color: var(--ink-soft); letter-spacing: 2px; }
+.foot-copy { margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--ink-dim); }
+
+/* ===================== 响应式 ===================== */
+@media (max-width: 880px) {
+  .dishes-grid { grid-template-columns: 1fr; }
+  .wish-list { grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+  section { padding: 96px 0 80px; }
+}
+@media (max-width: 768px) {
+  .hero { padding: 110px 20px 90px; }
+  .hero-corner { display: none; }
+  .hero-motto { padding: 24px 28px; }
+  .cursor-glow { display: none; }
+  .letter .salut { font-size: 22px; }
+}
+
+/* ===================== 减少动态效果 ===================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.1s !important; }
+  .preloader { display: none; }
+  .bg-glow .orb { animation: none !important; }
+  .light-canvas, .cursor-glow, .hero-beams { display: none; }
+  body.js .flame-svg, body.js .fl-inner { animation: none !important; }
+  body.js .wishes.lit .spark { animation: none !important; }
+  .hero { background: radial-gradient(ellipse 900px 600px at 50% 40%, rgba(232,168,90,0.07), transparent 70%); }
+}
+</style>
+</head>
+<body>
+
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pre-core">
+    <div class="pre-ring"></div>
+    <div class="pre-dot"></div>
+    <div class="pre-text">致父亲</div>
+  </div>
+</div>
+
+<div class="grain"></div>
+<div class="scroll-progress"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<div class="bg-glow">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="hero-beams" aria-hidden="true">
+    <div class="beam beam-1"></div>
+    <div class="beam beam-2"></div>
+    <div class="beam beam-3"></div>
+  </div>
+
+  <div class="hero-corner tl">FATHER'S DAY<br>2026 · 06 · 21</div>
+  <div class="hero-corner tr">FOR DAD<br><span class="v">致 · 爸爸</span></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">A Gift for Dad · 父亲节</div>
+    <p class="hero-eyebrow">Happy Father's Day · 2026</p>
+    <h1 class="hero-name" aria-label="父亲节快乐"><span class="glyph">父</span><span class="glyph">亲</span><span class="glyph">节</span><span class="glyph">快</span><span class="glyph">乐</span></h1>
+    <p class="hero-alias"><span class="cn">爸</span><span class="sep">·</span><span>我心里最好的厨师</span></p>
+    <div class="hero-motto"><em>你守着灶火</em>，养大了一个家<br>今天，<em>换我为你点一次火</em></div>
+  </div>
+
+  <div class="hearth-glow" aria-hidden="true"></div>
+  <div class="hero-scroll" aria-hidden="true"><span>SCROLL</span><div class="line"></div></div>
+</header>
+
+<main>
+  <!-- ===================== 一封信 ===================== -->
+  <section id="letter">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label"><span class="idx">01</span> A Letter · 一封信</div>
+        <h2 class="section-title">爸，有些话，<span class="hl">想认真对你说</span></h2>
+      </div>
+      <div class="letter reveal">
+        <p class="salut">爸：</p>
+        <p>我很少正经跟你说这些。今天是父亲节，请允许我，认真一次。</p>
+        <p>你这双手，握了大半辈子锅铲，颠得动整口大锅，也曾稳稳牵着小时候的我。灶台前的高温、油烟、一站就是一整天——这些苦，你几乎从不挂在嘴边。</p>
+        <p>你炒的 <em>千叶豆腐</em> 和 <em>肉炒腐竹</em>，是我吃过<span class="warm">最好吃的菜</span>。后来走过不少地方、下过不少馆子，再没尝到那个味道——我想，是因为那味道里，你还多放了一样东西。</p>
+        <p>长大以后我才慢慢懂：那不只是手艺，是你把最实在的爱，一勺一勺，盛进了我们的一日三餐。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===================== 拿手菜 ===================== -->
+  <section id="dishes">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label"><span class="idx">02</span> Home Flavor · 人间烟火</div>
+        <h2 class="section-title">在我这儿，<span class="hl">是天下第一</span></h2>
+      </div>
+      <div class="dishes-grid reveal-stagger">
+        <div class="dish-card tilt">
+          <div class="dish-emoji">🥢</div>
+          <div class="dish-name">千叶豆腐</div>
+          <div class="dish-en">Qianye Tofu</div>
+          <p class="dish-note">外头焦香，里头滑嫩，咸鲜入味。这道菜，我在任何一家馆子，都没再吃到过同样的味道。</p>
+        </div>
+        <div class="dish-card tilt">
+          <div class="dish-emoji">🍲</div>
+          <div class="dish-name">肉炒腐竹</div>
+          <div class="dish-en">Fuzhu with Pork</div>
+          <p class="dish-note">腐竹吸饱了肉汁，咸香下饭。小时候桌上有这一盘，我能多扒下两碗白米饭。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===================== 点亮灶火 + 祝福 ===================== -->
+  <section id="wishes" class="wishes">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label"><span class="idx">03</span> Blessings · 祝福</div>
+        <h2 class="section-title">今天，<span class="hl">换我为你点一灶火</span></h2>
+        <p class="section-sub">灶上的火，你守了一辈子；这一回，让我替你点亮，把心里的话，一句句递到你面前。</p>
+      </div>
+
+      <div class="hearth reveal">
+        <div class="flame-stage" aria-hidden="true">
+          <div class="halo"></div>
+          <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>
+          <svg class="flame-svg" viewBox="0 0 100 150" aria-hidden="true">
+            <defs>
+              <linearGradient id="flameOuter" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F4D9A8"/>
+                <stop offset="0.45" stop-color="#E8843A"/>
+                <stop offset="1" stop-color="#C36B5E"/>
+              </linearGradient>
+              <linearGradient id="flameInner" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FFFFFF"/>
+                <stop offset="0.55" stop-color="#F4D9A8"/>
+                <stop offset="1" stop-color="#E8B87A"/>
+              </linearGradient>
+            </defs>
+            <path class="fl-outer" d="M50 6 C30 44 18 60 18 88 C18 120 33 146 50 146 C67 146 82 120 82 88 C82 60 70 44 50 6 Z" fill="url(#flameOuter)"/>
+            <path class="fl-inner" d="M50 52 C41 70 36 80 36 95 C36 116 43 130 50 130 C57 130 64 116 64 95 C64 80 59 70 50 52 Z" fill="url(#flameInner)"/>
+          </svg>
+        </div>
+        <div class="stove-base" aria-hidden="true"></div>
+        <button class="ignite-btn" id="igniteBtn" type="button" aria-label="点亮这一灶火，送上祝福">点亮这一灶火</button>
+        <p class="wish-hint" aria-hidden="true">轻轻点一下 ↑</p>
+      </div>
+
+      <div class="wish-list" id="wishList">
+        <div class="wish-card">
+          <span class="wish-no">壹</span>
+          <div class="wish-head">身体康健</div>
+          <p class="wish-text">愿你少些病痛，腰背少些酸，能吃能睡，把身体照顾好——这是我最大的心愿。</p>
+        </div>
+        <div class="wish-card">
+          <span class="wish-no">贰</span>
+          <div class="wish-head">财源广进</div>
+          <p class="wish-text">愿你灶上生意红火，进账不断，越做越旺，手里宽裕，心里踏实。</p>
+        </div>
+        <div class="wish-card">
+          <span class="wish-no">叁</span>
+          <div class="wish-head">顺手少劳</div>
+          <p class="wish-text">愿你在灶台前不必那么拼，活儿顺手，遇上的人都待你好，少些奔波与操劳。</p>
+        </div>
+        <div class="wish-card">
+          <span class="wish-no">肆</span>
+          <div class="wish-head">笑口常开</div>
+          <p class="wish-text">愿你偶尔偷个闲，多为自己活一活，烦心事少一点，开怀的时候多一点。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===================== 落款 ===================== -->
+  <section id="sign" class="sign reveal">
+    <div class="container">
+      <p class="closing">灶火不熄，<span class="hl">愿你安康</span>。</p>
+      <div class="sig">
+        <span>——</span>
+        <span>你的儿子</span>
+        <span class="sig-name">宗昱</span>
+      </div>
+      <p class="sig-date">2026 · 父亲节</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="foot-line">愿天下父亲，灶火长明，岁岁安康。</p>
+  <p class="foot-copy">Made with warmth · 2026 · 写给爸爸的一页</p>
+</footer>
+
+<script>
+// —— 标记 JS 已启用（hero 入场编排 / 灶火互动依赖此类） ——
+document.body.classList.add('js');
+
+// —— Preloader：一星灶火破暗，随后整页点亮 ——
+(function preloader() {
+  const pre = document.getElementById('preloader');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const delay = reduced ? 0 : 1100;
+  setTimeout(() => {
+    if (pre) pre.classList.add('done');
+    document.body.classList.add('loaded');
+  }, delay);
+})();
+
+// —— 光标即是光：跟随鼠标的柔光 ——
+(function cursorGlow() {
+  const glow = document.querySelector('.cursor-glow');
+  if (!glow) return;
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let tx = -400, ty = -400, x = -400, y = -400, active = false, rafId = 0;
+  function loop() {
+    x += (tx - x) * 0.1;
+    y += (ty - y) * 0.1;
+    glow.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+    rafId = requestAnimationFrame(loop);
+  }
+  document.addEventListener('mousemove', (e) => {
+    tx = e.clientX; ty = e.clientY;
+    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); loop(); }
+  });
+  document.addEventListener('mouseleave', () => { glow.classList.remove('on'); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && rafId) { cancelAnimationFrame(rafId); rafId = 0; active = false; }
+  });
+})();
+
+// —— 3D 卡片倾斜 + 光斑追踪 ——
+(function () {
+  if (matchMedia('(hover: none)').matches) return;
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+      const rx = (0.5 - py) * 8;
+      const ry = (px - 0.5) * 10;
+      card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      card.style.setProperty('--mx', (px * 100) + '%');
+      card.style.setProperty('--my', (py * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+})();
+
+// —— 滚动进度 + hero 视差 ——
+const progressBar = document.querySelector('.scroll-progress');
+const heroInner = document.querySelector('.hero-inner');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  if (progressBar) progressBar.style.width = (scrolled * 100) + '%';
+  if (heroInner && window.scrollY < window.innerHeight) {
+    const y = window.scrollY;
+    heroInner.style.transform = 'translateY(' + (y * 0.22) + 'px)';
+    heroInner.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.85)).toFixed(3);
+  }
+}, { passive: true });
+
+// —— Reveal 触发 ——
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => obs.observe(el));
+
+// —— 上升的火星 canvas（暖橘 / 余烬） ——
+(function lightCanvas() {
+  const c = document.getElementById('lightCanvas');
+  if (!c) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = c.getContext('2d');
+  const hover = !matchMedia('(hover: none)').matches;
+  let w = 0, h = 0, dpr = 1;
+  let particles = [];
+  let mouseX = 0, mouseY = 0;
+  let targetX = -9999, targetY = -9999;
+  let mouseActive = false;
+  let opacity = 1;
+  let running = false;
+  let rafId = 0;
+
+  // 暖橘 · 焰橙 · 余烬 · 浅金（炉火上升的火星）
+  const colors = [
+    'rgba(232,168,90,', 'rgba(232,168,90,', 'rgba(232,132,58,', 'rgba(232,132,58,',
+    'rgba(244,217,168,', 'rgba(195,107,94,', 'rgba(232,184,122,', 'rgba(232,132,58,',
+    'rgba(244,200,140,', 'rgba(195,107,94,'
+  ];
+
+  function particleCount() {
+    if (w < 480) return 22;
+    if (w < 768) return 30;
+    return 50;
+  }
+
+  function spawn(initial) {
+    return {
+      x: Math.random() * w,
+      y: initial ? Math.random() * h : h + Math.random() * 30,
+      r: 0.6 + Math.pow(Math.random(), 2) * 1.8,
+      vx: (Math.random() - 0.5) * 0.1,
+      vy: -(0.12 + Math.random() * 0.32),
+      a: 0.32 + Math.random() * 0.42,
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.0015 + Math.random() * 0.002,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    };
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    c.width = Math.floor(w * dpr);
+    c.height = Math.floor(h * dpr);
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    const n = particleCount();
+    if (particles.length !== n) {
+      particles = Array.from({ length: n }, () => spawn(true));
+    }
+  }
+
+  function frame(t) {
+    if (!running) { rafId = 0; return; }
+    ctx.clearRect(0, 0, w, h);
+    if (opacity < 0.02) { rafId = requestAnimationFrame(frame); return; }
+    ctx.globalCompositeOperation = 'lighter';
+
+    if (mouseActive) {
+      targetX += (mouseX - targetX) * 0.12;
+      targetY += (mouseY - targetY) * 0.12;
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      if (hover && mouseActive && targetX > -9000) {
+        const dx = targetX - p.x;
+        const dy = targetY - p.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 40000) {
+          const d = Math.sqrt(d2) + 0.01;
+          p.vx += (dx / d) * 0.018;
+          p.vy += (dy / d) * 0.018;
+        }
+      }
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      if (p.vy > -0.05) p.vy = -0.05;
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -12 || p.x < -50 || p.x > w + 50) {
+        Object.assign(p, spawn(false));
+      }
+      const alpha = (p.a * (0.6 + 0.4 * Math.sin(t * p.freq + p.phase))).toFixed(3);
+      ctx.fillStyle = p.color + alpha + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() { if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
+  function stop() { running = false; }
+
+  if (hover) {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX; mouseY = e.clientY;
+        if (!mouseActive) { targetX = mouseX; targetY = mouseY; }
+        mouseActive = true;
+      });
+      hero.addEventListener('mouseleave', () => { mouseActive = false; });
+    }
+  }
+
+  function updateOpacity() {
+    const heroH = window.innerHeight;
+    const scrolled = window.scrollY;
+    opacity = Math.max(0, 1 - scrolled / heroH);
+    document.documentElement.style.setProperty('--light-opacity', opacity.toFixed(3));
+    if (opacity < 0.02) stop(); else start();
+  }
+  window.addEventListener('scroll', updateOpacity, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') stop();
+    else updateOpacity();
+  });
+  window.addEventListener('resize', resize);
+
+  resize();
+  updateOpacity();
+  start();
+})();
+
+// —— 点亮灶火：火焰升起，暖光散开，祝福逐条浮现 ——
+(function ignite() {
+  const wishes = document.getElementById('wishes');
+  const btn = document.getElementById('igniteBtn');
+  if (!wishes || !btn) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function light() {
+    if (wishes.classList.contains('lit')) return;
+    wishes.classList.add('lit');
+    btn.textContent = '灶火已燃 · 愿长明';
+    btn.disabled = true;
+    btn.setAttribute('aria-pressed', 'true');
+  }
+  btn.addEventListener('click', light);
+  // 减少动态效果时：直接点亮，确保祝福始终可读
+  if (reduced) light();
+})();
+</script>
+
+</body>
+</html>
