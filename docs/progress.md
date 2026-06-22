@@ -4,7 +4,7 @@
 
 ## Now
 
-**REQ-002 全站页面视觉美化** — `executing` — 美观度诊断完成(三组审查员实地评分),PM 定方针「混合:单薄页统一到全站暖金暗底,孤岛页保留独立美学只提精致度」。逐页迭代推进,当前 **M1 workflow.html**(最丑,5.0/10)。每页改完用户看效果验收,再下一页。
+**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,每页改完合并 main 发布、用户线上看效果。M1 workflow.html 已完成并发布(用户满意方向,定调成立)。当前 **M2 life_undertone.html**(6.5/10)。
 
 ## Next
 
@@ -16,7 +16,7 @@
 
 REQ-002 逐页美化(丑→美顺序;依据:审美诊断报告 + 混合方针)。每页改完用户看效果后勾选。
 
-- [ ] M1 `workflow.html`(5.0)→ 暖调暗底 #07070C + 多层光晕 orb + 噪点纹理 + scroll-reveal 入场 + 三档断点 + reduced-motion(单薄→统一)
+- [x] M1 `workflow.html`(5.0→8.x)✅ 暖金暗底 + 四层浮光 + 噪点纹理 + 圆角 + 三档断点 + reduced-motion;另修 hero 日期去月份。已合并 main 发布(PR #32/#33),用户满意方向
 - [ ] M2 `life_undertone.html`(6.5)→ 统一变量命名(--text-primary→--ink)+ 纹理/底层光效 + 提特效密度(单薄→统一)
 - [ ] M3 `idop.html`(7.0)→ 青色柔光晕 + 噪点纹理膜 + 各 section 入场动效(保留工程蓝图美学)
 - [ ] M4 `growth.html`(7.0)→ scroll-reveal + hero 暗色/纹理叠层提质感(保留杂志 editorial 风)
