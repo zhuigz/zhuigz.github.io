@@ -25,8 +25,7 @@ Personal portfolio / "personal manual" (个人说明书) for 曹宗昱 (online a
 ├── idop.html             # IDOP · 个人 IP 核心闭环 (输入·沉淀·输出·产品)
 ├── workflow.html         # LSA · 个人 IP 工作流仪表盘
 ├── hkrr.html             # HKRR — 好内容的四个变量
-├── know-ai.html          # 关于 AI 的一封信 — "不是替代你，是放大你"
-├── playground.html       # 前端动效/交互试验场
+├── opus.html             # 集大成 · 十章沉浸式滚动叙事 (12 内容源精华融合)
 ├── CLAUDE.md             # This file
 └── README.md             # Minimal placeholder
 ```
@@ -40,8 +39,7 @@ Each `*.html` file is **fully self-contained**: HTML + embedded `<style>` + inli
 | Entry / about | `index`, `life`, `life_undertone` |
 | Life goals & frameworks | `ideal`, `fire`, `growth`, `system`, `prosper` |
 | Personal IP & content workflow | `idop`, `workflow`, `hkrr` |
-| AI | `know-ai` |
-| Technical experiments | `playground` |
+| 集大成整合页 | `opus`(十章沉浸式叙事,融合上述全部内容源,含 AI「同行」章) |
 
 ## Tech Stack
 

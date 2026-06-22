@@ -4,11 +4,13 @@
 
 ## Now
 
-**REQ-001 集大成网站** — `done`(PM 验收通过 2026-06-15)— `opus.html` 交付完成,六项硬门槛 PASS,验收记录见 `acceptance.md`,架构基线已回写整合页形态。**无活跃需求**,backlog 已清。
+**无活跃需求。** 最近完成:
+- REQ-001 集大成网站 `done`(PM 验收通过 2026-06-15)— `opus.html` 已合并 main 上线(PR #30,merge `ffe14ef`)
+- **S 级清理(2026-06-15,PM 明确授权)**:删除 `know-ai.html` / `playground.html` / `replica.html`(无用页面;删前 grep 确认零 href 引用,AI 内容已吸收进 opus 第八章「同行」);CLAUDE.md 文件登记同步、opus.html 入册。仓库 HTML 15 → 12 个
 
 ## Next
 
-1. **上线决策(待 PM)**:分支 `claude/friendly-euler-sdhwcq` 已开 PR #30,未合 main。PM 决定何时合并(合并即 GitHub Pages 自动发布 opus.html);若介意 WIP 快照提交可 squash merge
+1. **本次删除的上线**:S 级清理提交在分支 `claude/friendly-euler-sdhwcq`,需合并 main 才能从线上移除三页面(等 PM 上线决策)
 2. 新需求:PM 可用 `/pm` 启动下一条需求的 designing
 
 ## Current Plan
