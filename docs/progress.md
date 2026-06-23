@@ -4,13 +4,15 @@
 
 ## Now
 
-**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代。M1–M5 发布(用户满意)。**M6 fire.html 第一轮精修已发布但桌面端变化几乎不可见(金色 #c9a96a→#d8b87a 色相太近 + 改动多为响应式/降级等看不见项),用户失望** → 进入 **round 2 真正可见的大改**:PM 授权大改视觉 + 适当拓展内容,守东方书卷魂(纸本/朱砂/碑刻/铜钱/印章/LIBERTAS/FIRE 主题),KPI = 用户一打开就明显看出脱胎换骨。
+**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,每页 Dev 改完 → **Conductor playwright 截图核验(新固化环节,见下)** → 合并发布。M1–M6 完成发布(用户认可)。当前 **M7 ideal.html**(7.6,暗底型,补 canvas 纵深 + reduced-motion,保留其最完整的调色板/排版)。
+
+**⚠️ 固化流程改进(fire 翻车教训)**:每页交付前,Conductor 必须用 `npx playwright screenshot`(本环境可用,无 chromium 需用 `npx playwright screenshot --viewport-size=W,H --wait-for-timeout=4000 "file://$PWD/x.html#anchor" out.png`)截图**亲自看过桌面+窄屏**,确认无重叠/崩坏/丑陋,才合并发布。不再只靠 grep 验证元素存在。
 
 ## Next
 
-1. M1 workflow.html 改进交付 → 用户看效果反馈 → 提交
-2. 按丑→美顺序推进 M2–M10;每页一个迭代单元
-3. 全部完成后统一合并 main(outward-facing,需 PM 授权)
+1. M7 ideal Dev 交付 → Conductor 截图核验 → 合并发布
+2. 按序推进 M8 prosper / M9 system / M10 hkrr;每页截图核验
+3. 全部完成后收尾 REQ-002
 
 ## Current Plan
 
@@ -21,7 +23,7 @@ REQ-002 逐页美化(丑→美顺序;依据:审美诊断报告 + 混合方针)�
 - [x] M3 `idop.html`(7.0→8.6)✅ 保留蓝图美学零暖金;青蓝光晕+冷调噪点+蓝图粉尘 canvas;sheet 扫描线显影+轴测装配入场。已合并发布(PR #35)
 - [x] M4 `growth.html`(7.0→8.6)✅ 保留亮底杂志风零侵入;halftone 网点+暗角+封面质感;reveal-stagger+reveal-mask 双层入场;补全 reduced-motion。已合并发布(merge ce29013)
 - [x] M5 `life.html`(7.2→8.6)✅ lightCanvas+3 orb 纵深 + 章节背景透出 + 光标三件套 + 768 断点 + reduced-motion;保留暖棕底/散文排版。已合并发布(merge 464c112)
-- [ ] M6 `fire.html`(7.5)→ 补三档响应式 + reduced-motion(保留东方书卷 + 纸本配色)
+- [x] M6 `fire.html`(7.5→克制版)✅ round1:金色 #c9a96a→#d8b87a 升级 + 三档响应式 + reduced-motion;round2 大改翻车(卷轴边饰/歪印章/拆字成语/重叠 bug)已回退止损;克制重做加「东方智慧」5 卡(持盈保泰等四字成语)。playwright 桌面+手机截图核验。已合并发布(merge 9bdbd0a)
 - [ ] M7 `ideal.html`(7.6)→ canvas/光晕层 + reduced-motion
 - [ ] M8 `prosper.html`(8.0)→ reduced-motion + 公式区网格升级
 - [ ] M9 `system.html`(8.2)→ canvas 粒子 + 768 细化 + reduced-motion
