@@ -1348,6 +1348,82 @@
   }
   #fire-chart { width: 100%; height: 110px; }
 
+  /* ─────────────── EASTERN WISDOM / 东方智慧四字 ─────────────── */
+  /* reuses the .fire-card visual language: dark ink card, gold hairline
+     borders, top radial hover glow, cinnabar accent dot. Standard CSS grid
+     5→3→2→1; idioms are always four full characters, horizontal. */
+  .ew-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+  }
+  .ew-card {
+    background: var(--ink-2);
+    border: 1px solid rgba(216, 184, 122,0.12);
+    padding: 40px 28px 34px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+  }
+  .ew-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(216, 184, 122,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.6s;
+    pointer-events: none;
+  }
+  .ew-card:hover {
+    background: var(--ink-3);
+    border-color: rgba(216, 184, 122,0.3);
+  }
+  .ew-card:hover::before { opacity: 1; }
+
+  /* small cinnabar accent dot — restrained, in normal flow */
+  .ew-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cinnabar);
+    box-shadow: 0 0 8px rgba(200, 57, 47,0.4);
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 2;
+  }
+  /* four-character idiom — full word, horizontal, large, never split */
+  .ew-idiom {
+    font-family: var(--serif-cn);
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+  .ew-source {
+    font-family: var(--serif-cn);
+    font-size: 12px;
+    color: var(--gold-deep);
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+  }
+  .ew-desc {
+    font-family: var(--serif-cn);
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.95;
+    font-weight: 300;
+    position: relative;
+    z-index: 2;
+  }
+
   /* ─────────────── WISDOM / 追光者箴言 ─────────────── */
   .wisdom-section {
     padding: 140px 60px;
@@ -1577,6 +1653,7 @@
     #hero::before { font-size: clamp(140px, 26vw, 300px); }
     .fire-grid { grid-template-columns: repeat(2, 1fr); }
     .types-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .ew-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .section-head-right { font-size: 72px; }
     section, .wisdom-section { padding: 100px 40px; }
   }
@@ -1605,6 +1682,7 @@
     .calc-grid { grid-template-columns: 1fr; gap: 40px; }
     .calc-result-panel { position: relative; top: 0; padding: 32px 24px; }
     .calc-result-main { font-size: 52px; }
+    .ew-grid { grid-template-columns: repeat(2, 1fr); }
     .wisdom-layout { grid-template-columns: 1fr; }
     .footer-inner { grid-template-columns: 1fr; gap: 36px; }
     .footer-bottom { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px 0; }
@@ -1629,6 +1707,7 @@
     .hero-cta-ghost { text-align: center; }
     .fire-grid { grid-template-columns: 1fr; }
     .types-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ew-grid { grid-template-columns: 1fr; }
     .calc-type-selector { grid-template-columns: 1fr 1fr; }
     .calc-result-main { font-size: 44px; }
     .section-title { font-size: clamp(28px, 8vw, 36px); }
@@ -1684,7 +1763,8 @@
     <a href="#types">流派 · 02</a>
     <a href="#compound">复利 · 03</a>
     <a href="#rule4">法则 · 04</a>
-    <a href="#calculator">自测 · 05</a>
+    <a href="#wisdom4">智慧 · 05</a>
+    <a href="#calculator">自测 · 06</a>
   </div>
 </nav>
 
@@ -2179,12 +2259,73 @@
   </div>
 </div>
 
+<!-- ━━━━━━━━━━━━━━━━━ EASTERN WISDOM ━━━━━━━━━━━━━━━━━ -->
+<section id="wisdom4">
+  <div class="section-head">
+    <div class="section-head-left">
+      <div class="section-eyebrow reveal">Chapter 05 · Eastern Wisdom</div>
+      <h2 class="section-title reveal reveal-delay-1">
+        永续之道 · <em>东方智慧</em>
+      </h2>
+      <p class="section-desc reveal reveal-delay-2">
+        FIRE 是西来的方法,永续却是东方的古训。<br>
+        五句四字箴言,藏着财富长盛不衰的底层心法——<br>
+        与复利同频,与时间为友。
+      </p>
+    </div>
+    <div class="section-head-right reveal reveal-delay-2">智慧</div>
+  </div>
+
+  <div class="ew-grid">
+    <div class="ew-card reveal">
+      <div class="ew-dot"></div>
+      <div class="ew-idiom">持盈保泰</div>
+      <div class="ew-source">老子 ·《道德经》</div>
+      <p class="ew-desc">
+        财富盈满时更要守成持重,留足安全边际,方能在牛熊更替中行稳致远。
+      </p>
+    </div>
+    <div class="ew-card reveal reveal-delay-1">
+      <div class="ew-dot"></div>
+      <div class="ew-idiom">生生不息</div>
+      <div class="ew-source">《周易》</div>
+      <p class="ew-desc">
+        让资产像草木般自我繁衍,复利不断、利滚利续,这正是永续现金流的根本。
+      </p>
+    </div>
+    <div class="ew-card reveal reveal-delay-2">
+      <div class="ew-dot"></div>
+      <div class="ew-idiom">取之有道</div>
+      <div class="ew-source">《论语》</div>
+      <p class="ew-desc">
+        以正当之业、长期主义获利,远离投机与杠杆,慢即是快,财富才走得长久。
+      </p>
+    </div>
+    <div class="ew-card reveal reveal-delay-3">
+      <div class="ew-dot"></div>
+      <div class="ew-idiom">福生于俭</div>
+      <div class="ew-source">《韩非子》</div>
+      <p class="ew-desc">
+        节流是最稳的开源,降低欲望即降低 FIRE 门槛,俭以养财,亦以养心。
+      </p>
+    </div>
+    <div class="ew-card reveal reveal-delay-4">
+      <div class="ew-dot"></div>
+      <div class="ew-idiom">功成身退</div>
+      <div class="ew-source">老子 ·《道德经》</div>
+      <p class="ew-desc">
+        资产足以覆盖支出便适时离场,把时间赎回,投入真正热爱之事,方为圆满。
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- ━━━━━━━━━━━━━━━━━ CALCULATOR ━━━━━━━━━━━━━━━━━ -->
 <div class="calc-section">
   <div class="calc-inner" id="calculator">
     <div class="section-head">
       <div class="section-head-left">
-        <div class="section-eyebrow reveal">Chapter 05 · Personal Calculator</div>
+        <div class="section-eyebrow reveal">Chapter 06 · Personal Calculator</div>
         <h2 class="section-title reveal reveal-delay-1">
           我的 FIRE <em>规划</em>
         </h2>
@@ -2374,6 +2515,7 @@
       <a href="#types">四大流派</a>
       <a href="#compound">复利之力</a>
       <a href="#rule4">4% 法则</a>
+      <a href="#wisdom4">东方智慧</a>
       <a href="#calculator">个人规划</a>
     </div>
     <div class="footer-col">
