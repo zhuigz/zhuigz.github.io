@@ -4,7 +4,7 @@
 
 ## Now
 
-**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,改完合并 main 发布、用户线上看。M1 workflow、M2 life_undertone 已完成发布(用户满意)。当前 **M3 idop.html**(7.0,风格孤岛=工程蓝图,保留个性只提纵深)。
+**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,改完合并 main 发布。M1–M3 已完成发布(用户满意)。当前 **M4 growth.html**(7.0,风格孤岛=亮底 editorial 杂志风,保留个性只补 scroll-reveal + 质感)。idop 日期暂保留 REV 月份(用户未明确表态,默认保留);后续页面顺手清理普通日期默认去月份。
 
 ## Next
 
@@ -18,7 +18,7 @@ REQ-002 逐页美化(丑→美顺序;依据:审美诊断报告 + 混合方针)�
 
 - [x] M1 `workflow.html`(5.0→8.x)✅ 暖金暗底 + 四层浮光 + 噪点纹理 + 圆角 + 三档断点 + reduced-motion;另修 hero 日期去月份。已合并 main 发布(PR #32/#33),用户满意方向
 - [x] M2 `life_undertone.html`(6.5→8.3)✅ 变量统一(52 处)+ canvas/grain/5 orb 纵深 + 多色 cursor;保留倾斜墙/spine/count-up。已合并发布(PR #34)
-- [ ] M3 `idop.html`(7.0)→ 青色柔光晕 + 噪点纹理膜 + 各 section 入场动效(保留工程蓝图美学)
+- [x] M3 `idop.html`(7.0→8.6)✅ 保留蓝图美学零暖金;青蓝光晕+冷调噪点+蓝图粉尘 canvas;sheet 扫描线显影+轴测装配入场。已合并发布(PR #35)
 - [ ] M4 `growth.html`(7.0)→ scroll-reveal + hero 暗色/纹理叠层提质感(保留杂志 editorial 风)
 - [ ] M5 `life.html`(7.2)→ canvas/纹理底层 + custom cursor + 768 断点
 - [ ] M6 `fire.html`(7.5)→ 补三档响应式 + reduced-motion(保留东方书卷 + 纸本配色)
