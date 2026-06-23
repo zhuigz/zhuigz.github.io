@@ -4,7 +4,7 @@
 
 ## Now
 
-**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,改完合并 main 发布。M1–M4 已完成发布(用户满意)。当前 **M5 life.html**(7.2,暗底型=暖金暖棕底,补 canvas 纵深 + cursor + 第三档断点,保留散文排版优雅)。
+**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,改完合并 main 发布。M1–M5 已完成发布(用户满意,5/10 过半)。当前 **M6 fire.html**(7.5,东方书卷孤岛)。**PM 特别授权:fire 是老页面、略落后,可大幅多优化让其明显更好看——但保留东方书卷灵魂(纸本/朱砂/碑刻/铜钱/印章),不推倒成暖金暗底。**
 
 ## Next
 
@@ -20,7 +20,7 @@ REQ-002 逐页美化(丑→美顺序;依据:审美诊断报告 + 混合方针)�
 - [x] M2 `life_undertone.html`(6.5→8.3)✅ 变量统一(52 处)+ canvas/grain/5 orb 纵深 + 多色 cursor;保留倾斜墙/spine/count-up。已合并发布(PR #34)
 - [x] M3 `idop.html`(7.0→8.6)✅ 保留蓝图美学零暖金;青蓝光晕+冷调噪点+蓝图粉尘 canvas;sheet 扫描线显影+轴测装配入场。已合并发布(PR #35)
 - [x] M4 `growth.html`(7.0→8.6)✅ 保留亮底杂志风零侵入;halftone 网点+暗角+封面质感;reveal-stagger+reveal-mask 双层入场;补全 reduced-motion。已合并发布(merge ce29013)
-- [ ] M5 `life.html`(7.2)→ canvas/纹理底层 + custom cursor + 768 断点
+- [x] M5 `life.html`(7.2→8.6)✅ lightCanvas+3 orb 纵深 + 章节背景透出 + 光标三件套 + 768 断点 + reduced-motion;保留暖棕底/散文排版。已合并发布(merge 464c112)
 - [ ] M6 `fire.html`(7.5)→ 补三档响应式 + reduced-motion(保留东方书卷 + 纸本配色)
 - [ ] M7 `ideal.html`(7.6)→ canvas/光晕层 + reduced-motion
 - [ ] M8 `prosper.html`(8.0)→ reduced-motion + 公式区网格升级
