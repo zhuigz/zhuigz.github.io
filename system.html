@@ -61,6 +61,12 @@ body {
 .bg-glow .orb-2 { width: 520px; height: 520px; background: radial-gradient(circle, rgba(195,107,94,0.06), transparent 70%); bottom: 16%; right: -10%; animation-delay: -7s; }
 .bg-glow .orb-3 { width: 440px; height: 440px; background: radial-gradient(circle, rgba(142,122,184,0.05), transparent 70%); top: 50%; left: 28%; animation-delay: -14s; }
 
+/* 暖金微尘 canvas — 固定背景细颗粒层，补 orb 大光晕之外的纵深 */
+.dust-canvas {
+  position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%;
+  pointer-events: none; display: block;
+}
+
 @keyframes orbFloat {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(60px, -40px) scale(1.1); }
@@ -103,6 +109,19 @@ body {
 }
 .nav-status .sep { color: rgba(255,255,255,0.12); }
 .nav-status #navClock { color: var(--gold); }
+/* 移动端章名指示（替代窄屏隐藏的 module-rail）—— 默认隐藏，仅 ≤768 显示 */
+.nav-chapter {
+  display: none; justify-self: end; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--text-secondary); white-space: nowrap;
+}
+.nav-chapter .nc-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  background: var(--nc-c, var(--gold));
+  box-shadow: 0 0 8px var(--nc-c, var(--gold));
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+.nav-chapter .nc-label { color: var(--gold); }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (max-width:900px) {
   .nav { grid-template-columns: auto 1fr; padding: 12px 18px; }
@@ -657,16 +676,57 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .ecard li:last-child { border-bottom: none; }
 .num-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(232,184,122,0.06); border: 1px solid rgba(232,184,122,0.1); border-radius: 6px; padding: 2px 8px; font-family: 'Outfit'; font-size: 12px; color: var(--gold); }
 
+/* ===== 三档断点 1024 / 880 / 768 ===== */
+@media (max-width: 1024px) {
+  /* rail 仍在(隐藏阈值 1100），三列网格略松一档，避免内容拥挤 */
+  .ai-split, .tactic-grid, .fire-pillars { grid-template-columns: repeat(3, 1fr); }
+  .factor-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 880px) {
+  /* rail 已隐藏(<1100)；三列网格降为两列，保证可读 */
+  .goal-tiers, .strategy-three, .tactic-grid, .fire-pillars { grid-template-columns: repeat(2, 1fr); }
+  .goal-tiers .gt-3, .strategy-three .strat-card:last-child,
+  .tactic-grid .tactic-card:last-child, .fire-pillars .fire-pillar:last-child {
+    grid-column: 1 / -1;
+  }
+  .ai-split { grid-template-columns: 1fr; }
+  .factor-cards { grid-template-columns: repeat(2, 1fr); }
+  .section-watermark { font-size: clamp(90px, 16vw, 160px); opacity: 0.9; }
+}
 @media (max-width: 768px) {
   .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 30px 0; padding: 30px 0; }
   .stat-item:nth-child(2)::after { display: none; }
   .achievements { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  .nav-chapter { display: inline-flex; }   /* 章名指示替代隐藏的 module-rail */
   .nav { padding: 14px 20px; }
   section { padding: 60px 0; }
   .growth-banner { padding: 32px 24px; }
-  .goal-tiers, .strategy-three, .tactic-grid, .fire-pillars, .dual-grid, .ai-split, .fire-wheels { grid-template-columns: 1fr; }
+  /* 全部多列网格统一收为单列，规整不重叠 */
+  .goal-tiers, .strategy-three, .tactic-grid, .fire-pillars, .dual-grid,
+  .ai-split, .fire-wheels, .factor-cards, .sys-hub-grid, .growth-engine,
+  .align-grid, .essence-cards, .slogan-list, .movie-quotes, .roles-grid {
+    grid-template-columns: 1fr;
+  }
+  .goal-tiers .gt-3, .strategy-three .strat-card:last-child,
+  .tactic-grid .tactic-card:last-child, .fire-pillars .fire-pillar:last-child {
+    grid-column: auto;
+  }
+  /* hero / 公式框窄屏内边距收紧，避免溢出 */
+  .hero { padding: 96px 18px 56px; }
+  .hero-motto { padding: 24px 28px; }
+  .formula-wrap { padding: 36px 22px; }
+  .feq { gap: 8px; }
+  .fire-prog, .dual-formula, .essence-intro { padding: 26px 22px; }
+  .section-watermark { font-size: clamp(72px, 22vw, 110px); top: 24px; }
+  .io-steps { flex-direction: column; align-items: stretch; }
+  .io-sep { transform: rotate(90deg); align-self: center; }
+}
+@media (max-width: 420px) {
+  /* 极窄屏：FIRE 启动/目标标签换行不挤 */
+  .fire-prog-labs { flex-direction: column; gap: 6px; align-items: flex-start; }
+  .nav-chapter .nc-label { max-width: 8.5em; overflow: hidden; text-overflow: ellipsis; }
 }
 
 .scroll-progress {
@@ -802,6 +862,30 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .orb-2 { animation-duration: 28s; animation-delay: -9s; }
 .orb-3 { animation-duration: 18s; animation-delay: -5s; }
 
+/* ===== 无障碍 · 减少动态偏好降级 ===== */
+/* 覆盖全部 17 个 keyframes + canvas + 滚动条平滑；降级后内容完整可读 */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* 入场动画的元素：直接定格为可见终态，避免停在初始隐藏帧 */
+  .hero-eyebrow, .hero-badge, .hero-name, .hero-alias, .hero-motto, .hero-scroll,
+  .module-rail { opacity: 1 !important; transform: none !important; }
+  .hero::after { opacity: 1 !important; transform: translate(-50%, -50%) !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  /* FIRE 进度条:跳过 2s 过渡,JS 写入宽度后立即呈现 */
+  .fire-bar { transition: none !important; }
+  /* canvas 微尘层在 JS 中已对 reduced-motion 直接 return,此处兜底隐藏 */
+  .dust-canvas { display: none !important; }
+  /* 持续辉光/脉冲类:静止在中性态 */
+  .hero-scroll .line { transform: scaleY(1) !important; }
+}
+
 </style>
 </head>
 <body>
@@ -813,6 +897,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 </div>
+<canvas id="dustCanvas" class="dust-canvas" aria-hidden="true"></canvas>
 
 <nav class="nav">
   <div class="nav-logo">人生系统</div>
@@ -832,6 +917,10 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <span>SYS·ONLINE</span>
     <span class="sep">·</span>
     <span id="navClock">--:--:--</span>
+  </div>
+  <div class="nav-chapter" aria-hidden="true">
+    <span class="nc-dot"></span>
+    <span class="nc-label" id="navChapter">总览</span>
   </div>
 </nav>
 
@@ -1248,12 +1337,31 @@ reveals.forEach(el => observer.observe(el));
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 const railLinks = document.querySelectorAll('.module-rail a');
+// 章名 + 模块色映射（供移动端 nav-chapter 指示使用，与 module-rail / 模块色注入一致）
+const chapterMap = {
+  system:  { name: '总览',   c: 'var(--m1)' },
+  goals:   { name: 'I · 目标', c: 'var(--m1)' },
+  strategy:{ name: 'II · 策略', c: 'var(--m2)' },
+  formula: { name: 'III · 公式', c: 'var(--m3)' },
+  fire:    { name: 'IV · FIRE', c: 'var(--m4)' },
+  dual:    { name: 'V · 双轨', c: 'var(--m5)' },
+  ai:      { name: 'VI · AI', c: 'var(--m6)' },
+  growth:  { name: 'VII · 成长', c: 'var(--m7)' },
+  essence: { name: 'VIII · 底色', c: 'var(--m8)' }
+};
+const navChapterEl = document.getElementById('navChapter');
+const navChapterWrap = document.querySelector('.nav-chapter');
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const id = '#' + entry.target.id;
       navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === id));
       railLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === id));
+      const ch = chapterMap[entry.target.id];
+      if (ch && navChapterEl) {
+        navChapterEl.textContent = ch.name;
+        if (navChapterWrap) navChapterWrap.style.setProperty('--nc-c', ch.c);
+      }
     }
   });
 }, { threshold: 0.3 });
@@ -1270,6 +1378,86 @@ sections.forEach(s => navObserver.observe(s));
   }
   tick();
   setInterval(tick, 1000);
+})();
+
+// —— 暖金微尘 canvas（固定背景层 · 与三球光晕协调的细颗粒）——
+(function dustField(){
+  const c = document.getElementById('dustCanvas');
+  if (!c) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = c.getContext('2d');
+  let w = 0, h = 0, dpr = 1;
+  let particles = [];
+  let running = false, rafId = 0;
+
+  // 80% 蜜金 · 12% 余烬 · 8% 浅金（呼应模块色，克制不抢戏）
+  const colors = [
+    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
+    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
+    'rgba(195,107,94,',
+    'rgba(244,217,168,'
+  ];
+
+  function particleCount() {
+    if (w < 480) return 26;
+    if (w < 768) return 36;
+    return 64;
+  }
+
+  function spawn(initial) {
+    return {
+      x: Math.random() * w,
+      y: initial ? Math.random() * h : h + Math.random() * 30,
+      r: 0.5 + Math.pow(Math.random(), 2) * 1.4,
+      vx: (Math.random() - 0.5) * 0.06,
+      vy: -(0.06 + Math.random() * 0.18),
+      a: 0.12 + Math.random() * 0.26,
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.0010 + Math.random() * 0.0016,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    };
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    c.width = Math.floor(w * dpr);
+    c.height = Math.floor(h * dpr);
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    const n = particleCount();
+    if (particles.length !== n) particles = Array.from({ length: n }, () => spawn(true));
+  }
+
+  function frame(t) {
+    if (!running) { rafId = 0; return; }
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -12 || p.x < -50 || p.x > w + 50) Object.assign(p, spawn(false));
+      const alpha = (p.a * (0.55 + 0.45 * Math.sin(t * p.freq + p.phase))).toFixed(3);
+      ctx.fillStyle = p.color + alpha + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() { if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
+  function stop()  { running = false; }
+
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+  document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+  start();
 })();
 </script>
 </body>

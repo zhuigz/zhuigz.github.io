@@ -4,7 +4,7 @@
 
 ## Now
 
-**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,每页 Dev 改完 → **Conductor playwright 截图核验(新固化环节,见下)** → 合并发布。M1–M6 完成发布(用户认可)。当前 **M8 prosper.html**(8.0,暗底型,补 reduced-motion + 公式区轻度精修,保留 canvas 粒子/cursor/铜刻字公式)。M7 ideal 已截图核验合并发布。
+**REQ-002 全站页面视觉美化** — `executing` — 逐页迭代,每页 Dev 改完 → **Conductor playwright 截图核验(新固化环节,见下)** → 合并发布。M1–M6 完成发布(用户认可)。当前 **M9 system.html**(8.2,暗底型,补 canvas 纵深 + 768 细化 + reduced-motion,保留模块导航轨/三球光晕/17 keyframes)。M8 prosper 已截图核验合并发布。
 
 **⚠️ 固化流程改进(fire 翻车教训)**:每页交付前,Conductor 必须用 `npx playwright screenshot`(本环境可用,无 chromium 需用 `npx playwright screenshot --viewport-size=W,H --wait-for-timeout=4000 "file://$PWD/x.html#anchor" out.png`)截图**亲自看过桌面+窄屏**,确认无重叠/崩坏/丑陋,才合并发布。不再只靠 grep 验证元素存在。
 
@@ -25,7 +25,7 @@ REQ-002 逐页美化(丑→美顺序;依据:审美诊断报告 + 混合方针)�
 - [x] M5 `life.html`(7.2→8.6)✅ lightCanvas+3 orb 纵深 + 章节背景透出 + 光标三件套 + 768 断点 + reduced-motion;保留暖棕底/散文排版。已合并发布(merge 464c112)
 - [x] M6 `fire.html`(7.5→克制版)✅ round1:金色 #c9a96a→#d8b87a 升级 + 三档响应式 + reduced-motion;round2 大改翻车(卷轴边饰/歪印章/拆字成语/重叠 bug)已回退止损;克制重做加「东方智慧」5 卡(持盈保泰等四字成语)。playwright 桌面+手机截图核验。已合并发布(merge 9bdbd0a)
 - [x] M7 `ideal.html`(7.6→8.6)✅ canvas 暖金纵深 + reduced-motion;保留最完整调色板/clamp 排版/cursor/tape-scroll。playwright 核验。已合并发布(merge 5555071)
-- [ ] M8 `prosper.html`(8.0)→ reduced-motion + 公式区网格升级
+- [x] M8 `prosper.html`(8.0→8.7)✅ 补全 reduced-motion(CSS+JS canvas 单帧)+ 公式区窄屏 2 列消除孤儿算符;保留 canvas/cursor/铜刻字。playwright 核验。已合并发布(merge 870ced1)
 - [ ] M9 `system.html`(8.2)→ canvas 粒子 + 768 细化 + reduced-motion
 - [ ] M10 `hkrr.html`(8.5)→ hero 纵深光晕 + audit/case 模块入场动效(保留 editorial)
 
