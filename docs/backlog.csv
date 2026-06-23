@@ -1,3 +1,3 @@
 id,标题,类型,复杂度,优先级,pipeline_status,版本,文档,阻塞原因,备注
 REQ-001,集大成网站:整合全站内容为单一沉浸式作品,feature,L,P0,done,v1,docs/requirements/REQ-001-unified-site/,,
-REQ-002,全站页面视觉美化(逐页提升美观度),improve,L,P1,executing,v1,,,"混合方针:单薄页(workflow/life_undertone)统一到全站暖金暗底语言;风格孤岛页(idop/growth/fire/hkrr)保留独立美学只提精致度。丑→美依次推进,每页用户看效果验收。排序诊断见 progress.md""将 index/life/life_undertone/ideal/fire/growth/system/prosper/idop/workflow/hkrr/know-ai 等页面的内容融合为一个统一作品,非链接跳转而是内容级整合;内容丰富度与视觉震撼度均要超越既有所有单页。待 designing 阶段决策:载体是新页面还是重构 index.html;与""index 不链接私密页面""约定的关系;各页内容的取舍与叙事顺序"
+REQ-002,全站页面视觉美化(逐页提升美观度),improve,L,P1,done,v1,,,"混合方针:单薄页(workflow/life_undertone)统一到全站暖金暗底语言;风格孤岛页(idop/growth/fire/hkrr)保留独立美学只提精致度。丑→美依次推进,每页用户看效果验收。排序诊断见 progress.md""将 index/life/life_undertone/ideal/fire/growth/system/prosper/idop/workflow/hkrr/know-ai 等页面的内容融合为一个统一作品,非链接跳转而是内容级整合;内容丰富度与视觉震撼度均要超越既有所有单页。待 designing 阶段决策:载体是新页面还是重构 index.html;与""index 不链接私密页面""约定的关系;各页内容的取舍与叙事顺序"
