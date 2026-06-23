@@ -682,8 +682,7 @@ strong { color: var(--ink); font-weight: 600; }
 .prologue {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(232,184,122,0.1), transparent 60%),
-    var(--bg);
+    radial-gradient(ellipse at 50% 30%, rgba(232,184,122,0.1), transparent 60%);
   padding: 0 32px;
   justify-content: center;
   overflow: hidden;
@@ -809,8 +808,7 @@ strong { color: var(--ink); font-weight: 600; }
 /* ============== 尾声 ============== */
 .epilogue {
   background:
-    radial-gradient(ellipse at 50% 70%, rgba(232,184,122,0.08), transparent 60%),
-    var(--bg);
+    radial-gradient(ellipse at 50% 70%, rgba(232,184,122,0.08), transparent 60%);
   justify-content: center;
   padding: 140px 32px;
 }
@@ -890,9 +888,34 @@ strong { color: var(--ink); font-weight: 600; }
   .pull { font-size: 19px; }
   .pull.credo { font-size: 22px; letter-spacing: 0.08em; }
 }
+/* 第三档 · 平板竖屏 / 大手机: 收窄留白, 侧导航退为点列, 网格降列 */
+@media (max-width: 768px) {
+  .side-nav { left: 10px; gap: 14px; }
+  .nav-label { display: none; }
+  .chapter { padding: 88px 20px; }
+  .chapter-header { margin-bottom: 44px; padding-bottom: 32px; }
+  .chapter-title { font-size: clamp(40px, 9vw, 64px); }
+  .chapter-subtitle { font-size: 17px; }
+  .lede { font-size: 20px; }
+  .quote { padding: 26px 28px; }
+  .quote blockquote { font-size: 17px; }
+  .renmin, .changan, .politics-block, .moonlight { padding: 28px 24px; }
+  .renmin-title { font-size: 30px; }
+  .changan-title { font-size: 26px; }
+  .friends-grid, .teachers-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .tl-month { min-width: 92px; font-size: 13px; }
+  .prologue-meta { padding: 24px 22px; }
+  .prologue-meta > div { font-size: 13px; }
+  .timeline { padding-left: 24px; }
+}
 @media (max-width: 520px) {
   body { font-size: 16px; }
   .gaokao-grid { grid-template-columns: repeat(2, 1fr); }
+  .side-nav { left: 8px; gap: 12px; }
+  .chapter { padding: 72px 18px; }
+  .prologue-meta > div { flex-direction: column; gap: 4px; }
+  .prologue-meta .v { text-align: left; }
 }
 
 /* ============================================ */
@@ -909,6 +932,50 @@ body::before {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='240' height='240' filter='url(%23n)' opacity='0.55'/></svg>");
   mix-blend-mode: overlay;
 }
+
+/* 1b. 背景纵深 · 暖金浮光 orb + 微光粒子 canvas (固定层, 在内容之下) */
+.bg-depth {
+  position: fixed; inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-depth .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  animation: orbFloat 26s ease-in-out infinite;
+}
+.bg-depth .orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,184,122,0.10), transparent 70%);
+  top: -14%; left: -12%;
+}
+.bg-depth .orb-2 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(195,107,94,0.07), transparent 70%);
+  top: 42%; right: -14%;
+  animation-delay: -8s; animation-duration: 30s;
+}
+.bg-depth .orb-3 {
+  width: 440px; height: 440px;
+  background: radial-gradient(circle, rgba(138,106,58,0.08), transparent 70%);
+  bottom: -10%; left: 24%;
+  animation-delay: -16s; animation-duration: 22s;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -45px) scale(1.08); }
+  66% { transform: translate(-35px, 55px) scale(0.94); }
+}
+.light-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+  pointer-events: none;
+}
+/* 内容主体置于纵深层之上 (progress-bar / side-nav 已有更高 z-index) */
+.memoir { position: relative; z-index: 1; }
 
 /* 2. 选中色优化 */
 ::selection {
@@ -946,21 +1013,59 @@ body::before {
   50% { box-shadow: 0 0 14px var(--gold), 0 0 28px var(--gold-soft), 0 0 40px rgba(232,184,122,0.3); }
 }
 
-/* 5. 鼠标光晕 · 仅序章激活 */
+/* 5. 自定义光标 · 柔光跟随 + 精致 dot / ring (全页, 随章节微变) */
+
+/* 柔光层 · 全页低存在感跟随 */
 .cursor-glow {
-  position: fixed;
+  position: fixed; left: 0; top: 0;
   pointer-events: none;
-  width: 360px; height: 360px;
+  width: 300px; height: 300px;
+  margin: -150px 0 0 -150px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,184,122,0.10) 0%, rgba(232,184,122,0.04) 30%, transparent 60%);
-  transform: translate(-50%, -50%);
-  z-index: 1;
+  background: radial-gradient(circle, rgba(232,184,122,0.09) 0%, rgba(195,107,94,0.035) 35%, transparent 62%);
+  z-index: 80;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.7s ease;
   mix-blend-mode: screen;
-  filter: blur(8px);
+  filter: blur(6px);
 }
-.cursor-glow.is-active { opacity: 1; }
+.cursor-glow.is-active { opacity: 0.55; }
+/* 序章 / 尾声内柔光更盛 */
+.cursor-glow.is-warm { opacity: 1; }
+
+/* 精致光标 · 实心金点 + 外环 */
+.cursor-dot {
+  position: fixed; left: 0; top: 0;
+  pointer-events: none;
+  width: 6px; height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(232,184,122,0.8);
+  z-index: 82;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.25s ease;
+}
+.cursor-ring {
+  position: fixed; left: 0; top: 0;
+  pointer-events: none;
+  width: 30px; height: 30px;
+  margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  border: 1px solid rgba(232,184,122,0.45);
+  z-index: 81;
+  opacity: 0;
+  transition: opacity 0.5s ease, width 0.3s ease, height 0.3s ease,
+              margin 0.3s ease, border-color 0.3s ease;
+}
+.cursor-dot.is-active, .cursor-ring.is-active { opacity: 1; }
+/* 悬停可交互元素时, 外环张开收拢 */
+.cursor-ring.is-hover {
+  width: 46px; height: 46px;
+  margin: -23px 0 0 -23px;
+  border-color: rgba(232,184,122,0.7);
+}
+.cursor-dot.is-hover { transform: scale(1.6); }
 
 /* 6. 侧边导航升级 · 激活项金色波纹脉动 */
 .nav-item {
@@ -1378,11 +1483,10 @@ a.prologue-scroll:hover .scroll-line {
   50% { text-shadow: 0 0 45px rgba(232,184,122,0.55), 0 0 80px rgba(232,184,122,0.18); }
 }
 
-/* 24. 章节顶部柔和光照 */
+/* 24. 章节顶部柔和光照 (透出背后纵深层) */
 .chapter:not(.prologue):not(.epilogue) {
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(232,184,122,0.025), transparent 45%),
-    var(--bg);
+    radial-gradient(ellipse at 50% 0%, rgba(232,184,122,0.025), transparent 45%);
 }
 
 /* 25. Reduced motion · 尊重用户偏好 */
@@ -1392,17 +1496,30 @@ a.prologue-scroll:hover .scroll-line {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  /* 关闭新增动效层: 微光粒子 canvas 不绘制 (JS 早退), orb 静止居中, 自定义光标隐藏 */
+  .light-canvas { display: none; }
+  .bg-depth .orb { animation: none !important; }
+  .cursor-glow, .cursor-dot, .cursor-ring { display: none; }
 }
 
 /* 26. 移动端 polish */
 @media (max-width: 860px) {
-  .cursor-glow { display: none; }
+  .cursor-glow, .cursor-dot, .cursor-ring { display: none; }
   .prologue-title::after { inset: -4% -2%; }
   body::before { opacity: 0.04; }
+  .bg-depth .orb { filter: blur(100px); }
 }
   </style>
 </head>
 <body>
+
+<!-- 背景纵深层 · 暖金浮光 orb + 微光粒子 canvas -->
+<div class="bg-depth" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
+</div>
 
 <!-- 进度条 -->
 <div class="progress-bar" id="progressBar"></div>
@@ -1953,7 +2070,7 @@ a.prologue-scroll:hover .scroll-line {
           <div class="tl-desc">长沙之行 · 山河又添一城</div>
         </div>
         <div class="tl-item tl-current">
-          <div class="tl-month">2026.05 · 此刻</div>
+          <div class="tl-month">2026 · 此刻</div>
           <div class="tl-desc">个人 IP 正式启动 · 19 岁生日将至</div>
         </div>
       </div>
@@ -2029,7 +2146,7 @@ a.prologue-scroll:hover .scroll-line {
       <div class="epilogue-divider"></div>
 
       <p class="ep-para">
-        从2007年的朔州，到2026年的武汉——<br>
+        从 2007 年的朔州，到 2026 年的武汉——<br>
         将近 19 年的人生，第一次被我从头到尾、不疾不徐地讲了一遍。
       </p>
 
@@ -2217,31 +2334,71 @@ a.prologue-scroll:hover .scroll-line {
   }, { threshold: 0.4 });
   numTargets.forEach(function (t) { numObs.observe(t.el); });
 
-  // ========== 鼠标光晕 · 仅序章激活 ==========
-  if (window.matchMedia('(min-width: 861px)').matches) {
-    const glow = document.createElement('div');
-    glow.className = 'cursor-glow';
+  // ========== 自定义光标 · 柔光跟随 + dot / ring (随章节微变) ==========
+  if (window.matchMedia('(min-width: 861px) and (hover: hover) and (pointer: fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const glow = document.createElement('div'); glow.className = 'cursor-glow';
+    const ring = document.createElement('div'); ring.className = 'cursor-ring';
+    const dot  = document.createElement('div'); dot.className  = 'cursor-dot';
     document.body.appendChild(glow);
-    const prologueEl = document.getElementById('prologue');
-    let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0, rafId = null;
+    document.body.appendChild(ring);
+    document.body.appendChild(dot);
+
+    let mx = -200, my = -200;          // 真实鼠标
+    let gx = -200, gy = -200;          // 柔光 (慢)
+    let rx = -200, ry = -200;          // 外环 (中)
+    let rafId = null, activated = false;
+
     function tick() {
-      glowX += (mouseX - glowX) * 0.18;
-      glowY += (mouseY - glowY) * 0.18;
-      glow.style.left = glowX + 'px';
-      glow.style.top = glowY + 'px';
+      gx += (mx - gx) * 0.12;  gy += (my - gy) * 0.12;
+      rx += (mx - rx) * 0.22;  ry += (my - ry) * 0.22;
+      glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
       rafId = requestAnimationFrame(tick);
     }
     window.addEventListener('mousemove', function (e) {
-      mouseX = e.clientX; mouseY = e.clientY;
-      if (!rafId) tick();
+      mx = e.clientX; my = e.clientY;
+      if (!activated) {
+        activated = true;
+        glow.classList.add('is-active');
+        ring.classList.add('is-active');
+        dot.classList.add('is-active');
+        if (!rafId) tick();
+      }
     }, { passive: true });
-    if (prologueEl) {
-      const glowObs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          glow.classList.toggle('is-active', en.isIntersecting);
+    window.addEventListener('mouseleave', function () {
+      glow.classList.remove('is-active');
+      ring.classList.remove('is-active');
+      dot.classList.remove('is-active');
+      activated = false;
+    });
+
+    // 悬停可交互元素时, 外环张开
+    const HOVER_SEL = 'a, button, .nav-item, .friend-card, .teacher-card, .stat, .gk-cell, .moment, .quote';
+    document.addEventListener('mouseover', function (e) {
+      if (e.target.closest && e.target.closest(HOVER_SEL)) {
+        ring.classList.add('is-hover'); dot.classList.add('is-hover');
+      }
+    });
+    document.addEventListener('mouseout', function (e) {
+      if (e.target.closest && e.target.closest(HOVER_SEL) &&
+          !(e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(HOVER_SEL))) {
+        ring.classList.remove('is-hover'); dot.classList.remove('is-hover');
+      }
+    });
+
+    // 序章 / 尾声内柔光更盛
+    const warmEls = [document.getElementById('prologue'), document.getElementById('epilogue')].filter(Boolean);
+    if (warmEls.length) {
+      const warmObs = new IntersectionObserver(function (entries) {
+        const anyWarm = warmEls.some(function (el) {
+          const r = el.getBoundingClientRect();
+          return r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5;
         });
-      }, { threshold: 0.1 });
-      glowObs.observe(prologueEl);
+        glow.classList.toggle('is-warm', anyWarm);
+      }, { threshold: [0, 0.3, 0.6, 1] });
+      warmEls.forEach(function (el) { warmObs.observe(el); });
     }
   }
 
@@ -2268,6 +2425,94 @@ a.prologue-scroll:hover .scroll-line {
       if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
     }
   });
+})();
+
+// ========== 微光粒子层 · 暖金缓升 (背景纵深) ==========
+(function lightCanvas() {
+  const c = document.getElementById('lightCanvas');
+  if (!c) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = c.getContext('2d');
+  let w = 0, h = 0, dpr = 1;
+  let particles = [];
+  let running = false, rafId = 0;
+
+  // 暖金调: 70% 金 · 20% 暖棕 · 10% 余烬, 契合回忆录温暖底色
+  const colors = [
+    'rgba(232,184,122,', 'rgba(232,184,122,', 'rgba(232,184,122,',
+    'rgba(232,184,122,', 'rgba(232,184,122,', 'rgba(232,184,122,',
+    'rgba(232,184,122,',
+    'rgba(201,160,106,', 'rgba(138,106,58,',
+    'rgba(195,107,94,'
+  ];
+
+  function particleCount() {
+    if (w < 480) return 18;
+    if (w < 768) return 26;
+    return 44;
+  }
+
+  function spawn(initial) {
+    return {
+      x: Math.random() * w,
+      y: initial ? Math.random() * h : h + Math.random() * 30,
+      r: 0.5 + Math.pow(Math.random(), 2) * 1.6,
+      vx: (Math.random() - 0.5) * 0.08,
+      vy: -(0.08 + Math.random() * 0.22),
+      a: 0.24 + Math.random() * 0.34,
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.0012 + Math.random() * 0.0018,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    };
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    c.width = Math.floor(w * dpr);
+    c.height = Math.floor(h * dpr);
+    c.style.width = w + 'px';
+    c.style.height = h + 'px';
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+    const n = particleCount();
+    if (particles.length !== n) {
+      particles = Array.from({ length: n }, function () { return spawn(true); });
+    }
+  }
+
+  function frame(t) {
+    if (!running) { rafId = 0; return; }
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -12 || p.x < -50 || p.x > w + 50) {
+        Object.assign(p, spawn(false));
+      }
+      const alpha = (p.a * (0.55 + 0.45 * Math.sin(t * p.freq + p.phase))).toFixed(3);
+      ctx.fillStyle = p.color + alpha + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start() { if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
+  function stop() { running = false; }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') stop(); else start();
+  });
+  window.addEventListener('resize', resize);
+
+  resize();
+  start();
 })();
 </script>
 </body>
