@@ -12,16 +12,20 @@
     --ink: #08080c;
     --ink-2: #0d0d15;
     --ink-3: #131321;
-    --paper: #f3ecd8;
-    --paper-dim: #d6cfb9;
-    --gold: #c9a96a;
-    --gold-soft: #b8986a;
-    --gold-bright: #e6cd95;
-    --gold-deep: #8b6e3a;
-    --gold-shadow: rgba(201, 169, 106, 0.15);
-    --cinnabar: #c53131;
-    --cinnabar-bright: #e14949;
-    --cinnabar-deep: #8d1f1f;
+    --paper: #f4ecd6;
+    --paper-dim: #d8d0b6;
+    /* warm refined "金石" gold — warmer & less green than the old #c9a96a */
+    --gold: #d8b87a;
+    --gold-soft: #c8a572;
+    --gold-bright: #f0d49c;
+    --gold-deep: #9a7942;
+    --gold-rgb: 216, 184, 122;
+    --gold-shadow: rgba(216, 184, 122, 0.15);
+    /* richer, slightly warmer cinnabar */
+    --cinnabar: #c8392f;
+    --cinnabar-bright: #e1564a;
+    --cinnabar-deep: #8a201a;
+    --cinnabar-rgb: 200, 57, 47;
     --text: #f0e9d8;
     --text-2: #b9b2a0;
     --text-3: #7a7566;
@@ -46,17 +50,27 @@
     position: relative;
   }
 
-  /* paper grain overlay */
+  /* paper-fibre grain + ink wash + warm aura — layered depth */
   body::before {
     content: '';
     position: fixed; inset: 0; pointer-events: none;
     background-image:
-      radial-gradient(ellipse at 20% 10%, rgba(201,169,106,0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 90%, rgba(197,49,49,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 18% 8%, rgba(var(--gold-rgb),0.055) 0%, transparent 52%),
+      radial-gradient(ellipse at 82% 92%, rgba(var(--cinnabar-rgb),0.04) 0%, transparent 50%),
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
     z-index: 1;
-    opacity: 0.35;
+    opacity: 0.4;
     mix-blend-mode: overlay;
+  }
+  /* corner vignette — gives the dark stone field quiet depth */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 120% 80% at 50% -10%, rgba(var(--gold-rgb),0.05) 0%, transparent 45%),
+      radial-gradient(circle at 50% 120%, transparent 55%, rgba(0,0,0,0.45) 100%);
+    z-index: 1;
+    opacity: 0.9;
   }
 
   /* ─────────────── SCROLLBAR ─────────────── */
@@ -79,7 +93,7 @@
   nav.scrolled {
     background: rgba(8,8,12,0.94);
     padding: 14px 56px;
-    border-bottom: 1px solid rgba(201,169,106,0.12);
+    border-bottom: 1px solid rgba(216, 184, 122,0.12);
   }
   .nav-logo {
     display: flex; align-items: center; gap: 14px;
@@ -140,7 +154,7 @@
     line-height: 1;
     letter-spacing: 0.04em;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(201, 169, 106, 0.05);
+    -webkit-text-stroke: 1px rgba(216, 184, 122, 0.05);
     z-index: 1;
     pointer-events: none;
     white-space: nowrap;
@@ -193,7 +207,7 @@
     letter-spacing: 10px;
     color: var(--gold-soft);
     font-weight: 300;
-    border-right: 1px solid rgba(201,169,106,0.25);
+    border-right: 1px solid rgba(216, 184, 122,0.25);
     padding: 0 22px 0 0;
     margin-bottom: 36px;
     opacity: 0;
@@ -236,21 +250,21 @@
     font-style: normal;
     background: linear-gradient(
       180deg,
-      #F4DEAA 0%,
-      #E8C888 32%,
-      #D4AC68 62%,
-      #B48848 100%
+      #FBE7B2 0%,
+      #F2D295 30%,
+      #E0B873 60%,
+      #C49652 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: 0.02em;
     filter:
-      drop-shadow(0 1px 0 #8A5C20)
-      drop-shadow(0 2px 0 #5E3E14)
-      drop-shadow(0 3px 0 #3A2608)
-      drop-shadow(0 4px 0 #1F1404)
-      drop-shadow(0 10px 22px rgba(0,0,0,.6));
+      drop-shadow(0 1px 0 #95641F)
+      drop-shadow(0 2px 0 #654314)
+      drop-shadow(0 3px 0 #3F2A08)
+      drop-shadow(0 4px 0 #221604)
+      drop-shadow(0 10px 24px rgba(0,0,0,.58));
   }
   /* cinnabar carved 永 — like an impressed wax seal */
   .hero-title-cn .accent {
@@ -258,11 +272,11 @@
     color: var(--cinnabar-bright);
     -webkit-text-fill-color: var(--cinnabar-bright);
     filter:
-      drop-shadow(0 1px 0 #8d1f1f)
-      drop-shadow(0 2px 0 #5a1010)
-      drop-shadow(0 3px 0 #320808)
-      drop-shadow(0 4px 0 #1a0404)
-      drop-shadow(0 8px 18px rgba(160, 30, 30, .55));
+      drop-shadow(0 1px 0 #8a201a)
+      drop-shadow(0 2px 0 #5e1410)
+      drop-shadow(0 3px 0 #380a08)
+      drop-shadow(0 4px 0 #1d0504)
+      drop-shadow(0 8px 20px rgba(170, 36, 30, .5));
   }
 
   .hero-title-en {
@@ -301,7 +315,7 @@
   }
   .hero-cta {
     display: inline-flex; align-items: center; gap: 12px;
-    border: 1px solid rgba(201,169,106,0.45);
+    border: 1px solid rgba(216, 184, 122,0.45);
     color: var(--gold);
     text-decoration: none;
     padding: 15px 32px;
@@ -350,10 +364,10 @@
     align-items: baseline;
     gap: 26px;
     padding: 32px 0;
-    border-top: 1px solid rgba(201,169,106,0.14);
+    border-top: 1px solid rgba(216, 184, 122,0.14);
     transition: padding 0.4s cubic-bezier(0.2,0.8,0.2,1);
   }
-  .hero-stat:last-child { border-bottom: 1px solid rgba(201,169,106,0.14); }
+  .hero-stat:last-child { border-bottom: 1px solid rgba(216, 184, 122,0.14); }
   .hero-stat:hover { padding-left: 16px; }
   .hero-stat-num {
     font-family: var(--serif-en);
@@ -362,7 +376,7 @@
     line-height: 0.92;
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
-    background: linear-gradient(180deg, #e6cd95 0%, #c9a96a 55%, #8b6e3a 100%);
+    background: linear-gradient(180deg, #f0d49c 0%, #d8b87a 55%, #9a7942 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -371,7 +385,7 @@
     font-size: 0.32em;
     margin-left: 4px;
     vertical-align: baseline;
-    background: linear-gradient(180deg, #c9a96a, #8b6e3a);
+    background: linear-gradient(180deg, #d8b87a, #9a7942);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -468,8 +482,8 @@
     padding: 140px 60px;
     background: var(--ink-2);
     overflow: hidden;
-    border-top: 1px solid rgba(201,169,106,0.08);
-    border-bottom: 1px solid rgba(201,169,106,0.08);
+    border-top: 1px solid rgba(216, 184, 122,0.08);
+    border-bottom: 1px solid rgba(216, 184, 122,0.08);
   }
   .quote-ornament {
     font-family: var(--serif-cn);
@@ -588,7 +602,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
-    border: 1px solid rgba(201,169,106,0.12);
+    border: 1px solid rgba(216, 184, 122,0.12);
     border-right: none;
     border-bottom: none;
     position: relative;
@@ -598,15 +612,15 @@
     padding: 56px 40px 52px;
     position: relative;
     overflow: hidden;
-    border-right: 1px solid rgba(201,169,106,0.12);
-    border-bottom: 1px solid rgba(201,169,106,0.12);
+    border-right: 1px solid rgba(216, 184, 122,0.12);
+    border-bottom: 1px solid rgba(216, 184, 122,0.12);
     transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     cursor: default;
   }
   .fire-card::before {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(201,169,106,0.08) 0%, transparent 60%);
+    background: radial-gradient(circle at 50% 0%, rgba(216, 184, 122,0.08) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.6s;
   }
@@ -617,7 +631,7 @@
     font-family: var(--serif-en);
     font-size: 280px;
     font-weight: 300;
-    color: rgba(201,169,106,0.04);
+    color: rgba(216, 184, 122,0.04);
     line-height: 1;
     pointer-events: none;
     transition: all 0.6s;
@@ -625,7 +639,7 @@
   }
   .fire-card:hover { background: var(--ink-3); }
   .fire-card:hover::before { opacity: 1; }
-  .fire-card:hover::after { color: rgba(201,169,106,0.08); transform: translate(-8px, -8px); }
+  .fire-card:hover::after { color: rgba(216, 184, 122,0.08); transform: translate(-8px, -8px); }
 
   .fire-seal {
     display: inline-flex;
@@ -640,7 +654,7 @@
     line-height: 1;
     margin-bottom: 32px;
     position: relative;
-    box-shadow: 0 2px 12px rgba(197,49,49,0.3);
+    box-shadow: 0 2px 12px rgba(200, 57, 47,0.3);
   }
   .fire-seal::after {
     content: '';
@@ -700,7 +714,7 @@
   .type-card {
     position: relative;
     padding: 40px 30px 36px;
-    border: 1px solid rgba(201,169,106,0.12);
+    border: 1px solid rgba(216, 184, 122,0.12);
     background: linear-gradient(180deg, var(--ink-2), var(--ink));
     transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     cursor: default;
@@ -716,10 +730,10 @@
     transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .type-card:hover {
-    border-color: rgba(201,169,106,0.4);
+    border-color: rgba(216, 184, 122,0.4);
     background: linear-gradient(180deg, var(--ink-3), var(--ink-2));
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px -20px rgba(201,169,106,0.2);
+    box-shadow: 0 20px 40px -20px rgba(216, 184, 122,0.2);
   }
   .type-card:hover::before { transform: scaleX(1); }
 
@@ -769,7 +783,7 @@
   }
   .type-amount-block {
     padding-top: 22px;
-    border-top: 1px dashed rgba(201,169,106,0.18);
+    border-top: 1px dashed rgba(216, 184, 122,0.18);
   }
   .type-amount-label {
     font-size: 10px;
@@ -813,7 +827,7 @@
     position: relative;
     background:
       linear-gradient(180deg, var(--ink-2) 0%, var(--ink) 100%);
-    border: 1px solid rgba(201,169,106,0.12);
+    border: 1px solid rgba(216, 184, 122,0.12);
     padding: 40px;
     display: flex; flex-direction: column;
   }
@@ -821,7 +835,7 @@
     display: flex; justify-content: space-between; align-items: flex-start;
     margin-bottom: 28px;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(201,169,106,0.1);
+    border-bottom: 1px solid rgba(216, 184, 122,0.1);
   }
   .compound-chart-title {
     font-family: var(--serif-cn);
@@ -850,7 +864,7 @@
   .legend-dot {
     width: 10px; height: 2px;
   }
-  .legend-dot.total { background: var(--gold); box-shadow: 0 0 6px rgba(201,169,106,0.6); }
+  .legend-dot.total { background: var(--gold); box-shadow: 0 0 6px rgba(216, 184, 122,0.6); }
   .legend-dot.invested {
     background: transparent;
     border-top: 1px dashed var(--gold-deep);
@@ -867,7 +881,7 @@
 
   .compound-result {
     background: linear-gradient(135deg, var(--ink-3), var(--ink-2));
-    border: 1px solid rgba(201,169,106,0.2);
+    border: 1px solid rgba(216, 184, 122,0.2);
     padding: 30px 32px;
     position: relative;
     overflow: hidden;
@@ -878,7 +892,7 @@
     right: -10px; top: -14px;
     font-family: var(--brush);
     font-size: 60px;
-    color: rgba(201,169,106,0.05);
+    color: rgba(216, 184, 122,0.05);
     line-height: 1;
     letter-spacing: -0.05em;
   }
@@ -917,13 +931,13 @@
   .slider-group {
     display: flex; flex-direction: column; gap: 12px;
     padding: 20px 24px;
-    background: rgba(201,169,106,0.02);
-    border: 1px solid rgba(201,169,106,0.08);
+    background: rgba(216, 184, 122,0.02);
+    border: 1px solid rgba(216, 184, 122,0.08);
     transition: all 0.3s;
   }
   .slider-group:hover {
-    border-color: rgba(201,169,106,0.2);
-    background: rgba(201,169,106,0.04);
+    border-color: rgba(216, 184, 122,0.2);
+    background: rgba(216, 184, 122,0.04);
   }
   .slider-label {
     display: flex; justify-content: space-between; align-items: baseline;
@@ -952,7 +966,7 @@
     -webkit-appearance: none;
     appearance: none;
     width: 100%; height: 2px;
-    background: linear-gradient(to right, var(--gold-deep), rgba(201,169,106,0.12));
+    background: linear-gradient(to right, var(--gold-deep), rgba(216, 184, 122,0.12));
     outline: none; cursor: pointer;
   }
   input[type="range"]::-webkit-slider-thumb {
@@ -962,7 +976,7 @@
     border-radius: 50%;
     background: var(--gold-bright);
     border: 2px solid var(--ink);
-    box-shadow: 0 0 0 1px var(--gold), 0 0 12px rgba(201,169,106,0.5);
+    box-shadow: 0 0 0 1px var(--gold), 0 0 12px rgba(216, 184, 122,0.5);
     transition: transform 0.2s;
     cursor: grab;
   }
@@ -982,12 +996,12 @@
   /* ─────────────── 4% RULE ─────────────── */
   .rule-bg {
     background:
-      radial-gradient(ellipse at 30% 50%, rgba(201,169,106,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 30% 50%, rgba(216, 184, 122,0.03) 0%, transparent 50%),
       var(--ink-2);
     padding: 140px 0;
     position: relative;
-    border-top: 1px solid rgba(201,169,106,0.08);
-    border-bottom: 1px solid rgba(201,169,106,0.08);
+    border-top: 1px solid rgba(216, 184, 122,0.08);
+    border-bottom: 1px solid rgba(216, 184, 122,0.08);
   }
   .rule-inner { max-width: 1240px; margin: 0 auto; padding: 0 60px; }
 
@@ -1006,7 +1020,7 @@
   .rule-coin svg {
     width: 100%; max-width: 420px;
     height: auto;
-    filter: drop-shadow(0 0 40px rgba(201,169,106,0.15));
+    filter: drop-shadow(0 0 40px rgba(216, 184, 122,0.15));
   }
 
   .rule-formula {
@@ -1018,8 +1032,8 @@
     gap: 22px;
     align-items: start;
     padding: 26px 28px;
-    border: 1px solid rgba(201,169,106,0.1);
-    background: linear-gradient(135deg, rgba(201,169,106,0.015), transparent);
+    border: 1px solid rgba(216, 184, 122,0.1);
+    background: linear-gradient(135deg, rgba(216, 184, 122,0.015), transparent);
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -1034,8 +1048,8 @@
     transition: transform 0.4s;
   }
   .rule-item:hover {
-    border-color: rgba(201,169,106,0.3);
-    background: linear-gradient(135deg, rgba(201,169,106,0.04), transparent);
+    border-color: rgba(216, 184, 122,0.3);
+    background: linear-gradient(135deg, rgba(216, 184, 122,0.04), transparent);
     padding-left: 32px;
   }
   .rule-item:hover::before { transform: scaleY(1); }
@@ -1091,7 +1105,7 @@
     gap: 2px;
     padding: 4px;
     background: var(--ink-2);
-    border: 1px solid rgba(201,169,106,0.1);
+    border: 1px solid rgba(216, 184, 122,0.1);
     margin-bottom: 12px;
   }
   .type-btn {
@@ -1131,13 +1145,13 @@
   .calc-input-group {
     display: flex; flex-direction: column; gap: 14px;
     padding: 22px 26px;
-    background: rgba(201,169,106,0.02);
-    border: 1px solid rgba(201,169,106,0.08);
+    background: rgba(216, 184, 122,0.02);
+    border: 1px solid rgba(216, 184, 122,0.08);
     transition: all 0.3s;
   }
   .calc-input-group:hover {
-    border-color: rgba(201,169,106,0.2);
-    background: rgba(201,169,106,0.04);
+    border-color: rgba(216, 184, 122,0.2);
+    background: rgba(216, 184, 122,0.04);
   }
   .calc-input-label {
     display: flex; justify-content: space-between; align-items: baseline;
@@ -1174,7 +1188,7 @@
 
   .calc-result-panel {
     background: linear-gradient(180deg, var(--ink-2) 0%, var(--ink-3) 100%);
-    border: 1px solid rgba(201,169,106,0.2);
+    border: 1px solid rgba(216, 184, 122,0.2);
     padding: 44px;
     position: sticky;
     top: 100px;
@@ -1184,8 +1198,8 @@
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(circle at 100% 0%, rgba(201,169,106,0.08) 0%, transparent 40%),
-      radial-gradient(circle at 0% 100%, rgba(197,49,49,0.04) 0%, transparent 40%);
+      radial-gradient(circle at 100% 0%, rgba(216, 184, 122,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 0% 100%, rgba(200, 57, 47,0.04) 0%, transparent 40%);
     pointer-events: none;
   }
   .calc-result-panel > * { position: relative; }
@@ -1249,12 +1263,12 @@
 
   .calc-metrics {
     display: flex; flex-direction: column; gap: 2px;
-    border-top: 1px solid rgba(201,169,106,0.12);
+    border-top: 1px solid rgba(216, 184, 122,0.12);
   }
   .calc-metric {
     display: flex; justify-content: space-between; align-items: baseline;
     padding: 16px 0;
-    border-bottom: 1px solid rgba(201,169,106,0.08);
+    border-bottom: 1px solid rgba(216, 184, 122,0.08);
   }
   .calc-metric-label {
     display: flex; align-items: center; gap: 10px;
@@ -1281,7 +1295,7 @@
   .calc-progress-section {
     margin-top: 32px;
     padding-top: 28px;
-    border-top: 1px solid rgba(201,169,106,0.12);
+    border-top: 1px solid rgba(216, 184, 122,0.12);
   }
   .calc-progress-label {
     display: flex; justify-content: space-between; align-items: baseline;
@@ -1301,7 +1315,7 @@
     background: var(--ink);
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(201,169,106,0.1);
+    border: 1px solid rgba(216, 184, 122,0.1);
   }
   .calc-progress-fill {
     height: 100%;
@@ -1319,7 +1333,7 @@
   .calc-chart {
     margin-top: 32px;
     padding-top: 28px;
-    border-top: 1px solid rgba(201,169,106,0.12);
+    border-top: 1px solid rgba(216, 184, 122,0.12);
     height: 150px;
     position: relative;
   }
@@ -1345,8 +1359,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    background: rgba(201,169,106,0.12);
-    border: 1px solid rgba(201,169,106,0.12);
+    background: rgba(216, 184, 122,0.12);
+    border: 1px solid rgba(216, 184, 122,0.12);
   }
   .wisdom-card {
     background: var(--ink);
@@ -1386,7 +1400,7 @@
 
   /* ─────────────── FOOTER ─────────────── */
   footer {
-    border-top: 1px solid rgba(201,169,106,0.1);
+    border-top: 1px solid rgba(216, 184, 122,0.1);
     padding: 72px 60px 56px;
     background: var(--ink-2);
     position: relative;
@@ -1400,7 +1414,7 @@
     font-size: 280px;
     font-weight: 300;
     font-style: italic;
-    color: rgba(201,169,106,0.03);
+    color: rgba(216, 184, 122,0.03);
     line-height: 1;
     letter-spacing: -0.05em;
     pointer-events: none;
@@ -1462,7 +1476,7 @@
   .footer-bottom {
     max-width: 1240px; margin: 60px auto 0;
     padding-top: 28px;
-    border-top: 1px solid rgba(201,169,106,0.08);
+    border-top: 1px solid rgba(216, 184, 122,0.08);
     display: flex; justify-content: space-between; align-items: center;
     font-size: 11px;
     color: var(--text-3);
@@ -1551,8 +1565,24 @@
 
   canvas { display: block; }
 
-  /* ─────────────── RESPONSIVE ─────────────── */
-  @media (max-width: 960px) {
+  /* ─────────────── RESPONSIVE — three tiers (1024 / 880 / 768) ─────────────── */
+
+  /* tier 1 — large tablet / small laptop: ease the hero density, 4→2 grids */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 36px; }
+    nav.scrolled { padding: 13px 36px; }
+    .nav-links { gap: 28px; }
+    #hero { gap: 40px; padding: 0 40px; }
+    .hero-coin { right: -160px; width: 600px; height: 600px; opacity: 0.7; }
+    #hero::before { font-size: clamp(140px, 26vw, 300px); }
+    .fire-grid { grid-template-columns: repeat(2, 1fr); }
+    .types-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .section-head-right { font-size: 72px; }
+    section, .wisdom-section { padding: 100px 40px; }
+  }
+
+  /* tier 2 — portrait tablet: hero stacks, dual columns collapse to single */
+  @media (max-width: 880px) {
     nav { padding: 18px 24px; }
     nav.scrolled { padding: 12px 24px; }
     .nav-links { gap: 20px; }
@@ -1560,16 +1590,14 @@
     #hero { grid-template-columns: 1fr; padding: 120px 24px 80px; min-height: auto; gap: 60px; }
     .hero-inscription { display: none; }
     .hero-right { align-items: flex-start; padding-right: 0; }
-    .hero-coin { right: -240px; width: 560px; height: 560px; opacity: 0.55; }
-    #hero::before { font-size: clamp(120px, 30vw, 220px); top: 14%; left: 6%; }
+    .hero-coin { right: -220px; top: 36%; width: 520px; height: 520px; opacity: 0.5; }
+    #hero::before { font-size: clamp(120px, 30vw, 220px); top: 12%; left: 6%; }
     .hero-seal { right: 24px; bottom: 32px; width: 72px; height: 72px; font-size: 14px; }
     section, .wisdom-section { padding: 80px 24px; }
     .types-inner, .rule-inner, .calc-inner { padding: 0 24px; }
     .quote-section { padding: 80px 24px; }
     .section-head { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 50px; }
     .section-head-right { font-size: 60px; }
-    .fire-grid { grid-template-columns: repeat(2, 1fr); }
-    .types-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .compound-layout { grid-template-columns: 1fr; gap: 40px; }
     .compound-right { padding: 28px 24px; }
     .rule-layout { grid-template-columns: 1fr; gap: 60px; }
@@ -1583,18 +1611,65 @@
     footer { padding: 56px 24px 40px; }
   }
 
-  @media (max-width: 520px) {
-    .hero-title-cn { font-size: 44px; }
-    .hero-stat-num { font-size: 40px; }
+  /* tier 3 — phone: single-column everything, tighter type scale */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    nav.scrolled { padding: 11px 20px; }
+    .nav-links { gap: 16px; }
+    .nav-logo { font-size: 16px; letter-spacing: 4px; }
+    #hero { padding: 104px 20px 64px; gap: 48px; }
+    .hero-coin { right: -180px; width: 420px; height: 420px; opacity: 0.4; }
+    #hero::before { font-size: clamp(100px, 34vw, 180px); top: 10%; }
+    section, .wisdom-section, .quote-section { padding: 72px 20px; }
+    .types-inner, .rule-inner, .calc-inner { padding: 0 20px; }
+    .hero-title-cn { font-size: clamp(38px, 12vw, 52px); }
+    .hero-stat-num { font-size: clamp(48px, 16vw, 72px); }
     .hero-actions { flex-direction: column; align-items: stretch; width: 100%; }
     .hero-cta { justify-content: center; }
     .hero-cta-ghost { text-align: center; }
     .fire-grid { grid-template-columns: 1fr; }
-    .types-grid { grid-template-columns: 1fr; }
+    .types-grid { grid-template-columns: 1fr; gap: 16px; }
     .calc-type-selector { grid-template-columns: 1fr 1fr; }
     .calc-result-main { font-size: 44px; }
-    .section-title { font-size: 32px; }
-    .section-head-right { font-size: 44px; }
+    .section-title { font-size: clamp(28px, 8vw, 36px); }
+    .section-head-right { font-size: 48px; }
+    .rule-coin svg { max-width: 220px; }
+  }
+
+  /* ─────────────── REDUCED MOTION — full graceful degradation ─────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    /* neutralise every animation & transition site-wide */
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* entrance keyframes: ensure final resting state is visible, not stuck at opacity 0 */
+    .hero-inscription, .hero-eyebrow, .hero-title-cn, .hero-title-en,
+    .hero-sub, .hero-actions, .hero-stats, .hero-scroll-hint {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .hero-coin {
+      opacity: 0.9 !important;
+      transform: translateY(-50%) !important;
+    }
+    .hero-coin .coin-tick { transform: none !important; }
+    .hero-seal {
+      opacity: 1 !important;
+      transform: rotate(-6deg) !important;
+    }
+    .reveal { opacity: 1 !important; transform: none !important; }
+
+    /* kill perpetual loops (coinBreath / coinSlowSpin / scrollPulse / shimmer / rotate) */
+    .hero-coin, .hero-coin .coin-tick, .scroll-line,
+    .hero-stat-num, [class*="shimmer"] {
+      animation: none !important;
+    }
   }
 </style>
 </head>
@@ -1621,18 +1696,18 @@
   <svg class="hero-coin" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <radialGradient id="coinHalo" cx="50%" cy="50%">
-        <stop offset="0%" stop-color="#c9a96a" stop-opacity="0.22"/>
-        <stop offset="55%" stop-color="#c9a96a" stop-opacity="0.06"/>
-        <stop offset="100%" stop-color="#c9a96a" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#d8b87a" stop-opacity="0.22"/>
+        <stop offset="55%" stop-color="#d8b87a" stop-opacity="0.06"/>
+        <stop offset="100%" stop-color="#d8b87a" stop-opacity="0"/>
       </radialGradient>
       <linearGradient id="coinRim" x1="100%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#e6cd95" stop-opacity="0.7"/>
-        <stop offset="50%" stop-color="#c9a96a" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#8b6e3a" stop-opacity="0.6"/>
+        <stop offset="0%" stop-color="#f0d49c" stop-opacity="0.7"/>
+        <stop offset="50%" stop-color="#d8b87a" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#9a7942" stop-opacity="0.6"/>
       </linearGradient>
       <linearGradient id="coinSquare" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#e6cd95" stop-opacity="0.55"/>
-        <stop offset="100%" stop-color="#8b6e3a" stop-opacity="0.65"/>
+        <stop offset="0%" stop-color="#f0d49c" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#9a7942" stop-opacity="0.65"/>
       </linearGradient>
     </defs>
 
@@ -1641,10 +1716,10 @@
 
     <!-- outer rim (double-line) -->
     <circle cx="360" cy="360" r="304" fill="none" stroke="url(#coinRim)" stroke-width="1.4"/>
-    <circle cx="360" cy="360" r="292" fill="none" stroke="rgba(201,169,106,0.18)" stroke-width="0.5"/>
+    <circle cx="360" cy="360" r="292" fill="none" stroke="rgba(216, 184, 122,0.18)" stroke-width="0.5"/>
 
     <!-- slowly rotating tick layer (coin patina/edge marks) -->
-    <g class="coin-tick" stroke="rgba(201,169,106,0.32)" stroke-width="0.8" stroke-linecap="round">
+    <g class="coin-tick" stroke="rgba(216, 184, 122,0.32)" stroke-width="0.8" stroke-linecap="round">
       <line x1="360" y1="50" x2="360" y2="78"/>
       <line x1="360" y1="50" x2="360" y2="78" transform="rotate(15 360 360)"/>
       <line x1="360" y1="50" x2="360" y2="78" transform="rotate(30 360 360)"/>
@@ -1672,25 +1747,25 @@
     </g>
 
     <!-- inner decorative ring -->
-    <circle cx="360" cy="360" r="220" fill="none" stroke="rgba(201,169,106,0.16)" stroke-width="0.5" stroke-dasharray="2 6"/>
+    <circle cx="360" cy="360" r="220" fill="none" stroke="rgba(216, 184, 122,0.16)" stroke-width="0.5" stroke-dasharray="2 6"/>
 
     <!-- inner square (the hole) — double border -->
     <rect x="288" y="288" width="144" height="144" fill="none" stroke="url(#coinSquare)" stroke-width="1.6"/>
-    <rect x="298" y="298" width="124" height="124" fill="none" stroke="rgba(201,169,106,0.22)" stroke-width="0.5"/>
+    <rect x="298" y="298" width="124" height="124" fill="none" stroke="rgba(216, 184, 122,0.22)" stroke-width="0.5"/>
 
     <!-- F·I·R·E at four cardinal positions around the square -->
     <g font-family="Cormorant Garamond, Fraunces, serif" font-style="italic" font-weight="500" text-anchor="middle">
-      <text x="360" y="250" font-size="38" fill="#e6cd95" letter-spacing="2" opacity="0.85">F</text>
-      <text x="490" y="376" font-size="38" fill="#c9a96a" letter-spacing="2" opacity="0.85">I</text>
-      <text x="360" y="500" font-size="38" fill="#c9a96a" letter-spacing="2" opacity="0.85">R</text>
-      <text x="230" y="376" font-size="38" fill="#e6cd95" letter-spacing="2" opacity="0.85">E</text>
+      <text x="360" y="250" font-size="38" fill="#f0d49c" letter-spacing="2" opacity="0.85">F</text>
+      <text x="490" y="376" font-size="38" fill="#d8b87a" letter-spacing="2" opacity="0.85">I</text>
+      <text x="360" y="500" font-size="38" fill="#d8b87a" letter-spacing="2" opacity="0.85">R</text>
+      <text x="230" y="376" font-size="38" fill="#f0d49c" letter-spacing="2" opacity="0.85">E</text>
     </g>
 
     <!-- tiny center accent -->
-    <circle cx="360" cy="360" r="2.5" fill="rgba(201,169,106,0.45)"/>
+    <circle cx="360" cy="360" r="2.5" fill="rgba(216, 184, 122,0.45)"/>
 
     <!-- four corner ornaments (compass-like) -->
-    <g stroke="rgba(201,169,106,0.22)" stroke-width="0.6" fill="none">
+    <g stroke="rgba(216, 184, 122,0.22)" stroke-width="0.6" fill="none">
       <line x1="360" y1="178" x2="360" y2="208"/>
       <line x1="542" y1="360" x2="512" y2="360"/>
       <line x1="360" y1="542" x2="360" y2="512"/>
@@ -1864,7 +1939,7 @@
         </div>
       </div>
 
-      <div class="type-card reveal reveal-delay-1" style="--accent: #c9a96a">
+      <div class="type-card reveal reveal-delay-1" style="--accent: #d8b87a">
         <div class="type-index">Ⅱ · STANDARD</div>
         <div class="type-badge">标准</div>
         <div class="type-name">Regular FIRE</div>
@@ -1894,7 +1969,7 @@
         </div>
       </div>
 
-      <div class="type-card reveal reveal-delay-3" style="--accent: #c53131">
+      <div class="type-card reveal reveal-delay-3" style="--accent: #c8392f">
         <div class="type-index">Ⅳ · ABUNDANT</div>
         <div class="type-badge">奢华</div>
         <div class="type-name">Fat FIRE</div>
@@ -2003,19 +2078,19 @@
               <stop offset="100%" stop-color="#08080c"/>
             </radialGradient>
             <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#e6cd95"/>
-              <stop offset="50%" stop-color="#c9a96a"/>
-              <stop offset="100%" stop-color="#8b6e3a"/>
+              <stop offset="0%" stop-color="#f0d49c"/>
+              <stop offset="50%" stop-color="#d8b87a"/>
+              <stop offset="100%" stop-color="#9a7942"/>
             </linearGradient>
           </defs>
 
           <!-- outermost decorative ring -->
-          <circle cx="210" cy="210" r="200" fill="none" stroke="#c9a96a" stroke-opacity="0.15" stroke-width="0.5"/>
-          <circle cx="210" cy="210" r="195" fill="none" stroke="#c9a96a" stroke-opacity="0.1" stroke-width="0.5" stroke-dasharray="1 4"/>
+          <circle cx="210" cy="210" r="200" fill="none" stroke="#d8b87a" stroke-opacity="0.15" stroke-width="0.5"/>
+          <circle cx="210" cy="210" r="195" fill="none" stroke="#d8b87a" stroke-opacity="0.1" stroke-width="0.5" stroke-dasharray="1 4"/>
 
           <!-- main coin body -->
-          <circle cx="210" cy="210" r="180" fill="url(#coinGrad)" stroke="#c9a96a" stroke-opacity="0.3" stroke-width="1"/>
-          <circle cx="210" cy="210" r="170" fill="none" stroke="#c9a96a" stroke-opacity="0.12" stroke-width="0.5"/>
+          <circle cx="210" cy="210" r="180" fill="url(#coinGrad)" stroke="#d8b87a" stroke-opacity="0.3" stroke-width="1"/>
+          <circle cx="210" cy="210" r="170" fill="none" stroke="#d8b87a" stroke-opacity="0.12" stroke-width="0.5"/>
 
           <!-- 4% arc on ring -->
           <circle id="rule-arc" cx="210" cy="210" r="150" fill="none"
@@ -2026,10 +2101,10 @@
                   style="transition: stroke-dasharray 2s cubic-bezier(0.25,0.46,0.45,0.94);"/>
 
           <!-- background arc -->
-          <circle cx="210" cy="210" r="150" fill="none" stroke="#c9a96a" stroke-opacity="0.08" stroke-width="3"/>
+          <circle cx="210" cy="210" r="150" fill="none" stroke="#d8b87a" stroke-opacity="0.08" stroke-width="3"/>
 
           <!-- tick marks -->
-          <g stroke="#c9a96a" stroke-opacity="0.25" stroke-width="0.5">
+          <g stroke="#d8b87a" stroke-opacity="0.25" stroke-width="0.5">
             <line x1="210" y1="40" x2="210" y2="50"/>
             <line x1="210" y1="370" x2="210" y2="380"/>
             <line x1="40" y1="210" x2="50" y2="210"/>
@@ -2037,14 +2112,14 @@
           </g>
 
           <!-- inner square (like a 方孔钱) -->
-          <rect x="185" y="185" width="50" height="50" fill="none" stroke="#c9a96a" stroke-opacity="0.2" stroke-width="0.5"/>
-          <rect x="190" y="190" width="40" height="40" fill="none" stroke="#c9a96a" stroke-opacity="0.15" stroke-width="0.5"/>
+          <rect x="185" y="185" width="50" height="50" fill="none" stroke="#d8b87a" stroke-opacity="0.2" stroke-width="0.5"/>
+          <rect x="190" y="190" width="40" height="40" fill="none" stroke="#d8b87a" stroke-opacity="0.15" stroke-width="0.5"/>
 
           <!-- center text -->
           <text x="210" y="195" text-anchor="middle"
                 font-family="Cormorant Garamond, serif"
                 font-size="76" font-weight="300"
-                fill="#c9a96a">4<tspan font-size="44" dy="-10">%</tspan></text>
+                fill="#d8b87a">4<tspan font-size="44" dy="-10">%</tspan></text>
           <text x="210" y="240" text-anchor="middle"
                 font-family="Noto Serif SC, serif"
                 font-size="10" letter-spacing="4"
@@ -2055,10 +2130,10 @@
                 fill="#b9b2a0">安 全 提 取 率</text>
 
           <!-- corner characters 天地玄黃 style -->
-          <text x="210" y="70" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#8b6e3a" opacity="0.6">积</text>
-          <text x="210" y="360" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#8b6e3a" opacity="0.6">承</text>
-          <text x="70" y="215" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#8b6e3a" opacity="0.6">久</text>
-          <text x="350" y="215" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#8b6e3a" opacity="0.6">长</text>
+          <text x="210" y="70" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#9a7942" opacity="0.6">积</text>
+          <text x="210" y="360" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#9a7942" opacity="0.6">承</text>
+          <text x="70" y="215" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#9a7942" opacity="0.6">久</text>
+          <text x="350" y="215" text-anchor="middle" font-family="Noto Serif SC" font-size="12" letter-spacing="3" fill="#9a7942" opacity="0.6">长</text>
         </svg>
       </div>
 
@@ -2313,6 +2388,10 @@
 </footer>
 
 <script>
+// ────────── MOTION PREFERENCE ──────────
+const prefersReducedMotion =
+  window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ────────── HERO CANVAS : 柔和粒子 ──────────
 const heroCanvas = document.getElementById('hero-canvas');
 const hCtx = heroCanvas.getContext('2d');
@@ -2323,7 +2402,11 @@ function resizeHeroCanvas() {
   heroCanvas.height = heroCanvas.parentElement.offsetHeight;
 }
 resizeHeroCanvas();
-window.addEventListener('resize', () => { resizeHeroCanvas(); initParticles(); });
+window.addEventListener('resize', () => {
+  resizeHeroCanvas();
+  initParticles();
+  if (prefersReducedMotion) drawParticles(false);
+});
 
 function initParticles() {
   particles = [];
@@ -2345,23 +2428,26 @@ function initParticles() {
 }
 initParticles();
 
-function animateParticles() {
+function drawParticles(animate) {
   hCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
   particles.forEach(p => {
-    p.y += p.vy;
-    p.x += p.vx;
-    p.opacity += p.fade * p.fadeDir;
-    if (p.opacity > 0.22 || p.opacity < 0.03) p.fadeDir *= -1;
-    if (p.y < -30) { p.y = heroCanvas.height + 30; p.x = Math.random() * heroCanvas.width; }
-    if (p.x < -30) p.x = heroCanvas.width + 30;
-    if (p.x > heroCanvas.width + 30) p.x = -30;
-    hCtx.fillStyle = `rgba(201, 169, 106, ${p.opacity})`;
+    if (animate) {
+      p.y += p.vy;
+      p.x += p.vx;
+      p.opacity += p.fade * p.fadeDir;
+      if (p.opacity > 0.22 || p.opacity < 0.03) p.fadeDir *= -1;
+      if (p.y < -30) { p.y = heroCanvas.height + 30; p.x = Math.random() * heroCanvas.width; }
+      if (p.x < -30) p.x = heroCanvas.width + 30;
+      if (p.x > heroCanvas.width + 30) p.x = -30;
+    }
+    hCtx.fillStyle = `rgba(216, 184, 122, ${p.opacity})`;
     hCtx.font = `${p.size}px 'Cormorant Garamond', serif`;
     hCtx.fillText(p.symbol, p.x, p.y);
   });
-  requestAnimationFrame(animateParticles);
+  if (animate) requestAnimationFrame(() => drawParticles(true));
 }
-animateParticles();
+// reduced-motion: render a single static field; otherwise loop
+drawParticles(!prefersReducedMotion);
 
 // ────────── NAV SCROLL ──────────
 window.addEventListener('scroll', () => {
@@ -2453,7 +2539,7 @@ function drawCompoundChart(data, P, annualContrib) {
   for (let i = 0; i <= 4; i++) {
     const y = pad.top + (H - pad.top - pad.bottom) * (1 - i / 4);
     cCtx.beginPath();
-    cCtx.strokeStyle = 'rgba(201,169,106,0.06)';
+    cCtx.strokeStyle = 'rgba(216, 184, 122,0.06)';
     cCtx.lineWidth = 1;
     cCtx.setLineDash(i === 0 ? [] : [2, 4]);
     cCtx.moveTo(pad.left, y);
@@ -2461,7 +2547,7 @@ function drawCompoundChart(data, P, annualContrib) {
     cCtx.stroke();
     cCtx.setLineDash([]);
     const val = max * i / 4;
-    cCtx.fillStyle = 'rgba(201,169,106,0.35)';
+    cCtx.fillStyle = 'rgba(216, 184, 122,0.35)';
     const label = val >= 1e8 ? `${(val/1e8).toFixed(1)}亿` : `${Math.round(val/1e4)}万`;
     cCtx.fillText(label, 8, y + 3);
   }
@@ -2480,9 +2566,9 @@ function drawCompoundChart(data, P, annualContrib) {
   cCtx.lineTo(pad.left, H - pad.bottom);
   cCtx.closePath();
   const grad1 = cCtx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
-  grad1.addColorStop(0, 'rgba(201,169,106,0.28)');
-  grad1.addColorStop(0.5, 'rgba(201,169,106,0.12)');
-  grad1.addColorStop(1, 'rgba(201,169,106,0.01)');
+  grad1.addColorStop(0, 'rgba(216, 184, 122,0.28)');
+  grad1.addColorStop(0.5, 'rgba(216, 184, 122,0.12)');
+  grad1.addColorStop(1, 'rgba(216, 184, 122,0.01)');
   cCtx.fillStyle = grad1;
   cCtx.fill();
 
@@ -2506,10 +2592,10 @@ function drawCompoundChart(data, P, annualContrib) {
     const y = H - pad.bottom - v * yScale;
     i === 0 ? cCtx.moveTo(x, y) : cCtx.lineTo(x, y);
   });
-  cCtx.strokeStyle = '#c9a96a';
+  cCtx.strokeStyle = '#d8b87a';
   cCtx.lineWidth = 2;
   cCtx.shadowBlur = 8;
-  cCtx.shadowColor = 'rgba(201,169,106,0.4)';
+  cCtx.shadowColor = 'rgba(216, 184, 122,0.4)';
   cCtx.stroke();
   cCtx.shadowBlur = 0;
 
@@ -2518,14 +2604,14 @@ function drawCompoundChart(data, P, annualContrib) {
   const lastY = H - pad.bottom - data[data.length - 1] * yScale;
   cCtx.beginPath();
   cCtx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-  cCtx.fillStyle = '#e6cd95';
+  cCtx.fillStyle = '#f0d49c';
   cCtx.shadowBlur = 12;
-  cCtx.shadowColor = 'rgba(201,169,106,0.8)';
+  cCtx.shadowColor = 'rgba(216, 184, 122,0.8)';
   cCtx.fill();
   cCtx.shadowBlur = 0;
 
   // X-axis year labels
-  cCtx.fillStyle = 'rgba(201,169,106,0.4)';
+  cCtx.fillStyle = 'rgba(216, 184, 122,0.4)';
   cCtx.font = "10px 'JetBrains Mono', monospace";
   cCtx.textAlign = 'center';
   const numLabels = 5;
@@ -2626,7 +2712,7 @@ function drawFireChart(trajectory, target) {
   // target line (dashed)
   const ty = H - pad.bottom - target * yScale;
   fCtx.beginPath();
-  fCtx.strokeStyle = 'rgba(197,49,49,0.4)';
+  fCtx.strokeStyle = 'rgba(200, 57, 47,0.4)';
   fCtx.lineWidth = 1;
   fCtx.setLineDash([3, 3]);
   fCtx.moveTo(pad.left, ty);
@@ -2635,7 +2721,7 @@ function drawFireChart(trajectory, target) {
   fCtx.setLineDash([]);
 
   // target label
-  fCtx.fillStyle = 'rgba(197,49,49,0.7)';
+  fCtx.fillStyle = 'rgba(200, 57, 47,0.7)';
   fCtx.font = "9px 'JetBrains Mono', monospace";
   fCtx.fillText('TARGET', W - 52, ty - 4);
 
@@ -2650,8 +2736,8 @@ function drawFireChart(trajectory, target) {
   fCtx.lineTo(pad.left, H - pad.bottom);
   fCtx.closePath();
   const grad = fCtx.createLinearGradient(0, pad.top, 0, H);
-  grad.addColorStop(0, 'rgba(201,169,106,0.35)');
-  grad.addColorStop(1, 'rgba(201,169,106,0.02)');
+  grad.addColorStop(0, 'rgba(216, 184, 122,0.35)');
+  grad.addColorStop(1, 'rgba(216, 184, 122,0.02)');
   fCtx.fillStyle = grad;
   fCtx.fill();
 
@@ -2662,10 +2748,10 @@ function drawFireChart(trajectory, target) {
     const y = H - pad.bottom - v * yScale;
     i === 0 ? fCtx.moveTo(x, y) : fCtx.lineTo(x, y);
   });
-  fCtx.strokeStyle = '#c9a96a';
+  fCtx.strokeStyle = '#d8b87a';
   fCtx.lineWidth = 1.8;
   fCtx.shadowBlur = 6;
-  fCtx.shadowColor = 'rgba(201,169,106,0.5)';
+  fCtx.shadowColor = 'rgba(216, 184, 122,0.5)';
   fCtx.stroke();
   fCtx.shadowBlur = 0;
 
@@ -2674,14 +2760,14 @@ function drawFireChart(trajectory, target) {
   const lastY = H - pad.bottom - trajectory[trajectory.length - 1] * yScale;
   fCtx.beginPath();
   fCtx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
-  fCtx.fillStyle = '#e6cd95';
+  fCtx.fillStyle = '#f0d49c';
   fCtx.shadowBlur = 8;
-  fCtx.shadowColor = 'rgba(201,169,106,0.8)';
+  fCtx.shadowColor = 'rgba(216, 184, 122,0.8)';
   fCtx.fill();
   fCtx.shadowBlur = 0;
 
   // year labels
-  fCtx.fillStyle = 'rgba(201,169,106,0.4)';
+  fCtx.fillStyle = 'rgba(216, 184, 122,0.4)';
   fCtx.font = "9px 'JetBrains Mono', monospace";
   fCtx.textAlign = 'left';
   fCtx.fillText('0y', pad.left, H - 6);
