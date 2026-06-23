@@ -554,10 +554,66 @@ body{
 .divider-marquee span{ display:inline-block; animation:marq 48s linear infinite; padding-right:60px; }
 .divider-marquee b{ color:var(--gold); font-weight:600; letter-spacing:.2em; }
 
+/* ============== formula-stage refine (narrow widths) ============== */
+/* below 1024 the four vars wrap into a 2-col grid; the standalone × operators
+   become orphaned at row ends, so retire them and let the grid carry the rhythm */
+@media (max-width:1024px){
+  .formula-stage{
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:24px; padding:60px 0; margin:60px auto;
+  }
+  .formula-stage .formula-x{ display:none; }
+  .formula-var{ min-width:0; min-height:0; }
+  .formula-eq{ grid-column:1 / -1; }
+}
+@media (max-width:560px){
+  .formula-stage{ grid-template-columns:1fr; }
+}
+
 /* ============== mobile cursor off ============== */
 @media (max-width:900px){
   body{ cursor:auto; }
   .formula-var, .pillar-block, .f2-card, a, button{ cursor:auto; }
+}
+
+/* ============== reduced motion — full graceful downgrade ============== */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+
+  /* neutralise every animation / transition site-wide, then restore
+     end-states for elements whose default style is the animation target */
+  *, *::before, *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    animation-delay:0ms !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+
+  /* hide the cursor follower entirely — it is pure motion */
+  .cursor-dot, .cursor-ring{ display:none; }
+  body{ cursor:auto; }
+
+  /* canvas is paused from JS too; dim it so it reads as a still field */
+  #bg-canvas{ opacity:.4; }
+
+  /* skip the preloader — show content immediately */
+  .preloader{ display:none; }
+
+  /* entrance states resolved to final (no rise / fade-in) */
+  .hero::before{ opacity:1; }
+  .hero-eyebrow, .hero-formula, .hero-sub, .scroll-cue{ opacity:1; }
+  .hero-title .word span{ transform:none; }
+  .hero-formula .x{ transform:none; opacity:1; }
+
+  /* reveal blocks: present, not staggered */
+  .reveal{ opacity:1; transform:none; }
+
+  /* f2 underline drawn statically */
+  .f2-formula .v::after{ transform:scaleX(1); }
+
+  /* operators sit still */
+  .formula-x{ opacity:.75; }
 }
 </style>
 </head>
@@ -944,10 +1000,14 @@ body{
 </footer>
 
 <script>
+/* honour the user's motion preference across every animated subsystem */
+const REDUCED_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ============== preloader ============== */
 (function(){
   const pre = document.getElementById('preloader');
   const pct = document.getElementById('prePercent');
+  if(REDUCED_MOTION){ pct.textContent = '100'; pre.classList.add('done'); return; }
   let p = 0;
   const t = setInterval(()=>{
     p += Math.random()*8 + 3;
@@ -958,6 +1018,7 @@ body{
 
 /* ============== custom cursor ============== */
 (function(){
+  if(REDUCED_MOTION) return;
   const dot = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
   let mx=0,my=0,rx=0,ry=0;
@@ -1035,7 +1096,9 @@ body{
   }
 
   let mx=W/2, my=H/2;
-  addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  if(!REDUCED_MOTION){
+    addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  }
 
   function draw(){
     ctx.clearRect(0,0,W,H);
@@ -1069,7 +1132,8 @@ body{
         }
       }
     }
-    requestAnimationFrame(draw);
+    // reduced motion: render a single still frame, no animation loop
+    if(!REDUCED_MOTION) requestAnimationFrame(draw);
   }
   draw();
 })();
