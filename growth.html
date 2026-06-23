@@ -27,7 +27,16 @@
 }
 
 html{ scroll-behavior:smooth; }
-html,body{ background:var(--paper); color:var(--ink); overflow-x:hidden; }
+html,body{
+  color:var(--ink); overflow-x:hidden;
+  /* 印刷质感底:极淡油墨渐变 + 暗角(vignette),让均质米色有呼吸 */
+  background:
+    radial-gradient(120% 80% at 18% 0%, rgba(255,255,255,0.55), transparent 55%),
+    radial-gradient(130% 100% at 100% 100%, rgba(19,19,26,0.06), transparent 60%),
+    radial-gradient(150% 120% at 50% 50%, transparent 62%, rgba(19,19,26,0.07) 100%),
+    var(--paper);
+  background-attachment:fixed;
+}
 body{
   font-family:'Inter','Noto Sans SC',system-ui,sans-serif;
   font-weight:400;
@@ -56,6 +65,14 @@ a{ color:inherit; text-decoration:none; }
 .noise{
   position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.06; mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+/* ============== halftone print screen ============== */
+/* 极淡印刷网点(CMYK 单色制版感),叠在米色底上,纯装饰 */
+.halftone{
+  position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05; mix-blend-mode:multiply;
+  background-image:radial-gradient(var(--ink) 0.8px, transparent 0.9px);
+  background-size:7px 7px;
+  background-position:0 0;
 }
 
 /* ============== loader ============== */
@@ -111,6 +128,10 @@ a{ color:inherit; text-decoration:none; }
   display:flex; flex-direction:column; justify-content:space-between;
   position:relative; z-index:2;
   overflow:hidden;
+  /* 封面页质感:左上柔光高光 + 底部油墨渐沉,给均质米色加层次(仍是亮底印刷语言) */
+  background:
+    radial-gradient(80% 60% at 12% 8%, rgba(255,255,255,0.5), transparent 60%),
+    linear-gradient(to bottom, transparent 62%, rgba(19,19,26,0.05) 100%);
 }
 /* editorial ghost — Latin for "momentum / drive" */
 .hero::before{
@@ -354,6 +375,26 @@ a{ color:inherit; text-decoration:none; }
 .reveal.visible{ opacity:1; transform:translateY(0); }
 .reveal.d1{ transition-delay:.1s; } .reveal.d2{ transition-delay:.2s; } .reveal.d3{ transition-delay:.3s; } .reveal.d4{ transition-delay:.4s; }
 
+/* stagger — 子元素错峰升起,杂志翻页式递进 */
+.reveal-stagger > *{ opacity:0; transform:translateY(34px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+.reveal-stagger.visible > *{ opacity:1; transform:translateY(0); }
+.reveal-stagger.visible > *:nth-child(1){ transition-delay:.05s; }
+.reveal-stagger.visible > *:nth-child(2){ transition-delay:.13s; }
+.reveal-stagger.visible > *:nth-child(3){ transition-delay:.21s; }
+.reveal-stagger.visible > *:nth-child(4){ transition-delay:.29s; }
+.reveal-stagger.visible > *:nth-child(5){ transition-delay:.37s; }
+.reveal-stagger.visible > *:nth-child(6){ transition-delay:.45s; }
+.reveal-stagger.visible > *:nth-child(7){ transition-delay:.53s; }
+.reveal-stagger.visible > *:nth-child(n+8){ transition-delay:.61s; }
+
+/* mask wipe — 标题 / 巨大数字遮罩揭幕,延续 hero 的 riseIn 语汇 */
+/* 留一点 padding,避免 Instrument Serif 斜体右侧出锋被裁切 */
+.reveal-mask{ overflow:hidden; padding-right:.08em; }
+.reveal-mask > .mw{ display:block; transform:translateY(105%); transition:transform 1s cubic-bezier(.2,.8,.2,1); }
+.reveal-mask.visible > .mw{ transform:translateY(0); }
+.reveal-mask.d1 > .mw{ transition-delay:.08s; }
+.reveal-mask.d2 > .mw{ transition-delay:.16s; }
+
 /* word-by-word fade */
 .split .w{ display:inline-block; opacity:0; transform:translateY(60%); transition:opacity .6s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
 .split.visible .w{ opacity:1; transform:translateY(0); }
@@ -517,6 +558,26 @@ a{ color:inherit; text-decoration:none; }
   position:fixed; top:0; left:0; height:3px; background:var(--c-coral);
   width:0%; z-index:300; transition:width .1s linear;
 }
+
+/* ============== reduced motion ============== */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important;
+  }
+  /* 入场态全部直接落位,不靠动画揭幕 */
+  .hero-title .line .inner{ transform:none; }
+  .hero::before{ opacity:1; transform:translate(-50%,-50%); }
+  .reveal{ opacity:1; transform:none; }
+  .reveal-stagger > *{ opacity:1; transform:none; }
+  .reveal-mask{ overflow:visible; }
+  .reveal-mask > .mw{ transform:none; }
+  .split .w{ opacity:1; transform:none; }
+  /* 循环 / 装饰动效关闭 */
+  .ticker .track{ animation:none; }
+  .sticker{ animation:none; }
+  .nav-status .live{ animation:none; }
+}
 </style>
 </head>
 <body>
@@ -530,6 +591,7 @@ a{ color:inherit; text-decoration:none; }
 <!-- cursor + noise + progress -->
 <div class="cursor" id="cursor"></div>
 <div class="noise"></div>
+<div class="halftone"></div>
 <div class="progress" id="progress"></div>
 
 <!-- nav -->
@@ -582,12 +644,12 @@ a{ color:inherit; text-decoration:none; }
 <section class="section" id="dashboard">
   <div class="container">
     <div class="section-head reveal">
-      <div class="idx">00</div>
+      <div class="idx reveal-mask"><span class="mw">00</span></div>
       <div class="title"><small>SECTION 00 · THE DASHBOARD</small>仪表盘<br>一眼看完整台机器</div>
       <div class="tag" data-hover>HOVER ↗</div>
     </div>
 
-    <div class="dashboard reveal">
+    <div class="dashboard reveal-stagger">
       <a href="#engine" class="dash-cell" style="--dc:var(--c-coral); --dt:#fff;" data-cursor="engine">
         <div class="dn"><span>01 · ENGINE</span><span class="num">引擎</span></div>
         <div class="icon-wrap">
@@ -754,7 +816,7 @@ a{ color:inherit; text-decoration:none; }
 <section class="module" id="engine" style="--mc:var(--c-coral); --mt:#FFF7F2;">
   <div class="module-inner">
     <div class="module-head reveal">
-      <div class="sysnum">01</div>
+      <div class="sysnum reveal-mask"><span class="mw">01</span></div>
       <div class="h-right">
         <div class="role">SUBSYSTEM 01 / 引擎</div>
         <div class="name">能量<em>基座</em></div>
@@ -762,7 +824,7 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
-    <div class="module-body reveal d1">
+    <div class="module-body reveal-stagger">
       <div class="mb-item">
         <div class="ix"><span class="ic">1</span>RITUAL 01 · 早起</div>
         <div class="it">6:30 起床<br>+ 听前哨站</div>
@@ -790,7 +852,7 @@ a{ color:inherit; text-decoration:none; }
 <section class="module" id="fuel" style="--mc:var(--c-blue); --mt:var(--ink);">
   <div class="module-inner">
     <div class="module-head reveal">
-      <div class="sysnum">02</div>
+      <div class="sysnum reveal-mask"><span class="mw">02</span></div>
       <div class="h-right">
         <div class="role">SUBSYSTEM 02 / 燃料</div>
         <div class="name">认知<em>输入</em></div>
@@ -798,7 +860,7 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
-    <div class="module-body reveal d1">
+    <div class="module-body reveal-stagger">
       <div class="mb-item">
         <div class="ix"><span class="ic">3</span>RITUAL 03 · 前哨站（听课）</div>
         <div class="it">持续跟进<br>深度笔记复盘</div>
@@ -826,7 +888,7 @@ a{ color:inherit; text-decoration:none; }
 <section class="module" id="wheels" style="--mc:var(--c-lime); --mt:var(--ink);">
   <div class="module-inner">
     <div class="module-head reveal">
-      <div class="sysnum">03</div>
+      <div class="sysnum reveal-mask"><span class="mw">03</span></div>
       <div class="h-right">
         <div class="role">SUBSYSTEM 03 / 轮子</div>
         <div class="name">价值<em>输出</em></div>
@@ -834,7 +896,7 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
-    <div class="module-body reveal d1">
+    <div class="module-body reveal-stagger">
       <div class="mb-item">
         <div class="ix"><span class="ic">5</span>RITUAL 05 · 做事 & 赚钱</div>
         <div class="it">公众号<br>现金流 + 商业闭环</div>
@@ -855,7 +917,7 @@ a{ color:inherit; text-decoration:none; }
 <section class="module" id="turbo" style="--mc:var(--c-yellow); --mt:var(--ink);">
   <div class="module-inner">
     <div class="module-head reveal">
-      <div class="sysnum">04</div>
+      <div class="sysnum reveal-mask"><span class="mw">04</span></div>
       <div class="h-right">
         <div class="role">SUBSYSTEM 04 / 涡轮</div>
         <div class="name">超级<em>杠杆</em></div>
@@ -863,7 +925,7 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
-    <div class="module-body reveal d1">
+    <div class="module-body reveal-stagger">
       <div class="mb-item">
         <div class="ix"><span class="ic">7</span>RITUAL 07 · AI 赋能</div>
         <div class="it">Gemini 3.1 Pro<br>+ GPT 5.3</div>
@@ -891,7 +953,7 @@ a{ color:inherit; text-decoration:none; }
 <section class="module" id="steering" style="--mc:var(--c-pink); --mt:#F4F0FB;">
   <div class="module-inner">
     <div class="module-head reveal">
-      <div class="sysnum">05</div>
+      <div class="sysnum reveal-mask"><span class="mw">05</span></div>
       <div class="h-right">
         <div class="role">SUBSYSTEM 05 / 方向盘</div>
         <div class="name">复盘<em>迭代</em></div>
@@ -903,7 +965,7 @@ a{ color:inherit; text-decoration:none; }
       核心定义 · <strong style="font-style:normal; font-weight:700;">双重审计机制</strong> —— 复盘不仅是对"知识输入"的深加工（变资产），更是对"时间支出"的冷酷审计（查账本）。
     </p>
 
-    <div class="module-body reveal d2">
+    <div class="module-body reveal-stagger">
       <div class="mb-item">
         <div class="ix"><span class="ic">M</span>MODULE 1 · 知识资产化</div>
         <div class="it">拒绝<br>认知逸散</div>
@@ -937,7 +999,7 @@ a{ color:inherit; text-decoration:none; }
       <div class="roi-formula">
         有效输入 = <b>SOURCE</b> · 信息获取 → <b>INSIGHT</b> · 启发 → <b>ADDRESS</b> · 系统坐标 → 写入《人生系统》
       </div>
-      <div class="roi-flow">
+      <div class="roi-flow reveal-stagger">
         <div class="roi-step">
           <div class="rsn">01</div>
           <div class="rst">Source</div>
@@ -965,12 +1027,12 @@ a{ color:inherit; text-decoration:none; }
 <section class="section">
   <div class="container">
     <div class="section-head reveal">
-      <div class="idx">06</div>
+      <div class="idx reveal-mask"><span class="mw">06</span></div>
       <div class="title"><small>SECTION 06 · DAILY GAUGES</small>每日<br>仪表读数</div>
       <div class="tag">LIVE METRICS</div>
     </div>
 
-    <div class="stats-strip reveal d1">
+    <div class="stats-strip reveal-stagger">
       <div class="stat" style="--sc:var(--c-coral)" data-hover>
         <div class="sk">WAKE-UP</div>
         <div class="sv" data-count="6.30">0</div>
@@ -1016,6 +1078,8 @@ a{ color:inherit; text-decoration:none; }
 (function(){
   const el = document.getElementById('loaderN');
   const loader = document.getElementById('loader');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced){ el.textContent = (7200).toLocaleString(); loader.classList.add('done'); return; }
   let n=0;
   const t=setInterval(()=>{
     n += Math.floor(Math.random()*240)+120;
@@ -1071,12 +1135,12 @@ a{ color:inherit; text-decoration:none; }
   tick(); setInterval(tick, 1000);
 })();
 
-/* ============== reveal ============== */
+/* ============== reveal (block fade / stagger / mask-wipe) ============== */
 (function(){
   const io = new IntersectionObserver((es)=>{
     es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold:.12, rootMargin:'0px 0px -60px 0px' });
-  document.querySelectorAll('.reveal, .split').forEach(el=>io.observe(el));
+  document.querySelectorAll('.reveal, .reveal-stagger, .reveal-mask, .split').forEach(el=>io.observe(el));
 })();
 
 /* ============== count up ============== */
