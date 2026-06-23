@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPER 理论 · 目标·规划·执行·解题 —— AI 时代的成事链路</title>
+<meta name="description" content="GPER 理论:Goal 目标 → Plan 规划 → Execution 执行 → Resolution 解题。一条可被拆解、优化、系统化的成事链路,以及它在 AI 时代的重构。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   GPER · 亮底 · 现代理性风  —— 自成清爽体系,告别黑金暗底
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 基础亮底 */
+  --bg:        #F7F7F4;   /* 暖白纸感底 */
+  --bg-soft:   #FFFFFF;   /* 卡片白底 */
+  --bg-sunk:   #EFEFEA;   /* 浅凹陷 / 分隔 */
+
+  /* 文字(深墨蓝灰) */
+  --ink:       #1C2230;
+  --ink-soft:  #59616E;
+  --ink-dim:   #99A0AB;
+
+  /* 线条 */
+  --line:      #E5E6E0;
+
+  /* 主强调 */
+  --primary:   #4F46E5;
+
+  /* GPER 四阶段链路色 */
+  --g: #4F46E5;   /* Goal 目标 · 靛蓝 */
+  --p: #0EA5E9;   /* Plan 规划 · 天蓝 */
+  --e: #F59E0B;   /* Execution 执行 · 琥珀 */
+  --r: #10B981;   /* Resolution 解题 · 翠绿 */
+
+  /* 阶段色的极浅染底(卡片背景点缀) */
+  --g-wash: #EEEDFC;
+  --p-wash: #E6F4FD;
+  --e-wash: #FEF3E2;
+  --r-wash: #E3F7EF;
+
+  /* 柔和阴影 */
+  --shadow:    0 1px 3px rgba(20,30,50,.06), 0 8px 24px rgba(20,30,50,.04);
+  --shadow-hi: 0 2px 6px rgba(20,30,50,.08), 0 16px 40px rgba(20,30,50,.07);
+
+  --maxw: 1120px;       /* 整页内容上限 */
+  --readw: 760px;       /* 舒适阅读行宽 */
+  --radius: 16px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 细网格质感背景(极淡,亮底之上) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(28,34,48,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28,34,48,.018) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+::selection { background: rgba(79,70,229,.16); color: var(--ink); }
+
+a { color: var(--primary); text-decoration: none; }
+
+/* ---------- 通用容器 ---------- */
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+.read { max-width: var(--readw); margin-left: auto; margin-right: auto; }
+
+section { padding: 84px 0; }
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  font-weight: 500;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: "";
+  width: 26px; height: 2px;
+  background: currentColor;
+  display: inline-block;
+  opacity: .5;
+}
+
+h2.sec-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 38px);
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+
+p { color: var(--ink-soft); margin-bottom: 18px; }
+p strong, strong { color: var(--ink); font-weight: 700; }
+
+.divider {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ===========================================================
+   HERO
+   =========================================================== */
+.hero {
+  padding: 116px 0 72px;
+  position: relative;
+  overflow: hidden;
+}
+/* hero 顶部四色渐隐光带 */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--g), var(--p), var(--e), var(--r));
+}
+.hero-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: clamp(46px, 8vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.hero h1 .gper-gradient {
+  background: linear-gradient(100deg, var(--g) 0%, var(--p) 36%, var(--e) 68%, var(--r) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.hero .subtitle {
+  font-size: clamp(17px, 2.4vw, 22px);
+  color: var(--ink-soft);
+  font-weight: 500;
+  max-width: 640px;
+  margin-top: 10px;
+  margin-bottom: 46px;
+}
+.hero .subtitle b { color: var(--ink); font-weight: 700; }
+
+/* ---- HERO 链路可视化 G→P→E→R ---- */
+.chain {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  flex-wrap: nowrap;
+}
+.chain-node {
+  flex: 1 1 0;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--node-c);
+  border-radius: var(--radius);
+  padding: 22px 22px 24px;
+  box-shadow: var(--shadow);
+  position: relative;
+  min-width: 0;
+}
+.chain-node .nlet {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--node-c);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--node-wash);
+  margin-bottom: 14px;
+}
+.chain-node .nname {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 21px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.chain-node .nen {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--node-c);
+  margin-bottom: 10px;
+}
+.chain-node .ndesc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+.chain-arrow {
+  flex: 0 0 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-dim);
+  font-size: 22px;
+  font-weight: 300;
+}
+
+/* ===========================================================
+   引入块(核心定义)
+   =========================================================== */
+.intro-lead {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 38px 42px;
+  box-shadow: var(--shadow);
+}
+.intro-lead .lead-k {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.intro-lead p { font-size: 18px; line-height: 1.85; color: var(--ink-soft); }
+.intro-lead p:last-child { margin-bottom: 0; }
+.intro-lead .gper-line {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 4px 0 24px;
+  line-height: 1.5;
+}
+.intro-lead .gper-line .gg { color: var(--g); }
+.intro-lead .gper-line .pp { color: var(--p); }
+.intro-lead .gper-line .ee { color: var(--e); }
+.intro-lead .gper-line .rr { color: var(--r); }
+
+/* ===========================================================
+   四个主章节  (阶段色驱动)
+   =========================================================== */
+.stage { position: relative; }
+.stage .read { position: relative; }
+
+.stage-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  margin-bottom: 30px;
+}
+.stage-num {
+  flex: 0 0 auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 22px;
+  width: 64px; height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  color: var(--stage-c);
+  background: var(--stage-wash);
+  border: 1px solid var(--stage-c);
+  letter-spacing: .04em;
+}
+.stage-head .htext { flex: 1 1 auto; min-width: 0; }
+.stage-head .stage-en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--stage-c);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.stage-head h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: clamp(25px, 3.4vw, 34px);
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+/* 问题强调小块 */
+.q-box {
+  background: var(--stage-wash);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 4px 0 24px;
+  font-size: 15.5px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.q-box .q-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--stage-c);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+/* 要点列表 */
+.pts { list-style: none; margin: 6px 0 26px; }
+.pts li {
+  position: relative;
+  padding: 11px 0 11px 30px;
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink-soft);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+.pts li:last-child { border-bottom: none; }
+.pts li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 20px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--stage-c);
+}
+.pts li b { color: var(--ink); }
+
+/* 一句话总结 金句块 */
+.summary {
+  border-left: 4px solid var(--stage-c);
+  background: var(--bg-soft);
+  border-radius: 0 12px 12px 0;
+  padding: 22px 26px;
+  margin-top: 8px;
+  box-shadow: var(--shadow);
+}
+.summary .s-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--stage-c);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.summary .s-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 阶段配色注入 */
+.stage.s-g { --stage-c: var(--g); --stage-wash: var(--g-wash); }
+.stage.s-p { --stage-c: var(--p); --stage-wash: var(--p-wash); }
+.stage.s-e { --stage-c: var(--e); --stage-wash: var(--e-wash); }
+.stage.s-r { --stage-c: var(--r); --stage-wash: var(--r-wash); }
+
+/* ===========================================================
+   AI 时代重构 · 人机分工表格
+   =========================================================== */
+.tbl-wrap {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+table.gper-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+table.gper-table thead th {
+  background: var(--bg-sunk);
+  text-align: left;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+}
+table.gper-table tbody td {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  vertical-align: middle;
+}
+table.gper-table tbody tr:last-child td { border-bottom: none; }
+table.gper-table .stage-cell {
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+table.gper-table .stage-cell .dot {
+  display: inline-block;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  margin-right: 9px;
+  vertical-align: middle;
+}
+.dot.dg { background: var(--g); }
+.dot.dp { background: var(--p); }
+.dot.de { background: var(--e); }
+.dot.dr { background: var(--r); }
+.resp {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.resp.human { color: var(--g); background: var(--g-wash); border-color: rgba(79,70,229,.2); }
+.resp.aih   { color: var(--p); background: var(--p-wash); border-color: rgba(14,165,233,.2); }
+.resp.mix-e { color: var(--e); background: var(--e-wash); border-color: rgba(245,158,11,.25); }
+.resp.mix-r { color: var(--r); background: var(--r-wash); border-color: rgba(16,185,129,.22); }
+
+.takeaway {
+  margin-top: 26px;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+.takeaway b { color: var(--ink); }
+
+/* ===========================================================
+   失败成本下降
+   =========================================================== */
+.try-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 28px;
+}
+.try-chip {
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 16px;
+  box-shadow: 0 1px 2px rgba(20,30,50,.04);
+}
+.sys-list {
+  list-style: none;
+  counter-reset: sys;
+  margin: 10px 0 0;
+}
+.sys-list li {
+  counter-increment: sys;
+  position: relative;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 20px 16px 60px;
+  margin-bottom: 12px;
+  color: var(--ink-soft);
+  box-shadow: var(--shadow);
+}
+.sys-list li::before {
+  content: counter(sys);
+  position: absolute;
+  left: 18px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--primary);
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--g-wash);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sys-list li b { color: var(--ink); }
+
+/* ===========================================================
+   GPER × 人生系统  (4 个子卡片)
+   =========================================================== */
+.life-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.life-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--lc-c, var(--primary));
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  box-shadow: var(--shadow);
+}
+.life-card h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.life-card .lc-en {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--lc-c, var(--primary));
+  margin-bottom: 18px;
+}
+.gper-steps { list-style: none; }
+.gper-steps li {
+  display: flex;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  border-bottom: 1px dashed var(--line);
+}
+.gper-steps li:last-child { border-bottom: none; }
+.gper-steps .step-k {
+  flex: 0 0 auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  width: 26px; height: 22px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.step-k.kg { background: var(--g); }
+.step-k.kp { background: var(--p); }
+.step-k.ke { background: var(--e); }
+.step-k.kr { background: var(--r); }
+.life-card p.lc-note {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ===========================================================
+   风险提醒 (5 条编号卡)
+   =========================================================== */
+.risk-list { display: grid; gap: 16px; }
+.risk-card {
+  display: flex;
+  gap: 20px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+}
+.risk-card .r-num {
+  flex: 0 0 auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 17px;
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--e);
+  background: var(--e-wash);
+  border: 1px solid rgba(245,158,11,.28);
+}
+.risk-card .r-body { flex: 1 1 auto; }
+.risk-card .r-title {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 16.5px;
+  margin-bottom: 5px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.risk-card .r-desc { font-size: 15px; color: var(--ink-soft); margin: 0; }
+
+/* ===========================================================
+   启发 / 总结
+   =========================================================== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin: 8px 0 40px;
+}
+.col-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px 32px;
+  box-shadow: var(--shadow);
+}
+.col-card.keep  { border-top: 3px solid var(--g); }
+.col-card.useai { border-top: 3px solid var(--p); }
+.col-card .cc-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.col-card.keep .cc-tag { color: var(--g); }
+.col-card.useai .cc-tag { color: var(--p); }
+.col-card h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.col-card ul { list-style: none; }
+.col-card ul li {
+  position: relative;
+  padding: 8px 0 8px 22px;
+  font-size: 15px;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed var(--line);
+}
+.col-card ul li:last-child { border-bottom: none; }
+.col-card.keep ul li::before  { background: var(--g); }
+.col-card.useai ul li::before { background: var(--p); }
+.col-card ul li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 16px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+}
+
+/* 末尾大金句块 */
+.final-quote {
+  background: linear-gradient(120deg, #1C2230 0%, #232a3d 100%);
+  color: #fff;
+  border-radius: 22px;
+  padding: 56px 52px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-hi);
+}
+.final-quote::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--g), var(--p), var(--e), var(--r));
+}
+.final-quote .fq-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #9fb0ff;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.final-quote .fq-text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(20px, 2.8vw, 27px);
+  font-weight: 700;
+  line-height: 1.7;
+  color: #fff;
+  margin: 0;
+}
+.final-quote .fq-text .gg { color: #b8b1ff; }
+.final-quote .fq-text .pp { color: #7dd3fc; }
+.final-quote .fq-text .ee { color: #fcd34d; }
+.final-quote .fq-text .rr { color: #6ee7b7; }
+
+/* ===========================================================
+   FOOTER
+   =========================================================== */
+footer {
+  padding: 56px 0 64px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+}
+footer .f-chain {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: var(--ink-dim);
+  margin-bottom: 14px;
+}
+footer .f-chain .gg { color: var(--g); }
+footer .f-chain .pp { color: var(--p); }
+footer .f-chain .ee { color: var(--e); }
+footer .f-chain .rr { color: var(--r); }
+footer .f-copy { font-size: 13px; color: var(--ink-dim); }
+
+/* ===========================================================
+   滚动入场
+   =========================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ===========================================================
+   响应式  1024 / 768 / 480
+   =========================================================== */
+@media (max-width: 1024px) {
+  .chain { flex-wrap: wrap; }
+  .chain-node { flex: 1 1 calc(50% - 19px); min-width: calc(50% - 19px); }
+  .chain-arrow { display: none; }
+  .life-grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  section { padding: 72px 0; }
+}
+
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+  .wrap { padding: 0 20px; }
+  .hero { padding: 92px 0 56px; }
+  .chain-node { flex: 1 1 100%; min-width: 100%; }
+  .stage-head { gap: 16px; }
+  .stage-num { width: 52px; height: 52px; font-size: 18px; }
+  .intro-lead { padding: 30px 26px; }
+  .final-quote { padding: 40px 28px; }
+  /* 表格在窄屏改卡片式堆叠 */
+  .tbl-wrap { border: none; box-shadow: none; background: transparent; }
+  table.gper-table, table.gper-table tbody, table.gper-table tr, table.gper-table td { display: block; width: 100%; }
+  table.gper-table thead { display: none; }
+  table.gper-table tbody tr {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  table.gper-table tbody td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 18px;
+    display: flex;
+    gap: 12px;
+  }
+  table.gper-table tbody td:last-child { border-bottom: none; }
+  table.gper-table tbody td::before {
+    content: attr(data-label);
+    flex: 0 0 96px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    font-weight: 600;
+    padding-top: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  section { padding: 58px 0; }
+  .hero h1 { font-size: clamp(40px, 13vw, 56px); }
+  .intro-lead { padding: 26px 22px; }
+  .col-card { padding: 24px 22px; }
+  .risk-card { gap: 14px; padding: 18px 18px; }
+  .summary { padding: 18px 20px; }
+  .summary .s-text { font-size: 17px; }
+  .final-quote { padding: 34px 22px; }
+}
+
+/* ===========================================================
+   reduced-motion 降级
+   =========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-tag">GPER · THE CHAIN OF GETTING THINGS DONE</div>
+    <h1><span class="gper-gradient">GPER</span> 理论</h1>
+    <p class="subtitle">目标 · 规划 · 执行 · 解题 —— <b>AI 时代的成事链路</b></p>
+
+    <!-- G → P → E → R 链路可视化 -->
+    <div class="chain reveal">
+      <div class="chain-node" style="--node-c:var(--g); --node-wash:var(--g-wash);">
+        <span class="nlet">G</span>
+        <div class="nname">目标</div>
+        <div class="nen">Goal</div>
+        <p class="ndesc">我到底要什么?我要去哪里?成事链路的起点与方向。</p>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node" style="--node-c:var(--p); --node-wash:var(--p-wash);">
+        <span class="nlet">P</span>
+        <div class="nname">规划</div>
+        <div class="nen">Plan</div>
+        <p class="ndesc">从现在到目标,路径怎么拆?把方向变成可行路线。</p>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node" style="--node-c:var(--e); --node-wash:var(--e-wash);">
+        <span class="nlet">E</span>
+        <div class="nname">执行</div>
+        <div class="nen">Execution</div>
+        <p class="ndesc">能不能真的开始并持续推进?把规划落到现实行动。</p>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node" style="--node-c:var(--r); --node-wash:var(--r-wash);">
+        <span class="nlet">R</span>
+        <div class="nname">解题</div>
+        <div class="nen">Resolution</div>
+        <p class="ndesc">遇到问题怎么办?逢山开路,遇水搭桥,穿越障碍。</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =====================================================
+     引入 · 核心定义
+     ===================================================== -->
+<section>
+  <div class="wrap read">
+    <div class="intro-lead reveal">
+      <div class="lead-k">The Core Definition</div>
+      <p>一个人想把事情做成,想真正达到目标,本质上需要一条清晰的<strong>成事链路</strong>。这条链路可以概括为:</p>
+      <div class="gper-line"><span class="gg">Goal 目标</span> → <span class="pp">Plan 规划</span> → <span class="ee">Execution 执行力</span> → <span class="rr">Resolution 解决问题</span></div>
+      <p>核心是:先有一个<strong>清晰明确的目标</strong>,然后做出<strong>切实可行的规划</strong>,再用<strong>足够的执行力</strong>推进规划,最后在过程中遇到问题就<strong>及时解决</strong>——逢山开路,遇水搭桥。</p>
+      <p>只要这四件事同时具备,一个人就已经具备了实现绝大多数目标的基本条件。GPER 这个名字略微有点生造,但好处是足够简洁、好记。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     一 · Goal
+     ===================================================== -->
+<section class="stage s-g">
+  <div class="wrap read">
+    <div class="reveal">
+      <div class="stage-head">
+        <div class="stage-num">G</div>
+        <div class="htext">
+          <div class="stage-en">Chapter One · Goal</div>
+          <h2>目标是成事链路的起点</h2>
+        </div>
+      </div>
+
+      <p>目标是第一位的。没有目标,后面的规划、执行和解决问题都会失去方向。</p>
+      <div class="q-box"><span class="q-label">它回答</span>我到底要什么?我要去哪里?我为什么要做这件事?</div>
+      <p>很多人高考前有明确目标,因为高考天然提供了一个外部目标:分数、学校、排名、录取结果。但高考结束后,很多人突然失去了这种清晰坐标,于是进入摆烂、躺平、刷视频、打游戏的状态。问题不只是他们"不努力",而是没有新的清晰目标——人不知道为什么要行动,也不知道行动通向哪里。</p>
+      <p>对我来说,目前最明确的目标之一就是:<strong>七年 FIRE 计划——实现财富自由,买回时间所有权。</strong>它不是模糊的"我要变好""我要成功",而是一个相对清晰、长期、有现实路径的方向。</p>
+
+      <p style="margin-bottom:10px;"><strong>清晰目标的价值在于:</strong></p>
+      <ul class="pts">
+        <li>它提供<b>方向</b>;</li>
+        <li>它过滤<b>诱惑</b>;</li>
+        <li>它抵抗<b>摆烂</b>;</li>
+        <li>它赋予行动<b>意义</b>;</li>
+        <li>它让<b>规划</b>有落点;</li>
+        <li>它让<b>执行力</b>有燃料;</li>
+        <li>它让<b>解决问题</b>有判断标准。</li>
+      </ul>
+      <p>没有目标的人,容易被环境、算法、情绪、同龄人节奏牵着走。有目标的人,才有可能主动选择自己的路径。</p>
+
+      <div class="summary">
+        <div class="s-tag">一句话总结</div>
+        <p class="s-text">目标不是口号,而是人生系统的导航坐标。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     二 · Plan
+     ===================================================== -->
+<section class="stage s-p">
+  <div class="wrap read">
+    <div class="reveal">
+      <div class="stage-head">
+        <div class="stage-num">P</div>
+        <div class="htext">
+          <div class="stage-en">Chapter Two · Plan</div>
+          <h2>规划是把目标变成路径</h2>
+        </div>
+      </div>
+
+      <p>光有目标还不够。目标回答"我要去哪",规划回答"我怎么去"。没有规划的目标,容易变成空喊口号;没有目标的规划,则容易变成无意义的忙碌。</p>
+      <div class="q-box"><span class="q-label">它回答</span>从现在到目标之间,我应该怎么走?阶段如何拆?路径如何设计?资源如何配置?风险如何预判?</div>
+      <p>在过去的时代,做规划很难。一个人往往只能靠自己的经验、信息、认知和直觉去想,很容易闭门造车、信息不足、路径偏差、判断失误。但 AI 时代完全不一样——规划这一环节,是 AI 极其擅长的部分。</p>
+
+      <p style="margin-bottom:10px;"><strong>现在完全可以借助 GPT、Claude、Gemini 等顶尖 AI 进行:</strong></p>
+      <ul class="pts">
+        <li>目标拆解、路径设计、阶段规划</li>
+        <li>风险预判、时间安排、资源配置</li>
+        <li>方案比较、多模型交叉验证</li>
+        <li>反例压力测试、执行步骤细化</li>
+      </ul>
+      <p>过去需要绞尽脑汁想很久的规划,现在可以借助 AI 快速生成多个版本,再由人进行判断、筛选和校准。AI 不能替我决定人生目标,但非常适合帮我把目标拆成路径。这正是 AI 时代的人机分工:<strong>人负责定义方向,AI 负责辅助规划。</strong>当然 AI 规划不是绝对正确、不能盲信,但至少比一个人闭门造车强太多;尤其在重大目标上,可以通过多模型交叉验证让规划更稳、更全面、更少盲区。</p>
+
+      <div class="summary">
+        <div class="s-tag">一句话总结</div>
+        <p class="s-text">规划不是凭空硬想,而是把目标拆成阶段、路径和行动方案;AI 时代,规划能力可以被极大增强。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     三 · Execution
+     ===================================================== -->
+<section class="stage s-e">
+  <div class="wrap read">
+    <div class="reveal">
+      <div class="stage-head">
+        <div class="stage-num">E</div>
+        <div class="htext">
+          <div class="stage-en">Chapter Three · Execution</div>
+          <h2>执行力是把规划变成现实</h2>
+        </div>
+      </div>
+
+      <p>有目标、有规划之后,真正决定事情能不能推进的,是执行力。</p>
+      <div class="q-box"><span class="q-label">它回答</span>我能不能真的开始做?能不能持续做?能不能把规划落到现实行动里?</div>
+      <p>AI 时代虽然让很多事情变简单了,但执行力依然不能被取消。即使 Agent 再强,也至少需要人:坐到电脑前、打开工具、明确任务、提供材料、发出指令、检查结果、做出判断、发布作品、承担责任。</p>
+
+      <p style="margin-bottom:10px;"><strong>现在的 AI 确实能降低执行门槛,大幅提效于:</strong></p>
+      <ul class="pts">
+        <li>写代码、做网站、整理文档</li>
+        <li>生成图片、拆解问题</li>
+        <li>制作课程框架、输出多版本方案</li>
+      </ul>
+      <p>但 AI 不能替代人的主体性,人仍然要有启动行动的力量。尤其在短视频、游戏、即时娱乐高度发达的时代,执行力变得更加稀缺——很多人不是没有能力,而是注意力带宽被持续压缩,习惯了低成本刺激,越来越难以长时间专注做一件真正有长期价值的事。所以执行力不是简单的"硬撑",它和注意力管理、目标感、环境设计、反上瘾机制、身体能量、情绪状态都有关。</p>
+      <p>对我来说,执行力的关键不是极端自律,而是回到已经形成的机制:<strong>要么坐到桌前踏实做事,要么躺到床上好好休息,不要卡在焦虑和内耗中间。</strong>状态好就踏实推进,状态不好就真正恢复;不要假装努力,也不要假装休息。</p>
+
+      <div class="summary">
+        <div class="s-tag">一句话总结</div>
+        <p class="s-text">执行力不是热血口号,而是把规划推进到现实世界的能力。AI 能降低执行难度,但不能替我启动人生。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     四 · Resolution
+     ===================================================== -->
+<section class="stage s-r">
+  <div class="wrap read">
+    <div class="reveal">
+      <div class="stage-head">
+        <div class="stage-num">R</div>
+        <div class="htext">
+          <div class="stage-en">Chapter Four · Resolution</div>
+          <h2>解决问题是成事过程的常态</h2>
+        </div>
+      </div>
+
+      <p>做任何事情,都会遇到问题。所以最后一环是 <strong>Resolution 解决问题</strong>。这里的解决问题,不是某个额外能力,而是事情推进过程中必然发生的常态。</p>
+
+      <p style="margin-bottom:10px;"><strong>真正做事时,一定会遇到:</strong></p>
+      <ul class="pts">
+        <li>不会做、做不好、没效果、没反馈</li>
+        <li>数据不好、技术卡住、内容质量不够</li>
+        <li>表达不自然、封面不好看、产品没人买</li>
+        <li>用户不理解、路径走偏、情绪波动</li>
+        <li>时间不够、资源不足</li>
+      </ul>
+      <p>过去遇到这些问题,很多人只能靠自己硬扛,或到处找人问,效率很低,也容易被问题击垮。但 AI 时代,解决问题这一环节也被极大增强,因为 AI 非常适合:拆解问题、找原因、给方案、做对比、提供备选路径、帮忙排查错误、给出改进建议、生成执行清单、辅助复盘、继续迭代。</p>
+      <p>当我已经有清晰目标、合理规划和基本执行力之后,过程中遇到的大多数问题,都可以借助 AI 快速拆解和解决。AI 不是绝对正确,也不能替我承担现实后果;但相比过去,现在解决问题的成本、速度和可得性都已发生巨大变化——这使"逢山开路,遇水搭桥"变得更现实。</p>
+
+      <div class="summary">
+        <div class="s-tag">一句话总结</div>
+        <p class="s-text">问题不是失败的信号,而是推进过程中的默认组成部分。AI 时代,解决问题能力被极大外部增强。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     五 · AI 时代重构 · 人机分工表格
+     ===================================================== -->
+<section>
+  <div class="wrap">
+    <div class="read" style="margin-bottom:34px;">
+      <div class="reveal">
+        <div class="eyebrow">Human × AI Division</div>
+        <h2 class="sec-title">AI 时代对 GPER 链路的重构</h2>
+        <p>GPER 在 AI 时代最重要的变化,是人和 AI 的分工变得更加清晰。过去四个环节基本都要靠人自己完成:目标要自己想、规划要自己做、执行要自己干、问题要自己解决,所以做成事非常难。现在不一样了。</p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="tbl-wrap">
+        <table class="gper-table">
+          <thead>
+            <tr><th>环节</th><th>核心问题</th><th>主要责任</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="stage-cell" data-label="环节"><span class="dot dg"></span>Goal 目标</td>
+              <td data-label="核心问题">我要什么?我要去哪里?</td>
+              <td data-label="主要责任"><span class="resp human">人为主</span></td>
+            </tr>
+            <tr>
+              <td class="stage-cell" data-label="环节"><span class="dot dp"></span>Plan 规划</td>
+              <td data-label="核心问题">我怎么去?路径怎么拆?</td>
+              <td data-label="主要责任"><span class="resp aih">AI 强辅助</span></td>
+            </tr>
+            <tr>
+              <td class="stage-cell" data-label="环节"><span class="dot de"></span>Execution 执行</td>
+              <td data-label="核心问题">我能不能真的开始并持续推进?</td>
+              <td data-label="主要责任"><span class="resp mix-e">人为主,Agent 辅助</span></td>
+            </tr>
+            <tr>
+              <td class="stage-cell" data-label="环节"><span class="dot dr"></span>Resolution 解决问题</td>
+              <td data-label="核心问题">遇到问题怎么处理?</td>
+              <td data-label="主要责任"><span class="resp mix-r">AI 强辅助,人做判断</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="read">
+      <p class="takeaway reveal"><b>目标和执行,仍然主要靠人;规划和解决问题,可以大量交给 AI 辅助。</b>AI 不能替我想清楚我真正想要什么,也不能替我发自内心地决定追求财富自由、建设个人 IP、推动长期理想。但一旦我有了清晰目标,AI 就能帮我规划路径;一旦我愿意执行,AI 就能帮我解决过程中的大量问题。成功没有变得轻而易举,但"把事情做成"的系统门槛确实被大幅降低了。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     六 · 失败成本下降
+     ===================================================== -->
+<section>
+  <div class="wrap read">
+    <div class="reveal">
+      <div class="eyebrow">Cheap Failure</div>
+      <h2 class="sec-title">失败成本下降:AI 最大的礼物是能廉价失败</h2>
+      <p>过去,失败代价很高。一个人想做一个项目,可能需要几年时间、几万甚至几十万投入。一旦失败,可能很久都缓不过来——很多人一生只能承受两三次重大失败。但 AI 时代,失败成本被极大压缩。</p>
+
+      <p style="margin-bottom:10px;"><strong>现在可以用 AI 低成本尝试:</strong></p>
+      <div class="try-grid">
+        <span class="try-chip">一篇文章</span>
+        <span class="try-chip">一条视频</span>
+        <span class="try-chip">一个网站</span>
+        <span class="try-chip">一个产品原型</span>
+        <span class="try-chip">一个资料包</span>
+        <span class="try-chip">一个课程框架</span>
+        <span class="try-chip">一个 AI 服务</span>
+        <span class="try-chip">一个小工具</span>
+        <span class="try-chip">一个内容系列</span>
+      </div>
+      <p>很多尝试失败了,损失可能只是几小时、几天,或者几百块 AI 会员费。这非常重要:单次成功率未必提高,但尝试次数大幅增加,总体跑通概率就会提高。过去可能试 3 次就破产,现在可能试 100 次,甚至 1000 次。<strong>失败不再是终点,而是中间状态。</strong></p>
+      <p>这里最关键的不是"AI 让人更容易成功",而是:<strong>AI 让人更容易失败,而且失败后不至于被摧毁。</strong>这对普通人来说,是过去所有时代都很难拥有的奢侈。</p>
+
+      <p style="margin-bottom:6px;"><strong>结合 GPER 来看,这构成了一个很强的成事系统:</strong></p>
+      <ol class="sys-list">
+        <li>有<b>清晰目标</b>,就不会乱试;</li>
+        <li>有 <b>AI 规划</b>,就不会完全瞎试;</li>
+        <li>有<b>执行力</b>,就能真的去试;</li>
+        <li>有 <b>AI 解决问题</b>,就能在失败中继续迭代;</li>
+        <li>有<b>复盘沉淀</b>,就能让失败变成下一轮输入。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     七 · GPER × 人生系统
+     ===================================================== -->
+<section>
+  <div class="wrap">
+    <div class="read" style="margin-bottom:34px;">
+      <div class="reveal">
+        <div class="eyebrow">GPER × Life System</div>
+        <h2 class="sec-title">GPER 与我的人生系统的关系</h2>
+        <p>GPER 理论可以接入我的多个人生系统模块,用同一条链路逐个拆解。</p>
+      </div>
+    </div>
+
+    <div class="life-grid">
+      <!-- 七年 FIRE -->
+      <div class="life-card reveal" style="--lc-c:var(--g);">
+        <h3>七年 FIRE 计划</h3>
+        <div class="lc-en">Financial Independence</div>
+        <ul class="gper-steps">
+          <li><span class="step-k kg">G</span><span>七年内实现财富自由,买回时间所有权。</span></li>
+          <li><span class="step-k kp">P</span><span>开源、节流、定投,个人 IP 作为核心进攻路径,AI 作为核心杠杆。</span></li>
+          <li><span class="step-k ke">E</span><span>持续输入、沉淀、输出、产品化,踏实推进。</span></li>
+          <li><span class="step-k kr">R</span><span>遇到流量、内容、产品、技术、商业化问题,就借助 AI 和复盘逐个解决。</span></li>
+        </ul>
+      </div>
+
+      <!-- 个人 IP -->
+      <div class="life-card reveal" style="--lc-c:var(--p);">
+        <h3>个人 IP</h3>
+        <div class="lc-en">Personal IP</div>
+        <ul class="gper-steps">
+          <li><span class="step-k kg">G</span><span>打造有真实成长、有价值、有信任、有产品的个人 IP。</span></li>
+          <li><span class="step-k kp">P</span><span>IDOP 闭环,HKRR 质量标准,内容和产品双线推进。</span></li>
+          <li><span class="step-k ke">E</span><span>持续拍视频、写文章、做图文、建网站、做产品雏形。</span></li>
+          <li><span class="step-k kr">R</span><span>封面不好、口播不顺、播放量差、产品不清晰,就逐个解决。</span></li>
+        </ul>
+      </div>
+
+      <!-- AI 护城河 -->
+      <div class="life-card reveal" style="--lc-c:var(--e);">
+        <h3>AI 护城河</h3>
+        <div class="lc-en">AI Moat</div>
+        <p class="lc-note">AI 护城河本质上是提升 GPER 后两环效率的重要基础:AI 帮助做规划;AI 帮助解决问题;Agent 帮助执行复杂任务;多模型交叉验证提升规划质量;个人资产系统提升 AI 协作深度。</p>
+      </div>
+
+      <!-- 主体性 -->
+      <div class="life-card reveal" style="--lc-c:var(--r);">
+        <h3>主体性</h3>
+        <div class="lc-en">Agency</div>
+        <p class="lc-note">GPER 里的 Goal 和 Execution 最能体现主体性。AI 可以帮助规划和解决问题,但目标必须由我自己提出,执行也必须由我自己启动。AI 越强,人越不能丢掉主体性——真正重要的是:<strong>用 AI 放大主体性,而不是用 AI 替代主体性。</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     八 · 风险提醒
+     ===================================================== -->
+<section>
+  <div class="wrap read">
+    <div class="reveal" style="margin-bottom:30px;">
+      <div class="eyebrow">Boundaries</div>
+      <h2 class="sec-title">这个模型的风险提醒</h2>
+      <p>GPER 理论很强,但也要注意几个边界。</p>
+    </div>
+
+    <div class="risk-list">
+      <div class="risk-card reveal">
+        <div class="r-num">01</div>
+        <div class="r-body">
+          <div class="r-title">不是所有目标都是真目标</div>
+          <p class="r-desc">有些目标只是外界塞给我的,有些只是短期欲望,有些只是焦虑驱动。所以 Goal 必须经过主体性筛选:这是我真正想要的吗?它符合我的长期人生系统吗?</p>
+        </div>
+      </div>
+      <div class="risk-card reveal">
+        <div class="r-num">02</div>
+        <div class="r-body">
+          <div class="r-title">规划不能盲信 AI</div>
+          <p class="r-desc">AI 很擅长做规划,但规划仍然需要人类判断、现实校准和多模型交叉验证。AI 给方案,不等于方案必然正确。</p>
+        </div>
+      </div>
+      <div class="risk-card reveal">
+        <div class="r-num">03</div>
+        <div class="r-body">
+          <div class="r-title">执行力仍然是核心瓶颈</div>
+          <p class="r-desc">AI 能降低执行门槛,但不能替我真正选择、启动、坚持和承担后果。如果一个人没有基本执行力,再好的目标和规划也会停在纸面上。</p>
+        </div>
+      </div>
+      <div class="risk-card reveal">
+        <div class="r-num">04</div>
+        <div class="r-body">
+          <div class="r-title">解决问题不能变成无限优化</div>
+          <p class="r-desc">遇到问题要解决,但不能永远卡在解决小问题上,忘了继续推进主线。解决问题的目的不是完美,而是继续前进。</p>
+        </div>
+      </div>
+      <div class="risk-card reveal">
+        <div class="r-num">05</div>
+        <div class="r-body">
+          <div class="r-title">廉价失败不是盲目开坑</div>
+          <p class="r-desc">AI 让失败成本下降,但不代表可以乱开项目。尝试要围绕主线,要有复盘,要有沉淀,要有筛选机制。否则 100 次失败也只是 100 次消耗。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- =====================================================
+     启发 / 总结
+     ===================================================== -->
+<section>
+  <div class="wrap read">
+    <div class="reveal" style="margin-bottom:8px;">
+      <div class="eyebrow">Takeaway</div>
+      <h2 class="sec-title">启发:做成事不是玄学,而是一条可被系统化的链路</h2>
+      <p>过去很多人把成功归结为天赋、运气、努力、资源,但这些都太粗。GPER 把"做成事"拆成更清晰的四步:<strong>目标是方向,规划是路径,执行是推进,解决问题是穿越障碍。</strong>在 AI 时代,这条链路发生了重大变化——人不再需要独自承担全部环节:目标仍需人自己定,执行仍需人自己启动,但规划和解决问题已经可以被 AI 大幅增强。</p>
+      <p>对于一个目标清晰、主体性强、有执行力的人来说,AI 时代是极大的利好。大多数人真正卡住的地方,可能已经不是"没有工具",而是没有目标、不愿执行、注意力被消耗、主体性不足。</p>
+    </div>
+
+    <div class="two-col">
+      <div class="col-card keep reveal">
+        <div class="cc-tag">Hold the Human Part</div>
+        <h3>守住人的部分</h3>
+        <ul>
+          <li>清晰目标</li>
+          <li>主体性</li>
+          <li>执行力</li>
+          <li>价值判断</li>
+          <li>良知底线</li>
+          <li>长期主义</li>
+        </ul>
+      </div>
+      <div class="col-card useai reveal">
+        <div class="cc-tag">Leverage the AI Part</div>
+        <h3>充分利用 AI 的部分</h3>
+        <ul>
+          <li>辅助规划</li>
+          <li>拆解路径</li>
+          <li>解决问题</li>
+          <li>降低试错成本</li>
+          <li>加速反馈迭代</li>
+          <li>支持复杂任务执行</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-bottom:42px;">
+      <p>这也解释了为什么我对未来如此乐观:只要我有清晰目标、有行动力、有 AI 辅助规划和解决问题,又能承受廉价失败并持续复盘,那么很多事情就不再是"能不能做到"的问题,而是"多久做到、怎么做到、做到什么程度"的问题。</p>
+    </div>
+
+    <!-- 末尾大金句 -->
+    <div class="final-quote reveal">
+      <div class="fq-tag">The Final Word</div>
+      <p class="fq-text">GPER 理论是 AI 时代的成事链路:<span class="gg">Goal 目标</span>决定方向,<span class="pp">Plan 规划</span>设计路径,<span class="ee">Execution 执行</span>推动现实,<span class="rr">Resolution 解题</span>穿越障碍。AI 不能替我决定目标,也不能替我承担人生,但它能极大增强规划和解题能力,让我用更低成本、更高频率、更快反馈去逼近目标。<strong style="color:#fff;">目标清晰,路径明确,持续执行,遇事解题,很多事就能一步一步做成。</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+<footer>
+  <div class="wrap">
+    <div class="f-chain"><span class="gg">GOAL</span> → <span class="pp">PLAN</span> → <span class="ee">EXECUTION</span> → <span class="rr">RESOLUTION</span></div>
+    <div class="f-copy">GPER 理论 · 成事链路 — 追光者 · 曹宗昱 个人说明书</div>
+  </div>
+</footer>
+
+<script>
+/* 克制的滚动入场:IntersectionObserver,进入视口加 .visible */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || !els.length) {
+    els.forEach(function (el) { el.classList.add('visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  els.forEach(function (el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>
