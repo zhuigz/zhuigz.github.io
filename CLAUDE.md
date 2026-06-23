@@ -188,7 +188,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: REQ-001 (集大成网站 `opus.html`, L, P0) is **done** — PM-accepted 2026-06-15. `opus.html` (220.5KB, 10-chapter immersive scroll narrative: scene engine + dual nav + tri-tier canvas) delivered, six hard gates PASS. On branch `claude/friendly-euler-sdhwcq`, PR #30 open (not yet merged to `main`). No active requirement — backlog clear.
+**Current status**: REQ-001 (集大成网站 `opus.html`) **done** + merged to `main`. REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). No active requirement — backlog clear.
 
 ## Adding New Content
 
