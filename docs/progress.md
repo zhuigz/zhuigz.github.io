@@ -4,9 +4,11 @@
 
 ## Now
 
-**REQ-002 全站页面视觉美化 — ✅ 全部完成(10/10,2026-06-23 收官)**。M1–M10 逐页美化完成,每页 Conductor playwright 截图核验桌面+窄屏后合并 main 发布,用户逐页认可。**无活跃需求。**
+**REQ-003 GPER 理论页面** — `executing`(框架完成,待细节优化)— 新建 `gper.html`(GPER 成事链路:目标·规划·执行·解题)。**全新亮底·现代理性风**(告别黑金:暖白底 #F7F7F4 + 靛蓝主色 + 四阶段链路色 G靛蓝/P天蓝/E琥珀/R翠绿),全部内容结构化,8 大块完整(Hero 链路图/四主章节/AI 分工表/失败成本/人生系统四卡/风险/启发),48KB,playwright 核验(桌面+整页+移动)上线。PM 后续慢慢优化细节动效。仓库现 13 个 HTML 页。
 
-固化保留环节:每次视觉改动交付前,用 `npx playwright screenshot --viewport-size=W,H --wait-for-timeout=4000 "file://$PWD/x.html" out.png` 亲自核验渲染(fire round2 翻车教训),不再只靠 grep 验证元素存在。
+**REQ-002 全站页面视觉美化 — ✅ 全部完成**(10/10,2026-06-23)。10 页逐页 playwright 核验 + 合并发布,用户逐页认可。
+
+固化环节:每次视觉改动交付前用 `npx playwright screenshot` 亲自核验渲染(fire round2 翻车教训),不再只靠 grep。
 
 ## Next
 
