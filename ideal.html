@@ -104,6 +104,8 @@ body{
   position:absolute;inset:0;opacity:.04;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+/* 向光金粉 canvas —— 全页微光纵深层，余烬 CSS 粒子之下、内容之下 */
+.light-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block;opacity:.85}
 .embers{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .ember{position:absolute;width:1.5px;height:1.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold-light);opacity:0;animation:rise linear infinite}
 @keyframes rise{
@@ -829,6 +831,29 @@ footer{
   animation:tape-scroll 30s linear infinite;
 }
 @keyframes tape-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════ Reduced Motion ═══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  html{scroll-behavior:auto}
+  /* 背景装饰动画：余烬 / 跑马灯 / 波纹 / 转环 / 浮光 全部静置 */
+  .embers,.light-canvas,.td-extra-ring,.td-tape{display:none !important}
+  .brand-seal::after,.hero-orb,.hero-rings .ring,.poster::before,.poster::after,
+  .credo::after,.hero-chip::before,.scroll-cue .line,.anchor-bridge .arrow{animation:none !important}
+  /* 自定义光标隐藏，恢复系统光标 */
+  .cursor-dot,.cursor-ring{display:none !important}
+  body,a,button,.hero-step,.dim,.wheel,.p-card,.fw,.conv-col,.anchor{cursor:auto !important}
+  /* 入场 reveal：直接呈现，内容完整可读，不依赖位移/缩放 */
+  .r,.r-l,.r-r,.r-s,.stag>*,.credo-text .line{opacity:1 !important;transform:none !important}
+  .feature::before{height:100% !important}
+  .tlf-line::after{width:var(--p,30%) !important}
+  .bg-ambient{opacity:1}
+}
 </style>
 </head>
 <body>
@@ -840,6 +865,7 @@ footer{
   <div class="bg-grid"></div>
   <div class="bg-vignette"></div>
   <div class="bg-ambient" id="bgAmbient"></div>
+  <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
   <div class="bg-noise"></div>
 </div>
 <div class="embers" id="embers"></div>
@@ -1548,7 +1574,7 @@ document.querySelectorAll('.dim').forEach(card => {
 /* Embers */
 const embersContainer = document.getElementById('embers');
 const colors = ['var(--gold)', 'var(--jade)', 'var(--violet)'];
-for (let i = 0; i < 22; i++){
+for (let i = 0; i < 16; i++){
   const e = document.createElement('div');
   e.className = 'ember';
   const left = Math.random() * 100;
@@ -1620,6 +1646,117 @@ document.querySelector('.menu-toggle')?.addEventListener('click', () => {
 
   window.addEventListener('scroll', update, { passive: true });
   update();
+})();
+
+/* ─────────── 向光金粉 canvas —— 全页微光纵深层 ─────────── */
+(function lightCanvas(){
+  const c = document.getElementById('lightCanvas');
+  if(!c) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = c.getContext('2d');
+  const hover = !matchMedia('(hover: none)').matches;
+  let w=0, h=0, dpr=1;
+  let particles=[];
+  let mouseX=0, mouseY=0, targetX=-9999, targetY=-9999, mouseActive=false;
+  let running=false, rafId=0;
+
+  // 暖金为主 · 少量余烬 / 浅金，呼应全站 palette
+  const colors=[
+    'rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,','rgba(232,184,122,',
+    'rgba(232,184,122,','rgba(232,184,122,',
+    'rgba(181,94,82,','rgba(142,122,184,',
+    'rgba(245,213,154,'
+  ];
+
+  function particleCount(){
+    if(w<480) return 16;
+    if(w<880) return 26;
+    return 40;
+  }
+
+  function spawn(initial){
+    return {
+      x: Math.random()*w,
+      y: initial ? Math.random()*h : h + Math.random()*30,
+      r: 0.5 + Math.pow(Math.random(),2)*1.5,
+      vx:(Math.random()-0.5)*0.08,
+      vy:-(0.10 + Math.random()*0.26),
+      a: 0.22 + Math.random()*0.34,
+      phase: Math.random()*Math.PI*2,
+      freq: 0.0014 + Math.random()*0.0018,
+      color: colors[Math.floor(Math.random()*colors.length)]
+    };
+  }
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    c.width = Math.floor(w*dpr);
+    c.height = Math.floor(h*dpr);
+    c.style.width = w+'px';
+    c.style.height = h+'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr,dpr);
+    const n = particleCount();
+    if(particles.length !== n) particles = Array.from({length:n}, ()=>spawn(true));
+  }
+
+  function frame(t){
+    if(!running){ rafId=0; return; }
+    ctx.clearRect(0,0,w,h);
+    ctx.globalCompositeOperation='lighter';
+
+    if(mouseActive){
+      targetX += (mouseX-targetX)*0.1;
+      targetY += (mouseY-targetY)*0.1;
+    }
+
+    for(let i=0;i<particles.length;i++){
+      const p = particles[i];
+      if(hover && mouseActive && targetX>-9000){
+        const dx = targetX-p.x, dy = targetY-p.y;
+        const d2 = dx*dx + dy*dy;
+        if(d2 < 32400){ // 180^2 吸附半径
+          const d = Math.sqrt(d2)+0.01;
+          p.vx += (dx/d)*0.014;
+          p.vy += (dy/d)*0.014;
+        }
+      }
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      if(p.vy > -0.04) p.vy = -0.04; // 维持向上漂
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.y < -12 || p.x < -50 || p.x > w+50){ Object.assign(p, spawn(false)); }
+      const alpha = (p.a * (0.55 + 0.45*Math.sin(t*p.freq + p.phase))).toFixed(3);
+      ctx.fillStyle = p.color + alpha + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function start(){ if(!running){ running=true; if(!rafId) rafId=requestAnimationFrame(frame); } }
+  function stop(){ running=false; }
+
+  if(hover){
+    window.addEventListener('mousemove', (e)=>{
+      mouseX=e.clientX; mouseY=e.clientY;
+      if(!mouseActive){ targetX=mouseX; targetY=mouseY; }
+      mouseActive=true;
+    });
+    document.addEventListener('mouseleave', ()=>{ mouseActive=false; });
+  }
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState==='hidden') stop(); else start();
+  });
+  window.addEventListener('resize', resize);
+
+  resize();
+  start();
 })();
 </script>
 </body>
