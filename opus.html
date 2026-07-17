@@ -9,34 +9,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ===== [00] TOKENS ===== */
-/* :root 调色板（逐字移植 index，变量名一字不改 · architecture 硬约束 #3）
-   + --scene-* 动态场景层（场景引擎按章切换的色温变量）。详见 T1.2 / KD-1。 */
+
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  /* 暖金主色系 */
+  
   --gold: #E8B87A;
   --gold-light: #F4D9A8;
   --gold-deep: #C99A56;
   --gold-pale: rgba(232,184,122,0.06);
   --gold-glow: rgba(232,184,122,0.25);
 
-  /* 余烬/赤色辅助（凤凰涅槃的火） */
+  
   --ember: #C36B5E;
   --ember-soft: rgba(195,107,94,0.18);
 
-  /* 紫蓝绿点缀（克制使用） */
+  
   --accent-violet: #8E7AB8;
   --accent-teal: #7FA8AD;
   --accent-sage: #88A878;
 
-  /* 底色与文字 */
+  
   --bg-deep: #07070C;
   --bg-elev: #11111A;
   --bg-card: rgba(255,255,255,0.025);
   --bg-card-hi: rgba(255,255,255,0.055);
-  --bg-card-lo: rgba(255,255,255,0.015);    /* 派生:数据墙底纹/实践行悬停的极淡提色(F9) */
+  --bg-card-lo: rgba(255,255,255,0.015);    
   --ink: #F2EFEB;
   --ink-soft: rgba(242,239,235,0.62);
   --ink-dim: rgba(242,239,235,0.34);
@@ -50,20 +49,17 @@
   --sans-en: 'Outfit', 'Noto Sans SC', sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* --- 场景动态层（叠加在上方静态调色板之上，由场景引擎按章改写）---
-     默认值 = 序章「冷夜微光 deep night」色板，即色温弧起点，
-     与 body[data-chapter="0"] 一致，避免 JS 未跑/首帧闪色。
-     具体着色规则集中在 [03] SCENE ENGINE，此处仅定义初值与过渡时长。 */
+  
   --scene-bg: radial-gradient(ellipse 120% 90% at 50% -10%, #0B0C16 0%, var(--bg-deep) 60%, #050509 100%);
-  --scene-glow: rgba(126,138,178,0.12);   /* 冷夜微光：一点冷蓝光 */
-  /* F2：与 body[data-chapter="0"]（[03]）取同一 color-mix 值，消除首帧闪色（首帧不闪色原则）。 */
+  --scene-glow: rgba(126,138,178,0.12);   
+  
   --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 14%, transparent);
-  --light-hue: 222;                         /* 深夜冷蓝色相起点 */
-  --scene-tr: 1.2s;                         /* 场景过渡时长；reduced-motion 下归零（[11]，见 R2） */
+  --light-hue: 222;                         
+  --scene-tr: 1.2s;                         
 }
 
-/* ===== [01] BASE & RESET ===== */
-/* 全局 reset、body 基底、排版基线、链接/选区等。 */
+
+
 html { scroll-behavior: smooth; }
 body {
   background: var(--scene-bg);
@@ -71,18 +67,14 @@ body {
   font-family: var(--sans-cn);
   line-height: 1.8;
   overflow-x: hidden;
-  /* transition 只加在 body 背景（及未来固定光层），不给 :root 整体加 —— T1.2 注意事项。
-     时长引用 --scene-tr，reduced-motion 下归零仍切换、只是瞬时（R2）。 */
+  
   transition: background var(--scene-tr) ease;
 }
 
-/* ===== [02] GLOBAL LIGHT LAYERS ===== */
-/* preloader / .grain / .scroll-progress / .bg-glow(orb×3) / lightCanvas / .cursor-glow。详见 T1.3。
-   从 index.html 全局贴层移植：preloader 触发 body.loaded（序章 per-glyph 入场依赖，R7）；
-   orb 色值由 index 的硬编码 rgba 改为引用 --scene-glow，随章变色（T1.3 注意事项 / KD-4）；
-   lightCanvas colors 按章着色 + 三级密度已落地（T5.2，见 [12] JS lightCanvas IIFE）。 */
 
-/* —— PRELOADER（开场：一点光，破暗而生）—— */
+
+
+
 .preloader {
   position: fixed; inset: 0; z-index: 10000;
   background: var(--bg-deep);
@@ -94,14 +86,14 @@ body {
 .pre-dot {
   width: 10px; height: 10px; border-radius: 50%;
   background: var(--gold);
-  /* F4：硬编码 rgba(232,184,122,…) → var(--gold) 派生（232,184,122 即 --gold #E8B87A）。 */
+  
   box-shadow: 0 0 24px var(--gold), 0 0 80px color-mix(in srgb, var(--gold) 50%, transparent);
   animation: preDot 1.4s ease-in-out infinite;
 }
 .pre-ring {
   position: absolute; top: -25px; left: 50%; margin-left: -30px;
   width: 60px; height: 60px; border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); /* F4：var(--gold) 派生 */
+  border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); 
   animation: preRing 1.4s ease-out infinite;
 }
 .pre-text {
@@ -113,28 +105,28 @@ body {
 @keyframes preRing { from { transform: scale(0.3); opacity: 1; } to { transform: scale(2.1); opacity: 0; } }
 @keyframes preText { from { color: var(--ink-dim); } to { color: var(--gold); } }
 
-/* —— 颗粒噪点（base64 SVG ~0.5KB，原样保留）—— */
+
 .grain {
   position: fixed; inset: 0; z-index: 9999; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* —— 顶部滚动进度细条 —— */
+
 .scroll-progress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0%; z-index: 200;
   background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-light));
-  /* F4：硬编码 rgba(232,184,122,0.55) → var(--gold) 派生（color-mix 取 55% 不透明）。 */
+  
   box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 55%, transparent);
   transition: width 0.08s linear;
 }
 
-/* —— 光标即是光：跟随鼠标的柔光（追光者签名交互）—— */
+
 .cursor-glow {
   position: fixed; left: 0; top: 0; z-index: 3;
   width: 380px; height: 380px; margin: -190px 0 0 -190px;
   border-radius: 50%; pointer-events: none;
-  /* F4：硬编码 rgba(232,184,122,…)/rgba(195,107,94,…) → var(--gold)/var(--ember) 派生。 */
+  
   background: radial-gradient(circle, color-mix(in srgb, var(--gold) 10%, transparent), color-mix(in srgb, var(--ember) 4%, transparent) 45%, transparent 65%);
   mix-blend-mode: screen;
   opacity: 0; transition: opacity 0.5s;
@@ -142,14 +134,9 @@ body {
 }
 .cursor-glow.on { opacity: 1; }
 
-/* —— 背景光晕 orb×3：色值引用 --scene-glow，随章变色（T1.3）——
-   三球保留 index 的暖金/余烬/紫的气质差异：orb-1 直接用 --scene-glow，
-   orb-2/orb-3 在 --scene-glow 基础上 color-mix 进 --ember/--accent-violet，
-   既随场景重着色，又保留三色层次。 */
+
 .bg-glow { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-/* orb 单一定义（F1：合并原 [02] 动画 + [03] transition 两处声明为一处）。
-   随章过渡：orb 色相来自 --scene-glow，故对 background 做 transition（时长引用 --scene-tr，
-   reduced-motion 下 [11] 归零 → 切换瞬时不"动"，R2）。 */
+
 .bg-glow .orb {
   position: absolute; border-radius: 50%; filter: blur(130px);
   animation: orbFloat 26s ease-in-out infinite;
@@ -164,7 +151,7 @@ body {
   66% { transform: translate(-40px,60px) scale(0.92); }
 }
 
-/* —— 向光金粉 canvas —— */
+
 .light-canvas {
   position: absolute; inset: 0; width: 100%; height: 100%;
   pointer-events: none; display: block;
@@ -172,109 +159,91 @@ body {
   transition: opacity .35s linear;
 }
 
-/* ===== [03] SCENE ENGINE ===== */
-/* body[data-chapter="N"] 各章色板（--scene-bg/--scene-glow/--scene-ink-tint/--light-hue）
-   + 背景与光层的 transition + .chapter 通用 min-height。详见 T1.4 / KD-1 / KD-2。
 
-   机制：sceneEngine IIFE 单 observer 判定当前章 → 写 body.dataset.chapter；
-   下方 11 组规则把每章色板集中定义；body 背景在 [01] 已对 --scene-bg 做 transition，
-   固定光层（orb/scene-tint）在此对 --scene-glow/--scene-ink-tint 做 transition。
-   所有色值从既有调色板派生（color-mix / 低透明度叠加），不引入调色板外的硬编码新色相。 */
 
-/* —— .chapter 通用骨架（min-height 章高保障，应对短章双命中 UX-002）——
-   svh 在旧 Safari/旧 Android WebView 不支持；CSS 同属性后写覆盖前写：
-   支持 svh 的取 svh、不支持的回落 vh，无需 @supports。
-   用 min-height（非 height）：横屏矮屏内容超一屏时仍可撑高、不裁切（与 T5.3 一致）。 */
+
+
 .chapter {
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
 }
 
-/* 固定光层随章过渡说明：orb 的 background transition 已并入 [02] 单一 .bg-glow .orb 定义（F1）；
-   --scene-ink-tint 叠层的 transition 见下方 .scene-tint。两者时长均引用 --scene-tr。 */
 
-/* 场景墨色微调叠层（--scene-ink-tint）：一层极淡的全屏覆盖，随章微调整体冷暖。
-   固定贴层、不挡交互、不参与合成开销热点（单层 radial，opacity 级）。 */
+
+
 .scene-tint {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(ellipse 140% 100% at 50% 0%, var(--scene-ink-tint), transparent 70%);
   transition: background var(--scene-tr) ease;
 }
 
-/* —— 11 组章色板（色温弧：序章冷夜 → 暖土黄 → 黎明 → 正午金 → 赤焰
-   → 靛紫深空 → 青银 → 金橙 → 紫金交汇 → 满金）——
-   每组改写 --scene-bg / --scene-glow / --scene-ink-tint / --light-hue 四个动态变量；
-   body 背景与固定光层对其 transition，JS 只切 data-chapter（KD-1）。
-   色值全部从既有调色板派生：--gold/--gold-light/--gold-deep/--ember/
-   --accent-violet/--accent-teal/--accent-sage + --bg-deep，
-   用 color-mix 插值或低透明度叠加，不写调色板外的裸色相。
-   data-chapter="0" 与 :root 默认值一致（[00]），保证 JS 未跑/首帧不闪色。 */
 
-/* 序章 · 追光者 —— 冷夜微光 deep night（色温弧起点，最冷一点光） */
+
+
 body[data-chapter="0"] {
   --scene-bg: radial-gradient(ellipse 120% 90% at 50% -10%, #0B0C16 0%, var(--bg-deep) 60%, #050509 100%);
   --scene-glow: rgba(126,138,178,0.12);
   --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 14%, transparent);
   --light-hue: 222;
 }
-/* 一 · 底色 —— 暖土黄（暖意初生，土黄基底） */
+
 body[data-chapter="1"] {
   --scene-bg: radial-gradient(ellipse 120% 90% at 50% -8%, color-mix(in srgb, var(--gold-deep) 24%, var(--bg-deep)) 0%, var(--bg-deep) 62%, #06060B 100%);
   --scene-glow: color-mix(in srgb, var(--gold-deep) 55%, transparent);
   --scene-ink-tint: color-mix(in srgb, var(--gold-deep) 12%, transparent);
   --light-hue: 38;
 }
-/* 二 · 来路 —— 黎明渐暖（地平线初光，暖金上扬） */
+
 body[data-chapter="2"] {
   --scene-bg: radial-gradient(ellipse 120% 95% at 50% 4%, color-mix(in srgb, var(--gold) 18%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #07060A 100%);
   --scene-glow: color-mix(in srgb, var(--gold) 50%, var(--ember) 10%);
   --scene-ink-tint: color-mix(in srgb, var(--gold) 10%, transparent);
   --light-hue: 44;
 }
-/* 三 · 此身 —— 正午金（最盛的暖金，光线最强） */
+
 body[data-chapter="3"] {
   --scene-bg: radial-gradient(ellipse 110% 90% at 50% -6%, color-mix(in srgb, var(--gold) 26%, var(--bg-deep)) 0%, var(--bg-deep) 60%, #08070C 100%);
   --scene-glow: color-mix(in srgb, var(--gold) 62%, var(--gold-light) 18%);
   --scene-ink-tint: color-mix(in srgb, var(--gold-light) 12%, transparent);
   --light-hue: 48;
 }
-/* 四 · 信念 —— 赤焰（ember 提亮，光效最"热"，凤凰之火） */
+
 body[data-chapter="4"] {
   --scene-bg: radial-gradient(ellipse 115% 92% at 50% -4%, color-mix(in srgb, var(--ember) 30%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #0A0608 100%);
   --scene-glow: color-mix(in srgb, var(--ember) 60%, var(--gold) 20%);
   --scene-ink-tint: color-mix(in srgb, var(--ember) 16%, transparent);
   --light-hue: 14;
 }
-/* 五 · 远方 —— 靛紫深空（光效转星空，冷紫深邃） */
+
 body[data-chapter="5"] {
   --scene-bg: radial-gradient(ellipse 120% 95% at 50% -10%, color-mix(in srgb, var(--accent-violet) 26%, var(--bg-deep)) 0%, var(--bg-deep) 56%, #050410 100%);
   --scene-glow: color-mix(in srgb, var(--accent-violet) 55%, transparent);
   --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 18%, transparent);
   --light-hue: 264;
 }
-/* 六 · 系统 —— 青银冷静（仪表辉，青银工程感） */
+
 body[data-chapter="6"] {
   --scene-bg: radial-gradient(ellipse 120% 92% at 50% -8%, color-mix(in srgb, var(--accent-teal) 22%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #04090C 100%);
   --scene-glow: color-mix(in srgb, var(--accent-teal) 52%, transparent);
   --scene-ink-tint: color-mix(in srgb, var(--accent-teal) 14%, transparent);
   --light-hue: 188;
 }
-/* 七 · 造物 —— 金橙工坊（流光，暖金橙锻造感） */
+
 body[data-chapter="7"] {
   --scene-bg: radial-gradient(ellipse 115% 90% at 50% -6%, color-mix(in srgb, var(--gold-deep) 30%, var(--bg-deep)) 0%, var(--bg-deep) 58%, #0A0705 100%);
   --scene-glow: color-mix(in srgb, var(--gold) 50%, var(--ember) 22%);
   --scene-ink-tint: color-mix(in srgb, var(--gold-deep) 14%, transparent);
   --light-hue: 33;
 }
-/* 八 · 同行 —— 紫金交汇（双色光效交汇，呼应"同行"） */
+
 body[data-chapter="8"] {
   --scene-bg: radial-gradient(ellipse 120% 95% at 50% -8%, color-mix(in srgb, var(--accent-violet) 20%, var(--bg-deep)) 0%, color-mix(in srgb, var(--gold-deep) 8%, var(--bg-deep)) 55%, #07060E 100%);
   --scene-glow: color-mix(in srgb, var(--accent-violet) 40%, var(--gold) 28%);
   --scene-ink-tint: color-mix(in srgb, var(--accent-violet) 12%, transparent);
   --light-hue: 286;
 }
-/* 终章 · 成为 —— 满金收束（万丈光，最盛满金，色温弧终点） */
+
 body[data-chapter="9"] {
   --scene-bg: radial-gradient(ellipse 120% 100% at 50% -4%, color-mix(in srgb, var(--gold) 34%, var(--bg-deep)) 0%, color-mix(in srgb, var(--gold-deep) 14%, var(--bg-deep)) 52%, #0A0805 100%);
   --scene-glow: color-mix(in srgb, var(--gold-light) 60%, var(--gold) 30%);
@@ -282,14 +251,10 @@ body[data-chapter="9"] {
   --light-hue: 46;
 }
 
-/* ===== [04] NAVIGATION ===== */
-/* 桌面 .chapter-rail 圆点列 + 顶部进度条 + 移动端 .chapter-bar 章名条。详见 KD-5 / T5.1。
-   两套导航的"当前章"全程 CSS 驱动(body[data-chapter="N"] …),与场景引擎同源、零 toggle JS;
-   唯一新增 JS 是 .chapter-bar 展开/收起(chapterRail IIFE)。
-   互斥交接:rail 桌面在场(>768px),bar 移动端在场(≤768px);768px 断点切换在 [10] 落规则。 */
 
-/* —— 桌面章节 rail:右侧固定一列 10 个圆点(ch0–ch9)——
-   当前章高亮全程 CSS:body[data-chapter="N"] .rail-dot[data-go="N"]{…},禁止 JS 逐点 toggle。 */
+
+
+
 .chapter-rail {
   position: fixed; top: 50%; right: 26px; transform: translateY(-50%);
   z-index: 180; display: flex; flex-direction: column; gap: 16px;
@@ -298,13 +263,13 @@ body[data-chapter="9"] {
 .rail-dot {
   position: relative; display: block;
   width: 11px; height: 11px; border-radius: 50%;
-  /* 静息态:极淡描边空心点,不喧宾夺主 */
+  
   background: transparent;
   border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
   transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
 }
 .rail-dot:hover { border-color: var(--gold); transform: scale(1.25); }
-/* hover 章名气泡:文本由 data-name 提供(纯 CSS content,不写 JS) */
+
 .rail-dot::after {
   content: attr(data-name);
   position: absolute; right: 24px; top: 50%; transform: translateY(-50%) translateX(6px);
@@ -316,7 +281,7 @@ body[data-chapter="9"] {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .rail-dot:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
-/* 当前章高亮(全程 CSS by body[data-chapter]):实心金点 + 光晕 + 放大,与场景引擎同源 */
+
 body[data-chapter="0"] .rail-dot[data-go="0"],
 body[data-chapter="1"] .rail-dot[data-go="1"],
 body[data-chapter="2"] .rail-dot[data-go="2"],
@@ -332,11 +297,9 @@ body[data-chapter="9"] .rail-dot[data-go="9"] {
   box-shadow: 0 0 12px color-mix(in srgb, var(--gold) 60%, transparent);
 }
 
-/* —— 移动端顶部固定章名条(.chapter-bar,UX-001 消解方案)——
-   桌面默认隐藏,768px 由 [10] 切为 display:flex(rail↔bar 互斥交接)。
-   贴在顶部进度条之下,常驻显示当前章名(纯 CSS content 切换),▾ 展开为章节清单。 */
+
 .chapter-bar {
-  display: none; /* >768px 隐藏;≤768px 在 [10] 切 display:flex */
+  display: none; 
   position: fixed; top: 0; left: 0; right: 0; z-index: 190;
   align-items: center; justify-content: space-between;
   height: 44px; padding: 0 16px;
@@ -344,7 +307,7 @@ body[data-chapter="9"] .rail-dot[data-go="9"] {
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
-/* 左侧当前章名:文本由 body[data-chapter="N"] …::after content 切换(11 组规则,零同步 JS)。 */
+
 .chapter-bar .bar-name {
   display: inline-flex; align-items: baseline; gap: 8px;
   font-family: var(--serif-cn); font-size: 14px; letter-spacing: 2px; color: var(--ink);
@@ -355,7 +318,7 @@ body[data-chapter="9"] .rail-dot[data-go="9"] {
   background: var(--gold); box-shadow: 0 0 8px var(--gold);
 }
 .chapter-bar .bar-name::after { content: '追光者 · 序章'; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* 当前章名 content 切换(与 rail 高亮、场景引擎同一 body[data-chapter] 驱动)。 */
+
 body[data-chapter="0"] .chapter-bar .bar-name::after { content: '序章 · 追光者'; }
 body[data-chapter="1"] .chapter-bar .bar-name::after { content: '一 · 底色'; }
 body[data-chapter="2"] .chapter-bar .bar-name::after { content: '二 · 来路'; }
@@ -366,7 +329,7 @@ body[data-chapter="6"] .chapter-bar .bar-name::after { content: '六 · 系统';
 body[data-chapter="7"] .chapter-bar .bar-name::after { content: '七 · 造物'; }
 body[data-chapter="8"] .chapter-bar .bar-name::after { content: '八 · 同行'; }
 body[data-chapter="9"] .chapter-bar .bar-name::after { content: '终章 · 成为'; }
-/* 右侧展开按钮(▾):点击给 .chapter-bar 加 .open 类(唯一 toggle JS) */
+
 .chapter-bar .bar-toggle {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
   width: 34px; height: 30px; padding: 0; margin: 0;
@@ -376,7 +339,7 @@ body[data-chapter="9"] .chapter-bar .bar-name::after { content: '终章 · 成�
 }
 .chapter-bar .bar-toggle .chev { display: inline-block; transition: transform 0.3s ease; font-size: 12px; line-height: 1; }
 .chapter-bar.open .bar-toggle .chev { transform: rotate(180deg); }
-/* 覆盖式章节清单:默认折叠(max-height 0),.open 展开。绝对定位贴在条下方,不挤压正文。 */
+
 .chapter-bar .bar-list {
   position: absolute; top: 100%; left: 0; right: 0;
   margin: 0; padding: 0; list-style: none;
@@ -395,7 +358,7 @@ body[data-chapter="9"] .chapter-bar .bar-name::after { content: '终章 · 成�
 }
 .chapter-bar .bar-list a .li-idx { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
 .chapter-bar .bar-list a:hover { color: var(--gold); background: var(--bg-card); }
-/* 当前章在清单里也高亮(全程 CSS,同 body[data-chapter] 驱动) */
+
 body[data-chapter="0"] .bar-list a[data-go="0"],
 body[data-chapter="1"] .bar-list a[data-go="1"],
 body[data-chapter="2"] .bar-list a[data-go="2"],
@@ -417,20 +380,16 @@ body[data-chapter="7"] .bar-list a[data-go="7"] .li-idx,
 body[data-chapter="8"] .bar-list a[data-go="8"] .li-idx,
 body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 
-/* ===== [05] CHAPTER SHELL ===== */
-/* .chapter 通用骨架（min-height 已在 [03] 定义）+ 章号眉题 .section-label
-   + .section-title（衬线大标题，.hl 渐变高亮）。详见 T2.1。
-   组件类逐字移植 index（变量名/手感一致，Dev 心智零迁移）；本 task 只建骨架/机制，
-   不写任何章节正文（T2.2–T2.4 范围）。
-   注：index 的 .divider 章间分隔细线在本页未使用——全宽 .chapter 段本身即天然分隔（T5.4 体量审计清理）。 */
 
-/* 章内容容器：每章正文的居中栅格基底（对齐 index .container），各章在此基础上扩展。 */
+
+
+
 .ch-inner { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 
-/* 章号眉题区：英文眉题 + 衬线大标题成组（对齐 index .section-head 间距）。 */
+
 .ch-head { margin-bottom: 64px; }
 
-/* 章号眉题（英文 + mono 序号）—— 逐字移植 index .section-label（第 427–434 行）。 */
+
 .section-label {
   display: inline-flex; align-items: center; gap: 12px;
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 5px;
@@ -440,7 +399,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 .section-label::before { content: ''; width: 28px; height: 1px; background: var(--gold); opacity: 0.6; }
 .section-label::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); }
 
-/* 衬线大标题（.hl 渐变高亮）—— 逐字移植 index .section-title（第 435–442 行）。 */
+
 .section-title {
   font-family: var(--serif-cn); font-size: clamp(34px, 5.6vw, 54px);
   font-weight: 700; line-height: 1.25; letter-spacing: 1px;
@@ -450,10 +409,8 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* ===== [06] REVEAL & ANIMATIONS ===== */
-/* .reveal / .reveal-stagger 入场 + 共享 @keyframes 定义。
-   跨章共享的入场 keyframes（逐字复制 index：fadeUp/fadeDown/glyphIn），
-   序章 [08] 与后续各章入场编排复用。 */
+
+
 @keyframes fadeUp { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes glyphIn {
@@ -461,10 +418,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 
-/* —— reveal / reveal-stagger 滚动入场（逐字移植 index 第 456–471 行）——
-   revealObserver IIFE 在元素入视口时加 .visible 触发；nth-child 延迟做错落入场，
-   超过 11 个走 n+12 兜底（长时间线分组包裹避免末节点延迟过久 —— T2.3 注意事项）。
-   reduced-motion 降级见 [11]：直接置为可见态、transition 归零（无依赖动画才呈现的信息，验收第 7 条）。 */
+
 .reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-stagger > * { opacity: 0; transform: translateY(36px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
@@ -482,16 +436,13 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 .reveal-stagger.visible > *:nth-child(11) { transition-delay: 0.75s; }
 .reveal-stagger.visible > *:nth-child(n+12) { transition-delay: 0.82s; }
 
-/* count-up 数字单位后缀 span（animateCount 注入 <span class="unit">…</span>）。
-   三章数据墙（T2.4）依赖此约定：data-num/data-suffix → 计数 + .unit 后缀。 */
+
 .unit { font-family: var(--sans-en); font-weight: 600; }
 
-/* ===== [07] SHARED COMPONENTS ===== */
-/* .info-card / .metric-cell / .practice-row / .tilt / .manifesto-row 等跨章复用组件。 */
 
-/* —— .tilt 3D 卡片倾斜 + 光斑追踪（逐字移植 index 第 474–485 行）——
-   tilt IIFE（[JS] 末段）在 hover:none 直接 return，移动端不生效是预期（T2.4 注意事项）；
-   --mx/--my 由 IIFE 写入，光斑 ::after 仅 opacity 过渡，reduced-motion 下无信息依赖。 */
+
+
+
 .tilt {
   position: relative;
   transform-style: preserve-3d;
@@ -505,8 +456,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 }
 .tilt:hover::after { opacity: 1; }
 
-/* —— 信息卡 .info-grid / .info-card（逐字移植 index 第 550–591 行；硬编码 rgba → 调色板派生）——
-   三·此身用于 ENFJ-A / 华农公管 / 团支书等身份事实卡（T2.4 ① 身份卡）。 */
+
 .info-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
@@ -549,9 +499,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 }
 .info-card:hover .kw-chips span { border-color: var(--line-strong); color: var(--gold); }
 
-/* —— 九宫数据墙 .metrics-grid / .metric-cell（逐字移植 index 第 594–638 行；硬编码 rgba → 调色板派生）——
-   count-up 由 revealObserver 触发（[JS] animateCount 读 data-num/data-suffix → .unit 后缀）。
-   9 个 data-num 与 index 数据墙逐项一致（可溯源硬要求，T2.4 ②）。 */
+
 .metrics-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
@@ -598,9 +546,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   position: relative; z-index: 1;
 }
 
-/* —— 实践行 .practice-list / .practice-row（逐字移植 index 第 641–706 行；硬编码 rgba → 调色板派生）——
-   data-ghost 仅悬停浮现的巨型描边水印（装饰，不承载关键信息——验收第 7 条精神，T2.4）。
-   7 件实践行（T2.4 ③）。 */
+
 .practice-list { border-top: 1px solid var(--line); }
 .practice-row {
   position: relative;
@@ -667,8 +613,8 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   color: var(--accent-sage); font-size: 11px; font-family: var(--sans-en); font-weight: 700;
   letter-spacing: 1px; margin-left: 4px;
 }
-/* 成长系统 chips（实践行第 7 件内嵌，逐字移植 index 第 753–758 行）。 */
-/* 列名 teaser，非 ch6 架构重复（Conductor 裁定）：此处系统名是成果展示 chip，与 ch6 八模块骨架（架构信息载体）同名不同功能。 */
+
+
 .sys-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; max-width: 760px; }
 .sys-chips span {
   font-size: 13px; padding: 8px 18px; border-radius: 999px;
@@ -678,15 +624,10 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 }
 .practice-row:hover .sys-chips span { border-color: var(--line-strong); color: var(--gold); }
 
-/* ===== [08] CHAPTERS ===== */
-/* 各章节专属样式（#ch0 序章 … #ch9 终章），按章号顺序排列。 */
 
-/* —— #ch0 序章 · 追光者（破暗开场 · 长廊入口）——
-   重新演绎，不复制 index hero 的 DOM（PRD 序章行硬约束）：
-   文案取自 index hero（姓名/别名/使命/★座右铭），但版式是新的「长廊入口」气质——
-   纵向门轴构图：一点光（放大 preloader 光点语汇）→ 姓名 per-glyph 自下破暗渐显
-   → 别名/使命作门内引语 → ★座右铭嵌入「门楣」框线，作为走进长廊的第一道门。
-   入场依赖 body.loaded（preloader IIFE 已移植，R7）；data-temp="night" = 色温弧最冷起点。 */
+
+
+
 .ch0 {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center; text-align: center;
@@ -698,7 +639,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   width: 100%; max-width: 760px;
 }
 
-/* 破暗的一点光：放大 preloader .pre-dot 语汇，作为长廊入口的源点 */
+
 .ch0-spark {
   position: relative; width: 14px; height: 14px; margin-bottom: 54px;
   border-radius: 50%;
@@ -709,11 +650,11 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 .ch0-spark::before {
   content: ''; position: absolute; top: 50%; left: 50%;
   width: 64px; height: 64px; margin: -32px 0 0 -32px;
-  /* F4：硬编码 rgba(232,184,122,0.28) → var(--gold) 派生。 */
+  
   border-radius: 50%; border: 1px solid color-mix(in srgb, var(--gold) 28%, transparent);
   animation: ch0Ripple 4.5s ease-out infinite;
 }
-/* 从光点垂落的一束细光，把视线引入长廊（纯 transform 的 scaleY 呼吸） */
+
 .ch0-spark::after {
   content: ''; position: absolute; top: 14px; left: 50%; margin-left: -0.5px;
   width: 1px; height: 46px;
@@ -721,7 +662,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   transform-origin: top; opacity: 0.7;
 }
 
-/* 入口眉题：长廊的门牌号（英文眉题规约） */
+
 .ch0-eyebrow {
   font-family: var(--serif-en); font-style: italic;
   font-size: clamp(13px, 1.8vw, 17px);
@@ -729,7 +670,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 }
 .ch0-eyebrow .ord { color: var(--gold); font-style: normal; letter-spacing: 3px; }
 
-/* 姓名：per-glyph 自下破暗渐显（长廊气质——逐字像被一束束光点亮，非 index 的横排大字） */
+
 .ch0-name {
   font-family: var(--serif-cn);
   font-size: clamp(64px, 14vw, 168px);
@@ -744,7 +685,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* 别名：作门内的一行落款 */
+
 .ch0-alias {
   display: inline-flex; align-items: center; gap: 16px; flex-wrap: wrap;
   justify-content: center;
@@ -754,7 +695,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 .ch0-alias .cn { font-family: var(--serif-cn); color: var(--ink); letter-spacing: 7px; }
 .ch0-alias .sep { color: var(--gold); }
 
-/* 使命：门内的引语，宽度收窄保证可读 */
+
 .ch0-mission {
   font-family: var(--serif-cn);
   font-size: clamp(15px, 1.9vw, 18px); color: var(--ink-soft);
@@ -762,7 +703,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 }
 .ch0-mission em { font-style: normal; color: var(--gold); font-weight: 500; }
 
-/* ★座右铭：长廊入口的「门楣」——上下两道金线夹住，像一道要跨过的门 */
+
 .ch0-motto {
   position: relative;
   font-family: var(--serif-cn);
@@ -781,7 +722,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
 .ch0-motto em { font-style: normal; color: var(--gold); font-weight: 600; }
 .ch0-motto .star { color: var(--gold); font-size: 0.7em; vertical-align: middle; padding: 0 0.4em; }
 
-/* 入口提示：走进长廊（替代 index 的 SCROLL，语义为「沿光前行」） */
+
 .ch0-enter {
   margin-top: 70px; display: flex; flex-direction: column; align-items: center; gap: 10px;
   color: var(--ink-dim); font-family: var(--sans-en);
@@ -793,9 +734,7 @@ body[data-chapter="9"] .bar-list a[data-go="9"] .li-idx { color: var(--gold); }
   animation: ch0Enter 2.4s ease-in-out infinite;
 }
 
-/* —— 入场编排（依赖 body.loaded；preloader 结束后逐层点亮，R7）——
-   per-glyph animation-delay 逐字递增总时长 ≤0.8s（T1.5：开场不拖沓）：
-   末字「者」起步 0.62s + 动画 0.9s 在 1.5s 收尾，整段在 ~2.4s 内安定。 */
+
 body.js .ch0-spark, body.js .ch0-eyebrow, body.js .ch0-alias,
 body.js .ch0-mission, body.js .ch0-motto, body.js .ch0-enter { opacity: 0; }
 body.js .ch0-name .glyph { opacity: 0; }
@@ -812,7 +751,7 @@ body.loaded .ch0-mission { animation: fadeUp 1s ease 1.1s both; }
 body.loaded .ch0-motto { animation: fadeUp 1.1s ease 1.3s both; }
 body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 
-/* 序章专属 keyframes（共享 fadeUp/fadeDown/glyphIn 复用 [06]，此处仅放 ch0 独有的） */
+
 @keyframes ch0Spark {
   0%, 100% { transform: scale(1); box-shadow: 0 0 26px var(--gold), 0 0 90px var(--gold-glow), 0 0 150px var(--gold-glow); }
   50% { transform: scale(1.35); box-shadow: 0 0 36px var(--gold-light), 0 0 120px var(--gold-glow), 0 0 200px var(--gold-glow); }
@@ -826,13 +765,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   70% { opacity: 0; }
   100% { transform: scale(2.4); opacity: 0; }
 }
-/* F7(Phase 1 遗留 · T5.4 性能重评)：ch0NameShine 用 background-position 动画(background-clip:text 流光)，
-   理论上是 paint 层操作(非 GPU 合成)。重评判定「保留」而非改 transform 流光，理由：
-   ① 作用面极小——仅序章姓名 3 个 glyph(曹宗昱)，且只在 #ch0 单屏序章生效，是全页最性能宽容的破暗开场时刻；
-   ② 改 transform 流光需为 clip-text 叠 translateX 渐变伪元素，增 DOM/复杂度且易在 background-clip:text 上视觉回归，
-      收益与 3 字小面积 paint 不成比例；
-   ③ 已被 [11] reduced-motion 完全停(.ch0-name .glyph animation:none → 静态金渐变姓名仍完整清晰)。
-   结论：保留现状，性能可接受、降级已覆盖。 */
+
 @keyframes ch0NameShine { 0% { background-position: 0% center; } 100% { background-position: -240% center; } }
 @keyframes ch0Enter {
   0% { transform: scaleY(0); transform-origin: top; }
@@ -841,24 +774,15 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 
-/* —— #ch1 一·底色 · Undertone（七色光谱 + 3 大理想 + ★金句 + 525 数字密码）——
-   源 life_undertone：把「构成我的所有微光」收束为一条可见光谱。
-   色温暖土黄（body[data-chapter="1"]：--light-hue:38，[03] 已预定义，挂 data-chapter="1" 即生效）。
-   ★UX-005 锁定：七色光谱用单个 conic-gradient 元素实现，禁止 7 个色块 div；
-   色标全部引用既有调色板变量（--ember/--gold/--gold-light/--gold-deep/--accent-*），
-   中间过渡色用 color-mix 对上述变量插值得到，不写调色板外裸 hex。 */
+
 .ch1 { padding: 140px 0 130px; }
 
-/* —— 中心隐喻：七色光谱（单元素 conic-gradient · 一团旋转的光，即「底色」）——
-   .spectrum 是唯一着色元素：conic-gradient 七个色标连续过渡成「红橙黄绿青蓝紫」光谱观感；
-   中央 ::after 是暗芯，把渐变切成一道环（「所有微光汇成的一团底色」语义）；
-   ::before 是同色谱的外溢柔光（blur），不增加可着色 DOM。 */
+
 .spectrum-wrap { position: relative; display: flex; justify-content: center; margin: 8px 0 4px; }
 .spectrum {
   position: relative;
   width: clamp(200px, 34vw, 300px); aspect-ratio: 1; border-radius: 50%;
-  /* 七色一圈：暖端 ember(红橙) → gold/gold-light(黄金) → sage(绿) → teal(青) → violet(蓝紫)，
-     中间过渡色由相邻变量 color-mix 插值，全程不引入调色板外硬编码色（T2.2 取色约束）。 */
+  
   background: conic-gradient(from -90deg,
     var(--ember) 0deg,
     color-mix(in srgb, var(--ember), var(--gold-light)) 42deg,
@@ -872,18 +796,18 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
     var(--ember) 360deg);
   animation: spectrumSpin 48s linear infinite;
 }
-/* 外溢柔光：同色谱模糊扩散，作底色「漫开」的氛围（纯 filter，无新 DOM 着色源） */
+
 .spectrum::before {
   content: ''; position: absolute; inset: -14%; border-radius: 50%; z-index: -1;
   background: inherit; filter: blur(34px); opacity: 0.5;
 }
-/* 暗芯：把渐变切成光环，并在环心留出「底色」标签位 */
+
 .spectrum::after {
   content: ''; position: absolute; inset: 26%; border-radius: 50%;
   background: radial-gradient(circle, color-mix(in srgb, var(--bg-deep) 90%, #000) 55%, color-mix(in srgb, var(--bg-deep), transparent 30%) 100%);
   box-shadow: inset 0 0 24px rgba(0,0,0,0.7);
 }
-/* 环心的「底色」二字（绝对居中于暗芯，不随光谱旋转） */
+
 .spectrum-core {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   text-align: center; z-index: 2; pointer-events: none;
@@ -897,7 +821,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   letter-spacing: 4px; color: var(--gold); margin-top: 6px; text-transform: uppercase;
 }
 
-/* 光谱引语：中心隐喻的一句话注脚（取自源 hero-lead，压缩重写） */
+
 .ch1-lead {
   font-family: var(--serif-cn); text-align: center;
   font-size: clamp(16px, 2.1vw, 20px); line-height: 2.1; color: var(--ink-soft);
@@ -905,7 +829,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch1-lead em { font-style: normal; color: var(--gold); font-weight: 500; }
 
-/* 子区眉题（章内小标题，对齐 index .subsection-label 手感） */
+
 .ch1-sub {
   font-family: var(--sans-en); font-size: 12px; letter-spacing: 4px;
   text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
@@ -914,7 +838,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch1-sub::before { content: ''; width: 22px; height: 1px; background: var(--gold); opacity: 0.5; }
 .ch1-block { margin-top: 84px; }
 
-/* —— 3 大理想（FIRE / 复兴 / 共产主义·AI 奇点）：三张并列卡 —— */
+
 .ideal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .ideal-card {
   position: relative; padding: 30px 26px 32px;
@@ -926,7 +850,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border-color: var(--line-strong); transform: translateY(-4px);
   background: var(--bg-card-hi);
 }
-/* 卡顶一道渐变弧，呼应光谱（每张取光谱不同区段，颜色全引用调色板变量） */
+
 .ideal-card::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, transparent, var(--c-a), var(--c-b), transparent);
@@ -949,10 +873,9 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ideal-card .i-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
 
-/* —— ★金句「追光的人，终将光芒万丈」（D8:择 #ch4 信念为权威落点；此处不重复同句）——
-   故 #ch1 不放该金句整句；中心隐喻+理想已承载本章。详见 tech-design D8。 */
 
-/* —— 数字密码 525「我爱我」（本章只取 525 一项，源页另 3 项不在叙事弧必取范围）—— */
+
+
 .cipher-525 {
   display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
   padding: 34px 36px; border-radius: 18px;
@@ -973,22 +896,15 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .cipher-525 .c-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.9; }
 .cipher-525 .c-desc em { font-style: normal; color: var(--gold); font-weight: 500; }
 
-/* —— #ch1 专属 keyframe（仅 transform/opacity；reduced-motion 降级见 [11]）—— */
+
 @keyframes spectrumSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* —— #ch2 二·来路 · The Road（垂直时间线：光点串 · 四幕节点）——
-   源 life：把 18 年来路收束为一条垂直光线，四幕节点沿线逐点入场。
-   色温黎明渐暖（body[data-chapter="2"]：--light-hue:44，[03] 已预定义，挂 data-chapter="2" 即生效）。
-   形态约束（T2.3）：节点入场只用 .reveal/.reveal-stagger（opacity/translateY），
-   **禁止 scroll 比例驱动连线绘制的逐帧动画**；「光点沿线下行」用 CSS @keyframes + transform（tl2Comet）。
-   分组约束：四幕各自包一层 .reveal-stagger（每幕 ≤4 子节点），nth-child 延迟不触 n+12 兜底（index 第 471 行），
-   末节点延迟不被前序累积拖长（技术快审注意事项）。 */
+
 .ch2 { padding: 140px 0 130px; }
 
-/* 时间线主轴：居中一条竖向光线（左侧承载光点串，右侧承载节点卡）。
-   --rail-x 是轴线水平位置，统一供线、光点、节点圆点定位引用，断点处只改这一个变量。 */
+
 .ch2-timeline { --rail-x: 26px; position: relative; margin-top: 8px; }
-/* 竖向光轴：一条自上而下的渐隐金线（纯渐变背景，非 JS 逐帧绘制） */
+
 .ch2-timeline::before {
   content: ''; position: absolute; top: 6px; bottom: 6px; left: var(--rail-x);
   width: 2px; transform: translateX(-50%);
@@ -997,7 +913,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
     var(--gold-deep) 94%, transparent 100%);
   opacity: 0.55;
 }
-/* 「光点沿线下行」：一颗沿轴线循环下落的彗星光点（CSS @keyframes + transform，不用 JS 算滚动） */
+
 .ch2-timeline::after {
   content: ''; position: absolute; left: var(--rail-x); top: 0;
   width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%;
@@ -1007,13 +923,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   pointer-events: none;
 }
 
-/* —— 一幕（.tl-act）：一段来路（萌芽/群星/月亮/密度），各自一个 .reveal-stagger 分组 ——
-   --act-pad（幕左缩进）/ --node-pad-x（节点水平内边距）抽成变量，供 ::before 光点定位引用，
-   断点收窄时只改这两个变量 + --rail-x，圆点定位自动跟随对齐轴线（避免硬编码 64/22 在断点失配）。 */
+
 .tl-act { --act-pad: 64px; position: relative; padding-left: var(--act-pad); padding-bottom: 8px; }
 .tl-act + .tl-act { margin-top: 18px; }
 
-/* 幕头：年代区段 + 幕名（沿轴线挂一颗较大的「幕节点」光点） */
+
 .tl-act-head { position: relative; margin-bottom: 18px; }
 .tl-act-head::before {
   content: ''; position: absolute; left: calc(var(--rail-x) - var(--act-pad) - 7px); top: 4px;
@@ -1038,15 +952,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   margin-top: 8px; line-height: 1.8;
 }
 
-/* 子节点（一幕内的关键事件卡）：沿轴挂一颗小光点 + 一段内容 */
+
 .tl-node { --node-pad-x: 22px; position: relative; padding: 16px var(--node-pad-x); margin-bottom: 12px;
   background: var(--bg-card); border: 1px solid var(--line);
   border-radius: 14px;
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
 }
 .tl-node:hover { border-color: var(--line-strong); background: var(--bg-card-hi); transform: translateX(3px); }
-/* 节点光点：绝对定位相对节点 padding-box 左缘（= 距时间线左缘 --act-pad），
-   故偏移只需扣 --act-pad，不含 --node-pad-x；-5px ≈ 半个点宽(4.5)+1px 边框，让点心落在 --rail-x 轴上。 */
+
 .tl-node::before {
   content: ''; position: absolute; left: calc(var(--rail-x) - var(--act-pad) - 5px); top: 24px;
   width: 9px; height: 9px; border-radius: 50%;
@@ -1059,15 +972,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .tl-node .n-title em { font-style: normal; color: var(--gold); font-weight: 600; }
 .tl-node .n-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.85; }
 .tl-node .n-desc em { font-style: normal; color: var(--gold); font-weight: 500; }
-/* 节点内的强调数字（高考 567 / 90万 等），引用既有金色高亮手感 */
+
 .tl-node .n-num {
   font-family: var(--sans-en); font-weight: 700; letter-spacing: 1px;
   background: linear-gradient(135deg, var(--gold-light), var(--gold));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* —— ★金句「把目标定在月亮，最差也不过迷失在星辰之间」——
-   本章唯一落点（PRD 溯源项，逐字保留）。归在「月亮与星辰」幕末，作整条来路的星空注脚。 */
+
 .tl-credo {
   position: relative; margin: 26px 0 4px var(--act-pad); padding: 26px 30px;
   border-radius: 16px; border: 1px solid var(--line-strong);
@@ -1082,8 +994,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* —— #ch2 专属 keyframe（仅 transform/opacity；reduced-motion 降级见 [11]）——
-   tl2Comet：光点沿轴线自上而下循环（translateY 表达「光沿来路下行」），纯 CSS 不依赖滚动。 */
+
 @keyframes tl2Comet {
   0%   { transform: translateY(0) scale(0.6); opacity: 0; }
   8%   { opacity: 1; }
@@ -1092,14 +1003,10 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   100% { transform: translateY(100vh) scale(0.6); opacity: 0; }
 }
 
-/* —— #ch3 三·此身 · This Self（身份卡 + 9 宫数据墙 + 7 实践行）——
-   源 index about / metrics / practice 三区精华提取（T2.4）：
-   info-card/metric-cell/practice-row/tilt 等组件类在 [07] 已跨章移植，本段只做章内编排。
-   色温正午金（body[data-chapter="3"]：--light-hue:48，[03] 已预定义，挂 data-chapter="3" 即生效）。
-   data-ghost 悬停水印为装饰，不承载关键信息（验收第 7 条精神）。 */
+
 .ch3 { padding: 140px 0 130px; }
 
-/* 章内三区块间距 + 小节副标题（数据墙/实践行的英文眉题，复用 .section-label 气质但更轻量）。 */
+
 .ch3-block { margin-top: 84px; }
 .ch3-sub {
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
@@ -1107,13 +1014,13 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   display: flex; align-items: center; gap: 12px;
 }
 .ch3-sub::before { content: ''; width: 24px; height: 1px; background: var(--gold); opacity: 0.6; }
-/* 章引子一句话（取自 index about/metrics section-sub，压缩重写）。 */
+
 .ch3-lead {
   font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
   color: var(--ink-soft); max-width: 720px; margin: -28px 0 4px;
 }
 .ch3-lead em { font-style: normal; color: var(--gold); }
-/* 实践行尾的成长宣言（移植 index .growth-banner 精华，作本章收束）。 */
+
 .ch3-credo {
   margin-top: 56px; padding: 40px 36px; text-align: center;
   border-radius: 20px; border: 1px solid var(--line-strong);
@@ -1129,22 +1036,17 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   letter-spacing: 2px; color: var(--ink-dim);
 }
 
-/* —— #ch4 四·信念 · Creeds（8 条信念编号宣言行 + 收束金句）——
-   源 index #beliefs 区 .manifesto-row 逐字移植(T3.1)：8 条信念含 emoji 🌳✨ 逐字保留(PRD 溯源抽查点)。
-   赤焰气质来自 body[data-chapter="4"] 的 --scene-glow(ember 60%+gold 20%，[03] 已预定义)着色固定光层——
-   即"光效最热"由场景引擎的 ember 占比表达，本章不写任何新火焰 canvas(KD-4)。
-   ★"追光的人，终将光芒万丈"是 D8 去重清单全页唯一权威落点，作 .is-final 收束金句突出处理。 */
+
 .ch4 { padding: 140px 0 130px; }
-/* 章引子一句话(取自 index #beliefs section-sub，压缩重写)。 */
+
 .ch4-lead {
   font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
   color: var(--ink-soft); max-width: 720px; margin: -28px 0 44px;
 }
 .ch4-lead em { font-style: normal; color: var(--gold); }
-/* 宣言行容器(移植 index .manifesto 第 931 行；F16:加章级前缀 .ch4-manifesto 避免与 index 同名)。 */
+
 .ch4-manifesto { max-width: 880px; margin: 0 auto; }
-/* 编号宣言行(逐字移植 index .manifesto-row 第 932–960 行；
-   硬编码 rgba 改派生变量、hover tick 着色随赤焰章用 --ember 提色)。 */
+
 .manifesto-row {
   display: grid; grid-template-columns: 80px 1fr auto;
   align-items: baseline;
@@ -1154,7 +1056,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   position: relative;
 }
 .manifesto-row:last-child { border-bottom: 1px solid var(--line); }
-/* hover 左侧短金线：赤焰章用 ember→gold 混色，呼应本章最热色温(非新光源，纯色值)。 */
+
 .manifesto-row::after {
   content: ''; position: absolute; left: 0; top: 50%;
   width: 0; height: 1px; background: color-mix(in srgb, var(--ember) 55%, var(--gold));
@@ -1164,7 +1066,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .manifesto-row:hover::after { width: 8px; }
 .manifesto-row .m-num {
   font-family: var(--sans-en); font-weight: 200; font-size: clamp(40px, 5vw, 56px);
-  color: color-mix(in srgb, var(--gold) 18%, transparent);   /* 派生:index 第 950 行 rgba(232,184,122,0.18) 变量化 */
+  color: color-mix(in srgb, var(--gold) 18%, transparent);   
   line-height: 1; transition: color 0.4s;
 }
 .manifesto-row:hover .m-num { color: var(--gold); }
@@ -1176,8 +1078,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   font-family: var(--mono); font-size: 10px; letter-spacing: 2px;
   color: var(--ink-dim); white-space: nowrap;
 }
-/* ★收束金句(第 8 条「追光的人，终将光芒万丈 ✨」)：D8 全页唯一落点，突出卡片处理。
-   底纹用 ember+gold 派生(index 第 962–967 行 rgba 变量化)，呼应赤焰章。 */
+
 .manifesto-row.is-final {
   margin-top: 24px;
   padding: 36px 32px;
@@ -1194,32 +1095,24 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   font-size: clamp(19px, 2.4vw, 23px);
 }
 
-/* —— #ch5 五·远方 · The Distance（三级目标阶梯 + FIRE 数字底座 + ★长期主义金句）——
-   源 ideal.html(三级人生目标) + fire.html(FIRE 数字/金句)，精华提取重组(T3.2)。
-   叙述角度 vs #ch1：ch1 是「底色陈列」(理想名 + 一句诗)，ch5 是「路线图」——按三级阶梯结构
-   组织（一级立己 FIRE → 二级达人复兴 → 三级终极奇点），带时间锚点 + 硬指标，避免与 ch1 逐句重复(D 清单)。
-   叙事关系：目标是方向(三级阶梯)、FIRE 是底座(25×/4%/72 数字组)，互为表里。
-   星空气质纯由场景引擎 body[data-chapter="5"]（--scene-glow violet 55% / --light-hue:264，[03] 已预定义）
-   着色固定光层实现，本章不写新 canvas(KD-4)；新增装饰只用 transform/opacity(starTwinkle)，[11] 降级。 */
+
 .ch5 { padding: 140px 0 130px; }
-/* 章引子：目标↔FIRE 互为表里的叙事关系一句话（重写，非源页长文搬运）。 */
+
 .ch5-lead {
   font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
   color: var(--ink-soft); max-width: 720px; margin: -28px 0 56px;
 }
 .ch5-lead em { font-style: normal; color: var(--gold-light); }
 
-/* 区块小标题（与 ch1-sub 同手感，本章局部派生，紫调眉题）。 */
+
 .ch5-sub {
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
   text-transform: uppercase; color: var(--accent-violet); margin-bottom: 22px;
 }
 
-/* —— 三级目标阶梯（路线图主体）——
-   桌面：三级竖向堆叠，自上而下 三级(∞) → 二级(2050) → 一级(FIRE)，每级逐层右缩进作「拾级而上」错落；
-   每级一张 .tier-step，左侧大号「级数 + 时间锚点」、右侧 名/硬指标。880/768 缩回零缩进纵向堆叠。 */
+
 .ch5-ladder { display: flex; flex-direction: column; gap: 18px; max-width: 940px; }
-/* 阶梯级卡：左 .tier-mark(级数/锚点) + 右 .tier-body(名/指标)。--step 控制桌面错落缩进。 */
+
 .tier-step {
   --step: 0px;
   display: grid; grid-template-columns: 168px 1fr;
@@ -1231,18 +1124,18 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border-radius: 18px;
   background: linear-gradient(135deg,
     color-mix(in srgb, var(--accent-violet) 6%, transparent),
-    var(--bg-card-lo));   /* F15:裸 rgba → --bg-card-lo 派生 */
+    var(--bg-card-lo));   
   transition: border-color 0.4s ease, transform 0.4s ease, background 0.4s ease;
 }
 .tier-step:hover {
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--accent-violet) 30%, var(--line-strong));
 }
-/* 拾级而上的桌面错落：三级最高(缩进最大) → 一级落地(零缩进，作「底座」视觉) */
+
 .tier-step.t3 { --step: 0px; }
 .tier-step.t2 { --step: 56px; }
 .tier-step.t1 { --step: 112px; }
-/* 左列：级数 + 时间锚点（∞ / 2050 / 时间起点） */
+
 .tier-mark { text-align: left; }
 .tier-mark .t-tier {
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 3px;
@@ -1257,7 +1150,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   display: block; margin-top: 8px;
   font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim);
 }
-/* 右列：目标名 + 硬指标说明 */
+
 .tier-body .t-name {
   font-family: var(--serif-cn); font-size: clamp(19px, 2.4vw, 24px);
   font-weight: 700; line-height: 1.4; color: var(--ink); margin-bottom: 10px;
@@ -1270,19 +1163,17 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   font-family: var(--serif-cn); font-size: 15px; line-height: 1.85; color: var(--ink-soft);
 }
 .tier-body .t-spec strong { color: var(--gold); font-weight: 700; }
-/* 一级「底座」强调：落地级用更实的描边，呼应「FIRE 是底座」叙事 */
+
 .tier-step.t1 {
   border-left-color: var(--gold-deep);
   background: linear-gradient(135deg,
     color-mix(in srgb, var(--gold) 7%, transparent),
-    var(--bg-card-lo));   /* F15:裸 rgba → --bg-card-lo 派生 */
+    var(--bg-card-lo));   
 }
 .tier-step.t1 .tier-mark .t-tier { color: var(--gold); }
 .tier-step.t1 .tier-mark .t-anchor { color: color-mix(in srgb, var(--gold) 60%, var(--ink)); }
 
-/* —— FIRE 数字底座（25× / 4% / 72）——
-   ★T3.2：定值非增量，用静态强调字，不 count-up（无 data-num，避免「涨到」语义误导）。
-   D7 去重清单：FIRE 数字组(25×/4%/72/300–1000万)全页唯一落点 = 本章。 */
+
 .ch5-fire { margin-top: 80px; }
 .fire-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
@@ -1291,11 +1182,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   padding: 38px 28px 32px;
   border: 1px solid var(--line);
   border-radius: 18px;
-  background: color-mix(in srgb, var(--bg-card-lo) 120%, transparent);   /* F15:裸 rgba(…0.018) → 略提亮的 --bg-card-lo 派生 */
+  background: color-mix(in srgb, var(--bg-card-lo) 120%, transparent);   
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .fire-cell:hover { transform: translateY(-3px); border-color: var(--line-strong); }
-/* 静态强调数字（非 count-up）：大号衬线，金光高亮。sub 为单位/记号。 */
+
 .fire-cell .f-num {
   font-family: var(--sans-en); font-weight: 200;
   font-size: clamp(56px, 8vw, 84px); line-height: 1;
@@ -1315,15 +1206,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   margin-top: 12px; font-family: var(--serif-cn); font-size: 13.5px;
   line-height: 1.8; color: var(--ink-soft);
 }
-/* FIRE 一句注脚：把数字底座与「底座」叙事收口（300–1000万 落点也在此，D7 全页唯一） */
+
 .ch5-fire-note {
   margin-top: 24px; font-family: var(--serif-cn); font-size: 15px;
   line-height: 1.9; color: var(--ink-soft); max-width: 760px;
 }
 .ch5-fire-note strong { color: var(--gold); font-weight: 700; }
 
-/* —— ★长期主义金句（逐字取 fire.html footer-motto 第 2290–2293 行）——
-   D3 清单：诗化金句非定义陈述，允许在 ch5 保留为唯一落点。星空气质装饰用 starTwinkle(transform/opacity)，[11] 降级。 */
+
 .ch5-creed {
   margin-top: 80px; position: relative;
   padding: 56px 40px; text-align: center;
@@ -1333,7 +1223,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
     color-mix(in srgb, var(--accent-violet) 10%, transparent), transparent 70%);
   overflow: hidden;
 }
-/* 星点装饰：纯 transform/opacity 闪烁（starTwinkle），不承载信息，[11] 停。 */
+
 .ch5-creed::before,
 .ch5-creed::after {
   content: ''; position: absolute; border-radius: 50%;
@@ -1357,27 +1247,22 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   margin-top: 22px; font-family: var(--mono); font-size: 11px;
   letter-spacing: 2px; color: var(--ink-dim); position: relative; z-index: 1;
 }
-/* 星点闪烁 keyframe（transform/opacity 限定，[11] 停）。 */
+
 @keyframes starTwinkle {
   0%, 100% { opacity: 0.25; transform: scale(0.7); }
   50% { opacity: 1; transform: scale(1.2); }
 }
 
-/* —— #ch6 六·系统 · The System（★繁荣公式 + 成长机器五子系统 + 人生系统八模块骨架）——
-   源 prosper.html（繁荣公式）+ growth.html（五子系统）+ system.html（八模块），精华提取重组（T3.3）。
-   仪表辉气质（青银工程感）：用细线网格（repeating-linear-gradient 单层贴层）+ 刻度感眉题表达「仪表盘」语义；
-   青银由场景引擎 body[data-chapter="6"]（--scene-glow teal 52% / --light-hue:188，[03] 已预定义）着色固定光层，
-   本章不写新 canvas（KD-4）；新增装饰仅 transform/opacity（dialPulse），[11] 降级、不承载信息。
-   去重（D1/D2/D3/D5/D6）：繁荣公式仅本章一次（formula-line 逐字）；五子系统每卡 ≤3 句；八模块列名为主。 */
+
 .ch6 { padding: 140px 0 130px; }
-/* 章引子：目标→方法的转场一句话（重写，非源页长文搬运）。 */
+
 .ch6-lead {
   font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
   color: var(--ink-soft); max-width: 760px; margin: -28px 0 56px;
 }
 .ch6-lead em { font-style: normal; color: color-mix(in srgb, var(--accent-teal) 60%, var(--ink)); }
 
-/* 区块小标题（与 ch5-sub 同手感，本章局部派生，青调眉题 + 刻度短线作仪表感）。 */
+
 .ch6-sub {
   display: flex; align-items: center; gap: 12px;
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
@@ -1385,15 +1270,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch6-sub::before { content: ''; width: 22px; height: 1px; background: var(--accent-teal); opacity: 0.6; }
 
-/* —— ★繁荣公式（D1：全页唯一落点，逐字一次）——
-   formula-line 横排逐字；细线网格底纹（仪表盘语义）；fx 为乘号/等号，fv-result 金光高亮收束。 */
+
 .ch6-formula {
   position: relative; padding: 48px 40px 44px; border-radius: 22px;
   border: 1px solid color-mix(in srgb, var(--accent-teal) 20%, var(--line));
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 6%, transparent), var(--bg-card-lo));   /* F15 同款:裸 rgba → --bg-card-lo 派生(与 F15 六处同章一并归并，保持 ch5/ch6 全章无裸 rgba) */
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 6%, transparent), var(--bg-card-lo));   
   overflow: hidden;
 }
-/* 细线网格底纹（仪表辉气质，纯 CSS 单层贴层、不参与逐帧）。 */
+
 .ch6-formula::before {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
   background:
@@ -1402,7 +1286,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 0%, transparent 78%);
   mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 0%, transparent 78%);
 }
-/* 公式横排（逐字一次，D1）：变量名 + 乘号/等号 + 结果。 */
+
 .formula-line {
   position: relative; z-index: 1; display: flex; flex-wrap: wrap;
   align-items: baseline; justify-content: center; gap: 10px 14px; text-align: center;
@@ -1420,7 +1304,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-/* 四元变量哲学层定位卡（各一句，D2/D3 不展开）：四列等宽，880/768 收列。 */
+
 .formula-vars {
   position: relative; z-index: 1; margin-top: 36px;
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
@@ -1430,22 +1314,21 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   padding: 20px 18px; border-radius: 14px;
   border: 1px solid var(--line);
   border-top: 2px solid color-mix(in srgb, var(--accent-teal) 38%, transparent);
-  background: color-mix(in srgb, var(--bg-card-lo) 93%, transparent);   /* F15:裸 rgba(…0.014) → --bg-card-lo 派生 */
+  background: color-mix(in srgb, var(--bg-card-lo) 93%, transparent);   
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .fvar:hover { transform: translateY(-3px); border-color: var(--line-strong); }
 .fvar .fvar-idx { font-family: var(--mono); font-size: 9.5px; letter-spacing: 2px; color: var(--ink-dim); }
 .fvar .fvar-name { font-family: var(--serif-cn); font-size: 17px; font-weight: 700; color: var(--ink); }
 .fvar .fvar-desc { font-family: var(--serif-cn); font-size: 13px; line-height: 1.75; color: var(--ink-soft); }
-/* 公式注脚：相乘/缺一不可的收口（非公式整体复述，不触 D1）。 */
+
 .ch6-formula-note {
   position: relative; z-index: 1; margin-top: 28px; text-align: center;
   font-family: var(--serif-cn); font-size: 15px; line-height: 1.9; color: var(--ink-soft);
 }
 .ch6-formula-note strong { color: var(--gold); font-weight: 700; }
 
-/* —— 成长机器五子系统（D5：每项 ≤3 句，紧凑卡片）——
-   五列等宽紧凑卡：编号眉题 + 名/功能 + 一句心法。1024 → 三列、880 → 两列、768 → 单列。 */
+
 .ch6-engine { margin-top: 84px; }
 .engine-grid {
   display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
@@ -1453,7 +1336,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .sub-card {
   padding: 26px 22px 24px; border-radius: 16px;
   border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-card-lo) 107%, transparent);   /* F15:裸 rgba(…0.016) → --bg-card-lo 派生 */
+  background: color-mix(in srgb, var(--bg-card-lo) 107%, transparent);   
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .sub-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent-teal) 28%, var(--line-strong)); }
@@ -1473,9 +1356,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   font-family: var(--serif-cn); font-size: 13px; line-height: 1.8; color: var(--ink-soft);
 }
 
-/* —— 人生系统八模块骨架（D6：列名为主 + 极简注解）——
-   八格网格作「骨架视图」（仪表盘语义），细描边 + 刻度感编号。4 列 → 1024:3 列 → 880:2 列 → 768:1 列。
-   每格内含装饰刻度点 dialPulse（transform/opacity，[11] 停），呼应仪表辉。 */
+
 .ch6-modules { margin-top: 84px; }
 .module-board {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
@@ -1484,11 +1365,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   position: relative; display: flex; flex-direction: column; gap: 6px;
   padding: 22px 20px; border-radius: 14px;
   border: 1px solid var(--line);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 4%, transparent), color-mix(in srgb, var(--bg-card-lo) 67%, transparent));   /* F15:裸 rgba(…0.01) → --bg-card-lo 派生 */
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-teal) 4%, transparent), color-mix(in srgb, var(--bg-card-lo) 67%, transparent));   
   transition: border-color 0.4s ease, transform 0.4s ease;
 }
 .mod-cell:hover { transform: translateY(-3px); border-color: var(--line-strong); }
-/* 刻度点装饰（仪表辉气质，纯 transform/opacity 闪烁，[11] 停、不承载信息）。 */
+
 .mod-cell::after {
   content: ''; position: absolute; top: 16px; right: 16px;
   width: 5px; height: 5px; border-radius: 50%;
@@ -1500,51 +1381,42 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .mod-cell .mod-no { font-family: var(--mono); font-size: 9.5px; letter-spacing: 2px; color: var(--ink-dim); }
 .mod-cell .mod-name { font-family: var(--serif-cn); font-size: 16px; font-weight: 700; color: var(--ink); }
 .mod-cell .mod-note { font-family: var(--serif-cn); font-size: 12.5px; line-height: 1.7; color: var(--ink-soft); }
-/* 八模块收口注脚：互为齿轮的一句话。 */
+
 .ch6-modules-note {
   margin-top: 24px; font-family: var(--serif-cn); font-size: 15px;
   line-height: 1.9; color: var(--ink-soft); max-width: 820px;
 }
-/* 刻度点闪烁 keyframe（transform/opacity 限定，[11] 停）。 */
+
 @keyframes dialPulse {
   0%, 100% { opacity: 0.3; transform: scale(0.8); }
   50% { opacity: 0.9; transform: scale(1.15); }
 }
 
-/* —— #ch7 七·造物 · The Forge（IDOP 四阶段飞轮 + HKRR 四变量质量门 + LSA 三格式/分层）——
-   三源精华重组（T4.1）：idop.html（IDOP 四阶段 + ★两条金句）+ hkrr.html（四变量·相乘关系）
-   + workflow.html（三格式 + 80/85/90 分层；★18 步短视频流程整段舍弃，过程性细节非叙事必需）。
-   金橙工坊「流光」气质纯由场景引擎 body[data-chapter="7"]（--scene-glow gold 50%+ember 22% / --light-hue:33，[03] 已预定义）
-   着色固定光层实现，本章不写新 canvas(KD-4)；新增装饰只用 transform/opacity（idopSpin 飞轮旋转 + forgeGlow），[11] 降级。
-   ★金句两条逐字以 idop.html 源为准：「IDOP 管流程，HKRR 管质量」(idop 第 2722 行)、「AI 提供廉价变异，IDOP 提供复利进化」(idop 第 2963 行)。
-   D2/D4 去重：本章只谈 IDOP/HKRR/AI 的「廉价变异·复利进化」，不下「AI 是杠杆」定义性论断(D2)；IDOP↔HKRR 分工金句为全页唯一落点(D4)。 */
+
 .ch7 { padding: 140px 0 130px; }
-/* 章引子：从「系统骨架」转入「造物本身」——把自己当作品来打磨（重写，非源页长文搬运）。 */
+
 .ch7-lead {
   font-family: var(--serif-cn); font-size: 17px; line-height: 1.95;
   color: var(--ink-soft); max-width: 720px; margin: -28px 0 56px;
 }
 .ch7-lead em { font-style: normal; color: var(--gold-light); }
-/* 区块小标题（与各章 -sub 同手感，本章金橙眉题）。 */
+
 .ch7-sub {
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
   text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
 }
 
-/* —— IDOP 四阶段飞轮（主体一）——
-   左：旋转飞轮（CSS @keyframes idopSpin，纯 transform，不用 JS / KD-4·T4.1）——一个环 + 四颗站点光点；
-   右：四阶段定义列（输入·沉淀·输出·产品，静态文本承载信息，不依赖旋转，[11] 停转仍完整可读）。
-   880/768 飞轮上、定义列下纵向堆叠。 */
+
 .ch7-flywheel {
   display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: center;
   max-width: 980px;
 }
-/* —— 飞轮可视化（装饰母题，信息在右侧列，飞轮停转不丢信息）—— */
+
 .idop-wheel {
   position: relative; width: 240px; height: 240px; margin: 0 auto;
   justify-self: center;
 }
-/* 旋转环：渐变描边 + 缓慢自转（transform 限定，[11] 停）。 */
+
 .idop-wheel .wheel-ring {
   position: absolute; inset: 0; border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--gold) 26%, transparent);
@@ -1558,9 +1430,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   mask: radial-gradient(circle, transparent 0 60%, #000 61%);
   animation: idopSpin 26s linear infinite;
 }
-/* 四颗站点光点（I/D/O/P）外层 .wheel-spin 整体随环旋转；
-   每个 .w-node 用 translate 定位在环上 12/3/6/9 点钟方向（定位 transform，不带动画）；
-   内层 .w-glyph 反向自转抵消母环旋转，保持字面始终正立可读（动画 transform 在内层，与外层定位 transform 解耦，互不覆盖）。 */
+
 .idop-wheel .wheel-spin {
   position: absolute; inset: 0; animation: idopSpin 26s linear infinite;
 }
@@ -1568,10 +1438,10 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   position: absolute; top: 50%; left: 50%;
   width: 46px; height: 46px; margin: -23px 0 0 -23px;
 }
-.idop-wheel .w-node.n1 { transform: translateY(-104px); }   /* I · 顶 */
-.idop-wheel .w-node.n2 { transform: translateX(104px); }    /* D · 右 */
-.idop-wheel .w-node.n3 { transform: translateY(104px); }    /* O · 底 */
-.idop-wheel .w-node.n4 { transform: translateX(-104px); }   /* P · 左 */
+.idop-wheel .w-node.n1 { transform: translateY(-104px); }   
+.idop-wheel .w-node.n2 { transform: translateX(104px); }    
+.idop-wheel .w-node.n3 { transform: translateY(104px); }    
+.idop-wheel .w-node.n4 { transform: translateX(-104px); }   
 .idop-wheel .w-glyph {
   width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
@@ -1582,7 +1452,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   box-shadow: 0 0 14px color-mix(in srgb, var(--gold) 22%, transparent);
   animation: idopSpin 26s linear infinite reverse;
 }
-/* 飞轮中心标识：I × D × O × P 整机相乘语义。 */
+
 .idop-wheel .wheel-hub {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   text-align: center; width: 120px;
@@ -1595,7 +1465,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .idop-wheel .wheel-hub .hub-sub {
   font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--ink-dim); margin-top: 6px;
 }
-/* 右侧四阶段定义列（静态文本=信息载体）。 */
+
 .idop-stages { display: flex; flex-direction: column; gap: 14px; }
 .idop-stage {
   display: grid; grid-template-columns: 52px 1fr; gap: 18px; align-items: baseline;
@@ -1609,16 +1479,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .idop-stage .s-name { font-family: var(--serif-cn); font-size: 18px; font-weight: 700; color: var(--ink); }
 .idop-stage .s-name b { color: var(--gold); font-weight: 700; }
 .idop-stage .s-desc { font-family: var(--serif-cn); font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); margin-top: 4px; }
-/* 飞轮注脚：首尾是 IP，中间是 DO；I×D×O×P 任一为零结果归零。 */
+
 .ch7-flywheel-note {
   margin-top: 32px; font-family: var(--serif-cn); font-size: 15px;
   line-height: 1.9; color: var(--ink-soft); max-width: 880px;
 }
 .ch7-flywheel-note strong { color: var(--gold); font-weight: 700; }
 
-/* —— HKRR 四变量质量门（主体二）——
-   四列等宽卡（快乐/知识/共鸣/节奏），列间「×」连接符强调相乘关系；卡内 变量名 + 英文 + 一句定位。
-   1024 → 两列、880 → 两列、768 → 单列（× 连接符在堆叠态隐藏）。 */
+
 .ch7-hkrr { margin-top: 96px; }
 .hkrr-grid {
   display: flex; align-items: stretch; gap: 0;
@@ -1641,20 +1509,19 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .hkrr-cell .hk-en { font-family: var(--sans-en); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-dim); margin: 8px 0 14px; }
 .hkrr-cell .hk-name { font-family: var(--serif-cn); font-size: 17px; font-weight: 700; color: var(--ink); }
 .hkrr-cell .hk-role { font-family: var(--serif-cn); font-size: 13px; line-height: 1.7; color: var(--ink-soft); margin-top: 8px; }
-/* 相乘连接符（×）：卡间分隔，强调「相乘不是相加」。 */
+
 .hkrr-x {
   display: flex; align-items: center; padding: 0 10px;
   font-family: var(--sans-en); font-weight: 200; font-size: 22px; color: color-mix(in srgb, var(--gold) 50%, var(--ink-dim));
 }
-/* 四变量收口注脚：相乘·任一为零则崩塌（HKRR 作质量门语义）。 */
+
 .ch7-hkrr-note {
   margin-top: 28px; font-family: var(--serif-cn); font-size: 15px;
   line-height: 1.9; color: var(--ink-soft); max-width: 880px;
 }
 .ch7-hkrr-note strong { color: var(--gold); font-weight: 700; }
 
-/* —— ★IDOP↔HKRR 关系金句卡（D4 全页唯一落点）+ ★AI 廉价变异金句（D2 不下杠杆论断）——
-   两条★金句逐字突出处理：金橙底纹卡，呼应工坊气质。 */
+
 .ch7-creed {
   margin-top: 56px; padding: 44px 38px; border-radius: 22px;
   background: linear-gradient(135deg,
@@ -1663,7 +1530,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border: 1px solid color-mix(in srgb, var(--gold) 26%, var(--line-strong));
   position: relative; overflow: hidden;
 }
-/* 流光装饰：缓慢横扫的暖光带（transform/opacity，[11] 停、不承载信息）。 */
+
 .ch7-creed::before {
   content: ''; position: absolute; top: 0; left: -40%;
   width: 40%; height: 100%;
@@ -1687,10 +1554,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   font-family: var(--serif-cn); font-size: 14px; line-height: 1.85; color: var(--ink-soft);
 }
 
-/* —— LSA 工作流·三格式 + 质量分层（主体三）——
-   上：三格式 chip 行（图文·文章·短视频，LSA 工作流覆盖的三种成品形态）；
-   下：质量梯（75/80/85/90 四级 rung，★「80 分发布，85 分复盘，90 分长期打磨」分层心法逐字）。
-   880/768 质量梯纵向堆叠。 */
+
 .ch7-lsa { margin-top: 96px; }
 .lsa-formats { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
 .lsa-formats .fmt {
@@ -1701,12 +1565,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .lsa-formats .fmt:hover { border-color: var(--line-strong); color: var(--gold); }
 .lsa-formats .fmt b { color: var(--gold); font-weight: 700; }
-/* ★分层心法金句（80/85/90，逐字以 workflow 第 787/997 行为准）。 */
+
 .ch7-lsa-credo {
   font-family: var(--serif-cn); font-size: clamp(17px, 2.2vw, 21px); font-weight: 700;
   line-height: 1.6; color: var(--gold-light); margin: 8px 0 30px; max-width: 720px;
 }
-/* 质量梯：四级 rung，分数 + 标签 + 一句说明，当前/目标级高亮。 */
+
 .lsa-ladder { display: flex; flex-direction: column; gap: 12px; max-width: 880px; }
 .rung {
   display: grid; grid-template-columns: 92px 1fr; gap: 24px; align-items: center;
@@ -1727,7 +1591,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent); color: var(--gold);
 }
 .rung .rung-desc { font-family: var(--serif-cn); font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); }
-/* 当前级（80）实色描边强调，目标级（85）金线左缘。 */
+
 .rung.is-now {
   border-color: color-mix(in srgb, var(--gold) 36%, var(--line-strong));
   background: linear-gradient(135deg, color-mix(in srgb, var(--gold) 8%, transparent), color-mix(in srgb, var(--bg-card-lo) 80%, transparent));
@@ -1735,12 +1599,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .rung.is-now .rung-score { color: var(--gold); }
 .rung.is-target { border-left: 2px solid var(--gold-deep); }
 
-/* IDOP 飞轮自转 keyframe（transform 限定，[11] 停）。 */
+
 @keyframes idopSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-/* 流光横扫 keyframe（金句卡装饰，transform/opacity 限定，[11] 停）。 */
+
 @keyframes forgeGlow {
   0%   { transform: translateX(0); opacity: 0; }
   20%  { opacity: 1; }
@@ -1748,23 +1612,15 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   100% { transform: translateX(360%); opacity: 0; }
 }
 
-/* —— #ch8 八·同行 · Walk With You（书信体「放大而非替代」+ ★两条金句 + 7 级台阶）——
-   单源精华(T4.2)：know-ai.html（书信体）。
-   紫金交汇「双色光效交汇」气质纯由场景引擎 body[data-chapter="8"]（--scene-glow violet 40%+gold 28% / --light-hue:286，[03] 已预定义）
-   着色固定光层实现，本章不写新 canvas(KD-4)；新增装饰仅 transform/opacity（fusionBreath 双光源对置呼吸），[11] 降级、不承载信息。
-   ★金句两条逐字以 know-ai.html 源为准：「用 AI 放大了你不可复制的那部分：判断/审美/经历/信任」(know-ai 第 1063 行)、
-   「我在前面等你。不是等你追上我，是等你追上昨天的自己」(know-ai 第 1094 行)。
-   D2 去重：本章只谈「放大而非替代」，不下「AI 是杠杆」定义性论断（杠杆定义仅 #ch6）。 */
+
 .ch8 { padding: 140px 0 130px; }
-/* 区块小标题（与各章 -sub 同手感，本章紫金双色由具体元素就近着色）。 */
+
 .ch8-sub {
   font-family: var(--sans-en); font-size: 11px; letter-spacing: 4px;
   text-transform: uppercase; color: var(--accent-violet); margin-bottom: 22px;
 }
 
-/* —— 双光源对置版式（紫光左上 + 金光右下交汇，呼应「同行」）——
-   包裹中心论点 + 书信体；两束光由 ::before/::after 缓动呼吸（fusionBreath：transform/opacity），
-   纯装饰、不承载信息，[11] 停。overflow:hidden 把光束裁在卡内，不溢出影响布局。 */
+
 .ch8-fusion {
   position: relative; overflow: hidden;
   padding: 64px clamp(28px, 5vw, 64px) 60px;
@@ -1774,7 +1630,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
     transparent 46%,
     color-mix(in srgb, var(--gold) 7%, transparent));
 }
-/* 紫光：左上对置光源（缓动呼吸，transform/opacity，[11] 停）。 */
+
 .ch8-fusion::before {
   content: ''; position: absolute; top: -30%; left: -12%;
   width: 56%; height: 90%; border-radius: 50%;
@@ -1782,7 +1638,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   filter: blur(8px); pointer-events: none;
   animation: fusionBreath 9s ease-in-out infinite;
 }
-/* 金光：右下对置光源（与紫光反相呼吸，交汇于中带，transform/opacity，[11] 停）。 */
+
 .ch8-fusion::after {
   content: ''; position: absolute; bottom: -30%; right: -12%;
   width: 56%; height: 90%; border-radius: 50%;
@@ -1790,7 +1646,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   filter: blur(8px); pointer-events: none;
   animation: fusionBreath 9s ease-in-out infinite reverse;
 }
-/* 中心论点（know-ai 第 605 行逐字）：紫金交汇处定调一句。 */
+
 .ch8-thesis {
   position: relative; z-index: 1;
   font-family: var(--serif-cn); font-weight: 700;
@@ -1800,7 +1656,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch8-thesis em { font-style: normal; }
 .ch8-thesis .vio { color: var(--accent-violet); }
 .ch8-thesis .gld { color: var(--gold); }
-/* 书信体长段落：行宽 ~62ch 控制可读（T4.2 注意事项），衬线行距宽松。 */
+
 .ch8-letter {
   position: relative; z-index: 1; max-width: 62ch;
 }
@@ -1811,7 +1667,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch8-letter p:last-child { margin-bottom: 0; }
 .ch8-letter em { font-style: normal; color: var(--gold-light); font-weight: 600; }
 
-/* —— ★金句一卡（护城河；逐字 know-ai 第 1063 行）——紫金双色边框，居中强调。 */
+
 .ch8-creed {
   margin: 56px 0 0; padding: 44px clamp(28px, 5vw, 52px);
   border: 1px solid color-mix(in srgb, var(--gold) 22%, var(--accent-violet) 16%);
@@ -1826,14 +1682,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch8-creed blockquote em { font-style: normal; color: var(--gold); }
 
-/* —— 7 级台阶（know-ai 第 1011–1066 行 L01–L07）——
-   垂直阶梯：左侧轴线（::before）+ 每级节点光点 + 级号；右侧名/说明。
-   L06/L07 高潮级（is-build 金高亮 / is-peak 紫金交汇高亮）。768px 序号列收窄、行内纵向堆叠。 */
+
 .ch8-ladder { margin-top: 88px; }
 .ladder-list {
   position: relative; margin-top: 28px;
 }
-/* 左轴线（贯穿七级，纯装饰）。 */
+
 .ladder-list::before {
   content: ''; position: absolute; left: 7px; top: 12px; bottom: 12px;
   width: 1px; background: linear-gradient(to bottom,
@@ -1847,7 +1701,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   border-bottom: 1px solid var(--line);
 }
 .ladder-step:first-child { border-top: 1px solid var(--line); }
-/* 节点光点（贴在左轴上，每级一颗）。 */
+
 .ladder-step::before {
   content: ''; position: absolute; left: 2px; top: 30px;
   width: 11px; height: 11px; border-radius: 50%;
@@ -1878,14 +1732,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   color: var(--ink-soft); margin: 0;
 }
 .ladder-step .ls-desc em { font-style: normal; color: var(--ink); font-weight: 600; }
-/* 台阶尾注（精华一句，与 ch7 -note 同手感）。 */
+
 .ch8-ladder-note {
   font-family: var(--serif-cn); font-size: 15px; line-height: 1.9;
   color: var(--ink-soft); max-width: 720px; margin: 36px 0 0;
 }
 .ch8-ladder-note strong { color: var(--gold-light); font-weight: 700; }
 
-/* —— ★金句二收束卡（逐字 know-ai 第 1094 行）——居中诗化，本章收束。 */
+
 .ch8-coda {
   margin: 72px auto 0; max-width: 720px; text-align: center;
 }
@@ -1904,22 +1758,16 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch8-coda .sig-name { font-family: var(--serif-cn); color: var(--accent-violet); letter-spacing: 1px; }
 
-/* 双光源对置呼吸 keyframe（紫/金交汇装饰，transform/opacity 限定，[11] 停）。 */
+
 @keyframes fusionBreath {
   0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.6; }
   50%      { transform: scale(1.15) translate(6%, 4%); opacity: 0.95; }
 }
 
-/* —— #ch9 终章·成为 · Become（★「我想成为…」全诗逐字 + 微信联系卡 + 满金收束）——
-   双源精华(T4.3)：index #become(全诗逐字) + index #connect(微信卡 czy18534901307 + 复制按钮)。
-   满金「万丈光」气质由场景引擎 body[data-chapter="9"]（--scene-glow gold-light 60%+gold 30% / --light-hue:46，[03] 已预定义）
-   着色固定光层承载，本章额外叠一层纯 CSS 径向「光收束」动画（sealConverge：transform/opacity），
-   收束整条叙事弧——[11] 降级、收束动画停后静止仍是满金底（T4.3 注意事项原话）。
-   诗逐字取自 index 第 1741–1749 行 .become-poem；联系卡逐字取自 index 第 1767–1772 行；copyWechat IIFE 移植 index 第 1915 行。 */
+
 .ch9 { padding: 140px 0 130px; text-align: center; position: relative; }
 
-/* 满金径向光收束：覆盖式纯装饰层，光环由外向内收束（transform/opacity，仅作用于本章背景气质，不挡正文）。
-   收束层不承载信息（终章诗/联系卡静态可读），[11] 停后保留静态满金径向底，不熄灭（T4.3 注意事项）。 */
+
 .ch9-seal {
   position: absolute; inset: 0; z-index: 1;
   pointer-events: none; overflow: hidden;
@@ -1944,11 +1792,10 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   opacity: 0.85;
 }
 
-/* 终章内容容器置于收束层之上 */
+
 .ch9 .ch-inner { position: relative; z-index: 2; }
 
-/* —— ★全诗逐字（index #become .become-poem，逐行取全）——
-   .b-line/.lead/.final/.b-gap 手感移植 index 第 1010–1028 行；em 满金渐变高亮。 */
+
 .ch9-poem { max-width: 760px; margin: 0 auto; }
 .ch9-poem .b-line {
   font-family: var(--serif-cn);
@@ -1970,7 +1817,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   margin-top: 8px; font-weight: 700; color: var(--ink);
 }
 
-/* 诗后印鉴（与 index .become-seal 同手感）——满金收束的一道封线 */
+
 .ch9-seal-mark {
   margin-top: 56px;
   display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
@@ -1981,13 +1828,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   letter-spacing: 5px; color: var(--ink-dim);
 }
 
-/* —— 微信联系卡（index #connect 精华：czy18534901307 + 复制按钮）——
-   .connect-card/.copy-btn 手感移植 index 第 1041–1089 行（含 connectSheen 微光横扫）。 */
+
 .ch9-connect { margin-top: 72px; display: flex; justify-content: center; }
 .ch9-connect .connect-card {
   position: relative;
-  /* F18:radial 顶光裸金 rgba(232,184,122,0.12) → var(--gold) 派生（color-mix 12%）。
-     F21:卡底裸 rgba(255,255,255,0.02) → --bg-card-lo 派生（与 --bg-card 取中即 0.02）。 */
+  
   background:
     radial-gradient(600px circle at 50% 0%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 60%),
     color-mix(in srgb, var(--bg-card) 50%, var(--bg-card-lo));
@@ -1998,7 +1843,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch9-connect .connect-card::before {
   content: ''; position: absolute; inset: 0;
-  /* F18:横扫微光裸金 rgba(232,184,122,0.05) → var(--gold) 派生（color-mix 5%）。 */
+  
   background: linear-gradient(135deg, transparent 40%, color-mix(in srgb, var(--gold) 5%, transparent) 50%, transparent 60%);
   background-size: 200% 200%; opacity: 0;
   transition: opacity 0.6s; pointer-events: none;
@@ -2009,7 +1854,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 .ch9-connect .icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 64px; height: 64px; border-radius: 18px;
-  /* F18:图标底/边裸金 rgba → var(--gold) 派生（color-mix 10% / 22%）。 */
+  
   background: color-mix(in srgb, var(--gold) 10%, transparent); border: 1px solid color-mix(in srgb, var(--gold) 22%, transparent);
   font-size: 28px; margin-bottom: 22px;
 }
@@ -2031,7 +1876,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   margin-top: 22px;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 28px; border-radius: 999px;
-  /* F18:按钮边/悬停底/悬停辉裸金 rgba → var(--gold) 派生（color-mix 35% / 12% / 20%）。 */
+  
   background: transparent; border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
   color: var(--gold); font-family: var(--sans-cn); font-size: 13px; letter-spacing: 2px;
   cursor: pointer; transition: all 0.35s ease;
@@ -2039,7 +1884,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 }
 .ch9-connect .copy-btn:hover { background: color-mix(in srgb, var(--gold) 12%, transparent); box-shadow: 0 0 24px color-mix(in srgb, var(--gold) 20%, transparent); transform: translateY(-1px); }
 
-/* 终章呼应序章座右铭（非整句重复：仅取「行则将至」一段，D 清单不冲突）——长廊尽头的一行小字 */
+
 .ch9-echo {
   margin-top: 56px;
   font-family: var(--serif-cn); font-size: clamp(15px, 2vw, 17px);
@@ -2051,28 +1896,21 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* 满金光收束 keyframe（径向光环由外向内呼吸收束，transform/opacity 限定，[11] 停后静止满金底）。 */
+
 @keyframes sealConverge {
   0%, 100% { transform: scale(1.18); opacity: 0.35; }
   50%      { transform: scale(0.62); opacity: 0.9; }
 }
 
-/* ===== [09] FOOTER ===== */
-/* 页脚 tagline + 版权行。 */
 
-/* ===== [10] RESPONSIVE ===== */
-/* @media 1024px / 880px / 768px 断点。 */
 
-/* —— 1024px：#ch3 数据墙 3 列 → 2 列（对照 index 第 1129–1133 行的边框补偿规则）；
-   #ch1 三大理想卡 3 列 → 2 列中间档（880px 才落 1 列，补此档使 880–1024 不再陡跳，F10）。 —— */
+
+
+
+
+
 @media (max-width: 1024px) {
-  /* —— rail↔正文不重叠(T5.3 / R6 复检)：769–1024px 区间 rail 仍在场（768px 才隐藏），
-     而 .ch-inner 正文此档已收到约 W−48px、与桌面满宽全宽栅格（数据墙/五子/八模块/HKRR）右缘
-     落在 W−24px，恰落入 rail（right:26px、高亮态 scale1.35 + 光晕约伸至 W−53px）的横向带内 → 重叠。
-     在此档把左右内边距对称收到 62px（非仅右侧 62px），把全宽栅格右缘推到 W−62px 清出 rail 及其光晕；
-     对称收窄保证章内居中内容（终章诗/各章 lead/公式，text-align:center + margin:auto）
-     仍以 padding-box 居中 = 视觉居中，不因单侧右 pad 而左偏（T5.3 复检修：避免居中内容偏移）；
-     768px 处 rail 隐藏后此预留在下方断点对称复位回 24px。 —— */
+  
   .ch-inner { padding-left: 62px; padding-right: 62px; }
 
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
@@ -2082,32 +1920,30 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .metric-cell:nth-child(n+9) { border-bottom: 0; }
   .ideal-grid { grid-template-columns: repeat(2, 1fr); }
 
-  /* —— #ch6 系统（T3.3）：繁荣公式四元变量卡 4 → 2 列；五子系统 5 → 3 列（末两卡落第二行）；
-     八模块骨架 4 → 3 列。中间档收一次，避免 880 才落更陡。 —— */
+  
   .formula-vars { grid-template-columns: repeat(2, 1fr); }
   .engine-grid { grid-template-columns: repeat(3, 1fr); }
   .module-board { grid-template-columns: repeat(3, 1fr); }
 
-  /* —— #ch7 造物（T4.1）：HKRR 四变量横排在中间档换行成 2×2 网格（× 连接符隐藏，
-     用网格 gap 表达并置）；飞轮列间距收一档。中间档收一次，避免 880 才落更陡。 —— */
+  
   .ch7-flywheel { gap: 40px; }
   .hkrr-grid { flex-wrap: wrap; }
   .hkrr-cell { flex: 1 1 calc(50% - 7px); }
   .hkrr-x { display: none; }
 }
 
-/* —— 880px：#ch1 三大理想卡纵向堆叠（3 列 → 1 列），呼应叙事弧后续阶梯/台阶的堆叠约定。 —— */
+
 @media (max-width: 880px) {
   .ch1 { padding: 110px 0 100px; }
   .ideal-grid { grid-template-columns: 1fr; gap: 16px; }
   .ch1-block { margin-top: 64px; }
 
-  /* #ch2 来路时间线（T2.3）：章上下留白收敛，幕间距略缩，时间线整体上移更紧凑。 */
+  
   .ch2 { padding: 110px 0 100px; }
   .ch2-timeline { margin-top: 0; }
   .tl-act + .tl-act { margin-top: 14px; }
 
-  /* #ch3 实践行（T2.4）：双列网格 → 单列堆叠，序号缩小、悬停水印缩小（对照 index 第 1137–1140 行）。 */
+  
   .ch3 { padding: 110px 0 100px; }
   .ch3-block { margin-top: 64px; }
   .practice-row { grid-template-columns: 1fr; gap: 10px; padding: 38px 4px; }
@@ -2115,21 +1951,18 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .practice-row .p-idx { font-size: 32px; }
   .practice-row::after { font-size: 100px; bottom: -22px; }
 
-  /* #ch4 信念（T3.1）：章上下留白收敛，宣言行间距略缩。
-     F17:880px 提前一档收窄 .manifesto-row（序号列缩窄、行距略收），避免 880–768 间宣言行偏宽。 */
+  
   .ch4 { padding: 110px 0 100px; }
   .manifesto-row { grid-template-columns: 68px 1fr auto; padding: 26px 0; }
 
-  /* #ch5 远方（T3.2）：三级阶梯桌面错落缩进归零（纵向堆叠不再「拾级」横移，避免窄屏溢出）；
-     FIRE 数字三列 → 两列（72 落第二行居中由 nth-child 兜底）；章留白收敛。 */
+  
   .ch5 { padding: 110px 0 100px; }
   .ch5-ladder { gap: 16px; }
   .tier-step.t1, .tier-step.t2, .tier-step.t3 { --step: 0px; }
   .fire-grid { grid-template-columns: repeat(2, 1fr); }
   .fire-cell:last-child { grid-column: 1 / -1; }
 
-  /* —— #ch6 系统（T3.3）：章留白收敛；公式卡内边距收一档；五子系统 3 → 2 列、八模块骨架 → 2 列。
-     呼应叙事弧后续台阶/网格的堆叠约定。 —— */
+  
   .ch6 { padding: 110px 0 100px; }
   .ch6-formula { padding: 40px 28px 36px; }
   .formula-vars { gap: 12px; }
@@ -2137,39 +1970,34 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .engine-grid { grid-template-columns: repeat(2, 1fr); }
   .module-board { grid-template-columns: repeat(2, 1fr); }
 
-  /* —— #ch7 造物（T4.1）：章留白收敛；IDOP 飞轮与四阶段定义列纵向堆叠（飞轮在上、定义列在下）；
-     HKRR 四变量维持 2×2；质量梯各级章块上下间距收一档。 —— */
+  
   .ch7 { padding: 110px 0 100px; }
   .ch7-flywheel { grid-template-columns: 1fr; gap: 40px; }
   .ch7-hkrr, .ch7-lsa { margin-top: 76px; }
   .ch7-creed { padding: 38px 30px; }
 
-  /* —— #ch8 同行（T4.2）：章留白收敛；双光源版式内边距收一档；台阶级间距略缩；
-     金句卡内边距收一档。书信体行宽 62ch 在此档仍适配（窄于容器自然收口）。 —— */
+  
   .ch8 { padding: 110px 0 100px; }
   .ch8-fusion { padding: 52px clamp(24px, 4.5vw, 48px) 48px; }
   .ch8-creed { padding: 38px 30px; }
   .ch8-ladder { margin-top: 72px; }
 
-  /* —— #ch9 终章·成为（T4.3）：章留白收敛；联系卡上间距收一档；收束光环缩尺避免溢出。 —— */
+  
   .ch9 { padding: 110px 0 100px; }
   .ch9-connect { margin-top: 60px; }
   .ch9-seal::before { width: min(130vw, 880px); }
 }
 
-/* —— 768px：#ch1 收紧——光谱稍缩、数字密码卡内边距与字号收敛、525 与文案纵向堆叠。 —— */
+
 @media (max-width: 768px) {
-  /* 768px 关闭光标光晕（移植 index 既有断点行为）。 */
+  
   .cursor-glow { display: none; }
 
-  /* —— rail↔bar 互斥交接(T5.1 / UX-001 / R6):桌面 rail 隐藏,移动端章名条在场。
-     任一断点恰有一种导航,杜绝"两者皆无"。bar 高 44px fixed 贴顶,
-     用 scroll-padding-top 让锚点跳转落点下移、不被条遮挡(配合 scroll-behavior:smooth)。 —— */
+  
   .chapter-rail { display: none; }
   .chapter-bar { display: flex; }
   html { scroll-padding-top: 52px; }
-  /* rail 已隐藏 → 对称复位 1024 档为 rail 预留的左右通道（62→24px 两侧；
-     1024 档现为左右各 62px 对称收窄，故此处两侧一并复位，回到基底 24px 对称内边距） */
+  
   .ch-inner { padding-left: 24px; padding-right: 24px; }
 
   .spectrum { width: clamp(180px, 60vw, 240px); }
@@ -2178,17 +2006,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .cipher-525 .c-num { font-size: clamp(52px, 22vw, 80px); }
   .cipher-525 .c-body { min-width: 100%; }
 
-  /* —— #ch2 来路时间线收窄（T2.3）：轴线左移、幕/节点/金句左缩进同步收敛，小屏正文宽度够读。
-     只改 --rail-x（轴位）与 --act-pad（幕左缩进）两个变量，幕头/节点光点 ::before 的定位公式
-     仅依赖这两者，自动跟随对齐到新轴位；--node-pad-x 仅影响节点内边距、不影响光点位置。
-     .tl-credo 左缩进随父级 .tl-act 的 --act-pad 自动同步降到 44px（无需再写死 margin-left，F12）。 */
+  
   .ch2 { padding: 90px 0 84px; }
   .ch2-timeline { --rail-x: 18px; }
   .tl-act { --act-pad: 44px; }
   .tl-node { --node-pad-x: 16px; padding-top: 14px; padding-bottom: 14px; }
   .tl-credo { padding: 22px 20px; }
 
-  /* —— #ch3 收紧（T2.4）：身份卡单列、数据墙单列（边框逐格补偿，对照 index 第 1168–1171 行）。 —— */
+  
   .ch3 { padding: 90px 0 84px; }
   .info-grid { grid-template-columns: 1fr; }
   .metrics-grid { grid-template-columns: 1fr; }
@@ -2196,16 +2021,14 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .metric-cell:last-child { border-bottom: 0 !important; }
   .ch3-credo { padding: 32px 22px; }
 
-  /* —— #ch4 收紧（T3.1，移植 index 第 1173–1174 行 .manifesto-row 768px 规则）：
-     宣言行序号列收窄、行距收敛、隐藏右侧 CREDO meta（meta 为装饰编号，非信息载体）。 —— */
+  
   .ch4 { padding: 90px 0 84px; }
   .ch4-lead { font-size: 16px; margin-bottom: 36px; }
   .manifesto-row { grid-template-columns: 60px 1fr; gap: 14px; padding: 22px 0; }
   .manifesto-row .m-meta { display: none; }
   .manifesto-row.is-final { padding: 30px 22px; }
 
-  /* —— #ch5 收紧（T3.2）：三级阶梯级卡左右列纵向堆叠（级数/锚点在上、名/指标在下）；
-     FIRE 数字单列堆叠；金句卡内边距收敛。三级阶梯在小屏纵向阅读、不裁切。 —— */
+  
   .ch5 { padding: 90px 0 84px; }
   .ch5-lead { font-size: 16px; margin-bottom: 44px; }
   .tier-step { grid-template-columns: 1fr; gap: 16px; padding: 26px 22px; }
@@ -2216,8 +2039,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .fire-cell { padding: 32px 24px 28px; }
   .ch5-creed { margin-top: 60px; padding: 44px 24px; }
 
-  /* —— #ch6 系统收紧（T3.3）：章留白收敛；公式横排在窄屏自然换行（formula-line 已 flex-wrap）、
-     公式卡内边距收敛；四元变量卡、五子系统、八模块骨架全部单列纵向堆叠，小屏纵向阅读不裁切。 —— */
+  
   .ch6 { padding: 90px 0 84px; }
   .ch6-lead { font-size: 16px; margin-bottom: 44px; }
   .ch6-formula { padding: 32px 20px 30px; }
@@ -2227,9 +2049,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .engine-grid { grid-template-columns: 1fr; gap: 12px; }
   .module-board { grid-template-columns: 1fr; gap: 10px; }
 
-  /* —— #ch7 造物收紧（T4.1）：章留白收敛；飞轮缩尺、四阶段定义行序号列收窄；
-     HKRR 四变量单列纵向堆叠（× 连接符已隐藏）；质量梯级卡左右列纵向堆叠（分数在上、说明在下），
-     小屏纵向阅读不裁切；金句卡内边距收敛。 —— */
+  
   .ch7 { padding: 90px 0 84px; }
   .ch7-lead { font-size: 16px; margin-bottom: 44px; }
   .idop-wheel { width: 200px; height: 200px; }
@@ -2243,9 +2063,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch7-creed { padding: 32px 22px; }
   .ch7-creed blockquote + blockquote { margin-top: 18px; padding-top: 18px; }
 
-  /* —— #ch8 同行收紧（T4.2）：章留白收敛；双光源版式内边距收敛；书信体段距略收；
-     7 级台阶序号列与名/说明纵向堆叠（级号在上、内容在下），左轴/节点光点同步左移对齐，
-     小屏纵向阅读不裁切；两张金句卡内边距收敛。 —— */
+  
   .ch8 { padding: 90px 0 84px; }
   .ch8-fusion { padding: 40px 22px 36px; }
   .ch8-letter p { font-size: 15.5px; line-height: 1.95; }
@@ -2259,8 +2077,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ladder-step::before { left: 0; top: 28px; }
   .ch8-coda { margin-top: 56px; }
 
-  /* —— #ch9 终章·成为收紧（T4.3）：章留白收敛；联系卡内边距与最小宽度收敛(窄屏不溢出)；
-     诗后印鉴与呼应小字上间距略收；收束光环进一步缩尺，纵向阅读不裁切。 —— */
+  
   .ch9 { padding: 90px 0 84px; }
   .ch9-poem .b-line { line-height: 2.15; }
   .ch9-seal-mark { margin-top: 44px; }
@@ -2270,45 +2087,32 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch9-seal::before { width: 150vw; }
 }
 
-/* ===== [11] REDUCED-MOTION ===== */
-/* @media (prefers-reduced-motion: reduce)：动画降级 + --scene-* transition 时长归零。 */
+
+
 @media (prefers-reduced-motion: reduce) {
-  /* R2 消解措施：把场景过渡时长归零，章号切换仍发生但瞬时（信息不丢、背景不"动"）。
-     这是本 task 在 body 背景上引入的 transition 的配套降级。 */
+  
   :root { --scene-tr: 0s; }
 
-  /* 全局贴层降级（对照 index 既有 reduced-motion 块）：
-     - preloader 直接隐藏（JS 端 delay 也置 0，body.loaded 立即添加，序章入场不丢）；
-     - orb 漂浮动画关停（保留静态光晕，仍随章变色）；
-     - lightCanvas / cursor-glow 整体隐藏（JS 端 reduced-motion 已 return，不跑粒子/光标追踪）；
-     - preloader 的 preDot/preRing/preText 三组 keyframe 随元素隐藏一并失效，无需逐条覆盖。 */
+  
   .preloader { display: none; }
   .bg-glow .orb { animation: none !important; }
   .light-canvas, .cursor-glow { display: none; }
-  /* scroll-progress 无动画，仅 width 过渡；此处放任其极短过渡，不影响可读性。 */
+  
 
-  /* —— [04] 导航降级(T5.1):rail 圆点 / 章名气泡 / 章名条展开 / ▾ 旋转的 transition 归零。
-     当前章高亮、章名 content、清单展开均为 CSS 状态切换(by body[data-chapter] / .open),
-     降级下仍生效、只是瞬时——"可见当前章 + 可跳任意章"信息零丢失(验收第 5 条)。
-     transform/opacity 级动效降级,符合 [11] 通则。 */
+  
   .rail-dot, .rail-dot::after,
   .chapter-bar .bar-toggle, .chapter-bar .bar-toggle .chev,
   .chapter-bar .bar-list { transition: none !important; }
-  /* 当前章 rail 点降级仍高亮(去掉放大动效,保留实心金点 + 光晕,信息可见)。 */
+  
   body[data-chapter] .rail-dot[data-go] { transform: none !important; }
 
-  /* [03] 场景引擎新增的 transition（.bg-glow .orb / .scene-tint 的 background）均引用
-     --scene-tr，已随上方归零 → 章号切换时背景/光层瞬时变色、不"动"，信息不丢（R2）。
-     sceneEngine 的 150ms 去抖逻辑保留（只是过渡瞬时），无新增 keyframe 需在此覆盖。 */
+  
 
-  /* —— [06] reveal / reveal-stagger 降级（验收第 7 条：无依赖动画才呈现的信息）——
-     直接置为可见态、入场 transition 归零；count-up 仍由 revealObserver 触发计数，
-     不依赖 transition，数字照常显示（target 值最终落地）。 */
+  
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
 
-  /* —— [08] 序章 #ch0 降级（T1.5 / 自检 4）：所有 ch0 入场/光点 keyframe 停，
-     文字必须直接完整可见（覆盖 body.js 设的 opacity:0 隐藏态 → opacity:1）。 */
+  
   body.js .ch0-spark, body.js .ch0-eyebrow, body.js .ch0-alias,
   body.js .ch0-mission, body.js .ch0-motto, body.js .ch0-enter,
   body.js .ch0-name .glyph { opacity: 1 !important; }
@@ -2316,80 +2120,44 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   .ch0-alias, .ch0-mission, .ch0-motto, .ch0-enter, .ch0-enter .line {
     animation: none !important;
   }
-  /* glyphIn 末态含 transform/blur，停动画后显式归位，确保姓名清晰可见。 */
+  
   .ch0-name .glyph { transform: none !important; filter: none !important; }
-  /* F14(Phase 1 遗留修复):.ch0-enter 此前漏入上方 animation:none 列,其 fadeUp(fill:both)在
-     1.6s delay 期间会以 from 态 translateY(36px) 定格 → reduce 下可感知位移。停动画后显式归位
-     transform，与 .ch0-alias/.ch0-mission/.ch0-motto(已在列)对齐,确保入口提示静止完整可见。 */
+  
   .ch0-enter { transform: none !important; }
 
-  /* —— [08] 一·底色 #ch1 降级（T2.2 / 自检 4）：七色光谱旋转停（spectrumSpin），
-     渐变本身静止仍完整呈现七色，信息不丢（光谱是静态可读的色相弧，非动画承载信息）。
-     ideal-card 的 transition 是 hover 增强，非入场依赖，降级下不影响信息可读，无需覆盖。 */
+  
   .spectrum { animation: none !important; }
 
-  /* —— [08] 二·来路 #ch2 降级（T2.3 / 自检 4）：时间线「光点沿线下行」彗星停（tl2Comet）。
-     该光点是装饰性母题，非信息载体——停后光轴静线 + 四幕节点 + ★金句仍完整可读，信息不丢。
-     节点入场仅用 .reveal/.reveal-stagger（上方已置可见态、transition 归零），tl-node hover 是增强非依赖，无需覆盖。 */
+  
   .ch2-timeline::after { animation: none !important; }
 
-  /* —— [08] 三·此身 #ch3 降级（T2.4 / 自检 4）：本章未新增任何 keyframe，无逐帧动画需停。
-     入场依赖 .reveal/.reveal-stagger（上方已置可见态、transition 归零）；
-     count-up 由 revealObserver 触发、直接落到 data-num 目标值，不依赖 transition；
-     info-card/metric-cell/practice-row 的 ::before/::after 与 .tilt 光斑均为 hover 增强（非信息载体），
-     data-ghost 水印是装饰水印不承载关键信息（验收第 7 条精神）——故无信息只在动画末态可见，无需额外覆盖。 */
+  
 
-  /* —— [08] 四·信念 #ch4 降级（T3.1 / 自检 4）：本章未新增任何 keyframe，无逐帧动画需停。
-     8 条信念 + 收束金句入场仅依赖 .reveal/.reveal-stagger（上方已置可见态、transition 归零），
-     文字直接完整可见；.manifesto-row 的 hover 缩进/短金线/序号着色均为 hover 增强（非信息载体）；
-     赤焰气质由场景引擎 --scene-glow 着色固定光层承载，无本章专属粒子/火焰动画——故无需额外覆盖。 */
+  
 
-  /* —— [08] 五·远方 #ch5 降级（T3.2 / 自检 4）：金句卡星点闪烁停（starTwinkle）。
-     星点是纯装饰母题（transform/opacity），停后仍为静态金点、不承载任何信息——
-     三级阶梯 + FIRE 数字(25×/4%/72，静态强调字非 count-up) + ★金句均为静态文本，入场仅依赖
-     .reveal/.reveal-stagger（上方已置可见态、transition 归零），降级下完整可读，信息不丢；
-     tier-step/fire-cell 的 hover 位移为增强非依赖；星空气质由场景引擎着色固定光层承载，无本章专属粒子。 */
+  
   .ch5-creed::before, .ch5-creed::after { animation: none !important; }
 
-  /* —— [08] 六·系统 #ch6 降级（T3.3 / 自检 4）：八模块骨架的刻度点闪烁停（dialPulse）。
-     刻度点是纯装饰母题（transform/opacity），停后仍为静态青点、不承载任何信息——
-     ★繁荣公式（逐字）+ 四元变量定位 + 五子系统 + 八模块均为静态文本，入场仅依赖
-     .reveal/.reveal-stagger（上方已置可见态、transition 归零），降级下完整可读，信息不丢；
-     formula 卡的网格底纹与 mask 是静态贴层（无 animation，无需覆盖）；fvar/sub-card/mod-cell 的 hover 位移为增强非依赖；
-     仪表辉气质由场景引擎 --scene-glow teal 着色固定光层承载，无本章专属粒子/canvas。 */
+  
   .mod-cell::after { animation: none !important; }
 
-  /* —— [08] 七·造物 #ch7 降级（T4.1 / 自检 4）：IDOP 飞轮自转停（idopSpin：环 + 站点外环 + 字形反转）、
-     ★金句卡流光横扫停（forgeGlow）。飞轮是纯装饰母题，停转后环静止、I/D/O/P 四颗站点光点固定在 12/3/6/9 点钟、
-     字形归正立——四阶段信息真正由右侧 .idop-stages 静态定义列承载，飞轮停转不丢任何信息（验收第 7 条）。
-     ★两条金句、HKRR 四变量、LSA 三格式/质量梯均为静态文本，入场仅依赖 .reveal/.reveal-stagger
-     （上方已置可见态、transition 归零），降级下完整可读；hkrr-cell/rung 的 hover 位移为增强非依赖；
-     流光气质由场景引擎 --scene-glow gold/ember 着色固定光层承载，无本章专属粒子/canvas。 */
+  
   .idop-wheel .wheel-ring, .idop-wheel .wheel-spin, .idop-wheel .w-glyph { animation: none !important; }
   .ch7-creed::before { animation: none !important; opacity: 0 !important; }
 
-  /* —— [08] 八·同行 #ch8 降级（T4.2 / 自检 4）：双光源对置呼吸停（fusionBreath：紫光 ::before / 金光 ::after）。
-     双光晕是纯装饰母题，停后两束光静止呈现（保留紫金交汇的静态版式底，不熄灭、信息不依赖呼吸动效）。
-     中心论点、书信体三段、★两条金句、7 级台阶均为静态文本，入场仅依赖 .reveal/.reveal-stagger
-     （上方已置可见态、transition 归零），降级下完整可读（验收第 7 条）；台阶节点光点/级号为静态视觉，无依赖动画。
-     紫金交汇气质由场景引擎 --scene-glow violet/gold 着色固定光层承载，无本章专属粒子/canvas。 */
+  
   .ch8-fusion::before, .ch8-fusion::after { animation: none !important; }
 
-  /* —— [08] 终章·成为 #ch9 降级（T4.3 / 自检 4 · T4.3 注意事项原话「收束动画也要进 reduced-motion 降级」）：
-     满金径向光收束停（sealConverge）——收束光环停后定格在中间收束态、保留静态满金径向底，不熄灭、不裁切（静止仍是满金底）。
-     收束层不承载信息（★全诗逐字、微信联系卡 czy18534901307 + 复制按钮、呼应小字均为静态文本与可交互按钮，
-     入场仅依赖 .reveal/.reveal-stagger，上方已置可见态、transition 归零），降级下完整可读（验收第 7 条）；
-     联系卡 connectSheen 微光横扫 + copy-btn hover 均为增强非依赖；满金气质由场景引擎 --scene-glow gold-light 着色固定光层承载。 */
+  
   .ch9-seal::before { animation: none !important; transform: scale(0.9) !important; opacity: 0.7 !important; }
-  /* F19(必修):connectSheen 持续动画补降级——全页 21 keyframes 唯一缺口，停后联系卡静止满金底，
-     微光横扫本就 opacity:0(非 hover 态),停动画不丢任何信息。 */
+  
   .ch9-connect .connect-card::before { animation: none !important; }
 }
 </style>
 </head>
 <body data-chapter="0">
 
-<!-- ===== [02] GLOBAL LIGHT LAYERS（preloader / grain / 进度条 / 光标光晕 / 背景光晕 + 金粉 canvas）===== -->
+
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="pre-core">
     <div class="pre-ring"></div>
@@ -2401,7 +2169,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 <div class="grain"></div>
 <div class="scroll-progress"></div>
 <div class="cursor-glow" aria-hidden="true"></div>
-<!-- 场景墨色微调叠层（--scene-ink-tint）：随章微调整体冷暖，纯 CSS transition，sceneEngine 只改变量。 -->
+
 <div class="scene-tint" aria-hidden="true"></div>
 
 <div class="bg-glow">
@@ -2411,11 +2179,9 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
 </div>
 
-<!-- ===== [04] NAVIGATION ===== -->
 
-<!-- 桌面章节 rail:右侧 10 个圆点(ch0–ch9)。当前章高亮全程 CSS(body[data-chapter])。
-     每点 <a> 锚点跳转 + scroll-behavior:smooth(html 已有);aria-label 提供无障碍可读名;
-     data-name 供 hover 章名气泡(纯 CSS content);data-go 供高亮选择器。 -->
+
+
 <nav class="chapter-rail" aria-label="章节导航">
   <a class="rail-dot" href="#ch0" data-go="0" data-name="序章 · 追光者" aria-label="跳到序章 · 追光者"></a>
   <a class="rail-dot" href="#ch1" data-go="1" data-name="一 · 底色" aria-label="跳到第一章 · 底色"></a>
@@ -2429,8 +2195,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   <a class="rail-dot" href="#ch9" data-go="9" data-name="终章 · 成为" aria-label="跳到终章 · 成为"></a>
 </nav>
 
-<!-- 移动端顶部固定章名条(≤768px 在场,UX-001)。左侧当前章名由 body[data-chapter] CSS content 切换;
-     右侧 ▾ 按钮展开覆盖式 10 锚点清单(chapterRail IIFE 唯一 toggle JS)。 -->
+
 <nav class="chapter-bar" aria-label="章节导航">
   <span class="bar-name" aria-live="polite"></span>
   <button class="bar-toggle" type="button" id="barToggle" aria-expanded="false" aria-controls="barList" aria-label="展开章节列表">
@@ -2450,10 +2215,9 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </ul>
 </nav>
 
-<!-- ===== [08] CHAPTERS ===== -->
 
-<!-- 序章 · 追光者 —— 破暗开场 · 长廊入口（重新演绎，非 index hero 版式；色温弧最冷起点）。
-     data-chapter="0" 接入场景引擎；data-temp="night" 语义为色温弧最冷一点光。 -->
+
+
 <section class="chapter ch0" id="ch0" data-chapter="0" data-temp="night">
   <div class="ch0-inner">
     <div class="ch0-spark" aria-hidden="true"></div>
@@ -2466,15 +2230,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 一 · 底色 —— 构成我的所有微光，收束为一条可见光谱（源 life_undertone）。
-     data-chapter="1" 接入场景引擎（色温暖土黄 --light-hue:38，[03] 已预定义）。
-     中心隐喻=七色光谱（单元素 conic-gradient，UX-005）→ 3 大理想 → 525 数字密码。
-     ★「追光的人，终将光芒万丈」按 D8 归 #ch4 信念为唯一权威落点，此章不重复同句。 -->
+
 <section class="chapter ch1" id="ch1" data-chapter="1" data-temp="earth">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">01</span> Chapter I · Undertone</p><h2 class="section-title">生命<span class="hl">底色</span></h2></div>
     <div class="spectrum-wrap reveal"><div class="spectrum" aria-hidden="true"></div><div class="spectrum-core"><span class="core-cn">底色</span><span class="core-en">The Colors That Make Me</span></div></div>
-    <p class="ch1-lead reveal">构成我的，不是身份档案与私人数字，<br>而是长期主义、主体性、良知、理想主义，<br>以及对世界持续保持的<em>好奇</em>。</p>
+    <p class="ch1-lead reveal">构成我的，不是身份档案与个人敏感信息，<br>而是长期主义、主体性、良知、理想主义，<br>以及对世界持续保持的<em>好奇</em>。</p>
     <div class="ch1-block reveal"><p class="ch1-sub">Public Coordinates · 公开坐标</p>
       <div class="ideal-grid reveal-stagger">
         <div class="ideal-card i1"><p class="i-idx">01</p><h3 class="i-name"><span class="hl">个人选择权</span></h3><p class="i-desc">以能力、健康和长期规划支撑主动生活。</p></div>
@@ -2485,12 +2246,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 二 · 来路 —— 黎明渐暖 · The Road（垂直时间线：光点串 · 四幕节点）。
-     源 life：把近 19 年来路收束为一条竖向光线，四幕（萌芽/群星闪耀/月亮与星辰/密度迸发）沿线逐点入场。
-     data-chapter="2" 接入场景引擎（[03] 色温黎明渐暖 --light-hue:44）。
-     形态约束（T2.3）：节点入场只用 .reveal / .reveal-stagger（opacity/translateY），无 scroll 比例驱动逐帧连线；
-     「光点沿线下行」由 .ch2-timeline::after 的 tl2Comet（CSS @keyframes + transform）承载。
-     分组约束：每幕各包一层 .reveal-stagger（子节点 ≤4），nth-child 延迟不触 n+12 兜底，末节点不被前序累积拖长。 -->
+
 <section class="chapter ch2" id="ch2" data-chapter="2" data-temp="dawn">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">02</span> Chapter II · The Road</p><h2 class="section-title">来<span class="hl">路</span></h2></div>
@@ -2509,12 +2265,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 三 · 此身 —— 正午金 · This Self（身份卡 + 9 宫数据墙 + 7 实践行）。
-     源 index about/metrics/practice 三区精华提取（T2.4）：组件类（info-card/metric-cell/practice-row/tilt）
-     在 [07] 已跨章移植，此处只做章内编排。
-     data-chapter="3" 接入场景引擎（[03] 色温正午金 --light-hue:48 已预定义，挂 data-chapter="3" 即生效）。
-     可溯源硬要求：9 宫 data-num/data-suffix 与 index 数据墙逐项一致（100W+/5000+/820H+/500+/10+/100天+/20+/7条+/30次+）。
-     count-up 由 [JS] revealObserver→animateCount 触发；.tilt 倾斜由 [JS] tilt IIFE 驱动（hover:none 直接 return）。 -->
+
 <section class="chapter ch3" id="ch3" data-chapter="3" data-temp="noon">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">03</span> Chapter III · This Self</p><h2 class="section-title">此<span class="hl">身</span></h2></div>
@@ -2536,12 +2287,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- ===== 四·信念 #ch4（T3.1）=====
-     源 index #beliefs 区(.manifesto-row)精华移植；data-chapter="4" 接入场景引擎
-     （色温赤焰 --light-hue:14 / --scene-glow ember 60%+gold 20%，[03] 已预定义，光效最"热"）。
-     ★8 条信念逐字保留(含 emoji 🌳✨)——PRD 第 2 条溯源抽查点，从 index #beliefs 逐字取。
-     ★第 8 条「追光的人，终将光芒万丈」是 D8 去重清单全页唯一权威落点(序章/ch1 已让位)，
-       作 .is-final 收束金句突出处理。赤焰气质纯由场景引擎着色固定光层实现，本章不写新火焰 canvas(KD-4)。 -->
+
 <section class="chapter ch4" id="ch4" data-chapter="4" data-temp="ember">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">04</span> Chapter IV · Creeds</p><h2 class="section-title">信<span class="hl">念</span></h2></div>
@@ -2557,17 +2303,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- ===== 五·远方 #ch5（T3.2）=====
-     源 ideal.html(三级人生目标·立己达人) + fire.html(FIRE 永续之道)，精华提取重组。data-chapter="5" 接入场景引擎
-     （色温靛紫深空 --light-hue:264 / --scene-glow violet 55%，[03] 已预定义，光效转「星空」）。
-     叙事关系：目标是方向(三级阶梯)，FIRE 是底座(25×/4%/72)，互为表里。
-     去重(D 清单)：
-       · 叙述角度刻意区别于 #ch1 理想卡——ch1 是「底色陈列」(理想名 + 一句诗)，ch5 是「路线图」
-         (三级阶梯结构 + 时间锚点 + 硬指标)，避免与 ch1 逐句重复；2050/复兴、共产主义·AI 奇点不重述 ch1 卡面诗句。
-       · D7：FIRE 数字组(25×/4%/72/300–1000万)全页唯一落点 = 本章，静态强调字、不 count-up。
-       · D3：★「以时间为舟…长期主义为帆」为诗化金句(非定义陈述)，允许在本章作唯一落点。
-     ★金句逐字取自 fire.html footer-motto(第 2290–2293 行)；FIRE 三数字/标签逐字取自 fire.html hero-stats(第 1729–1748 行)。
-     星空气质纯由场景引擎着色固定光层承载，本章不写新 canvas(KD-4)；新增装饰仅 starTwinkle(transform/opacity)，[11] 已降级。 -->
+
 <section class="chapter ch5" id="ch5" data-chapter="5" data-temp="indigo">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">05</span> Chapter V · The Distance</p><h2 class="section-title">远<span class="hl">方</span></h2></div>
@@ -2585,19 +2321,11 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 六 · 系统 —— 青银冷静（仪表辉，青银工程感）。三源精华重组（T3.3）：
-     prosper.html（★繁荣公式，全页唯一落点）+ growth.html（成长机器五子系统）+ system.html（人生系统八模块作骨架）。
-     data-chapter="6" 接入场景引擎（色温青银 --light-hue:188 / --scene-glow teal 52%，[03] 已预定义，光效「仪表辉」）。
-     —— 三源去重（对照 tech-design 禁止重复项清单 D1–D6，逐条落实）——
-     D1 繁荣公式：仅本章第一屏一次，逐字以 prosper 源（第 603 行）为准，其余章不复述整体；
-     D2 AI 杠杆 / D3 长期主义：仅作繁荣公式的两个乘子各一句哲学层引用，不再「三段分层」展开；
-     D5 五子系统：每项详解 ≤3 句，不与八模块互相解释；
-     D6 八模块：作结构骨架，列名为主 + 极简注解，不逐模块长解说。
-     仪表辉气质：细线网格 + 刻度感装饰，纯 transform/opacity 动画（dialPulse），[11] 已降级、不承载信息。 -->
+
 <section class="chapter ch6" id="ch6" data-chapter="6" data-temp="silver">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">06</span> Chapter VI · The System</p><h2 class="section-title">系<span class="hl">统</span></h2></div>
-    <p class="ch6-lead reveal">把人生当作一套可复盘、可调整的公开原则，<br>不展示私人仪表盘、精确日程或内部数据。</p>
+    <p class="ch6-lead reveal">把人生当作一套可复盘、可调整的公开原则，<br>不展示个人数据、精确日程或运营信息。</p>
     <div class="ch6-formula reveal"><p class="ch6-sub">The Prosperity Formula · 人生繁荣公式</p>
       <div class="formula-line"><span class="fv">方向</span><span class="fx">×</span><span class="fv">行动</span><span class="fx">×</span><span class="fv">AI 杠杆</span><span class="fx">×</span><span class="fv">长期主义</span><span class="fx fx-eq">=</span><span class="fv fv-result">持续成长</span></div>
       <p class="ch6-formula-note reveal">公式是提醒，不是精确的人生评分：先选对方向，再用行动、工具和时间形成复利。</p>
@@ -2612,15 +2340,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 七 · 造物 —— 金橙工坊（流光，暖金橙锻造感）。三源精华重组（T4.1）：
-     idop.html（IDOP 四阶段飞轮 + ★两条金句）+ hkrr.html（HKRR 四变量·相乘质量门）+ workflow.html（LSA 三格式 + 80/85/90 分层）。
-     data-chapter="7" 接入场景引擎（色温金橙 --light-hue:33 / --scene-glow gold 50%+ember 22%，[03] 已预定义，光效「流光」）。
-     —— 取舍（T4.1 注意事项）——
-     ★workflow 的 18 步短视频流程「整段舍弃」：过程性细节非叙事必需，不照搬；只取「三格式 + 80/85/90 分层」结论。
-     —— 三源去重（对照 tech-design 禁止重复项清单 D2 / D4，逐条落实）——
-     D2 AI 杠杆：本章只谈 IDOP/HKRR/AI 的「廉价变异·复利进化」，不下「AI 是杠杆」定义性论断（杠杆定义仅 #ch6）；
-     D4 IDOP↔HKRR 分工：★「IDOP 管流程，HKRR 管质量」为全页唯一落点 = 本章，逐字以 idop 第 2722 行为准。
-     流光气质：金句卡 forgeGlow 横扫 + IDOP 飞轮 idopSpin 自转，纯 transform/opacity 动画，[11] 已降级、不承载信息。 -->
+
 <section class="chapter ch7" id="ch7" data-chapter="7" data-temp="forge">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">07</span> Chapter VII · The Forge</p><h2 class="section-title">造<span class="hl">物</span></h2></div>
@@ -2643,19 +2363,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 八 · 同行 —— 紫金交汇（双色光效交汇，呼应「同行」）。单源精华(T4.2)：know-ai.html（书信体）。
-     data-chapter="8" 接入场景引擎（色温紫金 --light-hue:286 / --scene-glow violet 40%+gold 28%，[03] 已预定义，光效「双色交汇」）。
-     —— 必取精华（章节内容预算表「八 同行」行）——
-     · 中心论点「不是替代你，是放大你」（know-ai 第 605 行 band-c 逐字）；
-     · ★金句一逐字 know-ai 第 1063 行 L07 desc：「用 AI 放大了你不可复制的那部分：判断 / 审美 / 经历 / 信任」；
-     · ★金句二逐字 know-ai 第 1094 行：「我在前面等你。不是等你追上我，是等你追上昨天的自己。」（引用截断处忠实源文）；
-     · 7 级台阶（know-ai 第 1011–1066 行 L01–L07：意识到 / 动手试 / 换好工具 / 愿意付费 / 从 Chat 到 Agent / 做出真东西 / 撬动新的可能）。
-     —— 形态（T4.2 注意事项）——
-     · 书信体长段落行宽控制 max-width ~62ch（.ch8-letter 用 ch 单位）保可读；
-     · 7 级台阶移动端纵向堆叠（768px 序号列收窄、行内纵堆）；
-     · 双色光交汇：场景引擎 --scene-glow 同时混 violet+gold（[03] 已预定义），本章额外在 .ch8-fusion 用「双光源对置」纯 CSS 版式（::before 紫光左上 / ::after 金光右下，transform/opacity 缓动呼吸），呼应「同行」——验收第 4 条亮点，[11] 已降级、不承载信息。
-     —— 去重（对照 D 清单）——
-     D2 AI 杠杆：本章只谈「放大而非替代」，不下「AI 是杠杆」定义性论断（杠杆定义仅 #ch6）。 -->
+
 <section class="chapter ch8" id="ch8" data-chapter="8" data-temp="fusion">
   <div class="ch-inner">
     <div class="ch-head reveal"><p class="section-label"><span class="idx">08</span> Chapter VIII · Walk With You</p><h2 class="section-title">同<span class="hl">行</span></h2></div>
@@ -2673,19 +2381,7 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
   </div>
 </section>
 
-<!-- 终章 · 成为 —— 满金收束 · 长廊尽头（整条叙事弧在此闭合，色温弧终点：满金「万丈光」）。
-     data-chapter="9" 接入场景引擎（色温满金 --light-hue:46 / --scene-glow gold-light 60%+gold 30%，[03] 已预定义，光效「万丈光收束」）。
-     —— 必取精华（章节内容预算表「终章 成为」行）——
-     · ★「我想成为一个既清醒又热烈的人…」全诗逐字（index 第 1741–1749 行 .become-poem，逐行取全，PRD 溯源重点）；
-     · 微信联系卡 czy18534901307 + 复制按钮（index 第 1767–1772 行精华）；
-     · 满金收束——整条叙事弧在此闭合。
-     —— 形态（T4.3 注意事项）——
-     · ★全诗逐字居中（.ch9-poem 移植 index .become-poem 手感）；
-     · 微信卡 + 复制按钮（copyWechat IIFE 移植 index 第 1915 行，依赖固定 id copyBtn/wechatId，本页无 id 冲突已核）；
-     · 满金收束叠一层纯 CSS 径向光收束动画（.ch9-seal / sealConverge：transform/opacity），[11] 已降级（停后静止仍是满金底，T4.3 注意事项原话）。
-     —— 去重（对照 D 清单）——
-     D8「追光的人，终将光芒万丈」已归 #ch4 唯一落点，本章不重复同句；
-     呼应序章座右铭仅取「行则将至」一段（非整句重复，D 清单不冲突）。 -->
+
 <section class="chapter ch9" id="ch9" data-chapter="9" data-temp="gold">
   <div class="ch9-seal" aria-hidden="true"></div>
   <div class="ch-inner">
@@ -2705,16 +2401,12 @@ body.loaded .ch0-enter { animation: fadeUp 1s ease 1.6s both; }
 </section>
 
 <script>
-/* 各功能拆为独立自启 IIFE 模块（沿用 index 风格，无统一 init()）：
-   preloader / sceneEngine / revealObserver / chapterRail / lightCanvas / countUp / timeline / copyWechat。
-   详见 tech-design KD-6。后续 task 在此填充。 */
 
-/* —— 标记 JS 已启用（序章 per-glyph 入场编排依赖 body.js 设初始隐藏态，沿用 index 第 1797 行）——
-   reduced-motion 不影响此标记：降级在 [11] 把隐藏态/动画覆盖为直接可见。 */
+
+
 document.body.classList.add('js');
 
-/* —— preloader：一点光开场 → body.loaded（序章 per-glyph 入场依赖此机制，R7）——
-   依赖：#preloader。reduced-motion 下 delay 归零，body.loaded 立即添加，入场不丢。 */
+
 (function preloader() {
   const pre = document.getElementById('preloader');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2725,22 +2417,7 @@ document.body.classList.add('js');
   }, delay);
 })();
 
-/* —— sceneEngine：chapter-driven 场景引擎（全页技术核心，KD-1 / KD-2 / T1.4）——
-   职责：单个 IntersectionObserver 监听全部 .chapter，判定"当前章"，
-   只把章号写到 body.dataset.chapter；所有视觉变换由 CSS 对 --scene-* 做 transition 完成。
-   依赖：.chapter 元素（带 data-chapter）+ [03] 的 body[data-chapter="N"] 色板规则。
 
-   判定机制：
-   · rootMargin '-45% 0px -45% 0px' → 只有穿过视口中线（屏幕中带）的 section 命中，避免边界抖动。
-   · 回调里维护"当前所有 isIntersecting 的 .chapter"集合，取 intersectionRatio 最大者为候选章号
-     （同帧多 entry 命中时必须选 ratio 最大者，否则边界抖动）。
-   · 150ms 尾沿去抖（trailing debounce）：候选暂存 + 清上一个 setTimeout，150ms 后若与已写入值
-     不同才真正写 dataset.chapter —— 同帧/短时连续命中只触发一次写入、一次 1.2s transition，
-     杜绝背景在过渡期内连跳两个色温值的闪烁（UX-002 / R3）。
-
-   安全性：当前页面尚无 .chapter（序章 T1.5 才建），observer 监听 0 个目标不抛错；
-   data-chapter 维持 HTML 初值 0，背景仍呈现序章色板（JS 未跑也有背景，KD-1）。
-   reduced-motion 下逻辑不变（去抖保留），仅 CSS transition 时长在 [11] 归零、切换瞬时（R2）。 */
 (function sceneEngine() {
   const chapters = document.querySelectorAll('.chapter');
   if (!chapters.length) return; // 零监听目标：安全退出，data-chapter 维持初值 0
@@ -2784,10 +2461,7 @@ document.body.classList.add('js');
   chapters.forEach((ch) => obs.observe(ch));
 })();
 
-/* —— animateCount：数据墙数字计数（逐字移植 index 第 1870–1884 行）——
-   读 data-num（目标整数）/ data-suffix（单位后缀），三次缓出动画到目标值，
-   注入 <span class="unit"> 后缀。由 revealObserver 在元素入场时触发（只跑一次）。
-   三章数据墙（T2.4）将依赖这套 data-num/data-suffix 约定。 */
+
 function animateCount(el) {
   const target = parseInt(el.dataset.num, 10);
   const suffix = el.dataset.suffix || '';
@@ -2804,14 +2478,7 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
-/* —— revealObserver：滚动入场 + count-up 触发（移植 index 第 1887–1900 行）——
-   依赖：.reveal / .reveal-stagger 元素 + [data-num] count-up 节点（[06] CSS）。
-   入视口即加 .visible（CSS transition 完成入场）并触发该元素内所有 [data-num] 计数；
-   **必须 unobserve 已触发元素**（index 第 1896 行）—— 长页 reveal 元素很多，
-   不解绑会持续回调（技术快审注意事项）。每个元素只入场/计数一次。
-   index 原有的 .slope-box 绘制分支为 index 专属（opus 无 slope-box），此处不移植。
-   当前页尚无 .reveal（T2.2+ 才建）：监听 0 个目标不抛错，安全退出。
-   reduced-motion 下逻辑不变，仅 [11] 把 .reveal/.reveal-stagger 置为可见态、transition 归零。 */
+
 (function revealObserver() {
   const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
   if (!reveals.length) return; // 零监听目标：安全退出
@@ -2827,8 +2494,7 @@ function animateCount(el) {
   reveals.forEach((el) => obs.observe(el));
 })();
 
-/* —— cursorGlow：光标即是光，跟随鼠标的柔光（追光者签名交互）——
-   依赖：.cursor-glow。仅 hover+fine 指针生效；reduced-motion / 触屏直接 return。 */
+
 (function cursorGlow() {
   const glow = document.querySelector('.cursor-glow');
   if (!glow) return;
@@ -2853,10 +2519,7 @@ function animateCount(el) {
   });
 })();
 
-/* —— scrollProgress：顶部细进度条宽度跟随滚动（全页唯一 scroll 监听，passive）——
-   依赖：.scroll-progress。F5(Phase 1 遗留)清理：原 index 的 .hero-inner 视差死引用已删除
-   （opus 序章用 .ch0 重新演绎、无 .hero-inner 元素，分支永不执行）→ 唯一 scroll 监听只剩
-   进度条宽度更新，handler 更轻、零无效 DOM 查询。 */
+
 (function scrollProgress() {
   const progressBar = document.querySelector('.scroll-progress');
   if (!progressBar) return;
@@ -2866,13 +2529,7 @@ function animateCount(el) {
   }, { passive: true });
 })();
 
-/* —— chapterRail：移动端章名条展开/收起（KD-5 / T5.1 唯一新增 toggle JS）——
-   依赖:#barToggle(▾ 按钮)/ .chapter-bar / .bar-list a。
-   rail 高亮与 bar 章名均由 CSS body[data-chapter] 驱动,本 IIFE 只管 .open 展开态:
-   · 点 ▾ 给 .chapter-bar 加/去 .open + 同步 aria-expanded;
-   · 点清单内任一锚点(html scroll-behavior:smooth 跳转)后移除 .open;
-   · 点条外区域(其余文档)收起,避免清单滞留。
-   不存在依赖元素时直接 return,不报错(rail/进度条仍工作)。 */
+
 (function chapterRail() {
   const bar = document.querySelector('.chapter-bar');
   const toggle = document.getElementById('barToggle');
@@ -2912,21 +2569,7 @@ function animateCount(el) {
   });
 })();
 
-/* —— lightCanvas：向光金粉粒子（追光者签名画面）· 三级密度 + 按章着色（T5.2 / UX-004 / KD-4）——
-   依赖：#lightCanvas + body[data-chapter] + [03] 各章 --light-hue。
-   reduced-motion 整体 return（保留既有降级逻辑：JS 不跑、[11] CSS 隐藏 canvas，光母题靠静态光晕承载）。
 
-   三级密度（UX-004 锁定，保住终章高潮）——事件循环始终运行，仅按当前章调"目标粒子数 + 目标透明度"：
-   · 高密度档：序章 ch0 或终章 ch9 可见 → 满密度（桌面 ~80 / 平板 ≤30 / 移动 ≤22），透明度 1。
-   · 低密度档：中间章 ch1–ch8 可见 → 低密度不全停（桌面 ≤24 / 平板 ≤12 / 移动 ≤10），透明度地板 0.5。
-   · 完全停机档：仅 document.visibilityState==='hidden'（切后台/最小化）才 stop() 省电；任何叙事章都不停。
-   终章必然点亮：中间章只降密度、循环从不停 → 从中部跳 rail 到 ch9 时，data-chapter 一变即把目标拉回高密度，
-   粒子数每帧平滑逼近补满，"满金收束"必然呈现（杜绝"跳章到终章光效缺席"R4）。
-
-   按章着色：新生成粒子按当前 --light-hue 取色（hsla 色相 = 当前章色温，与 10 章色弧一致：冷夜蓝→暖金→…→满金）；
-   切章时只换"新粒子"的色，存量粒子自然衰减/复位时替换为新色，不瞬时全量换色（避免突兀）。
-
-   data-chapter 变化用 MutationObserver（attributes，轻量、零逐帧轮询）监听，不侵入 sceneEngine。 */
 (function lightCanvas() {
   const c = document.getElementById('lightCanvas');
   if (!c) return;
@@ -3108,10 +2751,7 @@ function animateCount(el) {
   start();
 })();
 
-/* —— tilt：3D 卡片倾斜 + 光斑追踪（逐字移植 index 第 1836–1854 行，T2.4）——
-   依赖：.tilt 元素（三·此身 info-card 带 .tilt）+ [07] 的 --mx/--my CSS 变量。
-   hover:none（移动端/触屏）直接 return，不绑事件——移动端不生效是预期（T2.4 注意事项）；
-   仅写 transform 与 --mx/--my（transform/opacity 级开销），无逐帧 scroll 监听。 */
+
 (function tilt() {
   if (matchMedia('(hover: none)').matches) return;
   const tilts = document.querySelectorAll('.tilt');
