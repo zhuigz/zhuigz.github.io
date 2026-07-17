@@ -2077,8 +2077,8 @@
       </h2>
       <p class="section-desc reveal reveal-delay-2">
         爱因斯坦称复利为「世界第八大奇迹」。<br>
-        越早开始定投,雪球效应越惊人——<br>
-        时间,才是最好的合伙人。
+        以下滑块均为<strong>示例初始值</strong>,不代表个人真实财务情况。<br>
+        调整参数,观察时间与复利的关系。
       </p>
     </div>
     <div class="section-head-right reveal reveal-delay-2">复利</div>
@@ -2087,19 +2087,19 @@
   <div class="compound-layout">
     <div class="compound-left">
       <div class="slider-group reveal">
-        <div class="slider-label"><span>初始本金</span><span class="val" id="principal-val">10 万</span></div>
+        <div class="slider-label"><span>示例初始本金</span><span class="val" id="principal-val">10 万</span></div>
         <input type="range" id="principal" min="1" max="100" value="10" step="1">
       </div>
       <div class="slider-group reveal reveal-delay-1">
-        <div class="slider-label"><span>年化收益率</span><span class="val" id="rate-val">8%</span></div>
+        <div class="slider-label"><span>示例年化收益率</span><span class="val" id="rate-val">8%</span></div>
         <input type="range" id="rate" min="2" max="20" value="8" step="0.5">
       </div>
       <div class="slider-group reveal reveal-delay-2">
-        <div class="slider-label"><span>每月定投</span><span class="val" id="monthly-val">3,000 元</span></div>
+        <div class="slider-label"><span>示例每月定投</span><span class="val" id="monthly-val">3,000 元</span></div>
         <input type="range" id="monthly" min="0" max="20000" value="3000" step="500">
       </div>
       <div class="slider-group reveal reveal-delay-3">
-        <div class="slider-label"><span>投资年限</span><span class="val" id="years-val">20 年</span></div>
+        <div class="slider-label"><span>示例投资年限</span><span class="val" id="years-val">20 年</span></div>
         <input type="range" id="years" min="5" max="40" value="20" step="1">
       </div>
 
@@ -2325,17 +2325,17 @@
   <div class="calc-inner" id="calculator">
     <div class="section-head">
       <div class="section-head-left">
-        <div class="section-eyebrow reveal">Chapter 06 · Personal Calculator</div>
+        <div class="section-eyebrow reveal">Chapter 06 · Example Calculator</div>
         <h2 class="section-title reveal reveal-delay-1">
-          我的 FIRE <em>规划</em>
+          FIRE <em>示例计算器</em>
         </h2>
         <p class="section-desc reveal reveal-delay-2">
-          输入你的财务情况,<br>
-          计算距离财务自由还有多远。<br>
-          每一次滑动,都是一次与未来对话。
+          以下初始数据仅用于演示计算逻辑,<br>
+          不代表站点作者的真实资产、收入或支出。<br>
+          你可以自行调整所有参数。
         </p>
       </div>
-      <div class="section-head-right reveal reveal-delay-2">自测</div>
+      <div class="section-head-right reveal reveal-delay-2">示例</div>
     </div>
 
     <div class="calc-grid">
@@ -2349,7 +2349,7 @@
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>当前净资产</span>
+            <span>示例净资产</span>
             <span class="calc-input-en">Net Worth</span>
           </div>
           <div class="calc-input-row">
@@ -2361,7 +2361,7 @@
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>年税后收入</span>
+            <span>示例年收入</span>
             <span class="calc-input-en">Annual Income</span>
           </div>
           <div class="calc-input-row">
@@ -2373,7 +2373,7 @@
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>年生活支出</span>
+            <span>示例年支出</span>
             <span class="calc-input-en">Annual Expense</span>
           </div>
           <div class="calc-input-row">
@@ -2397,7 +2397,7 @@
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>当前年龄</span>
+            <span>示例年龄</span>
             <span class="calc-input-en">Current Age</span>
           </div>
           <div class="calc-input-row">
@@ -2417,11 +2417,11 @@
 
         <div class="calc-metrics">
           <div class="calc-metric">
-            <span class="calc-metric-label">FIRE 目标金额</span>
+            <span class="calc-metric-label">示例 FIRE 目标</span>
             <span class="calc-metric-value accent" id="cr-target">300 万元</span>
           </div>
           <div class="calc-metric">
-            <span class="calc-metric-label">当前储蓄率</span>
+            <span class="calc-metric-label">示例储蓄率</span>
             <span class="calc-metric-value" id="cr-saverate">60.0%</span>
           </div>
           <div class="calc-metric">
@@ -2436,7 +2436,7 @@
 
         <div class="calc-progress-section">
           <div class="calc-progress-label">
-            <span>当前进度 · Current Progress</span>
+            <span>示例进度 · Example Progress</span>
             <span class="pct" id="cr-progress-pct">16.7%</span>
           </div>
           <div class="calc-progress-bar">
@@ -2446,8 +2446,8 @@
 
         <div class="calc-chart">
           <div class="calc-chart-label">
-            <span>TRAJECTORY · 资产轨迹</span>
-            <span>TARGET · 目标线</span>
+            <span>TRAJECTORY · 示例轨迹</span>
+            <span>TARGET · 示例目标线</span>
           </div>
           <canvas id="fire-chart"></canvas>
         </div>
