@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>追光者的三级人生目标 · 立己达人</title>
-<meta name="description" content="勤读力耕，立己达人 — 立己→FIRE自由 · 达人→中华民族伟大复兴 & AI奇点共产主义">
+<title>追光者的三级人生目标 · 公开版</title>
+<meta name="description" content="追光者的公开价值方向：个人选择权、公共价值、AI 普惠与共同繁荣。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@200;300;400;500;700;900&family=Outfit:wght@200;300;400;500;600;800;900&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
@@ -857,595 +857,104 @@ footer{
 </style>
 </head>
 <body>
-
-<div class="cursor-dot" aria-hidden="true"></div>
-<div class="cursor-ring" aria-hidden="true"></div>
-
-<div class="bg">
-  <div class="bg-grid"></div>
-  <div class="bg-vignette"></div>
-  <div class="bg-ambient" id="bgAmbient"></div>
-  <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
-  <div class="bg-noise"></div>
-</div>
+<div class="cursor-dot" aria-hidden="true"></div><div class="cursor-ring" aria-hidden="true"></div>
+<div class="bg"><div class="bg-grid"></div><div class="bg-vignette"></div><div class="bg-ambient" id="bgAmbient"></div><canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas><div class="bg-noise"></div></div>
 <div class="embers" id="embers"></div>
-
 <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
 
-<nav class="chapter-spine" aria-label="三级章节导航">
-  <div class="cs-inner">
-    <div class="cs-track"></div>
-    <div class="cs-fill" id="csFill"></div>
-    <a class="cs-item" data-t="1" href="#tier1">
-      <div class="cs-dot"></div>
-      <span class="cs-rom">I</span>
-    </a>
-    <a class="cs-item" data-t="2" href="#tier2">
-      <div class="cs-dot"></div>
-      <span class="cs-rom">II</span>
-    </a>
-    <a class="cs-item" data-t="3" href="#tier3">
-      <div class="cs-dot"></div>
-      <span class="cs-rom">III</span>
-    </a>
-  </div>
-</nav>
+<nav class="chapter-spine" aria-label="三级章节导航"><div class="cs-inner"><div class="cs-track"></div><div class="cs-fill" id="csFill"></div>
+  <a class="cs-item" data-t="1" href="#tier1"><div class="cs-dot"></div><span class="cs-rom">I</span></a>
+  <a class="cs-item" data-t="2" href="#tier2"><div class="cs-dot"></div><span class="cs-rom">II</span></a>
+  <a class="cs-item" data-t="3" href="#tier3"><div class="cs-dot"></div><span class="cs-rom">III</span></a>
+</div></nav>
 
 <header class="topbar">
-  <div class="brand">
-    <span class="brand-seal">追</span>
-    <div class="brand-text">
-      <span class="brand-zh">追光者 · 三级人生目标</span>
-      <span class="brand-en">Three-Tier Life Doctrine</span>
-    </div>
-  </div>
-  <nav>
-    <ul class="nav-links">
-      <li><a href="#prologue">序章</a></li>
-      <li><a href="#tier1">初级 · FIRE</a></li>
-      <li><a href="#tier2">高级 · 复兴</a></li>
-      <li><a href="#tier3">终极 · 奇点</a></li>
-      <li><a href="#convergence">同频闭环</a></li>
-    </ul>
-    <button class="menu-toggle" aria-label="Menu">≡</button>
-  </nav>
+  <div class="brand"><span class="brand-seal">追</span><div class="brand-text"><span class="brand-zh">追光者 · 三级人生目标</span><span class="brand-en">Three-Tier Life Doctrine</span></div></div>
+  <nav><ul class="nav-links"><li><a href="#prologue">序章</a></li><li><a href="#tier1">立己</a></li><li><a href="#tier2">公共价值</a></li><li><a href="#tier3">AI 普惠</a></li><li><a href="#convergence">同频闭环</a></li></ul><button class="menu-toggle" aria-label="Menu">≡</button></nav>
 </header>
 
-<!-- ═════════════════════════ HERO ═════════════════════════ -->
 <section class="hero" id="top">
   <div class="hero-orb"></div>
-  <div class="hero-rings">
-    <div class="ring ring-1"></div>
-    <div class="ring ring-2"></div>
-    <div class="ring ring-3"></div>
-    <div class="ring ring-4"></div>
-  </div>
-
+  <div class="hero-rings"><div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div><div class="ring ring-4"></div></div>
   <div class="hero-content">
-    <div class="hero-chip">PERSONAL DOCTRINE · 2026 EDITION</div>
-
-    <h1 class="hero-title">
-      <span class="tl-prefix">追光者的</span>
-      <span class="tl-main">三级人生目标</span>
-    </h1>
-
-    <div class="hero-motto">
-      <div class="hero-motto-1">勤读力耕<span class="sep">✦</span>立己达人</div>
-      <div class="hero-motto-2">立己 → <strong>FIRE 自由</strong> · 达人 → <strong>民族复兴</strong> &amp; <strong>AI 奇点</strong></div>
-    </div>
-
+    <div class="hero-chip">PERSONAL DOCTRINE · PUBLIC EDITION</div>
+    <h1 class="hero-title"><span class="tl-prefix">追光者的</span><span class="tl-main">三级人生目标</span></h1>
+    <div class="hero-motto"><div class="hero-motto-1">勤读力耕<span class="sep">✦</span>立己达人</div><div class="hero-motto-2">立己 → <strong>个人选择权</strong> · 达人 → <strong>公共价值</strong> &amp; <strong>AI 普惠</strong></div></div>
     <div class="hero-ladder">
-      <a class="hero-step" data-c="jade" href="#tier1">
-        <div class="rom">I</div>
-        <div class="zh">初级 · FIRE</div>
-        <div class="en">Personal Freedom</div>
-      </a>
-      <span class="hero-arrow">→</span>
-      <a class="hero-step" data-c="crimson" href="#tier2">
-        <div class="rom">II</div>
-        <div class="zh">高级 · 复兴</div>
-        <div class="en">National Revival</div>
-      </a>
-      <span class="hero-arrow">→</span>
-      <a class="hero-step" data-c="violet" href="#tier3">
-        <div class="rom">III</div>
-        <div class="zh">终极 · 奇点</div>
-        <div class="en">Singularity</div>
-      </a>
+      <a class="hero-step" data-c="jade" href="#tier1"><div class="rom">I</div><div class="zh">个人选择权</div><div class="en">Personal Freedom</div></a><span class="hero-arrow">→</span>
+      <a class="hero-step" data-c="crimson" href="#tier2"><div class="rom">II</div><div class="zh">公共价值</div><div class="en">Public Value</div></a><span class="hero-arrow">→</span>
+      <a class="hero-step" data-c="violet" href="#tier3"><div class="rom">III</div><div class="zh">AI 普惠</div><div class="en">Shared Prosperity</div></a>
     </div>
   </div>
-
   <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
 </section>
 
-<!-- ═════════════════════════ PROLOGUE / Anchor ═════════════════════════ -->
 <section class="prologue" id="prologue">
   <div class="container-narrow">
-    <div class="prologue-hero r">
-      <div class="eyebrow centered">PROLOGUE · 锚定坐标</div>
-      <div class="q-zh">勤读力耕<br><span class="em">立己达人</span></div>
-      <div class="q-en">"Cultivate the self diligently — then lift the world. One ancient creed; three modern tiers."</div>
-    </div>
-
+    <div class="prologue-hero r"><div class="eyebrow centered">PROLOGUE · 公开价值方向</div><div class="q-zh">勤读力耕<br><span class="em">立己达人</span></div><div class="q-en">先建立独立生活与持续成长的能力，再把能力用于帮助他人。</div></div>
     <div class="anchor-grid r-s">
-      <div class="anchor">
-        <div class="key">立</div>
-        <div class="label">己 · Inner</div>
-        <div class="ttl">FIRE 财富自由</div>
-        <div class="desc">先把自己活成一束光 —— 买断时间所有权，跳出生存焦虑，才有底气去追更大的事。</div>
-      </div>
-      <div class="anchor-bridge">
-        <div class="arrow">→</div>
-        <div class="label">递进</div>
-      </div>
-      <div class="anchor">
-        <div class="key">达</div>
-        <div class="label">人 · Outer</div>
-        <div class="ttl">复兴 · 奇点</div>
-        <div class="desc">不做旁观者，做参与者 —— 用 AI 杠杆托举民生普惠，用一生见证物种解放的终局。</div>
-      </div>
+      <div class="anchor"><div class="key">立</div><div class="label">己 · Inner</div><div class="ttl">选择权与成长</div><div class="desc">管理能量、提升能力、理性理解财富，让人生拥有更主动的选择空间。</div></div>
+      <div class="anchor-bridge"><div class="arrow">→</div><div class="label">递进</div></div>
+      <div class="anchor"><div class="key">达</div><div class="label">人 · Outer</div><div class="ttl">公共价值与普惠</div><div class="desc">关注真实问题，让知识、技术和创作更广泛地帮助普通人。</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═════════════════════════ TIER 01 ═════════════════════════ -->
-<div class="tier-divider tier-1">
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-stage">TIER ONE · 初级目标</div>
-  <div class="td-rom" data-zh="个人解放">I</div>
-  <div class="td-sub">个人层面的解放 · Personal Liberation</div>
-  <div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div>
-  <div class="td-tape" aria-hidden="true"><span>TIER ONE · 初级目标 · FIRE FREEDOM · PERSONAL LIBERATION · 七年路径 · 双轮驱动 · 三柱支撑 · TIER ONE · 初级目标 · FIRE FREEDOM · PERSONAL LIBERATION · 七年路径 · 双轮驱动 · 三柱支撑 · </span></div>
-</div>
-
+<div class="tier-divider tier-1"><div class="td-stage">TIER ONE · 立己</div><div class="td-rom" data-zh="个人选择权">I</div><div class="td-sub">可持续生活 · Personal Agency</div><div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div></div>
 <section class="chapter" id="tier1" style="--c:var(--jade);--c-soft:var(--jade-soft)">
-  <div class="container">
-    <div class="chapter-grid">
-      <aside class="chapter-aside r-l">
-        <div class="meta">CHAPTER 01 · 立 己</div>
-        <h2 class="name">FIRE &<br><span class="em">财富自由</span></h2>
-        <p class="blurb">个人层面的解放。<strong>硬指标：300万—1000万资产积累</strong>，彻底买断自己的时间所有权 —— 不再为别人卖命，把生命还给自己。</p>
-        <div class="meta-row">
-          <div class="meta-pair"><span class="k">Time Anchor</span><span class="v em">2026.01.23 启动</span></div>
-          <div class="meta-pair"><span class="k">Target Date</span><span class="v">2033.02 · 7 年</span></div>
-          <div class="meta-pair"><span class="k">FIRE Rule</span><span class="v">300万 × 4% = 12万/年</span></div>
-          <div class="meta-pair"><span class="k">Monthly Free</span><span class="v">¥10,000 / 月</span></div>
-        </div>
-      </aside>
-
-      <div class="chapter-main">
-
-        <div class="feature r">
-          <div class="feat-label">CORE TARGET · 硬指标</div>
-          <div class="feat-num count" data-target="300">0<span class="small">万 — 1000万</span></div>
-          <div class="feat-math"><strong>300万</strong> × 4% = <strong>12万/年</strong> · <strong>1万/月</strong> · 二三线城市 <strong>完全自由</strong></div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">01</span>七年路径 · Seven-Year Path</h3>
-          <div class="timeline-fire r">
-            <div class="tlf-node">
-              <div class="ico">🚀</div>
-              <div class="tag">Start</div>
-              <div class="date">2026.01.23</div>
-              <div class="lbl">启动元年</div>
-            </div>
-            <div class="tlf-line" style="--p:32%"></div>
-            <div class="tlf-node">
-              <div class="ico">⚙️</div>
-              <div class="tag">Build</div>
-              <div class="date">2027—2030</div>
-              <div class="lbl">双轮加速</div>
-            </div>
-            <div class="tlf-line" style="--p:0%"></div>
-            <div class="tlf-node">
-              <div class="ico">📈</div>
-              <div class="tag">Compound</div>
-              <div class="date">2031—2032</div>
-              <div class="lbl">复利爆发</div>
-            </div>
-            <div class="tlf-line" style="--p:0%"></div>
-            <div class="tlf-node">
-              <div class="ico">🎯</div>
-              <div class="tag">Goal</div>
-              <div class="date">2033.02</div>
-              <div class="lbl">300万达成</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">02</span>双轮驱动 · Two Wheels</h3>
-          <div class="dual r stag">
-            <div class="wheel">
-              <div class="w-tag">左轮 · Cash Cow</div>
-              <div class="w-name">现金流奶牛</div>
-              <ul>
-                <li>家庭教育号 / 读书分享号 / 汤圆萌宠号</li>
-                <li>角色：<strong>产品经理 + AI 训练师</strong></li>
-                <li>解决生存(¥1,000) + 提供定投弹药(¥2,000)</li>
-                <li>每天 1-2 小时，冷酷执行，只看数据</li>
-              </ul>
-            </div>
-            <div class="wheel">
-              <div class="w-tag">右轮 · Star Asset</div>
-              <div class="w-name">明星资产 · 个人 IP</div>
-              <ul>
-                <li>追光者 / 曹宗昱 个人 IP</li>
-                <li>角色：<strong>思想者 + 表达者 + 榜样</strong></li>
-                <li>记录成长 · 分享系统 · 输出 AI 方法论</li>
-                <li>终身事业，注入灵魂，实现 300 万爆发</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">03</span>三柱支撑 · Three Pillars</h3>
-          <div class="pillars-row r stag">
-            <div class="p-card">
-              <div class="p-ico">⚔️</div>
-              <h5>进攻 · 开源</h5>
-              <p>AI 杠杆式开源，拒绝打工模式，追求可复制的产品模式。</p>
-            </div>
-            <div class="p-card">
-              <div class="p-ico">🛡️</div>
-              <h5>防御 · 节流</h5>
-              <p>月开销目标 1000 元以内 —— 每分省下的钱，都是在赎回未来的自由。</p>
-            </div>
-            <div class="p-card">
-              <div class="p-ico">📈</div>
-              <h5>复利 · 定投</h5>
-              <p>只买资产，坚决不杀鹅。用 10 年维度看财富，熊市是低位加仓的黄金期。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">04</span>双轨制 · Dual Track</h3>
-          <div class="dual r stag">
-            <div class="wheel">
-              <div class="w-tag">体制内 · 绝对防守</div>
-              <div class="w-name">生存基石 / Risk Circuit Breaker</div>
-              <ul>
-                <li>只求稳，不求进，只拿稳定工资</li>
-                <li>时间套利 —— 真正价值在朝九晚五之外</li>
-                <li>有底气折腾：体制内兜底，敢一直试错</li>
-              </ul>
-            </div>
-            <div class="wheel">
-              <div class="w-tag">AI 创业 · 无限试错</div>
-              <div class="w-name">财富爆发点 / Destiny Changer</div>
-              <ul>
-                <li>AI 极度提效，<strong>一人抵十人</strong></li>
-                <li>赢一次就够 —— 撞上一次爆发，彻底自由</li>
-                <li>左轮 Cash Cow + 右轮 Star Asset 双轮驱动</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="insight r" style="--c:var(--jade)">
-          <p class="q">无限次低成本尝试 × <span class="em">只要赢一次</span> = 100% 成功率</p>
-          <p class="a">唯一变量是时间 · The Only Variable Is Time</p>
-        </div>
-
+  <div class="container"><div class="chapter-grid">
+    <aside class="chapter-aside r-l"><div class="meta">CHAPTER 01 · 立 己</div><h2 class="name">个人<br><span class="em">选择权</span></h2><p class="blurb">FIRE 在公开版中是一组长期原则：提升创造价值的能力、保持理性消费、理解风险与复利，让时间逐渐回到自己手中。</p></aside>
+    <div class="chapter-main">
+      <div class="eyebrow r">PUBLIC PRINCIPLES</div><h3 class="sub-title r">不展示资产数字，<br>只保留可复用的方法。</h3>
+      <div class="anchor-grid r-s">
+        <div class="anchor"><div class="key">能</div><div class="ttl">能力</div><div class="desc">持续学习、创造与解决问题。</div></div>
+        <div class="anchor"><div class="key">稳</div><div class="ttl">稳健</div><div class="desc">理性消费、风险意识与长期配置。</div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ═════════════════════════ TIER 02 ═════════════════════════ -->
-<div class="tier-divider tier-2">
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-stage">TIER TWO · 高级目标</div>
-  <div class="td-rom" data-zh="时代参与">II</div>
-  <div class="td-sub">国家上升周期的参与者 · National Revival</div>
-  <div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div>
-  <div class="td-tape" aria-hidden="true"><span>TIER TWO · 高级目标 · NATIONAL REVIVAL · 中华民族伟大复兴 · 七维普惠 · 反腐防火墙 · 时代参与者 · TIER TWO · 高级目标 · NATIONAL REVIVAL · 中华民族伟大复兴 · 七维普惠 · 反腐防火墙 · 时代参与者 · </span></div>
-</div>
-
-<section class="chapter" id="tier2" style="--c:var(--crimson-light);--c-soft:var(--crimson-soft)">
-  <div class="container">
-    <div class="chapter-grid">
-      <aside class="chapter-aside r-l">
-        <div class="meta">CHAPTER 02 · 达 人</div>
-        <h2 class="name">中华民族<br><span class="em">伟大复兴</span></h2>
-        <p class="blurb">在国家上升周期中，通过提升自我贡献力量 —— <strong>不做旁观者，要做伟大历史进程的「参与者」</strong>。</p>
-        <div class="meta-row">
-          <div class="meta-pair"><span class="k">Time Anchor</span><span class="v em">2050</span></div>
-          <div class="meta-pair"><span class="k">Vision</span><span class="v">社会主义现代化强国</span></div>
-          <div class="meta-pair"><span class="k">Method</span><span class="v">AI 技术普惠</span></div>
-          <div class="meta-pair"><span class="k">Defense</span><span class="v">反腐制度防火墙</span></div>
-        </div>
-      </aside>
-
-      <div class="chapter-main">
-
-        <div class="feature r">
-          <div class="feat-label">CORE TARGET · 时间锚点</div>
-          <div class="feat-num count" data-target="2050">0<span class="small">社会主义现代化强国</span></div>
-          <div class="feat-math">用 <strong>AI 极致生产力</strong> 撬动 <strong>民生七维普惠</strong> · 以 <strong>反腐制度</strong> 守住每一分红利</div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">01</span>普惠七维 · Seven Dimensions</h3>
-          <div class="dim-grid r stag">
-            <article class="dim" data-c="ene">
-              <div class="d-num">// 01 · BEDROCK</div>
-              <div class="d-ico">⚡</div>
-              <h5>普惠零成本能源</h5>
-              <div class="d-tag">Energy</div>
-              <p>可控核聚变让发电成本趋近于零 —— 一切民生成本的底层根基。</p>
-            </article>
-            <article class="dim" data-c="fd">
-              <div class="d-num">// 02 · FOOD</div>
-              <div class="d-ico">🌾</div>
-              <h5>普惠食物供给</h5>
-              <div class="d-tag">Food</div>
-              <p>合成生物 + AI 育种，主粮 2-3 毛/斤，合成肉 2.5 元/斤。</p>
-            </article>
-            <article class="dim" data-c="md">
-              <div class="d-num">// 03 · HEALTH</div>
-              <div class="d-ico">🩺</div>
-              <h5>普惠医疗保障</h5>
-              <div class="d-tag">Medical</div>
-              <p>AI 制药、基因技术、智能诊疗，特效药降到平民价。</p>
-            </article>
-            <article class="dim" data-c="hs">
-              <div class="d-num">// 04 · SHELTER</div>
-              <div class="d-ico">🏠</div>
-              <h5>普惠住房供给</h5>
-              <div class="d-tag">Housing</div>
-              <p>AI 工业化建造，造价几百元/㎡ + 保障房体系兜底。</p>
-            </article>
-            <article class="dim" data-c="ed">
-              <div class="d-num">// 05 · EDUCATION</div>
-              <div class="d-ico">📖</div>
-              <h5>普惠教育资源</h5>
-              <div class="d-tag">Education</div>
-              <p>顶级教育资源 AI 零成本复制 · 无差别覆盖。</p>
-            </article>
-            <article class="dim" data-c="el">
-              <div class="d-num">// 06 · DIGNITY</div>
-              <div class="d-ico">🕊</div>
-              <h5>普惠养老兜底</h5>
-              <div class="d-tag">Elder</div>
-              <p>AI 照护机器人 + 智慧养老 · 体面老去成全民权利。</p>
-            </article>
-            <article class="dim" data-c="tr">
-              <div class="d-num">// 07 · MOBILITY</div>
-              <div class="d-ico">🛤</div>
-              <h5>普惠出行服务</h5>
-              <div class="d-tag">Mobility</div>
-              <p>自动驾驶 + 智慧交通，出行自由 · 不被空间禁锢。</p>
-            </article>
-            <article class="dim" data-c="sum">
-              <div class="d-num">// SUMMARY</div>
-              <div class="d-ico" style="font-size:22px">∞</div>
-              <h5>七维同频 · 全周期普惠</h5>
-              <div class="d-tag">System</div>
-              <p>能源是底 · 食医是命 · 住是身 · 教养是根 · 出行是脉。</p>
-            </article>
-          </div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">02</span>反腐防火墙 · Anti-Corruption Firewall</h3>
-          <p class="lede r" style="margin-bottom:32px">技术能把成本打下来，制度能把路径规划好。<strong style="color:var(--paper)">"得罪千百人，不负十四亿"</strong> —— 不敢腐 · 不能腐 · 不想腐，一体推进，三位一体。</p>
-          <div class="firewall r stag">
-            <div class="fw" data-fw="1">
-              <div class="fw-num">不</div>
-              <div class="fw-tag">PILLAR 01 · 惩治</div>
-              <h5>不敢<span class="em">腐</span></h5>
-              <p class="fw-lead">无禁区、全覆盖、零容忍的高压惩治。</p>
-              <ul>
-                <li><strong>打虎：</strong>2025 处分省部级 69 人、厅局级 4155 人</li>
-                <li><strong>拍蝇：</strong>2026 Q1 立案村级一把手 2.3 万人</li>
-                <li><strong>猎狐：</strong>天网行动追回外逃 782 人</li>
-                <li><strong>行受贿一起查 ·</strong> 从源头斩断围猎链</li>
-              </ul>
-            </div>
-            <div class="fw" data-fw="2">
-              <div class="fw-num">能</div>
-              <div class="fw-tag">PILLAR 02 · 约束</div>
-              <h5>不能<span class="em">腐</span></h5>
-              <p class="fw-lead">把权力关进制度的笼子，让权力在阳光下运行。</p>
-              <ul>
-                <li><strong>AI 智慧监督：</strong>智慧粮库 · 医保大数据全流程</li>
-                <li><strong>资金直达：</strong>低保养老教育资助直达个人账户</li>
-                <li><strong>监察全覆盖：</strong>所有公职人员无死角</li>
-                <li><strong>专项闭环 ·</strong> 一领域一方案一闭环</li>
-              </ul>
-            </div>
-            <div class="fw" data-fw="3">
-              <div class="fw-num">想</div>
-              <div class="fw-tag">PILLAR 03 · 自觉</div>
-              <h5>不想<span class="em">腐</span></h5>
-              <p class="fw-lead">筑牢思想防线，从根本上铲除滋生土壤。</p>
-              <ul>
-                <li><strong>党纪学习：</strong>知敬畏、存戒惧、守底线</li>
-                <li><strong>警示教育：</strong>真实案例 · 权为民所用</li>
-                <li><strong>廉洁文化：</strong>风清气正政治生态</li>
-                <li><strong>初心使命 ·</strong> 把人民利益放在最高处</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="insight r" style="--c:var(--crimson-light)">
-          <p class="q">"<span class="em">得罪千百人，不负十四亿</span>" —— 不是口号，是承诺。</p>
-          <p class="a">A SWORD · 守护家国人民</p>
-        </div>
-
+<div class="tier-divider tier-2"><div class="td-stage">TIER TWO · 达人</div><div class="td-rom" data-zh="公共价值">II</div><div class="td-sub">公共价值 · Public Value</div><div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div></div>
+<section class="chapter" id="tier2" style="--c:var(--crimson);--c-soft:var(--crimson-soft)">
+  <div class="container"><div class="chapter-grid">
+    <aside class="chapter-aside r-l"><div class="meta">CHAPTER 02 · 达 人</div><h2 class="name">公共<br><span class="em">价值</span></h2><p class="blurb">希望把公共管理的学习、内容表达和技术能力用于理解真实社会问题，并推动更公平、更有尊严、更可持续的解决方案。</p></aside>
+    <div class="chapter-main">
+      <div class="eyebrow r">VALUE DIRECTION</div><h3 class="sub-title r">理想不靠身份标签证明，<br>而靠长期行动承担。</h3>
+      <div class="anchor-grid r-s">
+        <div class="anchor"><div class="key">人</div><div class="ttl">人的尊严</div><div class="desc">让发展成果更可及，让个体拥有选择和被尊重的空间。</div></div>
+        <div class="anchor"><div class="key">实</div><div class="ttl">真实问题</div><div class="desc">从现实处境出发，以证据、同理心和行动改进问题。</div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ═════════════════════════ TIER 03 ═════════════════════════ -->
-<div class="tier-divider tier-3">
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-stage">TIER THREE · 终极理想</div>
-  <div class="td-rom" data-zh="物种解放">III</div>
-  <div class="td-sub">物种层面的终局 · The Final Frontier</div>
-  <div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div>
-  <div class="td-tape" aria-hidden="true"><span>TIER THREE · 终极理想 · AI SINGULARITY · 物种解放 · 共产主义 · 亲眼见证 · 按需分配 · 物质极大丰富 · TIER THREE · 终极理想 · AI SINGULARITY · 物种解放 · 共产主义 · 亲眼见证 · 按需分配 · 物质极大丰富 · </span></div>
-</div>
-
+<div class="tier-divider tier-3"><div class="td-stage">TIER THREE · 远景</div><div class="td-rom" data-zh="AI 普惠">III</div><div class="td-sub">技术普惠与共同繁荣 · Shared Future</div><div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div></div>
 <section class="chapter" id="tier3" style="--c:var(--violet);--c-soft:var(--violet-soft)">
-  <div class="container">
-    <div class="chapter-grid">
-      <aside class="chapter-aside r-l">
-        <div class="meta">CHAPTER 03 · 终 局</div>
-        <h2 class="name">AI 奇点<br><span class="em">共产主义</span></h2>
-        <p class="blurb">物种层面的终局 —— AI 极致生产力 → 物质极大丰富 → 共产主义。<strong>保持健康，活得够久，亲眼见证奇点的到来。</strong></p>
-        <div class="meta-row">
-          <div class="meta-pair"><span class="k">Horizon</span><span class="v em">∞ Singularity</span></div>
-          <div class="meta-pair"><span class="k">Engine</span><span class="v">AI 极致生产力</span></div>
-          <div class="meta-pair"><span class="k">Outcome</span><span class="v">物质极大丰富</span></div>
-          <div class="meta-pair"><span class="k">Vow</span><span class="v">活得够久 · 亲眼见证</span></div>
-        </div>
-      </aside>
-
-      <div class="chapter-main">
-
-        <div class="feature r">
-          <div class="feat-label">FINAL HORIZON · 物种终局</div>
-          <div class="feat-num">∞<span class="small">AI 奇点 · Singularity</span></div>
-          <div class="feat-math"><strong>AI 极致生产力</strong> → <strong>物质极大丰富</strong> → <strong>按需分配</strong> → <strong>共产主义</strong></div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">01</span>终局路径 · The Path to Singularity</h3>
-          <div class="flow-path r stag">
-            <div class="flow-step">
-              <div class="fs-num">// STEP 01</div>
-              <h5>AI 极致生产力</h5>
-              <p>智能体规模化协作 · 通用人工智能跨越涌现 · 一人即一团队。</p>
-            </div>
-            <div class="flow-step">
-              <div class="fs-num">// STEP 02</div>
-              <h5>物质极大丰富</h5>
-              <p>能源近零、食物充足、医疗住房无差别 · 稀缺被技术终结。</p>
-            </div>
-            <div class="flow-step">
-              <div class="fs-num">// STEP 03</div>
-              <h5>劳动自由化</h5>
-              <p>劳动成为兴趣而非生存所迫 · 人各尽其能，按需分配。</p>
-            </div>
-            <div class="flow-step">
-              <div class="fs-num">// STEP 04</div>
-              <h5>共产主义</h5>
-              <p>"自由人的联合体" · 每个人的全面自由发展，是一切人自由发展的条件。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">02</span>见证之约 · The Witness Pact</h3>
-          <div class="witness r stag">
-            <div class="wit-card">
-              <div class="w-tag">VOW 01 · 健康</div>
-              <h5>保持健康 · 活到 100 岁</h5>
-              <p>"<strong>唯一变量是时间</strong>"。健康不是为了长寿本身，而是为了活到那一刻 —— 亲眼看见奇点临近，亲眼看见物质极大丰富，亲眼看见劳动自由化。</p>
-            </div>
-            <div class="wit-card">
-              <div class="w-tag">VOW 02 · 持续</div>
-              <h5>持续学习 · 不被时代抛下</h5>
-              <p>用 AI 杠杆构建外骨骼 —— <strong>让 AI 被治理、被分工、被收编进人生系统</strong>，三轨分离：理性中枢 · 感性陪伴 · AI 护城河。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="insight r" style="--c:var(--violet)">
-          <p class="q">每个人的<span class="em">全面自由发展</span>，是一切人自由发展的条件。</p>
-          <p class="a">— Karl Marx · 共产党宣言 ·1848</p>
-        </div>
-
+  <div class="container"><div class="chapter-grid">
+    <aside class="chapter-aside r-l"><div class="meta">CHAPTER 03 · 远 景</div><h2 class="name">AI 与<br><span class="em">共同繁荣</span></h2><p class="blurb">关注 AI 如何降低学习、创造和解决问题的门槛，同时守住人的目标、判断、责任与真实体验。</p></aside>
+    <div class="chapter-main">
+      <div class="eyebrow r">LONG HORIZON</div><h3 class="sub-title r">技术不是终点，<br>更广泛的人的发展才是。</h3>
+      <div class="anchor-grid r-s">
+        <div class="anchor"><div class="key">普</div><div class="ttl">能力普惠</div><div class="desc">让更多人获得学习、表达与创造的工具。</div></div>
+        <div class="anchor"><div class="key">责</div><div class="ttl">责任边界</div><div class="desc">尊重隐私、公平与安全，对技术使用结果负责。</div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- ═════════════════════════ CREDO · 生命之约 ═════════════════════════ -->
-<section class="credo" id="credo">
-  <div class="credo-inner">
-    <div class="credo-mark r">℘</div>
-    <div class="credo-pre r">CREDO · 生命之约 &nbsp;·&nbsp; <em>From "How the Steel Was Tempered" / 钢铁是怎样炼成的</em></div>
+<section class="credo" id="credo"><div class="container-narrow"><div class="credo-text r">“目标可以宏大，<br>公开表达必须克制；<br>真正的理想，最后都要回到行动。”</div></div></section>
 
-    <div class="credo-text">
-      <p class="line">人最宝贵的是<span class="gradient-gold">生命</span>。</p>
-      <p class="line">生命属于人，<em style="font-style:italic;color:var(--paper-2);font-family:var(--italic)">只有一次</em>。</p>
-      <p class="line">人的一生应当这样度过 ——</p>
-      <p class="line indent">当他回首往事的时候，不会因为<span style="color:var(--gold)">虚度年华</span>而悔恨，</p>
-      <p class="line indent">也不因<span style="color:var(--gold)">碌碌无为</span>而羞耻；</p>
-      <p class="line">这样，在临终的时候，他就能够说 ——</p>
-      <p class="line climax">"我已把自己整个的生命和全部的精力，<br>都献给了世界上最壮丽的事业 ——<br><span class="battle">为人类的解放而斗争。</span>"</p>
-    </div>
-
-    <div class="credo-attr r">
-      <span class="work">— 尼·奥斯特洛夫斯基 ·《钢铁是怎样炼成的》</span><span class="sep">·</span>保尔·柯察金 之独白
-    </div>
-  </div>
-</section>
-
-<!-- ═════════════════════════ CONVERGENCE ═════════════════════════ -->
 <section class="conv" id="convergence">
-  <div class="container">
-    <div class="conv-h">
-      <div class="eyebrow centered">CONVERGENCE · 三级同频</div>
-      <h2 class="h-title r">三级如何<br><span class="gradient-gold">同频闭环</span></h2>
-    </div>
-
-    <div class="conv-triangle r stag">
-      <div class="conv-col" data-c="1">
-        <div class="conv-mark">i.</div>
-        <h4>立己 ➜ 达人的<br>底气与弹药</h4>
-        <p>FIRE 不是终点，是 <strong>"达人"的起点</strong>。买断时间所有权之后，才能真正不为生计折腰，投入复兴的事业。300 万是地基，不是天花板。</p>
-      </div>
-      <div class="conv-col" data-c="2">
-        <div class="conv-mark">ii.</div>
-        <h4>AI 杠杆<br>同时撬动三级</h4>
-        <p>AI 既助力 <strong>FIRE 财富爆发</strong>(一人抵十人)，又推动 <strong>普惠民生</strong>(七维降本)，更直通 <strong>奇点终局</strong>(物种解放)。同一杠杆，三级共振。</p>
-      </div>
-      <div class="conv-col" data-c="3">
-        <div class="conv-mark">iii.</div>
-        <h4>家国情怀<br>找到现实依托</h4>
-        <p>个人理想不再飘渺。我的奋斗方向，恰是 <strong>国家正在全力奔赴的方向</strong>。"得罪千百人，不负十四亿"为我的理想筑牢防火墙。</p>
-      </div>
+  <div class="container"><div class="eyebrow centered r">CONVERGENCE · 同频闭环</div><h2 class="section-heading centered r">三级如何<span class="em">同频闭环</span></h2>
+    <div class="anchor-grid r-s">
+      <div class="anchor"><div class="key">I</div><div class="ttl">选择权</div><div class="desc">建立可持续生活与成长能力。</div></div>
+      <div class="anchor"><div class="key">II</div><div class="ttl">公共价值</div><div class="desc">把能力用于帮助他人与真实问题。</div></div>
+      <div class="anchor"><div class="key">III</div><div class="ttl">AI 普惠</div><div class="desc">让技术扩展更多人的可能性。</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═════════════════════════ FINAL POSTER ═════════════════════════ -->
-<section class="poster">
-  <div class="poster-content r-s">
-    <div class="poster-pre">FINAL · 立 己 达 人</div>
-    <div class="poster-quote">
-      <span class="l1">勤读力耕</span>
-      <span class="sep"></span>
-      <span class="l2">立己达人</span>
-    </div>
-    <p class="poster-sub">
-      立己 → <strong>FIRE</strong> · 达人 → <strong>复兴 &amp; 奇点</strong><br>
-      一句古训 · 三级阶梯 · 一生奔赴
-    </p>
-    <p class="poster-coda">"此生无悔入华夏 —— 不是因为它完美无缺，而是因为它永远有直面问题、自我革命的勇气，永远把人民的利益放在最高处。"</p>
-  </div>
-</section>
-
-<footer>
-  <div>© 2026 · 追光者 · 三级人生目标</div>
-  <div>勤读力耕 · 立己达人</div>
-  <div>FIRE → 复兴 → 奇点</div>
-</footer>
+<section class="poster"><div class="poster-inner"><div class="poster-seal">追</div><div class="poster-main">勤读力耕 · 立己达人</div><div class="poster-sub">从个人选择权，到公共价值，再到技术普惠。</div></div></section>
 
 <script>
 /* Reveal observer */
@@ -1759,5 +1268,6 @@ document.querySelector('.menu-toggle')?.addEventListener('click', () => {
   start();
 })();
 </script>
+
 </body>
 </html>
