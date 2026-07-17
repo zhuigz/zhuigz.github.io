@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>追光者的人生回忆录</title>
+  <title>追光者的人生回忆录 · 公开版</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -1513,7 +1513,6 @@ a.prologue-scroll:hover .scroll-line {
 </head>
 <body>
 
-<!-- 背景纵深层 · 暖金浮光 orb + 微光粒子 canvas -->
 <div class="bg-depth" aria-hidden="true">
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
@@ -1521,665 +1520,112 @@ a.prologue-scroll:hover .scroll-line {
   <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
 </div>
 
-<!-- 进度条 -->
 <div class="progress-bar" id="progressBar"></div>
 
-<!-- 侧边导航 -->
-<nav class="side-nav" id="sideNav">
+<nav class="side-nav" id="sideNav" aria-label="回忆录章节">
   <a href="#prologue" class="nav-item is-active" data-target="prologue">
-    <span class="nav-dot"></span>
-    <span class="nav-label">序</span>
-    <span class="nav-sub">追光者</span>
+    <span class="nav-dot"></span><span class="nav-label">序</span><span class="nav-sub">公开版</span>
   </a>
   <a href="#ch1" class="nav-item" data-target="ch1">
-    <span class="nav-dot"></span>
-    <span class="nav-label">一</span>
-    <span class="nav-sub">萌芽</span>
+    <span class="nav-dot"></span><span class="nav-label">一</span><span class="nav-sub">萌芽</span>
   </a>
   <a href="#ch2" class="nav-item" data-target="ch2">
-    <span class="nav-dot"></span>
-    <span class="nav-label">二</span>
-    <span class="nav-sub">群星闪耀</span>
+    <span class="nav-dot"></span><span class="nav-label">二</span><span class="nav-sub">求学</span>
   </a>
   <a href="#ch3" class="nav-item" data-target="ch3">
-    <span class="nav-dot"></span>
-    <span class="nav-label">三</span>
-    <span class="nav-sub">月亮与星辰</span>
+    <span class="nav-dot"></span><span class="nav-label">三</span><span class="nav-sub">转向</span>
   </a>
   <a href="#ch4" class="nav-item" data-target="ch4">
-    <span class="nav-dot"></span>
-    <span class="nav-label">四</span>
-    <span class="nav-sub">密度迸发</span>
+    <span class="nav-dot"></span><span class="nav-label">四</span><span class="nav-sub">扎根</span>
   </a>
   <a href="#epilogue" class="nav-item" data-target="epilogue">
-    <span class="nav-dot"></span>
-    <span class="nav-label">尾</span>
-    <span class="nav-sub">少年</span>
+    <span class="nav-dot"></span><span class="nav-label">尾</span><span class="nav-sub">继续</span>
   </a>
 </nav>
 
 <main class="memoir">
-
-  <!-- ============ 序 · 追光者 ============ -->
   <section id="prologue" class="chapter prologue">
     <div class="prologue-inner">
-      <div class="prologue-eyebrow">序 · Prologue</div>
+      <div class="prologue-eyebrow">公开版 · Public Memoir</div>
       <h1 class="prologue-title">追光者的<br>人生回忆录</h1>
       <div class="prologue-divider"></div>
       <p class="prologue-credo">追光的人，<br>终将光芒万丈。</p>
       <div class="prologue-meta">
-        <div><span class="k">出生</span><span class="v">2007.05.25 · 山西朔州</span></div>
-        <div><span class="k">现在</span><span class="v">2026 · 武汉 · 华中农业大学</span></div>
-        <div><span class="k">信念</span><span class="v">为中华民族伟大复兴贡献力量</span></div>
+        <div><span class="k">现在</span><span class="v">武汉 · 华中农业大学</span></div>
+        <div><span class="k">方向</span><span class="v">公共管理 · AI · 内容创作</span></div>
+        <div><span class="k">信念</span><span class="v">长期主义 · 主体性 · 公共价值</span></div>
       </div>
-      <p class="prologue-note">
-        这是一份口述的人生回顾，从出生写到此刻。<br>
-        它不完整，但每一段都真实地走过。
-      </p>
-      <a href="#ch1" class="prologue-scroll">
-        <span>向下翻阅</span>
-        <div class="scroll-line"></div>
-      </a>
+      <p class="prologue-note">这是一份经过匿名化与精简的公开回忆。<br>它保留成长的方向，不公开他人的姓名和私人生活细节。</p>
+      <a href="#ch1" class="prologue-scroll"><span>向下翻阅</span><div class="scroll-line"></div></a>
     </div>
   </section>
 
-  <!-- ============ 第一章 · 萌芽 ============ -->
   <section id="ch1" class="chapter">
     <header class="chapter-header">
-      <div class="chapter-meta">
-        <span class="chapter-number">第一章</span>
-        <span class="chapter-range">2007 — 2019</span>
-      </div>
+      <div class="chapter-meta"><span class="chapter-number">第一章</span><span class="chapter-range">童年</span></div>
       <h2 class="chapter-title">萌芽</h2>
-      <p class="chapter-subtitle">一个空白的世界，慢慢有了颜色</p>
+      <p class="chapter-subtitle">好奇心，是最早出现的一束光</p>
     </header>
-
     <div class="chapter-body">
-      <p class="lede">
-        2007 年 5 月 25 日，我出生在山西朔州——一座五线小城。
-        最早的几年，记忆是一片空白：朔州、寿阳，听妈妈讲过有一个叫刘向左的小朋友，
-        但我自己什么也记不得。
-      </p>
-
-      <p class="para">
-        真正有记忆，要从 7 岁，太原市万柏林区南上庄小学一年级开始。
-        那时候放学早，下午四五点就回家了，每天除了玩还是玩。
-        最深的记忆锚点在二三年级——我有两个特别要好的朋友：
-        <em>郭鹏程</em> 和 <em>王法乃</em>。我们一到三年级几乎形影不离。
-      </p>
-
-      <aside class="marginalia">
-        <span class="marginalia-year">2017</span>
-        <span class="marginalia-label">搬回朔州</span>
-      </aside>
-
-      <p class="para">
-        四年级，我回到朔州，转入<strong>朔城区第九小学</strong>。同年，妹妹出生了——她比我小整整 9 岁。
-      </p>
-
-      <p class="para">
-        五年级，班里转来一位同样从太原回流的同学。莫名其妙地，
-        我们四个人凑在了一起：<em>邸启</em>、<em>胡泽浩</em>、<em>王卓民</em>，还有我。
-        每天疯玩，没什么压力，留下了一段轻快、明亮的小学尾声。这份友谊，一直延续到今天。
-      </p>
-
-      <figure class="quote">
-        <div class="quote-mark">"</div>
-        <blockquote>
-          我现在能记起的小学时光都是开心愉快的。<br>
-          也许我潜意识里，总是把不愉快的部分悄悄抹去了。
-        </blockquote>
-      </figure>
-
-      <div class="friends-grid">
-        <div class="friend-card">
-          <div class="friend-era">太原 · 一至三年级</div>
-          <div class="friend-names">郭鹏程 · 王法乃</div>
-          <div class="friend-note">搬走后断联</div>
-        </div>
-        <div class="friend-card">
-          <div class="friend-era">朔州 · 五至六年级</div>
-          <div class="friend-names">邸启 · 胡泽浩 · 王卓民</div>
-          <div class="friend-note">挚友 · 至今</div>
-        </div>
-      </div>
-
-      <div class="moment">
-        <div class="moment-year">2019</div>
-        <div class="moment-body">
-          <h4 class="moment-title">小升初的岔路口</h4>
-          <div class="moment-text">
-            私立学校的入学考试，500 人里我考了第 9。副校长给妈妈打了好几个电话，
-            本来可以直接进尖子班。但我最终还是选了公立——
-            怕管得太严，物极必反。那时还不知道，这个看似"不够漂亮"的决定，
-            会让我遇见生命中第一位真正的恩师。
-          </div>
-        </div>
-      </div>
+      <p class="lede">我的童年由迁徙、校园、游戏和阅读组成。比起精确的地点和年份，我更愿意记住那些塑造性格的感受：对新事物的好奇，对表达的渴望，以及一次次重新适应环境的能力。</p>
+      <p class="para">小学好友让我第一次理解陪伴。我们一起玩耍、争论，也在不同阶段走向各自的生活。公开版本不记录他们的姓名，只保留这段关系带来的启发：真诚和信任，是一个人很早就能学会的事。</p>
+      <figure class="quote"><div class="quote-mark">"</div><blockquote>回忆不必成为身份档案。<br>真正值得留下的，是它教会我的东西。</blockquote></figure>
     </div>
   </section>
 
-  <!-- ============ 第二章 · 群星闪耀 ============ -->
   <section id="ch2" class="chapter">
     <header class="chapter-header">
-      <div class="chapter-meta">
-        <span class="chapter-number">第二章</span>
-        <span class="chapter-range">2019 — 2022</span>
-      </div>
-      <h2 class="chapter-title">群星闪耀</h2>
-      <p class="chapter-subtitle">一所「考砸」的初中，一段熠熠生辉的青春</p>
+      <div class="chapter-meta"><span class="chapter-number">第二章</span><span class="chapter-range">少年</span></div>
+      <h2 class="chapter-title">求学</h2>
+      <p class="chapter-subtitle">在同学与老师的陪伴中，慢慢建立自己的坐标</p>
     </header>
-
     <div class="chapter-body">
-      <p class="lede">
-        我的初中，是<strong>朔城区第七中学</strong>，209 班。
-        入学考试发挥一般，爸爸"托关系"把我塞进了一个中等偏下的班。
-        他以为是吃亏了。后来我才明白——那是我整个青春最闪亮的一段开端。
-      </p>
-
-      <p class="pull">
-        因为班级整体水平一般，我反而能稳定在<strong>全班第一</strong>，
-        全年级前 20–30 名（最好考过全校第十）。
-      </p>
-
-      <div class="moment">
-        <div class="moment-year">2019—2022</div>
-        <div class="moment-body">
-          <h4 class="moment-title">5:30 的操场</h4>
-          <div class="moment-text">
-            住校，作息规律到极致：22:10 熄灯，5:30 起床。<br>
-            我每天 5:30 准时到操场背书。夏天迎着第一缕日出，冬天在路灯下。
-            操场上几乎空无一人，只有我独自的身影。
-          </div>
-        </div>
-      </div>
-
-      <figure class="quote">
-        <div class="quote-mark">"</div>
-        <blockquote>生活中不要斤斤计较，学习上要分分计较。</blockquote>
-        <figcaption>李青 老师</figcaption>
-      </figure>
-
-      <p class="para">
-        初中班主任 <strong>李青老师</strong>，教语文。但我最爱听的，是他每周的班会课。
-        他给 209 班取的班名叫——
-      </p>
-
-      <h3 class="banner">「 群 星 闪 耀 」</h3>
-
-      <p class="para">
-        取自茨威格的《人类群星闪耀时》。他清楚地知道，
-        这个班不是每个人都会走学习这条路。他对我们说：
-      </p>
-
-      <figure class="quote">
-        <div class="quote-mark">"</div>
-        <blockquote>
-          人生很漫长，三百六十行，行行出状元。<br>
-          你们不必都走学习这条路，<br>
-          但要在自己选定的道路上，做那个领域里最闪耀的那颗星。
-        </blockquote>
-      </figure>
-
-      <p class="para">
-        他举学生的例子：有的去了上海当健身教练，月入三万；
-        有的学电焊，几年后成了工头，也是月入三万。<br>
-        他从不只用成绩评判我们。这件事，我一辈子都会记得。
-      </p>
-
-      <aside class="marginalia">
-        <span class="marginalia-year">月考之后</span>
-        <span class="marginalia-label">航拍中国</span>
-      </aside>
-
-      <p class="para">
-        每次月考结束，他会专门空一整节晚自习放《航拍中国》。
-        关灯，靠在桌上，全班一起沉浸进去。<br>
-        都说人无法同时拥有青春和对青春的感受——但那一刻，我确实拥有了。
-      </p>
-
-      <div class="divider-stars">✦ &nbsp; ✦ &nbsp; ✦</div>
-
-      <!-- 政治底色 -->
-      <div class="politics-block">
-        <div class="politics-eyebrow">生命底色 · 政治</div>
-        <h3 class="politics-title">从一句话开始的信念</h3>
-        <p class="para">初二那年，我开始真正关注政治。课本上那一句——</p>
-        <figure class="quote">
-          <div class="quote-mark">"</div>
-          <blockquote>少年有梦不应止于心动，更应付诸行动。</blockquote>
-        </figure>
-        <p class="para">
-          听得我热血沸腾。初三入团，5:30 的操场上，
-          我除了背课本，还会朗读<em>习近平总书记在纪念五四运动 100 周年大会上的讲话</em>。
-          考试不考，但我就是喜欢。<br>
-          那是一颗种子——它后来长成了我整个人生的底色。
-        </p>
-        <div class="politics-list">
-          <div><span class="dot"></span>初三 · 入团</div>
-          <div><span class="dot"></span>高中 · 选科选政治，阅读《习近平的七年知青岁月》《习近平和大学生朋友们》</div>
-          <div><span class="dot"></span>大学 · 入党积极分子</div>
-          <div><span class="dot"></span>高级目标 · 为中华民族伟大复兴贡献力量</div>
-          <div><span class="dot"></span>终极目标 · 实现共产主义</div>
-        </div>
-      </div>
-
-      <div class="divider-stars">✦ &nbsp; ✦ &nbsp; ✦</div>
-
-      <div class="moment">
-        <div class="moment-year">初二 · 暑假</div>
-        <div class="moment-body">
-          <h4 class="moment-title">一张照片，一个名字</h4>
-          <div class="moment-text">
-            那个暑假的早晨，我跑步时拍下了一张照片——
-            后来它成了我多年的微信头像，也是这个网站的名字：<br>
-            <strong>追光者的人生回忆录</strong>。
-          </div>
-        </div>
-      </div>
-
-      <p class="pull credo">追光的人，终将光芒万丈。</p>
-
-      <div class="friends-grid">
-        <div class="friend-card">
-          <div class="friend-era">同宿舍</div>
-          <div class="friend-names">元鑫</div>
-          <div class="friend-note">9:50 熄灯前 10 分钟一起飞奔回宿舍</div>
-        </div>
-        <div class="friend-card">
-          <div class="friend-era">同班 · 饭搭子</div>
-          <div class="friend-names">王泽雄</div>
-        </div>
-        <div class="friend-card">
-          <div class="friend-era">意外结识 · 不同班</div>
-          <div class="friend-names">李慧文</div>
-          <div class="friend-note">挚友 · 至今</div>
-        </div>
-      </div>
+      <p class="lede">进入更紧张的求学阶段后，我逐渐明白：成长不只是成绩，更是理解自己、承担选择，并在受挫后重新行动。</p>
+      <p class="para">初中班主任教会我自律与责任，高中老师让我看见知识背后的方法。几位同学好友在压力最大的时期给予陪伴。这里不公开学校、班级、分数或姓名，但我一直感谢这些真实存在过的善意。</p>
+      <div class="moment"><div class="moment-year">LEARN</div><div class="moment-body"><h4 class="moment-title">从结果走向方法</h4><div class="moment-text">比一次考试更重要的，是建立长期可复用的学习方法：主动输入、及时整理、勇于求助、持续复盘。</div></div></div>
     </div>
   </section>
 
-  <!-- ============ 第三章 · 月亮与星辰 ============ -->
   <section id="ch3" class="chapter">
     <header class="chapter-header">
-      <div class="chapter-meta">
-        <span class="chapter-number">第三章</span>
-        <span class="chapter-range">2022 — 2025</span>
-      </div>
-      <h2 class="chapter-title">月亮与星辰</h2>
-      <p class="chapter-subtitle">把目标定在月亮，最差也不过迷失在星辰之间</p>
+      <div class="chapter-meta"><span class="chapter-number">第三章</span><span class="chapter-range">选择</span></div>
+      <h2 class="chapter-title">转向</h2>
+      <p class="chapter-subtitle">没有抵达最初设想的终点，也能重新定义道路</p>
     </header>
-
     <div class="chapter-body">
-      <div class="moment">
-        <div class="moment-year">2022.08.01</div>
-        <div class="moment-body">
-          <h4 class="moment-title">凌晨 · 西山 · 第一缕霞光</h4>
-          <div class="moment-text">
-            初升高那个暑假，我和元鑫、王泽雄三个人，凌晨骑车到西山脚下，
-            摸黑爬上山顶，吹着山风、吃着零食、喝着可乐，
-            看太阳一点点把霞光铺满整个天空。<br>
-            那一刻，此生无憾。<br>
-            <em>这条朋友圈记录，让我多年后还能回到那个清爽的凌晨。</em>
-          </div>
-        </div>
-      </div>
-
-      <p class="lede">
-        高中是<em>苦乐交织</em>的三年。山河四省的累，是真的累。
-        但其中也有许多不应被遗忘的明亮瞬间。
-      </p>
-
-      <p class="para">
-        高一在 854 班，班主任张国文（名字像语文老师，其实教数学）。
-        高一下分科——我整体偏文科，但历史和地理特别差，
-        英语和政治反倒一直特别好。无奈之下，选了 <strong>物化政</strong>。
-      </p>
-
-      <!-- 白月光 -->
-      <div class="moonlight">
-        <div class="moonlight-eyebrow">白月光 · 高一</div>
-        <p class="para">
-          她叫 <strong>司梦琪</strong>。<br>
-          一切始于高一上的演讲比赛。<br>
-          后来某次放学，巧合地顺路了——之后一段时间，我们几乎每天放学一起走那段路。
-          甚至被政教主任撞见警告过。<br>
-          我当时一定是喜欢她的。我也猜，她对我多多少少也有一点。<br>
-          但在我那时的认知里，"早恋"只属于差学生。我是好学生，是班干部，<strong>不会越线</strong>。
-          分科之后，她选了文，我选了物化政。<br>
-          自此再无交集，彻底消失在彼此的人生里。
-        </p>
-        <p class="pull">多多少少，还是有点唏嘘。</p>
-      </div>
-
-      <!-- 老师 -->
-      <h3 class="section-title">两位老师 · 一个年级主任</h3>
-
-      <div class="teachers-grid">
-        <div class="teacher-card">
-          <div class="teacher-name">马 婧</div>
-          <div class="teacher-role">高二班主任 · 政治老师</div>
-          <p>30 岁出头，刚结婚不久，幽默、循循善诱，能与学生同频。
-          整个高中，我最喜欢的老师，没有之一——和初中的李青老师，是我心中的两座灯塔。</p>
-        </div>
-        <div class="teacher-card">
-          <div class="teacher-name">赵 晓 萍</div>
-          <div class="teacher-role">高三班主任 · 物理老师</div>
-          <p>马老师生子归来后无暇兼顾，物理老师赵晓萍接班。
-          管得太宽、态度强硬。我偷偷地、长久地、稳稳地，跟她对着干。</p>
-        </div>
-        <div class="teacher-card teacher-card-dim">
-          <div class="teacher-name">那位年级主任</div>
-          <div class="teacher-role">代班四个月</div>
-          <p>典型的势利眼。骂我们最狠的一句是：
-          <em>"你们这还是高三的学生，你们这是吃屎的畜生。"</em><br>
-          我们当时不怒反笑——长大了，无所谓了。</p>
-        </div>
-      </div>
-
-      <!-- 挚友 -->
-      <div class="moment">
-        <div class="moment-year">高中三年</div>
-        <div class="moment-body">
-          <h4 class="moment-title">安炳兆 · 第 5 位挚友</h4>
-          <div class="moment-text">
-            几乎形影不离，吃饭放学都在一起。<br>
-            他家里有从政背景，姥爷曾任县长——这一点让我们的话题极其投机。<br>
-            去年高考他 400 出头，目前在复读。这一年我们几乎没联系。<br>
-            再有一个多月，他要高考了。<br>
-            <strong>衷心祝他超常发挥。</strong>两年多的情谊，不会因为一年的沉默就消散。
-          </div>
-        </div>
-      </div>
-
-      <!-- 梦中情校 -->
-      <div class="renmin">
-        <div class="renmin-eyebrow">意难平 · 梦中情校</div>
-        <h3 class="renmin-title">中国人民大学</h3>
-        <p class="para">
-          建团百年大会上，习总书记引用了 1937 年毛主席为陕北公学成立的题词。
-          后来我才知道——<strong>1937 年正是人大建校的年份，陕北公学就是人大的前身。</strong><br>
-          自那之后，人大成了我整个高中挥之不去的目标。
-        </p>
-        <div class="moment">
-          <div class="moment-year">高二升高三 · 暑假</div>
-          <div class="moment-body">
-            <h4 class="moment-title">北京之行</h4>
-            <div class="moment-text">
-              妈妈非常理解我，专门陪我去了一趟北京，
-              只为让我亲眼看一眼这所梦寐以求的学校。<br>
-              虽然最终差了很多很多，但我从不后悔。
-            </div>
-          </div>
-        </div>
-        <figure class="quote">
-          <div class="quote-mark">"</div>
-          <blockquote>把目标定在月亮，最差也不过迷失在星辰之间。</blockquote>
-        </figure>
-      </div>
-
-      <!-- 高考 -->
-      <h3 class="section-title">2025 · 高考</h3>
-      <div class="gaokao-grid">
-        <div class="gk-cell gk-good">
-          <div class="gk-score">122</div>
-          <div class="gk-name">语文</div>
-          <div class="gk-note">三年最高</div>
-        </div>
-        <div class="gk-cell gk-good">
-          <div class="gk-score">126</div>
-          <div class="gk-name">英语</div>
-        </div>
-        <div class="gk-cell gk-good">
-          <div class="gk-score">87</div>
-          <div class="gk-name">政治</div>
-        </div>
-        <div class="gk-cell">
-          <div class="gk-score">109</div>
-          <div class="gk-name">数学</div>
-        </div>
-        <div class="gk-cell gk-bad">
-          <div class="gk-score">54</div>
-          <div class="gk-name">物理</div>
-        </div>
-        <div class="gk-cell gk-bad">
-          <div class="gk-score">69</div>
-          <div class="gk-name">化学</div>
-        </div>
-      </div>
-      <div class="gk-total">
-        <span class="gk-total-num">567</span>
-        <span class="gk-total-label">总分 / 距人大约差 70–100 分</span>
-      </div>
-
-      <p class="pull">语英政一门比一门好，数理化一门比一门差。</p>
-
-      <figure class="quote">
-        <div class="quote-mark">"</div>
-        <blockquote>
-          高三再苦再累，听一路树成林的直播都会好很多。<br>
-          没有他的陪伴，我也确实很难走到今天。
-        </blockquote>
-        <figcaption>一路相伴的苏醒 · 树成林</figcaption>
-      </figure>
+      <p class="lede">升学让我第一次认真面对理想与现实的距离。我不再用一个分数或一所学校定义自己，而是把注意力转向更长期的问题：我想成为怎样的人，愿意为哪些价值持续行动。</p>
+      <p class="para">公共议题、技术变化和个人成长逐渐汇合成新的方向。我开始相信，公共管理的训练、AI 的工具能力与内容创作可以彼此连接，让想法真正抵达他人。</p>
+      <figure class="quote"><div class="quote-mark">"</div><blockquote>道路可能改变，<br>但向上生长和帮助他人的方向不必改变。</blockquote></figure>
     </div>
   </section>
 
-  <!-- ============ 第四章 · 密度迸发 ============ -->
   <section id="ch4" class="chapter">
     <header class="chapter-header">
-      <div class="chapter-meta">
-        <span class="chapter-number">第四章</span>
-        <span class="chapter-range">2025 — 现在</span>
-      </div>
-      <h2 class="chapter-title">密度迸发</h2>
-      <p class="chapter-subtitle">高考完这一年的密度，比此前 18 年都要多</p>
+      <div class="chapter-meta"><span class="chapter-number">第四章</span><span class="chapter-range">大学</span></div>
+      <h2 class="chapter-title">扎根</h2>
+      <p class="chapter-subtitle">在武汉，把学习、创作与行动连接起来</p>
     </header>
-
     <div class="chapter-body">
-      <!-- 志愿 -->
-      <p class="lede">
-        分数不算高，但老王的志愿课实在太强大——
-        我捡到了一个性价比最高的位置：
-      </p>
-
-      <h3 class="banner-school">华 中 农 业 大 学 · 211</h3>
-      <p class="school-rank">报志愿那年，全国第 42 → 今年冲到 <strong>第 41</strong></p>
-
-      <p class="para">
-        身边对照活生生：李慧文比我分高，去了档次相近的学校；
-        姨妹刘姿慧比我高近 60 分，花 5000 多块找人填志愿，
-        与南京理工一分之差，最后去了华东理工——只比华农高两名。
-      </p>
-
-      <p class="pull">
-        华农前面那 41 所学校的任何专业，我几乎都报不上。<br>
-        这是没有更优解的最优选。
-      </p>
-
-      <!-- 专业的命运 -->
-      <div class="moment">
-        <div class="moment-year">2025.07</div>
-        <div class="moment-body">
-          <h4 class="moment-title">又一次「误打误撞」的安排</h4>
-          <div class="moment-text">
-            45 个志愿，30 多个填的是工商管理——因为政治相关的专业几乎都不能报。
-            唯一能报的政治线是<strong>行政管理</strong>。<br>
-            只有华农那一栏，我填成了<strong>公共管理类</strong>。<br>
-            大一分流后，大概率能进行政管理——所有可选专业里，<em>离政治最近的那一个</em>。
-          </div>
-        </div>
+      <p class="lede">来到华中农业大学后，我在公共管理方向学习，也开始系统探索 AI、内容创作、个人 IP、视觉表达与长期主义。</p>
+      <p class="para">我尝试把输入变成沉淀，把沉淀变成输出，再把输出变成可复用的作品。百万级内容阅读、数百张视觉作品和多个独立网站，只是这段实践的概括结果；更重要的是，我逐渐形成了持续创作和独立完成项目的能力。</p>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">AI</div><div class="stat-label">学习与协作工具</div></div>
+        <div class="stat"><div class="stat-num">IDOP</div><div class="stat-label">内容与个人 IP 方法</div></div>
+        <div class="stat"><div class="stat-num">长期</div><div class="stat-label">行动与复盘原则</div></div>
       </div>
-
-      <figure class="quote">
-        <div class="quote-mark">"</div>
-        <blockquote>
-          和当年「误进 209 班」如出一辙。<br>
-          命运总是把我推到最该去的地方。
-        </blockquote>
-      </figure>
-
-      <!-- 长安三万里 -->
-      <div class="changan">
-        <div class="changan-eyebrow">伏笔 · 人生电影</div>
-        <h3 class="changan-title">长安三万里</h3>
-        <p class="para">
-          2023 年暑假，电影上映，我一刷就被震撼到惊为天人，<br>
-          二刷、三刷、四刷……印象最深的，是那座<strong>黄鹤楼</strong>。<br>
-          万万没想到，命运把我送到了武汉，让我亲眼站在了它的面前。
-        </p>
-      </div>
-
-      <!-- 时间轴 -->
-      <h3 class="section-title">这一年的轨迹</h3>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-month">2025.07–08</div>
-          <div class="tl-desc">浪前 · 拓展人生版图：西安 → 开封</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2025.09</div>
-          <div class="tl-desc">抵达武汉 · 黄鹤楼 · 军训</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2025.10</div>
-          <div class="tl-desc">国庆回家 → 正式开学 · 公众号起步</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2025.11–12</div>
-          <div class="tl-desc">读书 · 听课 · 听前哨 · 期末周</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2026.02</div>
-          <div class="tl-desc">寒假 · 公众号拓展为矩阵 · 家中迎来汤圆🐱</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2026.03.21</div>
-          <div class="tl-desc">杭州线下见面会 · 一年前的梦，一年后实现</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2026.01–03</div>
-          <div class="tl-desc">构建人生系统 · 成长进步体系 · 复盘沉淀机制</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2026.04</div>
-          <div class="tl-desc">南昌 · 与学长五刷《长安三万里》· 第 6 位挚友</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-month">2026.05</div>
-          <div class="tl-desc">长沙之行 · 山河又添一城</div>
-        </div>
-        <div class="tl-item tl-current">
-          <div class="tl-month">2026 · 此刻</div>
-          <div class="tl-desc">个人 IP 正式启动 · 19 岁生日将至</div>
-        </div>
-      </div>
-
-      <!-- 数字 -->
-      <h3 class="section-title">这一年攒下的</h3>
-      <div class="stats-grid">
-        <div class="stat">
-          <div class="stat-num">90<span class="u">万+</span></div>
-          <div class="stat-label">公众号阅读量</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">4500<span class="u">+</span></div>
-          <div class="stat-label">收入（元）</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">300<span class="u">万字</span></div>
-          <div class="stat-label">与 AI 的对话</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">20<span class="u">+</span></div>
-          <div class="stat-label">链接的战友</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">3</div>
-          <div class="stat-label">身份：团支书 · 鄂浪负责人 · 入党积极分子</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">1</div>
-          <div class="stat-label">梦想成真 · 杭州线下</div>
-        </div>
-      </div>
-
-      <!-- 六位挚友 -->
-      <h3 class="section-title">六位挚友 · 一个完整的人生</h3>
-      <div class="friends-final">
-        <div class="ff-row">
-          <div class="ff-era">小学</div>
-          <div class="ff-names">邸启 · 胡泽浩 · 王卓民</div>
-        </div>
-        <div class="ff-row">
-          <div class="ff-era">初中</div>
-          <div class="ff-names">李慧文</div>
-        </div>
-        <div class="ff-row">
-          <div class="ff-era">高中</div>
-          <div class="ff-names">安炳兆</div>
-        </div>
-        <div class="ff-row ff-current">
-          <div class="ff-era">大学</div>
-          <div class="ff-names">喻嘉琦</div>
-        </div>
-      </div>
-
-      <div class="moment">
-        <div class="moment-year">2026.02</div>
-        <div class="moment-body">
-          <h4 class="moment-title">家里的新成员 · 汤圆</h4>
-          <div class="moment-text">
-            我最爱的动物就是猫。妈妈这次像开窍了一样，把汤圆抱回了家。<br>
-            一养就爱不释手——<em>所有家长都逃不过宠物真香定律。</em>
-          </div>
-        </div>
-      </div>
+      <p class="para">我仍然在路上。公开版本不呈现详细日程、身份标签或私人关系，只呈现愿意对外承担的方向：认真学习，持续创造，并把能力用于更广泛的公共价值。</p>
     </div>
   </section>
 
-  <!-- ============ 尾声 ============ -->
   <section id="epilogue" class="chapter epilogue">
     <div class="epilogue-inner">
       <div class="epilogue-eyebrow">尾声 · Epilogue</div>
-      <h2 class="epilogue-title">出走半生<br>归来仍是少年</h2>
+      <h2 class="epilogue-title">道阻且长<br>行则将至</h2>
       <div class="epilogue-divider"></div>
-
-      <p class="ep-para">
-        从 2007 年的朔州，到 2026 年的武汉——<br>
-        将近 19 年的人生，第一次被我从头到尾、不疾不徐地讲了一遍。
-      </p>
-
-      <p class="ep-para">
-        过去我总觉得自己的人生很平庸，没什么值得一提。<br>
-        现在我才知道：不是它平庸，<br>
-        是我从未停下来好好回头看一眼。
-      </p>
-
-      <p class="pull credo" style="color: var(--gold); text-shadow: 0 0 30px rgba(232,184,122,0.35); letter-spacing: 0.15em; font-size: clamp(18px, 2.5vw, 24px); border: none; padding: 30px 0;">
-        道阻且长，行则将至；<br>行而不辍，未来可期！
-      </p>
-
-      <p class="ep-para">
-        我有很好的过去式回忆，<br>
-        有很好的、不断推进的当下，<br>
-        还有很值得期待的未来。<br>
-        那还有什么不好的呢？
-      </p>
-
-      <p class="ep-para ep-future">
-        小时候那个又弱小又懵懂的我，把人生前 18 年活得还算精彩。<br>
-        那么往后的 80 年——<br>
-        指不定有多精彩呢。
-      </p>
-
-      <div class="ep-final">
-        <div class="ep-credo">追光的人，终将光芒万丈。</div>
-        <div class="ep-sig">— 追光者 · 写于 19 岁生日前夕 · 2026.05</div>
-      </div>
+      <p class="ep-para">回忆不是为了证明自己已经走了多远，<br>而是为了看清下一步要往哪里走。</p>
+      <p class="pull credo" style="color: var(--gold); text-shadow: 0 0 30px rgba(232,184,122,0.35); letter-spacing: 0.15em; font-size: clamp(18px, 2.5vw, 24px); border: none; padding: 30px 0;">追光的人，终将光芒万丈。</p>
     </div>
   </section>
-
 </main>
 
 <script>
@@ -2515,5 +1961,6 @@ a.prologue-scroll:hover .scroll-line {
   start();
 })();
 </script>
+
 </body>
 </html>
