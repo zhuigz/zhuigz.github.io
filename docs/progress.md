@@ -4,33 +4,51 @@
 
 ## Now
 
-**REQ-003 GPER 理论页面** — `executing`(框架完成,待细节优化)— 新建 `gper.html`(GPER 成事链路:目标·规划·执行·解题)。**全新亮底·现代理性风**(告别黑金:暖白底 #F7F7F4 + 靛蓝主色 + 四阶段链路色 G靛蓝/P天蓝/E琥珀/R翠绿),全部内容结构化,8 大块完整(Hero 链路图/四主章节/AI 分工表/失败成本/人生系统四卡/风险/启发),48KB,playwright 核验(桌面+整页+移动)上线。PM 后续慢慢优化细节动效。仓库现 13 个 HTML 页。
+**REQ-004 公开站点隐私加固与仓库治理** — `executing`（P0）。
 
-**REQ-002 全站页面视觉美化 — ✅ 全部完成**(10/10,2026-06-23)。10 页逐页 playwright 核验 + 合并发布,用户逐页认可。
+- 私人归档已完成导入与只读核验：提交链、32 个分支、13 个页面及公开图片资源一致
+- 已建立 `docs/public-facts.md` 与 `docs/privacy-rules.md`
+- 正在制作 13 个页面的公开安全版本；线上 `main` 尚未改动
+- 历史重写、强制替换 `main`、删除旧分支与关闭旧 PR 均留到独立维护窗口，并要求操作时再次确认
 
-固化环节:每次视觉改动交付前用 `npx playwright screenshot` 亲自核验渲染(fire round2 翻车教训),不再只靠 grep。
+**REQ-003 GPER 理论页面** — `done`。完整框架已发布并完成桌面、移动端核验；未来细节动效作为新需求登记。
 
 ## Next
 
-1. REQ-002 已收官,无活跃需求。PM 可用 `/pm` 启动新需求,或对某页提具体改进
-2. 任何后续视觉改动沿用 playwright 截图核验环节
+1. 完成逐页脱敏与图片元数据处理
+2. 运行隐私扫描、13 个 URL 和核心交互验证
+3. 用户验收当前公开安全版本
+4. 单独确认后进入公开历史重写与旧分支清理
 
 ## Current Plan
 
-REQ-002 逐页美化(丑→美顺序;依据:审美诊断报告 + 混合方针)。每页改完用户看效果后勾选。
-
-- [x] M1 `workflow.html`(5.0→8.x)✅ 暖金暗底 + 四层浮光 + 噪点纹理 + 圆角 + 三档断点 + reduced-motion;另修 hero 日期去月份。已合并 main 发布(PR #32/#33),用户满意方向
-- [x] M2 `life_undertone.html`(6.5→8.3)✅ 变量统一(52 处)+ canvas/grain/5 orb 纵深 + 多色 cursor;保留倾斜墙/spine/count-up。已合并发布(PR #34)
-- [x] M3 `idop.html`(7.0→8.6)✅ 保留蓝图美学零暖金;青蓝光晕+冷调噪点+蓝图粉尘 canvas;sheet 扫描线显影+轴测装配入场。已合并发布(PR #35)
-- [x] M4 `growth.html`(7.0→8.6)✅ 保留亮底杂志风零侵入;halftone 网点+暗角+封面质感;reveal-stagger+reveal-mask 双层入场;补全 reduced-motion。已合并发布(merge ce29013)
-- [x] M5 `life.html`(7.2→8.6)✅ lightCanvas+3 orb 纵深 + 章节背景透出 + 光标三件套 + 768 断点 + reduced-motion;保留暖棕底/散文排版。已合并发布(merge 464c112)
-- [x] M6 `fire.html`(7.5→克制版)✅ round1:金色 #c9a96a→#d8b87a 升级 + 三档响应式 + reduced-motion;round2 大改翻车(卷轴边饰/歪印章/拆字成语/重叠 bug)已回退止损;克制重做加「东方智慧」5 卡(持盈保泰等四字成语)。playwright 桌面+手机截图核验。已合并发布(merge 9bdbd0a)
-- [x] M7 `ideal.html`(7.6→8.6)✅ canvas 暖金纵深 + reduced-motion;保留最完整调色板/clamp 排版/cursor/tape-scroll。playwright 核验。已合并发布(merge 5555071)
-- [x] M8 `prosper.html`(8.0→8.7)✅ 补全 reduced-motion(CSS+JS canvas 单帧)+ 公式区窄屏 2 列消除孤儿算符;保留 canvas/cursor/铜刻字。playwright 核验。已合并发布(merge 870ced1)
-- [x] M9 `system.html`(8.2→8.7)✅ canvas 暖金微尘 + 768 章名导航替代 + 三档断点 + reduced-motion;保留模块导航轨/三球光晕。playwright 桌面+移动核验。已合并发布(merge 7c4776a)
-- [x] M10 `hkrr.html`(8.5→9.0)✅ hero 公式四色纵深光晕 + audit/case 模块入场;保留 editorial 四色/Fraunces/色温滚动/cursor。playwright 桌面+移动核验。已合并发布(merge 0c8ecb8)
+- [x] 建立并验证私人归档
+- [x] 建立公开事实与隐私规则
+- [x] 修正页面数量、GPER 状态与 REQ-003 CSV 格式
+- [ ] 逐页制作公开安全版
+- [ ] 清除图片敏感元数据
+- [ ] 静态隐私扫描
+- [ ] 桌面与移动端视觉、交互验证
+- [ ] 用户验收与发布
+- [ ] 再次确认后重写历史并清理旧分支、旧 PR 与缓存
 
 ## Latest Handoff
+
+**日期**: 2026-07-18（REQ-004 启动）
+
+**本次完成**
+- 私人归档通过只读完整性核验
+- 公开事实基线、隐私规则、架构说明与需求状态完成统一
+- 已建立独立工程分支，未影响线上 `main`
+
+**当前风险**
+- 历史重写和分支删除属于不可逆维护操作，当前阶段禁止执行
+- GitHub Pages 设置在最终发布前需要再次复核
+- 敏感词清单只用于受控扫描，不写入公开仓库
+
+---
+
+### 历史交接记录
 
 **日期**:2026-06-23(第六次 handoff,REQ-002 收官)
 
