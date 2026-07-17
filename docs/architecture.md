@@ -11,11 +11,12 @@
 
 ## 既有约定(变更需 PRD 显式声明)
 
-- `index.html` 不链接站内其他页面(它们是私密个人资产)。若某需求要改变这一点,必须写进该需求的 `prd.md` 并经 PM 确认。
+- **公开边界**:公开仓库中的所有页面、分支、提交和资源均视为公开信息。未被 `index.html` 链接的页面不等于私密页面;是否建立全站导航属于信息架构决策,但不能作为隐私措施。
 - 滚动入场统一用 `IntersectionObserver` + `.reveal` 模式(参数见 `CLAUDE.md`)。
 - 响应式断点:1024px / 880px / 768px 三档。
 - 所有动画覆盖 `@media (prefers-reduced-motion: reduce)` 降级。
-- 图片资源放 `assets/`,gallery 规格见 `assets/gallery/README.md`。
+- 图片资源放 `assets/`,gallery 规格见 `assets/gallery/README.md`;发布前必须清除可能包含位置、设备或作者隐私的 EXIF/XMP 元数据。
+- 个人事实与内容边界分别以 `docs/public-facts.md`、`docs/privacy-rules.md` 为准。完整原稿不得进入公开仓库或从公开内容链接。
 
 ## 站点构成
 
@@ -27,6 +28,6 @@
   - **双导航**:桌面 `.chapter-rail`(纯 CSS 高亮)+ 移动端 `.chapter-bar`(CSS `content` 切章名 + 展开列表),768px 互斥交接。
   - **lightCanvas 三级密度**:序/终章高密度、中间章低密度、仅页面隐藏停机;`MutationObserver` 监听 `data-chapter` 着色。
   - 仍遵守全部硬约束(自包含、零构建、设计系统、三档断点、reduced-motion 全覆盖);体量 220.5KB。
-  - 信息架构沿用"index.html 不链接私密页面"约定:**站内无任何页面链接到 opus.html**,保持半私密(详见该需求 `prd.md`)。
+  - `opus.html` 当前未被主页导航链接,但仍是公开页面,内容必须独立通过公开安全审查。
 
 后续整合页/新页面可参照此形态;场景引擎模式可复用。
