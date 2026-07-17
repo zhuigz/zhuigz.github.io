@@ -15,17 +15,20 @@ Personal portfolio / "personal manual" (个人说明书) for 曹宗昱 (online a
 ```
 /
 ├── index.html            # Home — 追光者 · 曹宗昱 个人说明书 (entry page)
-├── life.html             # 追光者的人生回忆录
-├── life_undertone.html   # 生命底色 · Life Undertone
+├── life.html             # 追光者的人生回忆录 · 匿名精简公开版
+├── life_undertone.html   # 生命底色 · 公开个人画像
 ├── ideal.html            # 三级人生目标 · 立己达人
 ├── fire.html             # FIRE · 永续之道 (财富自由)
 ├── growth.html           # The Growth Machine · 成长进步体系
-├── system.html           # 人生系统 · 私人仪表盘
+├── system.html           # 人生系统 · 公开概览
 ├── prosper.html          # 人生繁荣公式 · The Prosperity Formula
 ├── idop.html             # IDOP · 个人 IP 核心闭环 (输入·沉淀·输出·产品)
-├── workflow.html         # LSA · 个人 IP 工作流仪表盘
+├── workflow.html         # 个人 IP 内容工作流模板
 ├── hkrr.html             # HKRR — 好内容的四个变量
 ├── opus.html             # 集大成 · 十章沉浸式滚动叙事 (12 内容源精华融合)
+├── gper.html             # GPER · 目标、规划、执行、解题
+├── assets/gallery/       # 主页公开画廊资源
+├── docs/                 # 架构、进度、公开事实与隐私规则
 ├── CLAUDE.md             # This file
 └── README.md             # Minimal placeholder
 ```
@@ -37,7 +40,7 @@ Each `*.html` file is **fully self-contained**: HTML + embedded `<style>` + inli
 | Category | Pages |
 |---|---|
 | Entry / about | `index`, `life`, `life_undertone` |
-| Life goals & frameworks | `ideal`, `fire`, `growth`, `system`, `prosper` |
+| Life goals & frameworks | `ideal`, `fire`, `growth`, `system`, `prosper`, `gper` |
 | Personal IP & content workflow | `idop`, `workflow`, `hkrr` |
 | 集大成整合页 | `opus`(十章沉浸式叙事,融合上述全部内容源,含 AI「同行」章) |
 
@@ -68,7 +71,6 @@ The home page is a single scrolling layout with these sections (in order):
 | `#beliefs`    | 信念          | Core beliefs manifesto, numbered rows |
 | `#topics`     | 聊什么        | Topic chip cloud (`.topics-cloud`) |
 | `#become`     | 想成为怎样的人 | Centered poem lines (`.become-poem`) |
-| `#connect`    | 联系          | WeChat card with copy-to-clipboard button |
 | *(footer)*    | —             | Tagline + copyright line |
 
 Nav links (`<nav class="nav">`) on the home page mirror the main anchors. Other pages have their own page-specific navigation.
@@ -173,7 +175,8 @@ const observer = new IntersectionObserver((entries) => {
 ### Git Branches
 
 - `main` — production branch, auto-deployed by GitHub Pages
-- `claude/*` — AI development branches (one per task)
+- `claude/*` — 历史 AI 开发分支
+- `codex/*` — 当前工程任务分支
 
 ## Conductor Runtime (multi-agent workflow)
 
@@ -188,7 +191,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: REQ-001 (集大成网站 `opus.html`) **done** + merged to `main`. REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). No active requirement — backlog clear.
+**Current status**: REQ-001、REQ-002、REQ-003 均已完成；仓库共有 13 个自包含 HTML 页面。REQ-004（公开站点隐私加固与仓库治理，P0）正在 `codex/privacy-hardening-phase-1` 执行。公开内容必须遵守 `docs/public-facts.md` 与 `docs/privacy-rules.md`；不得把未链接页面视为私密资产。
 
 ## Adding New Content
 
@@ -211,7 +214,7 @@ Duplicate a `.practice-row` div inside `.practice-list`. Set `data-ghost` (short
 ### Updating key data (on `index.html`)
 Numbers are hardcoded in `.metrics-grid` — update `data-num` / `data-suffix` on the `.num` element (the count-up script reads them) plus the `.m-label` / `.m-sub` text.
 
-Note: `index.html` deliberately does **not** link to the other pages on the site — they are private personal assets. Do not add navigation/link sections to them on the home page.
+Note: `index.html` 当前不承担全站导航。未被主页链接的页面仍属于公开仓库与公开信息；任何页面进入公开仓库前都必须满足 `docs/privacy-rules.md`。是否增加导航属于后续信息架构决策。
 
 ### Gallery images (on `index.html`)
 Drop WebP files named `01.webp`–`08.webp` into `assets/gallery/` (long edge ~1600px, ≤400KB each — see `assets/gallery/README.md`). Missing files fall back to styled `.ph` placeholders via the `onerror` handler on each `<img>`. Keep the accordion at ≤12 panels.
