@@ -1069,17 +1069,6 @@ document.querySelectorAll('.dim').forEach(card => {
   });
 });
 
-/* Compute FIRE progress for the first timeline-fire line */
-(function(){
-  const start = new Date('2026-01-23').getTime();
-  const end = new Date('2033-02-01').getTime();
-  const now = Date.now();
-  const pct = Math.max(0, Math.min(1, (now - start) / (end - start))) * 100;
-  document.querySelectorAll('.timeline-fire .tlf-line').forEach((line, i) => {
-    if (i === 0) line.style.setProperty('--p', pct.toFixed(1) + '%');
-  });
-})();
-
 /* Embers */
 const embersContainer = document.getElementById('embers');
 const colors = ['var(--gold)', 'var(--jade)', 'var(--violet)'];
