@@ -592,49 +592,43 @@ section { padding: 130px 0 100px; position: relative; }
 
 /* ===================== METRICS（九宫格数据墙） ===================== */
 .metrics-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.001));
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line-strong); border-radius: 20px; overflow: hidden;
+  background: var(--bg-card);
 }
 .metric-cell {
-  position: relative;
-  padding: 44px 36px 38px;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  transition: background 0.45s ease;
-  overflow: hidden;
+  min-width: 0; position: relative; padding: 28px 22px;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  transition: background .2s ease;
 }
-.metric-cell:nth-child(3n) { border-right: 0; }
-.metric-cell:nth-child(n+7) { border-bottom: 0; }
-.metric-cell::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(420px circle at 50% 110%, rgba(232,184,122,0.10), transparent 60%);
-  opacity: 0; transition: opacity 0.5s;
-}
+.metric-cell:nth-child(4n) { border-right: 0; }
+.metric-cell:nth-last-child(-n+4) { border-bottom: 0; }
 .metric-cell:hover { background: var(--bg-card-hi); }
-.metric-cell:hover::before { opacity: 1; }
 .metric-cell .m-idx {
-  position: absolute; top: 16px; right: 20px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--ink-dim);
+  display: block; margin-bottom: 18px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; color: var(--ink-soft);
 }
 .metric-cell .num {
-  font-family: var(--sans-en); font-weight: 800;
-  font-size: clamp(44px, 6vw, 72px); line-height: 1;
-  background: linear-gradient(160deg, #fff 0%, var(--gold-light) 35%, var(--gold) 60%, var(--gold-deep) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  letter-spacing: -2px;
-  position: relative; z-index: 1;
+  font-family: var(--sans-en); font-weight: 800; font-size: clamp(36px, 3.6vw, 52px);
+  line-height: 1.1; color: var(--gold-light); letter-spacing: -1.5px; white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
-.metric-cell .num .unit { font-size: 0.46em; margin-left: 3px; font-weight: 600; -webkit-text-fill-color: var(--gold); }
-.metric-cell .m-label {
-  margin-top: 14px;
-  font-family: var(--serif-cn); font-size: 16px; font-weight: 700; color: var(--ink);
-  position: relative; z-index: 1;
+.metric-cell .num .unit { font-size: .42em; margin-left: 3px; font-weight: 600; letter-spacing: 0; color: var(--gold); }
+.metric-cell .m-label { margin-top: 14px; font-family: var(--sans-cn); font-size: 15px; font-weight: 600; line-height: 1.65; color: var(--ink); overflow-wrap: anywhere; }
+.metric-cell .m-sub { margin-top: 6px; font-size: 12px; line-height: 1.65; color: var(--ink-soft); overflow-wrap: anywhere; }
+@media (max-width: 1024px) {
+  .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metric-cell:nth-child(n) { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .metric-cell:nth-child(2n) { border-right: 0; }
+  .metric-cell:nth-last-child(-n+2) { border-bottom: 0; }
 }
-.metric-cell .m-sub {
-  margin-top: 4px; font-size: 12.5px; color: var(--ink-soft); font-weight: 300;
-  letter-spacing: 0.5px;
-  position: relative; z-index: 1;
+@media (max-width: 600px) {
+  .metrics-grid { border-radius: 16px; }
+  .metric-cell { padding: 20px 14px; }
+  .metric-cell .m-idx { margin-bottom: 12px; font-size: 9px; }
+  .metric-cell .num { font-size: clamp(28px, 8vw, 40px); letter-spacing: -1px; }
+  .metric-cell .m-label { font-size: 13px; margin-top: 10px; }
+  .metric-cell .m-sub { font-size: 11px; }
 }
 
 /* ===================== PRACTICE（我做过什么） ===================== */
@@ -1126,11 +1120,6 @@ section { padding: 130px 0 100px; position: relative; }
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 1024px) {
-  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-  .metric-cell:nth-child(3n) { border-right: 1px solid var(--line); }
-  .metric-cell:nth-child(2n) { border-right: 0; }
-  .metric-cell:nth-child(n+7) { border-bottom: 1px solid var(--line); }
-  .metric-cell:nth-child(n+8) { border-bottom: 0; }
   .intro-belief { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 880px) {
@@ -1166,9 +1155,6 @@ section { padding: 130px 0 100px; position: relative; }
   section { padding: 90px 0 60px; }
   .section-head { margin-bottom: 40px; }
   .info-grid { grid-template-columns: 1fr; }
-  .metrics-grid { grid-template-columns: 1fr; }
-  .metric-cell { border-right: 0 !important; border-bottom: 1px solid var(--line) !important; padding: 34px 26px 30px; }
-  .metric-cell:last-child { border-bottom: 0 !important; }
   .growth-banner { padding: 36px 22px; }
   .manifesto-row { grid-template-columns: 60px 1fr; gap: 14px; padding: 22px 0; }
   .manifesto-row .m-meta { display: none; }
