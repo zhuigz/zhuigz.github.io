@@ -1187,6 +1187,24 @@ section { padding: 130px 0 100px; position: relative; }
     background: radial-gradient(ellipse 900px 600px at 50% 32%, rgba(232,184,122,0.07), transparent 70%);
   }
 }
+
+/* Gallery refresh: full compositions, readable captions, single-tap viewing. */
+#gallery .fold-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; height: auto; }
+#gallery .fold-panel { display: flex; flex-direction: column; height: auto; flex: none; border-radius: 16px; transition: border-color .2s; }
+#gallery .fold-panel:hover { flex: none; box-shadow: none; border-color: var(--gold-deep); }
+#gallery .fold-panel img { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: #111119; transform: none; filter: none; padding: 10px; }
+#gallery .fold-panel .ph { display: none; }
+#gallery .fold-panel:not(:has(img)) .ph { position: relative; display: flex; aspect-ratio: 4 / 3; }
+#gallery .shade, #gallery .v-label { display: none; }
+#gallery .fold-cap { position: static; opacity: 1; transform: none; padding: 18px 20px; align-items: center; border-top: 1px solid var(--line); }
+#gallery .fold-cap .t { white-space: normal; font-size: 17px; letter-spacing: 1px; }
+#gallery .fold-cap .t small { letter-spacing: 1px; color: var(--ink-soft); }
+#gallery .fold-panel:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+@media (max-width: 600px) {
+  #gallery .fold-gallery { grid-template-columns: 1fr; gap: 20px; }
+  #gallery .fold-cap { padding: 16px; }
+}
+
 </style>
 </head>
 <body>
@@ -1549,10 +1567,10 @@ section { padding: 130px 0 100px; position: relative; }
     <div class="section-head reveal">
       <div class="section-label"><span class="idx">05</span> Visual Works</div>
       <h2 class="section-title">视觉<span class="hl">作品</span></h2>
-      <p class="section-sub">从 <strong>1000+</strong> 张 AI 生成作品里，选出最能代表我审美方向的八张：高级、电影感、光影、秩序、远方感。悬停展开折叠条，点击任意一张全屏观看。</p>
+      <p class="section-sub">从 <strong>1000+</strong> 张 AI 生成作品里，选出最能代表我审美方向的八张：高级、电影感、光影、秩序、远方感。点击任意作品，查看完整大图。</p>
     </div>
 
-    <div class="fold-gallery reveal" aria-label="AI 视觉作品折叠画廊">
+    <div class="fold-gallery reveal" aria-label="AI 视觉作品画廊">
       <figure class="fold-panel" data-title="疾驰 · Velocity">
         <div class="ph ph-1" data-glyph="驰"></div>
         <img src="assets/gallery/01.webp" alt="疾驰 · Velocity — 未来都市中的三辆电动车" loading="lazy" onerror="this.remove()">
@@ -1637,7 +1655,7 @@ section { padding: 130px 0 100px; position: relative; }
 
     <div class="gallery-note">
       <span>GPT-IMAGE / IMAGE-2 · ORIGINAL WORKS</span>
-      <span>500+ GENERATED · 8 SELECTED</span>
+      <span>1000+ GENERATED · 8 SELECTED</span>
     </div>
   </section>
 
@@ -1932,7 +1950,6 @@ sections.forEach(s => navObs.observe(s));
   const lb = document.getElementById('lightbox');
   if (!gallery || !lb) return;
   const panels = Array.from(gallery.querySelectorAll('.fold-panel'));
-  const touch = matchMedia('(hover: none)').matches;
   const stage = lb.querySelector('.lb-stage');
   const cap = lb.querySelector('.lb-cap');
   let cur = 0;
@@ -1960,22 +1977,22 @@ sections.forEach(s => navObs.observe(s));
     lb.classList.add('open');
     lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    lb.querySelector('.lb-close').focus();
   }
   function close() {
     lb.classList.remove('open');
     lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    panels[cur].focus();
   }
 
   panels.forEach((p, i) => {
-    p.addEventListener('click', () => {
-      // 触屏：第一次点按展开折叠条，再点打开大图
-      if (touch && !p.classList.contains('active')) {
-        panels.forEach(q => q.classList.remove('active'));
-        p.classList.add('active');
-        return;
-      }
-      open(i);
+    p.setAttribute('role', 'button');
+    p.setAttribute('tabindex', '0');
+    p.setAttribute('aria-label', '查看作品：' + p.dataset.title);
+    p.addEventListener('click', () => open(i));
+    p.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
     });
   });
   lb.querySelector('.lb-close').addEventListener('click', close);
@@ -1984,11 +2001,16 @@ sections.forEach(s => navObs.observe(s));
   lb.addEventListener('click', (e) => { if (e.target === lb || e.target === stage) close(); });
   document.addEventListener('keydown', (e) => {
     if (!lb.classList.contains('open')) return;
+    if (e.key === 'Tab') {
+      const buttons = Array.from(lb.querySelectorAll('button'));
+      const current = buttons.indexOf(document.activeElement);
+      e.preventDefault();
+      buttons[(current + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length].focus();
+    }
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowLeft') render(cur - 1);
     if (e.key === 'ArrowRight') render(cur + 1);
   });
-  if (touch && panels[0]) panels[0].classList.add('active');
 })();
 
 // —— 向光金粉 canvas（追光者签名画面） ——
