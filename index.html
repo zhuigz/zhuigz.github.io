@@ -1191,6 +1191,38 @@ section { padding: 130px 0 100px; position: relative; }
   #gallery .fold-cap { padding: 16px; }
 }
 
+
+/* Compact touch navigation; native details remains usable without scripts. */
+.mobile-nav { display: none; }
+@media (max-width: 768px) {
+  .nav { padding: 12px 16px; gap: 10px; }
+  .nav-right { gap: 10px; }
+  .nav-logo { white-space: nowrap; }
+  .nav-cta { padding: 10px 12px; letter-spacing: 1px; }
+  .mobile-nav { display: block; }
+  .mobile-nav summary {
+    display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 8px;
+    list-style: none; cursor: pointer; font-size: 13px; color: var(--ink);
+  }
+  .mobile-nav summary::-webkit-details-marker { display: none; }
+  .mobile-nav summary span { color: var(--gold); transition: transform .2s; }
+  .mobile-nav[open] summary span { transform: rotate(45deg); }
+  .mobile-nav-links {
+    position: absolute; top: calc(100% + 8px); left: 16px; right: 16px;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px;
+    padding: 12px; border: 1px solid var(--line-strong); border-radius: 16px;
+    background: #11111a; box-shadow: 0 18px 44px rgba(0,0,0,.4);
+    max-height: 65vh; overflow-y: auto;
+  }
+  .mobile-nav-links a {
+    display: flex; align-items: center; min-height: 44px; padding: 10px 14px;
+    font-size: 14px; color: var(--ink); text-decoration: none; border-radius: 8px;
+  }
+  .mobile-nav-links a:hover { background: var(--bg-card-hi); color: var(--gold); }
+  .mobile-nav summary:focus-visible, .mobile-nav-links a:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 2px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1230,6 +1262,15 @@ section { padding: 130px 0 100px; position: relative; }
       <li><a href="#gallery">视觉</a></li>
       <li><a href="#beliefs">信念</a></li>
     </ul>
+    <details class="mobile-nav">
+      <summary>目录<span aria-hidden="true">＋</span></summary>
+      <div class="mobile-nav-links" aria-label="页面目录">
+        <a href="#intro">自我介绍</a><a href="#about">基本信息</a>
+        <a href="#metrics">关键数据</a><a href="#practice">我的实践</a>
+        <a href="#gallery">视觉作品</a><a href="#beliefs">我的信念</a>
+        <a href="#topics">聊什么</a><a href="#connect">联系我</a>
+      </div>
+    </details>
     <a class="nav-cta" href="#connect">和我聊聊 →</a>
   </div>
 </nav>
@@ -1557,13 +1598,13 @@ section { padding: 130px 0 100px; position: relative; }
     </div>
 
     <div class="fold-gallery reveal" aria-label="AI 视觉作品画廊">
-      <figure class="fold-panel" data-title="疾驰 · Velocity">
+      <figure class="fold-panel" data-title="小米汽车 · Xiaomi Auto">
         <div class="ph ph-1" data-glyph="驰"></div>
-        <img src="assets/gallery/01.webp" alt="疾驰 · Velocity — 未来都市中的三辆电动车" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/01.webp" alt="小米汽车 · Xiaomi Auto — 未来都市中的三辆电动车" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
-        <span class="v-label">疾驰</span>
+        <span class="v-label">小米汽车</span>
         <figcaption class="fold-cap">
-          <span class="t">疾驰<small>Velocity · Industrial</small></span>
+          <span class="t">小米汽车<small>Xiaomi Auto · Industrial</small></span>
           <span class="zoom">点击查看 ↗</span>
         </figcaption>
       </figure>
@@ -1785,6 +1826,29 @@ section { padding: 130px 0 100px; position: relative; }
 </footer>
 
 <script>
+// Mobile directory: close after navigation, outside click, or Escape.
+(function () {
+  const menu = document.querySelector('.mobile-nav');
+  const trigger = menu.querySelector('summary');
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    menu.open = false;
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    }
+  }));
+  document.addEventListener('click', e => {
+    if (menu.open && !menu.contains(e.target)) menu.open = false;
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menu.open) { menu.open = false; trigger.focus(); }
+  });
+  matchMedia('(max-width: 768px)').addEventListener('change', e => {
+    if (!e.matches) menu.open = false;
+  });
+})();
+
 // —— 标记 JS 已启用（hero 入场编排依赖此类） ——
 document.body.classList.add('js');
 
