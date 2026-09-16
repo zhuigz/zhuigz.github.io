@@ -1299,6 +1299,61 @@ section { padding: 130px 0 100px; position: relative; }
   #about .mbti-pill { display: flex; width: fit-content; margin-bottom: 4px; padding: 3px 9px; }
 }
 
+
+/* Practice: compact editorial rows with readable project hierarchy. */
+#practice .section-head { margin-bottom: 30px; }
+#practice .practice-row {
+  grid-template-columns: 44px minmax(0, 1fr); gap: 20px; padding: 28px 8px;
+  overflow: visible; transition: background .2s;
+}
+#practice .practice-row:hover { padding-left: 8px; }
+#practice .practice-row::before, #practice .practice-row::after { display: none; }
+#practice .p-idx {
+  display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+  padding: 0; border: 1px solid rgba(232,184,122,.22); border-radius: 10px;
+  background: linear-gradient(135deg, rgba(232,184,122,.09), transparent);
+  font-size: 14px; font-weight: 500; color: var(--gold);
+}
+#practice .p-body { min-width: 0; }
+#practice .p-head { gap: 10px; margin-bottom: 12px; min-height: 36px; }
+#practice .p-head h3 { font-size: clamp(19px, 2.2vw, 23px); line-height: 1.5; }
+#practice .p-tag { font-size: 9px; letter-spacing: 1.3px; padding: 4px 9px; }
+#practice .p-body p { max-width: 860px; line-height: 1.85; }
+#practice .gold-num {
+  font-size: 19px; white-space: nowrap; padding: 0 3px;
+  border-bottom: 1px solid rgba(232,184,122,.4);
+}
+#practice .p-quote {
+  margin-top: 12px; padding-left: 12px; font-style: normal;
+  font-size: 14px !important; line-height: 1.8;
+  color: var(--ink-soft) !important; border-left: 2px solid rgba(232,184,122,.35);
+}
+#practice .idop-flow {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
+  margin-top: 16px; max-width: 620px;
+}
+#practice .idop-arrow { display: none; }
+#practice .idop-node { min-width: 0; padding: 12px 4px; border-radius: 10px; }
+#practice .idop-node .en { font-size: 11px; letter-spacing: 1px; }
+#practice .idop-note { margin-top: 10px; }
+#practice .sys-chips { gap: 7px; margin-top: 14px; }
+#practice .sys-chips span { padding: 5px 11px; font-size: 12px; letter-spacing: .5px; }
+#practice .growth-banner { margin-top: 36px; padding: 30px 24px; border-radius: 18px; }
+#practice .growth-banner .quote { font-size: clamp(16px, 2vw, 19px); line-height: 1.85; }
+#practice .growth-banner .signature { margin-top: 16px; font-size: 12px; letter-spacing: 2px; }
+@media (max-width: 600px) {
+  #practice .practice-row { display: block; padding: 24px 0; }
+  #practice .practice-row:hover { padding-left: 0; }
+  #practice .p-idx { position: absolute; top: 24px; left: 0; width: 30px; height: 30px; font-size: 12px; border-radius: 8px; }
+  #practice .p-head { padding-left: 42px; min-height: 30px; gap: 6px 10px; }
+  #practice .p-head h3 { font-size: 19px; }
+  #practice .p-body p { font-size: 14px; }
+  #practice .idop-flow { gap: 6px; }
+  #practice .idop-node .en { font-size: 9px; letter-spacing: .3px; }
+  #practice .idop-node .cn { font-size: 13px; }
+  #practice .growth-banner { padding: 26px 18px; }
+}
+
 </style>
 </head>
 <body>
