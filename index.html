@@ -1354,6 +1354,33 @@ section { padding: 130px 0 100px; position: relative; }
   #practice .growth-banner { padding: 26px 18px; }
 }
 
+
+/* Motion refinement: quiet reading, retained hero lighting. */
+.quiet-signature {
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  position: relative; z-index: 1; padding: 30px 24px;
+  font-family: var(--serif-cn); font-size: clamp(15px, 2vw, 20px);
+  letter-spacing: 3px; color: var(--gold);
+}
+.quiet-signature::before, .quiet-signature::after {
+  content: ''; width: clamp(20px, 8vw, 100px); height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-deep)); opacity: .45;
+}
+.quiet-signature::after { transform: rotate(180deg); }
+.signature-star { font-size: 10px; opacity: .65; }
+.tilt { transform-style: flat; will-change: auto; }
+.tilt:hover { transform: none; }
+.reveal { transform: translateY(14px); transition-duration: .4s; }
+.reveal-stagger > * { transform: translateY(10px); transition-duration: .35s; }
+.reveal-stagger.visible > *:nth-child(n) { transition-delay: 0s; }
+@media (max-width: 480px) {
+  .quiet-signature { gap: 12px; letter-spacing: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-delay: 0s !important; transition-delay: 0s !important; }
+  .reveal, .reveal-stagger > * { opacity: 1; transform: none; transition: none; }
+}
 </style>
 </head>
 <body>
@@ -1443,18 +1470,11 @@ section { padding: 130px 0 100px; position: relative; }
   </div>
 </header>
 
-<!-- 巨型描边跑马灯 -->
-<div class="giant-marquee" aria-hidden="true">
-  <div class="giant-track">
-    <span class="giant-item">追<span class="solid">光</span>者</span>
-    <span class="giant-item en">THE LIGHT CHASER</span>
-    <span class="giant-item">道阻且长 <span class="star">✦</span> 行则将至</span>
-    <span class="giant-item en"><span class="solid">REBORN</span> 2026</span>
-    <span class="giant-item">追<span class="solid">光</span>者</span>
-    <span class="giant-item en">THE LIGHT CHASER</span>
-    <span class="giant-item">道阻且长 <span class="star">✦</span> 行则将至</span>
-    <span class="giant-item en"><span class="solid">REBORN</span> 2026</span>
-  </div>
+<!-- 静态金色题记 -->
+<div class="quiet-signature" aria-hidden="true">
+  <span class="signature-star">✦</span>
+  <span>道阻且长，行则将至</span>
+  <span class="signature-star">✦</span>
 </div>
 
 <div class="container">
@@ -2008,38 +2028,11 @@ document.body.classList.add('loaded');
   });
 })();
 
-// —— 3D 卡片倾斜 + 光斑追踪 ——
-(function () {
-  if (matchMedia('(hover: none)').matches) return;
-  const tilts = document.querySelectorAll('.tilt');
-  tilts.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width;
-      const py = (e.clientY - rect.top) / rect.height;
-      const rx = (0.5 - py) * 8;
-      const ry = (px - 0.5) * 10;
-      card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-      card.style.setProperty('--mx', (px * 100) + '%');
-      card.style.setProperty('--my', (py * 100) + '%');
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-})();
-
-// —— 滚动进度 + hero 视差 ——
+// —— 滚动进度：保持正文与首屏稳定，不叠加视差 ——
 const progressBar = document.querySelector('.scroll-progress');
-const heroInner = document.querySelector('.hero-inner');
 window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-  progressBar.style.width = (scrolled * 100) + '%';
-  if (heroInner && window.scrollY < window.innerHeight) {
-    const y = window.scrollY;
-    heroInner.style.transform = 'translateY(' + (y * 0.22) + 'px)';
-    heroInner.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.85)).toFixed(3);
-  }
+  const range = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (range > 0 ? window.scrollY / range * 100 : 0) + '%';
 }, { passive: true });
 
 // —— 数字计数 ——
@@ -2047,7 +2040,11 @@ function animateCount(el) {
   const target = parseInt(el.dataset.num, 10);
   const suffix = el.dataset.suffix || '';
   if (!Number.isFinite(target)) return;
-  const duration = 1600;
+  const duration = 700;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.innerHTML = target + '<span class="unit">' + suffix + '</span>';
+    return;
+  }
   const start = performance.now();
   function tick(now) {
     const p = Math.min((now - start) / duration, 1);
@@ -2072,7 +2069,7 @@ const obs = new IntersectionObserver((entries) => {
       obs.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0, rootMargin: '0px 0px 40px 0px' });
 reveals.forEach(el => obs.observe(el));
 
 // —— 导航高亮 ——
