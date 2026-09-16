@@ -380,13 +380,13 @@ body.loaded .hero-name .glyph:nth-child(1) { animation-delay: 0.4s, 2.6s; }
 body.loaded .hero-name .glyph:nth-child(2) { animation-delay: 0.55s, 2.6s; }
 body.loaded .hero-name .glyph:nth-child(3) { animation-delay: 0.7s, 2.6s; }
 body.loaded .hero-name::after { animation: fadeUp 1.2s ease 0.8s both; }
-body.loaded .hero-alias { animation: fadeUp 1s ease 0.95s both; }
-body.loaded .hero-meta { animation: fadeUp 1s ease 1.05s both; }
-body.loaded .hero-tags { animation: fadeUp 1s ease 1.15s both; }
-body.loaded .hero-mission { animation: fadeUp 1s ease 1.3s both; }
-body.loaded .hero-motto { animation: fadeUp 1s ease 1.45s both; }
-body.loaded .hero-scroll { animation: fadeUp 1s ease 1.7s both; }
-body.loaded .hero-corner { animation: fadeDown 1s ease 1.8s both; }
+body.loaded .hero-alias { animation: fadeUp .65s ease 0.15s both; }
+body.loaded .hero-meta { animation: fadeUp .65s ease 0.2s both; }
+body.loaded .hero-tags { animation: fadeUp .65s ease 0.25s both; }
+body.loaded .hero-mission { animation: fadeUp .65s ease 0.3s both; }
+body.loaded .hero-motto { animation: fadeUp .65s ease 0.35s both; }
+body.loaded .hero-scroll { animation: fadeUp .65s ease 0.4s both; }
+body.loaded .hero-corner { animation: fadeDown .65s ease 0.1s both; }
 
 /* ===================== 巨型描边跑马灯 ===================== */
 .giant-marquee {
@@ -1242,17 +1242,31 @@ section { padding: 130px 0 100px; position: relative; }
     outline: 2px solid var(--gold); outline-offset: 2px;
   }
 }
+
+/* Hero shortcuts: immediately available, with one clear primary action. */
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.hero-action {
+  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+  min-height: 48px; padding: 12px 22px; border-radius: 999px;
+  text-decoration: none; font: 600 14px var(--sans-cn); letter-spacing: .5px;
+  transition: background .2s, box-shadow .2s;
+}
+.hero-action.primary {
+  color: #211a12; background: linear-gradient(120deg, #f4d9a8, #e8b87a);
+  border: 1px solid #f4d9a8; box-shadow: 0 6px 24px rgba(232,184,122,.12);
+}
+.hero-action.primary:hover { box-shadow: 0 6px 30px rgba(232,184,122,.25); }
+.hero-action.secondary { color: var(--gold-light); border: 1px solid rgba(232,184,122,.35); background: rgba(232,184,122,.025); }
+.hero-action.secondary:hover { background: rgba(232,184,122,.1); }
+.hero-action:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 5px; }
+.hero-actions + .hero-motto { margin-top: 24px; }
+@media (max-width: 600px) {
+  .hero-actions { gap: 10px; width: 100%; }
+  .hero-action { padding: 12px 16px; font-size: 13px; gap: 8px; }
+}
 </style>
 </head>
 <body>
-
-<div class="preloader" id="preloader" aria-hidden="true">
-  <div class="pre-core">
-    <div class="pre-ring"></div>
-    <div class="pre-dot"></div>
-    <div class="pre-text">追光者</div>
-  </div>
-</div>
 
 <div class="grain"></div>
 <div class="scroll-progress"></div>
@@ -1323,6 +1337,10 @@ section { padding: 130px 0 100px; position: relative; }
       <span class="tag">终身成长者</span>
     </div>
     <p class="hero-mission">帮助更多年轻人用 AI <em>打破思维钢印</em>，看见人生更多可能</p>
+    <div class="hero-actions">
+      <a class="hero-action primary" href="#gallery">看我的作品 <span aria-hidden="true">↗</span></a>
+      <a class="hero-action secondary" href="#practice">了解我在做什么 <span aria-hidden="true">↓</span></a>
+    </div>
     <div class="hero-motto">
       <em>道阻且长</em>，行则将至<br>
       行而不辍，<em>未来可期</em>
@@ -1872,16 +1890,8 @@ section { padding: 130px 0 100px; position: relative; }
 // —— 标记 JS 已启用（hero 入场编排依赖此类） ——
 document.body.classList.add('js');
 
-// —— Preloader：一点光破暗，随后整页点亮 ——
-(function preloader() {
-  const pre = document.getElementById('preloader');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const delay = reduced ? 0 : 1100;
-  setTimeout(() => {
-    if (pre) pre.classList.add('done');
-    document.body.classList.add('loaded');
-  }, delay);
-})();
+// Start the hero immediately, without a blocking loading screen.
+document.body.classList.add('loaded');
 
 // —— 光标即是光：跟随鼠标的柔光 ——
 (function cursorGlow() {
