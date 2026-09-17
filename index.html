@@ -1438,6 +1438,43 @@ section { padding: 130px 0 100px; position: relative; }
   #connect .copy-btn { width: 100%; }
 }
 
+
+/* Mobile usability: keep image controls clear of artwork and safe screen edges. */
+#copyStatus { font-size: 13px; color: var(--ink-soft); line-height: 1.7; margin-top: 12px; }
+#copyStatus:empty { display: none; }
+#wechatId { -webkit-user-select: all; user-select: all; }
+.lb-close:focus-visible, .lb-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 768px) {
+  .mobile-nav-links {
+    max-height: min(65vh, calc(100dvh - 100px));
+    overscroll-behavior: contain;
+  }
+  .mobile-nav-links a { min-height: 44px; }
+  .lightbox {
+    height: 100%; height: 100dvh;
+    padding: calc(70px + env(safe-area-inset-top, 0px)) 12px calc(92px + env(safe-area-inset-bottom, 0px));
+  }
+  .lb-stage { width: 100%; min-height: 0; flex: 1; }
+  .lb-stage img, .lb-stage .ph {
+    max-width: 100%; max-height: 100%;
+    max-height: calc(100dvh - 220px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    object-fit: contain; border-radius: 10px;
+  }
+  .lb-cap { flex-shrink: 0; margin-top: 12px; font-size: 13px; letter-spacing: 1px; }
+  .lb-close { top: calc(12px + env(safe-area-inset-top, 0px)); right: 14px; }
+  .lb-btn { top: auto; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: none; width: 48px; height: 48px; }
+  .lb-prev { left: calc(50% - 64px); }
+  .lb-next { left: calc(50% + 16px); right: auto; }
+}
+@media (max-width: 360px) {
+  .nav { padding-left: 12px; padding-right: 12px; gap: 6px; }
+  .nav-logo { font-size: 16px; gap: 6px; }
+  .nav-right { gap: 6px; }
+  .nav-cta { padding: 10px; font-size: 11px; letter-spacing: 0; }
+  .mobile-nav summary { padding: 0 9px; }
+  .hero-alias { flex-wrap: wrap; justify-content: center; gap: 10px; letter-spacing: 3px; }
+  #practice .idop-node .en { font-size: 10px; letter-spacing: 0; }
+}
 </style>
 </head>
 <body>
@@ -2007,7 +2044,8 @@ section { padding: 130px 0 100px; position: relative; }
         <div class="label">WeChat</div>
         <div class="value" id="wechatId">czy18534901307</div>
         <div class="hint">添加时请备注「追光」</div>
-        <button class="copy-btn" id="copyBtn" type="button">复制微信号</button>
+        <button class="copy-btn" id="copyBtn" type="button" aria-describedby="copyStatus">复制微信号</button>
+        <p id="copyStatus" role="status" aria-live="polite"></p>
       </div>
     </div>
     <p class="connect-foot reveal"><em>追光的人，终将光芒万丈。</em></p>
@@ -2015,7 +2053,7 @@ section { padding: 130px 0 100px; position: relative; }
 
 </div>
 
-<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="作品大图">
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="作品大图">
   <button class="lb-close" type="button" aria-label="关闭">✕</button>
   <button class="lb-btn lb-prev" type="button" aria-label="上一张">←</button>
   <div class="lb-stage"></div>
@@ -2141,29 +2179,34 @@ const navObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 sections.forEach(s => navObs.observe(s));
 
-// —— 复制微信号 ——
+// —— 复制微信号：明确区分成功与手动复制 ——
 (function copyWechat() {
   const btn = document.getElementById('copyBtn');
   const idEl = document.getElementById('wechatId');
-  if (!btn || !idEl) return;
-  btn.addEventListener('click', () => {
-    const text = idEl.textContent.trim();
-    const done = () => {
-      btn.textContent = '已复制 ✓ 备注「追光」';
-      setTimeout(() => { btn.textContent = '复制微信号'; }, 2200);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done).catch(() => {
-        const sel = window.getSelection();
+  const status = document.getElementById('copyStatus');
+  if (!btn || !idEl || !status) return;
+  let resetTimer;
+  btn.addEventListener('click', async () => {
+    clearTimeout(resetTimer);
+    btn.disabled = true;
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(idEl.textContent.trim());
+      btn.textContent = '已复制 ✓';
+      status.textContent = '微信号已复制，添加时请备注「追光」。';
+    } catch {
+      const sel = window.getSelection();
+      if (sel) {
         const range = document.createRange();
         range.selectNodeContents(idEl);
-        sel.removeAllRanges(); sel.addRange(range);
-      });
-    } else {
-      const sel = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(idEl);
-      sel.removeAllRanges(); sel.addRange(range);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      btn.textContent = '重试复制';
+      status.textContent = '未能自动复制，请长按上方微信号，选择「复制」。';
+    } finally {
+      btn.disabled = false;
+      resetTimer = setTimeout(() => { btn.textContent = '复制微信号'; }, 3000);
     }
   });
 })();
@@ -2207,7 +2250,7 @@ sections.forEach(s => navObs.observe(s));
     lb.classList.remove('open');
     lb.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    panels[cur].focus();
+    panels[cur].focus({ preventScroll: true });
   }
 
   panels.forEach((p, i) => {
