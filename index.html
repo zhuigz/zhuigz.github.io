@@ -1500,6 +1500,43 @@ section { padding: 130px 0 100px; position: relative; }
   #gallery .fold-cap .t small { font-size: 11px; }
 }
 
+
+/* Hero hierarchy: one central identity, with supporting details in flow. */
+.hero { padding: 116px 24px 32px; }
+.hero-inner { width: 100%; max-width: 960px; }
+.hero-badge { margin-bottom: 22px; }
+.hero-eyebrow { margin-bottom: 22px; letter-spacing: 2.5px; }
+.hero-alias { margin-top: 28px; }
+.hero-meta { display: flex; flex-direction: column; gap: 3px; margin-top: 16px; }
+.hero-school { font-family: var(--sans-cn); letter-spacing: 1.5px; }
+.hero-tags { margin-top: 22px; gap: 8px; }
+.hero-tags .tag { padding: 6px 14px; font-size: 12px; letter-spacing: 1px; }
+.hero-mission { margin-top: 24px; color: var(--ink-reading); text-wrap: balance; }
+.hero-actions { margin-top: 22px; }
+.hero-actions + .hero-motto { margin-top: 30px; }
+.hero-motto { padding: 18px 42px; font-size: clamp(17px, 2vw, 21px); }
+.hero > .status-pill {
+  position: static; z-index: 2; display: inline-flex; margin-top: 24px;
+  padding: 0; border: 0; border-radius: 0; background: none; backdrop-filter: none;
+  font-size: 10px; letter-spacing: 1px; color: var(--ink-caption);
+}
+.hero > .status-pill .pulse-dot { width: 4px; height: 4px; animation: none; }
+.hero-scroll { position: static; transform: none; margin-top: 18px; gap: 6px; font-size: 9px; }
+.hero-scroll .line { height: 24px; }
+@media (max-width: 768px) {
+  .hero { padding: 106px 20px 28px; }
+  .hero-badge { font-size: 10px; letter-spacing: 2.5px; padding: 7px 16px; margin-bottom: 20px; }
+  .hero-eyebrow { font-size: 13px; letter-spacing: 1.5px; margin-bottom: 20px; }
+  .hero-alias { margin-top: 24px; gap: 12px; letter-spacing: 3px; flex-wrap: wrap; justify-content: center; }
+  .hero-alias .cn { letter-spacing: 4px; }
+  .hero-meta { gap: 5px; }
+  .hero-school { letter-spacing: .7px; }
+  .hero-tags { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 340px); gap: 8px; }
+  .hero-tags .tag { justify-content: center; padding: 7px 8px; font-size: 12px; letter-spacing: .5px; }
+  .hero-mission { max-width: 360px; line-height: 1.9; }
+  .hero-motto { padding: 16px 28px; }
+}
+
 </style>
 </head>
 <body>
@@ -1515,10 +1552,6 @@ section { padding: 130px 0 100px; position: relative; }
   <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
 </div>
 
-<div class="status-pill" aria-hidden="true">
-  <span class="pulse-dot"></span>
-  <span>更新于 2026.09.16 · 武汉</span>
-</div>
 
 <nav class="nav">
   <div class="nav-logo">追光者</div>
@@ -1553,8 +1586,6 @@ section { padding: 130px 0 100px; position: relative; }
     <div class="beam beam-3"></div>
   </div>
 
-  <div class="hero-corner tl">INDEX · 002<br>个人说明书 · v2.0 · REBORN</div>
-  <div class="hero-corner tr">CHASING THE LIGHT<br><span class="v">since 2007 · 朔州 → 武汉</span></div>
 
   <div class="hero-inner">
     <div class="hero-badge">Personal Manual · v2.0</div>
@@ -1565,7 +1596,7 @@ section { padding: 130px 0 100px; position: relative; }
       <span class="sep">·</span>
       <span>The Light Chaser</span>
     </p>
-    <p class="hero-meta">2007 · 山西朔州 <span class="arrow">→</span> 湖北武汉 ┊ 华中农业大学 · 行政管理专业在读</p>
+    <p class="hero-meta"><span>2007 · 山西朔州 <span class="arrow">→</span> 湖北武汉</span><span class="hero-school">华中农业大学 · 行政管理专业在读</span></p>
     <div class="hero-tags">
       <span class="tag">AI 原生实践者</span>
       <span class="tag">个人IP起步者</span>
@@ -1583,7 +1614,12 @@ section { padding: 130px 0 100px; position: relative; }
     </div>
   </div>
 
-  <div class="hero-scroll">
+<div class="status-pill">
+  <span class="pulse-dot"></span>
+  <span>更新于 2026.09.16 · 武汉</span>
+</div>
+
+  <div class="hero-scroll" aria-hidden="true">
     <span>SCROLL</span>
     <div class="line"></div>
   </div>
