@@ -1569,9 +1569,30 @@ section { padding: 130px 0 100px; position: relative; }
 .footer-light { color: var(--gold-light); }
 .footer-light svg { width: 34px; height: 34px; display: block; }
 
+
+/* Navigation: top link and one clear chapter state. */
+.nav-logo { text-decoration: none; }
+.nav-logo:hover { color: var(--gold-light); }
+.nav-logo:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; border-radius: 2px; }
+.nav-cta.active { border-color: var(--gold); box-shadow: 0 0 18px rgba(232,184,122,.12); }
+.mobile-nav summary .nav-current {
+  font: 500 10px var(--mono); letter-spacing: 0; color: var(--gold);
+  min-width: 0;
+}
+.mobile-nav summary .nav-current:empty { display: none; }
+.mobile-nav-links a.active {
+  border-color: rgba(232,184,122,.58);
+  background: linear-gradient(135deg, rgba(232,184,122,.16), rgba(232,184,122,.045));
+  color: var(--gold-light);
+}
+.mobile-nav-links a.active::before { opacity: 1; }
+@media (max-width: 768px) {
+  .mobile-nav-links a:last-child { grid-column: 1 / -1; justify-content: center; }
+}
+
 </style>
 </head>
-<body>
+<body id="top">
 
 <div class="grain"></div>
 <div class="scroll-progress"></div>
@@ -1586,7 +1607,7 @@ section { padding: 130px 0 100px; position: relative; }
 
 
 <nav class="nav">
-  <div class="nav-logo">追光者</div>
+  <a class="nav-logo" href="#top" aria-label="追光者，返回首页">追光者</a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#intro">介绍</a></li>
@@ -1597,13 +1618,13 @@ section { padding: 130px 0 100px; position: relative; }
       <li><a href="#beliefs">信念</a></li>
     </ul>
     <details class="mobile-nav">
-      <summary>目录<span aria-hidden="true">＋</span></summary>
+      <summary>目录<span class="nav-current" aria-hidden="true"></span><span aria-hidden="true">＋</span></summary>
       <div class="mobile-nav-links" aria-label="页面目录">
         <div class="mobile-nav-heading" aria-hidden="true">随光探索<small>EXPLORE</small></div>
         <a href="#intro">自我介绍</a><a href="#about">基本信息</a>
         <a href="#metrics">关键数据</a><a href="#practice">我的实践</a>
         <a href="#gallery">视觉作品</a><a href="#beliefs">我的信念</a>
-        <a href="#topics">聊什么</a><a href="#connect">联系我</a>
+        <a href="#topics">聊什么</a><a href="#become">我想成为</a><a href="#connect">联系我</a>
       </div>
     </details>
     <a class="nav-cta" href="#connect">和我聊聊 →</a>
@@ -2260,17 +2281,40 @@ const obs = new IntersectionObserver((entries) => {
 }, { threshold: 0, rootMargin: '0px 0px 40px 0px' });
 reveals.forEach(el => obs.observe(el));
 
-// —— 导航高亮 ——
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-const navObs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id));
+// —— 导航高亮：单次确定当前章节，避免交界处多个观察回调互相覆盖 ——
+(function trackSection() {
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  const links = Array.from(document.querySelectorAll('.nav-links a, .mobile-nav-links a, .nav-cta'));
+  const current = document.querySelector('.mobile-nav .nav-current');
+  let queued = false;
+
+  function update() {
+    queued = false;
+    const readingLine = window.scrollY + Math.min(window.innerHeight * 0.34, 260);
+    let activeIndex = -1;
+    sections.forEach((section, index) => {
+      if (section.offsetTop <= readingLine) activeIndex = index;
+    });
+    const activeId = activeIndex < 0 ? '' : sections[activeIndex].id;
+    links.forEach(link => {
+      const selected = link.getAttribute('href') === '#' + activeId && !!activeId;
+      link.classList.toggle('active', selected);
+      if (selected) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    if (current) current.textContent = activeIndex < 0 ? '' : String(activeIndex + 1).padStart(2, '0');
+  }
+  function schedule() {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(update);
     }
-  });
-}, { threshold: 0.3 });
-sections.forEach(s => navObs.observe(s));
+  }
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('hashchange', schedule);
+  update();
+})();
 
 // —— 复制微信号：明确区分成功与手动复制 ——
 (function copyWechat() {
