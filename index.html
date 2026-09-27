@@ -1559,6 +1559,16 @@ section { padding: 130px 0 100px; position: relative; }
   #gallery .fold-panel img { padding: 6px; }
 }
 
+
+/* One warm-gold line icon language across profile and contact. */
+#about .info-card .icon, #connect .connect-card .icon { color: var(--gold); }
+#about .info-card .icon svg, #connect .connect-card .icon svg {
+  width: 19px; height: 19px; display: block; flex: none;
+}
+#connect .connect-card .icon svg { width: 24px; height: 24px; }
+.footer-light { color: var(--gold-light); }
+.footer-light svg { width: 34px; height: 34px; display: block; }
+
 </style>
 </head>
 <body>
@@ -1702,27 +1712,27 @@ section { padding: 130px 0 100px; position: relative; }
     </div>
     <div class="info-grid reveal-stagger">
       <div class="info-card tilt">
-        <span class="icon">🧬</span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h8M6 8v8M18 8v8M8 18h8M8 8l8 8"/></svg></span>
         <div class="label">MBTI</div>
         <div class="value"><span class="mbti-pill">ENFJ-A</span> 主人公</div>
       </div>
       <div class="info-card tilt">
-        <span class="icon">🏠</span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10Z"/><path d="M9 21v-7h6v7"/></svg></span>
         <div class="label">籍贯 · 城市</div>
         <div class="value">山西朔州 <small>/ 求学于湖北武汉</small></div>
       </div>
       <div class="info-card tilt">
-        <span class="icon">🎓</span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Z"/><path d="M6 11v6c3.5 3 8.5 3 12 0v-6M22 9v7"/></svg></span>
         <div class="label">学校 · 专业</div>
         <div class="value">华中农业大学 · 行政管理专业</div>
       </div>
       <div class="info-card tilt">
-        <span class="icon">🎯</span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
         <div class="label">兴趣</div>
         <div class="value">AI · 个人IP · FIRE · 摄影 · 羽毛球 · 口琴 · 阅读 · 电影 · 旅游 · 猫</div>
       </div>
       <div class="info-card tilt">
-        <span class="icon">✦</span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 14.7 9.3 21.5 12l-6.8 2.7L12 21.5l-2.7-6.8L2.5 12l6.8-2.7L12 2.5Z"/></svg></span>
         <div class="label">长期关键词</div>
         <div class="value kw-chips">
           <span>AI 原生</span><span>个人IP</span><span>长期主义</span><span>财富自由</span><span>复利效应</span><span>主体性</span><span>有情有义</span><span>理想主义</span>
@@ -2123,7 +2133,7 @@ section { padding: 130px 0 100px; position: relative; }
     </div>
     <div class="connect-wrap reveal">
       <div class="connect-card tilt">
-        <span class="icon">💬</span>
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4.1-1L3 21l1.8-5.1A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11.5h8M8 15h5"/></svg></span>
         <div class="label">WeChat</div>
         <div class="value" id="wechatId">czy18534901307</div>
         <div class="hint">添加时请备注「追光」</div>
@@ -2145,7 +2155,7 @@ section { padding: 130px 0 100px; position: relative; }
 </div>
 
 <footer class="footer">
-  <div class="footer-light">☀️</div>
+  <div class="footer-light" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 1.75v2.5M12 19.75v2.5M1.75 12h2.5M19.75 12h2.5M4.75 4.75l1.8 1.8m10.9 10.9 1.8 1.8M19.25 4.75l-1.8 1.8M6.55 17.45l-1.8 1.8"/></svg></div>
   <div class="footer-text">追光的人，终将光芒万丈</div>
   <div class="footer-sub">THE LIGHT CHASER</div>
   <div class="footer-line">追光者 · 曹宗昱 · 个人说明书 v2.0 · REBORN · 2026</div>
