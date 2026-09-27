@@ -2290,10 +2290,10 @@ reveals.forEach(el => obs.observe(el));
 
   function update() {
     queued = false;
-    const readingLine = window.scrollY + Math.min(window.innerHeight * 0.34, 260);
+    const readingLine = Math.min(window.innerHeight * 0.34, 260);
     let activeIndex = -1;
     sections.forEach((section, index) => {
-      if (section.offsetTop <= readingLine) activeIndex = index;
+      if (section.getBoundingClientRect().top <= readingLine) activeIndex = index;
     });
     const activeId = activeIndex < 0 ? '' : sections[activeIndex].id;
     links.forEach(link => {
@@ -2313,6 +2313,7 @@ reveals.forEach(el => obs.observe(el));
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', schedule);
   window.addEventListener('hashchange', schedule);
+  window.addEventListener('load', schedule, { once: true });
   update();
 })();
 
