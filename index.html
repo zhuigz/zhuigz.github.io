@@ -882,6 +882,7 @@ section { padding: 130px 0 100px; position: relative; }
   margin-top: 22px; text-align: center;
   font-family: var(--serif-cn); font-size: 15px; letter-spacing: 2px; color: var(--ink);
 }
+.lb-hint { display: none; }
 .lb-cap .lb-idx { font-family: var(--mono); font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-right: 14px; }
 .lb-btn {
   position: absolute; top: 50%; transform: translateY(-50%);
@@ -1209,7 +1210,7 @@ section { padding: 130px 0 100px; position: relative; }
   .mobile-nav summary::-webkit-details-marker { display: none; }
   .mobile-nav summary span { color: var(--gold); transition: transform .2s; }
   .mobile-nav[open] summary { border-color: rgba(232,184,122,.5); }
-  .mobile-nav[open] summary span { transform: rotate(45deg); }
+  .mobile-nav[open] summary span:last-child { transform: rotate(45deg); }
   .mobile-nav-links {
     position: absolute; top: calc(100% + 10px); left: 16px; right: 16px;
     display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
@@ -1454,13 +1455,14 @@ section { padding: 130px 0 100px; position: relative; }
     height: 100%; height: 100dvh;
     padding: calc(70px + env(safe-area-inset-top, 0px)) 12px calc(92px + env(safe-area-inset-bottom, 0px));
   }
-  .lb-stage { width: 100%; min-height: 0; flex: 1; }
+  .lb-stage { width: 100%; min-height: 0; flex: 1; touch-action: pan-y; }
   .lb-stage img, .lb-stage .ph {
     max-width: 100%; max-height: 100%;
     max-height: calc(100dvh - 220px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
     object-fit: contain; border-radius: 10px;
   }
   .lb-cap { flex-shrink: 0; margin-top: 12px; font-size: 13px; letter-spacing: 1px; }
+  .lb-hint { display: block; flex-shrink: 0; margin-top: 8px; color: var(--ink-caption); font: 11px var(--sans-cn); letter-spacing: 1px; }
   .lb-close { top: calc(12px + env(safe-area-inset-top, 0px)); right: 14px; }
   .lb-btn { top: auto; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: none; width: 48px; height: 48px; }
   .lb-prev { left: calc(50% - 64px); }
@@ -2173,6 +2175,7 @@ section { padding: 130px 0 100px; position: relative; }
   <div class="lb-stage"></div>
   <button class="lb-btn lb-next" type="button" aria-label="下一张">→</button>
   <div class="lb-cap"></div>
+  <p class="lb-hint" aria-hidden="true">左右滑动，继续看下一张</p>
 </div>
 
 <footer class="footer">
@@ -2403,6 +2406,20 @@ reveals.forEach(el => obs.observe(el));
   lb.querySelector('.lb-close').addEventListener('click', close);
   lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); render(cur - 1); });
   lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); render(cur + 1); });
+  let swipeStart = null;
+  stage.addEventListener('touchstart', e => {
+    if (!lb.classList.contains('open') || e.touches.length !== 1) { swipeStart = null; return; }
+    swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    if (!swipeStart || !lb.classList.contains('open') || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].clientX - swipeStart.x;
+    const dy = e.changedTouches[0].clientY - swipeStart.y;
+    swipeStart = null;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+    render(cur + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+  stage.addEventListener('touchcancel', () => { swipeStart = null; }, { passive: true });
   lb.addEventListener('click', (e) => { if (e.target === lb || e.target === stage) close(); });
   document.addEventListener('keydown', (e) => {
     if (!lb.classList.contains('open')) return;
