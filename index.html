@@ -1691,7 +1691,7 @@ section { padding: 130px 0 100px; position: relative; }
 
 <div class="status-pill">
   <span class="pulse-dot"></span>
-  <span>更新于 2026.09.16 · 武汉</span>
+  <span>更新于 2026.09.29 · 武汉</span>
 </div>
 
   <div class="hero-scroll" aria-hidden="true">
@@ -1797,49 +1797,49 @@ section { padding: 130px 0 100px; position: relative; }
     <div class="metrics-grid reveal-stagger">
       <div class="metric-cell">
         <span class="m-idx">DATA · 01</span>
-        <div class="num" data-num="100" data-suffix="W+">0<span class="unit">W+</span></div>
+        <div class="num">100<span class="unit">W+</span></div>
         <div class="m-label">公众号矩阵累计阅读量</div>
         <div class="m-sub">文字带来的覆盖与影响力</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 02</span>
-        <div class="num" data-num="5000" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="num">5000<span class="unit">+</span></div>
         <div class="m-label">AI 内容生产第一桶金</div>
         <div class="m-sub">公众号与 AI 内容变现</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 03</span>
-        <div class="num" data-num="1000" data-suffix="H+">0<span class="unit">H+</span></div>
+        <div class="num">1000<span class="unit">H+</span></div>
         <div class="m-label">成长认知类学习时长</div>
         <div class="m-sub">课程 · 播客 · 直播累计</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 04</span>
-        <div class="num" data-num="1000" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="num">1000<span class="unit">+</span></div>
         <div class="m-label">AI 视觉作品</div>
         <div class="m-sub">GPT-Image / Image-2.5 生成</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 05</span>
-        <div class="num" data-num="10" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="num">10<span class="unit">+</span></div>
         <div class="m-label">独立搭建的网站</div>
         <div class="m-sub">Vibe Coding · 想法到上线</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 06</span>
-        <div class="num" data-num="100" data-suffix="天+">0<span class="unit">天+</span></div>
+        <div class="num">100<span class="unit">天+</span></div>
         <div class="m-label">连续复盘与自我记录</div>
         <div class="m-sub">每天一次的自我对话</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 07</span>
-        <div class="num" data-num="30" data-suffix="+">0<span class="unit">+</span></div>
+        <div class="num">30<span class="unit">+</span></div>
         <div class="m-label">高质量非虚构书籍</div>
         <div class="m-sub">深读而非翻完</div>
       </div>
       <div class="metric-cell">
         <span class="m-idx">DATA · 08</span>
-        <div class="num" data-num="10" data-suffix="w+">0<span class="unit">w+</span></div>
+        <div class="num">10<span class="unit">w+</span></div>
         <div class="m-label">运营的视频号播放量</div>
         <div class="m-sub">AI漫剧持续创作</div>
       </div>
@@ -2267,34 +2267,12 @@ window.addEventListener('scroll', () => {
   progressBar.style.width = (range > 0 ? window.scrollY / range * 100 : 0) + '%';
 }, { passive: true });
 
-// —— 数字计数 ——
-function animateCount(el) {
-  const target = parseInt(el.dataset.num, 10);
-  const suffix = el.dataset.suffix || '';
-  if (!Number.isFinite(target)) return;
-  const duration = 700;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    el.innerHTML = target + '<span class="unit">' + suffix + '</span>';
-    return;
-  }
-  const start = performance.now();
-  function tick(now) {
-    const p = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    const v = Math.floor(eased * target);
-    el.innerHTML = v + '<span class="unit">' + suffix + '</span>';
-    if (p < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
-
-// —— Reveal & stagger 触发（含数字计数 / 斜率曲线绘制） ——
+// —— Reveal & stagger 触发（含斜率曲线绘制） ——
 const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      entry.target.querySelectorAll('[data-num]').forEach(animateCount);
       const slope = entry.target.querySelector('.slope-box') ||
         (entry.target.classList.contains('slope-box') ? entry.target : null);
       if (slope) slope.classList.add('draw');
