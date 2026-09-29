@@ -1565,7 +1565,10 @@ section { padding: 130px 0 100px; position: relative; }
 #gallery .work-landscape { grid-column: span 3; }
 #gallery .work-portrait { grid-column: span 2; }
 #gallery .fold-panel img {
-  width: 100%; height: auto; aspect-ratio: auto; padding: 8px;
+  /* Reserve each composition's dimensions before a lazy image loads. */
+  width: calc(100% - 16px); height: auto;
+  aspect-ratio: auto var(--art-ratio);
+  margin: 8px; padding: 0;
   object-fit: contain; flex-shrink: 0;
 }
 #gallery .fold-cap { gap: 12px; flex-wrap: wrap; padding: 16px; }
@@ -1578,7 +1581,7 @@ section { padding: 130px 0 100px; position: relative; }
 @media (max-width: 600px) {
   #gallery .fold-gallery { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   #gallery .fold-panel { grid-column: auto; }
-  #gallery .fold-panel img { padding: 6px; }
+  #gallery .fold-panel img { width: calc(100% - 12px); margin: 6px; }
 }
 
 
@@ -1691,7 +1694,7 @@ section { padding: 130px 0 100px; position: relative; }
 
 <div class="status-pill">
   <span class="pulse-dot"></span>
-  <span>更新于 2026.09.29 · 武汉</span>
+  <span>更新于 2026.09.30 · 武汉</span>
 </div>
 
   <div class="hero-scroll" aria-hidden="true">
@@ -1978,7 +1981,7 @@ section { padding: 130px 0 100px; position: relative; }
     <div class="fold-gallery reveal" aria-label="AI 视觉作品画廊">
       <figure class="fold-panel work-landscape" data-title="小米汽车 · Xiaomi Auto">
         <div class="ph ph-1" data-glyph="驰"></div>
-        <img src="assets/gallery/01.webp" alt="小米汽车 · Xiaomi Auto — 未来都市中的三辆电动车" width="1600" height="900" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/01.webp" alt="小米汽车 · Xiaomi Auto — 未来都市中的三辆电动车" width="1600" height="900" style="--art-ratio: 1600 / 900" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">小米汽车</span>
         <figcaption class="fold-cap">
@@ -1988,7 +1991,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-landscape" data-title="汤圆 · Tangyuan">
         <div class="ph ph-3" data-glyph="圆"></div>
-        <img src="assets/gallery/03.webp" alt="汤圆 · Tangyuan — 英短蓝白猫联名周边概念" width="1448" height="1086" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/03.webp" alt="汤圆 · Tangyuan — 英短蓝白猫联名周边概念" width="1448" height="1086" style="--art-ratio: 1448 / 1086" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">汤圆</span>
         <figcaption class="fold-cap">
@@ -1998,7 +2001,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-portrait" data-title="流浪地球 · The Wandering Earth">
         <div class="ph ph-2" data-glyph="航"></div>
-        <img src="assets/gallery/02.webp" alt="流浪地球 3 概念海报 — 行星发动机与远航的地球" width="1024" height="1536" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/02.webp" alt="流浪地球 3 概念海报 — 行星发动机与远航的地球" width="1024" height="1536" style="--art-ratio: 1024 / 1536" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">流浪地球</span>
         <figcaption class="fold-cap">
@@ -2008,7 +2011,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-portrait" data-title="利剑 · The Sword">
         <div class="ph ph-4" data-glyph="剑"></div>
-        <img src="assets/gallery/04.webp" alt="利剑 · The Sword — 公正·廉洁·为民主题海报" width="1122" height="1402" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/04.webp" alt="利剑 · The Sword — 公正·廉洁·为民主题海报" width="1122" height="1402" style="--art-ratio: 1122 / 1402" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">利剑</span>
         <figcaption class="fold-cap">
@@ -2018,7 +2021,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-portrait" data-title="地球 Online · Earth Online">
         <div class="ph ph-5" data-glyph="球"></div>
-        <img src="assets/gallery/05.webp" alt="地球 Online — 唯一无法重开的服务器" width="1055" height="1491" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/05.webp" alt="地球 Online — 唯一无法重开的服务器" width="1055" height="1491" style="--art-ratio: 1055 / 1491" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">地球在线</span>
         <figcaption class="fold-cap">
@@ -2028,7 +2031,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-portrait" data-title="江城 · Wuhan">
         <div class="ph ph-6" data-glyph="汉"></div>
-        <img src="assets/gallery/06.webp" alt="江城 · Wuhan — 黄鹤千年楼，长江万里潮（水墨风武汉海报）" width="900" height="1600" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/06.webp" alt="江城 · Wuhan — 黄鹤千年楼，长江万里潮（水墨风武汉海报）" width="900" height="1600" style="--art-ratio: 900 / 1600" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">江城</span>
         <figcaption class="fold-cap">
@@ -2038,7 +2041,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-portrait" data-title="一人公司 · One Person Company">
         <div class="ph ph-7" data-glyph="司"></div>
-        <img src="assets/gallery/07.webp" alt="一人公司 OPC — AI 时代，一个人就是一家公司" width="1236" height="1535" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/07.webp" alt="一人公司 OPC — AI 时代，一个人就是一家公司" width="1236" height="1535" style="--art-ratio: 1236 / 1535" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">一人公司</span>
         <figcaption class="fold-cap">
@@ -2048,7 +2051,7 @@ section { padding: 130px 0 100px; position: relative; }
       </figure>
       <figure class="fold-panel work-portrait" data-title="狮子山下 · HZAU">
         <div class="ph ph-8" data-glyph="耕"></div>
-        <img src="assets/gallery/08.webp" alt="狮子山下 — 华中农业大学：勤读力耕，立己达人" width="1024" height="1536" loading="lazy" onerror="this.remove()">
+        <img src="assets/gallery/08.webp" alt="狮子山下 — 华中农业大学：勤读力耕，立己达人" width="1024" height="1536" style="--art-ratio: 1024 / 1536" loading="lazy" onerror="this.remove()">
         <div class="shade"></div>
         <span class="v-label">狮子山下</span>
         <figcaption class="fold-cap">
