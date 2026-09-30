@@ -1524,9 +1524,10 @@ section { padding: 130px 0 100px; position: relative; }
 
 
 /* Hero hierarchy: one central identity, with supporting details in flow. */
-.hero { padding: 116px 24px 32px; }
+.hero { padding: 108px 24px 30px; min-height: 100svh; }
 .hero-inner { width: 100%; max-width: 960px; }
-.hero-badge { margin-bottom: 22px; }
+.hero-badge { margin-bottom: 28px; }
+.hero-name { font-size: clamp(78px, 15vw, 180px); }
 .hero-eyebrow { margin-bottom: 22px; letter-spacing: 2.5px; }
 .hero-alias { margin-top: 28px; }
 .hero-meta { display: flex; flex-direction: column; gap: 3px; margin-top: 16px; }
@@ -1535,10 +1536,10 @@ section { padding: 130px 0 100px; position: relative; }
 .hero-tags .tag { padding: 6px 14px; font-size: 12px; letter-spacing: 1px; }
 .hero-mission { margin-top: 24px; color: var(--ink-reading); text-wrap: balance; }
 .hero-actions { margin-top: 22px; }
-.hero-actions + .hero-motto { margin-top: 30px; }
-.hero-motto { padding: 18px 42px; font-size: clamp(17px, 2vw, 21px); }
+.hero-actions + .hero-motto { margin-top: 26px; }
+.hero-motto { padding: 12px 28px; font-size: clamp(15px, 1.6vw, 18px); line-height: 1.9; color: var(--ink-caption); }
 .hero > .status-pill {
-  position: static; z-index: 2; display: inline-flex; margin-top: 24px;
+  position: static; z-index: 2; display: inline-flex; margin-top: 18px;
   padding: 0; border: 0; border-radius: 0; background: none; backdrop-filter: none;
   font-size: 10px; letter-spacing: 1px; color: var(--ink-caption);
 }
@@ -1556,7 +1557,7 @@ section { padding: 130px 0 100px; position: relative; }
   .hero-tags { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(100%, 340px); gap: 8px; }
   .hero-tags .tag { justify-content: center; padding: 7px 8px; font-size: 12px; letter-spacing: .5px; }
   .hero-mission { max-width: 360px; line-height: 1.9; }
-  .hero-motto { padding: 16px 28px; }
+  .hero-motto { padding: 12px 26px; }
 }
 
 
@@ -1615,6 +1616,37 @@ section { padding: 130px 0 100px; position: relative; }
   .mobile-nav-links a:last-child { grid-column: 1 / -1; justify-content: center; }
 }
 
+
+/* Introduction: concrete work first, with the growth curve beside it. */
+#intro { padding: 88px 0 80px; }
+#intro .intro-layout {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+  gap: clamp(32px, 5vw, 72px); align-items: center;
+}
+#intro .intro-copy { min-width: 0; }
+#intro .section-head { margin-bottom: 24px; }
+#intro .section-title { font-size: clamp(32px, 4vw, 46px); line-height: 1.35; }
+#intro .intro-statement {
+  font: 400 16px/1.95 var(--sans-cn); letter-spacing: .2px;
+  color: var(--ink-reading); max-width: 520px;
+}
+#intro .intro-belief { display: block; margin-top: 28px; }
+#intro .intro-belief .text {
+  border-left: 1px solid rgba(232,184,122,.38); padding-left: 16px;
+  font-size: 18px; line-height: 1.9; color: var(--ink-caption);
+}
+#intro .slope-box { width: 100%; min-width: 0; }
+@media (max-width: 768px) {
+  #intro { padding: 60px 0 56px; }
+  #intro .intro-layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  #intro .section-head { margin-bottom: 20px; }
+  #intro .intro-statement { font-size: 15px; }
+  #intro .intro-statement br { display: none; }
+  #intro .intro-belief { margin-top: 22px; }
+  #intro .intro-belief .text { font-size: 17px; }
+  #intro .slope-box { max-width: 460px; }
+}
+
 </style>
 </head>
 <body id="top">
@@ -1667,14 +1699,13 @@ section { padding: 130px 0 100px; position: relative; }
 
   <div class="hero-inner">
     <div class="hero-badge">Personal Manual · v2.0</div>
-    <div class="hero-eyebrow">Reborn in light, still on the road</div>
     <h1 class="hero-name"><span class="glyph">追</span><span class="glyph">光</span><span class="glyph">者</span></h1>
     <p class="hero-alias">
       <span class="cn">曹宗昱</span>
       <span class="sep">·</span>
       <span>The Light Chaser</span>
     </p>
-    <p class="hero-meta"><span>2007 · 山西朔州 <span class="arrow">→</span> 湖北武汉</span><span class="hero-school">华中农业大学 · 行政管理专业在读</span></p>
+    <p class="hero-meta"><span>2007 · 山西朔州 <span class="arrow">→</span> 湖北武汉</span><span class="hero-school">华中农业大学 · 行政管理专业 · 大二在读</span></p>
     <div class="hero-tags">
       <span class="tag">AI 原生实践者</span>
       <span class="tag">个人IP起步者</span>
@@ -1703,24 +1734,21 @@ section { padding: 130px 0 100px; position: relative; }
   </div>
 </header>
 
-<!-- 静态金色题记 -->
-<div class="quiet-signature" aria-hidden="true">
-  <span class="signature-star">✦</span>
-  <span>道阻且长，行则将至</span>
-  <span class="signature-star">✦</span>
-</div>
-
 <div class="container">
 
   <!-- INTRO · 一句话介绍 -->
   <section id="intro">
-    <div class="section-head reveal">
-      <div class="section-label"><span class="idx">01</span> One Sentence</div>
-      <h2 class="section-title">一句话<span class="hl">介绍我</span></h2>
-    </div>
-    <p class="intro-statement reveal">我是追光者，一个正在用 <em>AI、内容、个人IP 和长期主义</em>，主动重构人生的大二学生。</p>
-    <div class="intro-belief reveal">
-      <div class="text">我相信：这个时代最重要的，不是你现在在哪里，<br>而是你<em>成长的斜率</em>有多高。</div>
+    <div class="intro-layout reveal">
+      <div class="intro-copy">
+        <div class="section-head">
+          <div class="section-label"><span class="idx">01</span> Introduction</div>
+          <h2 class="section-title">把想法，<br><span class="hl">做成作品</span></h2>
+        </div>
+        <p class="intro-statement">写文章、做视频，也用 AI 做视觉创作。<br>把学到的东西用起来，让想法变成看得见的作品。</p>
+        <div class="intro-belief">
+          <div class="text">我看重的，是<em>成长的斜率</em>。<br>持续学习，也持续行动。</div>
+        </div>
+      </div>
       <div class="slope-box">
         <span class="slope-tag">GROWTH · CURVE</span>
         <span class="slope-formula">dy/dx ↗</span>
