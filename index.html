@@ -1647,6 +1647,58 @@ section { padding: 130px 0 100px; position: relative; }
   #intro .slope-box { max-width: 460px; }
 }
 
+
+/* Practice hierarchy: completed output first, ongoing methods below. */
+#practice .practice-results {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+}
+#practice .practice-result {
+  min-width: 0; display: flex; flex-direction: column; padding: 26px 24px 20px;
+  border: 1px solid rgba(232,184,122,.16); border-radius: 18px;
+  background: linear-gradient(145deg, rgba(232,184,122,.065), rgba(255,255,255,.015) 70%);
+}
+#practice .result-kicker { font: 500 11px var(--sans-cn); letter-spacing: 1.5px; color: var(--ink-caption); }
+#practice .practice-result h3 { margin-top: 12px; font: 700 22px/1.5 var(--serif-cn); color: var(--ink); }
+#practice .result-stat {
+  margin-top: 22px; font: 600 clamp(42px, 4.5vw, 58px)/1.1 var(--sans-en);
+  letter-spacing: -1.5px; color: var(--gold-light);
+}
+#practice .result-stat span { font-size: .45em; letter-spacing: 0; margin-left: 3px; }
+#practice .result-label { margin-top: 8px; font: 400 12px/1.6 var(--sans-cn); color: var(--ink-caption); letter-spacing: 1px; }
+#practice .result-copy {
+  margin: 20px 0 24px; font: 400 15px/1.85 var(--sans-cn); color: var(--ink-reading);
+}
+#practice .result-foot {
+  margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(232,184,122,.13);
+  font: 400 12px/1.7 var(--sans-cn); color: var(--ink-caption);
+}
+#practice .result-foot strong { color: var(--gold-light); font-weight: 500; }
+#practice .result-foot a {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 32px;
+  color: var(--gold-light); text-decoration: none;
+}
+#practice .result-foot a:hover { text-decoration: underline; text-underline-offset: 4px; }
+#practice .result-foot a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
+#practice .practice-group-label {
+  display: flex; align-items: center; gap: 16px; margin: 40px 0 16px;
+  font: 500 13px/1.6 var(--sans-cn); color: var(--ink-caption); letter-spacing: 1px;
+}
+#practice .practice-group-label::after { content: ''; height: 1px; flex: 1; background: var(--line); }
+@media (min-width: 769px) and (max-width: 1000px) {
+  #practice .practice-results { gap: 12px; }
+  #practice .practice-result { padding: 22px 18px 18px; }
+  #practice .practice-result h3 { font-size: 19px; }
+  #practice .result-copy { font-size: 14px; }
+}
+@media (max-width: 768px) {
+  #practice .practice-results { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  #practice .practice-result { padding: 22px; }
+  #practice .practice-result h3 { font-size: 21px; }
+  #practice .result-stat { margin-top: 16px; font-size: 46px; }
+  #practice .result-copy { margin: 16px 0 20px; }
+  #practice .practice-group-label { margin-top: 30px; }
+}
+
 </style>
 </head>
 <body id="top">
@@ -1884,12 +1936,40 @@ section { padding: 130px 0 100px; position: relative; }
     <div class="section-head reveal">
       <div class="section-label"><span class="idx">04</span> What I've Done</div>
       <h2 class="section-title">我做过<span class="hl">什么</span></h2>
-      <p class="section-sub">我在做的七件事，以及一路积累的作品、经验与方法。</p>
+      <p class="section-sub">三项已经积累的成果，和四项持续推进的实践。</p>
     </div>
 
+    <div class="practice-results reveal-stagger">
+      <article class="practice-result">
+        <div class="result-kicker">01 · 内容运营</div>
+        <h3>公众号矩阵</h3>
+        <p class="result-stat">100<span>万+</span></p>
+        <p class="result-label">累计阅读量</p>
+        <p class="result-copy">用 AI 辅助内容生产与矩阵运营，积累了第一段真实的线上变现经历。</p>
+        <div class="result-foot">累计变现 <strong>5000+ 元</strong></div>
+      </article>
+      <article class="practice-result">
+        <div class="result-kicker">02 · 数字资产</div>
+        <h3>Vibe Coding 建站</h3>
+        <p class="result-stat">10<span>+</span></p>
+        <p class="result-label">独立搭建的网站</p>
+        <p class="result-copy">用 Claude Code、Codex 把想法做成网站，覆盖个人说明书、人生系统、FIRE 计算器等场景。</p>
+        <div class="result-foot">从一个想法，到一个上线的网站</div>
+      </article>
+      <article class="practice-result">
+        <div class="result-kicker">03 · 视觉表达</div>
+        <h3>视觉创作</h3>
+        <p class="result-stat">1000<span>+</span></p>
+        <p class="result-label">AI 图像作品</p>
+        <p class="result-copy">使用 GPT-Image / Image-2.5 创作，持续探索电影感、光影、东方气质与成长感。</p>
+        <div class="result-foot"><a href="#gallery">查看精选作品 <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </div>
+
+    <p class="practice-group-label reveal">持续推进的实践与方法</p>
     <div class="practice-list reveal-stagger">
       <div class="practice-row" data-ghost="AI">
-        <div class="p-idx">01</div>
+        <div class="p-idx">04</div>
         <div class="p-body">
           <div class="p-head">
             <h3>AI 深度实践</h3>
@@ -1900,20 +1980,8 @@ section { padding: 130px 0 100px; position: relative; }
         </div>
       </div>
 
-      <div class="practice-row" data-ghost="100W">
-        <div class="p-idx">02</div>
-        <div class="p-body">
-          <div class="p-head">
-            <h3>公众号矩阵</h3>
-            <span class="p-tag">WRITE · MONETIZE</span>
-          </div>
-          <p>用 AI 辅助内容生产，运营公众号矩阵，累计阅读量超过 <span class="gold-num">100W</span>，累计变现 <span class="gold-num">5000+</span>。这是我人生中第一段真实的线上变现经历。</p>
-          <p class="p-quote">它让我第一次确认：AI 不是消费，而是投资。</p>
-        </div>
-      </div>
-
       <div class="practice-row" data-ghost="IDOP">
-        <div class="p-idx">03</div>
+        <div class="p-idx">05</div>
         <div class="p-body">
           <div class="p-head">
             <h3>个人IP起步</h3>
@@ -1930,30 +1998,6 @@ section { padding: 130px 0 100px; position: relative; }
             <div class="idop-node product"><span class="en">PRODUCT</span><span class="cn">产品</span></div>
           </div>
           <div class="idop-note">输入不是目的，输出不是终点，<em>产品化才是长期价值沉淀</em>。</div>
-        </div>
-      </div>
-
-      <div class="practice-row" data-ghost="SHIP">
-        <div class="p-idx">04</div>
-        <div class="p-body">
-          <div class="p-head">
-            <h3>Vibe Coding 建站</h3>
-            <span class="p-tag">CODE · AGENT</span>
-          </div>
-          <p>熟练使用 <strong>Claude Code、Codex</strong> 等 Coding Agent，把「一个想法 → 一个网站」的链路压缩到很短时间。已独立做出 <span class="gold-num">10+</span> 个网站，覆盖个人说明书、人生系统、IDOP理论、FIRE计算器、纪念网站、视觉展示等多个场景。</p>
-          <p class="p-quote">未来的年轻人都应该拥有自己的数字资产，而不只是把内容发在平台上。</p>
-        </div>
-      </div>
-
-      <div class="practice-row" data-ghost="1000+">
-        <div class="p-idx">05</div>
-        <div class="p-body">
-          <div class="p-head">
-            <h3>视觉创作</h3>
-            <span class="p-tag">VISUAL · IMG</span>
-          </div>
-          <p>熟练使用 <strong>GPT-Image / Image-2.5</strong> 进行视觉创作，已生成 <span class="gold-num">1000+</span> 张图像作品。长期审美方向：高级、电影感、光影、秩序、远方感、理想主义、AI 时代感、东方气质、成长感。</p>
-          <p class="p-quote">视觉不是装饰，而是表达能力的一部分。</p>
         </div>
       </div>
 
