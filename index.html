@@ -1475,7 +1475,7 @@ section { padding: 130px 0 100px; position: relative; }
     height: 100%; height: 100dvh;
     padding: calc(70px + env(safe-area-inset-top, 0px)) 12px calc(92px + env(safe-area-inset-bottom, 0px));
   }
-  .lb-stage { width: 100%; min-height: 0; flex: 1; touch-action: pan-y; }
+  .lb-stage { width: 100%; min-height: 0; flex: 1; touch-action: pan-y pinch-zoom; }
   .lb-stage img, .lb-stage .ph {
     max-width: 100%; max-height: 100%;
     max-height: calc(100dvh - 220px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
@@ -1742,6 +1742,24 @@ section { padding: 130px 0 100px; position: relative; }
   #metrics .metric-cell:nth-child(n), #metrics .metrics-output .metric-featured { padding: 18px 12px; }
   #metrics .metric-featured .num { font-size: 32px; }
   #metrics .num { font-size: 30px; }
+}
+
+
+/* Original-image escape hatch and native pinch zoom in the viewer. */
+.lb-stage { touch-action: pan-y pinch-zoom; }
+.lb-original {
+  position: absolute; top: 24px; left: 28px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 44px; padding: 8px 16px; border: 1px solid var(--line-strong); border-radius: 999px;
+  color: var(--gold-light); background: rgba(232,184,122,.05);
+  font: 500 12px/1.5 var(--sans-cn); text-decoration: none; letter-spacing: 1px;
+}
+.lb-original[hidden] { display: none; }
+.lb-original:hover { background: rgba(232,184,122,.12); }
+.lb-original:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+@media (max-width: 600px) {
+  .lb-original { top: calc(12px + env(safe-area-inset-top, 0px)); left: 14px; padding: 8px 14px; }
+  .lb-hint { letter-spacing: .3px; }
 }
 
 </style>
@@ -2308,11 +2326,12 @@ section { padding: 130px 0 100px; position: relative; }
 
 <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="作品大图">
   <button class="lb-close" type="button" aria-label="关闭">✕</button>
+  <a class="lb-original" target="_blank" rel="noopener" hidden>查看原图 <span aria-hidden="true">↗</span></a>
   <button class="lb-btn lb-prev" type="button" aria-label="上一张">←</button>
   <div class="lb-stage"></div>
   <button class="lb-btn lb-next" type="button" aria-label="下一张">→</button>
-  <div class="lb-cap"></div>
-  <p class="lb-hint" aria-hidden="true">左右滑动，继续看下一张</p>
+  <div class="lb-cap" role="status" aria-live="polite" aria-atomic="true"></div>
+  <p class="lb-hint" aria-hidden="true">左右滑动切图 · 双指缩放 · 返回关闭</p>
 </div>
 
 <footer class="footer">
@@ -2467,47 +2486,105 @@ reveals.forEach(el => obs.observe(el));
   });
 })();
 
-// —— 折叠画廊 + 灯箱 ——
+// —— 作品查看器：原生缩放、单指切图与浏览器返回 ——
 (function foldGallery() {
   const gallery = document.querySelector('.fold-gallery');
   const lb = document.getElementById('lightbox');
   if (!gallery || !lb) return;
   const panels = Array.from(gallery.querySelectorAll('.fold-panel'));
+  if (!panels.length) return;
   const stage = lb.querySelector('.lb-stage');
   const cap = lb.querySelector('.lb-cap');
-  let cur = 0;
+  const original = lb.querySelector('.lb-original');
+  const historyKey = '__lightChaserViewer';
+  let cur = 0, opener = null, savedOverflow = '', closing = false;
+  let swipeStart = null, ignoreStageClickUntil = 0;
 
   function pad(n) { return String(n).padStart(2, '0'); }
-
-  function render(i) {
+  function isOpen() { return lb.classList.contains('open'); }
+  function viewerState(state) {
+    const value = state && state[historyKey];
+    return value && Number.isInteger(value.index) && value.index >= 0 && value.index < panels.length
+      ? value : null;
+  }
+  function atDefaultZoom() {
+    return !window.visualViewport || window.visualViewport.scale <= 1.05;
+  }
+  function updateTouchAction() {
+    // Keep horizontal swipes at normal scale; allow panning in every direction after zooming.
+    stage.style.touchAction = atDefaultZoom() ? 'pan-y pinch-zoom' : 'auto';
+    if (!atDefaultZoom()) swipeStart = null;
+  }
+  function render(i, syncHistory = true) {
     cur = (i + panels.length) % panels.length;
+    swipeStart = null;
     const p = panels[cur];
-    stage.innerHTML = '';
+    stage.replaceChildren();
     const img = p.querySelector('img');
+    original.hidden = !img;
     if (img) {
       const big = new Image();
       big.src = img.currentSrc || img.src;
       big.alt = img.alt;
+      big.decoding = 'async';
+      big.draggable = false;
       stage.appendChild(big);
+      original.href = big.src;
     } else {
-      // 图片缺失时灯箱也展示占位视觉
       stage.appendChild(p.querySelector('.ph').cloneNode(true));
+      original.removeAttribute('href');
     }
-    cap.innerHTML = '<span class="lb-idx">' + pad(cur + 1) + ' / ' + pad(panels.length) + '</span>' + (p.dataset.title || '');
+    const idx = document.createElement('span');
+    idx.className = 'lb-idx';
+    idx.textContent = pad(cur + 1) + ' / ' + pad(panels.length);
+    cap.replaceChildren(idx, document.createTextNode(p.dataset.title || ''));
+    if (syncHistory && viewerState(history.state)) {
+      history.replaceState({
+        ...history.state, [historyKey]: { ...history.state[historyKey], index: cur }
+      }, '');
+    }
   }
-  function open(i) {
-    render(i);
+  function show(i, origin) {
+    if (!isOpen()) {
+      savedOverflow = document.body.style.overflow;
+      opener = panels[Number.isInteger(origin) && panels[origin] ? origin : i];
+    }
+    closing = false;
+    render(i, false);
     lb.classList.add('open');
     lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    updateTouchAction();
     lb.querySelector('.lb-close').focus();
   }
-  function close() {
+  function open(i) {
+    if (isOpen()) { render(i); return; }
+    history.pushState({ ...history.state, [historyKey]: { index: i, origin: i } }, '');
+    show(i, i);
+  }
+  function hide() {
+    if (!isOpen()) return;
     lb.classList.remove('open');
     lb.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    panels[cur].focus({ preventScroll: true });
+    document.body.style.overflow = savedOverflow;
+    swipeStart = null;
+    closing = false;
+    if (opener) opener.focus({ preventScroll: true });
   }
+  function close() {
+    if (!isOpen() || closing) return;
+    if (viewerState(history.state)) {
+      closing = true;
+      history.back();
+    } else {
+      hide();
+    }
+  }
+  window.addEventListener('popstate', e => {
+    const value = viewerState(e.state);
+    if (value) show(value.index, value.origin);
+    else hide();
+  });
 
   panels.forEach((p, i) => {
     p.setAttribute('role', 'button');
@@ -2519,36 +2596,48 @@ reveals.forEach(el => obs.observe(el));
     });
   });
   lb.querySelector('.lb-close').addEventListener('click', close);
-  lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); render(cur - 1); });
-  lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); render(cur + 1); });
-  let swipeStart = null;
+  lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); render(cur - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); render(cur + 1); });
   stage.addEventListener('touchstart', e => {
-    if (!lb.classList.contains('open') || e.touches.length !== 1) { swipeStart = null; return; }
-    swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (!isOpen() || !atDefaultZoom() || e.touches.length !== 1) { swipeStart = null; return; }
+    const t = e.touches[0];
+    swipeStart = { id: t.identifier, x: t.clientX, y: t.clientY, time: performance.now() };
+  }, { passive: true });
+  stage.addEventListener('touchmove', e => {
+    if (e.touches.length !== 1 || !atDefaultZoom()) swipeStart = null;
   }, { passive: true });
   stage.addEventListener('touchend', e => {
-    if (!swipeStart || !lb.classList.contains('open') || !e.changedTouches.length) return;
-    const dx = e.changedTouches[0].clientX - swipeStart.x;
-    const dy = e.changedTouches[0].clientY - swipeStart.y;
+    const start = swipeStart;
     swipeStart = null;
-    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+    if (!start || !isOpen() || !atDefaultZoom() || e.touches.length) return;
+    const end = Array.from(e.changedTouches).find(t => t.identifier === start.id);
+    if (!end || performance.now() - start.time > 700) return;
+    const dx = end.clientX - start.x, dy = end.clientY - start.y;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    ignoreStageClickUntil = performance.now() + 400;
     render(cur + (dx < 0 ? 1 : -1));
   }, { passive: true });
   stage.addEventListener('touchcancel', () => { swipeStart = null; }, { passive: true });
-  lb.addEventListener('click', (e) => { if (e.target === lb || e.target === stage) close(); });
-  document.addEventListener('keydown', (e) => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Tab') {
-      const buttons = Array.from(lb.querySelectorAll('button'));
-      const current = buttons.indexOf(document.activeElement);
-      e.preventDefault();
-      buttons[(current + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length].focus();
-    }
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') render(cur - 1);
-    if (e.key === 'ArrowRight') render(cur + 1);
+  lb.addEventListener('click', e => {
+    if (performance.now() >= ignoreStageClickUntil && (e.target === lb || e.target === stage)) close();
   });
+  document.addEventListener('keydown', e => {
+    if (!isOpen()) return;
+    if (e.key === 'Tab') {
+      const controls = Array.from(lb.querySelectorAll('button, a[href]')).filter(el => !el.hidden);
+      const current = controls.indexOf(document.activeElement);
+      e.preventDefault();
+      controls[(current + (e.shiftKey ? -1 : 1) + controls.length) % controls.length].focus();
+    }
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); render(cur - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); render(cur + 1); }
+  });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', updateTouchAction);
+  const restored = viewerState(history.state);
+  if (restored) show(restored.index, restored.origin);
 })();
+
 
 // —— 向光金粉 canvas（追光者签名画面） ——
 (function lightCanvas() {
