@@ -569,6 +569,12 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .align-item .ai-ico { font-size: 16px; flex-shrink: 0; }
 
 .fire-header { text-align: center; margin-bottom: 36px; }
+.fire-target-label { font-size: 13px; color: var(--gold); letter-spacing: .2em; margin-bottom: 12px; }
+.fire-math-label { display: block; margin-bottom: 5px; color: var(--text-secondary); letter-spacing: .08em; }
+.fire-prog-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; }
+.fire-prog-head h3 { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.fire-time-percent { font-family: var(--sans-en); font-size: 26px; line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; }
+.fire-time-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(var(--line-rgb),.08); color: var(--text-secondary); font-size: 12px; line-height: 1.8; text-align: center; }
 .fire-big {
   font-family: 'Outfit'; font-weight: 900; font-size: clamp(64px, 12vw, 108px);
   background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
@@ -1253,13 +1259,16 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
       <a class="module-deep-link" href="fire.html">完整《FIRE · 永续之道》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="fire-header reveal">
+      <div class="fire-target-label">目标资产</div>
       <div class="fire-big">300万</div>
-      <div class="fire-math-txt">300万 × 4% = 12万/年 · 1万/月 · 二三线城市完全自由</div>
+      <div class="fire-math-txt"><span class="fire-math-label">示例测算 · 年提取比例 4%</span>300万 × 4% = 12万/年 · 约1万/月</div>
     </div>
     <div class="fire-prog reveal">
-      <div class="fire-prog-labs"><span class="s">🚀 2026.01.23 启动</span><span class="e">🎯 2033.02 目标</span></div>
-      <div class="fire-bar-bg"><div class="fire-bar" id="fireBar"></div></div>
-      <div class="fire-bar-info" id="fireBarInfo">计算中…</div>
+      <div class="fire-prog-head"><h3 id="fireTimeTitle">计划时间进度</h3><span class="fire-time-percent" id="fireTimePercent" aria-hidden="true">—</span></div>
+      <div class="fire-prog-labs"><span class="s">🚀 2026.01.23 启动</span><span class="e">🎯 2033.02 计划日期</span></div>
+      <div class="fire-bar-bg" id="fireTimeProgress" role="progressbar" aria-labelledby="fireTimeTitle" aria-describedby="fireTimeNote" aria-valuemin="0" aria-valuemax="100"><div class="fire-bar" id="fireBar"></div></div>
+      <div class="fire-bar-info" id="fireBarInfo">按计划起止日期计算</div>
+      <p class="fire-time-note" id="fireTimeNote">仅表示计划时间的经过比例，不代表资产目标完成度。</p>
     </div>
     <div class="fire-wheels reveal">
       <div class="fire-wheel fw-l">
@@ -1454,15 +1463,34 @@ function animateCount(el) {
   requestAnimationFrame(tick);
 }
 
-function initFireBar() {
+function initFireBar(now = new Date()) {
   const bar = document.getElementById('fireBar'), info = document.getElementById('fireBarInfo');
+  const progress = document.getElementById('fireTimeProgress'), percent = document.getElementById('fireTimePercent');
   if (!bar) return;
-  const start = new Date('2026-01-23'), end = new Date('2033-02-01'), now = new Date();
-  const pct = Math.min(((now - start) / (end - start)) * 100, 100);
-  const days = Math.floor((now - start) / 86400000);
-  const years = ((end - now) / (365.25 * 86400000)).toFixed(1);
+  // Use the plan's China calendar dates consistently in every visitor's timezone.
+  const start = new Date('2026-01-23T00:00:00+08:00'), end = new Date('2033-02-01T00:00:00+08:00');
+  const day = 86400000;
+  const pct = Math.max(0, Math.min(((now - start) / (end - start)) * 100, 100));
+  const displayPct = (Math.floor(pct * 10) / 10).toFixed(1);
+  const days = Math.max(0, Math.floor((now - start) / day));
+  const remainingDays = Math.max(0, Math.ceil((end - now) / day));
+  const years = ((end - now) / (365.25 * day)).toFixed(1);
+  let description;
+  if (now < start) {
+    description = '计划尚未开始 · 距启动还有 ' + Math.ceil((start - now) / day) + ' 天';
+  } else if (now >= end) {
+    description = '已出发 ' + days + ' 天 · 已到计划日期';
+  } else {
+    const remaining = remainingDays < 365 ? remainingDays + ' 天' : '约 ' + years + ' 年';
+    description = '已出发 ' + days + ' 天 · 距计划日期还有 ' + remaining;
+  }
   setTimeout(() => { bar.style.width = pct.toFixed(2) + '%'; }, 400);
-  if (info) info.textContent = `已出发 ${days} 天 · 进度 ${pct.toFixed(1)}% · 距目标还有 ${years} 年`;
+  if (percent) percent.textContent = displayPct + '%';
+  if (info) info.textContent = description;
+  if (progress) {
+    progress.setAttribute('aria-valuenow', displayPct);
+    progress.setAttribute('aria-valuetext', '计划时间已走过 ' + displayPct + '%，' + description);
+  }
 }
 
 const reveals = document.querySelectorAll('.reveal');
