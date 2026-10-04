@@ -25,7 +25,7 @@ Personal portfolio / "personal manual" (个人说明书) for 曹宗昱 (online a
 ├── idop.html             # IDOP · 个人 IP 核心闭环 (输入·沉淀·输出·产品)
 ├── workflow.html         # LSA · 个人 IP 工作流仪表盘
 ├── hkrr.html             # HKRR — 好内容的四个变量
-├── opus.html             # 集大成 · 十章沉浸式滚动叙事 (12 内容源精华融合)
+├── gper.html             # GPER · 目标·规划·执行·解题
 ├── CLAUDE.md             # This file
 └── README.md             # Minimal placeholder
 ```
@@ -37,9 +37,8 @@ Each `*.html` file is **fully self-contained**: HTML + embedded `<style>` + inli
 | Category | Pages |
 |---|---|
 | Entry / about | `index`, `life`, `life_undertone` |
-| Life goals & frameworks | `ideal`, `fire`, `growth`, `system`, `prosper` |
+| Life goals & frameworks | `ideal`, `fire`, `growth`, `system`, `prosper`, `gper` |
 | Personal IP & content workflow | `idop`, `workflow`, `hkrr` |
-| 集大成整合页 | `opus`(十章沉浸式叙事,融合上述全部内容源,含 AI「同行」章) |
 
 ## Tech Stack
 
@@ -188,7 +187,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: REQ-001 (集大成网站 `opus.html`) **done** + merged to `main`. REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). No active requirement — backlog clear.
+**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为七个模块；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). No active requirement — backlog clear.
 
 ## Adding New Content
 
