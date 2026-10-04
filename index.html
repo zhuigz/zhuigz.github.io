@@ -1699,6 +1699,51 @@ section { padding: 130px 0 100px; position: relative; }
   #practice .practice-group-label { margin-top: 30px; }
 }
 
+
+/* Metrics: explicit units, with outcomes and learning given distinct weight. */
+#metrics .section-head { margin-bottom: 30px; }
+#metrics .metrics-group-title {
+  display: flex; align-items: center; gap: 16px; margin: 28px 0 14px;
+  font: 500 13px/1.6 var(--sans-cn); letter-spacing: 1px; color: var(--ink-caption);
+}
+#metrics .metrics-group-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+#metrics .metrics-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px;
+  border-radius: 18px; background: var(--line);
+}
+#metrics .metric-cell:nth-child(n) {
+  grid-column: span 2; padding: 24px; border: 0;
+  background: #0d0d13;
+}
+#metrics .metrics-output .metric-featured {
+  grid-column: span 3; padding: 28px;
+  background: radial-gradient(ellipse at top left, rgba(232,184,122,.06), transparent 75%), #0d0d13;
+}
+#metrics .metric-cell:hover { background-color: #15151c; }
+#metrics .m-label { margin: 0 0 12px; font-size: 14px; font-weight: 500; color: var(--ink-reading); }
+#metrics .num { font-size: clamp(32px, 3.2vw, 42px); font-weight: 600; letter-spacing: -1px; }
+#metrics .metric-featured .num { font-size: clamp(40px, 4.5vw, 58px); }
+#metrics .num .unit {
+  font-family: var(--sans-cn); font-size: .36em; font-weight: 500; margin-left: 4px; color: var(--gold);
+}
+#metrics .m-sub { margin-top: 12px; font-size: 12px; color: var(--ink-caption); }
+#metrics .metrics-learning .num { color: var(--ink); }
+#metrics .metrics-learning .num .unit { color: var(--ink-caption); }
+@media (max-width: 600px) {
+  #metrics .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 14px; }
+  #metrics .metric-cell:nth-child(n), #metrics .metrics-output .metric-featured { grid-column: auto; padding: 20px 16px; }
+  #metrics .metrics-grid .metric-cell:last-child { grid-column: 1 / -1; }
+  #metrics .m-label { font-size: 13px; margin-bottom: 12px; }
+  #metrics .num { font-size: 32px; }
+  #metrics .metric-featured .num { font-size: 38px; }
+  #metrics .m-sub { font-size: 11px; line-height: 1.7; }
+}
+@media (max-width: 360px) {
+  #metrics .metric-cell:nth-child(n), #metrics .metrics-output .metric-featured { padding: 18px 12px; }
+  #metrics .metric-featured .num { font-size: 32px; }
+  #metrics .num { font-size: 30px; }
+}
+
 </style>
 </head>
 <body id="top">
@@ -1777,7 +1822,7 @@ section { padding: 130px 0 100px; position: relative; }
 
 <div class="status-pill">
   <span class="pulse-dot"></span>
-  <span>更新于 2026.09.30 · 武汉</span>
+  <span>更新于 2026.10.04 · 武汉</span>
 </div>
 
   <div class="hero-scroll" aria-hidden="true">
@@ -1874,57 +1919,54 @@ section { padding: 130px 0 100px; position: relative; }
     <div class="section-head reveal">
       <div class="section-label"><span class="idx">03</span> Key Data</div>
       <h2 class="section-title">关键<span class="hl">数据</span></h2>
-      <p class="section-sub"><strong>以下不是包装，是我已经真实做过的事。</strong>每一个数字背后，都有一段具体的时间和故事。</p>
+      <p class="section-sub">创作与运营的成果，也记录持续学习的积累。</p>
     </div>
 
-    <div class="metrics-grid reveal-stagger">
-      <div class="metric-cell">
-        <span class="m-idx">DATA · 01</span>
-        <div class="num">100<span class="unit">W+</span></div>
+    <h3 class="metrics-group-title reveal">创作与运营</h3>
+    <div class="metrics-grid metrics-output reveal-stagger">
+      <div class="metric-cell metric-featured">
         <div class="m-label">公众号矩阵累计阅读量</div>
-        <div class="m-sub">文字带来的覆盖与影响力</div>
+        <div class="num">100<span class="unit">万+</span></div>
+        <div class="m-sub">公众号矩阵 · 内容运营</div>
       </div>
-      <div class="metric-cell">
-        <span class="m-idx">DATA · 02</span>
-        <div class="num">5000<span class="unit">+</span></div>
-        <div class="m-label">AI 内容生产第一桶金</div>
+      <div class="metric-cell metric-featured">
+        <div class="m-label">AI 内容累计变现</div>
+        <div class="num">5000<span class="unit">+ 元</span></div>
         <div class="m-sub">公众号与 AI 内容变现</div>
       </div>
       <div class="metric-cell">
-        <span class="m-idx">DATA · 03</span>
-        <div class="num">1000<span class="unit">H+</span></div>
-        <div class="m-label">成长认知类学习时长</div>
-        <div class="m-sub">课程 · 播客 · 直播累计</div>
+        <div class="m-label">视频号累计播放量</div>
+        <div class="num">10<span class="unit">万+</span></div>
+        <div class="m-sub">AI 漫剧持续创作</div>
       </div>
       <div class="metric-cell">
-        <span class="m-idx">DATA · 04</span>
-        <div class="num">1000<span class="unit">+</span></div>
         <div class="m-label">AI 视觉作品</div>
+        <div class="num">1000<span class="unit">+ 张</span></div>
         <div class="m-sub">GPT-Image / Image-2.5 生成</div>
       </div>
       <div class="metric-cell">
-        <span class="m-idx">DATA · 05</span>
-        <div class="num">10<span class="unit">+</span></div>
         <div class="m-label">独立搭建的网站</div>
+        <div class="num">10<span class="unit">+ 个</span></div>
         <div class="m-sub">Vibe Coding · 想法到上线</div>
       </div>
+    </div>
+
+    <h3 class="metrics-group-title reveal">学习与积累</h3>
+    <div class="metrics-grid metrics-learning reveal-stagger">
       <div class="metric-cell">
-        <span class="m-idx">DATA · 06</span>
-        <div class="num">100<span class="unit">天+</span></div>
-        <div class="m-label">连续复盘与自我记录</div>
-        <div class="m-sub">每天一次的自我对话</div>
+        <div class="m-label">成长认知类学习时长</div>
+        <div class="num">1000<span class="unit">+ 小时</span></div>
+        <div class="m-sub">课程 · 播客 · 直播累计</div>
       </div>
       <div class="metric-cell">
-        <span class="m-idx">DATA · 07</span>
-        <div class="num">30<span class="unit">+</span></div>
         <div class="m-label">高质量非虚构书籍</div>
+        <div class="num">30<span class="unit">+ 本</span></div>
         <div class="m-sub">深读而非翻完</div>
       </div>
       <div class="metric-cell">
-        <span class="m-idx">DATA · 08</span>
-        <div class="num">10<span class="unit">w+</span></div>
-        <div class="m-label">运营的视频号播放量</div>
-        <div class="m-sub">AI漫剧持续创作</div>
+        <div class="m-label">连续复盘与自我记录</div>
+        <div class="num">100<span class="unit">+ 天</span></div>
+        <div class="m-sub">每天一次的自我对话</div>
       </div>
     </div>
   </section>
