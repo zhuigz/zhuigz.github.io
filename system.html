@@ -364,7 +364,7 @@ section { padding: 120px 0 90px; position: relative; }
 .section-title .hl {
   background: linear-gradient(135deg, var(--mc, var(--gold)), color-mix(in srgb, var(--mc, var(--gold)) 60%, white));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--mc, var(--gold)) 30%, transparent));
+  filter: none;
 }
 /* 模块 → 专题页 出站深读链接（紧贴 section-title 之下，承袭模块色） */
 .section-title:has(+ .module-deep-link) { margin-bottom: 16px; }
@@ -481,19 +481,13 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   width: 120px; height: 120px; border-radius: 50%;
   background: radial-gradient(circle, rgba(var(--gold-rgb),0.2), transparent 70%);
   margin: 0 auto 32px; display: flex; align-items: center; justify-content: center;
-  font-size: 48px; animation: glow 4s ease-in-out infinite;
+  font-size: 48px;
 }
-@keyframes glow { 0%, 100% { box-shadow: 0 0 40px rgba(var(--gold-rgb),0.1); } 50% { box-shadow: 0 0 80px rgba(var(--gold-rgb),0.2); } }
-@keyframes footerShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
 .footer-text {
   font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700; margin-bottom: 10px;
-  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
+  background: linear-gradient(125deg, #F8E3BE 0%, #D2A568 56%, #EFCEA0 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  filter:
-    drop-shadow(0 1px 0 #8A5C20)
-    drop-shadow(0 2px 0 #5E3E14)
-    drop-shadow(0 3px 0 #1F1404)
-    drop-shadow(0 6px 16px rgba(0,0,0,.5));
+  filter: none;
   letter-spacing: 4px;
 }
 .footer-sub { font-size: 13px; color: var(--text-dim); letter-spacing: 2px; }
@@ -547,13 +541,9 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .feq-eq { font-family: 'Outfit'; font-size: 22px; color: var(--gold); font-weight: 300; }
 .feq-r {
   font-family: 'Noto Serif SC', serif; font-weight: 900; font-size: clamp(16px, 2.5vw, 22px);
-  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
+  background: linear-gradient(125deg, #F8E3BE 0%, #D2A568 56%, #EFCEA0 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  filter:
-    drop-shadow(0 1px 0 #8A5C20)
-    drop-shadow(0 2px 0 #5E3E14)
-    drop-shadow(0 2px 0 #3A2608)
-    drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  filter: none;
   letter-spacing: 0.04em;
 }
 .formula-sub { margin-top: 14px; font-size: 12px; color: var(--text-dim); font-family: 'Outfit'; letter-spacing: 1px; }
@@ -577,14 +567,10 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .fire-time-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(var(--line-rgb),.08); color: var(--text-secondary); font-size: 12px; line-height: 1.8; text-align: center; }
 .fire-big {
   font-family: 'Outfit'; font-weight: 900; font-size: clamp(64px, 12vw, 108px);
-  background: linear-gradient(180deg, #F4DEAA 0%, #E8C888 32%, #D4AC68 62%, #B48848 100%);
+  background: linear-gradient(125deg, #F8E3BE 0%, #D2A568 56%, #EFCEA0 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   line-height: 1; letter-spacing: -0.02em;
-  filter:
-    drop-shadow(0 1px 0 #8A5C20)
-    drop-shadow(0 2px 0 #5E3E14)
-    drop-shadow(0 3px 0 #3A2608)
-    drop-shadow(0 10px 22px rgba(0,0,0,.6));
+  filter: none;
 }
 .fire-math-txt { font-family: 'Outfit'; font-size: 13px; color: var(--text-dim); letter-spacing: 2px; margin-top: 8px; }
 .fire-prog { background: var(--bg-card); border: 1px solid rgba(var(--line-rgb),0.05); border-radius: 20px; padding: 36px; margin-bottom: 28px; }
@@ -592,7 +578,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 .fire-prog-labs .s { color: var(--text-dim); }
 .fire-prog-labs .e { color: var(--gold); }
 .fire-bar-bg { height: 8px; background: rgba(var(--line-rgb),0.05); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
-.fire-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); border-radius: 4px; box-shadow: 0 0 14px rgba(var(--gold-rgb),0.4); transition: width 2s cubic-bezier(0.16,1,0.3,1); }
+.fire-bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light)); border-radius: 4px; box-shadow: none; transition: width 2s cubic-bezier(0.16,1,0.3,1); }
 .fire-bar-info { font-family: 'Outfit'; font-size: 12px; color: var(--text-dim); text-align: center; }
 .fire-wheels { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
 .fire-wheel { background: var(--bg-card); border: 1px solid rgba(var(--line-rgb),0.04); border-radius: 16px; padding: 26px; transition: all 0.3s; }
@@ -749,7 +735,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 }
 .sys-card:hover::before { opacity: 1; }
 
-/* fire-big depth now baked into carved bronze inscription above */
+/* FIRE target uses the same fine gold treatment as the page title. */
 
 /* 3. strat-bignum 可见度 */
 .strat-bignum { color: rgba(var(--gold-rgb),0.09); transition: color 0.4s; }
@@ -804,27 +790,17 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   width: 60px; background: linear-gradient(90deg, transparent, rgba(var(--gold-rgb),0.5), transparent);
 }
 
-/* section-title hl glow now baked into main rule above */
+/* Module headings keep their color gradient without a surrounding glow. */
 
-/* 公式框: 脉冲边框辉光 — 全页最戏剧化节点 */
-@keyframes formulaAura {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(var(--gold-rgb),0.08), 0 0 40px rgba(var(--gold-rgb),0.04), inset 0 0 60px rgba(var(--gold-rgb),0.02); }
-  50%       { box-shadow: 0 0 0 1px rgba(var(--gold-rgb),0.22), 0 0 80px rgba(var(--gold-rgb),0.09), inset 0 0 80px rgba(var(--gold-rgb),0.05); }
-}
-.formula-wrap { animation: formulaAura 5s ease-in-out infinite; border-color: transparent; }
+/* A steady frame keeps the formula readable without a pulsing halo. */
+.formula-wrap { border-color: rgba(var(--line-rgb),0.1); }
 
-/* prosperity result: bigger (glow now baked into carved bronze above) */
+/* Give the result emphasis through size instead of an extruded shadow. */
 .feq-r { font-size: clamp(20px, 3.2vw, 30px); }
 
 /* 公式乘号: 微金色 */
 .feq-x { color: rgba(var(--gold-rgb),0.35); }
 
-/* fire-bar: 光条脉冲 */
-@keyframes barPulse {
-  0%, 100% { box-shadow: 0 0 14px rgba(var(--gold-rgb),0.45); }
-  50%       { box-shadow: 0 0 28px rgba(var(--gold-rgb),0.8), 0 0 56px rgba(var(--gold-rgb),0.25); }
-}
-.fire-bar { animation: barPulse 3s ease-in-out infinite; }
 
 /* sys-card icon: hover 弹跳 */
 .sys-card-icon { transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1); }
@@ -1093,6 +1069,29 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   .ai-layer-head { gap: 10px; }
   .ai-ltag { margin-left: 0; }
 }
+
+
+/* Dark theme: quiet gold, steady borders and lighter display type. */
+[data-theme="dark"] .fire-big { font-weight: 600; }
+[data-theme="dark"] :is(.feq-r, .footer-text) { font-weight: 500; }
+[data-theme="dark"] .formula-wrap {
+  background: linear-gradient(120deg, rgba(var(--mcr),.035), transparent 65%), var(--bg-card);
+  border-color: rgba(var(--mcr),.18);
+}
+[data-theme="dark"] .feq-f {
+  font-weight: 500; border-color: rgba(var(--line-rgb),.12);
+}
+[data-theme="dark"] .feq-f:hover {
+  transform: none; box-shadow: none;
+  border-color: rgba(var(--mcr),.32); background: rgba(var(--mcr),.05);
+}
+[data-theme="dark"] .footer-light {
+  width: 88px; height: 88px; font-size: 32px; margin-bottom: 24px;
+  border: 1px solid rgba(var(--gold-rgb),.12);
+  background: radial-gradient(circle, rgba(var(--gold-rgb),.055), transparent 72%);
+}
+[data-theme="dark"] .footer-text { letter-spacing: .12em; line-height: 1.8; }
+[data-theme="dark"] :is(.footer-sub, .footer-line) { color: var(--reading-meta); }
 
 </style>
 </head>
