@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://zhuigz.github.io/og-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@200;300;400;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -473,9 +473,11 @@ section { padding: 130px 0 100px; position: relative; }
 }
 
 /* —— reveal —— */
-.reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal { opacity: 1; transform: none; transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.reveal-ready { opacity: 0; transform: translateY(48px); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-stagger > * { opacity: 0; transform: translateY(36px); transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+.reveal-stagger > * { opacity: 1; transform: none; transition: opacity 0.85s cubic-bezier(0.16,1,0.3,1), transform 0.85s cubic-bezier(0.16,1,0.3,1); }
+.reveal-stagger.reveal-ready > * { opacity: 0; transform: translateY(36px); }
 .reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
 .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; }
 .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.12s; }
@@ -548,11 +550,13 @@ section { padding: 130px 0 100px; position: relative; }
 .slope-grid { stroke: rgba(242,239,235,0.05); stroke-width: 1; stroke-dasharray: 3 6; }
 .slope-path {
   fill: none; stroke: url(#slopeGrad); stroke-width: 2.5; stroke-linecap: round;
-  stroke-dasharray: 560; stroke-dashoffset: 560;
+  stroke-dasharray: 560; stroke-dashoffset: 0;
 }
+.reveal-ready .slope-path, .slope-box.reveal-ready .slope-path { stroke-dashoffset: 560; }
 .slope-box.draw .slope-path { animation: slopeDraw 2.2s cubic-bezier(0.4,0,0.2,1) 0.3s forwards; }
 @keyframes slopeDraw { to { stroke-dashoffset: 0; } }
-.slope-dot { opacity: 0; }
+.slope-dot { opacity: 1; }
+.reveal-ready .slope-dot, .slope-box.reveal-ready .slope-dot { opacity: 0; }
 .slope-box.draw .slope-dot { animation: slopeDot 0.6s ease 2.3s forwards; }
 @keyframes slopeDot { to { opacity: 1; } }
 .slope-dot-pulse { opacity: 0; transform-origin: 372px 26px; }
@@ -1769,6 +1773,22 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
   animation-play-state: paused !important;
 }
 
+/* Content stays readable before enhancement; failed images keep their space. */
+#gallery .fold-cap .zoom { display: none; }
+#gallery .gallery-ready .fold-cap .zoom { display: inline; }
+.no-js-original { color: var(--gold-light); font: 12px var(--sans-cn); text-decoration: underline; text-underline-offset: 4px; }
+.gallery-ready .no-js-original { display: none; }
+#gallery .image-failed img { visibility: hidden; }
+#gallery .image-failed .ph {
+  display: flex; position: absolute; top: 8px; left: 8px; right: 8px; bottom: auto;
+  width: calc(100% - 16px); aspect-ratio: var(--art-ratio, 4 / 3); height: auto;
+}
+.image-note { display: none; position: relative; z-index: 2; padding: 14px 20px; border-radius: 12px; background: rgba(7,7,12,.75); color: var(--ink); font: 14px var(--sans-cn); text-align: center; }
+.image-note small { display: block; margin-top: 8px; color: var(--gold-light); font-size: 12px; }
+.image-failed .image-note { display: block; }
+.lb-stage.image-pending img { display: none; }
+.lb-message { width: min(80vw, 600px); padding: 48px 24px; border: 1px solid var(--line-strong); border-radius: 14px; background: var(--bg-elev); color: var(--ink-soft); font: 14px/1.8 var(--sans-cn); text-align: center; }
+
 </style>
 </head>
 <body id="top">
@@ -2118,84 +2138,92 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     </div>
 
     <div class="fold-gallery reveal" aria-label="AI 视觉作品画廊">
-      <figure class="fold-panel work-landscape" data-title="小米汽车 · Xiaomi Auto">
-        <div class="ph ph-1" data-glyph="驰"></div>
-        <img src="assets/gallery/01.webp" alt="小米汽车 · Xiaomi Auto — 未来都市中的三辆电动车" width="1600" height="900" style="--art-ratio: 1600 / 900" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-landscape" data-title="小米汽车 · Xiaomi Auto" style="--art-ratio: 1600 / 900">
+        <div class="ph ph-1" data-glyph="驰" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/01.webp" alt="小米汽车 · Xiaomi Auto — 未来都市中的三辆电动车" width="1600" height="900" style="--art-ratio: 1600 / 900" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">小米汽车</span>
         <figcaption class="fold-cap">
           <span class="t">小米汽车<small>Xiaomi Auto · Industrial</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/01.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-landscape" data-title="汤圆 · Tangyuan">
-        <div class="ph ph-3" data-glyph="圆"></div>
-        <img src="assets/gallery/03.webp" alt="汤圆 · Tangyuan — 英短蓝白猫联名周边概念" width="1448" height="1086" style="--art-ratio: 1448 / 1086" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-landscape" data-title="汤圆 · Tangyuan" style="--art-ratio: 1448 / 1086">
+        <div class="ph ph-3" data-glyph="圆" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/03.webp" alt="汤圆 · Tangyuan — 英短蓝白猫联名周边概念" width="1448" height="1086" style="--art-ratio: 1448 / 1086" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">汤圆</span>
         <figcaption class="fold-cap">
           <span class="t">汤圆<small>Cat Merch · Healing</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/03.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-portrait" data-title="流浪地球 · The Wandering Earth">
-        <div class="ph ph-2" data-glyph="航"></div>
-        <img src="assets/gallery/02.webp" alt="流浪地球 3 概念海报 — 行星发动机与远航的地球" width="1024" height="1536" style="--art-ratio: 1024 / 1536" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-portrait" data-title="流浪地球 · The Wandering Earth" style="--art-ratio: 1024 / 1536">
+        <div class="ph ph-2" data-glyph="航" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/02.webp" alt="流浪地球 3 概念海报 — 行星发动机与远航的地球" width="1024" height="1536" style="--art-ratio: 1024 / 1536" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">流浪地球</span>
         <figcaption class="fold-cap">
           <span class="t">流浪地球<small>Concept Poster · Cinema</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/02.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-portrait" data-title="利剑 · The Sword">
-        <div class="ph ph-4" data-glyph="剑"></div>
-        <img src="assets/gallery/04.webp" alt="利剑 · The Sword — 公正·廉洁·为民主题海报" width="1122" height="1402" style="--art-ratio: 1122 / 1402" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-portrait" data-title="利剑 · The Sword" style="--art-ratio: 1122 / 1402">
+        <div class="ph ph-4" data-glyph="剑" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/04.webp" alt="利剑 · The Sword — 公正·廉洁·为民主题海报" width="1122" height="1402" style="--art-ratio: 1122 / 1402" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">利剑</span>
         <figcaption class="fold-cap">
           <span class="t">利剑<small>Justice · Public Spirit</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/04.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-portrait" data-title="地球 Online · Earth Online">
-        <div class="ph ph-5" data-glyph="球"></div>
-        <img src="assets/gallery/05.webp" alt="地球 Online — 唯一无法重开的服务器" width="1055" height="1491" style="--art-ratio: 1055 / 1491" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-portrait" data-title="地球 Online · Earth Online" style="--art-ratio: 1055 / 1491">
+        <div class="ph ph-5" data-glyph="球" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/05.webp" alt="地球 Online — 唯一无法重开的服务器" width="1055" height="1491" style="--art-ratio: 1055 / 1491" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">地球在线</span>
         <figcaption class="fold-cap">
           <span class="t">地球 Online<small>Life Sim · Growth</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/05.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-portrait" data-title="江城 · Wuhan">
-        <div class="ph ph-6" data-glyph="汉"></div>
-        <img src="assets/gallery/06.webp" alt="江城 · Wuhan — 黄鹤千年楼，长江万里潮（水墨风武汉海报）" width="900" height="1600" style="--art-ratio: 900 / 1600" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-portrait" data-title="江城 · Wuhan" style="--art-ratio: 900 / 1600">
+        <div class="ph ph-6" data-glyph="汉" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/06.webp" alt="江城 · Wuhan — 黄鹤千年楼，长江万里潮（水墨风武汉海报）" width="900" height="1600" style="--art-ratio: 900 / 1600" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">江城</span>
         <figcaption class="fold-cap">
           <span class="t">江城<small>Wuhan · Ink &amp; Gold</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/06.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-portrait" data-title="一人公司 · One Person Company">
-        <div class="ph ph-7" data-glyph="司"></div>
-        <img src="assets/gallery/07.webp" alt="一人公司 OPC — AI 时代，一个人就是一家公司" width="1236" height="1535" style="--art-ratio: 1236 / 1535" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-portrait" data-title="一人公司 · One Person Company" style="--art-ratio: 1236 / 1535">
+        <div class="ph ph-7" data-glyph="司" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/07.webp" alt="一人公司 OPC — AI 时代，一个人就是一家公司" width="1236" height="1535" style="--art-ratio: 1236 / 1535" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">一人公司</span>
         <figcaption class="fold-cap">
           <span class="t">一人公司<small>OPC · AI Era</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/07.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
-      <figure class="fold-panel work-portrait" data-title="狮子山下 · HZAU">
-        <div class="ph ph-8" data-glyph="耕"></div>
-        <img src="assets/gallery/08.webp" alt="狮子山下 — 华中农业大学：勤读力耕，立己达人" width="1024" height="1536" style="--art-ratio: 1024 / 1536" loading="lazy" onerror="this.remove()">
+      <figure class="fold-panel work-portrait" data-title="狮子山下 · HZAU" style="--art-ratio: 1024 / 1536">
+        <div class="ph ph-8" data-glyph="耕" aria-hidden="true"><span class="image-note">图片暂未加载<small>点击查看原图</small></span></div>
+        <img src="assets/gallery/08.webp" alt="狮子山下 — 华中农业大学：勤读力耕，立己达人" width="1024" height="1536" style="--art-ratio: 1024 / 1536" loading="lazy">
         <div class="shade"></div>
         <span class="v-label">狮子山下</span>
         <figcaption class="fold-cap">
           <span class="t">狮子山下<small>HZAU · Campus</small></span>
           <span class="zoom">点击查看 ↗</span>
+          <a class="no-js-original" href="assets/gallery/08.webp">查看原图 ↗</a>
         </figcaption>
       </figure>
     </div>
@@ -2446,19 +2474,34 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // —— Reveal & stagger 触发（含斜率曲线绘制） ——
-const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      const slope = entry.target.querySelector('.slope-box') ||
-        (entry.target.classList.contains('slope-box') ? entry.target : null);
-      if (slope) slope.classList.add('draw');
-      obs.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0, rootMargin: '0px 0px 40px 0px' });
-reveals.forEach(el => obs.observe(el));
+(function revealContent() {
+  const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+  const finish = (el) => {
+    el.classList.add('visible');
+    const slope = el.querySelector('.slope-box') ||
+      (el.classList.contains('slope-box') ? el : null);
+    if (slope) slope.classList.add('draw');
+  };
+  let observer;
+  try {
+    if (!('IntersectionObserver' in window)) return;
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          finish(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px 40px 0px' });
+    reveals.forEach(el => {
+      observer.observe(el);
+      el.classList.add('reveal-ready');
+    });
+  } catch {
+    if (observer) observer.disconnect();
+    reveals.forEach(el => el.classList.remove('reveal-ready'));
+  }
+})();
 
 // —— 导航高亮：单次确定当前章节，避免交界处多个观察回调互相覆盖 ——
 (function trackSection() {
@@ -2542,6 +2585,16 @@ reveals.forEach(el => obs.observe(el));
   let cur = 0, opener = null, savedOverflow = '', closing = false;
   let swipeStart = null, ignoreStageClickUntil = 0;
 
+  // Preserve thumbnail dimensions and source URLs when an image fails.
+  panels.forEach(p => {
+    const img = p.querySelector('img');
+    if (!img) return;
+    const failed = () => p.classList.add('image-failed');
+    img.addEventListener('error', failed);
+    img.addEventListener('load', () => p.classList.remove('image-failed'));
+    if (img.complete && img.naturalWidth === 0) failed();
+  });
+
   function pad(n) { return String(n).padStart(2, '0'); }
   function isOpen() { return lb.classList.contains('open'); }
   function viewerState(state) {
@@ -2562,15 +2615,31 @@ reveals.forEach(el => obs.observe(el));
     swipeStart = null;
     const p = panels[cur];
     stage.replaceChildren();
+    stage.classList.remove('image-pending');
     const img = p.querySelector('img');
     original.hidden = !img;
     if (img) {
       const big = new Image();
-      big.src = img.currentSrc || img.src;
+      const message = document.createElement('p');
+      message.className = 'lb-message';
+      message.setAttribute('role', 'status');
+      message.textContent = '图片加载中…';
+      stage.classList.add('image-pending');
+      stage.appendChild(message);
       big.alt = img.alt;
       big.decoding = 'async';
       big.draggable = false;
+      big.addEventListener('load', () => {
+        if (!stage.contains(big)) return;
+        stage.classList.remove('image-pending');
+        message.remove();
+      }, { once: true });
+      big.addEventListener('error', () => {
+        if (!stage.contains(big)) return;
+        message.textContent = '图片暂时未能加载，可尝试查看原图。';
+      }, { once: true });
       stage.appendChild(big);
+      big.src = img.currentSrc || img.src;
       original.href = big.src;
     } else {
       stage.appendChild(p.querySelector('.ph').cloneNode(true));
@@ -2675,6 +2744,7 @@ reveals.forEach(el => obs.observe(el));
     if (e.key === 'ArrowLeft') { e.preventDefault(); render(cur - 1); }
     if (e.key === 'ArrowRight') { e.preventDefault(); render(cur + 1); }
   });
+  gallery.classList.add('gallery-ready');
   if (window.visualViewport) window.visualViewport.addEventListener('resize', updateTouchAction);
   const restored = viewerState(history.state);
   if (restored) show(restored.index, restored.origin);
