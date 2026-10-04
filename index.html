@@ -1762,6 +1762,13 @@ section { padding: 130px 0 100px; position: relative; }
   .lb-hint { letter-spacing: .3px; }
 }
 
+/* Pause decorative motion without resetting its appearance or timing. */
+.motion-paused, .motion-paused::before, .motion-paused::after,
+.motion-paused *, .motion-paused *::before, .motion-paused *::after,
+body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after {
+  animation-play-state: paused !important;
+}
+
 </style>
 </head>
 <body id="top">
@@ -2371,29 +2378,64 @@ document.body.classList.add('js');
 // Start the hero immediately, without a blocking loading screen.
 document.body.classList.add('loaded');
 
+// 装饰动效只在可见区域运行；切到其他标签页时保留并暂停当前帧。
+(function motionVisibility() {
+  const targets = document.querySelectorAll('.hero, .slope-box, .idop-flow');
+  const isVisible = (el) => {
+    const rect = el.getBoundingClientRect();
+    return rect.bottom > 0 && rect.top < window.innerHeight;
+  };
+  if ('IntersectionObserver' in window) {
+    targets.forEach((el) => el.classList.toggle('motion-paused', !isVisible(el)));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('motion-paused', !entry.isIntersecting));
+    });
+    targets.forEach((el) => observer.observe(el));
+  }
+  const syncPage = () => document.body.classList.toggle('page-inactive', document.visibilityState === 'hidden');
+  document.addEventListener('visibilitychange', syncPage);
+  syncPage();
+})();
+
 // —— 光标即是光：跟随鼠标的柔光 ——
 (function cursorGlow() {
   const glow = document.querySelector('.cursor-glow');
   if (!glow) return;
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const pointer = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let tx = -400, ty = -400, x = -400, y = -400, active = false, rafId = 0;
+  function eligible() {
+    return pointer.matches && !reduced.matches && document.visibilityState !== 'hidden';
+  }
+  function stop() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+    active = false;
+    glow.classList.remove('on');
+  }
   function loop() {
+    rafId = 0;
+    if (!active || !eligible()) { stop(); return; }
     x += (tx - x) * 0.1;
     y += (ty - y) * 0.1;
+    const settled = Math.abs(tx - x) < 0.2 && Math.abs(ty - y) < 0.2;
+    if (settled) { x = tx; y = ty; }
     glow.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
-    rafId = requestAnimationFrame(loop);
+    if (!settled) rafId = requestAnimationFrame(loop);
   }
   document.addEventListener('mousemove', (e) => {
+    if (!eligible()) return;
     tx = e.clientX; ty = e.clientY;
-    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); loop(); }
+    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); }
+    if (!rafId) rafId = requestAnimationFrame(loop);
   });
-  document.addEventListener('mouseleave', () => {
-    glow.classList.remove('on');
-  });
+  document.addEventListener('mouseleave', stop);
+  window.addEventListener('blur', stop);
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden' && rafId) { cancelAnimationFrame(rafId); rafId = 0; active = false; }
+    if (document.visibilityState === 'hidden') stop();
   });
+  pointer.addEventListener('change', stop);
+  reduced.addEventListener('change', stop);
 })();
 
 // —— 滚动进度：保持正文与首屏稳定，不叠加视差 ——
@@ -2643,9 +2685,10 @@ reveals.forEach(el => obs.observe(el));
 (function lightCanvas() {
   const c = document.getElementById('lightCanvas');
   if (!c) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const hero = document.querySelector('.hero');
   const ctx = c.getContext('2d');
+  if (!ctx || !hero) return;
   const hover = !matchMedia('(hover: none)').matches;
   let w = 0, h = 0, dpr = 1;
   let particles = [];
@@ -2702,9 +2745,9 @@ reveals.forEach(el => obs.observe(el));
   }
 
   function frame(t) {
-    if (!running) { rafId = 0; return; }
+    rafId = 0;
+    if (!running || !eligible()) { stop(); return; }
     ctx.clearRect(0, 0, w, h);
-    if (opacity < 0.02) { rafId = requestAnimationFrame(frame); return; }
     ctx.globalCompositeOperation = 'lighter';
 
     if (mouseActive) {
@@ -2741,16 +2784,22 @@ reveals.forEach(el => obs.observe(el));
     rafId = requestAnimationFrame(frame);
   }
 
-  function start() {
-    if (!running) {
-      running = true;
-      if (!rafId) rafId = requestAnimationFrame(frame);
-    }
+  function eligible() {
+    return opacity >= 0.02 && !reduced.matches && document.visibilityState !== 'hidden';
   }
-  function stop() { running = false; }
+  function start() {
+    if (!eligible()) { stop(); return; }
+    running = true;
+    if (!rafId) rafId = requestAnimationFrame(frame);
+  }
+  function stop() {
+    running = false;
+    mouseActive = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+  }
 
   if (hover) {
-    const hero = document.querySelector('.hero');
     if (hero) {
       hero.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
@@ -2763,22 +2812,23 @@ reveals.forEach(el => obs.observe(el));
   }
 
   function updateOpacity() {
-    const heroH = window.innerHeight;
-    const scrolled = window.scrollY;
-    opacity = Math.max(0, 1 - scrolled / heroH);
+    const rect = hero.getBoundingClientRect();
+    opacity = rect.top < window.innerHeight
+      ? Math.max(0, Math.min(1, rect.bottom / Math.max(1, rect.height)))
+      : 0;
     document.documentElement.style.setProperty('--light-opacity', opacity.toFixed(3));
-    if (opacity < 0.02) stop(); else start();
+    start();
   }
   window.addEventListener('scroll', updateOpacity, { passive: true });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') stop();
     else updateOpacity();
   });
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => { resize(); updateOpacity(); });
+  reduced.addEventListener('change', updateOpacity);
 
   resize();
   updateOpacity();
-  start();
 })();
 </script>
 
