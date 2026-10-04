@@ -977,8 +977,6 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 [data-theme="light"] .ai-lnum { color: var(--text-dim); }
 [data-theme="light"] .strat-en { opacity: 1; }
 [data-theme="light"] .ess-sec { opacity: 1; }
-[data-theme="light"] .goal-tier p[style],
-[data-theme="light"] .growth-banner .quote span[style] { opacity: 1 !important; }
 
 /* Mobile chapter directory; native disclosure keeps links usable without JS. */
 .nav-logo { text-decoration: none; }
@@ -1028,6 +1026,72 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 @media (max-width: 380px) {
   .directory-panel { padding: 16px; }
   .directory-links a { gap: 8px; padding: 12px 8px; font-size: 12px; }
+}
+
+
+/* Reading scale: clear body copy, quieter metadata and consistent spacing. */
+:root {
+  --reading-text: rgba(242,239,235,.8);
+  --reading-meta: rgba(242,239,235,.6);
+}
+:root[data-theme="light"] { --reading-text: #48515C; --reading-meta: #606974; }
+.container > section { padding: 88px 0 72px; }
+.section-title { margin-bottom: 36px; line-height: 1.35; }
+.module-deep-link { font-size: 14px; line-height: 1.7; margin-bottom: 30px; }
+.module-deep-link.compact { font-size: 13px; }
+.sys-hub-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.sys-card { padding: 24px; }
+.sys-card-title { font-size: 17px; line-height: 1.55; margin-bottom: 8px; }
+.sys-card-desc { font-size: 14px; line-height: 1.85; color: var(--reading-text); }
+.goal-tier h3 { font-size: 20px; line-height: 1.5; }
+.strat-card h4, .tactic-card h5, .factor-name, .fire-wheel h4,
+.fire-pillar h5, .ai-layer-head h4, .ai-sc h4, .gcard h4, .io-proto h4 {
+  font-size: 17px; line-height: 1.55;
+}
+.goal-tier p, .strat-card p, .tactic-card p, .factor-card p,
+.fire-wheel li, .fire-pillar p, .ai-layer p, .ai-sc li, .gcard p,
+.ecard li, .align-item, .slogan-pill, .mq-text {
+  font-size: 15px; line-height: 1.9; color: var(--reading-text);
+}
+.goal-tier p { margin-bottom: 10px; }
+.ai-layer p { max-width: 58em; margin-bottom: 14px; }
+.fire-wheel li, .ai-sc li, .ecard li { padding: 8px 0; }
+.sys-card-num, .tactic-label, .factor-en, .gcard-role, .io-step-en {
+  font-size: 12px; line-height: 1.6; letter-spacing: .08em; color: var(--reading-meta);
+}
+.strat-card .strat-en { font-size: 12px; letter-spacing: .1em; opacity: 1; }
+.gt-tag, .fw-badge, .ai-ltag { font-size: 12px; letter-spacing: .08em; }
+.ai-tool { font-size: 13px; line-height: 1.6; padding: 4px 10px; }
+.factor-role, .io-sub, .io-step-desc, .mq-src, .formula-sub,
+.fire-bar-info, .fire-prog-labs, .fire-time-note, .fire-math-txt {
+  font-size: 13px; line-height: 1.8;
+}
+.formula-sub, .io-sub, .mq-src, .fire-bar-info, .fire-math-txt,
+.fire-prog-labs .s { color: var(--reading-meta); }
+.fire-math-txt { letter-spacing: .06em; }
+.io-step-zh { font-size: 17px; line-height: 1.55; }
+.gt-footnote { margin-top: 16px; font: 12px/1.8 var(--sans-en); letter-spacing: .08em; color: var(--reading-meta); }
+.goal-tier .gt-footnote { font-size: 12px; color: var(--reading-meta); }
+.ai-layer .ai-layer-note { display: inline-block; margin-top: 10px; font-size: 13px; line-height: 1.85; color: var(--reading-meta); }
+.growth-banner-note { font-size: 14px; color: var(--reading-meta); }
+.essence-intro { font-size: 17px; line-height: 2; color: var(--reading-text); }
+.ess-sec { font-size: 13px; letter-spacing: .1em; opacity: 1; margin: 36px 0 18px; }
+.essence-cards { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.ecard-lbl { font-size: 15px; line-height: 1.6; letter-spacing: .04em; color: var(--text-primary); font-weight: 500; }
+.num-badge { font-size: 13px; }
+.slogan-pill { padding: 16px; }
+.movie-q { padding: 22px; }
+.ai-moat-banner p { font-size: 17px; line-height: 1.9; }
+@media (max-width: 768px) {
+  .container > section { padding: 56px 0; }
+  .section-title { margin-bottom: 28px; }
+  .module-deep-link { margin-bottom: 26px; }
+  .sys-hub-grid, .essence-cards { grid-template-columns: 1fr; }
+  .goal-tier, .strat-card, .tactic-card, .factor-card, .fire-wheel,
+  .fire-pillar, .ai-layer, .ai-sc, .gcard, .ecard { padding: 24px; }
+  .sys-card { padding: 22px; }
+  .ai-layer-head { gap: 10px; }
+  .ai-ltag { margin-left: 0; }
 }
 
 </style>
@@ -1124,7 +1188,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="system"><div class="section-watermark" aria-hidden="true">·</div>
     <div class="reveal">
       <div class="section-label">Life System</div>
-      <div class="section-title">七大<span class="hl">模块总览</span></div>
+      <h2 class="section-title">七大<span class="hl">模块总览</span></h2>
     </div>
     <div class="sys-hub-grid reveal">
       <a href="#goals" class="sys-card"><span class="sys-card-icon">🎯</span><div class="sys-card-num">Module 01</div><div class="sys-card-title">三级人生目标</div><div class="sys-card-desc">FIRE → 复兴 → AI奇点</div></a>
@@ -1142,7 +1206,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="goals"><div class="section-watermark" aria-hidden="true">I</div>
     <div class="reveal">
       <div class="section-label">Life Goals · Module 01</div>
-      <div class="section-title">三级<span class="hl">人生目标</span></div>
+      <h2 class="section-title">三级<span class="hl">人生目标</span></h2>
       <a class="module-deep-link" href="ideal.html">完整《三级人生目标 · 立己达人》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="goal-tiers reveal">
@@ -1152,7 +1216,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
         <p>个人层面的解放</p>
         <p>硬指标：<em>300万—1000万</em> 资产积累</p>
         <p>彻底买断自己的时间所有权，不再为别人卖命</p>
-        <p style="margin-top:12px;font-size:12px;opacity:.4;font-family:'Outfit';letter-spacing:1px">FIRE · WEALTH · FREEDOM</p>
+        <p class="gt-footnote">FIRE · WEALTH · FREEDOM</p>
       </div>
       <div class="goal-tier gt-2">
         <div class="gt-tag">高级目标</div>
@@ -1168,11 +1232,11 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
         <p>物种层面的终局</p>
         <p>AI极致生产力 → 物质极大丰富 → 共产主义</p>
         <p>保持健康，活得够久，<em>亲眼见证奇点的到来</em></p>
-        <p style="margin-top:12px;font-size:12px;opacity:.4;font-family:'Outfit';letter-spacing:1px">SINGULARITY · LIBERATION</p>
+        <p class="gt-footnote">SINGULARITY · LIBERATION</p>
       </div>
     </div>
     <div class="growth-banner reveal" style="margin-top:32px">
-      <div class="quote">勤读力耕，<em>立己达人</em><br><span style="font-size:14px;opacity:.6">立己 → FIRE · 达人 → 复兴 &amp; 奇点</span></div>
+      <div class="quote">勤读力耕，<em>立己达人</em><br><span class="growth-banner-note">立己 → FIRE · 达人 → 复兴 &amp; 奇点</span></div>
     </div>
   </section>
 
@@ -1181,7 +1245,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="strategy"><div class="section-watermark" aria-hidden="true">II</div>
     <div class="reveal">
       <div class="section-label">Life Strategy · Module 02</div>
-      <div class="section-title">S级<span class="hl">人生策略</span></div>
+      <h2 class="section-title">S级<span class="hl">人生策略</span></h2>
     </div>
     <div class="strategy-three reveal">
       <div class="strat-card">
@@ -1218,7 +1282,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="formula"><div class="section-watermark" aria-hidden="true">III</div>
     <div class="reveal">
       <div class="section-label">Prosperity Formula · Module 03</div>
-      <div class="section-title">人生<span class="hl">繁荣公式</span></div>
+      <h2 class="section-title">人生<span class="hl">繁荣公式</span></h2>
       <a class="module-deep-link" href="prosper.html">完整《人生繁荣公式》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="formula-wrap reveal">
@@ -1255,7 +1319,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="fire"><div class="section-watermark" aria-hidden="true">IV</div>
     <div class="reveal">
       <div class="section-label">FIRE Plan · Module 04</div>
-      <div class="section-title">七年<span class="hl">FIRE计划</span></div>
+      <h2 class="section-title">七年<span class="hl">FIRE计划</span></h2>
       <a class="module-deep-link" href="fire.html">完整《FIRE · 永续之道》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="fire-header reveal">
@@ -1305,7 +1369,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="ai"><div class="section-watermark" aria-hidden="true">V</div>
     <div class="reveal">
       <div class="section-label">AI Strategy · Module 05</div>
-      <div class="section-title">AI分层<span class="hl">使用战略</span></div>
+      <h2 class="section-title">AI分层<span class="hl">使用战略</span></h2>
     </div>
     <div class="ai-pyramid reveal">
       <div class="ai-layer al-base">
@@ -1315,7 +1379,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
       </div>
       <div class="ai-layer al-mid">
         <div class="ai-layer-head"><div class="ai-lnum">02</div><h4>中台层·生产力杠杆</h4><span class="ai-ltag">Mid Layer</span></div>
-        <p>搞钱·学业·项目·关键决策。工具化，只看结果交付。简单问题单模型快解；复杂问题先拆解，再多模型交叉验证，降低方向性错误概率。<br><span style="color:var(--text-dim);font-size:12px">重要问题，不只要得到答案，更要验证答案 · AI不是依赖，而是外骨骼</span></p>
+        <p>搞钱·学业·项目·关键决策。工具化，只看结果交付。简单问题单模型快解；复杂问题先拆解，再多模型交叉验证，降低方向性错误概率。<br><span class="ai-layer-note">重要问题，不只要得到答案，更要验证答案 · AI不是依赖，而是外骨骼</span></p>
         <div class="ai-tools"><span class="ai-tool">GPT</span><span class="ai-tool">Claude</span><span class="ai-tool">Gemini</span><span class="ai-tool">Grok</span><span class="ai-tool">豆包专家</span></div>
       </div>
       <div class="ai-layer al-top">
@@ -1339,7 +1403,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="growth"><div class="section-watermark" aria-hidden="true">VI</div>
     <div class="reveal">
       <div class="section-label">Growth System · Module 06</div>
-      <div class="section-title">成长进步<span class="hl">体系</span></div>
+      <h2 class="section-title">成长进步<span class="hl">体系</span></h2>
       <a class="module-deep-link" href="growth.html">完整《成长进步体系 · The Growth Machine》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="growth-engine reveal">
@@ -1370,7 +1434,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   <section id="essence"><div class="section-watermark" aria-hidden="true">VII</div>
     <div class="reveal">
       <div class="section-label">Life Essence · Module 07</div>
-      <div class="section-title">生命<span class="hl">底色</span></div>
+      <h2 class="section-title">生命<span class="hl">底色</span></h2>
       <a class="module-deep-link" href="life_undertone.html">完整《生命底色 · Life Undertone》<span class="mdl-arrow">→</span></a>
     </div>
     <div class="essence-intro reveal">
