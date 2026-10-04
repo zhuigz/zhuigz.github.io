@@ -973,6 +973,57 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 [data-theme="light"] .ess-sec { opacity: 1; }
 [data-theme="light"] .goal-tier p[style],
 [data-theme="light"] .growth-banner .quote span[style] { opacity: 1 !important; }
+
+/* Mobile chapter directory; native disclosure keeps links usable without JS. */
+.nav-logo { text-decoration: none; }
+.nav-logo:focus-visible, .directory-toggle:focus-visible, .directory-links a:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 6px;
+}
+.mobile-directory { display: none; }
+.directory-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 44px; padding: 8px 10px; list-style: none; cursor: pointer;
+  font-size: 13px; color: var(--text-primary); border-radius: 999px;
+  border: 1px solid rgba(var(--line-rgb),0.16); background: var(--bg-card);
+}
+.directory-toggle::-webkit-details-marker { display: none; }
+.directory-toggle svg { width: 16px; height: 16px; fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-linecap: round; }
+.directory-chevron { color: var(--gold); transition: transform .2s; }
+.mobile-directory[open] .directory-chevron { transform: rotate(180deg); }
+.mobile-directory[open] .directory-toggle { border-color: var(--gold); }
+.directory-panel {
+  position: absolute; top: calc(100% + 10px); left: 14px; right: 14px;
+  padding: 20px; border: 1px solid rgba(var(--gold-rgb),0.25); border-radius: 18px;
+  background: var(--bg-deep); box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+  max-height: calc(100vh - 100px); max-height: calc(100svh - 100px);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.directory-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding-bottom: 14px; margin-bottom: 12px; border-bottom: 1px solid rgba(var(--line-rgb),0.12);
+  color: var(--text-dim); font: 9px var(--mono); letter-spacing: .12em;
+}
+.directory-head b { display: block; margin-top: 5px; color: var(--text-primary); font: 500 17px var(--serif-cn); letter-spacing: .12em; }
+.directory-links { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.directory-links a {
+  display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 12px 10px;
+  border: 1px solid rgba(var(--line-rgb),0.08); border-radius: 10px;
+  color: var(--text-secondary); text-decoration: none; font-size: 13px;
+  background: var(--bg-card); transition: background .2s, border-color .2s, color .2s;
+}
+.directory-num { color: var(--gold); opacity: .75; font: 10px var(--mono); }
+.directory-links a:hover, .directory-links a.active {
+  color: var(--text-primary); background: var(--bg-card-hover); border-color: rgba(var(--gold-rgb),0.45);
+}
+.directory-links a.active .directory-num { opacity: 1; }
+[data-theme="light"] .directory-panel { box-shadow: 0 18px 48px rgba(25,28,32,0.1); }
+[data-theme="light"] .directory-links a.active { color: var(--gold); }
+@media (max-width: 768px) { .mobile-directory { display: block; } }
+@media (max-width: 380px) {
+  .directory-panel { padding: 16px; }
+  .directory-links a { gap: 8px; padding: 12px 8px; font-size: 12px; }
+}
+
 </style>
 </head>
 <body>
@@ -987,7 +1038,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
 <canvas id="dustCanvas" class="dust-canvas" aria-hidden="true"></canvas>
 
 <nav class="nav">
-  <div class="nav-logo">人生系统</div>
+  <a class="nav-logo" href="#top" aria-label="人生系统，返回顶部">人生系统</a>
   <ul class="nav-links">
     <li><a href="#system">总览</a></li>
     <li><a href="#goals">目标</a></li>
@@ -1005,10 +1056,28 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
     <span class="sep">·</span>
     <span id="navClock">--:--:--</span>
   </div>
-  <div class="nav-chapter" aria-hidden="true">
-    <span class="nc-dot"></span>
-    <span class="nc-label" id="navChapter">总览</span>
-  </div>
+  <details class="mobile-directory" id="mobileDirectory">
+    <summary class="directory-toggle" aria-label="章节目录" aria-controls="directoryPanel">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h10M3 15h14"/></svg>
+      <span>目录</span><span class="directory-chevron" aria-hidden="true">⌄</span>
+    </summary>
+    <div class="directory-panel" id="directoryPanel">
+      <div class="directory-head">
+        <span>CHAPTERS <b>章节索引</b></span>
+        <span class="nav-chapter" aria-hidden="true"><span class="nc-dot"></span><span class="nc-label" id="navChapter">首页</span></span>
+      </div>
+      <div class="directory-links">
+        <a href="#system"><span class="directory-num" aria-hidden="true">00</span><span>模块总览</span></a>
+        <a href="#goals"><span class="directory-num" aria-hidden="true">01</span><span>人生目标</span></a>
+        <a href="#strategy"><span class="directory-num" aria-hidden="true">02</span><span>人生策略</span></a>
+        <a href="#formula"><span class="directory-num" aria-hidden="true">03</span><span>繁荣公式</span></a>
+        <a href="#fire"><span class="directory-num" aria-hidden="true">04</span><span>FIRE 计划</span></a>
+        <a href="#ai"><span class="directory-num" aria-hidden="true">05</span><span>AI 分工</span></a>
+        <a href="#growth"><span class="directory-num" aria-hidden="true">06</span><span>成长体系</span></a>
+        <a href="#essence"><span class="directory-num" aria-hidden="true">07</span><span>生命底色</span></a>
+      </div>
+    </div>
+  </details>
   <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换到浅色模式" aria-pressed="false" title="切换到浅色模式">
     <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
     <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A9 9 0 0 1 9.5 3.5a9 9 0 1 0 11 11Z"/></svg>
@@ -1034,7 +1103,7 @@ section#essence  { --mc: var(--m8); --mcr: var(--m8r); }
   </div>
 </aside>
 
-<section class="hero">
+<section class="hero" id="top" tabindex="-1">
   <div class="hero-eyebrow">Private Dashboard · Internal Only</div>
   <div class="hero-badge">Life System · v1.0</div>
   <h1 class="hero-name" data-en="Personal Operating System">人生系统</h1>
@@ -1409,12 +1478,11 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 reveals.forEach(el => observer.observe(el));
 
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-const railLinks = document.querySelectorAll('.module-rail a');
-// 章名 + 模块色映射（供移动端 nav-chapter 指示使用，与 module-rail / 模块色注入一致）
+// Keep all navigation surfaces aligned with the section under the header.
+const sections = [...document.querySelectorAll('section[id]')].filter(section => section.id !== 'top');
+const sectionLinks = document.querySelectorAll('.nav-links a, .module-rail a, .directory-links a');
 const chapterMap = {
-  system:  { name: '总览',   c: 'var(--m1)' },
+  system:  { name: '总览', c: 'var(--m1)' },
   goals:   { name: 'I · 目标', c: 'var(--m1)' },
   strategy:{ name: 'II · 策略', c: 'var(--m2)' },
   formula: { name: 'III · 公式', c: 'var(--m3)' },
@@ -1425,21 +1493,64 @@ const chapterMap = {
 };
 const navChapterEl = document.getElementById('navChapter');
 const navChapterWrap = document.querySelector('.nav-chapter');
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = '#' + entry.target.id;
-      navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === id));
-      railLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === id));
-      const ch = chapterMap[entry.target.id];
-      if (ch && navChapterEl) {
-        navChapterEl.textContent = ch.name;
-        if (navChapterWrap) navChapterWrap.style.setProperty('--nc-c', ch.c);
-      }
+const navEl = document.querySelector('.nav');
+let navigationFrame = 0;
+function updateNavigation() {
+  navigationFrame = 0;
+  const readingLine = Math.min(window.innerHeight * 0.35, navEl.getBoundingClientRect().bottom + 72);
+  let activeId = null;
+  for (const section of sections) {
+    if (section.getBoundingClientRect().top <= readingLine) activeId = section.id;
+    else break;
+  }
+  sectionLinks.forEach(link => {
+    const active = link.getAttribute('href') === '#' + activeId;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  const chapter = chapterMap[activeId];
+  if (navChapterEl) navChapterEl.textContent = chapter ? chapter.name : '首页';
+  if (navChapterWrap) navChapterWrap.style.setProperty('--nc-c', chapter ? chapter.c : 'var(--gold)');
+}
+function scheduleNavigation() {
+  if (!navigationFrame) navigationFrame = requestAnimationFrame(updateNavigation);
+}
+window.addEventListener('scroll', scheduleNavigation, { passive: true });
+window.addEventListener('resize', scheduleNavigation, { passive: true });
+window.addEventListener('load', scheduleNavigation);
+window.addEventListener('hashchange', scheduleNavigation);
+updateNavigation();
+
+(function chapterDirectory() {
+  const directory = document.getElementById('mobileDirectory');
+  const summary = directory.querySelector('summary');
+  directory.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+    directory.open = false;
+    const target = document.getElementById(link.getAttribute('href').slice(1));
+    if (target) {
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
     }
   });
-}, { threshold: 0.3 });
-sections.forEach(s => navObserver.observe(s));
+  document.addEventListener('pointerdown', event => {
+    if (directory.open && !directory.contains(event.target)) directory.open = false;
+  });
+  directory.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && directory.open) {
+      event.preventDefault();
+      directory.open = false;
+      summary.focus();
+    }
+  });
+  directory.addEventListener('focusout', event => {
+    if (event.relatedTarget && !directory.contains(event.relatedTarget)) directory.open = false;
+  });
+  const desktop = matchMedia('(min-width: 769px)');
+  desktop.addEventListener('change', () => { if (desktop.matches) directory.open = false; });
+})();
 
 // Live clock for nav status (mission control feel)
 (function liveClock(){
