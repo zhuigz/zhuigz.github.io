@@ -472,7 +472,7 @@ section{position:relative;z-index:5}
   font-family:var(--italic);font-style:italic;font-weight:700;font-size:64px;
   color:var(--cc);line-height:1;letter-spacing:-.04em;opacity:.7;
 }
-.conv-col h4{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--paper);line-height:1.4;letter-spacing:.02em}
+.conv-col h3{font-family:var(--serif);font-weight:700;font-size:22px;color:var(--paper);line-height:1.4;letter-spacing:.02em}
 .conv-col p{font-size:13.5px;line-height:1.95;color:var(--paper-3)}
 .conv-col p strong{color:var(--cc);font-weight:500}
 
@@ -882,6 +882,7 @@ html[data-theme="light"]{--reading-text:#424941;--reading-meta:#555c53}
 .feature .feat-label{font-size:11px;letter-spacing:.18em;margin-bottom:20px}
 .feature .feat-num{display:flex;flex-direction:column;align-items:flex-start;gap:16px;font-size:clamp(64px,7.5vw,100px);line-height:1.05;font-weight:300;margin-bottom:24px}
 .feature .feat-num .small{font-family:var(--sans);font-size:clamp(20px,2.2vw,28px);font-weight:400;line-height:1.5;color:var(--reading-text);margin:0;letter-spacing:.04em}
+#tier1 .feat-num{flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:14px}#tier1 .feat-value{white-space:nowrap}#tier1 .feat-unit{font-size:.38em;margin-left:6px}#tier1 .feat-num .small{font-size:clamp(22px,2.8vw,36px)}
 .feature .feat-math{font-family:var(--sans);font-size:14px;line-height:1.9;letter-spacing:0}
 .sub-title{font-size:clamp(21px,2vw,28px);line-height:1.55;gap:12px;margin-bottom:24px;padding-bottom:14px;overflow-wrap:anywhere}
 .sub-title .num{flex-shrink:0}.sub-block{margin-bottom:48px}
@@ -901,7 +902,7 @@ html[data-theme="light"]{--reading-text:#424941;--reading-meta:#555c53}
 .prologue{padding:112px 0 80px}.prologue-hero{margin-bottom:56px}.prologue-hero .q-zh{font-weight:700;font-size:clamp(36px,5vw,68px);line-height:1.25}
 .anchor{padding:32px}.anchor .key{font-size:72px}
 .chapter{padding:88px 0 96px}.tier-divider{padding:80px 0}.td-rom{filter:none}
-.conv{padding:104px 0 88px}.conv-h{margin-bottom:48px}.conv-col{padding:32px}.conv-col h4{line-height:1.6;font-size:23px}.conv-col .conv-mark{font-size:52px}
+.conv{padding:104px 0 88px}.conv-h{margin-bottom:48px}.conv-col{padding:32px}.conv-col h3{line-height:1.6;font-size:23px}.conv-col .conv-mark{font-size:52px}
 .credo{padding:112px 56px}.credo-mark{margin-bottom:28px;font-size:76px}.credo-pre{margin-bottom:40px;font-size:11px;line-height:1.9;letter-spacing:.15em}
 .credo-text .line{margin-bottom:14px}.credo-text .climax{margin-top:32px;padding-top:30px}.credo-attr{margin-top:40px}
 .poster{padding:112px 56px}.poster-quote{font-weight:700;font-size:clamp(44px,7vw,96px);line-height:1.2}.poster-sub{margin-top:36px}.poster-coda{margin-top:40px}
@@ -1121,7 +1122,7 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
 
         <div class="feature r">
           <div class="feat-label">CORE TARGET · 硬指标</div>
-          <div class="feat-num">300<span class="small">万 — 1000万</span></div>
+          <div class="feat-num"><span class="feat-value">300<span class="feat-unit">万</span></span><span class="small">— 1000万</span></div>
           <div class="feat-math"><strong>300万</strong> × 4% = <strong>12万/年</strong> · <strong>1万/月</strong> · 二三线城市 <strong>完全自由</strong></div>
         </div>
 
@@ -1134,7 +1135,7 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
               <div class="date">2026.01.23</div>
               <div class="lbl">启动元年</div>
             </div>
-            <div class="tlf-line" style="--p:32%"></div>
+            <div class="tlf-line" style="--p:0%"></div>
             <div class="tlf-node">
               <div class="ico">⚙️</div>
               <div class="tag">Build</div>
@@ -1486,17 +1487,17 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
     <div class="conv-triangle r stag">
       <div class="conv-col" data-c="1">
         <div class="conv-mark">i.</div>
-        <h4>立己 ➜ 达人的<br>底气与弹药</h4>
+        <h3>立己 ➜ 达人的<br>底气与弹药</h3>
         <p>FIRE 不是终点，是 <strong>"达人"的起点</strong>。买断时间所有权之后，才能真正不为生计折腰，投入复兴的事业。300 万是地基，不是天花板。</p>
       </div>
       <div class="conv-col" data-c="2">
         <div class="conv-mark">ii.</div>
-        <h4>AI 杠杆<br>同时撬动三级</h4>
+        <h3>AI 杠杆<br>同时撬动三级</h3>
         <p>AI 既助力 <strong>FIRE 财富爆发</strong>(一人抵十人)，又推动 <strong>普惠民生</strong>(七维降本)，更直通 <strong>奇点终局</strong>(物种解放)。同一杠杆，三级共振。</p>
       </div>
       <div class="conv-col" data-c="3">
         <div class="conv-mark">iii.</div>
-        <h4>家国情怀<br>找到现实依托</h4>
+        <h3>家国情怀<br>找到现实依托</h3>
         <p>个人理想不再飘渺。我的奋斗方向，恰是 <strong>国家正在全力奔赴的方向</strong>。"得罪千百人，不负十四亿"为我的理想筑牢防火墙。</p>
       </div>
     </div>
