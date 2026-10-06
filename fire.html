@@ -6,7 +6,8 @@
 <title>FIRE · 永续之道 | 财富自由的东方答卷</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@200;300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@200;300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@200;300;400;500&family=Noto+Serif+SC:wght@200;300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet"></noscript>
 <style>
   :root {
     --ink: #08080c;
@@ -31,8 +32,8 @@
     --text-3: #7a7566;
     --text-faint: #4d4a42;
     --serif-en: 'Cormorant Garamond', 'Fraunces', serif;
-    --serif-cn: 'Noto Serif SC', serif;
-    --sans-cn: 'Noto Sans SC', sans-serif;
+    --serif-cn: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+    --sans-cn: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
     --mono: 'JetBrains Mono', monospace;
     --brush: 'Ma Shan Zheng', cursive;
   }
@@ -537,16 +538,6 @@
     margin-bottom: 80px;
   }
   .section-head-left { flex: 1; max-width: 640px; }
-  .section-head-right {
-    font-family: var(--serif-en);
-    font-size: 120px;
-    line-height: 0.9;
-    color: var(--gold-shadow);
-    font-weight: 300;
-    font-style: italic;
-    letter-spacing: -0.03em;
-    user-select: none;
-  }
   .section-eyebrow {
     display: flex; align-items: center; gap: 14px;
     font-family: var(--serif-en);
@@ -1610,8 +1601,8 @@
   }
 
   .reveal {
-    opacity: 0; transform: translateY(32px);
-    transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 1; transform: none;
+    transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .reveal.visible {
     opacity: 1; transform: translateY(0);
@@ -1644,7 +1635,7 @@
     .fire-grid { grid-template-columns: repeat(2, 1fr); }
     .types-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .ew-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .section-head-right { font-size: 72px; }
+
     section, .wisdom-section { padding: 100px 40px; }
   }
 
@@ -1664,7 +1655,7 @@
     .types-inner, .rule-inner, .calc-inner { padding: 0 24px; }
     .quote-section { padding: 80px 24px; }
     .section-head { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 50px; }
-    .section-head-right { font-size: 60px; }
+
     .compound-layout { grid-template-columns: 1fr; gap: 40px; }
     .compound-right { padding: 28px 24px; }
     .rule-layout { grid-template-columns: 1fr; gap: 60px; }
@@ -1701,7 +1692,7 @@
     .calc-type-selector { grid-template-columns: 1fr 1fr; }
     .calc-result-main { font-size: 44px; }
     .section-title { font-size: clamp(28px, 8vw, 36px); }
-    .section-head-right { font-size: 48px; }
+
     .rule-coin svg { max-width: 220px; }
   }
 
@@ -1940,6 +1931,49 @@
 
   .type-badge { align-self:flex-start; }
   @media (max-height:1100px) { .calc-result-panel { position:relative; top:0; } }
+
+  /* Final form pass: restrained rhythm and fail-open entrance effects. */
+  section, .wisdom-section { padding:100px 60px; }
+  .types-bg, .rule-bg, .calc-section { padding:100px 0; }
+  .quote-section { padding:72px 60px; }
+  .quote-ornament { margin-bottom:20px; }
+  .quote-attr { margin-top:24px; }
+  .section-head { margin-bottom:48px; gap:32px; align-items:flex-start; }
+  .section-head-left { max-width:760px; }
+  .reveal.is-pending { opacity:0; transform:translateY(16px); }
+  .reveal.visible { opacity:1; transform:none; }
+  #concept, #compound, #wisdom4 { scroll-margin-top:8px; }
+  #hero.is-offscreen .hero-coin, #hero.is-offscreen .coin-tick, #hero.is-offscreen .scroll-line,
+  .page-inactive #hero *, .page-inactive #hero *::before, .page-inactive #hero *::after { animation-play-state:paused !important; }
+  .chart-fallback { padding:20px; border:1px solid rgba(var(--gold-rgb),.2); font:14px/1.9 var(--sans-cn); color:var(--body-copy); }
+  .chart-unavailable { min-height:0; height:auto; }
+  [hidden] { display:none !important; }
+  input:disabled, button:disabled { cursor:default; }
+  @media (max-width:1024px) {
+    section, .wisdom-section { padding:80px 40px; }
+    .types-bg, .rule-bg, .calc-section { padding:80px 0; }
+    .quote-section { padding:56px 40px; }
+    #concept, #compound, #wisdom4 { scroll-margin-top:24px; }
+  }
+  @media (max-width:880px) {
+    section, .wisdom-section { padding:64px 24px; }
+    .types-bg, .rule-bg, .calc-section { padding:64px 0; }
+    .quote-section { padding:48px 24px; }
+    .section-head { margin-bottom:36px; }
+    #concept, #compound, #wisdom4 { scroll-margin-top:40px; }
+  }
+  @media (max-width:600px) {
+    section, .wisdom-section { padding:56px 20px; }
+    .types-bg, .rule-bg, .calc-section { padding:56px 0; }
+    .quote-section { padding:40px 20px; }
+    .section-head { margin-bottom:32px; }
+    #concept, #compound, #wisdom4 { scroll-margin-top:36px; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .reveal.is-pending { opacity:1 !important; transform:none !important; }
+    #hero .hero-coin { transform:none !important; }
+  }
+
 </style>
 </head>
 
@@ -2143,7 +2177,7 @@
         以提前退出被动劳动为目标的生活哲学。
       </p>
     </div>
-    <div class="section-head-right reveal reveal-delay-2">FIRE</div>
+    
   </div>
 
   <div class="fire-grid">
@@ -2205,7 +2239,7 @@
           从极简隐士到盛世豪客,各取所需。
         </p>
       </div>
-      <div class="section-head-right reveal reveal-delay-2">四流</div>
+      
     </div>
 
     <div class="types-grid">
@@ -2286,34 +2320,35 @@
         时间,才是最好的合伙人。
       </p>
     </div>
-    <div class="section-head-right reveal reveal-delay-2">复利</div>
+    
   </div>
 
   <div class="compound-layout">
     <div class="compound-left">
-      <div class="calculator-tools"><p>拖动滑块，或直接输入数字。</p><button type="button" class="reset-calculator" id="reset-compound">恢复默认 <span aria-hidden="true">↺</span></button></div>
+      <noscript><p class="model-note">当前为默认参数的示例结果；启用 JavaScript 后可调整参数。</p></noscript>
+      <div class="calculator-tools"><p>拖动滑块，或直接输入数字。</p><button disabled type="button" class="reset-calculator" id="reset-compound">恢复默认 <span aria-hidden="true">↺</span></button></div>
       <div class="slider-group reveal">
         <div class="slider-label"><label id="principal-label" for="principal-val">初始本金</label></div>
-        <div class="precise-row"><input class="precise-input" type="number" id="principal-val" min="1" max="100" step="0.01" value="10" inputmode="decimal" aria-describedby="principal-hint"><span class="precise-unit">万元</span></div>
-        <input type="range" id="principal" min="1" max="100" value="10" step="0.01" aria-labelledby="principal-label" aria-describedby="principal-hint">
+        <div class="precise-row"><input disabled class="precise-input" type="number" id="principal-val" min="1" max="100" step="0.01" value="10" inputmode="decimal" aria-describedby="principal-hint"><span class="precise-unit">万元</span></div>
+        <input disabled type="range" id="principal" min="1" max="100" value="10" step="0.01" aria-labelledby="principal-label" aria-describedby="principal-hint">
         <small class="field-hint" id="principal-hint" data-default="范围 1–100 万元">范围 1–100 万元</small>
       </div>
       <div class="slider-group reveal reveal-delay-1">
         <div class="slider-label"><label id="rate-label" for="rate-val">年化收益率</label></div>
-        <div class="precise-row"><input class="precise-input" type="number" id="rate-val" min="2" max="20" step="0.1" value="8" inputmode="decimal" aria-describedby="rate-hint"><span class="precise-unit">%</span></div>
-        <input type="range" id="rate" min="2" max="20" value="8" step="0.1" aria-labelledby="rate-label" aria-describedby="rate-hint">
+        <div class="precise-row"><input disabled class="precise-input" type="number" id="rate-val" min="2" max="20" step="0.1" value="8" inputmode="decimal" aria-describedby="rate-hint"><span class="precise-unit">%</span></div>
+        <input disabled type="range" id="rate" min="2" max="20" value="8" step="0.1" aria-labelledby="rate-label" aria-describedby="rate-hint">
         <small class="field-hint" id="rate-hint" data-default="范围 2–20 %">范围 2–20 %</small>
       </div>
       <div class="slider-group reveal reveal-delay-2">
         <div class="slider-label"><label id="monthly-label" for="monthly-val">每月定投</label></div>
-        <div class="precise-row"><input class="precise-input" type="number" id="monthly-val" min="0" max="20000" step="1" value="3000" inputmode="numeric" aria-describedby="monthly-hint"><span class="precise-unit">元</span></div>
-        <input type="range" id="monthly" min="0" max="20000" value="3000" step="1" aria-labelledby="monthly-label" aria-describedby="monthly-hint">
+        <div class="precise-row"><input disabled class="precise-input" type="number" id="monthly-val" min="0" max="20000" step="1" value="3000" inputmode="numeric" aria-describedby="monthly-hint"><span class="precise-unit">元</span></div>
+        <input disabled type="range" id="monthly" min="0" max="20000" value="3000" step="1" aria-labelledby="monthly-label" aria-describedby="monthly-hint">
         <small class="field-hint" id="monthly-hint" data-default="范围 0–20000 元">范围 0–20000 元</small>
       </div>
       <div class="slider-group reveal reveal-delay-3">
         <div class="slider-label"><label id="years-label" for="years-val">投资年限</label></div>
-        <div class="precise-row"><input class="precise-input" type="number" id="years-val" min="5" max="40" step="1" value="20" inputmode="numeric" aria-describedby="years-hint"><span class="precise-unit">年</span></div>
-        <input type="range" id="years" min="5" max="40" value="20" step="1" aria-labelledby="years-label" aria-describedby="years-hint">
+        <div class="precise-row"><input disabled class="precise-input" type="number" id="years-val" min="5" max="40" step="1" value="20" inputmode="numeric" aria-describedby="years-hint"><span class="precise-unit">年</span></div>
+        <input disabled type="range" id="years" min="5" max="40" value="20" step="1" aria-labelledby="years-label" aria-describedby="years-hint">
         <small class="field-hint" id="years-hint" data-default="范围 5–40 年">范围 5–40 年</small>
       </div>
 
@@ -2340,6 +2375,7 @@
         </div>
       </div>
       <div class="compound-chart-container">
+        <p class="chart-fallback" id="compound-chart-fallback">终值、本金与收益明细仍可查看。</p>
         <canvas id="compound-chart" role="img" aria-label="复利资产增长曲线" aria-describedby="compound-result total-invested total-gain"></canvas>
       </div>
     </div>
@@ -2361,7 +2397,7 @@
           也即「25 倍储蓄法则」的数理基石。
         </p>
       </div>
-      <div class="section-head-right reveal reveal-delay-2">4%</div>
+      
     </div>
 
     <div class="rule-layout">
@@ -2390,10 +2426,10 @@
           <!-- 4% arc on ring -->
           <circle id="rule-arc" cx="210" cy="210" r="150" fill="none"
                   stroke="url(#arcGrad)" stroke-width="3"
-                  stroke-dasharray="0 943"
+                  stroke-dasharray="37.6992 942.48"
                   stroke-linecap="round"
                   transform="rotate(-90 210 210)"
-                  style="transition: stroke-dasharray 2s cubic-bezier(0.25,0.46,0.45,0.94);"/>
+                  />
 
           <!-- background arc -->
           <circle cx="210" cy="210" r="150" fill="none" stroke="#d8b87a" stroke-opacity="0.08" stroke-width="3"/>
@@ -2488,7 +2524,7 @@
         与复利同频,与时间为友。
       </p>
     </div>
-    <div class="section-head-right reveal reveal-delay-2">智慧</div>
+    
   </div>
 
   <div class="ew-grid">
@@ -2550,17 +2586,18 @@
           每一次滑动,都是一次与未来对话。
         </p>
       </div>
-      <div class="section-head-right reveal reveal-delay-2">自测</div>
+      
     </div>
 
     <div class="calc-grid">
       <div class="calc-inputs reveal">
-        <div class="calculator-tools"><p>拖动滑块，或直接输入数字。</p><button type="button" class="reset-calculator" id="reset-fire">恢复默认 <span aria-hidden="true">↺</span></button></div>
+        <noscript><p class="model-note">当前为默认参数的示例结果；启用 JavaScript 后可调整参数。</p></noscript>
+      <div class="calculator-tools"><p>拖动滑块，或直接输入数字。</p><button disabled type="button" class="reset-calculator" id="reset-fire">恢复默认 <span aria-hidden="true">↺</span></button></div>
         <div class="calc-type-selector" role="group" aria-label="选择 FIRE 模式">
-          <button class="type-btn active" data-cn="极简" type="button" aria-label="极简 Lean FIRE" aria-pressed="true" onclick="setFireType('lean')">Lean</button>
-          <button class="type-btn" data-cn="标准" type="button" aria-label="标准 Regular FIRE" aria-pressed="false" onclick="setFireType('regular')">Regular</button>
-          <button class="type-btn" data-cn="半退" type="button" aria-label="半退 Barista FIRE" aria-pressed="false" onclick="setFireType('barista')">Barista</button>
-          <button class="type-btn" data-cn="奢华" type="button" aria-label="奢华 Fat FIRE" aria-pressed="false" onclick="setFireType('fat')">Fat</button>
+          <button disabled class="type-btn active" data-cn="极简" type="button" aria-label="极简 Lean FIRE" aria-pressed="true" onclick="setFireType('lean')">Lean</button>
+          <button disabled class="type-btn" data-cn="标准" type="button" aria-label="标准 Regular FIRE" aria-pressed="false" onclick="setFireType('regular')">Regular</button>
+          <button disabled class="type-btn" data-cn="半退" type="button" aria-label="半退 Barista FIRE" aria-pressed="false" onclick="setFireType('barista')">Barista</button>
+          <button disabled class="type-btn" data-cn="奢华" type="button" aria-label="奢华 Fat FIRE" aria-pressed="false" onclick="setFireType('fat')">Fat</button>
         </div>
 
         <div class="calc-input-group">
@@ -2569,10 +2606,10 @@
             <span class="calc-input-en">Net Worth</span>
           </div>
           <div class="calc-input-row">
-            <input class="precise-input" type="number" id="cv-assets" min="0" max="500" step="0.01" value="50" inputmode="decimal" aria-describedby="c-assets-hint">
+            <input disabled class="precise-input" type="number" id="cv-assets" min="0" max="500" step="0.01" value="50" inputmode="decimal" aria-describedby="c-assets-hint">
             <div class="calc-input-unit">万元</div>
           </div>
-          <input type="range" id="c-assets" min="0" max="500" value="50" step="0.01" aria-labelledby="c-assets-label" aria-describedby="c-assets-hint">
+          <input disabled type="range" id="c-assets" min="0" max="500" value="50" step="0.01" aria-labelledby="c-assets-label" aria-describedby="c-assets-hint">
         <small class="field-hint" id="c-assets-hint" data-default="范围 0–500 万元">范围 0–500 万元</small>
         </div>
 
@@ -2582,10 +2619,10 @@
             <span class="calc-input-en">Annual Income</span>
           </div>
           <div class="calc-input-row">
-            <input class="precise-input" type="number" id="cv-income" min="5" max="200" step="0.01" value="30" inputmode="decimal" aria-describedby="c-income-hint">
+            <input disabled class="precise-input" type="number" id="cv-income" min="5" max="200" step="0.01" value="30" inputmode="decimal" aria-describedby="c-income-hint">
             <div class="calc-input-unit">万 / 年</div>
           </div>
-          <input type="range" id="c-income" min="5" max="200" value="30" step="0.01" aria-labelledby="c-income-label" aria-describedby="c-income-hint">
+          <input disabled type="range" id="c-income" min="5" max="200" value="30" step="0.01" aria-labelledby="c-income-label" aria-describedby="c-income-hint">
         <small class="field-hint" id="c-income-hint" data-default="范围 5–200 万元 / 年">范围 5–200 万元 / 年</small>
         </div>
 
@@ -2595,10 +2632,10 @@
             <span class="calc-input-en">Annual Expense</span>
           </div>
           <div class="calc-input-row">
-            <input class="precise-input" type="number" id="cv-expense" min="3" max="100" step="0.01" value="12" inputmode="decimal" aria-describedby="c-expense-hint">
+            <input disabled class="precise-input" type="number" id="cv-expense" min="3" max="100" step="0.01" value="12" inputmode="decimal" aria-describedby="c-expense-hint">
             <div class="calc-input-unit">万 / 年</div>
           </div>
-          <input type="range" id="c-expense" min="3" max="100" value="12" step="0.01" aria-labelledby="c-expense-label" aria-describedby="c-expense-hint">
+          <input disabled type="range" id="c-expense" min="3" max="100" value="12" step="0.01" aria-labelledby="c-expense-label" aria-describedby="c-expense-hint">
         <small class="field-hint" id="c-expense-hint" data-default="范围 3–100 万元 / 年">范围 3–100 万元 / 年</small>
         </div>
 
@@ -2608,10 +2645,10 @@
             <span class="calc-input-en">Expected Return</span>
           </div>
           <div class="calc-input-row">
-            <input class="precise-input" type="number" id="cv-return" min="3" max="15" step="0.1" value="7" inputmode="decimal" aria-describedby="c-return-hint">
+            <input disabled class="precise-input" type="number" id="cv-return" min="3" max="15" step="0.1" value="7" inputmode="decimal" aria-describedby="c-return-hint">
             <div class="calc-input-unit">%</div>
           </div>
-          <input type="range" id="c-return" min="3" max="15" value="7" step="0.1" aria-labelledby="c-return-label" aria-describedby="c-return-hint">
+          <input disabled type="range" id="c-return" min="3" max="15" value="7" step="0.1" aria-labelledby="c-return-label" aria-describedby="c-return-hint">
         <small class="field-hint" id="c-return-hint" data-default="范围 3–15 %">范围 3–15 %</small>
         </div>
 
@@ -2621,10 +2658,10 @@
             <span class="calc-input-en">Current Age</span>
           </div>
           <div class="calc-input-row">
-            <input class="precise-input" type="number" id="cv-age" min="18" max="55" step="1" value="30" inputmode="numeric" aria-describedby="c-age-hint">
+            <input disabled class="precise-input" type="number" id="cv-age" min="18" max="55" step="1" value="30" inputmode="numeric" aria-describedby="c-age-hint">
             <div class="calc-input-unit">岁</div>
           </div>
-          <input type="range" id="c-age" min="18" max="55" value="30" step="1" aria-labelledby="c-age-label" aria-describedby="c-age-hint">
+          <input disabled type="range" id="c-age" min="18" max="55" value="30" step="1" aria-labelledby="c-age-label" aria-describedby="c-age-hint">
         <small class="field-hint" id="c-age-hint" data-default="范围 18–55 岁">范围 18–55 岁</small>
         </div>
       </div>
@@ -2672,7 +2709,8 @@
             <span>TRAJECTORY · 资产轨迹</span>
             <span>TARGET · 目标线</span>
           </div>
-          <canvas id="fire-chart" role="img" aria-label="FIRE 资产轨迹与目标线" aria-describedby="cr-years cr-target fire-scenario"></canvas>
+          <p class="chart-fallback" id="fire-chart-fallback">达标年限、目标金额与资产进度仍可查看。</p>
+        <canvas id="fire-chart" role="img" aria-label="FIRE 资产轨迹与目标线" aria-describedby="cr-years cr-target fire-scenario"></canvas>
         </div>
       </div>
     </div>
@@ -2693,7 +2731,7 @@
         最后都共同认同的箴言。
       </p>
     </div>
-    <div class="section-head-right reveal reveal-delay-2">箴言</div>
+    
   </div>
 
   <div class="wisdom-layout">
@@ -2831,95 +2869,144 @@
 </script>
 
 <script>
-// ────────── MOTION PREFERENCE ──────────
-const prefersReducedMotion =
-  window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Progressive entrance effects: failure always leaves the full document readable.
+(() => {
+  const elements = [...document.querySelectorAll('.reveal')];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let observer;
+  function showAll() {
+    if (observer) { try { observer.disconnect(); } catch {} }
+    elements.forEach(element => element.classList.remove('is-pending'));
+  }
+  try {
+    if (!reduce.matches && typeof IntersectionObserver === 'function') {
+      observer = new IntersectionObserver(entries => {
+        try {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove('is-pending');
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        } catch { showAll(); }
+      }, {threshold:0});
+      elements.forEach(element => observer.observe(element));
+      elements.forEach(element => {
+        if (!element.classList.contains('visible') && element.getBoundingClientRect().top >= window.innerHeight) element.classList.add('is-pending');
+      });
+    }
+  } catch { showAll(); }
+  const changed = () => { if (reduce.matches) showAll(); };
+  if (reduce.addEventListener) reduce.addEventListener('change',changed);
+  else if (reduce.addListener) reduce.addListener(changed);
+})();
+</script>
 
-// ────────── HERO CANVAS : 柔和粒子 ──────────
-const heroCanvas = document.getElementById('hero-canvas');
-const hCtx = heroCanvas.getContext('2d');
-let particles = [];
+<script>
+(() => {
+  const hero = document.getElementById('hero');
+  const update = () => {
+    const rect = hero.getBoundingClientRect();
+    hero.classList.toggle('is-offscreen',rect.bottom <= 0 || rect.top >= window.innerHeight);
+    document.body.classList.toggle('page-inactive',document.hidden);
+  };
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  document.addEventListener('visibilitychange',update);
+  update();
+})();
+</script>
 
-function resizeHeroCanvas() {
-  heroCanvas.width = window.innerWidth;
-  heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-}
-resizeHeroCanvas();
-window.addEventListener('resize', () => {
-  resizeHeroCanvas();
-  initParticles();
-  if (prefersReducedMotion) drawParticles(false);
-});
-
-function initParticles() {
-  particles = [];
-  const count = window.innerWidth < 768 ? 18 : 36;
-  const symbols = ['¥', '%', '∞', '4', '7', '25', '·', '○'];
-  for (let i = 0; i < count; i++) {
-    particles.push({
-      x: Math.random() * heroCanvas.width,
-      y: Math.random() * heroCanvas.height,
-      vy: -(0.15 + Math.random() * 0.3),
-      vx: (Math.random() - 0.5) * 0.15,
-      opacity: Math.random() * 0.2 + 0.04,
-      symbol: symbols[Math.floor(Math.random() * symbols.length)],
-      size: 10 + Math.random() * 16,
-      fade: Math.random() * 0.004 + 0.001,
-      fadeDir: Math.random() > 0.5 ? 1 : -1,
+<script>
+// A single guarded particle loop runs only while the opening is visible and active.
+(() => {
+  const hero = document.getElementById('hero');
+  const canvas = document.getElementById('hero-canvas');
+  let ctx;
+  try { ctx = canvas.getContext('2d'); } catch {}
+  if (!ctx) { canvas.hidden = true; return; }
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let particles = [], frame = 0, last = 0, visible = false, failed = false;
+  function stop() { if (frame) cancelAnimationFrame(frame); frame = 0; last = 0; }
+  function draw(delta) {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => {
+      p.y += p.vy * delta; p.x += p.vx * delta;
+      p.opacity += p.fade * p.direction * delta;
+      if (p.opacity > .22 || p.opacity < .03) p.direction *= -1;
+      if (p.y < -30) { p.y = canvas.height + 30; p.x = Math.random() * canvas.width; }
+      if (p.x < -30) p.x = canvas.width + 30;
+      if (p.x > canvas.width + 30) p.x = -30;
+      ctx.fillStyle = `rgba(216,184,122,${p.opacity})`;
+      ctx.font = `${p.size}px 'Cormorant Garamond', serif`;
+      ctx.fillText(p.symbol,p.x,p.y);
     });
   }
-}
-initParticles();
-
-function drawParticles(animate) {
-  hCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-  particles.forEach(p => {
-    if (animate) {
-      p.y += p.vy;
-      p.x += p.vx;
-      p.opacity += p.fade * p.fadeDir;
-      if (p.opacity > 0.22 || p.opacity < 0.03) p.fadeDir *= -1;
-      if (p.y < -30) { p.y = heroCanvas.height + 30; p.x = Math.random() * heroCanvas.width; }
-      if (p.x < -30) p.x = heroCanvas.width + 30;
-      if (p.x > heroCanvas.width + 30) p.x = -30;
+  function fail() { failed = true; stop(); canvas.hidden = true; }
+  function tick(time) {
+    frame = 0;
+    if (!visible || document.hidden || reduce.matches || failed) { last = 0; return; }
+    try {
+      if (!last || time - last >= 32) {
+        draw(last ? Math.min(3,(time - last)/16.667) : 1);
+        last = time;
+      }
+      frame = requestAnimationFrame(tick);
+    } catch { fail(); }
+  }
+  function update() {
+    const rect = hero.getBoundingClientRect();
+    visible = rect.bottom > 0 && rect.top < window.innerHeight;
+    if (failed) return;
+    if (visible && !document.hidden && !reduce.matches) {
+      if (!frame) frame = requestAnimationFrame(tick);
+    } else {
+      stop();
+      if (visible && !document.hidden) { try { draw(0); } catch { fail(); } }
     }
-    hCtx.fillStyle = `rgba(216, 184, 122, ${p.opacity})`;
-    hCtx.font = `${p.size}px 'Cormorant Garamond', serif`;
-    hCtx.fillText(p.symbol, p.x, p.y);
-  });
-  if (animate) requestAnimationFrame(() => drawParticles(true));
+  }
+  function resize() {
+    if (failed) return;
+    try {
+      stop(); canvas.width = hero.clientWidth; canvas.height = hero.offsetHeight;
+      const count = window.innerWidth < 768 ? 14 : 28;
+      const symbols = ['¥','%','∞','4','7','25','·','○'];
+      particles = Array.from({length:count},() => ({
+        x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+        vx:(Math.random()-.5)*.15,vy:-(.15+Math.random()*.3),
+        opacity:Math.random()*.2+.04,symbol:symbols[Math.floor(Math.random()*symbols.length)],
+        size:10+Math.random()*16,fade:Math.random()*.004+.001,direction:Math.random()>.5?1:-1
+      }));
+      draw(0); update();
+    } catch { fail(); }
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',resize);
+  document.addEventListener('visibilitychange',update);
+  if (reduce.addEventListener) reduce.addEventListener('change',update);
+  else if (reduce.addListener) reduce.addListener(update);
+  if (document.fonts) document.fonts.ready.then(resize).catch(() => {});
+  resize();
+})();
+</script>
+
+<script>
+// Chart availability must never prevent numeric results from updating.
+function safeChartContext(canvas) {
+  try { return canvas.getContext('2d'); } catch { return null; }
 }
-// reduced-motion: render a single static field; otherwise loop
-drawParticles(!prefersReducedMotion);
-
-// ────────── NAV SCROLL ──────────
-
-
-// ────────── REVEAL ──────────
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ────────── 4% COIN ARC ANIMATE ──────────
-const ruleObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      setTimeout(() => {
-        // circumference ≈ 2π × 150 ≈ 942.48
-        const C = 2 * Math.PI * 150;
-        const arcLen = C * 0.04;
-        document.getElementById('rule-arc').setAttribute('stroke-dasharray', `${arcLen} ${C}`);
-      }, 500);
-    }
-  });
-}, { threshold: 0.3 });
-const ruleEl = document.getElementById('rule4');
-if (ruleEl) ruleObserver.observe(ruleEl);
+function chartFallback(id, unavailable) {
+  const canvas = document.getElementById(id);
+  const fallback = document.getElementById(id + '-fallback');
+  canvas.hidden = unavailable;
+  fallback.hidden = !unavailable;
+  canvas.parentElement.classList.toggle('chart-unavailable',unavailable);
+}
 
 // ────────── COMPOUND CALCULATOR ──────────
 const compoundChart = document.getElementById('compound-chart');
-const cCtx = compoundChart.getContext('2d');
+let cCtx = safeChartContext(compoundChart);
 const DPR = window.devicePixelRatio || 1;
 
 function resizeCompoundChart() {
@@ -2966,6 +3053,9 @@ function calcCompound() {
 }
 
 function drawCompoundChart(data, P, annualContrib) {
+  if (!cCtx) { chartFallback('compound-chart',true); return; }
+  try {
+
   resizeCompoundChart();
   const W = compoundChart.width / DPR, H = compoundChart.height / DPR;
   cCtx.clearRect(0, 0, W, H);
@@ -3062,6 +3152,12 @@ function drawCompoundChart(data, P, annualContrib) {
     cCtx.fillText(`${yr}y`, x, H - 12);
   }
   cCtx.textAlign = 'left';
+
+    chartFallback('compound-chart',false);
+  } catch {
+    cCtx = null;
+    chartFallback('compound-chart',true);
+  }
 }
 
 
@@ -3082,7 +3178,7 @@ function setFireType(t) {
 }
 
 const fireChartCanvas = document.getElementById('fire-chart');
-const fCtx = fireChartCanvas.getContext('2d');
+let fCtx = safeChartContext(fireChartCanvas);
 
 function resizeFireChart() {
   const container = fireChartCanvas.parentElement;
@@ -3161,6 +3257,9 @@ function calcFire() {
 }
 
 function drawFireChart(trajectory, target) {
+  if (!fCtx) { chartFallback('fire-chart',true); return; }
+  try {
+
   resizeFireChart();
   const W = fireChartCanvas.width / DPR, H = fireChartCanvas.height / DPR;
   fCtx.clearRect(0, 0, W, H);
@@ -3235,6 +3334,12 @@ function drawFireChart(trajectory, target) {
   fCtx.textAlign = 'right';
   fCtx.fillText(`${trajectory.length - 1}y`, W - pad.right, H - 6);
   fCtx.textAlign = 'left';
+
+    chartFallback('fire-chart',false);
+  } catch {
+    fCtx = null;
+    chartFallback('fire-chart',true);
+  }
 }
 
 
@@ -3306,9 +3411,11 @@ preciseFields.forEach(bindPrecise);
   });
 });
 
-// initial
+// Initialize numeric results before enabling user interaction.
 calcCompound();
 calcFire();
+document.querySelectorAll('#compound input, #calculator input, .type-btn, .reset-calculator').forEach(control => control.removeAttribute('disabled'));
+if (document.fonts) document.fonts.ready.then(() => { calcCompound(); calcFire(); }).catch(() => {});
 
 // resize handler — redraw on window resize
 let resizeTimer;
@@ -3323,5 +3430,6 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
+
 
 
