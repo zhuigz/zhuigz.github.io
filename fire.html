@@ -1937,6 +1937,9 @@
     .calc-chart-label { letter-spacing:.5px; gap:12px; font-size:11px; }
   }
 
+
+  .type-badge { align-self:flex-start; }
+  @media (max-height:1100px) { .calc-result-panel { position:relative; top:0; } }
 </style>
 </head>
 
@@ -2973,7 +2976,7 @@ function drawCompoundChart(data, P, annualContrib) {
   const yScale = (H - pad.top - pad.bottom) / max;
 
   // horizontal grid lines
-  cCtx.font = "10px 'JetBrains Mono', monospace";
+  cCtx.font = "11px 'JetBrains Mono', monospace";
   for (let i = 0; i <= 4; i++) {
     const y = pad.top + (H - pad.top - pad.bottom) * (1 - i / 4);
     cCtx.beginPath();
@@ -2985,7 +2988,7 @@ function drawCompoundChart(data, P, annualContrib) {
     cCtx.stroke();
     cCtx.setLineDash([]);
     const val = max * i / 4;
-    cCtx.fillStyle = 'rgba(216, 184, 122,0.35)';
+    cCtx.fillStyle = '#ada594';
     const label = val >= 1e8 ? `${(val/1e8).toFixed(1)}亿` : `${Math.round(val/1e4)}万`;
     cCtx.fillText(label, 8, y + 3);
   }
@@ -3049,8 +3052,8 @@ function drawCompoundChart(data, P, annualContrib) {
   cCtx.shadowBlur = 0;
 
   // X-axis year labels
-  cCtx.fillStyle = 'rgba(216, 184, 122,0.4)';
-  cCtx.font = "10px 'JetBrains Mono', monospace";
+  cCtx.fillStyle = '#ada594';
+  cCtx.font = "11px 'JetBrains Mono', monospace";
   cCtx.textAlign = 'center';
   const numLabels = 5;
   for (let i = 0; i <= numLabels; i++) {
@@ -3176,8 +3179,8 @@ function drawFireChart(trajectory, target) {
   fCtx.setLineDash([]);
 
   // target label
-  fCtx.fillStyle = 'rgba(200, 57, 47,0.7)';
-  fCtx.font = "9px 'JetBrains Mono', monospace";
+  fCtx.fillStyle = '#e87769';
+  fCtx.font = "11px 'JetBrains Mono', monospace";
   fCtx.fillText('TARGET', W - 52, ty - 4);
 
   // fill area
@@ -3222,8 +3225,8 @@ function drawFireChart(trajectory, target) {
   fCtx.shadowBlur = 0;
 
   // year labels
-  fCtx.fillStyle = 'rgba(216, 184, 122,0.4)';
-  fCtx.font = "9px 'JetBrains Mono', monospace";
+  fCtx.fillStyle = '#ada594';
+  fCtx.font = "11px 'JetBrains Mono', monospace";
   fCtx.textAlign = 'left';
   fCtx.fillText('0y', pad.left, H - 6);
   fCtx.textAlign = 'right';
