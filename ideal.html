@@ -199,123 +199,75 @@ section{position:relative;z-index:5}
 .stag.v > *:nth-child(7){transition-delay:.53s}
 
 /* ═══════════════════════════════════════ HERO ═══════════════════════════════════════ */
+/* Contemporary declaration: typography leads, decoration stays quiet. */
 .hero{
-  min-height:100vh;
+  min-height:100vh;min-height:100svh;
   display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;padding:140px 56px 80px;
+  overflow:hidden;padding:150px 80px 110px;
+  background:radial-gradient(ellipse at 88% 48%,#18201f 0,transparent 52%),#0b0d10;
+  isolation:isolate;
 }
-.hero-orb{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:min(900px,95vw);height:min(900px,95vw);
-  background:
-    radial-gradient(circle at 30% 30%,rgba(122,187,143,.10),transparent 40%),
-    radial-gradient(circle at 70% 50%,rgba(232,184,122,.10),transparent 40%),
-    radial-gradient(circle at 50% 80%,rgba(142,122,184,.10),transparent 40%);
-  filter:blur(60px);animation:orb-pulse 12s ease-in-out infinite;
-  pointer-events:none;
+.hero-content{position:relative;z-index:6;text-align:left;max-width:1100px;width:100%}
+.hero-meta{
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11px;font-weight:400;line-height:1.5;
+  letter-spacing:.2em;color:#aaa9a6;
 }
-@keyframes orb-pulse{
-  0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1) rotate(0)}
-  50%{opacity:1;transform:translate(-50%,-50%) scale(1.06) rotate(60deg)}
+.hero-ghost{
+  position:absolute;right:0;top:64px;z-index:0;pointer-events:none;user-select:none;
+  font-family:var(--mono);font-size:clamp(160px,26vw,350px);font-weight:400;
+  line-height:1;letter-spacing:-.07em;color:#1f2725;
 }
-
-.hero-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:680px;height:680px;pointer-events:none}
-.hero-rings .ring{position:absolute;border-radius:50%;animation:spin 80s linear infinite}
-.hero-rings .ring-1{inset:0;border:1px solid rgba(232,184,122,.18)}
-.hero-rings .ring-2{inset:60px;border:1px dashed rgba(244,239,227,.08);animation-duration:120s;animation-direction:reverse}
-.hero-rings .ring-3{inset:140px;border:1px solid rgba(122,187,143,.12);animation-duration:60s}
-.hero-rings .ring-4{inset:220px;border:1px dashed rgba(142,122,184,.15);animation-duration:100s;animation-direction:reverse}
-
-.hero-content{position:relative;z-index:6;text-align:center;max-width:1100px;width:100%}
-
-.hero-chip{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:10px 22px;border:1px solid rgba(232,184,122,.3);border-radius:100px;
-  font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.36em;
-  color:var(--gold);text-transform:uppercase;margin-bottom:48px;
-  background:linear-gradient(135deg,rgba(232,184,122,.06),transparent);
-  position:relative;overflow:hidden;
-}
-.hero-chip::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold);animation:chip-pulse 2.2s ease-in-out infinite}
-@keyframes chip-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
-
+.hero-owner{position:relative;margin-top:56px;font-size:14px;line-height:1.8;letter-spacing:.18em;color:#aaa9a6}
 .hero-title{
-  position:relative;
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(56px,11vw,180px);line-height:.92;letter-spacing:.025em;
-  margin-bottom:42px;
+  position:relative;margin-top:18px;
+  font-family:var(--sans);font-weight:500;
+  font-size:clamp(46px,10vw,112px);line-height:1.16;letter-spacing:-.055em;
+  color:#eeeae2;
 }
-.hero-title .tl-prefix,.hero-title .tl-main{position:relative;z-index:3}
-.hero-title .tl-prefix{display:block;font-size:.32em;font-weight:400;font-family:var(--serif);color:var(--paper-3);letter-spacing:.5em;margin-bottom:18px;font-style:italic;font-family:var(--italic)}
-.hero-title .tl-main{
-  display:block;
-  background:linear-gradient(
-    180deg,
-    #F4DEAA 0%,
-    #E8C888 32%,
-    #D4AC68 62%,
-    #B48848 100%
-  );
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:.04em;
-  filter:
-    drop-shadow(0 1px 0 #8A5C20)
-    drop-shadow(0 2px 0 #5E3E14)
-    drop-shadow(0 3px 0 #3A2608)
-    drop-shadow(0 4px 0 #1F1404)
-    drop-shadow(0 10px 22px rgba(0,0,0,.6));
-}
-.hero-title::after{
-  content:'MMXXVI';
-  position:absolute;
-  left:50%;top:62%;
-  transform:translate(-50%,-50%);
-  font-family:var(--italic);font-style:italic;font-weight:700;
-  font-size:clamp(180px,28vw,440px);
-  line-height:1;letter-spacing:.04em;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(232,184,122,.055);
-  white-space:nowrap;pointer-events:none;
-  z-index:0;
-  user-select:none;
-}
-@media(max-width:900px){.hero-title::after{font-size:clamp(140px,32vw,260px);opacity:.7}}
-
-.hero-motto{
-  margin:60px auto 0;max-width:680px;position:relative;
-  padding:32px 0;
-}
-.hero-motto::before,.hero-motto::after{
-  content:'';position:absolute;left:50%;transform:translateX(-50%);
-  width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
-}
-.hero-motto::before{top:0}
-.hero-motto::after{bottom:0}
-.hero-motto-1{font-family:var(--serif);font-weight:700;font-size:clamp(18px,2vw,26px);color:var(--paper);letter-spacing:.36em;margin-bottom:14px}
-.hero-motto-1 .sep{color:var(--gold);margin:0 .3em;font-size:.6em;vertical-align:middle}
-.hero-motto-2{font-family:var(--italic);font-style:italic;font-size:clamp(13px,1.1vw,15px);color:var(--paper-3);letter-spacing:.04em}
-.hero-motto-2 strong{color:var(--gold);font-weight:500;font-style:normal;font-family:var(--mono)}
-
-/* Tier ladder */
+.hero-title span{display:block}
+.hero-title .tl-level{font-size:.65em;letter-spacing:.04em;color:#c6a779;margin-bottom:10px}
+.hero-motto{position:relative;margin-top:30px;max-width:680px}
+.hero-motto-1{font-family:var(--sans);font-weight:400;font-size:18px;line-height:1.7;letter-spacing:.13em;color:#aaa9a6}
+.hero-motto-1 .sep{color:#c6a779;margin:0 .5em}
+.hero-motto-2{font-size:13px;line-height:1.9;color:#aaa9a6;margin-top:10px}
+.hero-motto-2 strong{font-weight:400;color:#d0ccc4}
 .hero-ladder{
-  display:flex;justify-content:center;align-items:center;gap:40px;margin-top:70px;flex-wrap:wrap;
+  position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:24px;margin-top:58px;border-top:1px solid #2b2e30;padding-top:24px;
 }
 .hero-step{
-  display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;
-  transition:all .5s var(--ease);
+  display:grid;grid-template-columns:auto 1fr;align-items:baseline;column-gap:12px;row-gap:4px;
+  min-width:0;text-decoration:none;padding:8px 4px;border-radius:3px;
+  transition:background .25s var(--ease);
 }
-.hero-step:hover{transform:translateY(-4px)}
-.hero-step .rom{
-  font-family:var(--italic);font-style:italic;font-weight:700;font-size:42px;line-height:1;
-  color:transparent;-webkit-text-stroke:1px var(--c);transition:all .5s;letter-spacing:-.02em;
+.hero-step:hover{background:rgba(244,239,227,.035)}
+.hero-step:focus-visible{outline:2px solid var(--c);outline-offset:6px}
+.hero-step .rom{grid-row:1 / 3;font-family:var(--italic);font-style:italic;font-weight:400;font-size:30px;line-height:1;color:var(--c)}
+.hero-step .zh{font-family:var(--sans);font-weight:400;font-size:15px;letter-spacing:.04em;color:#d0ccc4}
+.hero-step .en{grid-column:2;font-family:var(--mono);font-weight:400;font-size:12px;line-height:1.5;letter-spacing:.03em;color:#aaa9a6}
+.hero-step[data-c="jade"]{--c:#92b89d}
+.hero-step[data-c="crimson"]{--c:#c9877f}
+.hero-step[data-c="violet"]{--c:#b9acd2}
+@media(max-width:900px){
+  .hero{padding:130px 40px 110px}
+  .hero-ladder{gap:16px}
 }
-.hero-step:hover .rom{color:var(--c);-webkit-text-stroke-color:transparent}
-.hero-step .zh{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--paper-2);letter-spacing:.18em}
-.hero-step .en{font-family:var(--mono);font-size:9px;letter-spacing:.32em;color:var(--paper-4);text-transform:uppercase;font-weight:500}
-.hero-step[data-c="jade"]{--c:var(--jade)}
-.hero-step[data-c="crimson"]{--c:var(--crimson-light)}
-.hero-step[data-c="violet"]{--c:var(--violet)}
-.hero-arrow{font-family:var(--mono);font-weight:200;font-size:24px;color:var(--paper-4)}
+@media(max-width:560px){
+  .hero{padding:120px 24px 96px}
+  .hero-meta{font-size:10px;letter-spacing:.1em;gap:12px}
+  .hero-owner{margin-top:56px;font-size:13px}
+  .hero-title{font-size:clamp(46px,11.8vw,66px);line-height:1.25}
+  .hero-ghost{top:104px;right:-4px;font-size:clamp(150px,45vw,230px)}
+  .hero-motto{margin-top:28px}
+  .hero-motto-1{font-size:15px;letter-spacing:.06em}
+  .hero-motto-2{font-size:12px}
+  .hero-ladder{margin-top:40px;gap:8px;padding-top:20px}
+  .hero-step{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px 0}
+  .hero-step .rom{font-size:26px}
+  .hero-step .zh{font-size:12px;letter-spacing:0}
+  .hero-step .en{font-size:11px;letter-spacing:0}
+}
 
 .scroll-cue{
   position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
@@ -717,15 +669,12 @@ footer{
   .dim-grid{grid-template-columns:repeat(2,1fr)}
   .timeline-fire{flex-direction:column;align-items:flex-start;gap:18px}
   .tlf-line{display:none}
-  .hero-ladder{gap:20px}
-  .hero-arrow{transform:rotate(90deg)}
   .feature{padding:32px 28px}
   .insight{padding:36px 28px}
 }
 @media (max-width:560px){
   .container,.container-narrow,.topbar,.hero,.poster,footer{padding-left:24px;padding-right:24px}
   .topbar{padding-top:14px;padding-bottom:14px}
-  .hero{padding-top:110px}
   .dim-grid{grid-template-columns:1fr}
   .flow-path{grid-template-columns:1fr}
   .chapter{padding:80px 0 120px}
@@ -843,8 +792,8 @@ footer{
   html{scroll-behavior:auto}
   /* 背景装饰动画：余烬 / 跑马灯 / 波纹 / 转环 / 浮光 全部静置 */
   .embers,.light-canvas,.td-extra-ring,.td-tape{display:none !important}
-  .brand-seal::after,.hero-orb,.hero-rings .ring,.poster::before,.poster::after,
-  .credo::after,.hero-chip::before,.scroll-cue .line,.anchor-bridge .arrow{animation:none !important}
+  .brand-seal::after,.poster::before,.poster::after,
+  .credo::after,.scroll-cue .line,.anchor-bridge .arrow{animation:none !important}
   /* 自定义光标隐藏，恢复系统光标 */
   .cursor-dot,.cursor-ring{display:none !important}
   body,a,button,.hero-step,.dim,.wheel,.p-card,.fw,.conv-col,.anchor{cursor:auto !important}
@@ -913,24 +862,14 @@ footer{
 
 <!-- ═════════════════════════ HERO ═════════════════════════ -->
 <section class="hero" id="top">
-  <div class="hero-orb"></div>
-  <div class="hero-rings">
-    <div class="ring ring-1"></div>
-    <div class="ring ring-2"></div>
-    <div class="ring ring-3"></div>
-    <div class="ring ring-4"></div>
-  </div>
-
   <div class="hero-content">
-    <div class="hero-chip">PERSONAL DOCTRINE · 2026 EDITION</div>
-
-    <h1 class="hero-title">
-      <span class="tl-prefix">追光者的</span>
-      <span class="tl-main">三级人生目标</span>
-    </h1>
+    <div class="hero-meta"><span>PERSONAL DOCTRINE</span><span>2026 EDITION</span></div>
+    <div class="hero-ghost" aria-hidden="true">03</div>
+    <div class="hero-owner">追光者的</div>
+    <h1 class="hero-title"><span class="tl-level">三级</span><span class="tl-main">人生目标</span></h1>
 
     <div class="hero-motto">
-      <div class="hero-motto-1">勤读力耕<span class="sep">✦</span>立己达人</div>
+      <div class="hero-motto-1">勤读力耕<span class="sep">·</span>立己达人</div>
       <div class="hero-motto-2">立己 → <strong>FIRE 自由</strong> · 达人 → <strong>民族复兴</strong> &amp; <strong>AI 奇点</strong></div>
     </div>
 
@@ -940,13 +879,11 @@ footer{
         <div class="zh">初级 · FIRE</div>
         <div class="en">Personal Freedom</div>
       </a>
-      <span class="hero-arrow">→</span>
       <a class="hero-step" data-c="crimson" href="#tier2">
         <div class="rom">II</div>
         <div class="zh">高级 · 复兴</div>
         <div class="en">National Revival</div>
       </a>
-      <span class="hero-arrow">→</span>
       <a class="hero-step" data-c="violet" href="#tier3">
         <div class="rom">III</div>
         <div class="zh">终极 · 奇点</div>
@@ -1099,30 +1036,6 @@ footer{
               <div class="p-ico">📈</div>
               <h5>复利 · 定投</h5>
               <p>只买资产，坚决不杀鹅。用 10 年维度看财富，熊市是低位加仓的黄金期。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="sub-block">
-          <h3 class="sub-title r"><span class="num">04</span>双轨制 · Dual Track</h3>
-          <div class="dual r stag">
-            <div class="wheel">
-              <div class="w-tag">体制内 · 绝对防守</div>
-              <div class="w-name">生存基石 / Risk Circuit Breaker</div>
-              <ul>
-                <li>只求稳，不求进，只拿稳定工资</li>
-                <li>时间套利 —— 真正价值在朝九晚五之外</li>
-                <li>有底气折腾：体制内兜底，敢一直试错</li>
-              </ul>
-            </div>
-            <div class="wheel">
-              <div class="w-tag">AI 创业 · 无限试错</div>
-              <div class="w-name">财富爆发点 / Destiny Changer</div>
-              <ul>
-                <li>AI 极度提效，<strong>一人抵十人</strong></li>
-                <li>赢一次就够 —— 撞上一次爆发，彻底自由</li>
-                <li>左轮 Cash Cow + 右轮 Star Asset 双轮驱动</li>
-              </ul>
             </div>
           </div>
         </div>
@@ -1495,17 +1408,6 @@ document.querySelectorAll('.r,.r-l,.r-r,.r-s,.stag,.feature,.tlf-line,.credo-tex
   });
 })();
 
-/* ─────────── Magnetic hero ladder steps ─────────── */
-document.querySelectorAll('.hero-step').forEach(step=>{
-  step.addEventListener('mousemove', e=>{
-    const r = step.getBoundingClientRect();
-    const x = (e.clientX - (r.left + r.width/2)) * 0.22;
-    const y = (e.clientY - (r.top + r.height/2)) * 0.22;
-    step.style.transform = `translate(${x}px,${y}px)`;
-  });
-  step.addEventListener('mouseleave', ()=>{step.style.transform=''});
-});
-
 /* ─────────── Animated counters ─────────── */
 const counters = document.querySelectorAll('.count[data-target]');
 const counterIO = new IntersectionObserver((entries)=>{
@@ -1761,3 +1663,4 @@ document.querySelector('.menu-toggle')?.addEventListener('click', () => {
 </script>
 </body>
 </html>
+
