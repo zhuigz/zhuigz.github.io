@@ -141,9 +141,10 @@ body{
 }
 .brand-seal::after{content:'';position:absolute;inset:-5px;border:1px dashed rgba(232,184,122,.35);border-radius:50%;animation:spin 40s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes centered-spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 .brand-text{display:flex;flex-direction:column;gap:2px;line-height:1}
 .brand-zh{font-family:var(--serif);font-weight:700;font-size:13px;letter-spacing:.08em;color:var(--paper)}
-.brand-en{font-family:var(--mono);font-size:9.5px;letter-spacing:.32em;color:var(--paper-4);text-transform:uppercase;font-weight:500}
+.brand-en{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--reading-meta);text-transform:uppercase;font-weight:500}
 
 .nav-links{display:flex;gap:4px;list-style:none;align-items:center}
 .nav-links a{
@@ -229,7 +230,7 @@ section{position:relative;z-index:5}
   font-family:var(--serif);font-style:normal;-webkit-text-stroke:0;color:var(--c);
   font-size:.22em;letter-spacing:.4em;font-weight:700;white-space:nowrap;
 }
-.td-sub{margin-top:24px;font-family:var(--serif);font-weight:400;font-size:18px;color:var(--paper-3);letter-spacing:.08em;font-style:italic;font-family:var(--italic)}
+.td-sub{margin-top:24px;font-family:var(--serif);font-weight:400;font-size:18px;color:var(--reading-meta);letter-spacing:.04em;font-style:normal;line-height:1.7}
 .td-line{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:32px}
 .td-line .l{flex:1;max-width:140px;height:1px;background:linear-gradient(90deg,transparent,var(--c),transparent)}
 .td-line .d{width:6px;height:6px;background:var(--c);transform:rotate(45deg);box-shadow:0 0 12px var(--c)}
@@ -247,7 +248,7 @@ section{position:relative;z-index:5}
   margin-bottom:32px;
 }
 .prologue-hero .q-zh .em{color:var(--gold)}
-.prologue-hero .q-en{font-family:var(--italic);font-style:italic;font-size:clamp(16px,1.4vw,20px);color:var(--paper-3);letter-spacing:.04em}
+.prologue-hero .q-en{font-family:var(--italic);font-style:italic;font-size:clamp(16px,1.4vw,20px);color:var(--reading-meta);letter-spacing:.04em;line-height:1.7}
 
 .anchor-grid{
   display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center;
@@ -484,8 +485,8 @@ section{position:relative;z-index:5}
 .poster::before,.poster::after{
   content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;
 }
-.poster::before{width:640px;height:640px;border:1px solid var(--gold);animation:spin 60s linear infinite;opacity:.3}
-.poster::after{width:520px;height:520px;border:1px dashed var(--gold-light);animation:spin 90s linear infinite reverse;opacity:.2}
+.poster::before{width:640px;height:640px;border:1px solid var(--gold);animation:centered-spin 60s linear infinite;opacity:.3}
+.poster::after{width:520px;height:520px;border:1px dashed var(--gold-light);animation:centered-spin 90s linear infinite reverse;opacity:.2}
 
 .poster-content{position:relative;z-index:3;max-width:920px;margin:0 auto}
 
@@ -521,24 +522,15 @@ section{position:relative;z-index:5}
   content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   width:600px;height:600px;border-radius:50%;
   border:1px solid rgba(232,184,122,.12);
-  animation:spin 90s linear infinite;pointer-events:none;
+  animation:centered-spin 90s linear infinite;pointer-events:none;
 }
 .credo-inner{max-width:880px;margin:0 auto;position:relative;z-index:3;text-align:center}
-.credo-mark{
-  position:relative;display:inline-block;margin-bottom:42px;
-  font-family:var(--italic);font-style:italic;font-weight:700;font-size:96px;line-height:1;
-  color:transparent;-webkit-text-stroke:1px rgba(232,184,122,.5);letter-spacing:-.04em;
-}
-.credo-mark::after{
-  content:'生命之约';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  font-family:var(--serif);font-style:normal;-webkit-text-stroke:0;color:var(--gold);
-  font-size:11px;letter-spacing:.42em;font-weight:600;white-space:nowrap;text-transform:uppercase;
-}
+.credo-heading{margin:0 0 24px;font-family:var(--serif);font-weight:500;font-size:clamp(32px,4vw,52px);line-height:1.4;letter-spacing:.14em;padding-left:.14em;color:var(--gold)}
 .credo-pre{
   font-family:var(--mono);font-size:10.5px;letter-spacing:.4em;
   color:var(--paper-4);text-transform:uppercase;font-weight:500;margin-bottom:60px;
 }
-.credo-pre em{font-style:italic;font-family:var(--italic);text-transform:none;letter-spacing:.04em;color:var(--paper-3);font-size:1.05em}
+.credo-pre em{display:block;margin-top:8px;font-style:normal;font-family:var(--sans);text-transform:none;letter-spacing:.025em;color:var(--reading-meta);font-size:12px;line-height:1.8}
 .credo-text{
   font-family:var(--serif);font-weight:400;
   font-size:clamp(20px,2.2vw,28px);line-height:2;color:var(--paper);letter-spacing:.02em;
@@ -661,6 +653,7 @@ footer{
   font-size:13px;line-height:1;white-space:nowrap;letter-spacing:-.02em;
   color:rgba(244,239,227,.15);transition:color .4s,transform .4s var(--ease);
 }
+.cs-rom{color:var(--reading-meta)}
 .cs-item.active .cs-rom{color:var(--csi-c);transform:translateX(4px)}
 .cs-item[data-t="1"]{--csi-c:var(--jade)}
 .cs-item[data-t="2"]{--csi-c:var(--crimson-light)}
@@ -688,35 +681,6 @@ footer{
 .bg-ambient.t1{--am-a:radial-gradient(circle,rgba(122,187,143,.09),transparent 65%);--am-b:radial-gradient(circle,rgba(74,138,101,.04),transparent 65%)}
 .bg-ambient.t2{--am-a:radial-gradient(circle,rgba(181,94,82,.09),transparent 65%);--am-b:radial-gradient(circle,rgba(200,130,100,.04),transparent 65%)}
 .bg-ambient.t3{--am-a:radial-gradient(circle,rgba(142,122,184,.09),transparent 65%);--am-b:radial-gradient(circle,rgba(160,140,200,.04),transparent 65%)}
-
-/* ─────────── Enhanced Tier Divider ─────────── */
-.td-rom{filter:drop-shadow(0 0 40px var(--c))}
-.td-extra-ring{
-  position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:150px;height:150px;
-  border-radius:50%;border:1px solid var(--c);
-  opacity:0;animation:ring-bloom 5.5s ease-out infinite;
-  pointer-events:none;
-}
-.tier-divider .td-extra-ring:nth-child(1){animation-delay:0s}
-.tier-divider .td-extra-ring:nth-child(2){animation-delay:1.8s}
-.tier-divider .td-extra-ring:nth-child(3){animation-delay:3.6s}
-@keyframes ring-bloom{
-  0%{transform:translate(-50%,-50%) scale(.3);opacity:.6}
-  100%{transform:translate(-50%,-50%) scale(3.2);opacity:0}
-}
-.td-tape{
-  position:absolute;bottom:26px;left:0;right:0;
-  overflow:hidden;height:18px;pointer-events:none;
-}
-.td-tape span{
-  display:inline-block;white-space:nowrap;
-  font-family:var(--mono);font-size:8.5px;letter-spacing:.38em;
-  color:rgba(244,239,227,.065);text-transform:uppercase;
-  animation:tape-scroll 30s linear infinite;
-}
-@keyframes tape-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* Two distinct readings of the same life doctrine: star oath / lifetime scroll. */
 :root{color-scheme:dark;--hero-text:#f2ead8;--hero-muted:#b3b8c7;--hero-accent:#d9b87b}
@@ -817,7 +781,6 @@ html[data-theme="light"] .anchor,html[data-theme="light"] .wheel,html[data-theme
 html[data-theme="light"] .anchor:hover,html[data-theme="light"] .flow-step:hover{background:var(--paper-5)}
 html[data-theme="light"] .tlf-node .ico{box-shadow:0 0 0 4px var(--ink)}
 html[data-theme="light"] .td-rom{filter:none}
-html[data-theme="light"] .td-extra-ring,html[data-theme="light"] .td-tape{display:none}
 html[data-theme="light"] .td-line .d{box-shadow:none}
 html[data-theme="light"] .cs-track{background:var(--line-strong)}
 html[data-theme="light"] .cs-dot{background:var(--ink);border-color:var(--line-strong)}
@@ -826,7 +789,6 @@ html[data-theme="light"] .cs-rom{color:var(--paper-4)}
 html[data-theme="light"] .progress-bar{box-shadow:none}
 html[data-theme="light"] .credo,html[data-theme="light"] .poster{background:var(--ink)}
 html[data-theme="light"] .credo::before,html[data-theme="light"] .credo::after,html[data-theme="light"] .poster::before,html[data-theme="light"] .poster::after{display:none}
-html[data-theme="light"] .credo-mark{-webkit-text-stroke-color:var(--gold)}
 html[data-theme="light"] .dim[data-c="ene"],html[data-theme="light"] .dim[data-c="fd"]{--ac:var(--gold);--ac-soft:rgba(145,71,46,.1)}
 html[data-theme="light"] .dim[data-c="md"]{--ac:var(--crimson);--ac-soft:var(--crimson-soft)}
 html[data-theme="light"] .dim[data-c="hs"]{--ac:var(--violet);--ac-soft:var(--violet-soft)}
@@ -855,7 +817,7 @@ html[data-theme="light"] .dim[data-c="sum"]{--ac:var(--gold);--ac-soft:rgba(145,
   }
   html{scroll-behavior:auto}
   /* 背景装饰动画：余烬 / 跑马灯 / 波纹 / 转环 / 浮光 全部静置 */
-  .embers,.light-canvas,.td-extra-ring,.td-tape{display:none !important}
+  .embers,.light-canvas{display:none !important}
   .brand-seal::after,.poster::before,.poster::after,
   .credo::after,.scroll-cue .line,.anchor-bridge .arrow{animation:none !important}
   /* 自定义光标隐藏，恢复系统光标 */
@@ -898,14 +860,15 @@ html[data-theme="light"]{--reading-text:#424941;--reading-meta:#555c53}
 .fw .fw-lead{margin-bottom:16px}.fw h4{font-size:24px;font-weight:700}.fw ul{gap:10px}.fw li::before{top:12px}
 .flow-path{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:32px}.flow-step{padding:28px;border:1px solid var(--line-strong)}.flow-step::after{display:none}.flow-step h4{font-size:20px;line-height:1.5}
 .witness{gap:18px;margin-bottom:32px}.wit-card{padding:28px}.wit-card h4{font-size:21px;line-height:1.6}.wit-card p strong{color:var(--violet-light)}
-.insight{margin-top:48px;padding:32px 36px}.insight .q{font-weight:500;line-height:1.8}.insight .a{font-size:11px;line-height:1.8;letter-spacing:.14em}
+.insight{margin-top:48px;padding:32px 36px}.insight .q{font-family:var(--serif);font-style:normal;font-weight:500;line-height:1.8}.insight .a{font-size:11px;line-height:1.8;letter-spacing:.14em}
 .prologue{padding:112px 0 80px}.prologue-hero{margin-bottom:56px}.prologue-hero .q-zh{font-weight:700;font-size:clamp(36px,5vw,68px);line-height:1.25}
 .anchor{padding:32px}.anchor .key{font-size:72px}
 .chapter{padding:88px 0 96px}.tier-divider{padding:80px 0}.td-rom{filter:none}
 .conv{padding:104px 0 88px}.conv-h{margin-bottom:48px}.conv-col{padding:32px}.conv-col h3{line-height:1.6;font-size:23px}.conv-col .conv-mark{font-size:52px}
-.credo{padding:112px 56px}.credo-mark{margin-bottom:28px;font-size:76px}.credo-pre{margin-bottom:40px;font-size:11px;line-height:1.9;letter-spacing:.15em}
+.credo{padding:112px 56px}.credo-pre{margin-bottom:40px;font-size:11px;line-height:1.9;letter-spacing:.15em}
+.credo-text .once,.credo-text .indent,.credo-text .ghost,.credo-text .climax{font-family:var(--serif);font-style:normal}.credo-text .once{color:var(--paper-2)}
 .credo-text .line{margin-bottom:14px}.credo-text .climax{margin-top:32px;padding-top:30px}.credo-attr{margin-top:40px}
-.poster{padding:112px 56px}.poster-quote{font-weight:700;font-size:clamp(44px,7vw,96px);line-height:1.2}.poster-sub{margin-top:36px}.poster-coda{margin-top:40px}
+.poster{padding:112px 56px}.poster-quote{font-weight:700;font-size:clamp(44px,7vw,96px);line-height:1.2}.poster-sub{margin-top:36px;font-family:var(--serif);font-style:normal}.poster-coda{margin-top:40px;font-size:16px;font-style:normal}
 .h-title{font-weight:700;line-height:1.22;font-size:clamp(32px,4.3vw,60px)}
 footer{font-size:11px;line-height:1.8;letter-spacing:.08em}
 .footer-links{display:flex;gap:20px;flex-wrap:wrap}.footer-links a{color:var(--reading-text);text-decoration:none;border-bottom:1px solid var(--line-strong);padding:8px 0}
@@ -923,7 +886,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
   .fw{display:block;padding:26px}.fw .fw-num{font-size:60px;margin-bottom:18px}.fw ul{display:flex}
   .sub-title{font-size:21px;gap:10px}.sub-block{margin-bottom:36px}.insight{margin-top:36px;padding:28px 24px}
   .conv{padding:80px 0 64px}.conv-col{padding:28px}.credo{padding:80px 24px}.credo-text{font-size:20px;line-height:1.9}.credo-text .climax{padding:28px 0 0;font-size:22px}
-  .poster{padding:80px 24px}.poster-coda{font-size:15px}.poster-sub{font-size:17px}
+  .poster{padding:80px 24px}.poster-coda{font-size:16px}.poster-sub{font-size:17px}
   section[id]{scroll-margin-top:88px}
 }
 /* A compact folio directory, with a native link fallback. */
@@ -948,7 +911,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 .stag.pending>*{opacity:0;transform:translateY(18px)}.credo-text.pending .line{opacity:0;transform:translateY(18px)}
 .feature::before{height:100%}.feature.pending::before{height:0}.feature.v::before{height:100%}.tlf-line::after{width:var(--p,0%)}
 .credo-text.v .line:nth-child(n){transition-delay:.08s}
-.tier-divider:not(.motion-visible)::before,.tier-divider:not(.motion-visible) .td-extra-ring,.tier-divider:not(.motion-visible) .td-tape span,.prologue:not(.motion-visible) .arrow,.poster:not(.motion-visible)::before,.poster:not(.motion-visible)::after,.credo:not(.motion-visible)::after,.hero:not(.motion-visible) .scroll-cue .line{animation-play-state:paused}
+.tier-divider:not(.motion-visible)::before,.prologue:not(.motion-visible) .arrow,.poster:not(.motion-visible)::before,.poster:not(.motion-visible)::after,.credo:not(.motion-visible)::after,.hero:not(.motion-visible) .scroll-cue .line{animation-play-state:paused}
 .motion-paused *, .motion-paused *::before, .motion-paused *::after{animation-play-state:paused !important}
 .light-canvas,.embers{opacity:0;transition:opacity .4s}.ambient-active .light-canvas{opacity:1}.ambient-active .embers{opacity:.65}
 .motion-paused .cursor-dot,.motion-paused .cursor-ring{display:none}
@@ -956,7 +919,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offse
 body:not(.cursor-ready),body:not(.cursor-ready) a,body:not(.cursor-ready) button,body:not(.cursor-ready) .hero-step,body:not(.cursor-ready) .dim,body:not(.cursor-ready) .wheel,body:not(.cursor-ready) .p-card,body:not(.cursor-ready) .fw,body:not(.cursor-ready) .conv-col,body:not(.cursor-ready) .anchor{cursor:auto}
 body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display:none}
 @media(prefers-reduced-motion:reduce){.r.pending,.r-l.pending,.r-r.pending,.r-s.pending,.stag.pending>*,.credo-text.pending .line{opacity:1!important;transform:none!important}.feature.pending::before{height:100%!important}}
-@media print{.r,.r-l,.r-r,.r-s,.stag>*,.credo-text .line{opacity:1!important;transform:none!important}.topbar,.chapter-spine,.light-canvas,.embers,.cursor-dot,.cursor-ring,.progress-track,.td-tape{display:none!important}.hero,.chapter,.credo,.conv,.poster,.prologue{break-inside:auto}.chapter-aside{position:static}.motion-paused *{animation:none!important}}
+@media print{.r,.r-l,.r-r,.r-s,.stag>*,.credo-text .line{opacity:1!important;transform:none!important}.topbar,.chapter-spine,.light-canvas,.embers,.cursor-dot,.cursor-ring,.progress-track{display:none!important}.hero,.chapter,.credo,.conv,.poster,.prologue{break-inside:auto}.chapter-aside{position:static}.motion-paused *{animation:none!important}}
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
@@ -1093,14 +1056,10 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
 
 <!-- ═════════════════════════ TIER 01 ═════════════════════════ -->
 <div class="tier-divider tier-1">
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
   <div class="td-stage">TIER ONE · 初级目标</div>
   <div class="td-rom" data-zh="个人解放">I</div>
   <div class="td-sub">个人层面的解放 · Personal Liberation</div>
   <div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div>
-  <div class="td-tape" aria-hidden="true"><span>TIER ONE · 初级目标 · FIRE FREEDOM · PERSONAL LIBERATION · 七年路径 · 双轮驱动 · 三柱支撑 · TIER ONE · 初级目标 · FIRE FREEDOM · PERSONAL LIBERATION · 七年路径 · 双轮驱动 · 三柱支撑 · </span></div>
 </div>
 
 <section class="chapter" id="tier1" style="--c:var(--jade);--c-soft:var(--jade-soft)" tabindex="-1">
@@ -1218,14 +1177,10 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
 
 <!-- ═════════════════════════ TIER 02 ═════════════════════════ -->
 <div class="tier-divider tier-2">
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
   <div class="td-stage">TIER TWO · 高级目标</div>
   <div class="td-rom" data-zh="时代参与">II</div>
   <div class="td-sub">国家上升周期的参与者 · National Revival</div>
   <div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div>
-  <div class="td-tape" aria-hidden="true"><span>TIER TWO · 高级目标 · NATIONAL REVIVAL · 中华民族伟大复兴 · 七维普惠 · 反腐防火墙 · 时代参与者 · TIER TWO · 高级目标 · NATIONAL REVIVAL · 中华民族伟大复兴 · 七维普惠 · 反腐防火墙 · 时代参与者 · </span></div>
 </div>
 
 <section class="chapter" id="tier2" style="--c:var(--crimson-light);--c-soft:var(--crimson-soft)" tabindex="-1">
@@ -1368,14 +1323,10 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
 
 <!-- ═════════════════════════ TIER 03 ═════════════════════════ -->
 <div class="tier-divider tier-3">
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
-  <div class="td-extra-ring"></div>
   <div class="td-stage">TIER THREE · 终极理想</div>
   <div class="td-rom" data-zh="物种解放">III</div>
   <div class="td-sub">物种层面的终局 · The Final Frontier</div>
   <div class="td-line"><div class="l"></div><div class="d"></div><div class="l"></div></div>
-  <div class="td-tape" aria-hidden="true"><span>TIER THREE · 终极理想 · AI SINGULARITY · 物种解放 · 共产主义 · 亲眼见证 · 按需分配 · 物质极大丰富 · TIER THREE · 终极理想 · AI SINGULARITY · 物种解放 · 共产主义 · 亲眼见证 · 按需分配 · 物质极大丰富 · </span></div>
 </div>
 
 <section class="chapter" id="tier3" style="--c:var(--violet);--c-soft:var(--violet-soft)" tabindex="-1">
@@ -1456,13 +1407,12 @@ body:not(.cursor-ready) .cursor-dot,body:not(.cursor-ready) .cursor-ring{display
 <!-- ═════════════════════════ CREDO · 生命之约 ═════════════════════════ -->
 <section class="credo" id="credo" tabindex="-1">
   <div class="credo-inner">
-    <h2 class="sr-only">生命之约</h2>
-    <div class="credo-mark r">℘</div>
+    <h2 class="credo-heading r">生命之约</h2>
     <div class="credo-pre r">CREDO · 生命之约 &nbsp;·&nbsp; <em>From "How the Steel Was Tempered" / 钢铁是怎样炼成的</em></div>
 
     <div class="credo-text">
       <p class="line">人最宝贵的是<span class="gradient-gold">生命</span>。</p>
-      <p class="line">生命属于人，<em style="font-style:italic;color:var(--paper-2);font-family:var(--italic)">只有一次</em>。</p>
+      <p class="line">生命属于人，<em class="once">只有一次</em>。</p>
       <p class="line">人的一生应当这样度过 ——</p>
       <p class="line indent">当他回首往事的时候，不会因为<span style="color:var(--gold)">虚度年华</span>而悔恨，</p>
       <p class="line indent">也不因<span style="color:var(--gold)">碌碌无为</span>而羞耻；</p>
