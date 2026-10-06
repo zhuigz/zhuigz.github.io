@@ -3146,9 +3146,12 @@ function calcFire() {
   if (years === 0) {
     document.getElementById('cr-years').textContent = '已达目标';
     document.getElementById('cr-age-target').textContent = '当前净资产已覆盖此模式的测算目标。';
-  } else if (years > 79) {
+  } else if (years > 79 && current < target) {
     document.getElementById('cr-years').textContent = '80 年内未达标';
     document.getElementById('cr-age-target').textContent = '当前参数在 80 年的测算范围内未达到目标。';
+  } else if (years === 80) {
+    document.getElementById('cr-years').textContent = '80 年';
+    document.getElementById('cr-age-target').textContent = `还需 80 年，约在 ${fireAge} 岁达成（模型测算）。`;
   }
   document.getElementById('cr-target').textContent = `${Number(target.toFixed(2))} 万元`;
   document.getElementById('cr-saving').textContent = `${Number(annualSaving.toFixed(2))} 万 / 年`;
