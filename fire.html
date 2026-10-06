@@ -1848,6 +1848,95 @@
   }
   @media (max-width:360px) { .directory-current { display:none; } }
 
+
+  /* Reading and tools: larger text, wider comparisons, precise paired inputs. */
+  :root { --body-copy:#c9c2b2; --body-muted:#ada594; }
+  .section-title { font-weight:500; line-height:1.4; }
+  .section-desc { font-size:16px; font-weight:400; color:var(--body-copy); line-height:1.95; }
+  .section-eyebrow { font-size:13px; letter-spacing:2.4px; font-weight:500; }
+  .fire-card-desc, .type-desc, .rule-item-desc, .ew-desc, .wisdom-desc, .footer-motto, .footer-col p { font-size:15px; line-height:1.95; font-weight:400; color:var(--body-copy); }
+  .fire-card { padding:40px 28px; }
+  .fire-card-title { font-size:24px; line-height:1.5; }
+  .fire-card-en, .type-index, .type-amount-label, .type-sub, .ew-source, .rule-item-title .en, .quote-attr, .compound-chart-sub, .compound-result-sub, .calc-input-en, .calc-chart-label, .footer-bottom { font-size:12px; color:var(--body-muted); letter-spacing:1px; font-weight:400; }
+  .type-badge { font-size:12px; }
+  .type-name-cn { font-size:14px; letter-spacing:1.5px; }
+  .types-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  .type-card { display:flex; flex-direction:column; padding:32px; }
+  .type-desc { min-height:0; margin-bottom:24px; }
+  .type-amount-block { margin-top:auto; }
+  .type-amount .unit { color:var(--gold-soft); }
+  .ew-grid { grid-template-columns:repeat(6,minmax(0,1fr)); gap:20px; }
+  .ew-card { grid-column:span 2; padding:32px; }
+  .ew-card:nth-child(n+4) { grid-column:span 3; }
+  .ew-idiom { font-size:30px; white-space:nowrap; }
+  .ew-source { color:var(--gold-soft); }
+  .wisdom-card { padding:36px 28px; }
+  .wisdom-title { font-size:21px; line-height:1.6; }
+  .rule-item-title { line-height:1.6; }
+  .rule-item-title .en { display:inline-block; color:var(--gold-soft); }
+  .rule-item-desc { line-height:1.95; }
+  .footer-col a { min-height:32px; font-size:14px; font-weight:400; }
+  .footer-col h4 { font-size:12px; }
+  .compound-result-label, .calc-result-eyebrow { color:var(--gold-soft); font-size:13px; letter-spacing:1px; }
+  .compound-result-sub .gain { color:#e87769; }
+  .compound-chart-head { flex-wrap:wrap; gap:16px; }
+  .legend-item { font-size:12px; color:var(--body-copy); }
+  .calculator-tools { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 16px; }
+  .calculator-tools p { font:13px/1.6 var(--sans-cn); color:var(--body-muted); }
+  .reset-calculator { min-height:44px; padding:8px 14px; border:1px solid rgba(var(--gold-rgb),.3); background:transparent; color:var(--gold); font:13px var(--sans-cn); cursor:pointer; }
+  .reset-calculator:hover { background:rgba(var(--gold-rgb),.07); }
+  .slider-group, .calc-input-group { gap:12px; padding:20px 24px; }
+  .slider-label, .calc-input-label { font-size:15px; color:var(--text); font-weight:400; gap:12px; flex-wrap:wrap; }
+  .precise-row, .calc-input-row { display:flex; align-items:center; gap:12px; }
+  .precise-input { width:140px; max-width:55%; min-width:0; min-height:48px; border:1px solid rgba(var(--gold-rgb),.25); border-radius:2px; padding:5px 12px; font:400 27px/1.2 var(--serif-en); font-variant-numeric:tabular-nums; letter-spacing:0; color:var(--gold-bright); background:rgba(var(--gold-rgb),.04); }
+  .precise-unit, .calc-input-unit { font-size:13px; color:var(--body-copy); }
+  .field-hint { color:var(--body-muted); font:12px/1.7 var(--sans-cn); letter-spacing:0; }
+  .has-error .field-hint { color:#f29486; }
+  .has-error .precise-input { border-color:#f29486; }
+  .model-note { color:var(--body-muted); font:13px/1.85 var(--sans-cn); margin-top:16px; }
+  #fire-model-note { margin:0 0 24px; }
+  .calc-scenario { font:13px/1.9 var(--sans-cn); color:var(--body-copy); margin:0 0 24px; padding:14px 16px; border-left:2px solid var(--gold-deep); background:rgba(var(--gold-rgb),.04); }
+  .calc-scenario.attention { color:#f29486; border-color:#e87769; }
+  .type-btn { font-size:13px; min-height:64px; color:var(--body-copy); letter-spacing:1px; }
+  .type-btn::after { font-size:12px; color:var(--body-muted); letter-spacing:1px; }
+  .calc-result-main { font-size:clamp(32px,4.8vw,64px); line-height:1.25; font-weight:500; overflow-wrap:anywhere; }
+  .calc-result-sub { font-size:15px; font-weight:400; color:var(--body-copy); line-height:1.9; margin-bottom:22px; }
+  .calc-metric { gap:20px; }
+  .calc-metric-label { font-size:14px; font-weight:400; color:var(--body-copy); }
+  .calc-metric-value { font-size:21px; text-align:right; }
+  .calc-progress-label { font-size:14px; gap:16px; }
+  .precise-input:focus-visible, .reset-calculator:focus-visible, .type-btn:focus-visible, input[type="range"]:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+  input[type="range"] { height:32px; background:linear-gradient(to right,var(--gold-deep),rgba(var(--gold-rgb),.16)) center/100% 3px no-repeat; }
+  input[type="range"]::-webkit-slider-thumb { width:20px; height:20px; }
+  input[type="range"]::-moz-range-thumb { width:18px; height:18px; }
+  .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+  @media (max-width:1100px) { .fire-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:880px) {
+    .ew-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .ew-card, .ew-card:nth-child(n+4) { grid-column:auto; }
+    .ew-card:last-child { grid-column:1 / -1; }
+    .wisdom-layout { grid-template-columns:1fr; }
+    .calc-result-panel { position:relative; top:0; }
+  }
+  @media (max-width:600px) {
+    .fire-grid, .types-grid, .ew-grid { grid-template-columns:1fr; }
+    .ew-card:last-child { grid-column:auto; }
+    .fire-card, .type-card, .ew-card, .wisdom-card { padding:28px 24px; }
+    .slider-group, .calc-input-group { padding:18px 20px; }
+    .calc-input-en { font-size:12px; letter-spacing:.5px; }
+    .calc-result-panel { padding:28px 22px; }
+    .calc-result-main { font-size:38px; }
+    .calc-type-selector { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .section-eyebrow { font-size:12px; letter-spacing:1px; flex-wrap:wrap; }
+    .section-eyebrow::before { flex-shrink:0; }
+    .calc-metric { flex-wrap:wrap; gap:8px; }
+    .calc-metric-value { margin-left:auto; }
+    .compound-result { padding:26px 24px; }
+    .compound-right { padding:24px 20px; }
+    .compound-result-num { font-size:46px; }
+    .calc-chart-label { letter-spacing:.5px; gap:12px; font-size:11px; }
+  }
+
 </style>
 </head>
 
@@ -2058,40 +2147,40 @@
     <div class="fire-card reveal" data-big="F">
       <div class="fire-seal"><span class="fire-seal-letter">F</span></div>
       <div class="fire-card-en">Financial</div>
-      <div class="fire-card-title">财务之基</div>
+      <h3 class="fire-card-title">财务之基</h3>
       <p class="fire-card-desc">
-        建立足够的资产池,<br>
-        让被动收入覆盖一切生活支出。<br>
+        建立足够的资产池,
+        让被动收入覆盖一切生活支出。
         财务是基础,但不是终极目标。
       </p>
     </div>
     <div class="fire-card reveal reveal-delay-1" data-big="I">
       <div class="fire-seal"><span class="fire-seal-letter">I</span></div>
       <div class="fire-card-en">Independence</div>
-      <div class="fire-card-title">独立之道</div>
+      <h3 class="fire-card-title">独立之道</h3>
       <p class="fire-card-desc">
-        不依附雇主或薪水维持生活,<br>
-        拥有选择做什么、<br>
+        不依附雇主或薪水维持生活,
+        拥有选择做什么、
         在哪里生活、如何度过每一天的自由。
       </p>
     </div>
     <div class="fire-card reveal reveal-delay-2" data-big="R">
       <div class="fire-seal"><span class="fire-seal-letter">R</span></div>
       <div class="fire-card-en">Retire</div>
-      <div class="fire-card-title">退休之意</div>
+      <h3 class="fire-card-title">退休之意</h3>
       <p class="fire-card-desc">
-        提前退出传统工作轨道,<br>
-        并非躺平,而是将精力<br>
+        提前退出传统工作轨道,
+        并非躺平,而是将精力
         投入到真正有意义的事物。
       </p>
     </div>
     <div class="fire-card reveal reveal-delay-3" data-big="E">
       <div class="fire-seal"><span class="fire-seal-letter">E</span></div>
       <div class="fire-card-en">Early</div>
-      <div class="fire-card-title">提早之决</div>
+      <h3 class="fire-card-title">提早之决</h3>
       <p class="fire-card-desc">
-        打破「工作到 65 岁」的默认设定,<br>
-        用十年的高效积累,<br>
+        打破「工作到 65 岁」的默认设定,
+        用十年的高效积累,
         换取几十年的自由人生。
       </p>
     </div>
@@ -2120,7 +2209,7 @@
       <div class="type-card reveal" style="--accent: #8a9c6e">
         <div class="type-index">Ⅰ · SIMPLIFIED</div>
         <div class="type-badge">极简</div>
-        <div class="type-name">Lean FIRE</div>
+        <h3 class="type-name">Lean FIRE</h3>
         <div class="type-name-cn">精简 · 提早</div>
         <p class="type-desc">
           以极低的年支出为目标,通常低于 4 万元。追求最快速度达到财务自由,需要严格的生活方式管理。
@@ -2135,7 +2224,7 @@
       <div class="type-card reveal reveal-delay-1" style="--accent: #d8b87a">
         <div class="type-index">Ⅱ · STANDARD</div>
         <div class="type-badge">标准</div>
-        <div class="type-name">Regular FIRE</div>
+        <h3 class="type-name">Regular FIRE</h3>
         <div class="type-name-cn">平衡 · 稳健</div>
         <p class="type-desc">
           中等生活水准,年支出 6–12 万。在生活质量与退休时间之间取得平衡,最为普遍,也最适合大多数人。
@@ -2150,7 +2239,7 @@
       <div class="type-card reveal reveal-delay-2" style="--accent: #a6805e">
         <div class="type-index">Ⅲ · SEMI-RETIRED</div>
         <div class="type-badge">半退</div>
-        <div class="type-name">Barista FIRE</div>
+        <h3 class="type-name">Barista FIRE</h3>
         <div class="type-name-cn">半退 · 兼职</div>
         <p class="type-desc">
           攒够部分资产后,转做兼职或低压工作补充收入。提前享受更多自由时间,降低完全 FIRE 的心理压力。
@@ -2165,7 +2254,7 @@
       <div class="type-card reveal reveal-delay-3" style="--accent: #c8392f">
         <div class="type-index">Ⅳ · ABUNDANT</div>
         <div class="type-badge">奢华</div>
-        <div class="type-name">Fat FIRE</div>
+        <h3 class="type-name">Fat FIRE</h3>
         <div class="type-name-cn">富足 · 无忧</div>
         <p class="type-desc">
           年支出 20 万以上,保持退休前的高生活水准。需要更多积累时间,但退休后无需任何妥协,从容自得。
@@ -2199,21 +2288,30 @@
 
   <div class="compound-layout">
     <div class="compound-left">
+      <div class="calculator-tools"><p>拖动滑块，或直接输入数字。</p><button type="button" class="reset-calculator" id="reset-compound">恢复默认 <span aria-hidden="true">↺</span></button></div>
       <div class="slider-group reveal">
-        <div class="slider-label"><span>初始本金</span><span class="val" id="principal-val">10 万</span></div>
-        <input type="range" id="principal" min="1" max="100" value="10" step="1">
+        <div class="slider-label"><label id="principal-label" for="principal-val">初始本金</label></div>
+        <div class="precise-row"><input class="precise-input" type="number" id="principal-val" min="1" max="100" step="0.01" value="10" inputmode="decimal" aria-describedby="principal-hint"><span class="precise-unit">万元</span></div>
+        <input type="range" id="principal" min="1" max="100" value="10" step="0.01" aria-labelledby="principal-label" aria-describedby="principal-hint">
+        <small class="field-hint" id="principal-hint" data-default="范围 1–100 万元">范围 1–100 万元</small>
       </div>
       <div class="slider-group reveal reveal-delay-1">
-        <div class="slider-label"><span>年化收益率</span><span class="val" id="rate-val">8%</span></div>
-        <input type="range" id="rate" min="2" max="20" value="8" step="0.5">
+        <div class="slider-label"><label id="rate-label" for="rate-val">年化收益率</label></div>
+        <div class="precise-row"><input class="precise-input" type="number" id="rate-val" min="2" max="20" step="0.1" value="8" inputmode="decimal" aria-describedby="rate-hint"><span class="precise-unit">%</span></div>
+        <input type="range" id="rate" min="2" max="20" value="8" step="0.1" aria-labelledby="rate-label" aria-describedby="rate-hint">
+        <small class="field-hint" id="rate-hint" data-default="范围 2–20 %">范围 2–20 %</small>
       </div>
       <div class="slider-group reveal reveal-delay-2">
-        <div class="slider-label"><span>每月定投</span><span class="val" id="monthly-val">3,000 元</span></div>
-        <input type="range" id="monthly" min="0" max="20000" value="3000" step="500">
+        <div class="slider-label"><label id="monthly-label" for="monthly-val">每月定投</label></div>
+        <div class="precise-row"><input class="precise-input" type="number" id="monthly-val" min="0" max="20000" step="1" value="3000" inputmode="numeric" aria-describedby="monthly-hint"><span class="precise-unit">元</span></div>
+        <input type="range" id="monthly" min="0" max="20000" value="3000" step="1" aria-labelledby="monthly-label" aria-describedby="monthly-hint">
+        <small class="field-hint" id="monthly-hint" data-default="范围 0–20000 元">范围 0–20000 元</small>
       </div>
       <div class="slider-group reveal reveal-delay-3">
-        <div class="slider-label"><span>投资年限</span><span class="val" id="years-val">20 年</span></div>
-        <input type="range" id="years" min="5" max="40" value="20" step="1">
+        <div class="slider-label"><label id="years-label" for="years-val">投资年限</label></div>
+        <div class="precise-row"><input class="precise-input" type="number" id="years-val" min="5" max="40" step="1" value="20" inputmode="numeric" aria-describedby="years-hint"><span class="precise-unit">年</span></div>
+        <input type="range" id="years" min="5" max="40" value="20" step="1" aria-labelledby="years-label" aria-describedby="years-hint">
+        <small class="field-hint" id="years-hint" data-default="范围 5–40 年">范围 5–40 年</small>
       </div>
 
       <div class="compound-result reveal reveal-delay-4">
@@ -2223,6 +2321,7 @@
           <span>本金 <span class="principal" id="total-invested">82.0 万</span></span>
           <span>收益 <span class="gain" id="total-gain">129.4 万</span></span>
         </div>
+        <p class="model-note">测算口径：收益率保持不变，按年复利，每年末计入 12 个月定投。</p>
       </div>
     </div>
 
@@ -2238,7 +2337,7 @@
         </div>
       </div>
       <div class="compound-chart-container">
-        <canvas id="compound-chart"></canvas>
+        <canvas id="compound-chart" role="img" aria-label="复利资产增长曲线" aria-describedby="compound-result total-invested total-gain"></canvas>
       </div>
     </div>
   </div>
@@ -2334,7 +2433,7 @@
         <div class="rule-item reveal reveal-delay-1">
           <div class="rule-item-num">Ⅰ</div>
           <div>
-            <div class="rule-item-title">起源 <span class="en">Trinity Study</span></div>
+            <h3 class="rule-item-title">起源 <span class="en">Trinity Study</span></h3>
             <div class="rule-item-desc">
               美国三一大学 1994 年对历史市场数据的分析发现:以股债 6/4 配置,每年提取 4%,在任意 30 年期间的成功率高达 96%。
             </div>
@@ -2343,7 +2442,7 @@
         <div class="rule-item reveal reveal-delay-2">
           <div class="rule-item-num">Ⅱ</div>
           <div>
-            <div class="rule-item-title">二十五倍法则 <span class="en">25×</span></div>
+            <h3 class="rule-item-title">二十五倍法则 <span class="en">25×</span></h3>
             <div class="rule-item-desc">
               4% 的反向推导:需要积累年支出 25 倍的资产。年支 10 万 → 目标 250 万;年支 20 万 → 目标 500 万。
             </div>
@@ -2352,7 +2451,7 @@
         <div class="rule-item reveal reveal-delay-3">
           <div class="rule-item-num">Ⅲ</div>
           <div>
-            <div class="rule-item-title">前提 <span class="en">Assumptions</span></div>
+            <h3 class="rule-item-title">前提 <span class="en">Assumptions</span></h3>
             <div class="rule-item-desc">
               资产配置以低成本指数基金为核心(股票约 60%),通胀长期约 3%,投资组合长期年化约 7–10%。
             </div>
@@ -2361,7 +2460,7 @@
         <div class="rule-item reveal reveal-delay-4">
           <div class="rule-item-num">Ⅳ</div>
           <div>
-            <div class="rule-item-title">局限 <span class="en">Limitations</span></div>
+            <h3 class="rule-item-title">局限 <span class="en">Limitations</span></h3>
             <div class="rule-item-desc">
               针对 30 年退休期设计。若计划更长退休(50 岁退休),建议将提取率调至 3–3.5%,或目标调至年支出的 28–33 倍。
             </div>
@@ -2392,7 +2491,7 @@
   <div class="ew-grid">
     <div class="ew-card reveal">
       <div class="ew-dot"></div>
-      <div class="ew-idiom">持盈保泰</div>
+      <h3 class="ew-idiom">持盈保泰</h3>
       <div class="ew-source">老子 ·《道德经》</div>
       <p class="ew-desc">
         财富盈满时更要守成持重,留足安全边际,方能在牛熊更替中行稳致远。
@@ -2400,7 +2499,7 @@
     </div>
     <div class="ew-card reveal reveal-delay-1">
       <div class="ew-dot"></div>
-      <div class="ew-idiom">生生不息</div>
+      <h3 class="ew-idiom">生生不息</h3>
       <div class="ew-source">《周易》</div>
       <p class="ew-desc">
         让资产像草木般自我繁衍,复利不断、利滚利续,这正是永续现金流的根本。
@@ -2408,7 +2507,7 @@
     </div>
     <div class="ew-card reveal reveal-delay-2">
       <div class="ew-dot"></div>
-      <div class="ew-idiom">取之有道</div>
+      <h3 class="ew-idiom">取之有道</h3>
       <div class="ew-source">《论语》</div>
       <p class="ew-desc">
         以正当之业、长期主义获利,远离投机与杠杆,慢即是快,财富才走得长久。
@@ -2416,7 +2515,7 @@
     </div>
     <div class="ew-card reveal reveal-delay-3">
       <div class="ew-dot"></div>
-      <div class="ew-idiom">福生于俭</div>
+      <h3 class="ew-idiom">福生于俭</h3>
       <div class="ew-source">《韩非子》</div>
       <p class="ew-desc">
         节流是最稳的开源,降低欲望即降低 FIRE 门槛,俭以养财,亦以养心。
@@ -2424,7 +2523,7 @@
     </div>
     <div class="ew-card reveal reveal-delay-4">
       <div class="ew-dot"></div>
-      <div class="ew-idiom">功成身退</div>
+      <h3 class="ew-idiom">功成身退</h3>
       <div class="ew-source">老子 ·《道德经》</div>
       <p class="ew-desc">
         资产足以覆盖支出便适时离场,把时间赎回,投入真正热爱之事,方为圆满。
@@ -2453,71 +2552,77 @@
 
     <div class="calc-grid">
       <div class="calc-inputs reveal">
-        <div class="calc-type-selector">
-          <button class="type-btn active" data-cn="极简" onclick="setFireType('lean')">Lean</button>
-          <button class="type-btn" data-cn="标准" onclick="setFireType('regular')">Regular</button>
-          <button class="type-btn" data-cn="半退" onclick="setFireType('barista')">Barista</button>
-          <button class="type-btn" data-cn="奢华" onclick="setFireType('fat')">Fat</button>
+        <div class="calculator-tools"><p>拖动滑块，或直接输入数字。</p><button type="button" class="reset-calculator" id="reset-fire">恢复默认 <span aria-hidden="true">↺</span></button></div>
+        <div class="calc-type-selector" role="group" aria-label="选择 FIRE 模式">
+          <button class="type-btn active" data-cn="极简" type="button" aria-label="极简 Lean FIRE" aria-pressed="true" onclick="setFireType('lean')">Lean</button>
+          <button class="type-btn" data-cn="标准" type="button" aria-label="标准 Regular FIRE" aria-pressed="false" onclick="setFireType('regular')">Regular</button>
+          <button class="type-btn" data-cn="半退" type="button" aria-label="半退 Barista FIRE" aria-pressed="false" onclick="setFireType('barista')">Barista</button>
+          <button class="type-btn" data-cn="奢华" type="button" aria-label="奢华 Fat FIRE" aria-pressed="false" onclick="setFireType('fat')">Fat</button>
         </div>
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>当前净资产</span>
+            <label id="c-assets-label" for="cv-assets">当前净资产</label>
             <span class="calc-input-en">Net Worth</span>
           </div>
           <div class="calc-input-row">
-            <div class="calc-input-value" id="cv-assets">50</div>
+            <input class="precise-input" type="number" id="cv-assets" min="0" max="500" step="0.01" value="50" inputmode="decimal" aria-describedby="c-assets-hint">
             <div class="calc-input-unit">万元</div>
           </div>
-          <input type="range" id="c-assets" min="0" max="500" value="50" step="5">
+          <input type="range" id="c-assets" min="0" max="500" value="50" step="0.01" aria-labelledby="c-assets-label" aria-describedby="c-assets-hint">
+        <small class="field-hint" id="c-assets-hint" data-default="范围 0–500 万元">范围 0–500 万元</small>
         </div>
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>年税后收入</span>
+            <label id="c-income-label" for="cv-income">年税后收入</label>
             <span class="calc-input-en">Annual Income</span>
           </div>
           <div class="calc-input-row">
-            <div class="calc-input-value" id="cv-income">30</div>
+            <input class="precise-input" type="number" id="cv-income" min="5" max="200" step="0.01" value="30" inputmode="decimal" aria-describedby="c-income-hint">
             <div class="calc-input-unit">万 / 年</div>
           </div>
-          <input type="range" id="c-income" min="5" max="200" value="30" step="5">
+          <input type="range" id="c-income" min="5" max="200" value="30" step="0.01" aria-labelledby="c-income-label" aria-describedby="c-income-hint">
+        <small class="field-hint" id="c-income-hint" data-default="范围 5–200 万元 / 年">范围 5–200 万元 / 年</small>
         </div>
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>年生活支出</span>
+            <label id="c-expense-label" for="cv-expense">年生活支出</label>
             <span class="calc-input-en">Annual Expense</span>
           </div>
           <div class="calc-input-row">
-            <div class="calc-input-value" id="cv-expense">12</div>
+            <input class="precise-input" type="number" id="cv-expense" min="3" max="100" step="0.01" value="12" inputmode="decimal" aria-describedby="c-expense-hint">
             <div class="calc-input-unit">万 / 年</div>
           </div>
-          <input type="range" id="c-expense" min="3" max="100" value="12" step="1">
+          <input type="range" id="c-expense" min="3" max="100" value="12" step="0.01" aria-labelledby="c-expense-label" aria-describedby="c-expense-hint">
+        <small class="field-hint" id="c-expense-hint" data-default="范围 3–100 万元 / 年">范围 3–100 万元 / 年</small>
         </div>
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>预期年化收益率</span>
+            <label id="c-return-label" for="cv-return">预期年化收益率</label>
             <span class="calc-input-en">Expected Return</span>
           </div>
           <div class="calc-input-row">
-            <div class="calc-input-value" id="cv-return">7</div>
+            <input class="precise-input" type="number" id="cv-return" min="3" max="15" step="0.1" value="7" inputmode="decimal" aria-describedby="c-return-hint">
             <div class="calc-input-unit">%</div>
           </div>
-          <input type="range" id="c-return" min="3" max="15" value="7" step="0.5">
+          <input type="range" id="c-return" min="3" max="15" value="7" step="0.1" aria-labelledby="c-return-label" aria-describedby="c-return-hint">
+        <small class="field-hint" id="c-return-hint" data-default="范围 3–15 %">范围 3–15 %</small>
         </div>
 
         <div class="calc-input-group">
           <div class="calc-input-label">
-            <span>当前年龄</span>
+            <label id="c-age-label" for="cv-age">当前年龄</label>
             <span class="calc-input-en">Current Age</span>
           </div>
           <div class="calc-input-row">
-            <div class="calc-input-value" id="cv-age">30</div>
+            <input class="precise-input" type="number" id="cv-age" min="18" max="55" step="1" value="30" inputmode="numeric" aria-describedby="c-age-hint">
             <div class="calc-input-unit">岁</div>
           </div>
-          <input type="range" id="c-age" min="18" max="55" value="30" step="1">
+          <input type="range" id="c-age" min="18" max="55" value="30" step="1" aria-labelledby="c-age-label" aria-describedby="c-age-hint">
+        <small class="field-hint" id="c-age-hint" data-default="范围 18–55 岁">范围 18–55 岁</small>
         </div>
       </div>
 
@@ -2525,9 +2630,11 @@
         <div class="calc-result-head">
           <div class="calc-result-eyebrow">预计达到财富自由</div>
         </div>
+        <p class="model-note" id="fire-model-note">极简模式 · 目标按年支出的 25 倍，月可支按年提取 4% 测算。</p>
         <div class="calc-result-main" id="cr-years">9 年</div>
         <div class="calc-result-sub" id="cr-age-target">还需 <em>9 年</em>,约在 <em>39</em> 岁达成</div>
 
+        <p class="calc-scenario" id="fire-scenario">当前年收入高于支出，按固定收益率、收入与支出逐年测算。</p>
         <div class="calc-metrics">
           <div class="calc-metric">
             <span class="calc-metric-label">FIRE 目标金额</span>
@@ -2552,7 +2659,7 @@
             <span>当前进度 · Current Progress</span>
             <span class="pct" id="cr-progress-pct">16.7%</span>
           </div>
-          <div class="calc-progress-bar">
+          <div class="calc-progress-bar" id="fire-progress" role="progressbar" aria-label="净资产占当前 FIRE 目标的比例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="16.7">
             <div class="calc-progress-fill" id="cr-progress-fill" style="width: 16.67%;"></div>
           </div>
         </div>
@@ -2562,7 +2669,7 @@
             <span>TRAJECTORY · 资产轨迹</span>
             <span>TARGET · 目标线</span>
           </div>
-          <canvas id="fire-chart"></canvas>
+          <canvas id="fire-chart" role="img" aria-label="FIRE 资产轨迹与目标线" aria-describedby="cr-years cr-target fire-scenario"></canvas>
         </div>
       </div>
     </div>
@@ -2589,21 +2696,21 @@
   <div class="wisdom-layout">
     <div class="wisdom-card reveal">
       <div class="wisdom-num">01 / THREE</div>
-      <div class="wisdom-title">开源节流 · 双刃合一</div>
+      <h3 class="wisdom-title">开源节流 · 双刃合一</h3>
       <div class="wisdom-desc">
         FIRE 的公式极简:<em>收入减支出,乘以时间,再乘以复利</em>。一端是提升主业与副业的「水龙头」,另一端是看紧生活的「漏水口」——两手都要硬,缺一不可。
       </div>
     </div>
     <div class="wisdom-card reveal reveal-delay-1">
       <div class="wisdom-num">02 / THREE</div>
-      <div class="wisdom-title">指数定投 · 与时为友</div>
+      <h3 class="wisdom-title">指数定投 · 与时为友</h3>
       <div class="wisdom-desc">
         别试图战胜市场,<em>加入市场</em>。低成本宽基指数基金、长期定投、不择时、不猜顶底——把时间站在自己这一边,是普通人最有尊严的胜率。
       </div>
     </div>
     <div class="wisdom-card reveal reveal-delay-2">
       <div class="wisdom-num">03 / THREE</div>
-      <div class="wisdom-title">意义先行 · 数字其次</div>
+      <h3 class="wisdom-title">意义先行 · 数字其次</h3>
       <div class="wisdom-desc">
         问清楚「<em>自由之后去做什么</em>」,比问「需要多少钱」更重要。FIRE 的真正目的不是躺平,而是把时间主权赎回,投入真正热爱的事物。
       </div>
@@ -2641,6 +2748,8 @@
     <span>道阻且长 · 行则将至</span>
   </div>
 </footer>
+
+<div class="visually-hidden" id="calculator-status" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <script>
 // Chapter navigation is independent of the decorative canvas and calculators.
@@ -2827,10 +2936,10 @@ function calcCompound() {
   const m = parseFloat(document.getElementById('monthly').value);
   const y = parseInt(document.getElementById('years').value);
 
-  document.getElementById('principal-val').textContent = `${document.getElementById('principal').value} 万`;
-  document.getElementById('rate-val').textContent = `${document.getElementById('rate').value}%`;
-  document.getElementById('monthly-val').textContent = `${parseInt(document.getElementById('monthly').value).toLocaleString()} 元`;
-  document.getElementById('years-val').textContent = `${y} 年`;
+  syncPrecise('principal');
+  syncPrecise('rate');
+  syncPrecise('monthly');
+  syncPrecise('years');
 
   let data = [];
   let val = P;
@@ -2952,9 +3061,7 @@ function drawCompoundChart(data, P, annualContrib) {
   cCtx.textAlign = 'left';
 }
 
-['principal','rate','monthly','years'].forEach(id => {
-  document.getElementById(id).addEventListener('input', calcCompound);
-});
+
 
 // ────────── FIRE CALCULATOR ──────────
 let fireType = 'lean';
@@ -2965,8 +3072,10 @@ function setFireType(t) {
   const types = ['lean','regular','barista','fat'];
   document.querySelectorAll('.type-btn').forEach((b, i) => {
     b.classList.toggle('active', types[i] === t);
+    b.setAttribute('aria-pressed',String(types[i] === t));
   });
   calcFire();
+  announceCalculator(`FIRE 模式已切换，${document.getElementById('cr-years').textContent}，目标 ${document.getElementById('cr-target').textContent}。`);
 }
 
 const fireChartCanvas = document.getElementById('fire-chart');
@@ -2991,11 +3100,11 @@ function calcFire() {
   const age = parseInt(document.getElementById('c-age').value);
   const mult = fireMultipliers[fireType];
 
-  document.getElementById('cv-assets').textContent = assets;
-  document.getElementById('cv-income').textContent = income;
-  document.getElementById('cv-expense').textContent = expense;
-  document.getElementById('cv-return').textContent = document.getElementById('c-return').value;
-  document.getElementById('cv-age').textContent = age;
+  syncPrecise('c-assets');
+  syncPrecise('c-income');
+  syncPrecise('c-expense');
+  syncPrecise('c-return');
+  syncPrecise('c-age');
 
   const target = expense * mult;
   const annualSaving = income - expense;
@@ -3025,6 +3134,23 @@ function calcFire() {
   document.getElementById('cr-progress-pct').textContent = `${progress.toFixed(1)}%`;
   document.getElementById('cr-progress-fill').style.width = `${progress}%`;
 
+  const names = { lean:'极简', regular:'标准', barista:'半退', fat:'奢华' };
+  document.getElementById('fire-model-note').textContent = `${names[fireType]}模式 · 目标按年支出的 ${mult} 倍，月可支按年提取 4% 测算。`;
+  document.getElementById('fire-scenario').textContent = annualSaving > 0
+    ? '当前年收入高于支出，按固定收益率、收入与支出逐年测算。'
+    : '年支出不低于收入：本模型仍按固定收益率计算，结果包含资产收益和每年的收支差额。';
+  document.getElementById('fire-scenario').classList.toggle('attention',annualSaving <= 0);
+  if (years === 0) {
+    document.getElementById('cr-years').textContent = '已达目标';
+    document.getElementById('cr-age-target').textContent = '当前净资产已覆盖此模式的测算目标。';
+  } else if (years > 79) {
+    document.getElementById('cr-years').textContent = '80 年内未达标';
+    document.getElementById('cr-age-target').textContent = '当前参数在 80 年的测算范围内未达到目标。';
+  }
+  document.getElementById('cr-target').textContent = `${Number(target.toFixed(2))} 万元`;
+  document.getElementById('cr-saving').textContent = `${Number(annualSaving.toFixed(2))} 万 / 年`;
+  document.getElementById('fire-progress').setAttribute('aria-valuenow',progress.toFixed(1));
+  document.getElementById('fire-progress').setAttribute('aria-valuetext',`${progress.toFixed(1)}%，净资产 ${assets} 万元，目标 ${Number(target.toFixed(2))} 万元`);
   drawFireChart(trajectory, target);
 }
 
@@ -3105,8 +3231,73 @@ function drawFireChart(trajectory, target) {
   fCtx.textAlign = 'left';
 }
 
-['c-assets','c-income','c-expense','c-return','c-age'].forEach(id => {
-  document.getElementById(id).addEventListener('input', calcFire);
+
+
+
+// Paired inputs: preserve last valid values while an incomplete number is being edited.
+const preciseFields = [{"range": "principal", "number": "principal-val", "unit": "万元"}, {"range": "rate", "number": "rate-val", "unit": "%"}, {"range": "monthly", "number": "monthly-val", "unit": "元"}, {"range": "years", "number": "years-val", "unit": "年"}, {"range": "c-assets", "number": "cv-assets", "unit": "万元"}, {"range": "c-income", "number": "cv-income", "unit": "万元 / 年"}, {"range": "c-expense", "number": "cv-expense", "unit": "万元 / 年"}, {"range": "c-return", "number": "cv-return", "unit": "%"}, {"range": "c-age", "number": "cv-age", "unit": "岁"}];
+let calculatorAnnounceTimer;
+function announceCalculator(message) {
+  clearTimeout(calculatorAnnounceTimer);
+  calculatorAnnounceTimer = setTimeout(() => { document.getElementById('calculator-status').textContent = message; },600);
+}
+function syncPrecise(id) {
+  const field = preciseFields.find(f => f.range === id);
+  const range = document.getElementById(id);
+  const number = document.getElementById(field.number);
+  if (document.activeElement !== number) number.value = range.value;
+  range.setAttribute('aria-valuetext',`${range.value} ${field.unit}`);
+}
+function bindPrecise(field) {
+  const range = document.getElementById(field.range);
+  const number = document.getElementById(field.number);
+  const hint = document.getElementById(field.range + '-hint');
+  const calculate = field.range.startsWith('c-') ? calcFire : calcCompound;
+  const group = range.parentElement;
+  function clearError() {
+    number.removeAttribute('aria-invalid');
+    group.classList.remove('has-error');
+    hint.textContent = hint.dataset.default;
+  }
+  function message() {
+    return field.range.startsWith('c-')
+      ? `FIRE 测算已更新：${document.getElementById('cr-years').textContent}，目标 ${document.getElementById('cr-target').textContent}。`
+      : `复利测算已更新：终值 ${document.getElementById('compound-result').textContent}。`;
+  }
+  range.addEventListener('input',() => {
+    number.value = range.value;
+    clearError(); calculate(); announceCalculator(message());
+  });
+  number.addEventListener('input',() => {
+    if (number.value.trim() === '' || !number.validity.valid || !Number.isFinite(number.valueAsNumber)) {
+      number.setAttribute('aria-invalid','true'); group.classList.add('has-error');
+      hint.textContent = `请输入 ${range.min}–${range.max} ${field.unit}，步长 ${range.step}。`;
+      return;
+    }
+    range.value = number.value;
+    clearError(); calculate(); announceCalculator(message());
+  });
+  number.addEventListener('blur',() => {
+    const invalid = number.getAttribute('aria-invalid') === 'true';
+    number.value = range.value; clearError();
+    if (invalid) announceCalculator(`输入未采用，已恢复为 ${range.value} ${field.unit}。`);
+  });
+  number.addEventListener('keydown',event => {
+    if (event.key === 'Enter') { event.preventDefault(); number.blur(); }
+  });
+}
+preciseFields.forEach(bindPrecise);
+['compound','fire'].forEach(mode => {
+  document.getElementById('reset-' + mode).addEventListener('click',() => {
+    preciseFields.filter(field => field.range.startsWith('c-') === (mode === 'fire')).forEach(field => {
+      const range = document.getElementById(field.range), number = document.getElementById(field.number);
+      range.value = range.defaultValue; number.value = range.value;
+      number.removeAttribute('aria-invalid'); range.parentElement.classList.remove('has-error');
+      const hint = document.getElementById(field.range + '-hint'); hint.textContent = hint.dataset.default;
+    });
+    if (mode === 'fire') setFireType('lean'); else calcCompound();
+    announceCalculator(`${mode === 'fire' ? 'FIRE' : '复利'}计算器已恢复默认参数。`);
+  });
 });
 
 // initial
@@ -3126,4 +3317,5 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
+
 
