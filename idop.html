@@ -2182,6 +2182,8 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
 .loop-asm .view-rev { bottom:14px; font-size:11px; }.diagram-key { display:none; }
 .expl-svg { aspect-ratio:470 / 490; width:100%; max-width:560px; margin:auto; }
 .fw-svg { aspect-ratio:560 / 540; min-width:0; padding-bottom:38px; }.fw-svg svg { display:block; height:auto; aspect-ratio:560 / 540; }
+.bom table { table-layout:fixed; }
+.bom .bom-order { width:52px; }.bom .bom-code { width:56px; }.bom .bom-name { width:104px; }
 .bom th { white-space:nowrap; }
 @media(max-width:1280px) { .mast { grid-template-columns:1fr auto; }.mast .stamp-c { display:none; }.chapter-directory { display:block; } }
 @media(max-width:760px) { .mast { gap:12px; padding:0 18px; }.mast .stamp-r { gap:12px; }.mast .stamp-r .rev,.counter { display:none; }.fw-svg { max-width:560px; margin:auto; width:100%; } }
@@ -2194,6 +2196,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
  .diagram-key b { display:block; font-size:15px; font-weight:500; color:var(--paper); }.diagram-key p { grid-column:1/-1; padding-top:10px; border-top:1px dashed var(--pap-5); color:var(--pap-1); }
  .expl { padding:28px 18px 20px; }.expl-svg { display:none; }
  .fw-svg { padding:26px 10px 36px; }
+ .bom .bom-order { width:44px; }.bom .bom-code { width:48px; }.bom .bom-name { width:80px; }
  .bom th,.bom td { padding:9px 8px; }.bom .bom-ft { gap:10px; flex-wrap:wrap; }
 }
 @media(max-width:390px) { #directory-current { display:none; }.directory-panel { right:12px; width:calc(100vw - 24px); }.brand-name { font-size:10px; }.mast { padding:0 12px; } }
@@ -2473,6 +2476,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
             <span><b>图号</b> IDOP-001</span>
           </div>
           <table>
+            <colgroup><col class="bom-order"><col class="bom-code"><col class="bom-name"><col></colgroup>
             <thead>
               <tr><th>序</th><th>代号</th><th>名称</th><th>说明</th></tr>
             </thead>
@@ -3249,6 +3253,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
  directory.addEventListener('toggle',()=>summary.setAttribute('aria-expanded',String(directory.open)));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&directory.open){e.preventDefault();close(true);}});
  document.addEventListener('focusin',e=>{if(directory.open&&!directory.contains(e.target))close();});
+ document.addEventListener('transitionend',e=>{if(e.propertyName==='transform'&&e.target.classList.contains('reveal'))schedule();});
  window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',()=>{if(!narrow.matches)close(directory.contains(document.activeElement));schedule();});
  function restore(){const el=document.getElementById(location.hash.slice(1));if(el&&(el.id==='hero'||chapters.includes(el))){close();arrive(el);}else schedule();}
  window.addEventListener('hashchange',restore);window.addEventListener('popstate',restore);window.addEventListener('load',restore,{once:true});
