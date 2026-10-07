@@ -964,13 +964,13 @@ section {
 }
 .bom td.code { color: var(--cyan); font-weight: 500; width: 36px; }
 .bom td.idx  { color: var(--pap-3); width: 36px; }
-.bom td.desc { color: var(--paper); }
+.bom .desc { color: var(--paper); }
 .bom td.cn   { color: var(--pap-2); font-family: var(--sans); font-size: 13px; }
 .bom tr.divider td { background: rgba(245,177,75,0.04); border-top: 1px dashed var(--amber); }
 .bom tr.brand td.code { color: var(--cyan); }
-.bom tr.brand td.desc { color: var(--cyan); }
+.bom tr.brand .desc { color: var(--cyan); }
 .bom tr.core td.code  { color: var(--amber); }
-.bom tr.core td.desc  { color: var(--amber); }
+.bom tr.core .desc  { color: var(--amber); }
 .bom .bom-ft {
   padding: 10px 14px;
   border-top: 1px solid var(--pap-5);
@@ -2202,6 +2202,125 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
 @media(max-width:390px) { #directory-current { display:none; }.directory-panel { right:12px; width:calc(100vw - 24px); }.brand-name { font-size:10px; }.mast { padding:0 12px; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
 
+
+/* Reading layer — stage 3: hierarchy and copy, independent of decoration. */
+body { font-size:16px; line-height:1.85; }
+em, i { font-family:inherit; font-style:normal; }
+.copy { font-size:16px; line-height:1.95; max-width:38em; }
+.copy + .copy { margin-top:18px; }
+.copy em { font-family:inherit; font-style:normal; font-weight:500; }
+.sec-head h2 { font-family:var(--sans); line-height:1.4; font-weight:500; }
+.sec-head h2 em { font-family:inherit; font-style:normal; font-weight:500; }
+.sec-head .spec { font:400 15px/1.9 var(--sans); letter-spacing:0; text-transform:none; color:var(--pap-1); max-width:42em; margin-top:20px; }
+.mod-banner .meta .cn { font-family:var(--sans); font-size:clamp(28px,3vw,36px); line-height:1.3; font-weight:500; }
+.mod-banner .meta { gap:8px; }
+.mod-banner .meta > span { font-size:12px; letter-spacing:.08em; }
+.mod-lead { font-family:var(--sans); font-style:normal; line-height:1.7; font-weight:400; max-width:38em; }
+.hero-title { font-family:var(--sans); font-style:normal; font-weight:500; line-height:1.65; }
+.pq, .pq-section .q, .pq-section .q em, .coda .closing, .std-stamp .seal .by, .tb-defn, .tb-cell .verb { font-family:var(--sans); font-style:normal; line-height:1.75; }
+.conv-feed .cn, .conv-out .ttl { font-family:var(--sans); line-height:1.5; font-weight:500; }
+.conv-feed .q { font-family:var(--sans); font-size:15px; font-style:normal; line-height:1.8; }
+.conv-feed .desc, .conv-out .note, .fs-card .desc, .fca-col .desc { font-size:16px; line-height:1.9; color:var(--pap-1); }
+.fs-card .ttl, .fca-col .ttl, .tree-root .ttl, .fca-eq .eq { font-family:var(--sans); font-style:normal; font-weight:500; line-height:1.65; }
+.fs-card .ttl { font-size:19px; }.fca-col .ttl { font-size:21px; }
+.conv-out .note em { font-style:normal; }
+.expl-step { grid-template-columns:64px minmax(0,1fr); gap:14px; padding:14px 0; }
+.expl-step .num { font-size:12px; letter-spacing:.04em; }
+.expl-step .body { gap:6px; }.expl-step .ttl { font:500 18px/1.5 var(--sans); }
+.expl-step .sub { font-size:16px; line-height:1.9; color:var(--pap-1); }
+.tree-node .nm { font:500 16px/1.6 var(--sans); }.tree-node .ds { font:400 12px/1.7 var(--sans); letter-spacing:.02em; color:var(--pap-2); }
+.flow-node .ttl { font-size:16px; }.flow-gate .gname { font:500 14px/1.6 var(--sans); letter-spacing:0; }.flow-gate .gcn { font-size:13px; line-height:1.7; }
+.flow-chain { grid-template-columns:minmax(96px,1fr) 24px repeat(4,minmax(88px,1fr) 24px) minmax(96px,1fr); }
+.std-row .txt { font-size:16px; line-height:1.85; }.std-row .code { font-size:12px; letter-spacing:.02em; }
+.tb-cell .nm { font-size:14px; letter-spacing:.06em; }.tb-cell .verb { font-size:16px; }
+.tb-signoff .lbl { font-size:11px; color:var(--pap-2); }.tb-signoff .val { font-size:13px; letter-spacing:.06em; }
+/* Supporting text remains technical, but no longer competes through tiny type. */
+.sheet-meta, .sec-head .num, .dim, .anno, .leader, .note-strip, .conv-feed .en, .conv-feed .ratesp span, .conv-out .lbl, .flow-node .lbl, .fs-card .lbl, .tree-root .lbl, .tree-tier .tier-lbl, .fb-chips .c, .fca-col .lbl, .fca-col .unit, .fca-eq .lbl, .pq-section .by, .std-stamp .seal .lbl { font-size:12px; line-height:1.7; letter-spacing:.06em; }
+.sheet-meta, .anno, .leader, .note-strip, .conv-feed .ratesp span, .tree-tier .tier-lbl, .pq-section .by { color:var(--pap-2); }
+.sheet-tab, .conv .conv-title, .expl .view-tag, .flow .view-tag, .tree .view-tag, .fca .view-tag, .loop-asm .view-label, .fw-asm .view-label { font-size:11px; letter-spacing:.06em; }
+.sheet-tab { max-width:calc(100% - 36px); flex-wrap:wrap; }
+.copy, .spec, .mod-lead, .conv-feed .desc, .expl-step .sub, .fs-card .desc, .fca-col .desc { overflow-wrap:break-word; }
+.conv-grid > *, .fca-grid > *, .fw > *, .loop-grid > *, .flow-spec > * { min-width:0; }
+/* Native comparison table: fixed columns keep the two ideas easy to compare. */
+.spec-table { display:table; width:100%; border-collapse:collapse; table-layout:fixed; font-size:16px; }
+.spec-table .spec-order { width:64px; }
+.spec-table .hd { font:500 13px/1.65 var(--sans); letter-spacing:.02em; text-align:left; }
+.spec-table .hd.col-sp .pill { font:600 11px/1.4 var(--mono); margin-left:6px; }
+.spec-table .cell { display:table-cell; vertical-align:top; line-height:1.85; font-weight:400; }
+.spec-table .cell.idx { font-size:12px; letter-spacing:0; color:var(--pap-2); }
+.spec-table .cell.as { color:var(--pap-1); }
+.spec-table .cell.sp::before { content:none; }
+.spec-table tbody tr:last-child > * { border-bottom:0; }
+.spec-table tbody tr:nth-child(even) { background:rgba(125,211,252,.025); }
+.bom .bom-hd, .bom .bom-ft { font-size:11px; line-height:1.8; letter-spacing:.04em; flex-wrap:wrap; gap:8px; }
+.bom table { font-family:var(--sans); }
+.bom th, .bom td { font-size:13px; line-height:1.8; letter-spacing:0; padding:12px 10px; }
+.bom thead th { font:500 12px/1.7 var(--sans); letter-spacing:.02em; color:var(--pap-2); }
+.bom th[scope="row"] { font:500 14px/1.8 var(--sans); background:none; text-transform:none; }
+.bom td.cn { font-size:14px; color:var(--pap-1); }.bom .code, .bom .idx { font-family:var(--mono); }
+.bom .idx { font-size:11px; }.bom table .bom-order { width:52px; }.bom table .bom-code { width:56px; }.bom table .bom-name { width:104px; }
+@media(max-width:900px) {
+ .flow-chain { grid-template-columns:1fr; gap:8px; overflow-x:visible; }
+ .flow-arr { height:22px; }.flow-arr::before { left:50%; right:auto; width:1px; top:0; bottom:0; height:100%; }
+ .flow-arr::after { right:auto; top:auto; bottom:2px; left:50%; transform:translateX(-50%) rotate(135deg); }
+ .flow-node, .flow-gate { padding:16px 12px; }
+}
+@media(max-width:600px) {
+ .sec-head h2 { font-size:28px; line-height:1.45; }
+ .mod-banner .meta .cn { font-size:28px; }.mod-banner .big { font-size:64px; }
+ .spec-table { font-size:15px; }.spec-table .spec-order { width:34px; }
+ .spec-table .cell, .spec-table .hd { padding:12px 8px; }.spec-table .cell.idx { font-size:11px; padding-left:6px; padding-right:6px; }
+ .spec-table .hd { font-size:12px; }.spec-table .hd.col-sp .pill { display:block; width:max-content; margin:5px 0 0; }
+ .bom th, .bom td { padding:10px 8px; }.bom table .bom-order { width:40px; }.bom table .bom-code { width:44px; }.bom table .bom-name { width:80px; }
+ .bom th[scope="row"], .bom td.cn { font-size:13px; }.bom .bom-ft { justify-content:flex-start; }
+ .expl-step { grid-template-columns:54px minmax(0,1fr); gap:10px; }
+ .sheet-meta { position:static; transform:none; text-align:left; margin-bottom:22px; max-width:none; display:table; }
+ .mod-lead br, .copy br, .tb-defn br { display:none; }
+}
+
+
+/* Hero composition — stage 4: four stages first, drawing records last. */
+.hero { min-height:100svh; padding:104px 0 44px; }
+.hero-frame { padding:32px 40px 24px; background:linear-gradient(135deg,rgba(125,211,252,.035),transparent 65%); }
+.hero-spec { font:500 13px/1.6 var(--sans); letter-spacing:.1em; margin-bottom:28px; color:var(--pap-1); }
+.hero-spec::before { content:""; display:block; width:28px; height:1px; padding:0; background:var(--cyan); }
+.hero-letters { gap:24px; margin:0; font-weight:400; }
+.hl-letter { display:block; padding:0; --stage:var(--st-i); }
+.hl-letter:nth-child(2) { --stage:var(--st-d); }.hl-letter:nth-child(3) { --stage:var(--st-o); }.hl-letter:nth-child(4) { --stage:var(--st-p); }
+.hero-letters .hl-letter .glyph { font-size:clamp(96px,15vw,192px); line-height:1; font-weight:600; -webkit-text-stroke:1.5px var(--stage); letter-spacing:-.04em; }
+.hl-letter:hover .glyph { transform:translateY(-3px); -webkit-text-stroke-width:1.5px; }
+.hl-letter .dimline { position:relative; display:block; bottom:auto; left:auto; right:auto; margin:20px 8% 16px; background:var(--stage); opacity:.6; }
+.hl-letter .dimline::before, .hl-letter .dimline::after { background:var(--stage); }
+.hl-letter .meta { position:static; display:flex; gap:5px; font-weight:400; letter-spacing:0; }
+.hero-letters .hl-letter .meta .name { font:500 18px/1.5 var(--sans); letter-spacing:.12em; color:var(--stage); }
+.hl-letter .meta .cn { font:400 13px/1.5 var(--sans); letter-spacing:.04em; color:var(--pap-2); }
+.hero-lower { display:grid; grid-template-columns:1.15fr 1fr; gap:48px; margin-top:36px; padding-top:28px; border-top:1px solid var(--pap-5); }
+.hero-title { margin:0; max-width:none; font:500 clamp(24px,2.3vw,32px)/1.6 var(--sans); letter-spacing:0; }
+.hero-title em { color:var(--amber); }.hero-title b { font-weight:600; }
+.hero-kicker { margin:0; max-width:none; font:400 15px/1.9 var(--sans); letter-spacing:0; text-transform:none; color:var(--pap-1); }
+.hero-brackets { display:flex; gap:28px; margin-top:20px; flex-wrap:wrap; }
+.hb-grp { padding:0; text-align:left; letter-spacing:0; }.hb-grp::before { content:none; }
+.hb-grp .pair { font-size:18px; margin-bottom:3px; }.hb-grp .note { font:400 12px/1.8 var(--sans); letter-spacing:0; }
+.hero-scroll { min-height:44px; margin-top:24px; padding:8px 16px; border:1px solid var(--cyan-d); font-size:12px; letter-spacing:.08em; background:rgba(125,211,252,.025); }
+.hero-scroll:hover { border-color:var(--cyan); background:rgba(125,211,252,.06); }
+.hero-record { display:flex; justify-content:space-between; gap:16px 32px; flex-wrap:wrap; margin-top:28px; padding-top:16px; border-top:1px dashed var(--pap-5); }
+.hero-record .hero-stamp { position:static; transform:none; border:0; padding:0; min-width:0; background:none; display:flex; flex-direction:row; gap:10px 20px; flex-wrap:wrap; font-size:11px; line-height:1.6; letter-spacing:.04em; }
+.hero-record .hero-stamp .row { gap:7px; }.hero-record .lbl { color:var(--pap-2); }.hero-record .val { color:var(--pap-1); }
+@media(max-width:880px) {
+ .hero-lower { grid-template-columns:1fr; gap:28px; }.hero-context { max-width:40em; }
+ .hero-frame { padding:28px 24px 20px; }.hero-letters { gap:14px; }.hero-brackets { gap:24px; }
+}
+@media(max-width:600px) {
+ .hero { padding:92px 0 36px; }.hero-frame { padding:24px 18px 18px; }
+ .hero-spec { font-size:12px; letter-spacing:.04em; gap:10px; margin-bottom:24px; }.hero-spec::before { width:16px; }
+ .hero-letters { gap:10px; }.hero-letters .hl-letter .glyph { font-size:clamp(56px,15vw,90px); -webkit-text-stroke-width:1.2px; }
+ .hl-letter .dimline { margin:16px 5% 12px; }.hero-letters .hl-letter .meta .name { font-size:15px; letter-spacing:.06em; }.hl-letter .meta .cn { font-size:12px; letter-spacing:0; }
+ .hero-lower { margin-top:28px; padding-top:24px; gap:24px; }.hero-title { font-size:24px; line-height:1.6; }
+ .hero-kicker { font-size:14px; }.hero-kicker br { display:none; }.hero-scroll { margin-top:20px; }
+ .hero-brackets { margin-top:16px; gap:16px 24px; }.hb-grp .pair { font-size:16px; }
+ .hero-record { margin-top:24px; gap:10px; }.hero-record .hero-stamp { gap:8px 14px; font-size:10px; }
+}
+
 </style>
 </head>
 <body>
@@ -2265,87 +2384,77 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
   <canvas id="dustCanvas" class="dust-canvas" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-frame">
-      <span class="crop-tr"></span>
-      <span class="crop-bl"></span>
-
-      <!-- corner stamps -->
-      <div class="hero-stamp tl">
-        <div class="row"><span class="lbl">图号</span><span class="val cy">IDOP-001</span></div>
-        <div class="row"><span class="lbl">图纸</span><span class="val">01 / 10</span></div>
-        <div class="row"><span class="lbl">比例</span><span class="val">1 : 1</span></div>
-      </div>
-      <div class="hero-stamp br">
-        <div class="row"><span class="lbl">作者</span><span class="val">追光者</span></div>
-        <div class="row"><span class="lbl">日期</span><span class="val">2026.06</span></div>
-        <div class="row"><span class="lbl">版次</span><span class="val am">A</span></div>
-      </div>
-
-      <!-- OPVS ghost word -->
-      <div class="opus-ghost">OPVS</div>
-
+      <span class="crop-tr" aria-hidden="true"></span>
+      <span class="crop-bl" aria-hidden="true"></span>
       <p class="hero-spec">个人 IP 核心闭环系统</p>
-
-      <!-- The 4 letterforms -->
-      <div class="hero-letters" data-cursor="描图">
-        <div class="hl-letter">
+      <h1 class="hero-letters" aria-label="IDOP · 输入、沉淀、输出、产品">
+        <span class="hl-letter">
           <span class="glyph">I</span>
-          <span class="dimline"></span>
-          <div class="meta">
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="meta">
             <span class="name">输入</span>
             <span class="cn">源头</span>
-          </div>
-        </div>
-        <div class="hl-letter">
+          </span>
+        </span>
+        <span class="hl-letter">
           <span class="glyph">D</span>
-          <span class="dimline"></span>
-          <div class="meta">
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="meta">
             <span class="name">沉淀</span>
             <span class="cn">资产</span>
-          </div>
-        </div>
-        <div class="hl-letter">
+          </span>
+        </span>
+        <span class="hl-letter">
           <span class="glyph">O</span>
-          <span class="dimline"></span>
-          <div class="meta">
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="meta">
             <span class="name">输出</span>
             <span class="cn">信号</span>
-          </div>
-        </div>
-        <div class="hl-letter">
+          </span>
+        </span>
+        <span class="hl-letter">
           <span class="glyph">P</span>
-          <span class="dimline"></span>
-          <div class="meta">
+          <span class="dimline" aria-hidden="true"></span>
+          <span class="meta">
             <span class="name">产品</span>
             <span class="cn">交付</span>
-          </div>
+          </span>
+        </span>
+      </h1>
+      <div class="hero-lower">
+        <div class="hero-message"><p class="hero-title">
+        个人 <b>IP</b> 不是 <em>想</em> 出来的。<br/>
+        它是 <em>做</em> 出来的。
+      </p><a href="#why" class="hero-scroll" data-cursor="前往">
+        <span>阅读图纸</span>
+        <span class="arr"></span>
+      </a>
         </div>
-      </div>
-
-      <!-- IP / DO bracket annotations -->
-      <div class="hero-brackets">
-        <div class="hb-grp ip" style="grid-column: 1 / 2">
+        <div class="hero-context"><p class="hero-kicker">
+        <b>IDOP</b> · 输入 · 沉淀 · 输出 · 产品。<br/>
+        四阶段以 <b>×</b> 串联（非 +）。首尾拼 IP，中间拼 DO。
+      </p><div class="hero-brackets">
+        <div class="hb-grp ip">
           <div class="pair">I &nbsp;·&nbsp; P</div>
           <div class="note">首尾 · 品牌之框</div>
         </div>
-        <div class="hb-grp do" style="grid-column: 2 / 3; transform:translateX(0)">
+        <div class="hb-grp do">
           <div class="pair">D &nbsp;·&nbsp; O</div>
           <div class="note">中间 · 动作 · 做</div>
         </div>
       </div>
-
-      <p class="hero-title">
-        个人 <b>IP</b> 不是 <em>想</em> 出来的。<br/>
-        它是 <em>做</em> 出来的。
-      </p>
-      <p class="hero-kicker">
-        <b>IDOP</b> · 输入 · 沉淀 · 输出 · 产品。<br/>
-        四阶段以 <b>×</b> 串联（非 +）。首尾拼 IP，中间拼 DO。
-      </p>
-
-      <a href="#why" class="hero-scroll" data-cursor="前往">
-        <span>阅读图纸</span>
-        <span class="arr"></span>
-      </a>
+        </div>
+      </div>
+      <div class="hero-record"><div class="hero-stamp tl">
+        <div class="row"><span class="lbl">图号</span><span class="val cy">IDOP-001</span></div>
+        <div class="row"><span class="lbl">图纸</span><span class="val">01 / 10</span></div>
+        <div class="row"><span class="lbl">比例</span><span class="val">1 : 1</span></div>
+      </div><div class="hero-stamp br">
+        <div class="row"><span class="lbl">作者</span><span class="val">追光者</span></div>
+        <div class="row"><span class="lbl">日期</span><span class="val">2026.06</span></div>
+        <div class="row"><span class="lbl">版次</span><span class="val am">A</span></div>
+      </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2373,39 +2482,51 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
         <p class="spec">通行的理解被简化为：<b>发内容 → 涨粉 → 接广告 → 卖货</b>。本图说明真正能生产长期 IP 的那台 <b>机器</b> —— 一个闭环系统，而非内容流水。</p>
       </div>
 
-      <div class="spec-table">
-        <div class="hd"></div>
-        <div class="hd col-as">现状 &nbsp; · &nbsp; 普通做号思维</div>
-        <div class="hd col-sp">规范 <span class="pill">IDOP</span></div>
-
-        <div class="cell idx">01</div>
-        <div class="cell as">想到什么发什么</div>
-        <div class="cell sp">用高质量输入持续供能</div>
-
-        <div class="cell idx">02</div>
-        <div class="cell as">追热点、追流量</div>
-        <div class="cell sp">沉淀长期认知资产</div>
-
-        <div class="cell idx">03</div>
-        <div class="cell as">内容发完就结束</div>
-        <div class="cell sp">输出后进入反馈迭代</div>
-
-        <div class="cell idx">04</div>
-        <div class="cell as">有粉再想变现</div>
-        <div class="cell sp">从一开始就考虑产品交付</div>
-
-        <div class="cell idx">05</div>
-        <div class="cell as">靠爆款</div>
-        <div class="cell sp">靠系统</div>
-
-        <div class="cell idx">06</div>
-        <div class="cell as">把账号当窗口</div>
-        <div class="cell sp">把自己当作品在打磨</div>
-
-        <div class="cell idx row-last">07</div>
-        <div class="cell as row-last">短期数据决定一切</div>
-        <div class="cell sp row-last">长期复利决定结果</div>
-      </div>
+      <table class="spec-table" aria-label="普通做号思维与 IDOP 的对比">
+        <colgroup><col class="spec-order"><col><col></colgroup>
+        <thead><tr>
+          <th class="hd" scope="col" aria-label="序号"></th>
+          <th class="hd col-as" scope="col">现状 &nbsp; · &nbsp; 普通做号思维</th>
+          <th class="hd col-sp" scope="col">规范 <span class="pill">IDOP</span></th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <th class="cell idx" scope="row">01</th>
+            <td class="cell as">想到什么发什么</td>
+            <td class="cell sp">用高质量输入持续供能</td>
+          </tr>
+          <tr>
+            <th class="cell idx" scope="row">02</th>
+            <td class="cell as">追热点、追流量</td>
+            <td class="cell sp">沉淀长期认知资产</td>
+          </tr>
+          <tr>
+            <th class="cell idx" scope="row">03</th>
+            <td class="cell as">内容发完就结束</td>
+            <td class="cell sp">输出后进入反馈迭代</td>
+          </tr>
+          <tr>
+            <th class="cell idx" scope="row">04</th>
+            <td class="cell as">有粉再想变现</td>
+            <td class="cell sp">从一开始就考虑产品交付</td>
+          </tr>
+          <tr>
+            <th class="cell idx" scope="row">05</th>
+            <td class="cell as">靠爆款</td>
+            <td class="cell sp">靠系统</td>
+          </tr>
+          <tr>
+            <th class="cell idx" scope="row">06</th>
+            <td class="cell as">把账号当窗口</td>
+            <td class="cell sp">把自己当作品在打磨</td>
+          </tr>
+          <tr>
+            <th class="cell idx row-last" scope="row">07</th>
+            <td class="cell as row-last">短期数据决定一切</td>
+            <td class="cell sp row-last">长期复利决定结果</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="note-strip">
         <span class="tag">信号流</span>
@@ -2475,19 +2596,19 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
             <span>零件清单</span>
             <span><b>图号</b> IDOP-001</span>
           </div>
-          <table>
+          <table aria-label="IDOP 零件清单">
             <colgroup><col class="bom-order"><col class="bom-code"><col class="bom-name"><col></colgroup>
             <thead>
-              <tr><th>序</th><th>代号</th><th>名称</th><th>说明</th></tr>
+              <tr><th scope="col">序</th><th scope="col">代号</th><th scope="col">名称</th><th scope="col">说明</th></tr>
             </thead>
             <tbody>
-              <tr><td class="idx">01</td><td class="code">I</td><td class="desc">输入</td><td class="cn">高质量源头</td></tr>
-              <tr><td class="idx">02</td><td class="code">D</td><td class="desc">沉淀</td><td class="cn">认知资产</td></tr>
-              <tr><td class="idx">03</td><td class="code">O</td><td class="desc">输出</td><td class="cn">公开信任</td></tr>
-              <tr><td class="idx">04</td><td class="code">P</td><td class="desc">产品</td><td class="cn">价值交付</td></tr>
+              <tr><td class="idx">01</td><td class="code">I</td><th class="desc" scope="row">输入</th><td class="cn">高质量源头</td></tr>
+              <tr><td class="idx">02</td><td class="code">D</td><th class="desc" scope="row">沉淀</th><td class="cn">认知资产</td></tr>
+              <tr><td class="idx">03</td><td class="code">O</td><th class="desc" scope="row">输出</th><td class="cn">公开信任</td></tr>
+              <tr><td class="idx">04</td><td class="code">P</td><th class="desc" scope="row">产品</th><td class="cn">价值交付</td></tr>
               <tr class="divider"><td class="idx">—</td><td class="code">—</td><td class="desc">—</td><td class="cn">—</td></tr>
-              <tr class="brand"><td class="idx">首尾</td><td class="code">IP</td><td class="desc">品牌之框</td><td class="cn">边框 · 长期信任</td></tr>
-              <tr class="core"><td class="idx">中间</td><td class="code">DO</td><td class="desc">动作</td><td class="cn">做出来</td></tr>
+              <tr class="brand"><td class="idx">首尾</td><td class="code">IP</td><th class="desc" scope="row">品牌之框</th><td class="cn">边框 · 长期信任</td></tr>
+              <tr class="core"><td class="idx">中间</td><td class="code">DO</td><th class="desc" scope="row">动作</th><td class="cn">做出来</td></tr>
             </tbody>
           </table>
           <div class="bom-ft">
@@ -2532,7 +2653,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
           <span class="big">I</span>
           <div class="meta">
             <span>第 01 阶段</span>
-            <span class="cn">输入</span>
+            <h2 class="cn">输入</h2>
           </div>
         </div>
         <span class="tag">源头 · 决定上限</span>
@@ -2551,7 +2672,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
             <div class="conv-feed f-k">
               <span class="ltr">K</span>
               <div class="en">第一类源头</div>
-              <div class="cn">认知输入</div>
+              <h3 class="cn">认知输入</h3>
               <div class="q">"我有什么值得讲？"</div>
               <div class="desc">高质量课程、播客、书籍、AI 内容、真实项目，提供观点 / 模型 / 方法 / 判断与灵感。</div>
               <div class="ratesp">
@@ -2567,7 +2688,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
             <div class="conv-feed f-h">
               <span class="ltr">H</span>
               <div class="en">第二类源头</div>
-              <div class="cn">审美输入</div>
+              <h3 class="cn">审美输入</h3>
               <div class="q">"我如何讲得更好？"</div>
               <div class="desc">AI 什么都能生成的时代，能判断 65 分与 85 分的距离，才是真正拉开差距的厚度。</div>
               <div class="ratesp">
@@ -2583,7 +2704,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
             <div class="conv-feed f-r">
               <span class="ltr">R</span>
               <div class="en">第三类源头</div>
-              <div class="cn">用户输入</div>
+              <h3 class="cn">用户输入</h3>
               <div class="q">"别人到底需要什么？"</div>
               <div class="desc">评论 / 私信 / 朋友的真实困惑 / 同龄人的痛点 / 市场的真实数据，是个人 IP 不自嗨的安全绳。</div>
               <div class="ratesp">
@@ -2611,7 +2732,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
           <!-- output -->
           <div class="conv-out">
             <div class="lbl">→ 进入 沉淀</div>
-            <div class="ttl">合格源头</div>
+            <h3 class="ttl">合格源头</h3>
             <div class="note">
               <em>认知输入</em>让我有东西可讲，<em>审美输入</em>让我把东西讲得更好，<em>用户输入</em>让我知道别人真正需要什么。
             </div>
@@ -2638,7 +2759,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
           <span class="big">D</span>
           <div class="meta">
             <span>第 02 阶段</span>
-            <span class="cn">沉淀</span>
+            <h2 class="cn">沉淀</h2>
           </div>
         </div>
         <span class="tag">信息 → 资产</span>
@@ -2755,7 +2876,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
           <span class="big">O</span>
           <div class="meta">
             <span>第 03 阶段</span>
-            <span class="cn">输出</span>
+            <h2 class="cn">输出</h2>
           </div>
         </div>
         <span class="tag">信任在此累积</span>
@@ -2812,12 +2933,12 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
         <div class="flow-spec">
           <div class="fs-card">
             <span class="lbl">关系 01</span>
-            <p class="ttl"><b>IDOP</b> 管流程，<a class="xref" href="hkrr.html"><b>HKRR</b> <span class="ar">↗</span></a> 管质量。</p>
+            <h3 class="ttl"><b>IDOP</b> 管流程，<a class="xref" href="hkrr.html"><b>HKRR</b> <span class="ar">↗</span></a> 管质量。</h3>
             <p class="desc">IDOP 是个人 IP 的总闭环，HKRR 是贯穿其中的质量标尺。一个让它跑起来，一个让它跑得好。</p>
           </div>
           <div class="fs-card">
             <span class="lbl">关系 02</span>
-            <p class="ttl">上游 <b>HKR</b> 筛源头，下游 <b>HKRR</b> 打磨内容。</p>
+            <h3 class="ttl">上游 <b>HKR</b> 筛源头，下游 <b>HKRR</b> 打磨内容。</h3>
             <p class="desc">两端都被质量标尺锁住——上游不进垃圾，下游不出次品。</p>
           </div>
         </div>
@@ -2842,7 +2963,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
           <span class="big">P</span>
           <div class="meta">
             <span>第 04 阶段</span>
-            <span class="cn">产品</span>
+            <h2 class="cn">产品</h2>
           </div>
         </div>
         <span class="tag">信任 → 交付</span>
@@ -3064,7 +3185,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
         <div class="fca-grid">
           <div class="fca-col cheap">
             <span class="lbl">A 栏 · 廉价失败</span>
-            <p class="ttl"><em>AI</em> 把每一次尝试的单位成本，大幅压低。</p>
+            <h3 class="ttl"><em>AI</em> 把每一次尝试的单位成本，大幅压低。</h3>
             <p class="desc">过去做产品、做项目、创业，一次失败可能意味着几个月时间、几十万成本、巨大心力。今天，普通人可以更快做出一个网页、一段视频、一份文档、一个原型。<b>失败不再致命</b>。</p>
             <p class="unit">规范：<b>单次试错成本</b> ↓↓↓</p>
           </div>
@@ -3073,7 +3194,7 @@ section[tabindex="-1"]:focus { outline:none; }section[id] { scroll-margin-top:0;
 
           <div class="fca-col evo">
             <span class="lbl">B 栏 · 可演化性</span>
-            <p class="ttl">一个系统能进化，是因为它能把 <em>变异转化成记忆</em>。</p>
+            <h3 class="ttl">一个系统能进化，是因为它能把 <em>变异转化成记忆</em>。</h3>
             <p class="desc">一个系统能否进化，不取决于它能产生多少变异，而取决于它能否拿到反馈、记住有效经验、保留成功结构、把失败变成下一次输入。<b>这正是 IDOP 飞轮的价值</b>。</p>
             <p class="unit">规范：<b>学习增益</b> ↑↑↑</p>
           </div>
@@ -3440,3 +3561,4 @@ window.addEventListener('load', () => {
 </script>
 </body>
 </html>
+
