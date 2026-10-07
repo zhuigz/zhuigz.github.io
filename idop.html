@@ -7,7 +7,7 @@
 <meta name="description" content="IDOP · 输入 · 沉淀 · 输出 · 产品。首尾是 IP，中间是 DO。个人 IP 不是想出来的，而是做出来的。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
 <style>
 /* ============================================================================
    IDOP · The Personal-IP Loop
@@ -2073,10 +2073,11 @@ footer .right { opacity: 0.6; }
    Reveal animation
    ============================================================ */
 .reveal {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
   transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
 }
+.reveal.reveal-pending { opacity: 0; transform: translateY(20px); }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
@@ -2091,10 +2092,11 @@ footer .right { opacity: 0.6; }
    overhanging .sheet-tab and corner crop marks stay fully visible.
    A dedicated .scanedge child rides the sweep in cyan. */
 .reveal.sheet-in {
-  opacity: 0;
-  transform: translateY(26px);
+  opacity: 1;
+  transform: none;
   transition: opacity .8s var(--ease-out), transform 1s var(--ease-out);
 }
+.reveal.sheet-in.reveal-pending { opacity: 0; transform: translateY(26px); }
 .reveal.sheet-in.visible {
   opacity: 1;
   transform: translateY(0);
@@ -2108,7 +2110,7 @@ footer .right { opacity: 0.6; }
   opacity: 0;
   z-index: 6; pointer-events: none;
 }
-.reveal.sheet-in.visible .scanedge { animation: sheetScan 1.15s .12s var(--ease-out) forwards; }
+.reveal.sheet-in.reveal-animated.visible .scanedge { animation: sheetScan 1.15s .12s var(--ease-out) forwards; }
 @keyframes sheetScan {
   0%   { top: 0%;   opacity: 0; }
   14%  { opacity: 0.9; }
@@ -2120,31 +2122,34 @@ footer .right { opacity: 0.6; }
    sequence, echoing axonometric assembly. Apply .stack-in on a
    reveal wrapper; direct flagged children animate via --si index. */
 .reveal.stack-in .si {
-  opacity: 0;
-  transform: translateY(22px) translateX(-8px);
+  opacity: 1;
+  transform: none;
   transition: opacity .7s var(--ease-out), transform .8s var(--ease-out);
   transition-delay: calc(var(--si, 0) * 0.11s);
 }
+.reveal.stack-in.reveal-pending .si { opacity: 0; transform: translateY(22px) translateX(-8px); }
 .reveal.stack-in.visible .si {
   opacity: 1;
   transform: translateY(0) translateX(0);
 }
 
 .draw-line {
-  stroke-dasharray: var(--len, 1000);
-  stroke-dashoffset: var(--len, 1000);
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
   transition: stroke-dashoffset 1.4s var(--ease-out);
 }
+.draw-line.draw-pending { stroke-dasharray: var(--len, 1000); stroke-dashoffset: var(--len, 1000); }
 .draw-line.drawn { stroke-dashoffset: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  .draw-line { stroke-dashoffset: 0; }
+  .reveal.reveal-pending, .reveal.sheet-in.reveal-pending { opacity: 1; transform: none; }
+  .draw-line.draw-pending { stroke-dashoffset: 0; }
   .bg-glow .orb { animation: none !important; }
   .dust-canvas { display: none; }
   .reveal.sheet-in { transform: none; }
   .reveal.sheet-in .scanedge { display: none; }
-  .reveal.stack-in .si { opacity: 1; transform: none; }
+  .reveal.stack-in .si, .reveal.stack-in.reveal-pending .si { opacity: 1; transform: none; }
 }
 
 /* IDOP: diagram legibility and chapter navigation */
@@ -3386,91 +3391,127 @@ em, i { font-family:inherit; font-style:normal; }
 </script>
 
 <script>
-/* ============================================================
-   Crosshair cursor + data-cursor labels
-   ============================================================ */
+
+// Reading progress does not depend on any visual effects.
+(() => {
+  const label = document.getElementById('lcPos'), track = document.getElementById('reading-progress');
+  if (!label && !track) return;
+  function update() {
+    const root = document.documentElement, total = root.scrollHeight - root.clientHeight;
+    const value = Math.max(0, Math.min(100, Math.round(total > 0 ? root.scrollTop / total * 100 : 0)));
+    if (label) label.textContent = value + '%';
+    if (track) track.value = value;
+  }
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update, { once: true });
+  if (document.fonts) { document.fonts.ready.then(update).catch(() => {}); document.fonts.addEventListener('loadingdone', update); }
+  update();
+})();
+</script>
+<script>
+
+// Content is visible in CSS. Hide only successfully observed, off-screen sheets.
+(() => {
+  const sheets = [...document.querySelectorAll('.reveal')];
+  let observer;
+  function show(sheet) {
+    sheet.classList.remove('reveal-pending');
+    sheet.classList.add('visible');
+    sheet.querySelectorAll('.draw-line').forEach(line => line.classList.add('drawn'));
+  }
+  function release() {
+    if (observer) { try { observer.disconnect(); } catch (_) {} }
+    sheets.forEach(sheet => { sheet.classList.remove('reveal-animated'); show(sheet); });
+  }
+  function safe(fn) { try { fn(); } catch (_) { release(); } }
+  function checkVisible() {
+    const height = window.innerHeight || document.documentElement.clientHeight;
+    sheets.forEach(sheet => {
+      if (sheet.classList.contains('reveal-pending') && sheet.getBoundingClientRect().top < height) show(sheet);
+    });
+  }
+  try {
+    const motion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    if (typeof IntersectionObserver !== 'function' || (motion && motion.matches)) { release(); return; }
+    observer = new IntersectionObserver(entries => safe(() => entries.forEach(entry => {
+      if (entry.isIntersecting) { show(entry.target); observer.unobserve(entry.target); }
+    })), { threshold: 0.01 });
+    sheets.forEach(sheet => observer.observe(sheet));
+    const height = window.innerHeight || document.documentElement.clientHeight;
+    sheets.forEach(sheet => {
+      if (sheet.getBoundingClientRect().top >= height) {
+        sheet.classList.add('reveal-animated', 'reveal-pending');
+        sheet.querySelectorAll('.draw-line').forEach(line => line.classList.add('draw-pending'));
+      } else show(sheet);
+    });
+    // Native anchors, focus and scrolling also release content if an observer stalls.
+    document.addEventListener('focusin', event => safe(() => sheets.forEach(sheet => {
+      if (sheet.contains(event.target) || event.target.contains(sheet)) show(sheet);
+    })));
+    document.addEventListener('scroll', () => safe(checkVisible), { passive: true });
+    ['load', 'hashchange', 'popstate', 'resize'].forEach(type => window.addEventListener(type, () => safe(checkVisible)));
+    if (document.fonts) { document.fonts.ready.then(() => safe(checkVisible)).catch(() => {}); document.fonts.addEventListener('loadingdone', () => safe(checkVisible)); }
+    if (motion) {
+      const changed = event => { if (event.matches) release(); };
+      if (motion.addEventListener) motion.addEventListener('change', changed);
+      else if (motion.addListener) motion.addListener(changed);
+    }
+  } catch (_) { release(); }
+})();
+</script>
+<script>
+(() => {
 const xh = document.getElementById('xhair');
 const xhLbl = document.getElementById('xhairLbl');
 let xPos = { x: 0, y: 0 };
 let xTarget = { x: 0, y: 0 };
+let failed = false, cursorFrame = 0;
+function fail() { failed = true; if (cursorFrame) cancelAnimationFrame(cursorFrame); if (xh) xh.style.display = 'none'; }
+function safe(fn) { if (!failed) { try { fn(); } catch (_) { fail(); } } }
+if (!xh || !xhLbl || typeof matchMedia !== 'function') { fail(); return; }
+try {
 
 if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
   document.addEventListener('mousemove', (e) => {
     xTarget.x = e.clientX;
     xTarget.y = e.clientY;
   });
-  function rafXh() {
+  function rafXh() { safe(drawCursor); }
+  function drawCursor() {
     xPos.x += (xTarget.x - xPos.x) * 0.35;
     xPos.y += (xTarget.y - xPos.y) * 0.35;
     xh.style.setProperty('--x', xPos.x + 'px');
     xh.style.setProperty('--y', xPos.y + 'px');
-    requestAnimationFrame(rafXh);
+    cursorFrame = requestAnimationFrame(rafXh);
   }
   rafXh();
 
-  document.body.addEventListener('mouseover', (e) => {
+  document.body.addEventListener('mouseover', (e) => safe(() => {
     const tgt = e.target.closest('[data-cursor], a, button');
     if (tgt) {
       xh.classList.add('hover');
       xhLbl.textContent = tgt.dataset.cursor || (tgt.tagName === 'A' ? '打开' : '点击');
     }
-  });
-  document.body.addEventListener('mouseout', (e) => {
+  }));
+  document.body.addEventListener('mouseout', (e) => safe(() => {
     const tgt = e.target.closest('[data-cursor], a, button');
     if (tgt) xh.classList.remove('hover');
-  });
+  }));
 }
 
-/* ============================================================
-   Line-counter progress
-   ============================================================ */
-const lcPos = document.getElementById('lcPos');
-function updateCounter() {
-  const h = document.documentElement;
-  const total = h.scrollHeight - h.clientHeight;
-  const p = total > 0 ? (h.scrollTop / total) : 0;
-  const v = Math.max(0, Math.min(100, Math.round(p * 100)));
-  lcPos.textContent = v + '%';
-  document.getElementById('reading-progress').value = v;
-}
-document.addEventListener('scroll', updateCounter, { passive: true });
-updateCounter();
 
-/* ============================================================
-   Reveal + draw-line on scroll
-   ============================================================ */
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      // also kick stroke-dashoffset on enclosed lines
-      e.target.querySelectorAll('.draw-line').forEach(el => {
-        el.classList.add('drawn');
-      });
-      revealObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-/* draw lines outside reveal containers (hero) */
-window.addEventListener('load', () => {
-  document.querySelectorAll('.hero .draw-line, .draw-line').forEach(el => {
-    if (!el.classList.contains('drawn')) el.classList.add('drawn');
-  });
-}, { once: true });
-
-/* ============================================================
-   Hero blueprint-dust canvas — cyan/amber motes rising over the
-   drawing. Blueprint palette only (no warm gold). Fades out as the
-   hero scrolls away; pauses when tab hidden or hero off-screen.
-   ============================================================ */
+} catch (_) { fail(); }
+})();
+</script>
+<script>
 (function dustCanvas() {
   const c = document.getElementById('dustCanvas');
   if (!c) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const ctx = c.getContext('2d');
+  let failed = false;
+  let ctx;
+  function fail() { failed = true; running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; c.style.display = 'none'; }
+  function run(fn) { if (failed) return; try { fn(); } catch (_) { fail(); } }
   let w = 0, h = 0, dpr = 1;
   let motes = [];
   let opacity = 1;
@@ -3520,7 +3561,8 @@ window.addEventListener('load', () => {
     if (motes.length !== n) motes = Array.from({ length: n }, () => spawn(true));
   }
 
-  function frame(t) {
+  function frame(t) { run(() => drawFrame(t)); }
+  function drawFrame(t) {
     if (!running) { rafId = 0; return; }
     ctx.clearRect(0, 0, w, h);
     if (opacity < 0.02) { rafId = requestAnimationFrame(frame); return; }
@@ -3549,18 +3591,24 @@ window.addEventListener('load', () => {
     if (opacity < 0.02) stop(); else start();
   }
 
-  window.addEventListener('scroll', updateOpacity, { passive: true });
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') stop();
-    else updateOpacity();
-  });
-  window.addEventListener('resize', resize);
+  try {
+    if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    ctx = c.getContext('2d');
+    if (!ctx) { fail(); return; }
+  } catch (_) { fail(); return; }
 
-  resize();
-  updateOpacity();
-  start();
+  window.addEventListener('scroll', () => run(updateOpacity), { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    run(() => { if (document.visibilityState === 'hidden') stop(); else updateOpacity(); });
+  });
+  window.addEventListener('resize', () => run(resize));
+  window.addEventListener('load', () => run(resize), { once: true });
+  if (document.fonts) document.fonts.ready.then(() => run(resize)).catch(() => {});
+
+  run(() => { resize(); updateOpacity(); start(); });
 })();
 </script>
 </body>
 </html>
+
 
