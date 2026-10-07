@@ -2328,6 +2328,32 @@ em, i { font-family:inherit; font-style:normal; }
  .hero-record { margin-top:24px; gap:10px; }.hero-record .hero-stamp { gap:8px 14px; font-size:10px; }
 }
 
+
+/* Stage 6: compact drawing notes and a quieter reading rhythm. */
+section:not(.hero):not(.pq-section) { padding:104px 0 64px; }
+.pq-section { padding:24px 0 32px; }
+.pq-section .pq-wrap { padding:24px 28px; border:0; border-left:2px solid var(--cyan-d); background:linear-gradient(90deg,rgba(125,211,252,.025),transparent); }
+.pq-section .pq-wrap::before, .pq-section .pq-wrap::after { content:none; }
+.pq-section .q { font-size:clamp(19px,2vw,24px); line-height:1.8; max-width:34em; }
+.pq-section .by { margin-top:14px; }
+.coda { margin-top:36px; padding:28px 0 0; border-top:1px solid var(--pap-5); }
+.coda .wordmark { font-size:clamp(40px,5vw,64px); gap:20px; }
+.coda .underline { margin-top:14px; font-size:11px; letter-spacing:.08em; }
+.coda .underline .ln { width:40px; }
+.coda .closing { margin-top:20px; font-size:20px; }
+footer { margin-top:40px; padding-top:24px; }
+@media(max-width:720px) {
+ section:not(.hero):not(.pq-section) { padding:112px 0 48px; }
+ .pq-section { padding:16px 0 24px; }.pq-section .pq-wrap { padding:20px 18px; }
+ .coda .closing { font-size:18px; }
+}
+/* Decorative loops stay still until the page is visible and the hero is in view. */
+.bg-glow .orb, .hero-scroll .arr::after { animation-play-state:paused; }
+body.motion-ready.hero-in-view:not(.page-inactive):not(.motion-reduced) .bg-glow .orb,
+body.motion-ready.hero-in-view:not(.page-inactive):not(.motion-reduced) .hero-scroll .arr::after { animation-play-state:running; }
+body.page-inactive .scanedge { animation-play-state:paused !important; }
+.xhair { display:none; }
+
 </style>
 </head>
 <body>
@@ -3461,154 +3487,159 @@ em, i { font-family:inherit; font-style:normal; }
 })();
 </script>
 <script>
+
+// CSS loops share page/hero visibility. A script failure leaves them static.
 (() => {
-const xh = document.getElementById('xhair');
-const xhLbl = document.getElementById('xhairLbl');
-let xPos = { x: 0, y: 0 };
-let xTarget = { x: 0, y: 0 };
-let failed = false, cursorFrame = 0;
-function fail() { failed = true; if (cursorFrame) cancelAnimationFrame(cursorFrame); if (xh) xh.style.display = 'none'; }
-function safe(fn) { if (!failed) { try { fn(); } catch (_) { fail(); } } }
-if (!xh || !xhLbl || typeof matchMedia !== 'function') { fail(); return; }
-try {
-
-if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.addEventListener('mousemove', (e) => {
-    xTarget.x = e.clientX;
-    xTarget.y = e.clientY;
-  });
-  function rafXh() { safe(drawCursor); }
-  function drawCursor() {
-    xPos.x += (xTarget.x - xPos.x) * 0.35;
-    xPos.y += (xTarget.y - xPos.y) * 0.35;
-    xh.style.setProperty('--x', xPos.x + 'px');
-    xh.style.setProperty('--y', xPos.y + 'px');
-    cursorFrame = requestAnimationFrame(rafXh);
-  }
-  rafXh();
-
-  document.body.addEventListener('mouseover', (e) => safe(() => {
-    const tgt = e.target.closest('[data-cursor], a, button');
-    if (tgt) {
-      xh.classList.add('hover');
-      xhLbl.textContent = tgt.dataset.cursor || (tgt.tagName === 'A' ? '打开' : '点击');
+  const hero = document.getElementById('hero'), mast = document.getElementById('mast');
+  if (!hero) return;
+  try {
+    const motion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    function update() {
+      try {
+        const rect = hero.getBoundingClientRect(), edge = mast ? mast.getBoundingClientRect().bottom : 0;
+        document.body.classList.toggle('hero-in-view', rect.bottom > edge && rect.top < window.innerHeight);
+        document.body.classList.toggle('page-inactive', document.visibilityState === 'hidden');
+        document.body.classList.toggle('motion-reduced', !!(motion && motion.matches));
+        document.body.classList.add('motion-ready');
+      } catch (_) { document.body.classList.remove('motion-ready'); }
     }
-  }));
-  document.body.addEventListener('mouseout', (e) => safe(() => {
-    const tgt = e.target.closest('[data-cursor], a, button');
-    if (tgt) xh.classList.remove('hover');
-  }));
-}
-
-
-} catch (_) { fail(); }
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+    window.addEventListener('pageshow', update);
+    window.addEventListener('pagehide', () => document.body.classList.add('page-inactive'));
+    document.addEventListener('visibilitychange', update);
+    if (motion) { if (motion.addEventListener) motion.addEventListener('change', update); else if (motion.addListener) motion.addListener(update); }
+    update();
+  } catch (_) { document.body.classList.remove('motion-ready'); }
 })();
 </script>
 <script>
-(function dustCanvas() {
-  const c = document.getElementById('dustCanvas');
-  if (!c) return;
-  let failed = false;
-  let ctx;
-  function fail() { failed = true; running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; c.style.display = 'none'; }
-  function run(fn) { if (failed) return; try { fn(); } catch (_) { fail(); } }
-  let w = 0, h = 0, dpr = 1;
-  let motes = [];
-  let opacity = 1;
-  let running = false;
-  let rafId = 0;
 
-  /* blueprint palette: cyan (dominant), periwinkle, lone amber spark */
-  const colors = [
-    'rgba(125,211,252,', 'rgba(125,211,252,', 'rgba(125,211,252,', 'rgba(125,211,252,',
-    'rgba(56,189,248,',  'rgba(56,189,248,',
-    'rgba(196,181,253,', 'rgba(196,181,253,',
-    'rgba(245,177,75,'   /* the one warm — DO/action accent */
-  ];
-
-  function moteCount() {
-    if (w < 480) return 16;
-    if (w < 768) return 24;
-    return 40;
+// The reticle follows an active mouse, then settles without a permanent frame loop.
+(() => {
+  const scope = document.getElementById('xhair'), label = document.getElementById('xhairLbl');
+  if (!scope || !label || typeof matchMedia !== 'function') return;
+  let frameId = 0, idle = 0, failed = false, present = false, last = 0;
+  let x = 0, y = 0, targetX = 0, targetY = 0, fine, motion;
+  function hide() {
+    if (frameId) cancelAnimationFrame(frameId);
+    if (idle) clearTimeout(idle);
+    frameId = idle = last = 0; present = false;
+    scope.style.display = 'none'; scope.classList.remove('hover');
   }
-
-  function spawn(initial) {
-    return {
-      x: Math.random() * w,
-      y: initial ? Math.random() * h : h + Math.random() * 30,
-      r: 0.5 + Math.pow(Math.random(), 2) * 1.5,
-      vx: (Math.random() - 0.5) * 0.08,
-      vy: -(0.10 + Math.random() * 0.26),
-      a: 0.26 + Math.random() * 0.38,
-      phase: Math.random() * Math.PI * 2,
-      freq: 0.0013 + Math.random() * 0.0018,
-      color: colors[Math.floor(Math.random() * colors.length)]
-    };
-  }
-
-  function resize() {
-    const hero = c.parentElement;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = hero ? hero.clientWidth : window.innerWidth;
-    h = hero ? hero.clientHeight : window.innerHeight;
-    c.width = Math.floor(w * dpr);
-    c.height = Math.floor(h * dpr);
-    c.style.width = w + 'px';
-    c.style.height = h + 'px';
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
-    const n = moteCount();
-    if (motes.length !== n) motes = Array.from({ length: n }, () => spawn(true));
-  }
-
-  function frame(t) { run(() => drawFrame(t)); }
-  function drawFrame(t) {
-    if (!running) { rafId = 0; return; }
-    ctx.clearRect(0, 0, w, h);
-    if (opacity < 0.02) { rafId = requestAnimationFrame(frame); return; }
-    ctx.globalCompositeOperation = 'lighter';
-    for (let i = 0; i < motes.length; i++) {
-      const p = motes[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.y < -12 || p.x < -50 || p.x > w + 50) Object.assign(p, spawn(false));
-      const alpha = (p.a * (0.55 + 0.45 * Math.sin(t * p.freq + p.phase)) * opacity).toFixed(3);
-      ctx.fillStyle = p.color + alpha + ')';
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    rafId = requestAnimationFrame(frame);
-  }
-
-  function start() { if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
-  function stop() { running = false; }
-
-  function updateOpacity() {
-    const heroH = c.parentElement ? c.parentElement.clientHeight : window.innerHeight;
-    opacity = Math.max(0, 1 - window.scrollY / heroH);
-    c.style.setProperty('--dust-opacity', opacity.toFixed(3));
-    if (opacity < 0.02) stop(); else start();
-  }
-
+  function safe(fn) { if (!failed) { try { fn(); } catch (_) { failed = true; hide(); } } }
+  function allowed() { return fine.matches && !motion.matches && document.visibilityState !== 'hidden'; }
+  function place() { scope.style.setProperty('--x', x + 'px'); scope.style.setProperty('--y', y + 'px'); }
+  function frame(t) { safe(() => {
+    frameId = 0;
+    if (!present || !allowed()) { hide(); return; }
+    const blend = 1 - Math.pow(.65, last ? Math.min(t - last, 64) / (1000 / 60) : 1);
+    last = t; x += (targetX - x) * blend; y += (targetY - y) * blend;
+    if (Math.abs(targetX - x) + Math.abs(targetY - y) < .25) { x = targetX; y = targetY; last = 0; place(); return; }
+    place(); frameId = requestAnimationFrame(frame);
+  }); }
+  function moved(event) { safe(() => {
+    if ((event.pointerType && event.pointerType !== 'mouse') || !allowed()) { hide(); return; }
+    targetX = event.clientX; targetY = event.clientY;
+    if (!present) { x = targetX; y = targetY; present = true; place(); }
+    scope.style.display = 'block';
+    if (!frameId) frameId = requestAnimationFrame(frame);
+    if (idle) clearTimeout(idle);
+    idle = setTimeout(() => safe(hide), 900);
+  }); }
   try {
-    if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    ctx = c.getContext('2d');
-    if (!ctx) { fail(); return; }
-  } catch (_) { fail(); return; }
+    fine = matchMedia('(hover: hover) and (pointer: fine)');
+    motion = matchMedia('(prefers-reduced-motion: reduce)');
+    document.addEventListener('pointermove', moved, { passive:true });
+    document.addEventListener('pointerout', event => { if (!event.relatedTarget) safe(hide); });
+    document.body.addEventListener('mouseover', event => safe(() => {
+      const target = event.target.closest('[data-cursor], a, button');
+      if (target && present && allowed()) { scope.classList.add('hover'); label.textContent = target.dataset.cursor || (target.tagName === 'A' ? '打开' : '点击'); }
+    }));
+    document.body.addEventListener('mouseout', event => safe(() => {
+      if (event.target.closest('[data-cursor], a, button')) scope.classList.remove('hover');
+    }));
+    ['blur', 'pagehide', 'scroll'].forEach(type => window.addEventListener(type, () => safe(hide), { passive:true }));
+    ['visibilitychange', 'keydown'].forEach(type => document.addEventListener(type, () => safe(hide)));
+    [fine, motion].forEach(query => { const changed = () => safe(hide); if (query.addEventListener) query.addEventListener('change', changed); else if (query.addListener) query.addListener(changed); });
+    hide();
+  } catch (_) { failed = true; hide(); }
+})();
+</script>
+<script>
 
-  window.addEventListener('scroll', () => run(updateOpacity), { passive: true });
-  document.addEventListener('visibilitychange', () => {
-    run(() => { if (document.visibilityState === 'hidden') stop(); else updateOpacity(); });
-  });
-  window.addEventListener('resize', () => run(resize));
-  window.addEventListener('load', () => run(resize), { once: true });
-  if (document.fonts) document.fonts.ready.then(() => run(resize)).catch(() => {});
-
-  run(() => { resize(); updateOpacity(); start(); });
+// Hero dust: bounded paint rate, time-based movement, immediate stop off-screen/background.
+(() => {
+  const canvas = document.getElementById('dustCanvas'), hero = document.getElementById('hero'), mast = document.getElementById('mast');
+  if (!canvas || !hero) return;
+  let ctx, motion, failed = false, frameId = 0, needsResize = true;
+  let width = 0, height = 0, opacity = 1, motes = [], lastPaint = null, clock = 0;
+  const interval = 1000 / 30;
+  const colors = ['rgba(125,211,252,','rgba(125,211,252,','rgba(125,211,252,','rgba(125,211,252,','rgba(56,189,248,','rgba(56,189,248,','rgba(196,181,253,','rgba(196,181,253,','rgba(245,177,75,'];
+  function stop() { if (frameId) cancelAnimationFrame(frameId); frameId = 0; lastPaint = null; }
+  function fail() { failed = true; stop(); canvas.style.display = 'none'; }
+  function safe(fn) { if (!failed) { try { fn(); } catch (_) { fail(); } } }
+  function allowed() {
+    if (document.visibilityState === 'hidden' || (motion && motion.matches)) return false;
+    const rect = hero.getBoundingClientRect(), edge = mast ? mast.getBoundingClientRect().bottom : 0;
+    return rect.bottom > edge && rect.top < window.innerHeight && opacity > .02;
+  }
+  function spawn(initial) {
+    return { x:Math.random()*width, y:initial ? Math.random()*height : height+Math.random()*30,
+      r:.5+Math.pow(Math.random(),2)*1.5, vx:(Math.random()-.5)*.08, vy:-(.10+Math.random()*.26),
+      a:.26+Math.random()*.38, phase:Math.random()*Math.PI*2, freq:.0013+Math.random()*.0018,
+      color:colors[Math.floor(Math.random()*colors.length)] };
+  }
+  function resize() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    width = hero.clientWidth; height = hero.clientHeight;
+    canvas.width = Math.floor(width*ratio); canvas.height = Math.floor(height*ratio);
+    canvas.style.width = width+'px'; canvas.style.height = height+'px';
+    ctx.setTransform(1,0,0,1,0,0); ctx.scale(ratio,ratio);
+    const count = width < 480 ? 14 : width < 768 ? 20 : 28;
+    if (motes.length !== count) motes = Array.from({length:count},() => spawn(true));
+    needsResize = false;
+  }
+  function frame(t) { safe(() => {
+    frameId = 0;
+    if (!allowed()) { stop(); return; }
+    if (lastPaint === null) lastPaint = t-interval;
+    if (t-lastPaint >= interval-1) {
+      const delta = Math.min(t-lastPaint,64), step = delta/(1000/60);
+      clock += delta; lastPaint = t;
+      ctx.clearRect(0,0,width,height); ctx.globalCompositeOperation = 'lighter';
+      for (const mote of motes) {
+        mote.x += mote.vx*step; mote.y += mote.vy*step;
+        if (mote.y < -12 || mote.x < -50 || mote.x > width+50) Object.assign(mote,spawn(false));
+        const alpha = (mote.a*(.55+.45*Math.sin(clock*mote.freq+mote.phase))*opacity).toFixed(3);
+        ctx.fillStyle = mote.color+alpha+')'; ctx.beginPath(); ctx.arc(mote.x,mote.y,mote.r,0,Math.PI*2); ctx.fill();
+      }
+    }
+    frameId = requestAnimationFrame(frame);
+  }); }
+  function sync() { safe(() => {
+    const rect = hero.getBoundingClientRect();
+    opacity = Math.max(0, Math.min(1,rect.bottom / Math.max(1,hero.clientHeight)));
+    canvas.style.setProperty('--dust-opacity',opacity.toFixed(3));
+    if (!allowed()) { stop(); return; }
+    if (!ctx) { ctx = canvas.getContext('2d'); if (!ctx) { fail(); return; } }
+    if (needsResize) resize();
+    if (!frameId) frameId = requestAnimationFrame(frame);
+  }); }
+  try {
+    motion = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    window.addEventListener('scroll',sync,{passive:true});
+    ['resize','load','pageshow'].forEach(type => window.addEventListener(type, () => { needsResize = true; sync(); }));
+    window.addEventListener('pagehide',stop);
+    document.addEventListener('visibilitychange',sync);
+    if (motion) { if (motion.addEventListener) motion.addEventListener('change',sync); else if (motion.addListener) motion.addListener(sync); }
+    if (document.fonts) { const changed = () => { needsResize = true; sync(); }; document.fonts.ready.then(changed).catch(() => {}); document.fonts.addEventListener('loadingdone',changed); }
+    sync();
+  } catch (_) { fail(); }
 })();
 </script>
 </body>
 </html>
+
 
 
