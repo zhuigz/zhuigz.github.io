@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!--
+StatiCrypt embedded crypto/codec license:
+MIT License
+
+Copyright (c) 2017 Robin Moisson
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>人生系统 · 私密访问</title>
+<script>try { if (localStorage.getItem('zg-life-system-theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (_) {}</script>
+<style>
+:root{color-scheme:dark;--bg:#0b0c10;--panel:#121319;--ink:#ede9e1;--muted:#aba79f;--line:#34332f;--accent:#dfbc83;--field:#0d0e12;--button:#dfbc83;--button-ink:#191711}
+:root[data-theme="light"]{color-scheme:light;--bg:#f5f4ef;--panel:#fcfbf7;--ink:#252725;--muted:#686a63;--line:#d8d7ce;--accent:#75552c;--field:#f4f3ed;--button:#343b35;--button-ink:#fff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;min-height:100svh;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;display:grid;place-items:center;padding:32px 20px;background-image:radial-gradient(ellipse at 50% 0%,rgba(170,132,76,.08),transparent 65%)}
+main{width:min(100%,440px);padding:38px 34px 30px;background:var(--panel);border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.08)}
+.eyebrow{display:flex;align-items:center;gap:10px;color:var(--accent);font-size:11px;letter-spacing:.19em;font-weight:500}.eyebrow svg{width:16px;height:16px;flex:none}
+h1{font-family:"Songti SC","Noto Serif SC",SimSun,serif;font-weight:500;font-size:38px;letter-spacing:.09em;margin:24px 0 14px;line-height:1.35}
+.intro{font-size:14px;line-height:1.9;color:var(--muted);margin:0 0 28px}.rule{height:1px;background:var(--line);margin:0 0 25px}
+label{font-size:13px}.password-label{display:block;margin-bottom:10px}.field{position:relative}input[type="password"],input[type="text"]{width:100%;min-height:52px;border:1px solid var(--line);border-radius:10px;padding:12px 76px 12px 14px;font:inherit;font-size:16px;color:var(--ink);background:var(--field)}
+button{font:inherit;cursor:pointer}.visibility{position:absolute;right:4px;top:4px;min-width:62px;height:44px;background:transparent;border:0;border-radius:7px;color:var(--muted);font-size:13px}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}input[aria-invalid="true"]{border-color:#c98073}
+.remember{display:flex;align-items:center;gap:10px;min-height:44px;margin:12px 0 2px;cursor:pointer}.remember input{width:18px;height:18px;margin:0;accent-color:var(--accent);flex:none}.remember-note{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 20px 28px}
+.unlock{width:100%;min-height:52px;background:var(--button);color:var(--button-ink);border:0;border-radius:10px;font-weight:600;font-size:15px;letter-spacing:.12em}.unlock:hover:not(:disabled){filter:brightness(1.06)}button:disabled{cursor:wait;opacity:.65}
+.status{font-size:13px;line-height:1.75;color:var(--muted);margin:16px 0 0;min-height:23px}.status.error{color:#d99a8c}:root[data-theme="light"] .status.error{color:#9b352b}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:24px;padding-top:19px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.foot a{color:var(--muted);text-decoration:none;padding:8px 0}.foot a:hover{color:var(--ink)}
+@media(max-width:400px){main{padding:30px 24px 24px}h1{font-size:33px}body{padding:24px 16px}}
+</style>
+</head>
+<body>
+<main aria-labelledby="gate-title">
+<div class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>PRIVATE SPACE</div>
+<h1 id="gate-title">人生系统</h1>
+<p class="intro">留给自己的思考与规划。<br>输入访问密码，进入你的个人空间。</p>
+<div class="rule" aria-hidden="true"></div>
+<form id="unlock-form">
+<label class="password-label" for="unlock-password">访问密码</label>
+<div class="field"><input id="unlock-password" type="password" autocomplete="current-password" required aria-describedby="unlock-status" spellcheck="false" autocapitalize="off"><button id="toggle-password" class="visibility" type="button" aria-controls="unlock-password" aria-pressed="false">显示</button></div>
+<label class="remember" for="remember-device"><input id="remember-device" type="checkbox">记住此设备</label>
+<p class="remember-note" id="remember-note">仅在自己的设备上开启，下次直接进入。</p>
+<button id="unlock-button" class="unlock" type="submit" disabled>进入系统</button>
+</form>
+<p id="unlock-status" class="status" role="status" aria-live="polite">正在准备解锁…</p>
+<noscript><p class="status error">解锁需要启用 JavaScript。页面内容已加密，无法在禁用脚本时显示。</p></noscript>
+<div class="foot"><span>在此设备中解锁</span><a href="index.html">返回个人主页 ↗</a></div>
+</main>
+<script>
+// StatiCrypt 3.5.4, MIT. Its crypto engine and codec are embedded at build time.
+// This template never accepts passwords from URLs or sends passwords over the network.
+(async function () {
+  // Replacing a document before its parser finishes can leave the gate mixed into the decrypted page.
+  if (document.readyState === 'loading') await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve, { once: true }));
+  const form = document.getElementById('unlock-form');
+  const input = document.getElementById('unlock-password');
+  const button = document.getElementById('unlock-button');
+  const remember = document.getElementById('remember-device');
+  const status = document.getElementById('unlock-status');
+  const passKey = 'zg-life-system-unlock-v1';
+  const expiryKey = 'zg-life-system-unlock-expiry-v1';
+  const lockKey = 'zg-life-system-locked-at';
+  let storageAvailable = false;
+  let busy = false;
+  let unlockedHtml = null;
+  function message(text, error) { status.textContent = text; status.classList.toggle('error', !!error); }
+  function clearSaved() { try { localStorage.removeItem(passKey); localStorage.removeItem(expiryKey); } catch (_) {} }
+  function replacePage() { const html = unlockedHtml; unlockedHtml = null; input.value = ''; document.open(); document.write(html); document.close(); }
+  document.getElementById('toggle-password').addEventListener('click', function () {
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    this.textContent = show ? '隐藏' : '显示';
+    this.setAttribute('aria-pressed', String(show));
+  });
+  // Register the handler even if initialization fails, so the form can never submit a password.
+  let engine;
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    if (busy || !engine || !input.value) return;
+    busy = true; button.disabled = true; input.setAttribute('aria-invalid', 'false');
+    message('正在解锁…');
+    try {
+      const result = await engine.handleDecryptionOfPage(input.value, false);
+      if (!result.isSuccessful) { input.setAttribute('aria-invalid', 'true'); message('密码不正确，请重新输入。', true); input.focus(); return; }
+      clearSaved();
+      if (remember.checked && storageAvailable) {
+        try { localStorage.setItem(passKey, result.hashedPassword); } catch (_) {}
+      }
+      replacePage();
+    } catch (_) { unlockedHtml = null; message('解锁未完成，请刷新后重试。', true); }
+    finally { busy = false; if (document.getElementById('unlock-button')) button.disabled = false; }
+  });
+  try {
+    if (!window.isSecureContext || !window.crypto || !window.crypto.subtle) { message('请通过 HTTPS 或本机预览地址打开，以使用加密解锁。', true); return; }
+    const staticryptInitiator = /*[|js_staticrypt|]*/ 0;
+    const staticryptConfig = /*[|staticrypt_config|]*/ 0;
+    engine = staticryptInitiator.init(staticryptConfig, {
+      rememberPassphraseKey: passKey,
+      rememberExpirationKey: expiryKey,
+      replaceHtmlCallback: function (html) { unlockedHtml = html; },
+      clearLocalStorageCallback: clearSaved
+    });
+    try { const probe = 'zg-life-system-storage-probe'; localStorage.setItem(probe, '1'); localStorage.removeItem(probe); storageAvailable = true; } catch (_) {}
+    if (!storageAvailable) { remember.disabled = true; document.getElementById('remember-note').textContent = '浏览器未允许保存凭据，本次仍可正常解锁。'; }
+    const logout = new URLSearchParams(location.search).has('staticrypt_logout') || location.hash === '#staticrypt_logout';
+    if (logout) {
+      clearSaved();
+      try { localStorage.setItem(lockKey, String(Date.now())); } catch (_) {}
+      history.replaceState(null, '', location.pathname);
+    }
+    let saved = null;
+    try { saved = localStorage.getItem(passKey); } catch (_) {}
+    if (saved && !logout) {
+      busy = true;
+      message('正在进入你的个人空间…');
+      try {
+        const result = await engine.handleDecryptionOfPageFromHash(saved, false);
+        if (result.isSuccessful) { replacePage(); return; }
+      } catch (_) {}
+      clearSaved(); unlockedHtml = null; busy = false;
+    }
+    button.disabled = false;
+    message(logout ? '已锁定，且已清除此设备保存的解锁凭据。' : '');
+  } catch (_) { message('解锁组件未能启动，请刷新后重试。', true); }
+})();
+</script>
+</body>
+</html>

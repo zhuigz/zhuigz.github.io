@@ -1,0 +1,9 @@
+# Private plaintext, keys and tooling are never publication inputs.
+private/
+decrypted/
+life-system-private/
+*.key
+*.secret
+.env
+.env.*
+node_modules/
