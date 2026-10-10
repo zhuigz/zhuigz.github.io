@@ -458,6 +458,17 @@ section[id] { scroll-margin-top: 70px; }
   font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 16px; color: var(--ink);
 }
 .footprint .fp-spot { font-size: 12px; color: var(--ink-soft); text-align: center; line-height: 1.5; max-width: 130px; }
+.footprint-extra {
+  margin-top: 20px; padding: 12px 18px 18px;
+  border: 1px solid rgba(var(--sc-rgb), 0.16); border-radius: 14px;
+  background: rgba(var(--sc-rgb), 0.04);
+}
+.footprint-extra summary {
+  min-height: 44px; display: flex; align-items: center;
+  color: var(--ink); cursor: pointer; font-size: 14px;
+}
+.footprint-extra summary:focus-visible { outline: 2px solid var(--sc); outline-offset: 3px; }
+.footprint-extra .chip-row { padding-top: 10px; }
 
 /* 学校箭头流 */
 .school-path {
@@ -1378,13 +1389,13 @@ section[id] { scroll-margin-top: 70px; }
           <span class="fp-region">浙江</span>
           <span class="pin"></span>
           <span class="fp-city">杭州</span>
-          <span class="fp-spot">树成林线下见面会</span>
+          <span class="fp-spot">西湖 · 树成林线下见面会</span>
         </div>
         <div class="footprint">
           <span class="fp-region">江西</span>
           <span class="pin"></span>
           <span class="fp-city">南昌</span>
-          <span class="fp-spot">八一起义纪念馆</span>
+          <span class="fp-spot">滕王阁 · 八一起义纪念馆</span>
         </div>
         <div class="footprint">
           <span class="fp-region">湖南</span>
@@ -1394,6 +1405,21 @@ section[id] { scroll-margin-top: 70px; }
         </div>
       </div>
     </div>
+    <details class="footprint-extra">
+      <summary>武汉 · 更多足迹</summary>
+      <div class="chip-row">
+        <span class="chip">黄鹤楼</span><span class="chip">湖北省博物馆</span>
+        <span class="chip">武汉欢乐谷</span><span class="chip">武汉东湖风景区</span>
+        <span class="chip">武汉大学</span><span class="chip">户部巷</span>
+        <span class="chip">汉口江滩</span><span class="chip">武汉革命博物馆</span>
+        <span class="chip">毛泽东旧居</span><span class="chip">中共五大会址</span>
+        <span class="chip">江汉路步行街</span><span class="chip">九峰森林动物园</span>
+        <span class="chip">光谷步行街</span><span class="chip">宝通寺</span>
+        <span class="chip">杜莎夫人蜡像馆</span><span class="chip">武汉植物园</span>
+        <span class="chip">长江荣耀号邮轮</span><span class="chip">武汉长江大桥</span>
+        <span class="chip">黎黄陂路</span><span class="chip">辛亥革命博物馆</span>
+      </div>
+    </details>
   </div>
 
   <div class="reveal">
@@ -1469,7 +1495,27 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">人生人物 · 核心指路人 <small>MENTORS · 5</small></div>
+    <div class="subsection-label">我的理论 <small>FRAMEWORKS · 2</small></div>
+    <div class="chip-row">
+      <span class="chip"><span class="dot"></span>HKRR 理论</span>
+      <span class="chip"><span class="dot"></span>IDOP 理论</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="subsection-label">人生最重要的六件事 <small>SIX THINGS</small></div>
+    <div class="chip-row">
+      <span class="chip"><span class="dot"></span>健康</span>
+      <span class="chip"><span class="dot"></span>财富</span>
+      <span class="chip"><span class="dot"></span>爱情（幸福）</span>
+      <span class="chip"><span class="dot"></span>理想</span>
+      <span class="chip"><span class="dot"></span>主体性</span>
+      <span class="chip"><span class="dot"></span>有情有义</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="subsection-label">人生人物 · 核心指路人 <small>MENTORS · 6</small></div>
     <div class="mentor-grid">
       <div class="mentor-card">
         <div class="mentor-avatar">习</div>
@@ -1496,11 +1542,16 @@ section[id] { scroll-margin-top: 70px; }
         <div class="mentor-name">叶炎</div>
         <div class="mentor-role">同路人</div>
       </div>
+      <div class="mentor-card">
+        <div class="mentor-avatar">李</div>
+        <div class="mentor-name">李笑来</div>
+        <div class="mentor-role">作者</div>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">榜样群像 <small>ROLE MODELS · 10</small></div>
+    <div class="subsection-label">榜样群像 <small>ROLE MODELS · 16</small></div>
     <div class="role-chips">
       <span class="chip"><span class="dot"></span>姜哥</span>
       <span class="chip"><span class="dot"></span>张桂梅</span>
@@ -1512,11 +1563,17 @@ section[id] { scroll-margin-top: 70px; }
       <span class="chip"><span class="dot"></span>碎嘴企鹅</span>
       <span class="chip"><span class="dot"></span>老李</span>
       <span class="chip"><span class="dot"></span>范仲淹</span>
+      <span class="chip"><span class="dot"></span>蔡垒磊</span>
+      <span class="chip"><span class="dot"></span>梦章</span>
+      <span class="chip"><span class="dot"></span>风铃</span>
+      <span class="chip"><span class="dot"></span>于东来</span>
+      <span class="chip"><span class="dot"></span>刘强东</span>
+      <span class="chip"><span class="dot"></span>马斯克</span>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">Slogan · 灵魂指令墙 <small>13 LIFE COMMANDS</small></div>
+    <div class="subsection-label">Slogan · 灵魂指令墙 <small>14 LIFE COMMANDS</small></div>
     <div class="slogan-wall">
       <div class="slogan-card big tilt-l"><span class="idx">01</span>世界不死，理想不灭</div>
       <div class="slogan-card big tilt-r"><span class="idx">02</span>追光的人，终会光芒万丈</div>
@@ -1530,7 +1587,8 @@ section[id] { scroll-margin-top: 70px; }
       <div class="slogan-card tilt-l2"><span class="idx">10</span>主动，真的会有故事</div>
       <div class="slogan-card"><span class="idx">11</span>凡事发生皆有利于我</div>
       <div class="slogan-card tilt-r2"><span class="idx">12</span>越参与，越收获</div>
-      <div class="slogan-card big"><span class="idx">13</span>利他就是利己</div>
+      <div class="slogan-card"><span class="idx">13</span>勤读力耕，立己达人</div>
+      <div class="slogan-card big"><span class="idx">14</span>利他就是利己</div>
     </div>
   </div>
 
@@ -1570,8 +1628,9 @@ section[id] { scroll-margin-top: 70px; }
   <div class="reveal">
     <div class="subsection-label">作者 <small>AUTHORS</small></div>
     <div class="chip-row authors-row">
-      <span class="chip"><span class="dot"></span>大刘</span>
+      <span class="chip"><span class="dot"></span>刘慈欣（大刘）</span>
       <span class="chip"><span class="dot"></span>老杨的猫头鹰</span>
+      <span class="chip"><span class="dot"></span>李笑来</span>
       <span class="chip"><span class="dot"></span>今何在</span>
     </div>
   </div>
@@ -1589,7 +1648,7 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">书籍 <small>BOOKS · 8</small></div>
+    <div class="subsection-label">书籍 <small>BOOKS · 12</small></div>
     <div class="bookshelf">
       <div class="book-spine"><div class="book-mark">01</div><div class="book-title">习近平的<br>七年知青岁月</div></div>
       <div class="book-spine"><div class="book-mark">02</div><div class="book-title">长安诗选</div></div>
@@ -1599,6 +1658,10 @@ section[id] { scroll-margin-top: 70px; }
       <div class="book-spine"><div class="book-mark">06</div><div class="book-title">超新星纪元</div></div>
       <div class="book-spine"><div class="book-mark">07</div><div class="book-title">凡事发生<br>皆有利于我</div></div>
       <div class="book-spine"><div class="book-mark">08</div><div class="book-title">把时间<br>当作朋友</div></div>
+      <div class="book-spine"><div class="book-mark">09</div><div class="book-title">习近平与<br>大学生朋友们</div></div>
+      <div class="book-spine"><div class="book-mark">10</div><div class="book-title">七年就是<br>一辈子</div></div>
+      <div class="book-spine"><div class="book-mark">11</div><div class="book-title">财富自由之路</div></div>
+      <div class="book-spine"><div class="book-mark">12</div><div class="book-title">人生的容错率<br>大到你难以想象</div></div>
     </div>
   </div>
 
@@ -1723,7 +1786,22 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">电视剧 <small>TV SERIES · 6</small></div>
+    <div class="subsection-label">更多电影与系列 <small>ALSO ON MY LIST</small></div>
+    <div class="chip-row">
+      <span class="chip">《流浪地球》1</span>
+      <span class="chip">《白蛇》1—3</span>
+      <span class="chip">《阿甘正传》</span>
+      <span class="chip">《楚门的世界》</span>
+      <span class="chip">《肖申克的救赎》</span>
+      <span class="chip">《疯狂动物城》1</span>
+      <span class="chip">《复仇者联盟》1—4</span>
+      <span class="chip">《阿凡达》1—2</span>
+      <span class="chip">《黑客帝国》1—3</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="subsection-label">电视剧 <small>TV SERIES · 7</small></div>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">主旋律</span>觉醒年代</div>
       <div class="media-card"><span class="mtype">科幻</span>三体</div>
@@ -1731,6 +1809,7 @@ section[id] { scroll-margin-top: 70px; }
       <div class="media-card"><span class="mtype">扫黑</span>狂飙</div>
       <div class="media-card"><span class="mtype">基层</span>县委大院</div>
       <div class="media-card"><span class="mtype">反腐</span>人民的名义</div>
+      <div class="media-card"><span class="mtype">军旅</span>士兵突击</div>
     </div>
   </div>
 
@@ -1767,11 +1846,15 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">公众号 <small>WECHAT · 7</small></div>
+    <div class="subsection-label">公众号 <small>WECHAT · 11</small></div>
     <div class="chip-row">
       <span class="chip"><span class="dot"></span>青年大学习</span>
       <span class="chip"><span class="dot"></span>夜读</span>
       <span class="chip"><span class="dot"></span>树成林</span>
+      <span class="chip"><span class="dot"></span>记忆承载</span>
+      <span class="chip"><span class="dot"></span>清辞</span>
+      <span class="chip"><span class="dot"></span>数字生命卡兹克</span>
+      <span class="chip"><span class="dot"></span>dontbesilent</span>
       <span class="chip"><span class="dot"></span>小禹科技测评</span>
       <span class="chip"><span class="dot"></span>小禹说养老</span>
       <span class="chip"><span class="dot"></span>小禹生活妙招</span>
@@ -1912,7 +1995,7 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">游戏 <small>GAMES · 4</small></div>
+    <div class="subsection-label">游戏 <small>GAMES · 5</small></div>
     <div class="game-grid">
       <div class="game-card">
         <div class="gicon">🏛️</div>
@@ -1930,6 +2013,18 @@ section[id] { scroll-margin-top: 70px; }
         <div class="gicon">🎹</div>
         <div class="gname">钢琴块 2</div>
       </div>
+      <div class="game-card">
+        <div class="gicon">🌍</div>
+        <div class="gname">地球 Online</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="subsection-label">棋类 <small>BOARD GAMES · 2</small></div>
+    <div class="chip-row">
+      <span class="chip"><span class="dot"></span>五子棋</span>
+      <span class="chip"><span class="dot"></span>象棋</span>
     </div>
   </div>
 
@@ -2188,8 +2283,8 @@ section[id] { scroll-margin-top: 70px; }
     <div class="ai-grid">
       <div class="ai-card">
         <div class="ai-icon">✦</div>
-        <div class="ai-name">ChatGPT 5.5 Thinking</div>
-        <div class="ai-tag">+ GPT Image-2</div>
+        <div class="ai-name">ChatGPT-6 Astra</div>
+        <div class="ai-tag">+ ChatGPT-Image 2.5</div>
       </div>
       <div class="ai-card">
         <div class="ai-icon">⌨</div>
@@ -2453,3 +2548,4 @@ sections.forEach(s => spineObserver.observe(s));
 
 </body>
 </html>
+
