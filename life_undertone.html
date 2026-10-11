@@ -26,7 +26,7 @@
   /* 文字「墨」系语义 — 全站统一命名 */
   --ink: #F2EFEB;
   --ink-soft: rgba(242,239,235,0.62);
-  --ink-dim: rgba(242,239,235,0.34);
+  --ink-dim: rgba(242,239,235,0.62);
   --line: rgba(255,255,255,0.06);
   --line-strong: rgba(232,184,122,0.18);
   /* 中国红 — §4「我的颜色」内容色，非全局辅调，保留为语义命名 */
@@ -100,7 +100,7 @@ body {
   background: rgba(7,7,12,0.78); backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
-.nav-logo { font-family: 'Noto Serif SC', serif; font-size: 17px; font-weight: 700; color: var(--gold); }
+.nav-logo { font-family: 'Noto Serif SC', serif; font-size: 17px; font-weight: 700; color: var(--gold); text-decoration: none; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-deep); }
@@ -231,42 +231,15 @@ section[id] { scroll-margin-top: 70px; }
   50%      { box-shadow: 0 0 70px rgba(232,184,122,0.32), inset 0 0 0 0.5px rgba(255,255,255,0.15); }
 }
 
-/* TOC 七色圆点 */
-.toc-dots {
-  display: flex; gap: 18px; margin-top: 32px; flex-wrap: wrap; justify-content: center;
-  animation: fadeUp 1s ease 1.2s both;
-  position: relative;
-}
-.toc-dots::before {
-  content: ''; position: absolute;
-  top: 50%; left: 8px; right: 8px; height: 1px;
-  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5), var(--c6), var(--c7));
-  opacity: 0.18; transform: translateY(-50%); pointer-events: none;
-}
-.toc-dot {
-  width: 14px; height: 14px; border-radius: 50%; cursor: pointer;
-  position: relative; transition: all 0.3s; text-decoration: none;
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.04);
-}
-.toc-dot:hover { transform: scale(1.4); box-shadow: 0 0 18px currentColor; }
-.toc-dot::after {
-  content: attr(data-label); position: absolute; top: 26px; left: 50%; transform: translateX(-50%);
-  font-size: 11px; color: var(--ink-dim); white-space: nowrap; letter-spacing: 1px;
-  opacity: 0; transition: opacity 0.3s; pointer-events: none;
-  font-family: 'Noto Sans SC', sans-serif;
-}
-.toc-dot:hover::after { opacity: 1; }
-.toc-dot.d1 { background: var(--c1); color: var(--c1); }
-.toc-dot.d2 { background: var(--c2); color: var(--c2); }
-.toc-dot.d3 { background: var(--c3); color: var(--c3); }
-.toc-dot.d4 { background: var(--c4); color: var(--c4); }
-.toc-dot.d5 { background: var(--c5); color: var(--c5); }
-.toc-dot.d6 { background: var(--c6); color: var(--c6); }
-.toc-dot.d7 { background: var(--c7); color: var(--c7); }
+/* 七色文字目录 */
+.hero-toc { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 800px; margin-top: 28px; }
+.hero-toc a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 14px; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: var(--ink); text-decoration: none; font-size: 14px; background: var(--bg-card); }
+.hero-toc a span { color: var(--toc-color); font: 600 13px 'Outfit', sans-serif; }
+.hero-toc a:hover, .hero-toc a[aria-current] { border-color: var(--toc-color); background: var(--bg-card-hi); }
 
 .hero-scroll {
   position: absolute; bottom: 32px; display: flex; flex-direction: column;
-  align-items: center; gap: 6px; color: var(--ink-dim); font-size: 11px;
+  align-items: center; gap: 6px; color: var(--ink-dim); font-size: 13px;
   letter-spacing: 3px; animation: fadeUp 1s ease 1.4s both;
 }
 .hero-scroll .line {
@@ -300,7 +273,7 @@ section[id] { scroll-margin-top: 70px; }
   -webkit-text-stroke: 1px rgba(var(--sc-rgb), 0.16);
 }
 .section-label {
-  font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 5px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 5px;
   text-transform: uppercase; color: var(--sc); margin-bottom: 14px;
   display: flex; align-items: center; gap: 12px;
 }
@@ -323,7 +296,7 @@ section[id] { scroll-margin-top: 70px; }
 .subsection-label {
   font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 700;
   color: var(--sc); letter-spacing: 3px; margin: 56px 0 22px;
-  display: flex; align-items: center; gap: 14px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
 }
 .subsection-label::before {
   content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--sc);
@@ -332,8 +305,8 @@ section[id] { scroll-margin-top: 70px; }
   animation: pulse 2.8s ease-in-out infinite;
 }
 .subsection-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(var(--sc-rgb),0.2), transparent); }
-.subsection-label small { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 11px;
-  color: var(--ink-dim); letter-spacing: 2px; margin-left: 4px; }
+.subsection-label small { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 13px;
+  color: var(--ink-dim); letter-spacing: 1px; margin-left: 4px; }
 
 .divider {
   height: 1px;
@@ -397,8 +370,7 @@ section[id] { scroll-margin-top: 70px; }
 }
 
 /* reveal 滚动入场 */
-.reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.16,1,0.3,1); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 1; transform: none; }
 
 /* ===================== §1 身份与根基 · 金 ===================== */
 .coord-grid {
@@ -417,7 +389,7 @@ section[id] { scroll-margin-top: 70px; }
 }
 .coord-icon { font-size: 32px; margin-bottom: 14px; opacity: 0.85; }
 .coord-label {
-  font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 3px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 3px;
   text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px;
 }
 .coord-main {
@@ -432,19 +404,13 @@ section[id] { scroll-margin-top: 70px; }
 /* 足迹时间线 */
 .footprint-wrap { margin: 28px 0 12px; }
 .footprint-track {
-  display: flex; flex-wrap: wrap; gap: 0; align-items: stretch;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: stretch;
   position: relative; padding: 12px 0;
 }
-.footprint-track::before {
-  content: ''; position: absolute; top: 50%; left: 8px; right: 8px;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, rgba(var(--sc-rgb),0.45) 0 6px, transparent 6px 12px);
-  transform: translateY(-0.5px);
-}
 .footprint {
-  flex: 1 1 0; min-width: 130px;
+  min-width: 0;
   display: flex; flex-direction: column; align-items: center; gap: 10px;
-  position: relative; padding: 8px 6px; z-index: 1;
+  position: relative; padding: 18px 10px; border: 1px solid rgba(var(--sc-rgb),0.16); border-radius: 14px; background: rgba(var(--sc-rgb),0.025); z-index: 1;
 }
 .footprint .pin {
   width: 14px; height: 14px; border-radius: 50%;
@@ -496,12 +462,12 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 信息条 */
 .id-strip {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
   gap: 14px; margin-top: 28px;
 }
 .id-strip .tcard { padding: 18px 22px; }
 .id-strip .id-label {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 3px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 3px;
   text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px;
 }
 .id-strip .id-val { font-size: 15px; font-weight: 500; line-height: 1.5; }
@@ -514,7 +480,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* ===================== §2 精神图腾 · 赤红 ===================== */
 .ideal-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 18px;
 }
 .ideal-card {
@@ -538,7 +504,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 人生人物 */
 .mentor-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
   gap: 14px;
 }
 .mentor-card {
@@ -564,7 +530,7 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--ink);
 }
 .mentor-role {
-  font-size: 11px; color: var(--ink-dim); letter-spacing: 1px;
+  font-size: 13px; color: var(--ink-dim); letter-spacing: 1px;
   margin-top: 4px; font-family: 'Outfit', sans-serif; text-transform: uppercase;
 }
 
@@ -607,7 +573,7 @@ section[id] { scroll-margin-top: 70px; }
   box-shadow: 0 14px 38px rgba(var(--sc-rgb), 0.15);
 }
 .slogan-card .idx {
-  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 11px;
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 13px;
   color: var(--sc); opacity: 0.55; letter-spacing: 2px; display: block; margin-bottom: 8px;
 }
 
@@ -626,7 +592,7 @@ section[id] { scroll-margin-top: 70px; }
 .motto-banner::before { top: 20px; }
 .motto-banner::after { bottom: 20px; }
 .motto-banner .motto-eyebrow {
-  font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 5px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 5px;
   text-transform: uppercase; color: var(--sc); opacity: 0.7; margin-bottom: 20px;
 }
 .motto-banner .motto-text {
@@ -639,7 +605,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 博主语录 */
 .quotes-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 18px;
 }
 .quote-card {
@@ -661,7 +627,7 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--sc); margin-bottom: 12px; letter-spacing: 1px;
   display: flex; align-items: center; gap: 8px;
 }
-.quote-author::before { content: '◆'; font-size: 10px; opacity: 0.6; }
+.quote-author::before { content: '◆'; font-size: 13px; opacity: 0.6; }
 .quote-text {
   font-family: 'Noto Serif SC', serif; font-size: 14px; line-height: 1.9;
   color: var(--ink-soft);
@@ -676,15 +642,15 @@ section[id] { scroll-margin-top: 70px; }
 /* ===================== §3 认知输入 · 靛紫 ===================== */
 /* 书脊 */
 .bookshelf {
-  display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 10px 0;
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; padding: 10px 0;
 }
 .book-spine {
-  flex: 1 1 130px; max-width: 180px; min-height: 200px;
-  padding: 22px 14px; border-radius: 4px;
+  min-width: 0; min-height: 130px;
+  padding: 18px 14px; border-radius: 4px;
   background: linear-gradient(135deg, rgba(var(--sc-rgb), 0.18), rgba(var(--sc-rgb), 0.04));
   border: 1px solid rgba(var(--sc-rgb), 0.28);
   border-left: 4px solid var(--sc);
-  display: flex; flex-direction: column; justify-content: space-between;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
   cursor: default;
 }
@@ -698,8 +664,8 @@ section[id] { scroll-margin-top: 70px; }
   line-height: 1.5; color: var(--ink);
 }
 .book-spine .book-mark {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 2px;
-  color: var(--sc); opacity: 0.6; text-transform: uppercase;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 2px;
+  color: var(--sc); opacity: 1; text-transform: uppercase;
 }
 
 /* 电影海报墙 */
@@ -708,12 +674,12 @@ section[id] { scroll-margin-top: 70px; }
   margin-top: 8px;
 }
 .movie-poster {
-  position: relative; padding: 36px 30px;
+  position: relative; padding: 24px;
   border-radius: 18px; overflow: hidden;
   background: linear-gradient(155deg, var(--mc1, rgba(142,122,184,0.18)) 0%, var(--mc2, rgba(142,122,184,0.04)) 60%, rgba(255,255,255,0.01) 100%);
   border: 1px solid var(--mb, rgba(142,122,184,0.25));
-  min-height: 240px;
-  display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 150px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
   transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .movie-poster::before {
@@ -727,8 +693,8 @@ section[id] { scroll-margin-top: 70px; }
 }
 .movie-poster.feature {
   grid-column: 1 / -1;
-  min-height: 280px;
-  padding: 48px 44px;
+  min-height: 200px;
+  padding: 36px;
 }
 .poster-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -736,7 +702,7 @@ section[id] { scroll-margin-top: 70px; }
   padding: 6px 14px; border-radius: 30px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.15);
-  font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 2px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 2px;
   color: var(--ink); text-transform: uppercase;
 }
 .poster-badge.gold {
@@ -745,16 +711,6 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--gold-light);
 }
 .poster-badge.gold::before { content: '★'; font-size: 12px; color: var(--gold); }
-.poster-quote {
-  font-family: 'Noto Serif SC', serif; font-size: clamp(18px, 2.2vw, 24px);
-  font-weight: 700; line-height: 1.6; margin: 18px 0;
-  color: var(--ink); position: relative; z-index: 1;
-}
-.movie-poster.feature .poster-quote { font-size: clamp(22px, 3vw, 32px); }
-.poster-quote::before {
-  content: '"'; font-size: 64px; line-height: 0.4; vertical-align: -20px;
-  color: var(--sc); margin-right: 2px; opacity: 0.5; font-family: 'Noto Serif SC', serif;
-}
 .poster-foot {
   display: flex; justify-content: space-between; align-items: flex-end;
   position: relative; z-index: 1;
@@ -777,7 +733,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 电视剧 / 小说 / 漫画 网格 */
 .media-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
   gap: 12px;
 }
 .media-card {
@@ -794,8 +750,8 @@ section[id] { scroll-margin-top: 70px; }
   transform: translateY(-3px);
 }
 .media-card .mtype {
-  display: block; font-family: 'Outfit', sans-serif; font-size: 10px;
-  letter-spacing: 2px; color: var(--sc); opacity: 0.7;
+  display: block; font-family: 'Outfit', sans-serif; font-size: 13px;
+  letter-spacing: 2px; color: var(--sc); opacity: 1;
   text-transform: uppercase; margin-bottom: 6px; font-weight: 600;
 }
 
@@ -836,7 +792,7 @@ section[id] { scroll-margin-top: 70px; }
   background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 60%);
 }
 .color-swatch .cs-label {
-  font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 4px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 4px;
   color: rgba(255,255,255,0.6); text-transform: uppercase;
 }
 .color-swatch .cs-name {
@@ -858,7 +814,7 @@ section[id] { scroll-margin-top: 70px; }
 .pet-card:hover { transform: translateY(-4px); border-color: rgba(var(--sc-rgb), 0.4); }
 .pet-card .pet-emoji { font-size: 42px; line-height: 1; }
 .pet-card .pet-cat {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 3px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 3px;
   color: var(--sc); opacity: 0.8; text-transform: uppercase; margin-bottom: 6px;
 }
 .pet-card .pet-name {
@@ -871,7 +827,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 浪漫卡 */
 .romance-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 16px;
 }
 .romance-card {
@@ -889,7 +845,7 @@ section[id] { scroll-margin-top: 70px; }
 .romance-card:hover { transform: translateY(-4px) scale(1.01); }
 .romance-card .ro-icon { font-size: 28px; margin-bottom: 12px; }
 .romance-card .ro-type {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 3px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 3px;
   color: var(--sc); text-transform: uppercase; margin-bottom: 6px;
 }
 .romance-card .ro-text {
@@ -916,12 +872,12 @@ section[id] { scroll-margin-top: 70px; }
   color: rgba(var(--sc-rgb),0.55); min-width: 28px;
 }
 .playlist-row:hover .pl-idx { color: var(--sc); }
-.playlist-row .pl-play {
+.playlist-row .pl-note {
   width: 32px; height: 32px; border-radius: 50%;
   background: rgba(var(--sc-rgb),0.12);
   border: 1px solid rgba(var(--sc-rgb),0.3);
   display: flex; align-items: center; justify-content: center;
-  color: var(--sc); font-size: 11px;
+  color: var(--sc); font-size: 13px;
 }
 .playlist-row .pl-title {
   font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 16px;
@@ -930,7 +886,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 游戏卡 */
 .game-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
   gap: 14px;
 }
 .game-card {
@@ -952,7 +908,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 通用单行 mini-card */
 .mini-row {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
   gap: 12px;
 }
 .mini-card {
@@ -970,7 +926,7 @@ section[id] { scroll-margin-top: 70px; }
 .mini-card .mi-icon { font-size: 22px; }
 .mini-card .mi-meta { line-height: 1.4; }
 .mini-card .mi-label {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 2px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 2px;
   color: var(--ink-dim); text-transform: uppercase;
 }
 .mini-card .mi-val {
@@ -989,7 +945,7 @@ section[id] { scroll-margin-top: 70px; }
 }
 .food-section .fs-label .fs-emoji { font-size: 22px; }
 .food-section .fs-label small {
-  font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 11px;
+  font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 13px;
   color: var(--ink-dim); letter-spacing: 2px;
 }
 .food-chips { display: flex; flex-wrap: wrap; gap: 11px; }
@@ -1011,7 +967,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* ===================== §6 物质载体 · 青银 ===================== */
 .spec-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 14px;
 }
 .spec-card {
@@ -1027,7 +983,7 @@ section[id] { scroll-margin-top: 70px; }
 }
 .spec-card .sp-icon { font-size: 26px; margin-bottom: 14px; }
 .spec-card .sp-cat {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 3px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 3px;
   color: var(--sc); text-transform: uppercase; margin-bottom: 6px; font-weight: 600;
 }
 .spec-card .sp-name {
@@ -1091,7 +1047,7 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--sc); letter-spacing: 2px;
 }
 .friend-stage .stage-en {
-  font-family: 'Outfit', sans-serif; font-size: 10px; letter-spacing: 3px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 3px;
   color: var(--ink-dim); text-transform: uppercase;
 }
 .friend-stage .stage-label::before {
@@ -1116,7 +1072,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* AI 伙伴 */
 .ai-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 14px;
 }
 .ai-card {
@@ -1142,25 +1098,19 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--ink); letter-spacing: 0.5px;
 }
 .ai-card .ai-tag {
-  font-size: 11px; color: var(--ink-dim); margin-top: 4px; letter-spacing: 1px;
+  font-size: 13px; color: var(--ink-dim); margin-top: 4px; letter-spacing: 1px;
 }
 .ai-card.spotlight {
   background: linear-gradient(135deg, rgba(232,184,122,0.1), rgba(var(--sc-rgb),0.04));
   border-color: rgba(232,184,122, 0.45);
   box-shadow: 0 0 0 1px rgba(232,184,122, 0.1);
 }
-.ai-card.spotlight::after {
-  content: 'IT\'S ME'; position: absolute; top: 14px; right: 14px;
-  font-family: 'Outfit', sans-serif; font-size: 9px; letter-spacing: 2px;
-  color: var(--gold); padding: 2px 8px; border-radius: 6px;
-  background: rgba(232,184,122, 0.12); border: 1px solid rgba(232,184,122, 0.3);
-}
 .ai-card.spotlight .ai-icon { background: rgba(232,184,122, 0.18); color: var(--gold); }
 .ai-card.spotlight .ai-name { color: var(--gold-light); }
 
 /* 数字密码 */
 .cipher-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
   gap: 16px;
 }
 .cipher-card {
@@ -1225,7 +1175,7 @@ section[id] { scroll-margin-top: 70px; }
   .container { max-width: 920px; }
   .movie-wall { gap: 14px; }
   .aes-grid { grid-template-columns: 1fr 1fr; }
-  .footprint { min-width: 120px; flex: 1 1 calc(33.33% - 8px); }
+  .bookshelf { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 880px) {
   .section { padding: 90px 0 64px; }
@@ -1242,7 +1192,7 @@ section[id] { scroll-margin-top: 70px; }
   .section-num { font-size: 100px; top: 30px; right: 10px; }
   .coord-grid { grid-template-columns: 1fr; }
   .aes-grid { grid-template-columns: 1fr 1fr; }
-  .footprint { min-width: 110px; flex: 1 1 calc(50% - 8px); }
+  .footprint-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .id-strip { grid-template-columns: 1fr 1fr; }
   .slogan-wall { column-count: 1; }
   .friend-stage { grid-template-columns: 1fr; gap: 12px; padding-left: 16px; }
@@ -1264,6 +1214,70 @@ section[id] { scroll-margin-top: 70px; }
   .light-canvas, .cursor-glow { display: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
   .hero::before { animation: none; opacity: 1; }
+}
+
+/* 长页导航与阅读细节 */
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 4px; }
+.skip-link { position: fixed; top: -80px; left: 16px; z-index: 300; padding: 12px 18px; background: var(--gold-light); color: var(--bg-deep); }
+.skip-link:focus { top: 12px; }
+.nav-actions { display: flex; align-items: center; gap: 18px; font-size: 14px; }
+.nav-actions > a { color: var(--ink-soft); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
+.nav-actions > a:hover { color: var(--gold-light); }
+.chapter-nav { position: relative; }
+.chapter-nav summary { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; color: var(--gold-light); list-style: none; }
+.chapter-nav summary::-webkit-details-marker, .footprint-extra summary::-webkit-details-marker { display: none; }
+.chapter-nav summary::after, .footprint-extra summary::after { content: '⌄'; margin-left: auto; transition: transform 0.2s; }
+.chapter-nav[open] summary::after, .footprint-extra[open] summary::after { transform: rotate(180deg); }
+.chapter-menu { position: absolute; right: 0; top: calc(100% + 10px); width: 230px; max-height: calc(100dvh - 100px); overflow-y: auto; padding: 8px; background: #111116; border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+.chapter-menu a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 8px 12px; border-radius: 8px; color: var(--ink); text-decoration: none; }
+.chapter-menu a span { color: var(--gold); font-family: 'Outfit', sans-serif; }
+.chapter-menu a:hover, .chapter-menu a[aria-current] { background: rgba(232,184,122,0.12); }
+.content-link { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+a.chip { text-decoration: none; }
+.movie-poster.feature .poster-title { font-size: clamp(24px, 4vw, 36px); }
+.footprint-extra summary { gap: 16px; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; margin-top: 20px; }
+.footer-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--gold-light); text-decoration: none; }
+.updated { color: var(--ink-dim); font-size: 13px; margin-top: 16px; }
+@media (max-width: 768px) {
+  .hero { padding: 100px 20px 110px; }
+  .hero-lead { margin-top: 24px; }
+  .bookshelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .book-spine { min-height: 100px; }
+  .slogan-card { transform: none !important; padding: 18px 20px; }
+  .slogan-card.big { padding: 22px 20px; }
+  .spec-card { padding: 16px; }
+  .spec-card .sp-icon { font-size: 22px; margin-bottom: 6px; }
+  .spec-card .sp-name { font-size: 14px; overflow-wrap: anywhere; }
+  .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .movie-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .movie-poster { min-height: 140px; padding: 18px 14px; }
+  .movie-poster.feature { min-height: 170px; padding: 24px; }
+  .poster-title { font-size: 15px; letter-spacing: 0; }
+  .poster-num { font-size: 24px; margin-left: 6px; }
+  .poster-badge { letter-spacing: 0; padding: 4px 8px; }
+  .coord-card { padding: 28px 24px; }
+  .coord-main { font-size: 24px; }
+  .l-footer { padding-top: 64px; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 20px; }
+  .section::before { left: -20px; right: -20px; }
+  .nav { padding: 8px 12px; gap: 10px; }
+  .nav-logo { font-size: 15px; white-space: nowrap; }
+  .nav-prefix { display: none; }
+  .nav-actions { gap: 12px; font-size: 13px; }
+  .chapter-menu { right: -55px; }
+  .hero-toc a { font-size: 13px; padding: 8px 10px; }
+  .section-label { letter-spacing: 2px; font-size: 12px; }
+  .subsection-label { letter-spacing: 1px; }
+  .mentor-grid, .media-grid, .game-grid, .cipher-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cipher-card { padding: 20px 12px; }
+  .cipher-num { font-size: 48px; }
+  .cipher-desc { font-size: 13px; }
+  .ai-card { padding: 18px; }
+  .school-path { padding: 24px 12px; gap: 8px; }
+  .school-node { font-size: 14px; padding: 8px 10px; }
 }
 </style>
 </head>
@@ -1292,12 +1306,29 @@ section[id] { scroll-margin-top: 70px; }
   <canvas id="lightCanvas" class="light-canvas" aria-hidden="true"></canvas>
 </div>
 
-<nav class="nav">
-  <div class="nav-logo">追光者 · 生命底色</div>
+<a class="skip-link" href="#main">跳到正文</a>
+<nav class="nav" aria-label="页面导航">
+  <a class="nav-logo" href="#top"><span class="nav-prefix">追光者 · </span>生命底色</a>
+  <div class="nav-actions">
+    <a href="https://zhuigz.github.io/index.html">个人说明书</a>
+    <details class="chapter-nav">
+      <summary><span class="chapter-current">章节目录</span></summary>
+      <div class="chapter-menu" aria-label="章节目录">
+        <a href="#s1"><span aria-hidden="true">01</span>身份与根基</a>
+        <a href="#s2"><span aria-hidden="true">02</span>精神图腾</a>
+        <a href="#s3"><span aria-hidden="true">03</span>认知输入</a>
+        <a href="#s4"><span aria-hidden="true">04</span>审美与热爱</a>
+        <a href="#s5"><span aria-hidden="true">05</span>烟火人间</a>
+        <a href="#s6"><span aria-hidden="true">06</span>物质载体</a>
+        <a href="#s7"><span aria-hidden="true">07</span>社交与连接</a>
+      </div>
+    </details>
+    <a href="#top">↑ 顶部</a>
+  </div>
 </nav>
 
 <!-- ===================== HERO ===================== -->
-<section class="hero">
+<section id="top" class="hero">
   <div class="hero-badge">LIFE UNDERTONE · 2026</div>
   <h1 class="hero-name">生命底色</h1>
   <div class="hero-en">THE COLORS THAT MAKE ME</div>
@@ -1307,22 +1338,22 @@ section[id] { scroll-margin-top: 70px; }
     它们一起，拼出了我之为我的<em>底色</em>。
   </p>
   <div class="spectrum-bar"></div>
-  <div class="toc-dots">
-    <a class="toc-dot d1" href="#s1" data-label="身份与根基"></a>
-    <a class="toc-dot d2" href="#s2" data-label="精神图腾"></a>
-    <a class="toc-dot d3" href="#s3" data-label="认知输入"></a>
-    <a class="toc-dot d4" href="#s4" data-label="审美与热爱"></a>
-    <a class="toc-dot d5" href="#s5" data-label="烟火人间"></a>
-    <a class="toc-dot d6" href="#s6" data-label="物质载体"></a>
-    <a class="toc-dot d7" href="#s7" data-label="社交与连接"></a>
-  </div>
+  <nav class="hero-toc" aria-label="从这里开始阅读">
+    <a href="#s1" style="--toc-color:var(--c1)"><span aria-hidden="true">01</span>身份与根基</a>
+    <a href="#s2" style="--toc-color:var(--c2)"><span aria-hidden="true">02</span>精神图腾</a>
+    <a href="#s3" style="--toc-color:var(--c3)"><span aria-hidden="true">03</span>认知输入</a>
+    <a href="#s4" style="--toc-color:var(--c4)"><span aria-hidden="true">04</span>审美与热爱</a>
+    <a href="#s5" style="--toc-color:var(--c5)"><span aria-hidden="true">05</span>烟火人间</a>
+    <a href="#s6" style="--toc-color:var(--c6)"><span aria-hidden="true">06</span>物质载体</a>
+    <a href="#s7" style="--toc-color:var(--c7)"><span aria-hidden="true">07</span>社交与连接</a>
+  </nav>
   <div class="hero-scroll">
     <span>SCROLL</span>
     <div class="line"></div>
   </div>
 </section>
 
-<div class="container">
+<main id="main" class="container">
 
 <!-- ===================== §1 身份与根基 ===================== -->
 <section id="s1" class="section s1">
@@ -1339,7 +1370,7 @@ section[id] { scroll-margin-top: 70px; }
       <div class="coord-card">
         <div class="coord-icon">📍</div>
         <div class="coord-label">Hometown</div>
-        <div class="coord-main">山西省朔州市朔城区</div>
+        <div class="coord-main">山西省朔州市山阴县</div>
         <div class="coord-sub">黄土之上 · 长城脚下</div>
       </div>
       <div class="coord-card">
@@ -1352,7 +1383,7 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">足迹 <small>FOOTPRINTS · 8 CITIES</small></div>
+    <div class="subsection-label">足迹 <small>FOOTPRINTS · 8 STOPS</small></div>
     <div class="footprint-wrap">
       <div class="footprint-track">
         <div class="footprint">
@@ -1478,7 +1509,7 @@ section[id] { scroll-margin-top: 70px; }
     <div class="ideal-grid">
       <div class="ideal-card">
         <div class="glyph">01</div>
-        <h3>FIRE · 财富自由</h3>
+        <h3><a class="content-link" href="https://zhuigz.github.io/fire.html">FIRE · 财富自由 <span aria-hidden="true">↗</span></a></h3>
         <p>用一辈子时间，把人生主导权握在自己手里。</p>
       </div>
       <div class="ideal-card">
@@ -1497,8 +1528,8 @@ section[id] { scroll-margin-top: 70px; }
   <div class="reveal">
     <div class="subsection-label">我的理论 <small>FRAMEWORKS · 2</small></div>
     <div class="chip-row">
-      <span class="chip"><span class="dot"></span>HKRR 理论</span>
-      <span class="chip"><span class="dot"></span>IDOP 理论</span>
+      <a class="chip" href="https://zhuigz.github.io/hkrr.html"><span class="dot"></span>HKRR 理论 <span aria-hidden="true">↗</span></a>
+      <a class="chip" href="https://zhuigz.github.io/idop.html"><span class="dot"></span>IDOP 理论 <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 
@@ -1603,7 +1634,7 @@ section[id] { scroll-margin-top: 70px; }
       <div class="quote-card">
         <div class="quote-author">北辰星</div>
         <div class="quote-text">
-          思君无转意，何异北辰星。<br>
+          思君无转易，何异北辰星。<br>
           <em>跨过星辰大海，我们终将重逢。</em>
         </div>
       </div>
@@ -1666,13 +1697,14 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">课程 <small>COURSES · 6</small></div>
+    <div class="subsection-label">课程 <small>COURSES · 7</small></div>
     <div class="chip-row">
+      <span class="chip"><span class="dot"></span>通往财富自由之路</span>
       <span class="chip"><span class="dot"></span>希望者联盟</span>
       <span class="chip"><span class="dot"></span>单词突围老友记</span>
       <span class="chip"><span class="dot"></span>浪前成长预备营</span>
       <span class="chip"><span class="dot"></span>前哨站</span>
-      <span class="chip"><span class="dot"></span>ip 课</span>
+      <span class="chip"><span class="dot"></span>IP 课</span>
       <span class="chip"><span class="dot"></span>心力课</span>
     </div>
   </div>
@@ -1689,12 +1721,11 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">🎬 电影 · 台词海报 <small>10 LIFE-SHAPING FILMS</small></div>
+    <div class="subsection-label">电影 · 珍藏片单 <small>FILMS · 10</small></div>
     <div class="movie-wall">
 
       <div class="movie-poster feature" style="--mc1:rgba(232,184,122,0.22); --mc2:rgba(200,53,42,0.08); --mb:rgba(232,184,122,0.45);">
         <div class="poster-badge gold">人生电影 · 唯一五刷</div>
-        <div class="poster-quote">高三十五，你心中的一团锦绣，<br>终有脱口而出的那一日！</div>
         <div class="poster-foot">
           <div class="poster-title">《长安三万里》</div>
           <div class="poster-num">01</div>
@@ -1703,7 +1734,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(195,107,94,0.2); --mc2:rgba(195,107,94,0.04); --mb:rgba(195,107,94,0.4);">
         <div class="poster-badge">国漫之光</div>
-        <div class="poster-quote">若前方无路，那就踏出一条路；<br>若命运不公，那就扭转这乾坤！</div>
         <div class="poster-foot">
           <div class="poster-title">《哪吒之魔童闹海》</div>
           <div class="poster-num">02</div>
@@ -1712,7 +1742,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(74,158,245,0.2); --mc2:rgba(74,158,245,0.04); --mb:rgba(74,158,245,0.4);">
         <div class="poster-badge">魔法 &amp; 牌局</div>
-        <div class="poster-quote">无论生活给你什么牌，<br>你必须学会创造属于自己的魔法。</div>
         <div class="poster-foot">
           <div class="poster-title">《惊天魔盗团 3》</div>
           <div class="poster-num">03</div>
@@ -1721,7 +1750,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(127,168,173,0.2); --mc2:rgba(127,168,173,0.04); --mb:rgba(127,168,173,0.4);">
         <div class="poster-badge">未来史诗</div>
-        <div class="poster-quote">希望，是这个时代<br>像钻石一样珍贵的东西。</div>
         <div class="poster-foot">
           <div class="poster-title">《流浪地球 2》</div>
           <div class="poster-num">04</div>
@@ -1730,7 +1758,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(142,122,184,0.22); --mc2:rgba(142,122,184,0.04); --mb:rgba(142,122,184,0.45);">
         <div class="poster-badge">星际寓言</div>
-        <div class="poster-quote">墨菲定律非指坏事必发生，<br>而是凡事皆有可能则必然发生。</div>
         <div class="poster-foot">
           <div class="poster-title">《星际穿越》</div>
           <div class="poster-num">05</div>
@@ -1739,7 +1766,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(136,168,120,0.2); --mc2:rgba(136,168,120,0.04); --mb:rgba(136,168,120,0.4);">
         <div class="poster-badge">守护之名</div>
-        <div class="poster-quote">强大不是为了征服，<br>而是为了守护。</div>
         <div class="poster-foot">
           <div class="poster-title">《罗小黑战记 2》</div>
           <div class="poster-num">06</div>
@@ -1748,7 +1774,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(216,138,117,0.22); --mc2:rgba(216,138,117,0.04); --mb:rgba(216,138,117,0.45);">
         <div class="poster-badge">梦中之梦</div>
-        <div class="poster-quote">最微小的想法，就像大脑中的一颗种子，<br>会生长，会定义你或毁灭你。</div>
         <div class="poster-foot">
           <div class="poster-title">《盗梦空间》</div>
           <div class="poster-num">07</div>
@@ -1757,7 +1782,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(216,160,107,0.22); --mc2:rgba(216,160,107,0.04); --mb:rgba(216,160,107,0.45);">
         <div class="poster-badge">现实即绿洲</div>
-        <div class="poster-quote">我们不会关闭绿洲，会让它更好。<br>但每周二、四关闭。<br>因为无论多爱它，<br>我们都需铭记现实世界才是唯一重要的地方。</div>
         <div class="poster-foot">
           <div class="poster-title">《头号玩家》</div>
           <div class="poster-num">08</div>
@@ -1766,7 +1790,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(232,184,122,0.18); --mc2:rgba(216,138,117,0.06); --mb:rgba(232,184,122,0.4);">
         <div class="poster-badge">动物乌托邦</div>
-        <div class="poster-quote">好的关系从不是「永远一致」，<br>而是明知不同，仍愿并肩。<br><span style="display:block;margin-top:14px;color:var(--ink-soft);font-size:0.85em;">「别着急，美好的东西值得我们等待。」<br>「不断跌倒，不断失败，也要不断重来。」</span></div>
         <div class="poster-foot">
           <div class="poster-title">《疯狂动物城 2》</div>
           <div class="poster-num">09</div>
@@ -1775,7 +1798,6 @@ section[id] { scroll-margin-top: 70px; }
 
       <div class="movie-poster" style="--mc1:rgba(74,158,245,0.22); --mc2:rgba(136,168,120,0.06); --mb:rgba(74,158,245,0.4);">
         <div class="poster-badge">疗愈之蓝</div>
-        <div class="poster-quote">伤口不会消失，<br>但我们可以选择不让它定义我们。</div>
         <div class="poster-foot">
           <div class="poster-title">《阿凡达 3》</div>
           <div class="poster-num">10</div>
@@ -1967,27 +1989,27 @@ section[id] { scroll-margin-top: 70px; }
     <div class="playlist">
       <div class="playlist-row">
         <span class="pl-idx">01</span>
-        <span class="pl-play">▶</span>
+        <span class="pl-note" aria-hidden="true">♪</span>
         <span class="pl-title">《一点》</span>
       </div>
       <div class="playlist-row">
         <span class="pl-idx">02</span>
-        <span class="pl-play">▶</span>
+        <span class="pl-note" aria-hidden="true">♪</span>
         <span class="pl-title">《就是哪吒》</span>
       </div>
       <div class="playlist-row">
         <span class="pl-idx">03</span>
-        <span class="pl-play">▶</span>
+        <span class="pl-note" aria-hidden="true">♪</span>
         <span class="pl-title">《Normal no more》</span>
       </div>
       <div class="playlist-row">
         <span class="pl-idx">04</span>
-        <span class="pl-play">▶</span>
+        <span class="pl-note" aria-hidden="true">♪</span>
         <span class="pl-title">《山海》</span>
       </div>
       <div class="playlist-row">
         <span class="pl-idx">05</span>
-        <span class="pl-play">▶</span>
+        <span class="pl-note" aria-hidden="true">♪</span>
         <span class="pl-title">《一程山路》</span>
       </div>
     </div>
@@ -2096,9 +2118,10 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 
   <div class="reveal food-section">
-    <div class="fs-label"><span class="fs-emoji">🥤</span>饮品 / 茶 <small>DRINKS · 3</small></div>
+    <div class="fs-label"><span class="fs-emoji">🥤</span>饮品 / 茶 <small>DRINKS · 4</small></div>
     <div class="food-chips">
       <span class="food-chip">蜜桃四季春</span>
+      <span class="food-chip">草莓摇摇奶昔</span>
       <span class="food-chip">多肉杨梅</span>
       <span class="food-chip">安吉白茶</span>
     </div>
@@ -2323,7 +2346,7 @@ section[id] { scroll-margin-top: 70px; }
   </div>
 </section>
 
-</div>
+</main>
 
 <!-- ===================== FOOTER ===================== -->
 <footer class="l-footer">
@@ -2332,45 +2355,28 @@ section[id] { scroll-margin-top: 70px; }
     一起拼出了<em>我的生命底色</em>。
   </div>
   <div class="signature">追光者 · 曹宗昱 · LIFE UNDERTONE</div>
+  <p class="updated">最近更新 · <time datetime="2026-10-11">2026 年 10 月 11 日</time></p>
+  <div class="footer-links"><a href="https://zhuigz.github.io/index.html">返回个人说明书 ↗</a><a href="#top">回到顶部 ↑</a></div>
 </footer>
 
 <script>
-// 滚动进度条
-const progressBar = document.querySelector('.scroll-progress');
-window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-  progressBar.style.width = (scrolled * 100) + '%';
-}, { passive: true });
-
-// 数字计数（用于数字密码 525/209/882/659）
-function animateCount(el) {
-  const target = parseInt(el.dataset.target, 10);
-  if (!target) return;
-  const duration = 1400;
-  const start = performance.now();
-  function tick(now) {
-    const p = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    el.textContent = Math.floor(eased * target);
-    if (p < 1) requestAnimationFrame(tick);
-  }
-  el.textContent = '0';
-  requestAnimationFrame(tick);
-}
-
-// 滚动入场
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      // 数字密码触发计数
-      entry.target.querySelectorAll('.cipher-num[data-target]').forEach(animateCount);
-      observer.unobserve(entry.target);
-    }
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if ('IntersectionObserver' in window && !reduceMotion) {
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target, target = Number(el.dataset.target), start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / 1000, 1);
+        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      counterObserver.unobserve(el);
+    });
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-reveals.forEach(el => observer.observe(el));
+  document.querySelectorAll('.cipher-num[data-target]').forEach(el => counterObserver.observe(el));
+}
 
 // 进度条颜色随板块切换
 const sections = document.querySelectorAll('.section');
@@ -2383,32 +2389,43 @@ const sectionColors = {
   s6: 'linear-gradient(90deg, var(--c6), color-mix(in srgb, var(--c6) 60%, white))',
   s7: 'linear-gradient(90deg, var(--c7), color-mix(in srgb, var(--c7) 60%, white))',
 };
-const navObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const cls = [...entry.target.classList].find(c => /^s\d$/.test(c));
-      if (cls && sectionColors[cls]) {
-        progressBar.style.background = sectionColors[cls];
-      }
-    }
-  });
-}, { threshold: 0.25 });
-sections.forEach(s => navObserver.observe(s));
-
-// 七色书脊 — 随章节激活
+const progressBar = document.querySelector('.scroll-progress');
 const spineSegs = document.querySelectorAll('.cs-seg');
-const spineObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const cls = [...entry.target.classList].find(c => /^s\d$/.test(c));
-      if (cls) {
-        const idx = parseInt(cls[1]) - 1;
-        spineSegs.forEach((seg, i) => seg.classList.toggle('active', i === idx));
-      }
-    }
+const chapterNav = document.querySelector('.chapter-nav');
+const chapterCurrent = document.querySelector('.chapter-current');
+const chapterLinks = document.querySelectorAll('.chapter-menu a, .hero-toc a');
+const chapterLabels = ["身份与根基", "精神图腾", "认知输入", "审美与热爱", "烟火人间", "物质载体", "社交与连接"];
+let scrollFrame = 0;
+function updateReadingPosition() {
+  scrollFrame = 0;
+  const maxScroll = document.documentElement.scrollHeight - innerHeight;
+  progressBar.style.width = (maxScroll > 0 ? Math.min(100, scrollY / maxScroll * 100) : 0) + '%';
+  const readingLine = document.querySelector('.nav').getBoundingClientRect().bottom + 60;
+  let current = -1;
+  sections.forEach((section, i) => { if (section.getBoundingClientRect().top <= readingLine) current = i; });
+  const id = current >= 0 ? sections[current].id : '';
+  chapterCurrent.textContent = current >= 0 ? chapterLabels[current] : '章节目录';
+  spineSegs.forEach((seg, i) => seg.classList.toggle('active', i === current));
+  chapterLinks.forEach(link => {
+    if (link.hash === '#' + id) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
   });
-}, { threshold: 0.35 });
-sections.forEach(s => spineObserver.observe(s));
+  progressBar.style.background = sectionColors[id] || '';
+}
+function scheduleReadingPosition() { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateReadingPosition); }
+window.addEventListener('scroll', scheduleReadingPosition, { passive: true });
+window.addEventListener('resize', scheduleReadingPosition);
+document.querySelectorAll('details').forEach(el => el.addEventListener('toggle', scheduleReadingPosition));
+chapterLinks.forEach(link => link.addEventListener('click', () => { chapterNav.open = false; }));
+document.addEventListener('click', event => { if (!chapterNav.contains(event.target)) chapterNav.open = false; });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && chapterNav.open) {
+    chapterNav.open = false;
+    chapterNav.querySelector('summary').focus();
+  }
+});
+if (document.fonts) document.fonts.ready.then(scheduleReadingPosition);
+updateReadingPosition();
 
 // —— 自定义柔光光标：跟随鼠标，随当前章节切换七色 ——
 (function cursorGlow() {
@@ -2448,13 +2465,13 @@ sections.forEach(s => spineObserver.observe(s));
     tintFrom(e.target);
     if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); loop(); }
   });
-  document.addEventListener('mouseleave', () => { glow.classList.remove('on'); });
+  function stopGlow() {
+    glow.classList.remove('on');
+    cancelAnimationFrame(rafId); rafId = 0; active = false;
+  }
+  document.addEventListener('mouseleave', stopGlow);
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden' && rafId) {
-      cancelAnimationFrame(rafId); rafId = 0; active = false;
-    } else if (document.visibilityState === 'visible' && active && !rafId) {
-      loop();
-    }
+    if (document.visibilityState === 'hidden') stopGlow();
   });
 })();
 
