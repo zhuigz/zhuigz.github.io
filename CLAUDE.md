@@ -187,7 +187,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为七个模块；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). No active requirement — backlog clear.
+**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为七个模块；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). 当前维护精力集中在个人说明书、人生系统、三级人生目标、FIRE、IDOP、HKRR、生命底色七页。最新授权先完成生命底色、个人说明书、人生系统的第一轮收尾，再准备第二轮优化。
 
 ## Adding New Content
 
@@ -217,3 +217,10 @@ Note: `index.html` deliberately does **not** link to the other pages on the site
 ### Gallery images (on `index.html`)
 Drop WebP files named `01.webp`–`08.webp` into `assets/gallery/` (long edge ~1600px, ≤400KB each — see `assets/gallery/README.md`). Missing files fall back to styled `.ph` placeholders via the `onerror` handler on each `<img>`. Keep the accordion at ≤12 panels.
 
+
+## 当前维护范围（用户确认 2026-10-12）
+
+- 人生回忆录（life.html）、成长进步体系（growth.html）、人生繁荣公式（prosper.html）、个人IP工作流（workflow.html）、GPER（gper.html）五页全部暂缓。只有用户主动提起相应页面并要求恢复时才推进；不自动排期、不催验收、不顺带修改。
+- life.html未上线预览和PR #39仅保留为可恢复工作，不合并。不要以阶段收尾或下一轮优化为理由启动它。
+- 七页中先收尾生命底色，再个人说明书，最后人生系统。此前个人说明书精选项目案例继续跳过；生命底色图片及电影/课程等待补素材继续跳过，不能编造个人素材。
+- 人生系统历史隐私隔离仍需专门接续，不把普通页面优化视为仓库迁移或历史改写授权。当前加密与历史隔离分开记录。
