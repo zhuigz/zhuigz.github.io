@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>生命底色 · Life Undertone | 追光者 · 曹宗昱</title>
 <meta name="description" content="构成我整个人生的所有微光 — 我相信的、走过的、看过的、爱过的一切。">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet"></noscript>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1328,7 +1331,7 @@ a.chip { text-decoration: none; }
 </nav>
 
 <!-- ===================== HERO ===================== -->
-<section id="top" class="hero">
+<section id="top" tabindex="-1" class="hero">
   <div class="hero-badge">LIFE UNDERTONE · 2026</div>
   <h1 class="hero-name">生命底色</h1>
   <div class="hero-en">THE COLORS THAT MAKE ME</div>
@@ -1353,10 +1356,10 @@ a.chip { text-decoration: none; }
   </div>
 </section>
 
-<main id="main" class="container">
+<main id="main" tabindex="-1" class="container">
 
 <!-- ===================== §1 身份与根基 ===================== -->
-<section id="s1" class="section s1">
+<section id="s1" tabindex="-1" class="section s1">
   <div class="section-num">01</div>
   <div class="reveal">
     <div class="section-label">I · IDENTITY &amp; ROOTS</div>
@@ -1496,7 +1499,7 @@ a.chip { text-decoration: none; }
 <div class="divider"></div>
 
 <!-- ===================== §2 精神图腾 ===================== -->
-<section id="s2" class="section s2">
+<section id="s2" tabindex="-1" class="section s2">
   <div class="section-num">02</div>
   <div class="reveal">
     <div class="section-label">II · SPIRITUAL TOTEM</div>
@@ -1670,7 +1673,7 @@ a.chip { text-decoration: none; }
 <div class="divider"></div>
 
 <!-- ===================== §3 认知输入 ===================== -->
-<section id="s3" class="section s3">
+<section id="s3" tabindex="-1" class="section s3">
   <div class="section-num">03</div>
   <div class="reveal">
     <div class="section-label">III · COGNITIVE INPUT</div>
@@ -1898,7 +1901,7 @@ a.chip { text-decoration: none; }
 <div class="divider"></div>
 
 <!-- ===================== §4 审美与热爱 ===================== -->
-<section id="s4" class="section s4">
+<section id="s4" tabindex="-1" class="section s4">
   <div class="section-num">04</div>
   <div class="reveal">
     <div class="section-label">IV · AESTHETICS &amp; LOVE</div>
@@ -2080,7 +2083,7 @@ a.chip { text-decoration: none; }
 <div class="divider"></div>
 
 <!-- ===================== §5 烟火人间 ===================== -->
-<section id="s5" class="section s5">
+<section id="s5" tabindex="-1" class="section s5">
   <div class="section-num">05</div>
   <div class="reveal">
     <div class="section-label">V · EARTHLY FLAVORS</div>
@@ -2131,7 +2134,7 @@ a.chip { text-decoration: none; }
 <div class="divider"></div>
 
 <!-- ===================== §6 物质载体 ===================== -->
-<section id="s6" class="section s6">
+<section id="s6" tabindex="-1" class="section s6">
   <div class="section-num">06</div>
   <div class="reveal">
     <div class="section-label">VI · MATERIAL CARRIERS</div>
@@ -2241,7 +2244,7 @@ a.chip { text-decoration: none; }
 <div class="divider"></div>
 
 <!-- ===================== §7 社交与连接 ===================== -->
-<section id="s7" class="section s7">
+<section id="s7" tabindex="-1" class="section s7">
   <div class="section-num">07</div>
   <div class="reveal">
     <div class="section-label">VII · CONNECTIONS</div>
@@ -2355,28 +2358,12 @@ a.chip { text-decoration: none; }
     一起拼出了<em>我的生命底色</em>。
   </div>
   <div class="signature">追光者 · 曹宗昱 · LIFE UNDERTONE</div>
-  <p class="updated">最近更新 · <time datetime="2026-10-11">2026 年 10 月 11 日</time></p>
+  <p class="updated">最近更新 · <time datetime="2026-10-12">2026 年 10 月 12 日</time></p>
   <div class="footer-links"><a href="https://zhuigz.github.io/index.html">返回个人说明书 ↗</a><a href="#top">回到顶部 ↑</a></div>
 </footer>
 
 <script>
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-if ('IntersectionObserver' in window && !reduceMotion) {
-  const counterObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target, target = Number(el.dataset.target), start = performance.now();
-      function tick(now) {
-        const p = Math.min((now - start) / 1000, 1);
-        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-      counterObserver.unobserve(el);
-    });
-  });
-  document.querySelectorAll('.cipher-num[data-target]').forEach(el => counterObserver.observe(el));
-}
+// 生日与班级等身份数字直接显示原值，不依赖计数动画或观察器。
 
 // 进度条颜色随板块切换
 const sections = document.querySelectorAll('.section');
@@ -2415,8 +2402,17 @@ function updateReadingPosition() {
 function scheduleReadingPosition() { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateReadingPosition); }
 window.addEventListener('scroll', scheduleReadingPosition, { passive: true });
 window.addEventListener('resize', scheduleReadingPosition);
+window.addEventListener('hashchange', scheduleReadingPosition);
+window.addEventListener('pageshow', scheduleReadingPosition);
 document.querySelectorAll('details').forEach(el => el.addEventListener('toggle', scheduleReadingPosition));
-chapterLinks.forEach(link => link.addEventListener('click', () => { chapterNav.open = false; }));
+document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  const target = document.getElementById(link.getAttribute('href').slice(1));
+  if (target) { chapterNav.open = false; target.focus({ preventScroll: true }); }
+}));
+chapterNav.addEventListener('focusout', event => {
+  if (!chapterNav.contains(event.relatedTarget)) chapterNav.open = false;
+});
 document.addEventListener('click', event => { if (!chapterNav.contains(event.target)) chapterNav.open = false; });
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape' && chapterNav.open) {
@@ -2431,8 +2427,8 @@ updateReadingPosition();
 (function cursorGlow() {
   const glow = document.querySelector('.cursor-glow');
   if (!glow) return;
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const pointerQuery = matchMedia('(hover: hover) and (pointer: fine)');
+  const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
   // 每个章节一对 (核心色, 外晕色)：金 / 余烬赤 / 暮霭紫 / 黏土珊瑚 / 焦糖橙 / 锈青 / 鼠尾草绿
   const palette = {
     s1: ['rgba(232,184,122,0.12)', 'rgba(232,184,122,0.04)'],
@@ -2445,10 +2441,12 @@ updateReadingPosition();
   };
   let tx = -400, ty = -400, x = -400, y = -400, active = false, rafId = 0;
   function loop() {
+    rafId = 0;
+    if (!active) return;
     x += (tx - x) * 0.12;
     y += (ty - y) * 0.12;
     glow.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
-    rafId = requestAnimationFrame(loop);
+    if (Math.abs(tx - x) + Math.abs(ty - y) > .5) rafId = requestAnimationFrame(loop);
   }
   function tintFrom(el) {
     const sec = el && el.closest && el.closest('.section');
@@ -2461,15 +2459,20 @@ updateReadingPosition();
     glow.style.setProperty('--cg-2', pair[1]);
   }
   document.addEventListener('mousemove', (e) => {
+    if (!pointerQuery.matches || motionQuery.matches || document.hidden) { stopGlow(); return; }
     tx = e.clientX; ty = e.clientY;
     tintFrom(e.target);
-    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); loop(); }
+    if (!active) { active = true; x = tx; y = ty; glow.classList.add('on'); }
+    if (!rafId) loop();
   });
   function stopGlow() {
     glow.classList.remove('on');
     cancelAnimationFrame(rafId); rafId = 0; active = false;
   }
-  document.addEventListener('mouseleave', stopGlow);
+  document.documentElement.addEventListener('mouseleave', stopGlow);
+  window.addEventListener('blur', stopGlow);
+  pointerQuery.addEventListener('change', stopGlow);
+  motionQuery.addEventListener('change', stopGlow);
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') stopGlow();
   });
@@ -2479,8 +2482,10 @@ updateReadingPosition();
 (function lightCanvas() {
   const c = document.getElementById('lightCanvas');
   if (!c) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const ctx = c.getContext('2d');
+  const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
+  let ctx;
+  try { ctx = c.getContext('2d'); } catch (error) { return; }
+  if (!ctx) return;
   let w = 0, h = 0, dpr = 1;
   let particles = [];
   let running = false, rafId = 0;
@@ -2539,11 +2544,20 @@ updateReadingPosition();
     }
     rafId = requestAnimationFrame(frame);
   }
-  function start() { if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
-  function stop() { running = false; }
+  function start() { if (document.hidden || motionQuery.matches) return; if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
+  function stop() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+  }
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') stop(); else start();
   });
+  motionQuery.addEventListener('change', () => {
+    if (motionQuery.matches) stop(); else start();
+  });
+  window.addEventListener('pagehide', stop);
+  window.addEventListener('pageshow', start);
   window.addEventListener('resize', resize);
   resize();
   start();
