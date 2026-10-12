@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>追光者的人生回忆录</title>
+  <meta name="description" content="追光者的口述人生回顾：从2007年的萌芽，到2026年5月的大学生活、朋友、信念与理想。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"></noscript>
   <style>
 /* ============== 追光者的人生回忆录 · 样式 ============== */
 
@@ -121,8 +123,12 @@ strong { color: var(--ink); font-weight: 600; }
 .chapter-body > * { width: 100%; }
 
 /* Reveal */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease; }
-.reveal.is-revealed { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 1; }
+.reveal.is-revealed { animation: readingRise .8s ease; }
+@keyframes readingRise {
+  from { opacity: .75; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
 
 /* ============== Chapter Header ============== */
 .chapter-header {
@@ -1129,19 +1135,19 @@ body::before {
 .prologue-meta,
 .prologue-note,
 .prologue-scroll {
-  opacity: 0;
-  animation: heroFade 1.2s ease forwards;
+  opacity: 1;
+  animation: heroFade .8s ease forwards;
 }
 .prologue-eyebrow { animation-delay: 0.2s; }
 .prologue-divider {
-  animation: heroLine 1.6s 1.6s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+  animation: heroLine .8s .25s cubic-bezier(0.7, 0, 0.3, 1) forwards;
   transform: scaleX(0);
   transform-origin: center;
 }
-.prologue-credo { animation-delay: 2.0s; }
-.prologue-meta { animation-delay: 2.4s; }
-.prologue-note { animation-delay: 2.8s; }
-.prologue-scroll { animation-delay: 3.2s; }
+.prologue-credo { animation-delay: .3s; }
+.prologue-meta { animation-delay: .4s; }
+.prologue-note { animation-delay: .5s; }
+.prologue-scroll { animation-delay: .6s; }
 @keyframes heroFade {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1442,18 +1448,7 @@ a.prologue-scroll:hover .scroll-line {
 }
 .ff-row:hover::before { transform: scaleY(1); transform-origin: top; }
 
-/* 22. Politics 列表 · 进入视图时依次浮现 */
-.politics-list > div {
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.politics-list.is-revealed > div { opacity: 1; transform: translateX(0); }
-.politics-list.is-revealed > div:nth-child(1) { transition-delay: 0.0s; }
-.politics-list.is-revealed > div:nth-child(2) { transition-delay: 0.12s; }
-.politics-list.is-revealed > div:nth-child(3) { transition-delay: 0.24s; }
-.politics-list.is-revealed > div:nth-child(4) { transition-delay: 0.36s; }
-.politics-list.is-revealed > div:nth-child(5) { transition-delay: 0.48s; }
+/* 22. Politics 列表 · 正文默认可见 */
 .politics-list .dot {
   animation: politicsDot 3.2s ease-in-out infinite;
 }
@@ -1465,13 +1460,13 @@ a.prologue-scroll:hover .scroll-line {
 /* 23. 尾声标题字符入场 + credo 持续呼吸 */
 .epilogue-title .char {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
 }
 .epilogue-title.is-revealed .char {
   animation: charRise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 @keyframes charRise {
+  from { opacity: .75; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .ep-credo {
@@ -1509,6 +1504,64 @@ a.prologue-scroll:hover .scroll-line {
   body::before { opacity: 0.04; }
   .bg-depth .orb { filter: blur(100px); }
 }
+
+/* ============== 阅读导航与可靠显示 ============== */
+.chapter { scroll-margin-top: 72px; }
+.chapter:focus { outline: none; }
+.side-nav { gap: 10px; }
+.nav-item { min-height: 44px; color: var(--ink-dim); }
+.nav-sub { font-family: var(--serif); font-size: 12px; opacity: 1; transform: none; letter-spacing: .08em; }
+.reading-bar {
+  position: fixed; inset: 2px 0 auto; z-index: 95;
+  display: flex; align-items: center; gap: 20px;
+  min-height: 58px; padding: 0 32px;
+  background: rgba(20,17,13,.96); border-bottom: 1px solid var(--line-soft);
+  font-family: var(--sans); font-size: 13px;
+}
+.reading-bar a { color: var(--ink-dim); text-decoration: none; }
+.reading-bar > a { display: flex; align-items: center; min-height: 44px; }
+.reading-bar a:hover { color: var(--gold); }
+.reading-current { margin-left: auto; color: var(--gold-soft); }
+.chapter-menu { display: none; position: relative; }
+.chapter-menu summary { cursor: pointer; color: var(--ink-soft); min-height: 44px; display: flex; align-items: center; gap: 6px; list-style: none; }
+.chapter-menu summary::-webkit-details-marker { display: none; }
+.chapter-menu summary::after { content: '⌄'; color: var(--gold); }
+.chapter-menu[open] summary::after { content: '⌃'; }
+.chapter-menu nav {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  width: min(300px, calc(100vw - 32px)); max-height: calc(100dvh - 84px); overflow-y: auto;
+  padding: 8px 16px; border: 1px solid var(--line); background: var(--bg-soft);
+  box-shadow: 0 16px 32px rgba(0,0,0,.3);
+}
+.chapter-menu a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; border-bottom: 1px solid var(--line-soft); color: var(--ink-soft); }
+.chapter-menu a:last-child { border-bottom: 0; }
+.chapter-menu a[aria-current="location"] { color: var(--gold); }
+.chapter-menu small { font-size: 12px; color: var(--ink-dim); white-space: nowrap; }
+.reading-bar :focus-visible, .prologue-scroll:focus-visible { outline: 1px solid var(--gold); outline-offset: 3px; }
+.record-date { display: block; font-style: normal; font-family: var(--sans); font-size: 13px; color: var(--gold-soft); margin-top: 12px; }
+@media (max-width: 1100px) {
+  .side-nav { display: none; }
+  .chapter-menu { display: block; }
+}
+@media (max-width: 520px) {
+  .reading-bar { padding: 0 16px; gap: 12px; font-size: 12px; }
+  .reading-current { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .reading-bar > a, .chapter-menu { flex-shrink: 0; }
+  .chapter-menu small { font-size: 11px; }
+  .chapter { padding-top: 96px; }
+  .prologue-title { font-size: clamp(40px, 11vw, 56px); }
+  .tl-item { flex-direction: column; gap: 4px; }
+  .tl-month { min-width: 0; }
+  .friends-grid, .teachers-grid, .stats-grid { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .prologue-eyebrow, .prologue-divider, .prologue-credo,
+  .prologue-meta, .prologue-note, .prologue-scroll,
+  .prologue-title .char, .epilogue-title .char {
+    opacity: 1 !important; transform: none !important; animation: none !important;
+  }
+}
   </style>
 </head>
 <body>
@@ -1525,7 +1578,7 @@ a.prologue-scroll:hover .scroll-line {
 <div class="progress-bar" id="progressBar"></div>
 
 <!-- 侧边导航 -->
-<nav class="side-nav" id="sideNav">
+<nav class="side-nav" id="sideNav" aria-label="章节导航">
   <a href="#prologue" class="nav-item is-active" data-target="prologue">
     <span class="nav-dot"></span>
     <span class="nav-label">序</span>
@@ -1558,10 +1611,27 @@ a.prologue-scroll:hover .scroll-line {
   </a>
 </nav>
 
+<header class="reading-bar">
+  <a href="https://zhuigz.github.io/">个人说明书</a>
+  <span class="reading-current" id="readingCurrent">序章 · 追光者</span>
+  <details class="chapter-menu" id="chapterMenu">
+    <summary>目录</summary>
+    <nav aria-label="章节目录">
+        <a href="#prologue" data-target="prologue"><span>序章 · 追光者</span><small>2026.05</small></a>
+        <a href="#ch1" data-target="ch1"><span>一 · 萌芽</span><small>2007—2019</small></a>
+        <a href="#ch2" data-target="ch2"><span>二 · 群星闪耀</span><small>2019—2022</small></a>
+        <a href="#ch3" data-target="ch3"><span>三 · 月亮与星辰</span><small>2022—2025</small></a>
+        <a href="#ch4" data-target="ch4"><span>四 · 密度迸发</span><small>2025—2026</small></a>
+        <a href="#epilogue" data-target="epilogue"><span>尾声 · 少年</span><small></small></a>
+    </nav>
+  </details>
+  <a href="#prologue">回顶</a>
+</header>
+
 <main class="memoir">
 
   <!-- ============ 序 · 追光者 ============ -->
-  <section id="prologue" class="chapter prologue">
+  <section id="prologue" tabindex="-1" class="chapter prologue">
     <div class="prologue-inner">
       <div class="prologue-eyebrow">序 · Prologue</div>
       <h1 class="prologue-title">追光者的<br>人生回忆录</h1>
@@ -1569,12 +1639,13 @@ a.prologue-scroll:hover .scroll-line {
       <p class="prologue-credo">追光的人，<br>终将光芒万丈。</p>
       <div class="prologue-meta">
         <div><span class="k">出生</span><span class="v">2007.05.25 · 山西朔州</span></div>
-        <div><span class="k">现在</span><span class="v">2026 · 武汉 · 华中农业大学</span></div>
+        <div><span class="k">记录时</span><span class="v">2026.05 · 武汉 · 华中农业大学</span></div>
         <div><span class="k">信念</span><span class="v">为中华民族伟大复兴贡献力量</span></div>
       </div>
       <p class="prologue-note">
         这是一份口述的人生回顾，从出生写到此刻。<br>
         它不完整，但每一段都真实地走过。
+        <span class="record-date">口述回顾 · 记录截至 2026 年 5 月</span>
       </p>
       <a href="#ch1" class="prologue-scroll">
         <span>向下翻阅</span>
@@ -1584,7 +1655,7 @@ a.prologue-scroll:hover .scroll-line {
   </section>
 
   <!-- ============ 第一章 · 萌芽 ============ -->
-  <section id="ch1" class="chapter">
+  <section id="ch1" tabindex="-1" class="chapter">
     <header class="chapter-header">
       <div class="chapter-meta">
         <span class="chapter-number">第一章</span>
@@ -1660,7 +1731,7 @@ a.prologue-scroll:hover .scroll-line {
   </section>
 
   <!-- ============ 第二章 · 群星闪耀 ============ -->
-  <section id="ch2" class="chapter">
+  <section id="ch2" tabindex="-1" class="chapter">
     <header class="chapter-header">
       <div class="chapter-meta">
         <span class="chapter-number">第二章</span>
@@ -1800,7 +1871,7 @@ a.prologue-scroll:hover .scroll-line {
   </section>
 
   <!-- ============ 第三章 · 月亮与星辰 ============ -->
-  <section id="ch3" class="chapter">
+  <section id="ch3" tabindex="-1" class="chapter">
     <header class="chapter-header">
       <div class="chapter-meta">
         <span class="chapter-number">第三章</span>
@@ -1966,7 +2037,7 @@ a.prologue-scroll:hover .scroll-line {
   </section>
 
   <!-- ============ 第四章 · 密度迸发 ============ -->
-  <section id="ch4" class="chapter">
+  <section id="ch4" tabindex="-1" class="chapter">
     <header class="chapter-header">
       <div class="chapter-meta">
         <span class="chapter-number">第四章</span>
@@ -2070,7 +2141,7 @@ a.prologue-scroll:hover .scroll-line {
           <div class="tl-desc">长沙之行 · 山河又添一城</div>
         </div>
         <div class="tl-item tl-current">
-          <div class="tl-month">2026 · 此刻</div>
+          <div class="tl-month">2026.05 · 记录时</div>
           <div class="tl-desc">个人 IP 正式启动 · 19 岁生日将至</div>
         </div>
       </div>
@@ -2139,7 +2210,7 @@ a.prologue-scroll:hover .scroll-line {
   </section>
 
   <!-- ============ 尾声 ============ -->
-  <section id="epilogue" class="chapter epilogue">
+  <section id="epilogue" tabindex="-1" class="chapter epilogue">
     <div class="epilogue-inner">
       <div class="epilogue-eyebrow">尾声 · Epilogue</div>
       <h2 class="epilogue-title">出走半生<br>归来仍是少年</h2>
@@ -2184,34 +2255,61 @@ a.prologue-scroll:hover .scroll-line {
 
 <script>
 (function () {
-  // ========== 进度条 ==========
+  // ========== 阅读位置与章节目录 (独立于入场动画) ==========
   const bar = document.getElementById('progressBar');
-  function updateProgress() {
+  const current = document.getElementById('readingCurrent');
+  const menu = document.getElementById('chapterMenu');
+  const links = document.querySelectorAll('[data-target]');
+  const sectionIds = ['prologue', 'ch1', 'ch2', 'ch3', 'ch4', 'epilogue'];
+  const sections = sectionIds.map(function (id) { return document.getElementById(id); });
+  const labels = ['序章 · 追光者', '一 · 萌芽', '二 · 群星闪耀', '三 · 月亮与星辰', '四 · 密度迸发', '尾声 · 少年'];
+  function updateReading() {
     const h = document.documentElement;
     const total = h.scrollHeight - h.clientHeight;
-    const ratio = total > 0 ? Math.min(1, h.scrollTop / total) : 0;
+    const ratio = total > 0 ? Math.max(0, Math.min(1, h.scrollTop / total)) : 0;
     bar.style.transform = 'scaleX(' + ratio + ')';
-  }
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-
-  // ========== 侧边导航 active ==========
-  const navItems = document.querySelectorAll('.nav-item');
-  const sectionIds = ['prologue', 'ch1', 'ch2', 'ch3', 'ch4', 'epilogue'];
-  const navObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (en.isIntersecting) {
-        const id = en.target.id;
-        navItems.forEach(function (item) {
-          item.classList.toggle('is-active', item.dataset.target === id);
-        });
-      }
+    let index = 0;
+    sections.forEach(function (section, i) {
+      if (section.getBoundingClientRect().top <= Math.max(76, window.innerHeight * .28)) index = i;
     });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sectionIds.forEach(function (id) {
-    const el = document.getElementById(id);
-    if (el) navObserver.observe(el);
+    current.textContent = labels[index];
+    links.forEach(function (link) {
+      const active = link.dataset.target === sectionIds[index];
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  let readingFrame = 0;
+  function scheduleReading() {
+    if (!readingFrame) readingFrame = requestAnimationFrame(function () {
+      readingFrame = 0; updateReading();
+    });
+  }
+  window.addEventListener('scroll', scheduleReading, { passive: true });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1100) menu.open = false;
+    scheduleReading();
   });
+  window.addEventListener('hashchange', scheduleReading);
+  window.addEventListener('pageshow', scheduleReading);
+  if (document.fonts) document.fonts.ready.then(scheduleReading);
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest('a[href^="#"]');
+    if (link && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
+      const target = document.getElementById(link.getAttribute('href').slice(1));
+      if (target) { menu.open = false; target.focus({ preventScroll: true }); }
+    } else if (!menu.contains(e.target)) menu.open = false;
+  });
+  menu.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.open) {
+      menu.open = false; menu.querySelector('summary').focus();
+    }
+  });
+  menu.addEventListener('focusout', function (e) {
+    if (!menu.contains(e.relatedTarget)) menu.open = false;
+  });
+  updateReading();
 
   // ========== 字符级拆分 (用于标题入场) ==========
   function splitChars(el, baseDelay) {
@@ -2235,104 +2333,22 @@ a.prologue-scroll:hover .scroll-line {
   const epilogueTitle = document.querySelector('.epilogue-title');
   if (epilogueTitle) splitChars(epilogueTitle, 0);
 
-  // ========== Reveal-on-scroll (跳过序章因有专属编排) ==========
-  const revealTargets = document.querySelectorAll(
-    '.chapter-body > *, .epilogue-inner > *'
-  );
-  const revealObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-revealed');
-        revealObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  revealTargets.forEach(function (el) {
-    el.classList.add('reveal');
-    revealObserver.observe(el);
-  });
-
-  // ========== Politics 列表错峰浮现 ==========
-  const politicsList = document.querySelector('.politics-list');
-  if (politicsList) {
-    const polObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          en.target.classList.add('is-revealed');
-          polObs.unobserve(en.target);
-        }
+  // ========== 入场仅作增强: 观察器失效仍保留全部文字与原始数字 ==========
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    try {
+      const revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.chapter-body > *, .epilogue-inner > *').forEach(function (el) {
+        el.classList.add('reveal'); revealObserver.observe(el);
       });
-    }, { threshold: 0.4 });
-    polObs.observe(politicsList);
+    } catch (error) { /* 正文默认可见, 不依赖增强初始化成功。 */ }
   }
-
-  // ========== 数字 count-up ==========
-  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-  function animateNumber(el, target, duration, render) {
-    const start = performance.now();
-    const tick = function (now) {
-      const t = Math.min(1, (now - start) / duration);
-      const v = Math.floor(easeOutCubic(t) * target);
-      render(v);
-      if (t < 1) requestAnimationFrame(tick);
-      else render(target);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  const numTargets = [];
-
-  // 高考分数
-  document.querySelectorAll('.gk-score').forEach(function (el) {
-    const n = parseInt(el.textContent, 10);
-    if (!isNaN(n)) {
-      numTargets.push({
-        el: el, target: n, duration: 1100,
-        render: function (v) { el.textContent = v; }
-      });
-      el.textContent = '0';
-    }
-  });
-
-  // 高考总分
-  const gkTotal = document.querySelector('.gk-total-num');
-  if (gkTotal) {
-    const n = parseInt(gkTotal.textContent, 10);
-    if (!isNaN(n)) {
-      numTargets.push({
-        el: gkTotal, target: n, duration: 1800,
-        render: function (v) { gkTotal.textContent = v; }
-      });
-      gkTotal.textContent = '0';
-    }
-  }
-
-  // 这一年攒下的统计
-  document.querySelectorAll('.stat-num').forEach(function (el) {
-    const text = el.textContent.trim();
-    const m = text.match(/^(\d+)/);
-    if (m) {
-      const n = parseInt(m[1], 10);
-      const u = el.querySelector('.u');
-      const unitHTML = u ? u.outerHTML : '';
-      numTargets.push({
-        el: el, target: n, duration: 1500,
-        render: function (v) { el.innerHTML = v + unitHTML; }
-      });
-      el.innerHTML = '0' + unitHTML;
-    }
-  });
-
-  const numObs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (en.isIntersecting) {
-        const item = numTargets.find(function (t) { return t.el === en.target; });
-        if (item) animateNumber(item.el, item.target, item.duration, item.render);
-        numObs.unobserve(en.target);
-      }
-    });
-  }, { threshold: 0.4 });
-  numTargets.forEach(function (t) { numObs.observe(t.el); });
 
   // ========== 自定义光标 · 柔光跟随 + dot / ring (随章节微变) ==========
   if (window.matchMedia('(min-width: 861px) and (hover: hover) and (pointer: fine)').matches &&
@@ -2355,7 +2371,8 @@ a.prologue-scroll:hover .scroll-line {
       glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
       ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
       dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
-      rafId = requestAnimationFrame(tick);
+      rafId = Math.abs(mx - gx) + Math.abs(my - gy) + Math.abs(mx - rx) + Math.abs(my - ry) > .5
+        ? requestAnimationFrame(tick) : null;
     }
     window.addEventListener('mousemove', function (e) {
       mx = e.clientX; my = e.clientY;
@@ -2364,14 +2381,22 @@ a.prologue-scroll:hover .scroll-line {
         glow.classList.add('is-active');
         ring.classList.add('is-active');
         dot.classList.add('is-active');
-        if (!rafId) tick();
       }
+      if (!rafId) tick();
     }, { passive: true });
-    window.addEventListener('mouseleave', function () {
+    function stopCursor() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
       glow.classList.remove('is-active');
       ring.classList.remove('is-active');
       dot.classList.remove('is-active');
+      glow.classList.remove('is-warm');
       activated = false;
+    }
+    document.documentElement.addEventListener('mouseleave', stopCursor);
+    window.addEventListener('blur', stopCursor);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopCursor();
     });
 
     // 悬停可交互元素时, 外环张开
@@ -2388,43 +2413,15 @@ a.prologue-scroll:hover .scroll-line {
       }
     });
 
-    // 序章 / 尾声内柔光更盛
-    const warmEls = [document.getElementById('prologue'), document.getElementById('epilogue')].filter(Boolean);
-    if (warmEls.length) {
-      const warmObs = new IntersectionObserver(function (entries) {
-        const anyWarm = warmEls.some(function (el) {
-          const r = el.getBoundingClientRect();
-          return r.top < window.innerHeight * 0.5 && r.bottom > window.innerHeight * 0.5;
-        });
-        glow.classList.toggle('is-warm', anyWarm);
-      }, { threshold: [0, 0.3, 0.6, 1] });
-      warmEls.forEach(function (el) { warmObs.observe(el); });
-    }
+    // 暖色光晕仅随鼠标活动显示, 不再依赖观察器。
+    window.addEventListener('mousemove', function () {
+      const warm = [sections[0], sections[5]].some(function (section) {
+        const r = section.getBoundingClientRect();
+        return r.top < window.innerHeight * .5 && r.bottom > window.innerHeight * .5;
+      });
+      glow.classList.toggle('is-warm', warm);
+    }, { passive: true });
   }
-
-  // ========== 键盘导航 ↑↓ / j k ==========
-  window.addEventListener('keydown', function (e) {
-    const tag = e.target.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-    let activeIdx = -1;
-    navItems.forEach(function (item, idx) {
-      if (item.classList.contains('is-active')) activeIdx = idx;
-    });
-    if (activeIdx < 0) return;
-    let next = activeIdx;
-    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'j') {
-      next = Math.min(sectionIds.length - 1, activeIdx + 1);
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'k') {
-      next = Math.max(0, activeIdx - 1);
-    } else {
-      return;
-    }
-    e.preventDefault();
-    if (next !== activeIdx) {
-      const targetEl = document.getElementById(sectionIds[next]);
-      if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
 })();
 
 // ========== 微光粒子层 · 暖金缓升 (背景纵深) ==========
@@ -2434,6 +2431,7 @@ a.prologue-scroll:hover .scroll-line {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const ctx = c.getContext('2d');
+  if (!ctx) return;
   let w = 0, h = 0, dpr = 1;
   let particles = [];
   let running = false, rafId = 0;
@@ -2504,7 +2502,11 @@ a.prologue-scroll:hover .scroll-line {
   }
 
   function start() { if (!running) { running = true; if (!rafId) rafId = requestAnimationFrame(frame); } }
-  function stop() { running = false; }
+  function stop() {
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = 0;
+  }
 
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'hidden') stop(); else start();
@@ -2512,7 +2514,7 @@ a.prologue-scroll:hover .scroll-line {
   window.addEventListener('resize', resize);
 
   resize();
-  start();
+  if (!document.hidden) start();
 })();
 </script>
 </body>
