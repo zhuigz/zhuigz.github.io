@@ -2507,12 +2507,24 @@ document.body.classList.add('loaded');
     const rect = el.getBoundingClientRect();
     return rect.bottom > 0 && rect.top < window.innerHeight;
   };
-  if ('IntersectionObserver' in window) {
-    targets.forEach((el) => el.classList.toggle('motion-paused', !isVisible(el)));
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => entry.target.classList.toggle('motion-paused', !entry.isIntersecting));
-    });
-    targets.forEach((el) => observer.observe(el));
+  const syncTargets = () => targets.forEach((el) => el.classList.toggle('motion-paused', !isVisible(el)));
+  syncTargets();
+  let observer;
+  let observed = false;
+  try {
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => entry.target.classList.toggle('motion-paused', !entry.isIntersecting));
+      });
+      targets.forEach((el) => observer.observe(el));
+      observed = true;
+    }
+  } catch {
+    if (observer) observer.disconnect();
+  }
+  if (!observed) {
+    window.addEventListener('scroll', syncTargets, { passive: true });
+    window.addEventListener('resize', syncTargets);
   }
   const syncPage = () => document.body.classList.toggle('page-inactive', document.visibilityState === 'hidden');
   document.addEventListener('visibilitychange', syncPage);
