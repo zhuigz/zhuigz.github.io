@@ -2475,7 +2475,8 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 (function () {
   const menu = document.querySelector('.mobile-nav');
   const trigger = menu.querySelector('summary');
-  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', e => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     menu.open = false;
     const target = document.querySelector(link.getAttribute('href'));
     if (target) {
@@ -2488,6 +2489,9 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && menu.open) { menu.open = false; trigger.focus(); }
+  });
+  menu.addEventListener('focusout', e => {
+    if (e.relatedTarget && !menu.contains(e.relatedTarget)) menu.open = false;
   });
   matchMedia('(max-width: 768px)').addEventListener('change', e => {
     if (!e.matches) menu.open = false;
