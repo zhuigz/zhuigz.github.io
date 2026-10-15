@@ -1283,6 +1283,18 @@ a.chip { text-decoration: none; }
   .school-node { font-size: 14px; padding: 8px 10px; }
 }
 
+/* 已有明确重点：六件重要的事，保留原顺序与原文 */
+.core-values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.core-values .chip {
+  justify-content: center; min-height: 68px; padding: 16px 12px;
+  border-radius: 12px; font-family: 'Noto Serif SC', serif;
+  font-size: 17px; font-weight: 600; text-align: center; overflow-wrap: anywhere;
+}
+@media (max-width: 768px) {
+  .core-values { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .core-values .chip { min-height: 60px; font-size: 15px; }
+}
+
 /* 第二轮：长章节内的栏目入口，沿用本章色板 */
 .section-overview {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
@@ -1574,7 +1586,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
 
   <div class="reveal">
     <h3 id="s2-six-things" tabindex="-1" class="subsection-label">人生最重要的六件事 <small>SIX THINGS</small></h3>
-    <div class="chip-row">
+    <div class="chip-row core-values">
       <span class="chip"><span class="dot"></span>健康</span>
       <span class="chip"><span class="dot"></span>财富</span>
       <span class="chip"><span class="dot"></span>爱情（幸福）</span>
