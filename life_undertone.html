@@ -499,7 +499,7 @@ section[id] { scroll-margin-top: 70px; }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   margin-bottom: 6px; opacity: 0.6;
 }
-.ideal-card h3 {
+.ideal-card h4 {
   font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700;
   color: var(--ink); margin-bottom: 8px;
 }
@@ -1241,7 +1241,6 @@ a.chip { text-decoration: none; }
 .footprint-extra summary { gap: 16px; }
 .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; margin-top: 20px; }
 .footer-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--gold-light); text-decoration: none; }
-.updated { color: var(--ink-dim); font-size: 13px; margin-top: 16px; }
 @media (max-width: 768px) {
   .hero { padding: 100px 20px 110px; }
   .hero-lead { margin-top: 24px; }
@@ -1281,6 +1280,42 @@ a.chip { text-decoration: none; }
   .ai-card { padding: 18px; }
   .school-path { padding: 24px 12px; gap: 8px; }
   .school-node { font-size: 14px; padding: 8px 10px; }
+}
+
+/* 已有明确重点：六件重要的事，保留原顺序与原文 */
+.core-values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.core-values .chip {
+  justify-content: center; min-height: 68px; padding: 16px 12px;
+  border-radius: 12px; font-family: 'Noto Serif SC', serif;
+  font-size: 17px; font-weight: 600; text-align: center; overflow-wrap: anywhere;
+}
+@media (max-width: 768px) {
+  .core-values { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .core-values .chip { min-height: 60px; font-size: 15px; }
+}
+
+/* 第二轮：长章节内的栏目入口，沿用本章色板 */
+.section-overview {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: -28px 0 40px; padding: 16px 0;
+  border-top: 1px solid rgba(var(--sc-rgb), 0.16);
+  border-bottom: 1px solid rgba(var(--sc-rgb), 0.16);
+}
+.overview-label { flex-basis: 100%; color: var(--ink-soft); font-size: 12px; letter-spacing: 2px; }
+.section-overview a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  max-width: 100%; padding: 7px 12px; border-radius: 8px;
+  color: var(--ink); font-size: 14px; line-height: 1.6;
+  background: rgba(var(--sc-rgb), 0.05); text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.section-overview a:hover { background: rgba(var(--sc-rgb), 0.13); color: var(--sc); }
+h3.subsection-label[id], #s2-motto { scroll-margin-top: 110px; }
+h3.subsection-label:focus { outline: none; }
+h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset: 6px; }
+@media (max-width: 768px) {
+  .section-overview { margin-bottom: 28px; gap: 6px; }
+  .section-overview a { font-size: 13px; padding: 7px 10px; }
 }
 </style>
 </head>
@@ -1505,31 +1540,43 @@ a.chip { text-decoration: none; }
     <div class="section-label">II · SPIRITUAL TOTEM</div>
     <h2 class="section-title">精神<span class="hl">图腾</span></h2>
     <p class="section-sub">我相信什么——理想、人物、Slogan、座右铭。这一团<em>赤红</em>，是我血液里的火。</p>
+    <nav class="section-overview" aria-label="精神图腾本章速览">
+      <span class="overview-label">本章速览</span>
+      <a href="#s2-ideals">理想</a>
+      <a href="#s2-frameworks">我的理论</a>
+      <a href="#s2-six-things">人生最重要的六件事</a>
+      <a href="#s2-mentors">核心指路人</a>
+      <a href="#s2-role-models">榜样群像</a>
+      <a href="#s2-slogans">灵魂指令墙</a>
+      <a href="#s2-motto">座右铭</a>
+      <a href="#s2-voices">博主语录</a>
+      <a href="#s2-authors">作者</a>
+    </nav>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">理想 <small>IDEALS</small></div>
+    <h3 id="s2-ideals" tabindex="-1" class="subsection-label">理想 <small>IDEALS</small></h3>
     <div class="ideal-grid">
       <div class="ideal-card">
         <div class="glyph">01</div>
-        <h3><a class="content-link" href="https://zhuigz.github.io/fire.html">FIRE · 财富自由 <span aria-hidden="true">↗</span></a></h3>
+        <h4><a class="content-link" href="https://zhuigz.github.io/fire.html">FIRE · 财富自由 <span aria-hidden="true">↗</span></a></h4>
         <p>用一辈子时间，把人生主导权握在自己手里。</p>
       </div>
       <div class="ideal-card">
         <div class="glyph">02</div>
-        <h3>中华民族伟大复兴 · 中国梦</h3>
+        <h4>中华民族伟大复兴 · 中国梦</h4>
         <p>这片土地值得，也必将站在世界之巅。</p>
       </div>
       <div class="ideal-card">
         <div class="glyph">03</div>
-        <h3>共产主义 · AI 奇点</h3>
+        <h4>共产主义 · AI 奇点</h4>
         <p>当生产力被彻底解放，人类终于自由。</p>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">我的理论 <small>FRAMEWORKS · 2</small></div>
+    <h3 id="s2-frameworks" tabindex="-1" class="subsection-label">我的理论 <small>FRAMEWORKS · 2</small></h3>
     <div class="chip-row">
       <a class="chip" href="https://zhuigz.github.io/hkrr.html"><span class="dot"></span>HKRR 理论 <span aria-hidden="true">↗</span></a>
       <a class="chip" href="https://zhuigz.github.io/idop.html"><span class="dot"></span>IDOP 理论 <span aria-hidden="true">↗</span></a>
@@ -1537,8 +1584,8 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">人生最重要的六件事 <small>SIX THINGS</small></div>
-    <div class="chip-row">
+    <h3 id="s2-six-things" tabindex="-1" class="subsection-label">人生最重要的六件事 <small>SIX THINGS</small></h3>
+    <div class="chip-row core-values">
       <span class="chip"><span class="dot"></span>健康</span>
       <span class="chip"><span class="dot"></span>财富</span>
       <span class="chip"><span class="dot"></span>爱情（幸福）</span>
@@ -1549,7 +1596,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">人生人物 · 核心指路人 <small>MENTORS · 6</small></div>
+    <h3 id="s2-mentors" tabindex="-1" class="subsection-label">人生人物 · 核心指路人 <small>MENTORS · 6</small></h3>
     <div class="mentor-grid">
       <div class="mentor-card">
         <div class="mentor-avatar">习</div>
@@ -1585,7 +1632,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">榜样群像 <small>ROLE MODELS · 16</small></div>
+    <h3 id="s2-role-models" tabindex="-1" class="subsection-label">榜样群像 <small>ROLE MODELS · 16</small></h3>
     <div class="role-chips">
       <span class="chip"><span class="dot"></span>姜哥</span>
       <span class="chip"><span class="dot"></span>张桂梅</span>
@@ -1607,7 +1654,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">Slogan · 灵魂指令墙 <small>14 LIFE COMMANDS</small></div>
+    <h3 id="s2-slogans" tabindex="-1" class="subsection-label">Slogan · 灵魂指令墙 <small>14 LIFE COMMANDS</small></h3>
     <div class="slogan-wall">
       <div class="slogan-card big tilt-l"><span class="idx">01</span>世界不死，理想不灭</div>
       <div class="slogan-card big tilt-r"><span class="idx">02</span>追光的人，终会光芒万丈</div>
@@ -1626,13 +1673,13 @@ a.chip { text-decoration: none; }
     </div>
   </div>
 
-  <div class="reveal motto-banner">
+  <div id="s2-motto" tabindex="-1" class="reveal motto-banner">
     <div class="motto-eyebrow">座右铭 · MOTTO</div>
     <div class="motto-text">道阻且长，行则将至<br>行而不辍，未来可期</div>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">博主语录 <small>VOICES</small></div>
+    <h3 id="s2-voices" tabindex="-1" class="subsection-label">博主语录 <small>VOICES</small></h3>
     <div class="quotes-grid">
       <div class="quote-card">
         <div class="quote-author">北辰星</div>
@@ -1660,7 +1707,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">作者 <small>AUTHORS</small></div>
+    <h3 id="s2-authors" tabindex="-1" class="subsection-label">作者 <small>AUTHORS</small></h3>
     <div class="chip-row authors-row">
       <span class="chip"><span class="dot"></span>刘慈欣（大刘）</span>
       <span class="chip"><span class="dot"></span>老杨的猫头鹰</span>
@@ -1679,10 +1726,24 @@ a.chip { text-decoration: none; }
     <div class="section-label">III · COGNITIVE INPUT</div>
     <h2 class="section-title">认知<span class="hl">输入</span></h2>
     <p class="section-sub">我学什么、看什么、听什么——书籍、课程、播客、电影、剧集、小说、动漫、公众号、日历。<em>靛紫</em>是深夜的颜色，也是头脑的颜色。</p>
+    <nav class="section-overview" aria-label="认知输入本章速览">
+      <span class="overview-label">本章速览</span>
+      <a href="#s3-books">书籍</a>
+      <a href="#s3-courses">课程</a>
+      <a href="#s3-podcast">播客</a>
+      <a href="#s3-films">珍藏片单</a>
+      <a href="#s3-more-films">更多电影与系列</a>
+      <a href="#s3-tv">电视剧</a>
+      <a href="#s3-novels">小说</a>
+      <a href="#s3-audio-drama">广播剧</a>
+      <a href="#s3-animation">动漫 / 漫画</a>
+      <a href="#s3-wechat">公众号</a>
+      <a href="#s3-calendar">日历</a>
+    </nav>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">书籍 <small>BOOKS · 12</small></div>
+    <h3 id="s3-books" tabindex="-1" class="subsection-label">书籍 <small>BOOKS · 12</small></h3>
     <div class="bookshelf">
       <div class="book-spine"><div class="book-mark">01</div><div class="book-title">习近平的<br>七年知青岁月</div></div>
       <div class="book-spine"><div class="book-mark">02</div><div class="book-title">长安诗选</div></div>
@@ -1700,7 +1761,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">课程 <small>COURSES · 7</small></div>
+    <h3 id="s3-courses" tabindex="-1" class="subsection-label">课程 <small>COURSES · 7</small></h3>
     <div class="chip-row">
       <span class="chip"><span class="dot"></span>通往财富自由之路</span>
       <span class="chip"><span class="dot"></span>希望者联盟</span>
@@ -1713,7 +1774,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">播客 <small>PODCAST</small></div>
+    <h3 id="s3-podcast" tabindex="-1" class="subsection-label">播客 <small>PODCAST</small></h3>
     <div class="solo-card">
       <span class="solo-icon">🎙️</span>
       <div>
@@ -1724,7 +1785,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">电影 · 珍藏片单 <small>FILMS · 10</small></div>
+    <h3 id="s3-films" tabindex="-1" class="subsection-label">电影 · 珍藏片单 <small>FILMS · 10</small></h3>
     <div class="movie-wall">
 
       <div class="movie-poster feature" style="--mc1:rgba(232,184,122,0.22); --mc2:rgba(200,53,42,0.08); --mb:rgba(232,184,122,0.45);">
@@ -1811,7 +1872,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">更多电影与系列 <small>ALSO ON MY LIST</small></div>
+    <h3 id="s3-more-films" tabindex="-1" class="subsection-label">更多电影与系列 <small>ALSO ON MY LIST</small></h3>
     <div class="chip-row">
       <span class="chip">《流浪地球》1</span>
       <span class="chip">《白蛇》1—3</span>
@@ -1827,7 +1888,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">电视剧 <small>TV SERIES · 7</small></div>
+    <h3 id="s3-tv" tabindex="-1" class="subsection-label">电视剧 <small>TV SERIES · 7</small></h3>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">主旋律</span>觉醒年代</div>
       <div class="media-card"><span class="mtype">科幻</span>三体</div>
@@ -1840,7 +1901,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">小说 <small>NOVELS · 3</small></div>
+    <h3 id="s3-novels" tabindex="-1" class="subsection-label">小说 <small>NOVELS · 3</small></h3>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">悬疑</span>死亡作业</div>
       <div class="media-card"><span class="mtype">未来</span>未来：人类的征途</div>
@@ -1849,7 +1910,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">广播剧 <small>AUDIO DRAMA</small></div>
+    <h3 id="s3-audio-drama" tabindex="-1" class="subsection-label">广播剧 <small>AUDIO DRAMA</small></h3>
     <div class="solo-card">
       <span class="solo-icon">📻</span>
       <div>
@@ -1860,7 +1921,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">动漫 / 漫画 <small>ANIMATION · 6</small></div>
+    <h3 id="s3-animation" tabindex="-1" class="subsection-label">动漫 / 漫画 <small>ANIMATION · 6</small></h3>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">古风</span>成何体统</div>
       <div class="media-card"><span class="mtype">五行</span>雾山五行</div>
@@ -1872,7 +1933,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">公众号 <small>WECHAT · 9</small></div>
+    <h3 id="s3-wechat" tabindex="-1" class="subsection-label">公众号 <small>WECHAT · 9</small></h3>
     <div class="chip-row">
       <span class="chip"><span class="dot"></span>青年大学习</span>
       <span class="chip"><span class="dot"></span>夜读</span>
@@ -1887,7 +1948,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">日历 <small>CALENDAR</small></div>
+    <h3 id="s3-calendar" tabindex="-1" class="subsection-label">日历 <small>CALENDAR</small></h3>
     <div class="solo-card">
       <span class="solo-icon">📅</span>
       <div>
@@ -1907,10 +1968,21 @@ a.chip { text-decoration: none; }
     <div class="section-label">IV · AESTHETICS &amp; LOVE</div>
     <h2 class="section-title">审美与<span class="hl">热爱</span></h2>
     <p class="section-sub">我爱什么——颜色、动植物、浪漫、音乐、游戏、运动、收集。<em>珊瑚色</em>是心跳的颜色。</p>
+    <nav class="section-overview" aria-label="审美与热爱本章速览">
+      <span class="overview-label">本章速览</span>
+      <a href="#s4-color">颜色</a>
+      <a href="#s4-creatures">动植物</a>
+      <a href="#s4-romance">浪漫</a>
+      <a href="#s4-instrument">乐器</a>
+      <a href="#s4-playlist">歌单</a>
+      <a href="#s4-games">游戏</a>
+      <a href="#s4-board-games">棋类</a>
+      <a href="#s4-sport-collection">运动 · 收集</a>
+    </nav>
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">颜色 <small>COLOR</small></div>
+    <h3 id="s4-color" tabindex="-1" class="subsection-label">颜色 <small>COLOR</small></h3>
     <div class="aes-grid" style="grid-template-columns: 1fr;">
       <div class="color-swatch">
         <div>
@@ -1923,7 +1995,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">动植物 <small>CREATURES</small></div>
+    <h3 id="s4-creatures" tabindex="-1" class="subsection-label">动植物 <small>CREATURES</small></h3>
     <div class="aes-grid">
       <div class="pet-card">
         <div class="pet-emoji">🐱</div>
@@ -1950,7 +2022,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">浪漫 <small>ROMANCE</small></div>
+    <h3 id="s4-romance" tabindex="-1" class="subsection-label">浪漫 <small>ROMANCE</small></h3>
     <div class="romance-grid">
       <div class="romance-card">
         <div class="ro-icon">🌅</div>
@@ -1977,7 +2049,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">音乐 · 乐器 <small>INSTRUMENT</small></div>
+    <h3 id="s4-instrument" tabindex="-1" class="subsection-label">音乐 · 乐器 <small>INSTRUMENT</small></h3>
     <div class="solo-card">
       <span class="solo-icon">🎵</span>
       <div>
@@ -1988,7 +2060,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">音乐 · 歌单 <small>PLAYLIST · 5</small></div>
+    <h3 id="s4-playlist" tabindex="-1" class="subsection-label">音乐 · 歌单 <small>PLAYLIST · 5</small></h3>
     <div class="playlist">
       <div class="playlist-row">
         <span class="pl-idx">01</span>
@@ -2019,7 +2091,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">游戏 <small>GAMES · 5</small></div>
+    <h3 id="s4-games" tabindex="-1" class="subsection-label">游戏 <small>GAMES · 5</small></h3>
     <div class="game-grid">
       <div class="game-card">
         <div class="gicon">🏛️</div>
@@ -2045,7 +2117,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">棋类 <small>BOARD GAMES · 2</small></div>
+    <h3 id="s4-board-games" tabindex="-1" class="subsection-label">棋类 <small>BOARD GAMES · 2</small></h3>
     <div class="chip-row">
       <span class="chip"><span class="dot"></span>五子棋</span>
       <span class="chip"><span class="dot"></span>象棋</span>
@@ -2053,7 +2125,7 @@ a.chip { text-decoration: none; }
   </div>
 
   <div class="reveal">
-    <div class="subsection-label">运动 · 收集 <small>SPORT &amp; COLLECTION</small></div>
+    <h3 id="s4-sport-collection" tabindex="-1" class="subsection-label">运动 · 收集 <small>SPORT &amp; COLLECTION</small></h3>
     <div class="mini-row">
       <div class="mini-card">
         <span class="mi-icon">🏸</span>
@@ -2358,7 +2430,6 @@ a.chip { text-decoration: none; }
     一起拼出了<em>我的生命底色</em>。
   </div>
   <div class="signature">追光者 · 曹宗昱 · LIFE UNDERTONE</div>
-  <p class="updated">最近更新 · <time datetime="2026-10-12">2026 年 10 月 12 日</time></p>
   <div class="footer-links"><a href="https://zhuigz.github.io/index.html">返回个人说明书 ↗</a><a href="#top">回到顶部 ↑</a></div>
 </footer>
 
