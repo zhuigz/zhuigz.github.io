@@ -76,6 +76,18 @@ body {
   overflow-x: hidden;
 }
 
+/* Keyboard reading: bypass navigation and enter the main content. */
+.skip-link {
+  position: fixed; top: 12px; left: 16px; z-index: 11000;
+  transform: translateY(calc(-100% - 24px));
+  max-width: calc(100vw - 32px); padding: 10px 16px; border-radius: 8px;
+  background: var(--gold-light); color: var(--bg-deep);
+  font-size: 14px; text-decoration: none;
+}
+.skip-link:focus { transform: translateY(0); outline: 2px solid var(--ink); outline-offset: 3px; }
+#main { scroll-margin-top: 90px; }
+#main:focus { outline: none; }
+
 /* ===================== PRELOADER（开场：一点光，破暗而生） ===================== */
 .preloader {
   position: fixed; inset: 0; z-index: 10000;
@@ -1886,6 +1898,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 </style>
 </head>
 <body id="top">
+<a class="skip-link" href="#main">跳到正文</a>
 
 <div class="grain"></div>
 <div class="scroll-progress"></div>
@@ -1899,7 +1912,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 </div>
 
 
-<nav class="nav">
+<nav class="nav" aria-label="页面导航">
   <a class="nav-logo" href="#top" aria-label="追光者，返回首页">追光者</a>
   <div class="nav-right">
     <ul class="nav-links">
@@ -1970,7 +1983,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
   </div>
 </header>
 
-<div class="container">
+<main class="container" id="main" tabindex="-1">
 
   <!-- INTRO · 一句话介绍 -->
   <section id="intro">
@@ -2451,7 +2464,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     <p class="connect-foot reveal"><em>追光的人，终将光芒万丈。</em></p>
   </section>
 
-</div>
+</main>
 
 <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="作品大图">
   <button class="lb-close" type="button" aria-label="关闭">✕</button>
