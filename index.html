@@ -2791,6 +2791,13 @@ window.addEventListener('scroll', () => {
     updateTouchAction();
     lb.querySelector('.lb-close').focus();
   }
+  // Once the opening fade finishes, recover focus if the initial attempt ran while hidden.
+  lb.addEventListener('transitionend', e => {
+    if (e.target === lb && e.propertyName === 'opacity' && isOpen() &&
+        !lb.contains(document.activeElement)) {
+      lb.querySelector('.lb-close').focus({ preventScroll: true });
+    }
+  });
   function open(i) {
     if (isOpen()) { render(i); return; }
     history.pushState({ ...history.state, [historyKey]: { index: i, origin: i } }, '');
