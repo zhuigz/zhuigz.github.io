@@ -2789,7 +2789,9 @@ window.addEventListener('scroll', () => {
     lb.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     updateTouchAction();
-    lb.querySelector('.lb-close').focus();
+    requestAnimationFrame(() => {
+      if (isOpen()) lb.querySelector('.lb-close').focus({ preventScroll: true });
+    });
   }
   function open(i) {
     if (isOpen()) { render(i); return; }
@@ -3027,3 +3029,4 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
+
