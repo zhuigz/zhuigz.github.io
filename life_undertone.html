@@ -1318,6 +1318,18 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   .section-overview { margin-bottom: 28px; gap: 6px; }
   .section-overview a { font-size: 13px; padding: 7px 10px; }
 }
+/* Return from long chapters to their existing overview. */
+.section-overview[id] { scroll-margin-top: 110px; }
+.chapter-return {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; max-width: 100%; margin-top: 28px; padding: 8px 0;
+  color: var(--sc); font-size: 14px; line-height: 1.6;
+  text-decoration: underline; text-underline-offset: 4px;
+}
+.chapter-return:hover { color: var(--ink); }
+.section-overview:focus-visible, .chapter-return:focus-visible {
+  outline: 2px solid var(--sc); outline-offset: 6px; border-radius: 4px;
+}
 </style>
 </head>
 <body>
@@ -1541,7 +1553,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     <div class="section-label">II · SPIRITUAL TOTEM</div>
     <h2 class="section-title">精神<span class="hl">图腾</span></h2>
     <p class="section-sub">我相信什么——理想、人物、Slogan、座右铭。这一团<em>赤红</em>，是我血液里的火。</p>
-    <nav class="section-overview" aria-label="精神图腾本章速览">
+    <nav class="section-overview" id="s2-overview" tabindex="-1" aria-label="精神图腾本章速览">
       <span class="overview-label">本章速览</span>
       <a href="#s2-ideals">理想</a>
       <a href="#s2-frameworks">我的理论</a>
@@ -1716,6 +1728,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
       <span class="chip"><span class="dot"></span>今何在</span>
     </div>
   </div>
+  <a class="chapter-return" href="#s2-overview" aria-label="返回精神图腾本章速览"><span aria-hidden="true">↑</span> 返回本章速览</a>
 </section>
 
 <div class="divider"></div>
@@ -1727,7 +1740,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     <div class="section-label">III · COGNITIVE INPUT</div>
     <h2 class="section-title">认知<span class="hl">输入</span></h2>
     <p class="section-sub">我学什么、看什么、听什么——书籍、课程、播客、电影、剧集、小说、动漫、公众号、日历。<em>靛紫</em>是深夜的颜色，也是头脑的颜色。</p>
-    <nav class="section-overview" aria-label="认知输入本章速览">
+    <nav class="section-overview" id="s3-overview" tabindex="-1" aria-label="认知输入本章速览">
       <span class="overview-label">本章速览</span>
       <a href="#s3-books">书籍</a>
       <a href="#s3-courses">课程</a>
@@ -1958,6 +1971,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
       </div>
     </div>
   </div>
+  <a class="chapter-return" href="#s3-overview" aria-label="返回认知输入本章速览"><span aria-hidden="true">↑</span> 返回本章速览</a>
 </section>
 
 <div class="divider"></div>
@@ -1969,7 +1983,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     <div class="section-label">IV · AESTHETICS &amp; LOVE</div>
     <h2 class="section-title">审美与<span class="hl">热爱</span></h2>
     <p class="section-sub">我爱什么——颜色、动植物、浪漫、音乐、游戏、运动、收集。<em>珊瑚色</em>是心跳的颜色。</p>
-    <nav class="section-overview" aria-label="审美与热爱本章速览">
+    <nav class="section-overview" id="s4-overview" tabindex="-1" aria-label="审美与热爱本章速览">
       <span class="overview-label">本章速览</span>
       <a href="#s4-color">颜色</a>
       <a href="#s4-creatures">动植物</a>
@@ -2151,6 +2165,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
       </div>
     </div>
   </div>
+  <a class="chapter-return" href="#s4-overview" aria-label="返回审美与热爱本章速览"><span aria-hidden="true">↑</span> 返回本章速览</a>
 </section>
 
 <div class="divider"></div>
