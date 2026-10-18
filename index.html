@@ -1895,6 +1895,27 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
   #connect { padding: 64px 0 56px; }
 }
 
+
+/* Concrete introduction and a direct conversation entry. */
+.hero-intro {
+  max-width: 560px; margin-top: 22px;
+  font-family: var(--sans-cn); font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.9; color: var(--ink);
+}
+body.js .hero-intro { opacity: 0; }
+body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
+.hero-intro + .hero-tags { margin-top: 20px; }
+.hero-intro ~ .hero-mission { margin-top: 20px; font-size: clamp(13px, 1.5vw, 15px); }
+.hero-action.tertiary {
+  color: var(--ink-soft); border: 1px solid transparent; background: transparent;
+}
+.hero-action.tertiary:hover { color: var(--gold-light); }
+@media (max-width: 600px) {
+  .hero-intro { margin-top: 20px; }
+  .hero-actions .hero-action.primary,
+  .hero-actions .hero-action.secondary { flex: 1 1 130px; max-width: 190px; }
+  .hero-actions .hero-action.tertiary { flex-basis: 100%; padding-top: 4px; padding-bottom: 4px; }
+}
 </style>
 </head>
 <body id="top">
@@ -1955,6 +1976,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
       <span>The Light Chaser</span>
     </p>
     <p class="hero-meta"><span>2007 · 山西朔州 <span class="arrow">→</span> 湖北武汉</span><span class="hero-school">华中农业大学 · 行政管理专业 · 大二在读</span></p>
+    <p class="hero-intro">写文章、做视频，用 AI 做视觉创作。<br>也把想法做成网页与工具。</p>
     <div class="hero-tags">
       <span class="tag">AI 原生实践者</span>
       <span class="tag">个人IP起步者</span>
@@ -1963,8 +1985,9 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     </div>
     <p class="hero-mission">帮助更多年轻人用 AI <em>打破思维钢印</em>，看见人生更多可能</p>
     <div class="hero-actions">
-      <a class="hero-action primary" href="#gallery">看我的作品 <span aria-hidden="true">↗</span></a>
-      <a class="hero-action secondary" href="#practice">了解我在做什么 <span aria-hidden="true">↓</span></a>
+      <a class="hero-action primary" href="#topics">可以聊什么 <span aria-hidden="true">↓</span></a>
+      <a class="hero-action secondary" href="#gallery">看我的作品 <span aria-hidden="true">↗</span></a>
+      <a class="hero-action tertiary" href="#practice">了解我在做什么 <span aria-hidden="true">↓</span></a>
     </div>
     <div class="hero-motto">
       <em>道阻且长</em>，行则将至<br>
