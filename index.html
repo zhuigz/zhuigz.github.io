@@ -1871,7 +1871,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
   #connect .section-head { grid-column: 1; grid-row: 1; margin-bottom: 0; text-align: left; }
   #connect .section-title { font-size: 48px; }
   #connect .section-sub { margin-left: 0; margin-right: 0; max-width: 440px; }
-  #connect .connect-wrap { grid-column: 2; grid-row: 1 / 3; }
+  #connect .connect-wrap { grid-column: 2; grid-row: 1; }
   #connect .connect-foot { grid-column: 1; grid-row: 2; margin-top: 0; text-align: left; }
 }
 
@@ -1916,6 +1916,9 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
   .hero-actions .hero-action.secondary { flex: 1 1 130px; max-width: 190px; }
   .hero-actions .hero-action.tertiary { flex-basis: 100%; padding-top: 4px; padding-bottom: 4px; }
 }
+
+/* Closing copy: keep the new centered subtitle aligned with its heading. */
+#become .section-sub { margin-left: auto; margin-right: auto; }
 </style>
 </head>
 <body id="top">
@@ -2367,8 +2370,8 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
   <section id="beliefs">
     <div class="section-head reveal">
       <div class="section-label"><span class="idx">06</span> Core Beliefs</div>
-      <h2 class="section-title">一些我坚信的<span class="hl">道理</span></h2>
-      <p class="section-sub">不是哲学命题，是被自己反复用过的句子。每一条都帮我做过决定。</p>
+      <h2 class="section-title">我相信的<span class="hl">几句话</span></h2>
+      <p class="section-sub">这些话，是我给自己的提醒。</p>
     </div>
 
     <div class="manifesto reveal-stagger">
@@ -2443,13 +2446,13 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
   <section id="become">
     <div class="section-head reveal" style="text-align:center;">
       <div class="section-label" style="justify-content:center;"><span class="idx">08</span> Who I Want To Be</div>
-      <h2 class="section-title">我想成为<span class="hl">怎样的人</span></h2>
+      <h2 class="section-title">既清醒<span class="hl">又热烈</span></h2>
+      <p class="section-sub">我想成为这样的人。</p>
     </div>
     <div class="become-poem reveal-stagger">
-      <p class="b-line lead">我想成为一个<em>既清醒又热烈</em>的人。</p>
       <p class="b-line">有能力赚钱，也有能力生活；</p>
       <p class="b-line">有理性系统，也有感性底色；</p>
-      <p class="b-line">能长期奋斗，也能认真感受日落、电影、和猫；</p>
+      <p class="b-line">能长期奋斗，也能认真感受日落、电影和猫；</p>
       <p class="b-line">能用 AI 放大自己，也能始终守住<em>人的温度和良知</em>。</p>
       <div class="b-gap"></div>
       <p class="b-line">我现在还不够强，</p>
@@ -2468,8 +2471,8 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
   <section id="connect">
     <div class="section-head reveal">
       <div class="section-label"><span class="idx">09</span> Connect</div>
-      <h2 class="section-title">如果你也想<span class="hl">追光</span></h2>
-      <p class="section-sub">可以聊 AI，聊成长，聊个人IP，聊 FIRE，聊人生选择——也可以只是约一杯咖啡，打一通电话。</p>
+      <h2 class="section-title">很高兴<span class="hl">认识你</span></h2>
+      <p class="section-sub">有想交流的事，欢迎加我微信。</p>
     </div>
     <div class="connect-wrap reveal">
       <div class="connect-card tilt">
@@ -2481,7 +2484,6 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
         <p id="copyStatus" role="status" aria-live="polite"></p>
       </div>
     </div>
-    <p class="connect-foot reveal"><em>追光的人，终将光芒万丈。</em></p>
   </section>
 
 </main>
