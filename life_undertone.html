@@ -1330,6 +1330,39 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
 .section-overview:focus-visible, .chapter-return:focus-visible {
   outline: 2px solid var(--sc); outline-offset: 6px; border-radius: 4px;
 }
+
+/* Cognitive input: three reading groups, with original items and anchor order. */
+#s3 .input-overview { display: block; }
+#s3 .input-overview > .overview-label { display: block; margin-bottom: 12px; }
+#s3 .input-overview-group {
+  display: grid; grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px; align-items: start;
+}
+#s3 .input-overview-group + .input-overview-group { margin-top: 10px; }
+#s3 .input-overview-label {
+  padding: 10px 0; color: var(--sc);
+  font-size: 13px; font-weight: 500; line-height: 1.8;
+}
+#s3 .input-overview-links { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+#s3 .input-group { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(var(--sc-rgb), .22); }
+#s3 .input-group-title {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 18px;
+  color: var(--ink); font: 700 24px/1.5 'Noto Serif SC', serif; letter-spacing: 1px;
+}
+#s3 .input-group-title small {
+  color: var(--sc); font: 400 11px/1.8 'Outfit', sans-serif; letter-spacing: 2px;
+}
+#s3 .input-group > .reveal:first-of-type .subsection-label { margin-top: 28px; }
+#s3 .subsection-label[id] { scroll-margin-top: 110px; }
+#s3 .subsection-label:focus { outline: none; }
+#s3 .subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset: 6px; }
+@media (max-width: 560px) {
+  #s3 .input-overview-group { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  #s3 .input-overview-group + .input-overview-group { margin-top: 16px; }
+  #s3 .input-overview-label { padding: 0; }
+  #s3 .input-group { margin-top: 44px; padding-top: 24px; }
+  #s3 .input-group-title { font-size: 21px; gap: 8px 12px; }
+}
 </style>
 </head>
 <body>
@@ -1740,24 +1773,41 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     <div class="section-label">III · COGNITIVE INPUT</div>
     <h2 class="section-title">认知<span class="hl">输入</span></h2>
     <p class="section-sub">我学什么、看什么、听什么——书籍、课程、播客、电影、剧集、小说、动漫、公众号、日历。<em>靛紫</em>是深夜的颜色，也是头脑的颜色。</p>
-    <nav class="section-overview" id="s3-overview" tabindex="-1" aria-label="认知输入本章速览">
+    <nav class="section-overview input-overview" id="s3-overview" tabindex="-1" aria-label="认知输入本章速览">
       <span class="overview-label">本章速览</span>
-      <a href="#s3-books">书籍</a>
-      <a href="#s3-courses">课程</a>
-      <a href="#s3-podcast">播客</a>
-      <a href="#s3-films">珍藏片单</a>
-      <a href="#s3-more-films">更多电影与系列</a>
-      <a href="#s3-tv">电视剧</a>
-      <a href="#s3-novels">小说</a>
-      <a href="#s3-audio-drama">广播剧</a>
-      <a href="#s3-animation">动漫 / 漫画</a>
-      <a href="#s3-wechat">公众号</a>
-      <a href="#s3-calendar">日历</a>
+      <div class="input-overview-group">
+        <span class="input-overview-label">阅读与学习</span>
+        <div class="input-overview-links">
+          <a href="#s3-books">书籍</a>
+          <a href="#s3-courses">课程</a>
+          <a href="#s3-podcast">播客</a>
+        </div>
+      </div>
+      <div class="input-overview-group">
+        <span class="input-overview-label">影像与故事</span>
+        <div class="input-overview-links">
+          <a href="#s3-films">珍藏片单</a>
+          <a href="#s3-more-films">更多电影与系列</a>
+          <a href="#s3-tv">电视剧</a>
+          <a href="#s3-novels">小说</a>
+          <a href="#s3-audio-drama">广播剧</a>
+          <a href="#s3-animation">动漫 / 漫画</a>
+        </div>
+      </div>
+      <div class="input-overview-group">
+        <span class="input-overview-label">日常关注</span>
+        <div class="input-overview-links">
+          <a href="#s3-wechat">公众号</a>
+          <a href="#s3-calendar">日历</a>
+        </div>
+      </div>
     </nav>
   </div>
 
+  <div class="input-group" aria-labelledby="s3-group-learning">
+    <h3 class="input-group-title" id="s3-group-learning">阅读与学习 <small>READING &amp; LEARNING</small></h3>
   <div class="reveal">
-    <h3 id="s3-books" tabindex="-1" class="subsection-label">书籍 <small>BOOKS · 12</small></h3>
+    <h4 id="s3-books" tabindex="-1" class="subsection-label">书籍 <small>BOOKS · 12</small></h4>
     <div class="bookshelf">
       <div class="book-spine"><div class="book-mark">01</div><div class="book-title">习近平的<br>七年知青岁月</div></div>
       <div class="book-spine"><div class="book-mark">02</div><div class="book-title">长安诗选</div></div>
@@ -1775,7 +1825,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-courses" tabindex="-1" class="subsection-label">课程 <small>COURSES · 7</small></h3>
+    <h4 id="s3-courses" tabindex="-1" class="subsection-label">课程 <small>COURSES · 7</small></h4>
     <div class="chip-row">
       <span class="chip"><span class="dot"></span>通往财富自由之路</span>
       <span class="chip"><span class="dot"></span>希望者联盟</span>
@@ -1788,7 +1838,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-podcast" tabindex="-1" class="subsection-label">播客 <small>PODCAST</small></h3>
+    <h4 id="s3-podcast" tabindex="-1" class="subsection-label">播客 <small>PODCAST</small></h4>
     <div class="solo-card">
       <span class="solo-icon">🎙️</span>
       <div>
@@ -1798,8 +1848,12 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     </div>
   </div>
 
+  </div>
+
+  <div class="input-group" aria-labelledby="s3-group-stories">
+    <h3 class="input-group-title" id="s3-group-stories">影像与故事 <small>FILMS &amp; STORIES</small></h3>
   <div class="reveal">
-    <h3 id="s3-films" tabindex="-1" class="subsection-label">电影 · 珍藏片单 <small>FILMS · 10</small></h3>
+    <h4 id="s3-films" tabindex="-1" class="subsection-label">电影 · 珍藏片单 <small>FILMS · 10</small></h4>
     <div class="movie-wall">
 
       <div class="movie-poster feature" style="--mc1:rgba(232,184,122,0.22); --mc2:rgba(200,53,42,0.08); --mb:rgba(232,184,122,0.45);">
@@ -1886,7 +1940,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-more-films" tabindex="-1" class="subsection-label">更多电影与系列 <small>ALSO ON MY LIST</small></h3>
+    <h4 id="s3-more-films" tabindex="-1" class="subsection-label">更多电影与系列 <small>ALSO ON MY LIST</small></h4>
     <div class="chip-row">
       <span class="chip">《流浪地球》1</span>
       <span class="chip">《白蛇》1—3</span>
@@ -1902,7 +1956,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-tv" tabindex="-1" class="subsection-label">电视剧 <small>TV SERIES · 7</small></h3>
+    <h4 id="s3-tv" tabindex="-1" class="subsection-label">电视剧 <small>TV SERIES · 7</small></h4>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">主旋律</span>觉醒年代</div>
       <div class="media-card"><span class="mtype">科幻</span>三体</div>
@@ -1915,7 +1969,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-novels" tabindex="-1" class="subsection-label">小说 <small>NOVELS · 3</small></h3>
+    <h4 id="s3-novels" tabindex="-1" class="subsection-label">小说 <small>NOVELS · 3</small></h4>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">悬疑</span>死亡作业</div>
       <div class="media-card"><span class="mtype">未来</span>未来：人类的征途</div>
@@ -1924,7 +1978,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-audio-drama" tabindex="-1" class="subsection-label">广播剧 <small>AUDIO DRAMA</small></h3>
+    <h4 id="s3-audio-drama" tabindex="-1" class="subsection-label">广播剧 <small>AUDIO DRAMA</small></h4>
     <div class="solo-card">
       <span class="solo-icon">📻</span>
       <div>
@@ -1935,7 +1989,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-animation" tabindex="-1" class="subsection-label">动漫 / 漫画 <small>ANIMATION · 6</small></h3>
+    <h4 id="s3-animation" tabindex="-1" class="subsection-label">动漫 / 漫画 <small>ANIMATION · 6</small></h4>
     <div class="media-grid">
       <div class="media-card"><span class="mtype">古风</span>成何体统</div>
       <div class="media-card"><span class="mtype">五行</span>雾山五行</div>
@@ -1946,8 +2000,12 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     </div>
   </div>
 
+  </div>
+
+  <div class="input-group" aria-labelledby="s3-group-daily">
+    <h3 class="input-group-title" id="s3-group-daily">日常关注 <small>DAILY INPUT</small></h3>
   <div class="reveal">
-    <h3 id="s3-wechat" tabindex="-1" class="subsection-label">公众号 <small>WECHAT · 9</small></h3>
+    <h4 id="s3-wechat" tabindex="-1" class="subsection-label">公众号 <small>WECHAT · 9</small></h4>
     <div class="chip-row">
       <span class="chip"><span class="dot"></span>青年大学习</span>
       <span class="chip"><span class="dot"></span>夜读</span>
@@ -1962,7 +2020,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s3-calendar" tabindex="-1" class="subsection-label">日历 <small>CALENDAR</small></h3>
+    <h4 id="s3-calendar" tabindex="-1" class="subsection-label">日历 <small>CALENDAR</small></h4>
     <div class="solo-card">
       <span class="solo-icon">📅</span>
       <div>
@@ -1970,6 +2028,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
         <div class="solo-desc">夜读温柔，日历人间</div>
       </div>
     </div>
+  </div>
   </div>
   <a class="chapter-return" href="#s3-overview" aria-label="返回认知输入本章速览"><span aria-hidden="true">↑</span> 返回本章速览</a>
 </section>
