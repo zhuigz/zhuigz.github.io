@@ -1363,6 +1363,34 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   #s3 .input-group { margin-top: 44px; padding-top: 24px; }
   #s3 .input-group-title { font-size: 21px; gap: 8px 12px; }
 }
+
+/* Spiritual totem: follow numbered beliefs by row, and give quotations reading width. */
+#s2 .slogan-wall {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px; column-count: auto;
+}
+#s2 .slogan-card {
+  display: block; min-width: 0; margin-bottom: 0;
+  transform: none; overflow-wrap: anywhere;
+}
+#s2 .slogan-card:hover { transform: translateY(-3px); }
+#s2 .quotes-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+#s2 .quote-card {
+  display: grid; grid-template-columns: 120px minmax(0, 1fr);
+  align-items: start; gap: 24px; padding: 26px 28px;
+}
+#s2 .quote-author { margin-bottom: 0; line-height: 1.9; }
+#s2 .quote-text {
+  min-width: 0; max-width: 48em; font-size: 15px; line-height: 2;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 900px) {
+  #s2 .slogan-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+  #s2 .slogan-wall { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  #s2 .quote-card { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 22px 20px; }
+}
 </style>
 </head>
 <body>
