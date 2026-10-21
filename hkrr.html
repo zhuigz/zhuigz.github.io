@@ -2188,6 +2188,15 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 .score-advice, .score-tier, .verdict-text { overflow-wrap: anywhere; }
 #audit .score-card { position: static; }
 @media (max-width: 720px) { .audit-workflow { grid-template-columns: 1fr; gap: 18px; } }
+
+/* Distinct R indices do not widen the large formula or require hover. */
+.hero-formula .l, .principle-letter, .synth-formula .gly { position: relative; }
+.variable-index { position: absolute; right: -.3em; bottom: .05em; font-family: var(--mono); font-size: .22em; line-height: 1; letter-spacing: 0; }
+.synth-formula { font-size: clamp(40px, 14vw, 200px); flex-wrap: nowrap; }
+.synth-formula .term { min-width: 0; text-decoration: none; }
+.synth-formula .term:hover { transform: none; }
+.synth-formula .term:focus-visible { outline: 2px solid var(--c); outline-offset: 6px; border-radius: 4px; }
+.synth-formula .term .role, .synth-formula .term:hover .role { opacity: 1; transform: none; font-family: var(--sans); font-size: clamp(12px, 1.1vw, 16px); letter-spacing: 0; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -2234,9 +2243,9 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         <a href="#resonance" data-section="resonance" style="--chapter-color:var(--r1)"><span class="chapter-key">R₁</span>共鸣</a>
         <a href="#rhythm" data-section="rhythm" style="--chapter-color:var(--r2)"><span class="chapter-key">R₂</span>节奏</a>
         <a href="#synthesis" data-section="synthesis"><span class="chapter-key">06</span>合一</a>
-        <a href="#cases" data-section="cases"><span class="chapter-key">06B</span>案例</a>
-        <a href="#audit" data-section="audit"><span class="chapter-key">07</span>自检</a>
-        <a href="#manifesto" data-section="manifesto"><span class="chapter-key">08</span>原则</a>
+        <a href="#cases" data-section="cases"><span class="chapter-key">07</span>案例</a>
+        <a href="#audit" data-section="audit"><span class="chapter-key">08</span>自检</a>
+        <a href="#manifesto" data-section="manifesto"><span class="chapter-key">09</span>原则</a>
       </div>
     </nav>
   </details>
@@ -2267,8 +2276,8 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
           <span class="fa fa-r1"></span>
           <span class="fa fa-r2"></span>
         </div>
-        <h1 class="hero-formula" aria-label="H × K × R × R">
-        <span class="l l-1" data-cursor="Happiness">H</span><span class="x x-1">×</span><span class="l l-2" data-cursor="Knowledge">K</span><span class="x x-2">×</span><span class="l l-3" data-cursor="Resonance">R</span><span class="x x-3">×</span><span class="l l-4" data-cursor="Rhythm">R</span>
+        <h1 class="hero-formula" aria-label="H 快乐 × K 知识 × R₁ 共鸣 × R₂ 节奏">
+        <span class="l l-1" data-cursor="Happiness">H</span><span class="x x-1">×</span><span class="l l-2" data-cursor="Knowledge">K</span><span class="x x-2">×</span><span class="l l-3" data-cursor="Resonance">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="x x-3">×</span><span class="l l-4" data-cursor="Rhythm">R<sub class="variable-index" aria-hidden="true">2</sub></span>
         </h1>
       </div>
       <p class="hero-words">
@@ -2485,7 +2494,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter" data-cursor="Resonance">R</span>
+          <span class="principle-letter" data-cursor="Resonance">R<sub class="variable-index" aria-hidden="true">1</sub></span>
           <div class="principle-titles">
             <span class="principle-en">Resonance</span>
             <h3 class="principle-zh">共鸣</h3>
@@ -2554,7 +2563,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter" data-cursor="Rhythm">R</span>
+          <span class="principle-letter" data-cursor="Rhythm">R<sub class="variable-index" aria-hidden="true">2</sub></span>
           <div class="principle-titles">
             <span class="principle-en">Rhythm</span>
             <h3 class="principle-zh">节奏</h3>
@@ -2624,15 +2633,15 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
       <p class="s-lead">我用四个维度检查具体片段，再决定先改哪一处。数据不理想时，也要回看选题、标题、封面和受众是否匹配。<span class="strong">先提出一个有证据的修改判断，再用下一次发布验证。</span></p>
 
       <div class="synth-stage">
-        <div class="synth-eyebrow">悬停每一个字母 · Hover each variable</div>
-        <p class="synth-formula" aria-label="H × K × R × R">
-          <span class="term h" data-cursor="Happiness"><span class="gly">H</span><span class="role">Happiness</span></span>
+        <div class="synth-eyebrow">选择字母，回到对应章节 · Jump to a variable</div>
+        <p class="synth-formula">
+          <a class="term h" href="#happiness" data-cursor="Happiness" aria-label="H 快乐，前往快乐章节"><span class="gly" aria-hidden="true">H</span><span class="role">快乐</span></a>
           <span class="x">×</span>
-          <span class="term k" data-cursor="Knowledge"><span class="gly">K</span><span class="role">Knowledge</span></span>
+          <a class="term k" href="#knowledge" data-cursor="Knowledge" aria-label="K 知识，前往知识章节"><span class="gly" aria-hidden="true">K</span><span class="role">知识</span></a>
           <span class="x">×</span>
-          <span class="term r1" data-cursor="Resonance"><span class="gly">R</span><span class="role">Resonance</span></span>
+          <a class="term r1" href="#resonance" data-cursor="Resonance" aria-label="R₁ 共鸣，前往共鸣章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="role">共鸣</span></a>
           <span class="x">×</span>
-          <span class="term r2" data-cursor="Rhythm"><span class="gly">R</span><span class="role">Rhythm</span></span>
+          <a class="term r2" href="#rhythm" data-cursor="Rhythm" aria-label="R₂ 节奏，前往节奏章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">2</sub></span><span class="role">节奏</span></a>
         </p>
         <p class="synth-note"><b>×</b> 提醒我留意短板，先补影响本条目标的缺口。</p>
       </div>
@@ -2670,11 +2679,11 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     </div>
   </section>
 
-  <!-- ============ 06.5 · CASES ============ -->
+  <!-- ============ 07 · CASES ============ -->
   <section class="section r" id="cases" data-tint="rgba(245,242,233,0.04)">
     <div class="wrap wrap-wide">
       <div class="s-marker">
-        <span class="n">06½</span>
+        <span class="n">07</span>
         <span class="lbl">案例 · Cases</span>
         <span class="bar"></span>
         <span class="dot"></span>
@@ -2743,11 +2752,11 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     </div>
   </section>
 
-  <!-- ============ 07 · AUDIT ============ -->
+  <!-- ============ 08 · AUDIT ============ -->
   <section class="section r" id="audit" data-tint="rgba(240,200,120,0.10)">
     <div class="wrap">
       <div class="s-marker">
-        <span class="n">07</span>
+        <span class="n">08</span>
         <span class="lbl">互动 · Audit</span>
         <span class="bar"></span>
         <span class="dot"></span>
@@ -2814,7 +2823,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     </div>
   </section>
 
-  <!-- ============ 08 · MANIFESTO ============ -->
+  <!-- ============ 09 · MANIFESTO ============ -->
   <section class="manifesto r" id="manifesto" data-tint="rgba(245,242,233,0.06)">
     <div class="manifesto-bg" aria-hidden="true">
       <div class="orb o1"></div>
@@ -2824,7 +2833,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     </div>
     <div class="wrap manifesto-inner">
       <div class="s-marker" style="justify-content:center">
-        <span class="n">08</span>
+        <span class="n">09</span>
         <span class="lbl">原则 · Manifesto</span>
       </div>
 
@@ -2855,7 +2864,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
   <div class="wrap">
     <div class="formula" aria-hidden="true">
       <span>好内容 =</span>
-      <span class="l l-1">H</span><span class="x">×</span><span class="l l-2">K</span><span class="x">×</span><span class="l l-3">R</span><span class="x">×</span><span class="l l-4">R</span>
+      <span class="l l-1">H</span><span class="x">×</span><span class="l l-2">K</span><span class="x">×</span><span class="l l-3">R₁</span><span class="x">×</span><span class="l l-4">R₂</span>
     </div>
     <div class="meta">
       <span>参考影视飓风 Tim · 个人创作工作台</span>
@@ -2870,8 +2879,8 @@ window.HKRR = {
   sliders: [
     { letter: 'H', name: '快乐', en: 'Happiness',  m: 'h',  hint: '有趣、惊喜、审美享受、释然或希望感',           start: 6, color: '#ffb86a', action: '圈出体验平淡的片段，检查能否用更贴切的例子、画面或表达增加趣味与满足，不硬加笑料。' },
     { letter: 'K', name: '知识', en: 'Knowledge',  m: 'k',  hint: '有准确的新信息、解释、判断或方法',          start: 7, color: '#7eb9f5', action: '写下观众应带走的一句话，补足支撑它的依据、解释或步骤，删去只堆名词的部分。' },
-    { letter: 'R', name: '共鸣', en: 'Resonance',  m: 'r1', hint: '说准观众处境、感受或关切，素材真实',                start: 5, color: '#ff8a93', action: '指出目标观众正在意的处境或问题，检查素材是否真实、有关，不靠虚构亲历来补共鸣。' },
-    { letter: 'R', name: '节奏', en: 'Rhythm',     m: 'r2', hint: '顺序清楚、密度合适，信息与情绪有推进',           start: 6, color: '#6fe1b3', action: '按正常速度标出重复、跳跃或来不及理解的位置，调整顺序、停顿或密度。' },
+    { letter: 'R₁', name: '共鸣', en: 'Resonance',  m: 'r1', hint: '说准观众处境、感受或关切，素材真实',                start: 5, color: '#ff8a93', action: '指出目标观众正在意的处境或问题，检查素材是否真实、有关，不靠虚构亲历来补共鸣。' },
+    { letter: 'R₂', name: '节奏', en: 'Rhythm',     m: 'r2', hint: '顺序清楚、密度合适，信息与情绪有推进',           start: 6, color: '#6fe1b3', action: '按正常速度标出重复、跳跃或来不及理解的位置，调整顺序、停顿或密度。' },
   ],
   yesno: [
     { letter: 'H', name: 'Happiness · 快乐',  m: 'h',
@@ -2880,10 +2889,10 @@ window.HKRR = {
     { letter: 'K', name: 'Knowledge · 知识', m: 'k',
       q: '观众看完后，能多知道或理解一件事，或带走一个判断、方法吗？',
       sub: '说清收获是什么，正文有依据、有解释，不必每条都有行动清单。' },
-    { letter: 'R', name: 'Resonance · 共鸣', m: 'r1',
+    { letter: 'R₁', name: 'Resonance · 共鸣', m: 'r1',
       q: '内容是否说准了目标观众的处境、感受、愿望或共同关切？',
       sub: '亲历、观察、采访均可，注明素材归属，不把别人的经历写成自己。' },
-    { letter: 'R', name: 'Rhythm · 节奏',    m: 'r2',
+    { letter: 'R₂', name: 'Rhythm · 节奏',    m: 'r2',
       q: '信息和情绪的展开是否顺畅，观众跟得上，也有继续看的理由吗？',
       sub: '按正常阅读或播放速度检查顺序、停顿、重复和信息密度。' },
   ]
