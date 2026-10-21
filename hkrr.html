@@ -2170,6 +2170,24 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 .case-after .case-stage { color: var(--c, var(--gold)); }
 .case-fragment p { color: var(--pap-1); line-height: 1.9; overflow-wrap: anywhere; }
 .case .case-note { margin-top: 0; font-style: normal; }
+
+/* A short workflow and optional rubric support the existing audit controls. */
+.audit-workflow { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; margin: 40px 0 0; }
+.audit-workflow article { min-width: 0; border-top: 1px solid var(--pap-5); padding-top: 18px; }
+.audit-workflow h3 { color: var(--pap-0); font-size: 17px; font-weight: 500; margin-bottom: 10px; }
+.audit-workflow p { font-size: 15px; line-height: 1.9; color: var(--pap-2); }
+.audit-rubric { border: 1px solid var(--pap-5); border-radius: 10px; padding: 0 16px; margin-bottom: 28px; }
+.audit-rubric summary { cursor: pointer; min-height: 44px; padding: 12px 0; font-size: 14px; color: var(--pap-1); }
+.audit-rubric summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.audit-rubric ul, .audit-actions { padding-left: 20px; }
+.audit-rubric li, .audit-rubric p { font-size: 14px; line-height: 1.9; color: var(--pap-2); margin-bottom: 10px; }
+.audit-rubric b { color: var(--pap-1); font-weight: 500; }
+.audit-actions { margin: 12px 0 0; }
+.audit-actions li + li { margin-top: 10px; }
+.score-advice p, .verdict-text p { margin: 0; }
+.score-advice, .score-tier, .verdict-text { overflow-wrap: anywhere; }
+#audit .score-card { position: static; }
+@media (max-width: 720px) { .audit-workflow { grid-template-columns: 1fr; gap: 18px; } }
 </style>
 </head>
 <body>
@@ -2735,8 +2753,14 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         <span class="dot"></span>
       </div>
 
-      <h2 class="s-title">轮到你了——<br/>给你最近一条内容<span class="it">打个分</span>。</h2>
-      <p class="s-lead">两种模式：<em>精细打分</em>给细致优化，<em>是非自检</em>给快速过审。<span class="strong">滑动时，背景的色调会随着你打的分变化。</span></p>
+      <h2 class="s-title">拿一条具体内容，<br/>找到<span class="it">下一处修改</span>。</h2>
+      <p class="s-lead">先明确本条目标，再选择<em>精细打分</em>或<em>是非自检</em>。<span class="strong">每个判断都尽量对应一个段落、句子或时间点，本轮先选一处值得修改的地方。</span></p>
+
+      <div class="audit-workflow" aria-label="创作与复盘的三个步骤">
+        <article><h3>创作前 · 定目标</h3><p>写清给谁看、希望带走什么，以及本条侧重的维度。选题、标题和封面是否匹配，也单独检查。</p></article>
+        <article><h3>审稿时 · 找证据</h3><p>按正常速度通读或播放，圈出支持判断的片段。先改一处影响目标的问题，再看前后是否更清楚。</p></article>
+        <article><h3>发布后 · 校判断</h3><p>结合完读或停留、收藏分享和评论原话回看，与相近内容比较。单个指标不直接等同某个变量，记下一次要验证的改法。</p></article>
+      </div>
 
       <div class="audit-shell r-pop" id="auditShell">
         <noscript><p class="audit-fallback">自检工具需要 JavaScript。你仍可阅读四个变量，对照正文完成检查。</p></noscript>
@@ -2747,9 +2771,19 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 
         <div class="audit-panel active" id="panelSliders" role="tabpanel" aria-labelledby="tabSliders" tabindex="0" data-panel="sliders">
           <div class="audit-tools">
-            <p class="audit-note" id="scoreHelp">每项 0—10 分。初始 6 / 7 / 5 / 6 是演示值，请按自己的内容调整。</p>
+            <p class="audit-note" id="scoreHelp">每项 0—10 分，先找片段证据，再参照下方说明。初始 6 / 7 / 5 / 6 只是演示值。</p>
             <button type="button" class="audit-reset" id="resetSliders" disabled>恢复示例</button>
           </div>
+          <details class="audit-rubric">
+            <summary>评分参照 · 点开按同一把尺检查</summary>
+            <ul>
+              <li><b>0—3 分</b> 尚未找到清楚的片段支撑，或表达意图尚未落地。</li>
+              <li><b>4—6 分</b> 能指出支撑片段，但表达、依据或衔接仍有明显可改处。</li>
+              <li><b>7—8 分</b> 片段清楚、贴合目标，能具体说明它为什么有效。</li>
+              <li><b>9—10 分</b> 多次回看或观众反馈能支持判断，暂未发现重要缺口。</li>
+            </ul>
+            <p>这是个人自评参照。低分先问是否影响本条目标，不必四项平均用力；高分也要留待真实反馈核对。</p>
+          </details>
           <div class="audit-grid">
             <div class="sliders" id="sliderList"></div>
             <aside class="score-card" id="scoreCard" aria-labelledby="scoreLabel">
@@ -2757,8 +2791,8 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
               <div class="score-display"><span id="scoreVal">—</span><span class="max">/ 100</span></div>
               <div class="score-tier" id="scoreTier">—</div>
               <div class="score-bars" id="scoreBars"></div>
-              <p class="score-advice" id="scoreAdvice">拖动滑块，给当前内容评估每个维度。</p>
-              <p class="score-method">本工具自定算法：四项分数的几何平均 × 10，取整；任一项为 0，综合分为 0。用来对照自己的修改，不预测播放量或传播表现。</p>
+              <div class="score-advice" id="scoreAdvice">结合片段评估各维度，再选本轮要改的一处。</div>
+              <p class="score-method">综合分沿用四项几何平均 × 10，取整。高项会在数值上补偿低项；任一项为 0，综合分为 0。它仅用于对照自评，不能作为发布门槛或传播预测。</p>
             </aside>
           </div>
           <p class="audit-sr" id="scoreFeedback" role="status" aria-atomic="true"></p>
@@ -2766,15 +2800,15 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 
         <div class="audit-panel" id="panelYesno" role="tabpanel" aria-labelledby="tabYesno" tabindex="0" data-panel="yesno" hidden>
           <div class="audit-tools">
-            <p class="audit-note">每项选择“是”或“否”；两种模式独立记录，切换不会清空。</p>
+            <p class="audit-note">“是”表示能指出支撑片段；“否”表示暂未体现或仍需回看。两种模式独立记录，切换不会清空。</p>
             <button type="button" class="audit-reset" id="resetYesno" disabled>重新开始</button>
           </div>
           <div class="yesno" id="yesnoList"></div>
           <div class="verdict" id="verdict" role="status" aria-atomic="true">
-            <span class="verdict-stamp" id="verdictStamp">— 待判定 —</span>
-            <p class="verdict-text" id="verdictText">逐条作答。<b>四项全 ✓</b> 才算通过；任意一项 ✗，建议先回去补一刀。</p>
+            <span class="verdict-stamp" id="verdictStamp">— 待检查 —</span>
+            <div class="verdict-text" id="verdictText">逐条检查，再判断哪些缺口影响本条目标。</div>
           </div>
-          <p class="audit-note audit-disclaimer">通过表示四项自检均回答“是”，仍需结合观众反馈判断实际效果。</p>
+          <p class="audit-note audit-disclaimer">回答“否”不自动否定内容。先判断该项是否影响目标，再决定补强、调整目标，或保留当前取舍。</p>
         </div>
       </div>
     </div>
@@ -2834,10 +2868,10 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 <script>
 window.HKRR = {
   sliders: [
-    { letter: 'H', name: '快乐', en: 'Happiness',  m: 'h',  hint: '有趣、惊喜、审美享受、释然或希望感',           start: 6, color: '#ffb86a' },
-    { letter: 'K', name: '知识', en: 'Knowledge',  m: 'k',  hint: '有准确的新信息、解释、判断或方法',          start: 7, color: '#7eb9f5' },
-    { letter: 'R', name: '共鸣', en: 'Resonance',  m: 'r1', hint: '说准观众处境、感受或关切，素材真实',                start: 5, color: '#ff8a93' },
-    { letter: 'R', name: '节奏', en: 'Rhythm',     m: 'r2', hint: '顺序清楚、密度合适，信息与情绪有推进',           start: 6, color: '#6fe1b3' },
+    { letter: 'H', name: '快乐', en: 'Happiness',  m: 'h',  hint: '有趣、惊喜、审美享受、释然或希望感',           start: 6, color: '#ffb86a', action: '圈出体验平淡的片段，检查能否用更贴切的例子、画面或表达增加趣味与满足，不硬加笑料。' },
+    { letter: 'K', name: '知识', en: 'Knowledge',  m: 'k',  hint: '有准确的新信息、解释、判断或方法',          start: 7, color: '#7eb9f5', action: '写下观众应带走的一句话，补足支撑它的依据、解释或步骤，删去只堆名词的部分。' },
+    { letter: 'R', name: '共鸣', en: 'Resonance',  m: 'r1', hint: '说准观众处境、感受或关切，素材真实',                start: 5, color: '#ff8a93', action: '指出目标观众正在意的处境或问题，检查素材是否真实、有关，不靠虚构亲历来补共鸣。' },
+    { letter: 'R', name: '节奏', en: 'Rhythm',     m: 'r2', hint: '顺序清楚、密度合适，信息与情绪有推进',           start: 6, color: '#6fe1b3', action: '按正常速度标出重复、跳跃或来不及理解的位置，调整顺序、停顿或密度。' },
   ],
   yesno: [
     { letter: 'H', name: 'Happiness · 快乐',  m: 'h',
@@ -2853,6 +2887,43 @@ window.HKRR = {
       q: '信息和情绪的展开是否顺畅，观众跟得上，也有继续看的理由吗？',
       sub: '按正常阅读或播放速度检查顺序、停顿、重复和信息密度。' },
   ]
+};
+
+
+/* Review results are work prompts, never automatic publishing gates. */
+window.HKRR.reviewScores = function(state) {
+  const data = window.HKRR.sliders;
+  const product = state.reduce((a, b) => a * (b / 10), 1);
+  const score = Math.round(Math.pow(product, 1 / state.length) * 100);
+  const min = Math.min(...state);
+  const weakest = data.filter((_, i) => state[i] === min);
+  const names = weakest.map(d => d.name).join('、');
+  const same = state.every(v => v === state[0]);
+  let lead;
+  if (min === 0) lead = '有自评为零的维度，综合分按算法归零。先核对是缺少支撑，还是本条并不侧重，不据此直接否定内容。';
+  else if (same) lead = '四项自评分相同，先结合本条目标选一项复核；不需要为了提高总分同时修改四项。';
+  else lead = '较低项是检查线索，先判断它是否影响本条目标，再选一处修改。';
+  const steps = weakest.map(d => '<li><b>' + d.name + '</b> ' + d.action + '</li>').join('');
+  return { score, min, weakest, label: '低分线索 · ' + names,
+    advice: '<p>' + lead + '</p><ul class="audit-actions">' + steps + '</ul>' };
+};
+window.HKRR.reviewAnswers = function(state) {
+  const data = window.HKRR.yesno;
+  const answered = state.filter(v => v !== null).length;
+  const missing = data.filter((_, i) => state[i] === 'no');
+  const names = missing.map(d => d.name).join('、');
+  if (answered < data.length) return { kind: '', stamp: '— 待检查 —',
+    html: '<p>已回答 <b>' + answered + '/' + data.length + '</b>。' +
+      (missing.length ? '暂未体现或待回看：<b>' + names + '</b>。' : '') +
+      '请完成剩余 ' + (data.length - answered) + ' 项，再结合目标判断。</p>' };
+  if (!missing.length) return { kind: 'pass', stamp: '✓ 四项已有支撑',
+    html: '<p>四项均回答“是”。核对能否指出具体片段；若已达到本条目标，可按计划发布，再用真实反馈验证判断。</p>' };
+  const steps = missing.map(d => {
+    const item = window.HKRR.sliders.find(x => x.m === d.m);
+    return '<li><b>' + item.name + '</b> ' + item.action + '</li>';
+  }).join('');
+  return { kind: 'fail', stamp: '→ 有 ' + missing.length + ' 项待判断',
+    html: '<p>暂未体现或待回看：<b>' + names + '</b>。先选影响本条目标的一处，不必把所有“否”都补成“是”。</p><ul class="audit-actions">' + steps + '</ul>' };
 };
 
 /* ----------------------------------------------------------
@@ -3156,35 +3227,13 @@ window.HKRR = {
   const feedback = document.getElementById('scoreFeedback');
   let announceTimer;
 
-  function tier(score) {
-    if (score >= 85) return { label: 'STRONG · 较强', m: 'r2' };
-    if (score >= 60) return { label: 'GOOD · 可打磨', m: 'h' };
-    if (score >= 30) return { label: 'WEAK · 优先补强', m: 'r1' };
-    return { label: 'CRITICAL · 先补缺口', m: 'r1' };
-  }
-
   function compute(announce = false) {
-    // Preserve the geometric-mean scale; zero must remain zero.
-    const product = state.reduce((a, b) => a * (b / 10), 1);
-    const score = Math.round(Math.pow(product, 1 / state.length) * 100);
+    const result = window.HKRR.reviewScores(state);
+    const score = result.score;
     scoreVal.textContent = score;
-    const t = tier(score);
-    const min = Math.min(...state);
-    const weakest = data.filter((_, i) => state[i] === min).map(d => d.name).join('、');
-    const zeros = data.filter((_, i) => state[i] === 0).map(d => d.name).join('、');
-    let advice;
-    if (zeros) {
-      advice = `<strong>零分项：${zeros}。</strong>任一因子为零，综合分就为零。先补这些缺口，再查看其他维度。`;
-    } else if (min < 6) {
-      advice = `<strong>优先补强：${weakest}（${min}/10）。</strong>其他维度的高分不能替代这里的不足，先围绕这些维度修改一轮。`;
-    } else if (score >= 85) {
-      advice = '<strong>四项自评分都较高。</strong>记录值得复用的结构，发布后继续用真实反馈验证。';
-    } else {
-      advice = `<strong>下一轮先看：${weakest}（${min}/10）。</strong>把修改落到具体段落、例子或剪辑上，再重新评估。`;
-    }
-    scoreTier.textContent = t.label;
-    scoreAdvice.innerHTML = advice;
-    scoreCard.style.setProperty('--score-color', data.find(d => d.m === t.m).color);
+    scoreTier.textContent = result.label;
+    scoreAdvice.innerHTML = result.advice;
+    scoreCard.style.setProperty('--score-color', result.weakest[0].color);
     const max = Math.max(...state);
     shell.style.setProperty('--audit-tint', max === 0 ? 'var(--gold)' : data[state.indexOf(max)].color);
     scoreBars.innerHTML = data.map((d, i) => `
@@ -3258,21 +3307,11 @@ window.HKRR = {
       el.classList.toggle('no', state[i] === 'no');
       el.querySelectorAll('input').forEach(input => { input.checked = input.value === state[i]; });
     });
-    const answered = state.filter(v => v !== null).length;
-    const failed = data.filter((_, i) => state[i] === 'no').map(d => d.name);
+    const result = window.HKRR.reviewAnswers(state);
     verdictNode.classList.remove('pass', 'fail');
-    if (answered < data.length) {
-      stamp.textContent = '— 待判定 —';
-      txt.innerHTML = `已回答 <b>${answered}/${data.length}</b>。${failed.length ? `待补强：<b>${failed.join('、')}</b>。` : ''}请完成剩余 ${data.length-answered} 项，四项全选“是”才通过自检。`;
-    } else if (!failed.length) {
-      verdictNode.classList.add('pass');
-      stamp.textContent = '✓ PASS · 自检通过';
-      txt.innerHTML = '<b>四项均回答“是”。</b>记录这条内容的结构，再用发布后的真实反馈验证效果。';
-    } else {
-      verdictNode.classList.add('fail');
-      stamp.textContent = '✗ HOLD · 先补强';
-      txt.innerHTML = `<b>缺口在：${failed.join('、')}。</b>建议先补强这 ${failed.length} 项，再重新自检。`;
-    }
+    if (result.kind) verdictNode.classList.add(result.kind);
+    stamp.textContent = result.stamp;
+    txt.innerHTML = result.html;
   }
   wrap.addEventListener('change', e => {
     if (!e.target.matches('input[type="radio"][data-i]')) return;
