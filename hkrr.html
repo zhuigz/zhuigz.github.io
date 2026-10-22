@@ -11,11 +11,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
 <style>
 /* ==========================================================================
-   HKRR · Cinematic redesign.
-   Reference: Locomotive Studio (locomotive.ca) — for the big editorial type,
-   marquees, custom cursor with state, color washes on scroll;
-   crossed with Active Theory's staged formula reveal and Vercel/Linear's
-   dark-mode finish.
+   HKRR · Personal creation handbook.
    ========================================================================== */
 
 :root {
@@ -135,65 +131,6 @@ em, i { font-family: var(--italic); font-style: italic; }
 ::-webkit-scrollbar-thumb:hover { background: var(--pap-4); }
 
 /* ==========================================================================
-   OPTIONAL CURSOR — motion-limited with a native fallback
-   ========================================================================== */
-.cursor {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-}
-@media (hover: hover) and (pointer: fine) and (min-width: 721px) and (prefers-reduced-motion: no-preference) {
-  body.has-custom-cursor .cursor { display: block; }
-  body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button,
-  body.has-custom-cursor input, body.has-custom-cursor .hero-formula .l,
-  body.has-custom-cursor .principle-letter, body.has-custom-cursor .synth-formula .term { cursor: none; }
-}
-@media (pointer: coarse), (max-width: 720px) { .cursor { display: none; } }
-.cursor-dot {
-  position: absolute;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--pap-0);
-  transform: translate(-50%, -50%);
-  transition: opacity .2s;
-}
-.cursor-ring {
-  position: absolute;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--pap-2);
-  transform: translate(-50%, -50%);
-  transition: width .35s var(--ease), height .35s var(--ease), background .35s, border-color .35s, opacity .25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cursor-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ink-1);
-  opacity: 0;
-  transition: opacity .25s;
-  font-weight: 500;
-  white-space: nowrap;
-  pointer-events: none;
-}
-.cursor.hover .cursor-ring {
-  width: 80px; height: 80px;
-  background: var(--pap-0);
-  border-color: var(--pap-0);
-}
-.cursor.hover .cursor-dot { opacity: 0; }
-.cursor.hover .cursor-label { opacity: 1; }
-.cursor.tiny .cursor-ring { width: 12px; height: 12px; opacity: 0.4; }
-.cursor.tiny .cursor-dot { opacity: 0; }
-
-/* ==========================================================================
    READING PROGRESS — gold hairline
    ========================================================================== */
 .progress {
@@ -263,7 +200,7 @@ em, i { font-family: var(--italic); font-style: italic; }
   align-items: center;
   gap: 10px;
 }
-@media (min-width: 880px) {
+@media (min-width: 1040px) {
   .mast .ctr { display: inline-flex; }
 }
 .mast .ctr .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--pap-4); }
@@ -279,7 +216,7 @@ em, i { font-family: var(--italic); font-style: italic; }
 
 /* Compact chapter index — native details stays usable without JavaScript. */
 .chapter-menu { display: none; }
-@media (max-width: 879px) {
+@media (max-width: 1039px) {
   .chapter-menu { display: block; }
   .chapter-menu summary {
     display: flex;
@@ -2197,23 +2134,214 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 .synth-formula .term:hover { transform: none; }
 .synth-formula .term:focus-visible { outline: 2px solid var(--c); outline-offset: 6px; border-radius: 4px; }
 .synth-formula .term .role, .synth-formula .term:hover .role { opacity: 1; transform: none; font-family: var(--sans); font-size: clamp(12px, 1.1vw, 16px); letter-spacing: 0; white-space: nowrap; }
+
+/* Personal handbook: a clear reading hierarchy and a compact working layer. */
+:root { --ink-1:#0d0e11; --ink-2:#131519; --ink-3:#191b20; --pap-2:rgba(245,242,233,.72); --pap-3:rgba(245,242,233,.58); }
+body::before { opacity:.2; }
+body::after, .hero::after, .principle-mega, .principle-letter::before { display:none; }
+.mast, .mast.lifted { padding:12px 32px; font-family:var(--sans); font-size:13px; letter-spacing:.03em; }
+.mast.lifted { background:rgba(13,14,17,.94); backdrop-filter:blur(16px); }
+.mast .ctr { gap:12px; }
+.mast .ctr .sec { color:var(--pap-2); }
+.mast .ctr .sec:hover, .mast .ctr .sec.active { color:var(--pap-0); }
+.mast .ctr .sec.active::after { content:''; position:absolute; bottom:3px; inset-inline:0; height:2px; background:var(--gold); }
+.hero { min-height:0; padding:128px 0 60px; }
+.hero-tag { display:table; margin:0 auto 22px; padding:0; border:0; border-radius:0; background:none; backdrop-filter:none; color:var(--pap-2); font-family:var(--sans); font-size:13px; letter-spacing:.12em; }
+.hero-tag .pulse { display:none; }
+.hero-eq { display:block; margin-bottom:36px; font:18px/1.6 var(--sans); color:var(--pap-1); letter-spacing:.04em; }
+.hero-eq::before, .hero-eq::after { display:none; }
+.hero-formula { font-size:clamp(64px,14vw,184px); }
+.hero-formula .l, .hero-formula .l:hover { text-shadow:none; transform:none; }
+.hero-formula .x, .synth-formula .x { color:var(--pap-3); }
+.hero-bg .glow { opacity:.1; filter:blur(110px); animation:none; }
+.formula-aura { opacity:.35; }
+.formula-aura .fa { animation:none; }
+.hero-bg .grid { opacity:.18; }
+.hero-tag, .hero-eq, .hero-formula .l, .hero-formula .x, .hero-words, .hero-cta { opacity:1; transform:none; animation:none; }
+.formula-wrap { margin-bottom:32px; }
+.hero-words { margin-bottom:30px; font-size:clamp(16px,1.7vw,22px); color:var(--pap-2); }
+.hero-cta { display:flex; align-items:center; gap:12px; }
+.btn { padding:13px 24px; min-height:48px; border-radius:10px; font-family:var(--sans); font-size:14px; letter-spacing:.04em; }
+.btn-primary { background:var(--gold); }
+.hero-read { display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:10px 18px; font-size:14px; color:var(--pap-2); text-decoration:underline; text-underline-offset:5px; text-decoration-color:var(--pap-4); }
+.hero-read:hover { color:var(--pap-0); }
+.wrap, .wrap-wide { max-width:1180px; }
+.wrap-prose { max-width:860px; }
+.section { padding:76px 0; }
+.s-marker { margin-bottom:24px; gap:14px; letter-spacing:.1em; }
+.s-marker .n { font-size:25px; }
+.s-title { font-size:clamp(30px,3.5vw,46px); line-height:1.35; margin-bottom:22px; letter-spacing:-.02em; }
+.s-title .accent { color:var(--pap-0); }
+.s-lead { font-size:17px; line-height:1.9; max-width:740px; }
+.s-lead .strong { font-family:var(--sans); font-size:1em; }
+.origin-quote { margin:28px 0 18px; font-size:23px; }
+.origin-quote-credit { margin-bottom:30px; font-size:12px; letter-spacing:.06em; line-height:1.8; }
+.tenet { grid-template-columns:44px 1fr; gap:24px; padding:24px 0; }
+.tenet h4 { font-size:21px; }
+.tenet p { font-size:16px; line-height:1.85; }
+.principle-head { gap:28px; margin-bottom:28px; padding-bottom:24px; align-items:center; }
+.principle-letter { font-size:clamp(76px,9vw,120px); }
+.principle-letter:hover { transform:none; text-shadow:none; }
+.principle-titles { padding:0; gap:8px; }
+.principle-zh { font-size:clamp(32px,4vw,46px); }
+.principle-role { font-family:var(--sans); font-size:15px; }
+.principle-stat { padding:0; color:var(--pap-2); font-size:12px; }
+.principle-stat b { font-size:20px; }
+.principle-def { font-family:var(--sans); font-size:19px; line-height:1.9; max-width:850px; margin-bottom:30px; text-wrap:pretty; }
+.principle-def .drop { font:inherit; margin:0; vertical-align:baseline; }
+.principle-grid { gap:40px; }
+.principle-misc { padding:20px 22px; margin-bottom:24px; }
+.principle-misc strong, .principle-example p { font-family:var(--sans); }
+.principle-example p { font-size:16px; line-height:1.85; }
+.principle-example .lbl, .principle-methods-lbl { font-size:12px; color:var(--pap-2); letter-spacing:.08em; }
+.method { padding:22px 0; gap:14px; grid-template-columns:28px 1fr; }
+.method h5 { font-size:20px; }
+.method p { font-size:16px; line-height:1.85; }
+.principle-keywords { margin-top:26px; padding:16px 0; gap:8px 22px; font-size:13px; }
+.synth-stage { margin-top:32px; padding:30px 24px; border-radius:16px; background:var(--ink-2); }
+.synth-stage::before { display:none; }
+.synth-eyebrow { margin-bottom:24px; color:var(--pap-2); font-size:12px; letter-spacing:.06em; }
+.synth-formula { font-size:clamp(48px,9vw,100px); }
+.synth-formula .term { gap:16px; cursor:pointer; }
+.synth-formula .term .gly { filter:none; }
+.synth-formula .term:hover .role { text-decoration:underline; text-underline-offset:5px; }
+.synth-note { margin-top:26px; font-family:var(--sans); font-size:16px; }
+.bridge { margin-top:36px; gap:36px; }
+.bridge-row { padding:16px 0; }
+.bridge-row .src, .bridge-body strong { font-family:var(--sans); font-style:normal; }
+.bridge-row .src { font-size:17px; }
+.bridge-row .dst { font-size:12px; letter-spacing:0; gap:8px; }
+.bridge-row .dst::before { box-shadow:none; width:5px; height:5px; flex-shrink:0; }
+.cases { margin-top:36px; gap:22px; }
+.case { padding:28px 30px; gap:32px; border-radius:16px; backdrop-filter:none; }
+.case:hover { transform:none; }
+.case h3 { font-size:30px; line-height:1.4; }
+.case p { font-size:16px; line-height:1.85; }
+.case em { font-family:var(--sans); font-style:normal; }
+.case-meta { color:var(--pap-2); font-size:12px; letter-spacing:.06em; }
+.case-note { font-family:var(--sans); }
+.audit-workflow { margin-top:28px; }
+.audit-shell { margin-top:32px; padding:30px; border-radius:16px; background:var(--ink-2); backdrop-filter:none; }
+.audit-shell::before { display:none; }
+.audit-tabs { gap:28px; margin-bottom:24px; font-family:var(--sans); font-size:16px; letter-spacing:0; }
+.audit-note, .score-method { font-size:14px; }
+.audit-grid { gap:30px; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); }
+.slider-name { flex-wrap:wrap; gap:6px 12px; }
+.slider-name .ltr { font-size:12px; letter-spacing:.04em; }
+.slider-name .nm { font-family:var(--sans); font-size:19px; }
+.slider-row { padding:20px 0; }
+.slider-row p { font-family:var(--sans); color:var(--pap-2); }
+.score-card { padding:26px; border-radius:12px; background:var(--ink-3); text-align:left; }
+.score-label { font-family:var(--sans); font-size:13px; font-weight:400; letter-spacing:.04em; color:var(--pap-2); margin-bottom:12px; }
+.score-tier { margin-top:0; font-family:var(--sans); font-size:21px; font-weight:500; letter-spacing:0; color:var(--pap-0); }
+.score-advice { margin-top:16px; padding:0; border:0; text-align:left; text-wrap:pretty; font-size:16px; line-height:1.85; }
+.score-advice strong { font-size:1em; }
+.score-summary { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:24px; padding-top:22px; border-top:1px solid var(--pap-5); font-size:14px; color:var(--pap-2); }
+.score-display { font-size:48px; color:var(--pap-0); line-height:1; gap:0; }
+.score-display .max { font-size:12px; color:var(--pap-2); }
+.score-bars { margin-top:20px; padding-top:0; border:0; gap:12px; }
+.score-bar { font-size:12px; }
+.score-calculation { margin-top:22px; border-top:1px solid var(--pap-5); }
+.score-calculation summary { min-height:44px; padding:12px 0; cursor:pointer; font-size:13px; color:var(--pap-2); }
+.score-method { margin:0; padding:0; border:0; }
+.yesno-item { gap:22px; padding:24px 0; }
+.yesno-letter { font-size:34px; }
+.yesno-q h3 { font-size:18px; line-height:1.6; }
+.yesno-q p { font-size:14px; color:var(--pap-2); }
+.yesno-toggle { gap:8px; letter-spacing:0; }
+.verdict { margin-top:28px; padding-top:24px; text-align:left; }
+.verdict-stamp, .verdict.pass .verdict-stamp, .verdict.fail .verdict-stamp { padding:0; border:0; transform:none; font-family:var(--sans); font-size:20px; letter-spacing:0; }
+.verdict.fail .verdict-stamp { color:var(--gold); }
+.verdict-text { margin:16px 0 0; max-width:760px; font-family:var(--sans); font-size:16px; line-height:1.85; text-wrap:pretty; }
+.audit-disclaimer { text-align:left; }
+.manifesto { padding:76px 0; border-top:1px solid var(--pap-6); }
+.manifesto-bg { opacity:.3; }
+.manifesto-lines { font-size:clamp(23px,3vw,36px); font-style:normal; margin-bottom:28px; }
+.manifesto-coda { font-size:19px; }
+.manifesto-coda em { font-size:22px; }
+.colophon { color:var(--pap-2); }
+.quick-reference { position:relative; z-index:1; padding:36px 0 50px; scroll-margin-top:84px; }
+.quick-heading { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:24px; }
+.eyebrow { font-size:12px; letter-spacing:.08em; color:var(--pap-2); margin-bottom:10px; }
+.quick-heading h2 { font-family:var(--serif); font-weight:500; font-size:28px; line-height:1.5; }
+.quick-heading>p { color:var(--pap-2); font-size:14px; line-height:1.8; }
+.quick-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+.quick-card { display:flex; flex-direction:column; min-width:0; padding:22px 20px; border:1px solid var(--pap-5); border-top:2px solid var(--m); border-radius:4px 4px 12px 12px; background:var(--ink-2); transition:background .2s,border-color .2s; }
+.quick-card:hover { background:var(--ink-3); border-color:var(--m); }
+.quick-card:focus-visible { outline-color:var(--m); }
+.quick-name { display:flex; gap:12px; align-items:center; font-size:18px; }
+.quick-letter { font-family:var(--serif); font-size:36px; line-height:1; color:var(--m); min-width:40px; }
+.quick-name small { display:block; font-size:12px; color:var(--pap-2); font-weight:400; margin-top:3px; }
+.quick-arrow { margin-left:auto; color:var(--pap-2); font-size:18px; }
+.quick-card p { margin:20px 0 14px; font-size:17px; line-height:1.75; }
+.quick-hint { margin-top:auto; font-size:13px; line-height:1.8; color:var(--pap-2); }
+@media (max-width:1039px) { .quick-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:920px) { .audit-grid { grid-template-columns:1fr; } }
+@media (max-width:720px) {
+  .mast, .mast.lifted { padding:10px 20px; }
+  .hero { padding:108px 0 36px; }
+  .hero-bg .glow { opacity:.055; }
+  .hero-eq { font-size:16px; margin-bottom:28px; }
+  .formula-wrap { margin-bottom:24px; }
+  .hero-words { max-width:320px; margin-bottom:24px; }
+  .hero-read { flex-basis:100%; justify-content:center; }
+  .section { padding:48px 0; }
+  .wrap, .hero-inner { padding-inline:20px; }
+  .s-title { font-size:30px; }
+  .s-lead { font-size:16px; }
+  .tenet { grid-template-columns:28px 1fr; gap:16px; }
+  .principle-head { grid-template-columns:auto minmax(0,1fr); gap:18px; }
+  .principle-stat { display:none; }
+  .principle-en { font-size:11px; letter-spacing:.1em; }
+  .principle-role { font-size:14px; }
+  .principle-def { font-size:17px; line-height:1.9; }
+  .principle-grid { gap:24px; }
+  .principle-keywords { margin-top:20px; }
+  .synth-stage { padding:26px 14px; }
+  .synth-eyebrow { font-size:11px; }
+  .synth-formula .term { gap:16px; }
+  .synth-note { font-size:15px; }
+  .case { padding:22px; gap:24px; }
+  .case h3 { font-size:27px; }
+  .audit-shell { padding:22px 18px; }
+  .score-card { padding:22px 18px; }
+  .score-display { font-size:44px; }
+  .yesno-item { column-gap:16px; row-gap:14px; }
+  .yesno-toggle { padding-left:48px; }
+  .quick-reference { padding:28px 0 36px; }
+  .quick-heading { display:block; }
+  .quick-heading h2 { font-size:25px; }
+  .quick-heading>p { margin-top:12px; }
+  .quick-heading>p br { display:none; }
+  .quick-card { padding:20px; }
+  .manifesto { padding:50px 0; }
+  .manifesto-lines .line { column-gap:12px; }
+}
+@media (max-width:520px) {
+  .quick-grid { grid-template-columns:1fr; gap:12px; }
+  .quick-card p { margin:14px 0 8px; }
+  .hero-cta { gap:10px; }
+  .btn { padding:12px 20px; }
+  .principle-role { line-height:1.7; }
+  .score-summary { flex-wrap:wrap; }
+}
+
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor" aria-hidden="true">
-  <div class="cursor-ring"><span class="cursor-label" id="cursorLabel"></span></div>
-  <div class="cursor-dot"></div>
-</div>
+
 
 <div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="mast" id="mast">
-  <a class="mark" href="#top" data-cursor="HOME" aria-label="HKRR，返回顶部">
+  <a class="mark" href="#top" aria-label="HKRR，返回顶部">
     <span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     <span>HKRR</span>
   </a>
   <nav class="ctr" id="masterNav" aria-label="章节目录">
+    <a class="sec" href="#quick" data-section="quick">速查</a>
+    <span class="sep"></span>
     <a class="sec" href="#origin" data-section="origin">起源</a>
     <span class="sep"></span>
     <a class="sec" href="#happiness" data-section="happiness">快乐</a>
@@ -2237,6 +2365,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     <nav class="chapter-index" aria-label="手机章节目录">
       <p class="chapter-index-label">HKRR · CONTENTS</p>
       <div class="chapter-index-grid">
+        <a href="#quick" data-section="quick"><span class="chapter-key">↗</span>速查</a>
         <a href="#origin" data-section="origin"><span class="chapter-key">01</span>起源</a>
         <a href="#happiness" data-section="happiness" style="--chapter-color:var(--h)"><span class="chapter-key">H</span>快乐</a>
         <a href="#knowledge" data-section="knowledge" style="--chapter-color:var(--k)"><span class="chapter-key">K</span>知识</a>
@@ -2266,9 +2395,9 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     <div class="hero-inner">
       <div class="hero-tag">
         <span class="pulse"></span>
-        <span>A Content Theory · 2026</span>
+        <span>个人创作手册 · HKRR</span>
       </div>
-      <p class="hero-eq">好内容 =</p>
+      <p class="hero-eq">用四个维度，检查一条内容</p>
       <div class="formula-wrap">
         <div class="formula-aura" aria-hidden="true">
           <span class="fa fa-h"></span>
@@ -2277,29 +2406,48 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
           <span class="fa fa-r2"></span>
         </div>
         <h1 class="hero-formula" aria-label="H 快乐 × K 知识 × R₁ 共鸣 × R₂ 节奏">
-        <span class="l l-1" data-cursor="Happiness">H</span><span class="x x-1">×</span><span class="l l-2" data-cursor="Knowledge">K</span><span class="x x-2">×</span><span class="l l-3" data-cursor="Resonance">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="x x-3">×</span><span class="l l-4" data-cursor="Rhythm">R<sub class="variable-index" aria-hidden="true">2</sub></span>
+        <span class="l l-1">H</span><span class="x x-1">×</span><span class="l l-2">K</span><span class="x x-2">×</span><span class="l l-3">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="x x-3">×</span><span class="l l-4">R<sub class="variable-index" aria-hidden="true">2</sub></span>
         </h1>
       </div>
       <p class="hero-words">
         <span class="seg h">Happiness</span> · <span class="seg k">Knowledge</span> · <span class="seg r1">Resonance</span> · <span class="seg r2">Rhythm</span>
       </p>
       <div class="hero-cta">
-        <a href="#origin" class="btn btn-primary" data-cursor="Read">从起源读起 <span class="arr">↓</span></a>
-        <a href="#audit" class="btn btn-ghost" data-cursor="Try it">直接去自检 <span class="arr">→</span></a>
+        <a href="#audit" class="btn btn-primary">开始自检 <span class="arr">→</span></a>
+        <a href="#quick" class="btn btn-ghost">四维速查 <span class="arr">↓</span></a>
+        <a href="#origin" class="hero-read">阅读完整说明 <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
-    <div class="hero-key">
-      <span style="--key-color:var(--h)">快乐 — 体验满足</span>
-      <span style="--key-color:var(--k)">知识 — 认知收获</span>
-      <span style="--key-color:var(--r1)">共鸣 — 处境连接</span>
-      <span style="--key-color:var(--r2)">节奏 — 持续投入</span>
-    </div>
 
-    <a class="hero-scroll" href="#origin" aria-label="向下滚动" data-cursor="Scroll">
-      <span>Scroll</span>
-      <span class="line"></span>
-    </a>
+  </section>
+
+  <!-- Quick reference sits outside the nine full-reading chapters. -->
+  <section class="quick-reference" id="quick" aria-labelledby="quickTitle" data-tint="rgba(245,242,233,0.02)">
+    <div class="wrap">
+      <div class="quick-heading">
+        <div><p class="eyebrow">四维速查 · Quick reference</p><h2 id="quickTitle">四个问题，快速检查。</h2></div>
+        <p>明确给谁看、希望留下什么。<br/>再找具体片段，判断本轮值得改哪里。</p>
+      </div>
+      <div class="quick-grid">
+        <a class="quick-card" href="#happiness" style="--m:var(--h)">
+          <span class="quick-name"><span class="quick-letter" aria-hidden="true">H</span><span>快乐<small>体验满足</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
+          <p>哪一处，让阅读或观看更有满足感？</p><span class="quick-hint">找趣味、惊喜、审美享受或释然。</span>
+        </a>
+        <a class="quick-card" href="#knowledge" style="--m:var(--k)">
+          <span class="quick-name"><span class="quick-letter" aria-hidden="true">K</span><span>知识<small>认知收获</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
+          <p>看完后，具体多知道或理解了什么？</p><span class="quick-hint">用一句话说清收获，再检查依据。</span>
+        </a>
+        <a class="quick-card" href="#resonance" style="--m:var(--r1)">
+          <span class="quick-name"><span class="quick-letter" aria-hidden="true">R₁</span><span>共鸣<small>处境连接</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
+          <p>哪一处，说中了目标观众的处境？</p><span class="quick-hint">看感受、愿望和关切是否讲得真切。</span>
+        </a>
+        <a class="quick-card" href="#rhythm" style="--m:var(--r2)">
+          <span class="quick-name"><span class="quick-letter" aria-hidden="true">R₂</span><span>节奏<small>持续投入</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
+          <p>哪里重复、跳跃，或来不及理解？</p><span class="quick-hint">按正常速度，检查顺序、停顿和密度。</span>
+        </a>
+      </div>
+    </div>
   </section>
 
   <!-- ============ 01 · ORIGIN ============ -->
@@ -2356,7 +2504,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter" data-cursor="Happiness">H</span>
+          <span class="principle-letter">H</span>
           <div class="principle-titles">
             <span class="principle-en">Happiness</span>
             <h3 class="principle-zh">快乐</h3>
@@ -2425,7 +2573,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter" data-cursor="Knowledge">K</span>
+          <span class="principle-letter">K</span>
           <div class="principle-titles">
             <span class="principle-en">Knowledge</span>
             <h3 class="principle-zh">知识</h3>
@@ -2494,7 +2642,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter" data-cursor="Resonance">R<sub class="variable-index" aria-hidden="true">1</sub></span>
+          <span class="principle-letter">R<sub class="variable-index" aria-hidden="true">1</sub></span>
           <div class="principle-titles">
             <span class="principle-en">Resonance</span>
             <h3 class="principle-zh">共鸣</h3>
@@ -2563,7 +2711,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter" data-cursor="Rhythm">R<sub class="variable-index" aria-hidden="true">2</sub></span>
+          <span class="principle-letter">R<sub class="variable-index" aria-hidden="true">2</sub></span>
           <div class="principle-titles">
             <span class="principle-en">Rhythm</span>
             <h3 class="principle-zh">节奏</h3>
@@ -2635,13 +2783,13 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
       <div class="synth-stage">
         <div class="synth-eyebrow">选择字母，回到对应章节 · Jump to a variable</div>
         <p class="synth-formula">
-          <a class="term h" href="#happiness" data-cursor="Happiness" aria-label="H 快乐，前往快乐章节"><span class="gly" aria-hidden="true">H</span><span class="role">快乐</span></a>
+          <a class="term h" href="#happiness" aria-label="H 快乐，前往快乐章节"><span class="gly" aria-hidden="true">H</span><span class="role">快乐</span></a>
           <span class="x">×</span>
-          <a class="term k" href="#knowledge" data-cursor="Knowledge" aria-label="K 知识，前往知识章节"><span class="gly" aria-hidden="true">K</span><span class="role">知识</span></a>
+          <a class="term k" href="#knowledge" aria-label="K 知识，前往知识章节"><span class="gly" aria-hidden="true">K</span><span class="role">知识</span></a>
           <span class="x">×</span>
-          <a class="term r1" href="#resonance" data-cursor="Resonance" aria-label="R₁ 共鸣，前往共鸣章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="role">共鸣</span></a>
+          <a class="term r1" href="#resonance" aria-label="R₁ 共鸣，前往共鸣章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="role">共鸣</span></a>
           <span class="x">×</span>
-          <a class="term r2" href="#rhythm" data-cursor="Rhythm" aria-label="R₂ 节奏，前往节奏章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">2</sub></span><span class="role">节奏</span></a>
+          <a class="term r2" href="#rhythm" aria-label="R₂ 节奏，前往节奏章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">2</sub></span><span class="role">节奏</span></a>
         </p>
         <p class="synth-note"><b>×</b> 提醒我留意短板，先补影响本条目标的缺口。</p>
       </div>
@@ -2649,22 +2797,22 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
       <div class="bridge r-children">
         <div class="bridge-block">
           <h4>与“有用 · 好看 · 动人”的对照</h4>
-          <div class="bridge-row k" data-cursor="K">
+          <div class="bridge-row k">
             <span class="src">有用</span>
             <span class="arr">→</span>
             <span class="dst">Knowledge · 知识</span>
           </div>
-          <div class="bridge-row r1" data-cursor="R">
+          <div class="bridge-row r1">
             <span class="src">动人</span>
             <span class="arr">→</span>
             <span class="dst">Resonance · 共鸣</span>
           </div>
-          <div class="bridge-row h" data-cursor="H">
+          <div class="bridge-row h">
             <span class="src">好看 · 愉悦体验</span>
             <span class="arr">→</span>
             <span class="dst">Happiness · 快乐</span>
           </div>
-          <div class="bridge-row r2" data-cursor="R">
+          <div class="bridge-row r2">
             <span class="src">好看 · 观看体验</span>
             <span class="arr">→</span>
             <span class="dst">Rhythm · 节奏</span>
@@ -2757,13 +2905,13 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
     <div class="wrap">
       <div class="s-marker">
         <span class="n">08</span>
-        <span class="lbl">互动 · Audit</span>
+        <span class="lbl">自检 · Audit</span>
         <span class="bar"></span>
         <span class="dot"></span>
       </div>
 
       <h2 class="s-title">拿一条具体内容，<br/>找到<span class="it">下一处修改</span>。</h2>
-      <p class="s-lead">先明确本条目标，再选择<em>精细打分</em>或<em>是非自检</em>。<span class="strong">每个判断都尽量对应一个段落、句子或时间点，本轮先选一处值得修改的地方。</span></p>
+      <p class="s-lead">先用<em>快速检查</em>找到支撑片段，需要时再做<em>四维自评</em>。<span class="strong">每个判断都尽量对应一个段落、句子或时间点，本轮先选一处值得修改的地方。</span></p>
 
       <div class="audit-workflow" aria-label="创作与复盘的三个步骤">
         <article><h3>创作前 · 定目标</h3><p>写清给谁看、希望带走什么，以及本条侧重的维度。选题、标题和封面是否匹配，也单独检查。</p></article>
@@ -2774,17 +2922,17 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
       <div class="audit-shell r-pop" id="auditShell">
         <noscript><p class="audit-fallback">自检工具需要 JavaScript。你仍可阅读四个变量，对照正文完成检查。</p></noscript>
         <div class="audit-tabs" role="tablist" aria-label="自检模式">
-          <button type="button" class="audit-tab active" id="tabSliders" role="tab" aria-selected="true" aria-controls="panelSliders" tabindex="0" data-tab="sliders" data-cursor="Score" disabled>精细打分</button>
-          <button type="button" class="audit-tab" id="tabYesno" role="tab" aria-selected="false" aria-controls="panelYesno" tabindex="-1" data-tab="yesno" data-cursor="Check" disabled>是非自检</button>
+          <button type="button" class="audit-tab active" id="tabYesno" role="tab" aria-selected="true" aria-controls="panelYesno" tabindex="0" data-tab="yesno" disabled>快速检查</button>
+          <button type="button" class="audit-tab" id="tabSliders" role="tab" aria-selected="false" aria-controls="panelSliders" tabindex="-1" data-tab="sliders" disabled>四维自评</button>
         </div>
 
-        <div class="audit-panel active" id="panelSliders" role="tabpanel" aria-labelledby="tabSliders" tabindex="0" data-panel="sliders">
+        <div class="audit-panel" id="panelSliders" role="tabpanel" aria-labelledby="tabSliders" tabindex="0" data-panel="sliders" hidden>
           <div class="audit-tools">
             <p class="audit-note" id="scoreHelp">每项 0—10 分，先找片段证据，再参照下方说明。初始 6 / 7 / 5 / 6 只是演示值。</p>
             <button type="button" class="audit-reset" id="resetSliders" disabled>恢复示例</button>
           </div>
           <details class="audit-rubric">
-            <summary>评分参照 · 点开按同一把尺检查</summary>
+            <summary>评分参照 · 展开查看</summary>
             <ul>
               <li><b>0—3 分</b> 尚未找到清楚的片段支撑，或表达意图尚未落地。</li>
               <li><b>4—6 分</b> 能指出支撑片段，但表达、依据或衔接仍有明显可改处。</li>
@@ -2796,18 +2944,18 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
           <div class="audit-grid">
             <div class="sliders" id="sliderList"></div>
             <aside class="score-card" id="scoreCard" aria-labelledby="scoreLabel">
-              <div class="score-label" id="scoreLabel">综合自评分 · Composite</div>
-              <div class="score-display"><span id="scoreVal">—</span><span class="max">/ 100</span></div>
-              <div class="score-tier" id="scoreTier">—</div>
-              <div class="score-bars" id="scoreBars"></div>
+              <h3 class="score-label" id="scoreLabel">本轮复核建议</h3>
+              <p class="score-tier" id="scoreTier">—</p>
               <div class="score-advice" id="scoreAdvice">结合片段评估各维度，再选本轮要改的一处。</div>
-              <p class="score-method">综合分沿用四项几何平均 × 10，取整。高项会在数值上补偿低项；任一项为 0，综合分为 0。它仅用于对照自评，不能作为发布门槛或传播预测。</p>
+              <div class="score-summary"><span>综合自评</span><div class="score-display"><span id="scoreVal">—</span><span class="max">/ 100</span></div></div>
+              <div class="score-bars" id="scoreBars"></div>
+              <details class="score-calculation"><summary>综合分如何计算</summary><p class="score-method">四项几何平均 × 10，取整。高项会在数值上补偿低项；任一项为 0，综合分为 0。它仅用于对照自评，不能作为发布门槛或传播预测。</p></details>
             </aside>
           </div>
           <p class="audit-sr" id="scoreFeedback" role="status" aria-atomic="true"></p>
         </div>
 
-        <div class="audit-panel" id="panelYesno" role="tabpanel" aria-labelledby="tabYesno" tabindex="0" data-panel="yesno" hidden>
+        <div class="audit-panel active" id="panelYesno" role="tabpanel" aria-labelledby="tabYesno" tabindex="0" data-panel="yesno">
           <div class="audit-tools">
             <p class="audit-note">“是”表示能指出支撑片段；“否”表示暂未体现或仍需回看。两种模式独立记录，切换不会清空。</p>
             <button type="button" class="audit-reset" id="resetYesno" disabled>重新开始</button>
@@ -2908,19 +3056,29 @@ window.HKRR.reviewScores = function(state) {
   const weakest = data.filter((_, i) => state[i] === min);
   const names = weakest.map(d => d.name).join('、');
   const same = state.every(v => v === state[0]);
-  let lead;
-  if (min === 0) lead = '有自评为零的维度，综合分按算法归零。先核对是缺少支撑，还是本条并不侧重，不据此直接否定内容。';
-  else if (same) lead = '四项自评分相同，先结合本条目标选一项复核；不需要为了提高总分同时修改四项。';
-  else lead = '较低项是检查线索，先判断它是否影响本条目标，再选一处修改。';
-  const steps = weakest.map(d => '<li><b>' + d.name + '</b> ' + d.action + '</li>').join('');
-  return { score, min, weakest, label: '低分线索 · ' + names,
-    advice: '<p>' + lead + '</p><ul class="audit-actions">' + steps + '</ul>' };
+  let label, lead, steps = '';
+  if (min >= 7) {
+    label = '自评均有清楚支撑';
+    lead = '按评分参照，四项均已有清楚支撑，暂未显示需要优先补强的维度。核对这些分数是否对应具体片段；若符合本条目标，可以保留当前版本，再用实际反馈校正判断。';
+  } else if (same) {
+    label = min === 0 ? '四项支撑待确认' : '四项自评分相同';
+    lead = min === 0
+      ? '先区分尚未评估、暂未找到支撑，以及本条并不侧重。综合分归零不代表整条内容没有价值；确认目标后，再选一个相关维度回看。'
+      : '相同分数没有指出优先项。先结合本条目标选一个维度，核对具体片段，再决定是否修改。';
+  } else {
+    label = '优先核对 · ' + names;
+    lead = min === 0
+      ? '有维度自评为零，先核对它是否影响本条目标。以下是回看方向；若属于有意取舍，可以保留当前表达。'
+      : '这些维度自评相对较低。先判断它们是否影响本条目标，以下动作按实际片段选用。';
+    steps = '<ul class="audit-actions">' + weakest.map(d => '<li><b>' + d.name + '</b> ' + d.action + '</li>').join('') + '</ul>';
+  }
+  return { score, min, weakest, label, advice: '<p>' + lead + '</p>' + steps };
 };
 window.HKRR.reviewAnswers = function(state) {
   const data = window.HKRR.yesno;
   const answered = state.filter(v => v !== null).length;
   const missing = data.filter((_, i) => state[i] === 'no');
-  const names = missing.map(d => d.name).join('、');
+  const names = missing.map(d => window.HKRR.sliders.find(item => item.m === d.m).name).join('、');
   if (answered < data.length) return { kind: '', stamp: '— 待检查 —',
     html: '<p>已回答 <b>' + answered + '/' + data.length + '</b>。' +
       (missing.length ? '暂未体现或待回看：<b>' + names + '</b>。' : '') +
@@ -2934,79 +3092,6 @@ window.HKRR.reviewAnswers = function(state) {
   return { kind: 'fail', stamp: '→ 有 ' + missing.length + ' 项待判断',
     html: '<p>暂未体现或待回看：<b>' + names + '</b>。先选影响本条目标的一处，不必把所有“否”都补成“是”。</p><ul class="audit-actions">' + steps + '</ul>' };
 };
-
-/* ----------------------------------------------------------
-   Optional cursor — render only while moving; native cursor is the fallback
-   ---------------------------------------------------------- */
-(function customCursor() {
-  const cur = document.getElementById('cursor');
-  const ring = cur && cur.querySelector('.cursor-ring');
-  const dot = cur && cur.querySelector('.cursor-dot');
-  const label = document.getElementById('cursorLabel');
-  if (!cur || !ring || !dot || !label) return;
-  let raf = null, idle = null, positioned = false, lastTime = 0;
-  let tx = 0, ty = 0, rx = 0, ry = 0, dx = 0, dy = 0;
-  let allowed;
-  function stop() {
-    if (raf !== null) cancelAnimationFrame(raf);
-    clearTimeout(idle);
-    raf = idle = null;
-    positioned = false;
-    lastTime = 0;
-    document.body.classList.remove('has-custom-cursor');
-    cur.style.opacity = 0;
-    cur.classList.remove('hover', 'tiny');
-    label.textContent = '';
-  }
-  function eligible() {
-    return allowed.matches && !document.hidden && !document.body.classList.contains('page-inactive');
-  }
-  function paint(time) {
-    raf = null;
-    try {
-      if (!eligible()) { stop(); return; }
-      const step = lastTime ? Math.min(64, time-lastTime)/(1000/60) : 1;
-      lastTime = time;
-      const slow = 1-Math.pow(.86, step), fast = 1-Math.pow(.55, step);
-      rx += (tx-rx)*slow; ry += (ty-ry)*slow;
-      dx += (tx-dx)*fast; dy += (ty-dy)*fast;
-      const settled = Math.max(Math.abs(tx-rx), Math.abs(ty-ry), Math.abs(tx-dx), Math.abs(ty-dy)) < .25;
-      if (settled) { rx = dx = tx; ry = dy = ty; }
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
-      cur.style.opacity = 1;
-      document.body.classList.add('has-custom-cursor');
-      if (!settled) raf = requestAnimationFrame(paint);
-      else lastTime = 0;
-    } catch (_) { stop(); }
-  }
-  try {
-    allowed = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 721px) and (prefers-reduced-motion: no-preference)');
-    addEventListener('mousemove', e => {
-      try {
-        if (!eligible()) { stop(); return; }
-        tx = e.clientX; ty = e.clientY;
-        if (!positioned) { rx = dx = tx; ry = dy = ty; positioned = true; }
-        const target = e.target.closest('[data-cursor], a, button, input, summary, label');
-        label.textContent = target ? target.dataset.cursor || '' : '';
-        cur.classList.toggle('hover', !!label.textContent);
-        cur.classList.toggle('tiny', !!target && !label.textContent);
-        clearTimeout(idle);
-        idle = setTimeout(stop, 900);
-        if (raf === null) raf = requestAnimationFrame(paint);
-      } catch (_) { stop(); }
-    }, { passive: true });
-    document.addEventListener('mouseleave', stop);
-    document.addEventListener('keydown', stop);
-    document.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') stop(); });
-    addEventListener('scroll', stop, { passive: true });
-    addEventListener('resize', stop);
-    addEventListener('blur', stop);
-    addEventListener('pagehide', stop);
-    document.addEventListener('visibilitychange', stop);
-    allowed.addEventListener('change', stop);
-  } catch (_) { stop(); }
-})();
 
 /* Opening and closing decoration: no endless JS loop or observer dependency. */
 (function decorationMotion() {
@@ -3135,7 +3220,7 @@ window.HKRR.reviewAnswers = function(state) {
     // so moving from the summary to a chapter link cannot cancel its click.
     if (e.relatedTarget && !menu.contains(e.relatedTarget)) close();
   });
-  matchMedia('(min-width: 880px)').addEventListener('change', e => { if (e.matches) close(); });
+  matchMedia('(min-width: 1040px)').addEventListener('change', e => { if (e.matches) close(); });
   function restoreChapter() {
     if (!location.hash) { close(); document.getElementById('top').focus({ preventScroll: true }); return; }
     const target = document.getElementById(location.hash.slice(1));
@@ -3150,7 +3235,7 @@ window.HKRR.reviewAnswers = function(state) {
   const sections = document.querySelectorAll('[data-tint]');
   const navLinks = document.querySelectorAll('a[data-section]');
   const menuChapter = document.getElementById('menuChapter');
-  const labels = {origin:'起源', happiness:'快乐', knowledge:'知识', resonance:'共鸣', rhythm:'节奏', synthesis:'合一', cases:'案例', audit:'自检', manifesto:'原则'};
+  const labels = {quick:'速查', origin:'起源', happiness:'快乐', knowledge:'知识', resonance:'共鸣', rhythm:'节奏', synthesis:'合一', cases:'案例', audit:'自检', manifesto:'原则'};
   const root = document.documentElement;
 
   function update() {
