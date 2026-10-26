@@ -187,7 +187,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为七个模块；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). 当前维护精力集中在个人说明书、人生系统、三级人生目标、FIRE、IDOP、HKRR、生命底色七页。最新授权先完成生命底色、个人说明书、人生系统的第一轮收尾，再准备第二轮优化。
+**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为六个模块（2026-10-26已删除人生繁荣公式）；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). 当前维护精力集中在个人说明书、人生系统、三级人生目标、FIRE、IDOP、HKRR、生命底色七页。最新授权先完成生命底色、个人说明书、人生系统的第一轮收尾，再准备第二轮优化。
 
 ## Adding New Content
 
@@ -233,5 +233,5 @@ Drop WebP files named `01.webp`–`08.webp` into `assets/gallery/` (long edge ~1
 
 - 维护重点为六页：index.html、system.html、life_undertone.html、ideal.html、fire.html、hkrr.html。
 - IDOP（idop.html）新增暂缓，除非用户主动提及并要求推进，否则不排期、不修改。与 life/growth/prosper/workflow/gper 合计六个暂停页。
-- 用户要求从人生系统删除“人生繁荣公式”板块及其总览、目录、侧栏、编号和相关内容，目标保留其余六模块。该操作仅针对 system.html，不恢复或删除独立 prosper.html。
-- 当前线上仍为七模块密文；六模块删除稿已在仓库外准备并做静态检查，尚待通过用户现有密码在本机重新加密，未上线。不得用历史明文替换线上密文，不重设密码、不要求已解锁HTML。
+- 已按用户要求从人生系统删除“人生繁荣公式”板块及其总览、目录、侧栏与相关内容，剩余六模块编号顺延。该操作仅针对 system.html，不恢复或删除独立 prosper.html。
+- 2026-10-26用户主动提供并更正现有密码，授权云端处理。当前已从最新密文解密、删除并重新加密发布六模块版；沿用现有密码和盐，锁定/记住设备/主题脚本保留。不得记录密码或派生凭据，不用历史明文替换线上密文，不重设密码、不要求已解锁HTML。
