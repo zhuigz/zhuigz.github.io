@@ -187,7 +187,7 @@ For larger, multi-session requirements this repo runs a Conductor orchestration 
 
 Small one-off edits (S 级) may bypass the pipeline — but still update `docs/progress.md` if state changes.
 
-**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为六个模块（2026-10-26已删除人生繁荣公式）；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). 当前维护精力集中在个人说明书、人生系统、三级人生目标、FIRE、IDOP、HKRR、生命底色七页。最新授权先完成生命底色、个人说明书、人生系统的第一轮收尾，再准备第二轮优化。
+**Current status**: 用户于 2026-10-04 明确要求删除「集大成之书」，`opus.html` 已移除，不再维护或恢复该页面。`system.html` 已移除双轨制战略，现为五个模块（2026-10-26删除人生繁荣公式，2026-10-29删除成长进步体系）；其他内容等待用户逐步说明。REQ-001 保留为历史需求记录。 REQ-002 (全站页面视觉美化, L, P1) **done** (2026-06-23) — all 10 pages (workflow/life_undertone/idop/growth/life/fire/ideal/prosper/system/hkrr) beautified per 混合 method (单薄页统一暖金暗底, 孤岛页保留独立美学), each playwright-screenshot-verified + merged to `main`. Repo now has 12 self-contained HTML pages, all live. New standing practice: visual changes are verified by `npx playwright screenshot` before merge (fire round2 翻车教训). 当前维护精力集中在个人说明书、人生系统、三级人生目标、FIRE、IDOP、HKRR、生命底色七页。最新授权先完成生命底色、个人说明书、人生系统的第一轮收尾，再准备第二轮优化。
 
 ## Adding New Content
 
@@ -241,4 +241,11 @@ Drop WebP files named `01.webp`–`08.webp` into `assets/gallery/` (long edge ~1
 - 第一优先级并列：人生系统（system.html）、HKRR理论（hkrr.html）。接下来一段时间的主要精力放在这两页；两者之间依实际问题和用户指示安排，不擅自判定其中一页永久高于另一页。
 - 第二优先级：个人说明书（index.html）、生命底色（life_undertone.html）、FIRE（fire.html）、三级人生目标（ideal.html）。四页仍继续维护，作为调剂适当穿插优化，不等同暂缓，也不虚构四页内部排序。
 - IDOP及life/growth/prosper/workflow/gper六页继续暂停；仅用户主动恢复对应页时推进。
-- 本次确认的是后续重心，不自动授权改写个人事实、扩展理论或同时重做六页。HKRR此前阶段收尾仍有效，后续按创作中的具体问题迭代；人生系统现有六模块保持，内容变动依用户说明。
+- 本次确认的是后续重心，不自动授权改写个人事实、扩展理论或同时重做六页。HKRR此前阶段收尾仍有效，后续按创作中的具体问题迭代；人生系统现有五模块保持，后续重构一步一步按用户说明。
+
+## 人生系统五模块（用户确认 2026-10-29）
+
+- 已从最新加密system.html删除成长进步体系完整章节（含引擎/燃料/输出/涡轮/方向盘与I/O吞吐协议）、总览卡、三处导航、章名映射与专用样式。生命底色顺延05，保留其余五板块内容。
+- 当前五板块为三级人生目标、S级人生策略、FIRE计划、AI分层使用战略、生命底色。此次只删除，不自动补充或重构其余内容，等待用户逐步说明。
+- 现有密码和盐、加密入口、记住设备、锁定/跨标签锁定、主题脚本沿用；仓库只发布密文。
+- 独立growth.html继续暂停，本次不是恢复或删除其独立网站的授权；其他暂停页范围不变。
