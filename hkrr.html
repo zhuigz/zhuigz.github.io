@@ -11,7 +11,11 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" /></noscript>
 <style>
 /* ==========================================================================
-   HKRR · Personal creation handbook.
+   HKRR · Cinematic redesign.
+   Reference: Locomotive Studio (locomotive.ca) — for the big editorial type,
+   marquees, custom cursor with state, color washes on scroll;
+   crossed with Active Theory's staged formula reveal and Vercel/Linear's
+   dark-mode finish.
    ========================================================================== */
 
 :root {
@@ -131,6 +135,65 @@ em, i { font-family: var(--italic); font-style: italic; }
 ::-webkit-scrollbar-thumb:hover { background: var(--pap-4); }
 
 /* ==========================================================================
+   OPTIONAL CURSOR — motion-limited with a native fallback
+   ========================================================================== */
+.cursor {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+  body.has-custom-cursor .cursor { display: block; }
+  body.has-custom-cursor, body.has-custom-cursor a, body.has-custom-cursor button,
+  body.has-custom-cursor input, body.has-custom-cursor .hero-formula .l,
+  body.has-custom-cursor .principle-letter, body.has-custom-cursor .synth-formula .term { cursor: none; }
+}
+@media (pointer: coarse), (max-width: 720px) { .cursor { display: none; } }
+.cursor-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--pap-0);
+  transform: translate(-50%, -50%);
+  transition: opacity .2s;
+}
+.cursor-ring {
+  position: absolute;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--pap-2);
+  transform: translate(-50%, -50%);
+  transition: width .35s var(--ease), height .35s var(--ease), background .35s, border-color .35s, opacity .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cursor-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-1);
+  opacity: 0;
+  transition: opacity .25s;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.cursor.hover .cursor-ring {
+  width: 80px; height: 80px;
+  background: var(--pap-0);
+  border-color: var(--pap-0);
+}
+.cursor.hover .cursor-dot { opacity: 0; }
+.cursor.hover .cursor-label { opacity: 1; }
+.cursor.tiny .cursor-ring { width: 12px; height: 12px; opacity: 0.4; }
+.cursor.tiny .cursor-dot { opacity: 0; }
+
+/* ==========================================================================
    READING PROGRESS — gold hairline
    ========================================================================== */
 .progress {
@@ -200,7 +263,7 @@ em, i { font-family: var(--italic); font-style: italic; }
   align-items: center;
   gap: 10px;
 }
-@media (min-width: 1040px) {
+@media (min-width: 880px) {
   .mast .ctr { display: inline-flex; }
 }
 .mast .ctr .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--pap-4); }
@@ -216,7 +279,7 @@ em, i { font-family: var(--italic); font-style: italic; }
 
 /* Compact chapter index — native details stays usable without JavaScript. */
 .chapter-menu { display: none; }
-@media (max-width: 1039px) {
+@media (max-width: 879px) {
   .chapter-menu { display: block; }
   .chapter-menu summary {
     display: flex;
@@ -1447,13 +1510,9 @@ em, i { font-family: var(--italic); font-style: italic; }
   color: var(--m);
   margin-right: 10px;
 }
-.case-k { --c: var(--k); }
-.case-r1 { --c: var(--r1); }
-.case-h { --c: var(--h); }
-.case-r2 { --c: var(--r2); }
-.case .case-note .lbl { color: var(--c); }
-.case p.case-change { margin-top: 20px; }
-.case-change .case-stage { color: var(--c); }
+.case-1 { --c: var(--k); }   .case-1 .case-note .lbl { color: var(--k); }
+.case-2 { --c: var(--h); }   .case-2 .case-note .lbl { color: var(--h); }
+.case-3 { --c: var(--r2); }  .case-3 .case-note .lbl { color: var(--r2); }
 
 /* ==========================================================================
    AUDIT — interactive
@@ -2101,7 +2160,7 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 }
 
 /* Concrete practice fragments keep the existing case-card layout. */
-.case { align-items: start; scroll-margin-top: 100px; }
+.case { align-items: start; }
 .case h3 { font-style: normal; }
 .case > *, .case-compare, .case-fragment { min-width: 0; }
 .case-compare { display: grid; gap: 18px; }
@@ -2138,214 +2197,23 @@ body.page-inactive *, body.page-inactive *::before, body.page-inactive *::after 
 .synth-formula .term:hover { transform: none; }
 .synth-formula .term:focus-visible { outline: 2px solid var(--c); outline-offset: 6px; border-radius: 4px; }
 .synth-formula .term .role, .synth-formula .term:hover .role { opacity: 1; transform: none; font-family: var(--sans); font-size: clamp(12px, 1.1vw, 16px); letter-spacing: 0; white-space: nowrap; }
-
-/* Personal handbook: a clear reading hierarchy and a compact working layer. */
-:root { --ink-1:#0d0e11; --ink-2:#131519; --ink-3:#191b20; --pap-2:rgba(245,242,233,.72); --pap-3:rgba(245,242,233,.58); }
-body::before { opacity:.2; }
-body::after, .hero::after, .principle-mega, .principle-letter::before { display:none; }
-.mast, .mast.lifted { padding:12px 32px; font-family:var(--sans); font-size:13px; letter-spacing:.03em; }
-.mast.lifted { background:rgba(13,14,17,.94); backdrop-filter:blur(16px); }
-.mast .ctr { gap:12px; }
-.mast .ctr .sec { color:var(--pap-2); }
-.mast .ctr .sec:hover, .mast .ctr .sec.active { color:var(--pap-0); }
-.mast .ctr .sec.active::after { content:''; position:absolute; bottom:3px; inset-inline:0; height:2px; background:var(--gold); }
-.hero { min-height:0; padding:128px 0 60px; }
-.hero-tag { display:table; margin:0 auto 22px; padding:0; border:0; border-radius:0; background:none; backdrop-filter:none; color:var(--pap-2); font-family:var(--sans); font-size:13px; letter-spacing:.12em; }
-.hero-tag .pulse { display:none; }
-.hero-eq { display:block; margin-bottom:36px; font:18px/1.6 var(--sans); color:var(--pap-1); letter-spacing:.04em; }
-.hero-eq::before, .hero-eq::after { display:none; }
-.hero-formula { font-size:clamp(64px,14vw,184px); }
-.hero-formula .l, .hero-formula .l:hover { text-shadow:none; transform:none; }
-.hero-formula .x, .synth-formula .x { color:var(--pap-3); }
-.hero-bg .glow { opacity:.1; filter:blur(110px); animation:none; }
-.formula-aura { opacity:.35; }
-.formula-aura .fa { animation:none; }
-.hero-bg .grid { opacity:.18; }
-.hero-tag, .hero-eq, .hero-formula .l, .hero-formula .x, .hero-words, .hero-cta { opacity:1; transform:none; animation:none; }
-.formula-wrap { margin-bottom:32px; }
-.hero-words { margin-bottom:30px; font-size:clamp(16px,1.7vw,22px); color:var(--pap-2); }
-.hero-cta { display:flex; align-items:center; gap:12px; }
-.btn { padding:13px 24px; min-height:48px; border-radius:10px; font-family:var(--sans); font-size:14px; letter-spacing:.04em; }
-.btn-primary { background:var(--gold); }
-.hero-read { display:inline-flex; align-items:center; gap:10px; min-height:48px; padding:10px 18px; font-size:14px; color:var(--pap-2); text-decoration:underline; text-underline-offset:5px; text-decoration-color:var(--pap-4); }
-.hero-read:hover { color:var(--pap-0); }
-.wrap, .wrap-wide { max-width:1180px; }
-.wrap-prose { max-width:860px; }
-.section { padding:76px 0; }
-.s-marker { margin-bottom:24px; gap:14px; letter-spacing:.1em; }
-.s-marker .n { font-size:25px; }
-.s-title { font-size:clamp(30px,3.5vw,46px); line-height:1.35; margin-bottom:22px; letter-spacing:-.02em; }
-.s-title .accent { color:var(--pap-0); }
-.s-lead { font-size:17px; line-height:1.9; max-width:740px; }
-.s-lead .strong { font-family:var(--sans); font-size:1em; }
-.origin-quote { margin:28px 0 18px; font-size:23px; }
-.origin-quote-credit { margin-bottom:30px; font-size:12px; letter-spacing:.06em; line-height:1.8; }
-.tenet { grid-template-columns:44px 1fr; gap:24px; padding:24px 0; }
-.tenet h4 { font-size:21px; }
-.tenet p { font-size:16px; line-height:1.85; }
-.principle-head { gap:28px; margin-bottom:28px; padding-bottom:24px; align-items:center; }
-.principle-letter { font-size:clamp(76px,9vw,120px); }
-.principle-letter:hover { transform:none; text-shadow:none; }
-.principle-titles { padding:0; gap:8px; }
-.principle-zh { font-size:clamp(32px,4vw,46px); }
-.principle-role { font-family:var(--sans); font-size:15px; }
-.principle-stat { padding:0; color:var(--pap-2); font-size:12px; }
-.principle-stat b { font-size:20px; }
-.principle-def { font-family:var(--sans); font-size:19px; line-height:1.9; max-width:850px; margin-bottom:30px; text-wrap:pretty; }
-.principle-def .drop { font:inherit; margin:0; vertical-align:baseline; }
-.principle-grid { gap:40px; }
-.principle-misc { padding:20px 22px; margin-bottom:24px; }
-.principle-misc strong, .principle-example p { font-family:var(--sans); }
-.principle-example p { font-size:16px; line-height:1.85; }
-.principle-example .lbl, .principle-methods-lbl { font-size:12px; color:var(--pap-2); letter-spacing:.08em; }
-.method { padding:22px 0; gap:14px; grid-template-columns:28px 1fr; }
-.method h5 { font-size:20px; }
-.method p { font-size:16px; line-height:1.85; }
-.principle-keywords { margin-top:26px; padding:16px 0; gap:8px 22px; font-size:13px; }
-.synth-stage { margin-top:32px; padding:30px 24px; border-radius:16px; background:var(--ink-2); }
-.synth-stage::before { display:none; }
-.synth-eyebrow { margin-bottom:24px; color:var(--pap-2); font-size:12px; letter-spacing:.06em; }
-.synth-formula { font-size:clamp(48px,9vw,100px); }
-.synth-formula .term { gap:16px; cursor:pointer; }
-.synth-formula .term .gly { filter:none; }
-.synth-formula .term:hover .role { text-decoration:underline; text-underline-offset:5px; }
-.synth-note { margin-top:26px; font-family:var(--sans); font-size:16px; }
-.bridge { margin-top:36px; gap:36px; }
-.bridge-row { padding:16px 0; }
-.bridge-row .src, .bridge-body strong { font-family:var(--sans); font-style:normal; }
-.bridge-row .src { font-size:17px; }
-.bridge-row .dst { font-size:12px; letter-spacing:0; gap:8px; }
-.bridge-row .dst::before { box-shadow:none; width:5px; height:5px; flex-shrink:0; }
-.cases { margin-top:36px; gap:22px; }
-.case { padding:28px 30px; gap:32px; border-radius:16px; backdrop-filter:none; }
-.case:hover { transform:none; }
-.case h3 { font-size:30px; line-height:1.4; }
-.case p { font-size:16px; line-height:1.85; }
-.case em { font-family:var(--sans); font-style:normal; }
-.case-meta { color:var(--pap-2); font-size:12px; letter-spacing:.06em; }
-.case-note { font-family:var(--sans); }
-.audit-workflow { margin-top:28px; }
-.audit-shell { margin-top:32px; padding:30px; border-radius:16px; background:var(--ink-2); backdrop-filter:none; }
-.audit-shell::before { display:none; }
-.audit-tabs { gap:28px; margin-bottom:24px; font-family:var(--sans); font-size:16px; letter-spacing:0; }
-.audit-note, .score-method { font-size:14px; }
-.audit-grid { gap:30px; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); }
-.slider-name { flex-wrap:wrap; gap:6px 12px; }
-.slider-name .ltr { font-size:12px; letter-spacing:.04em; }
-.slider-name .nm { font-family:var(--sans); font-size:19px; }
-.slider-row { padding:20px 0; }
-.slider-row p { font-family:var(--sans); color:var(--pap-2); }
-.score-card { padding:26px; border-radius:12px; background:var(--ink-3); text-align:left; }
-.score-label { font-family:var(--sans); font-size:13px; font-weight:400; letter-spacing:.04em; color:var(--pap-2); margin-bottom:12px; }
-.score-tier { margin-top:0; font-family:var(--sans); font-size:21px; font-weight:500; letter-spacing:0; color:var(--pap-0); }
-.score-advice { margin-top:16px; padding:0; border:0; text-align:left; text-wrap:pretty; font-size:16px; line-height:1.85; }
-.score-advice strong { font-size:1em; }
-.score-summary { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:24px; padding-top:22px; border-top:1px solid var(--pap-5); font-size:14px; color:var(--pap-2); }
-.score-display { font-size:48px; color:var(--pap-0); line-height:1; gap:0; }
-.score-display .max { font-size:12px; color:var(--pap-2); }
-.score-bars { margin-top:20px; padding-top:0; border:0; gap:12px; }
-.score-bar { font-size:12px; }
-.score-calculation { margin-top:22px; border-top:1px solid var(--pap-5); }
-.score-calculation summary { min-height:44px; padding:12px 0; cursor:pointer; font-size:13px; color:var(--pap-2); }
-.score-method { margin:0; padding:0; border:0; }
-.yesno-item { gap:22px; padding:24px 0; }
-.yesno-letter { font-size:34px; }
-.yesno-q h3 { font-size:18px; line-height:1.6; }
-.yesno-q p { font-size:14px; color:var(--pap-2); }
-.yesno-toggle { gap:8px; letter-spacing:0; }
-.verdict { margin-top:28px; padding-top:24px; text-align:left; }
-.verdict-stamp, .verdict.pass .verdict-stamp, .verdict.fail .verdict-stamp { padding:0; border:0; transform:none; font-family:var(--sans); font-size:20px; letter-spacing:0; }
-.verdict.fail .verdict-stamp { color:var(--gold); }
-.verdict-text { margin:16px 0 0; max-width:760px; font-family:var(--sans); font-size:16px; line-height:1.85; text-wrap:pretty; }
-.audit-disclaimer { text-align:left; }
-.manifesto { padding:76px 0; border-top:1px solid var(--pap-6); }
-.manifesto-bg { opacity:.3; }
-.manifesto-lines { font-size:clamp(23px,3vw,36px); font-style:normal; margin-bottom:28px; }
-.manifesto-coda { font-size:19px; }
-.manifesto-coda em { font-size:22px; }
-.colophon { color:var(--pap-2); }
-.quick-reference { position:relative; z-index:1; padding:36px 0 50px; scroll-margin-top:84px; }
-.quick-heading { display:flex; justify-content:space-between; align-items:end; gap:24px; margin-bottom:24px; }
-.eyebrow { font-size:12px; letter-spacing:.08em; color:var(--pap-2); margin-bottom:10px; }
-.quick-heading h2 { font-family:var(--serif); font-weight:500; font-size:28px; line-height:1.5; }
-.quick-heading>p { color:var(--pap-2); font-size:14px; line-height:1.8; }
-.quick-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
-.quick-card { display:flex; flex-direction:column; min-width:0; padding:22px 20px; border:1px solid var(--pap-5); border-top:2px solid var(--m); border-radius:4px 4px 12px 12px; background:var(--ink-2); transition:background .2s,border-color .2s; }
-.quick-card:hover { background:var(--ink-3); border-color:var(--m); }
-.quick-card:focus-visible { outline-color:var(--m); }
-.quick-name { display:flex; gap:12px; align-items:center; font-size:18px; }
-.quick-letter { font-family:var(--serif); font-size:36px; line-height:1; color:var(--m); min-width:40px; }
-.quick-name small { display:block; font-size:12px; color:var(--pap-2); font-weight:400; margin-top:3px; }
-.quick-arrow { margin-left:auto; color:var(--pap-2); font-size:18px; }
-.quick-card p { margin:20px 0 14px; font-size:17px; line-height:1.75; }
-.quick-hint { margin-top:auto; font-size:13px; line-height:1.8; color:var(--pap-2); }
-@media (max-width:1039px) { .quick-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media (max-width:920px) { .audit-grid { grid-template-columns:1fr; } }
-@media (max-width:720px) {
-  .mast, .mast.lifted { padding:10px 20px; }
-  .hero { padding:108px 0 36px; }
-  .hero-bg .glow { opacity:.055; }
-  .hero-eq { font-size:16px; margin-bottom:28px; }
-  .formula-wrap { margin-bottom:24px; }
-  .hero-words { max-width:320px; margin-bottom:24px; }
-  .hero-read { flex-basis:100%; justify-content:center; }
-  .section { padding:48px 0; }
-  .wrap, .hero-inner { padding-inline:20px; }
-  .s-title { font-size:30px; }
-  .s-lead { font-size:16px; }
-  .tenet { grid-template-columns:28px 1fr; gap:16px; }
-  .principle-head { grid-template-columns:auto minmax(0,1fr); gap:18px; }
-  .principle-stat { display:none; }
-  .principle-en { font-size:11px; letter-spacing:.1em; }
-  .principle-role { font-size:14px; }
-  .principle-def { font-size:17px; line-height:1.9; }
-  .principle-grid { gap:24px; }
-  .principle-keywords { margin-top:20px; }
-  .synth-stage { padding:26px 14px; }
-  .synth-eyebrow { font-size:11px; }
-  .synth-formula .term { gap:16px; }
-  .synth-note { font-size:15px; }
-  .case { padding:22px; gap:24px; }
-  .case h3 { font-size:27px; }
-  .audit-shell { padding:22px 18px; }
-  .score-card { padding:22px 18px; }
-  .score-display { font-size:44px; }
-  .yesno-item { column-gap:16px; row-gap:14px; }
-  .yesno-toggle { padding-left:48px; }
-  .quick-reference { padding:28px 0 36px; }
-  .quick-heading { display:block; }
-  .quick-heading h2 { font-size:25px; }
-  .quick-heading>p { margin-top:12px; }
-  .quick-heading>p br { display:none; }
-  .quick-card { padding:20px; }
-  .manifesto { padding:50px 0; }
-  .manifesto-lines .line { column-gap:12px; }
-}
-@media (max-width:520px) {
-  .quick-grid { grid-template-columns:1fr; gap:12px; }
-  .quick-card p { margin:14px 0 8px; }
-  .hero-cta { gap:10px; }
-  .btn { padding:12px 20px; }
-  .principle-role { line-height:1.7; }
-  .score-summary { flex-wrap:wrap; }
-}
-
 </style>
 </head>
 <body>
 
-
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-ring"><span class="cursor-label" id="cursorLabel"></span></div>
+  <div class="cursor-dot"></div>
+</div>
 
 <div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="mast" id="mast">
-  <a class="mark" href="#top" aria-label="HKRR，返回顶部">
+  <a class="mark" href="#top" data-cursor="HOME" aria-label="HKRR，返回顶部">
     <span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     <span>HKRR</span>
   </a>
   <nav class="ctr" id="masterNav" aria-label="章节目录">
-    <a class="sec" href="#quick" data-section="quick">速查</a>
-    <span class="sep"></span>
     <a class="sec" href="#origin" data-section="origin">起源</a>
     <span class="sep"></span>
     <a class="sec" href="#happiness" data-section="happiness">快乐</a>
@@ -2369,7 +2237,6 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
     <nav class="chapter-index" aria-label="手机章节目录">
       <p class="chapter-index-label">HKRR · CONTENTS</p>
       <div class="chapter-index-grid">
-        <a href="#quick" data-section="quick"><span class="chapter-key">↗</span>速查</a>
         <a href="#origin" data-section="origin"><span class="chapter-key">01</span>起源</a>
         <a href="#happiness" data-section="happiness" style="--chapter-color:var(--h)"><span class="chapter-key">H</span>快乐</a>
         <a href="#knowledge" data-section="knowledge" style="--chapter-color:var(--k)"><span class="chapter-key">K</span>知识</a>
@@ -2399,9 +2266,9 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
     <div class="hero-inner">
       <div class="hero-tag">
         <span class="pulse"></span>
-        <span>个人创作手册 · HKRR</span>
+        <span>A Content Theory · 2026</span>
       </div>
-      <p class="hero-eq">用四个维度，检查一条内容</p>
+      <p class="hero-eq">好内容 =</p>
       <div class="formula-wrap">
         <div class="formula-aura" aria-hidden="true">
           <span class="fa fa-h"></span>
@@ -2410,48 +2277,29 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
           <span class="fa fa-r2"></span>
         </div>
         <h1 class="hero-formula" aria-label="H 快乐 × K 知识 × R₁ 共鸣 × R₂ 节奏">
-        <span class="l l-1">H</span><span class="x x-1">×</span><span class="l l-2">K</span><span class="x x-2">×</span><span class="l l-3">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="x x-3">×</span><span class="l l-4">R<sub class="variable-index" aria-hidden="true">2</sub></span>
+        <span class="l l-1" data-cursor="Happiness">H</span><span class="x x-1">×</span><span class="l l-2" data-cursor="Knowledge">K</span><span class="x x-2">×</span><span class="l l-3" data-cursor="Resonance">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="x x-3">×</span><span class="l l-4" data-cursor="Rhythm">R<sub class="variable-index" aria-hidden="true">2</sub></span>
         </h1>
       </div>
       <p class="hero-words">
         <span class="seg h">Happiness</span> · <span class="seg k">Knowledge</span> · <span class="seg r1">Resonance</span> · <span class="seg r2">Rhythm</span>
       </p>
       <div class="hero-cta">
-        <a href="#audit" class="btn btn-primary">开始自检 <span class="arr">→</span></a>
-        <a href="#quick" class="btn btn-ghost">四维速查 <span class="arr">↓</span></a>
-        <a href="#origin" class="hero-read">阅读完整说明 <span aria-hidden="true">↗</span></a>
+        <a href="#origin" class="btn btn-primary" data-cursor="Read">从起源读起 <span class="arr">↓</span></a>
+        <a href="#audit" class="btn btn-ghost" data-cursor="Try it">直接去自检 <span class="arr">→</span></a>
       </div>
     </div>
 
-
-  </section>
-
-  <!-- Quick reference sits outside the nine full-reading chapters. -->
-  <section class="quick-reference" id="quick" aria-labelledby="quickTitle" data-tint="rgba(245,242,233,0.02)">
-    <div class="wrap">
-      <div class="quick-heading">
-        <div><p class="eyebrow">四维速查 · Quick reference</p><h2 id="quickTitle">四个问题，快速检查。</h2></div>
-        <p>明确给谁看、希望留下什么。<br/>再找具体片段，判断本轮值得改哪里。</p>
-      </div>
-      <div class="quick-grid">
-        <a class="quick-card" href="#happiness" style="--m:var(--h)">
-          <span class="quick-name"><span class="quick-letter" aria-hidden="true">H</span><span>快乐<small>体验满足</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
-          <p>哪一处，让阅读或观看更有满足感？</p><span class="quick-hint">找趣味、惊喜、审美享受或释然。</span>
-        </a>
-        <a class="quick-card" href="#knowledge" style="--m:var(--k)">
-          <span class="quick-name"><span class="quick-letter" aria-hidden="true">K</span><span>知识<small>认知收获</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
-          <p>看完后，具体多知道或理解了什么？</p><span class="quick-hint">用一句话说清收获，再检查依据。</span>
-        </a>
-        <a class="quick-card" href="#resonance" style="--m:var(--r1)">
-          <span class="quick-name"><span class="quick-letter" aria-hidden="true">R₁</span><span>共鸣<small>处境连接</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
-          <p>哪一处，说中了目标观众的处境？</p><span class="quick-hint">看感受、愿望和关切是否讲得真切。</span>
-        </a>
-        <a class="quick-card" href="#rhythm" style="--m:var(--r2)">
-          <span class="quick-name"><span class="quick-letter" aria-hidden="true">R₂</span><span>节奏<small>持续投入</small></span><span class="quick-arrow" aria-hidden="true">↗</span></span>
-          <p>哪里重复、跳跃，或来不及理解？</p><span class="quick-hint">按正常速度，检查顺序、停顿和密度。</span>
-        </a>
-      </div>
+    <div class="hero-key">
+      <span style="--key-color:var(--h)">快乐 — 体验满足</span>
+      <span style="--key-color:var(--k)">知识 — 认知收获</span>
+      <span style="--key-color:var(--r1)">共鸣 — 处境连接</span>
+      <span style="--key-color:var(--r2)">节奏 — 持续投入</span>
     </div>
+
+    <a class="hero-scroll" href="#origin" aria-label="向下滚动" data-cursor="Scroll">
+      <span>Scroll</span>
+      <span class="line"></span>
+    </a>
   </section>
 
   <!-- ============ 01 · ORIGIN ============ -->
@@ -2474,21 +2322,21 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
           <span class="roman">i</span>
           <div>
             <h4>先定这条内容的目标。</h4>
-            <p>写下一句话，说明给谁看、希望对方理解什么或留下什么感受。审稿时用这句话作参照，找最影响目标的片段。</p>
+            <p>先说清楚给谁看、解决什么问题，或希望留下什么感受。再用四个维度检查，找出最影响这次目标的一处，而非要求每条内容都面面俱到。</p>
           </div>
         </article>
         <article class="tenet">
           <span class="roman">ii</span>
           <div>
             <h4>用乘法提醒自己留意短板。</h4>
-            <p>H × K × R₁ × R₂ 是我的检查提示，不是经过验证的传播定律。某一处理解障碍可能拖累整段体验；具体是否要改，回到片段判断。</p>
+            <p>我保留 H × K × R₁ × R₂，提醒自己别只打磨最擅长的一项。它表达的是各项会相互影响。具体改哪里，要看内容目的和实际片段，不因某项偏弱就否定整条内容。</p>
           </div>
         </article>
         <article class="tenet">
           <span class="roman">iii</span>
           <div>
             <h4>按内容类型调整侧重。</h4>
-            <p>教程先看能否理解和照做，观点表达先看理由与处境，生活记录可以侧重感受和余味。四项不必平均用力，明确这次取舍，再用真实反馈校正。</p>
+            <p>我主要用它检查文章、口播和视频。方法教程、观点表达与生活记录各有重点，四项不必平均用力；跨到其他形式时，先判断这套检查是否有帮助。</p>
           </div>
         </article>
       </div>
@@ -2508,11 +2356,11 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter">H</span>
+          <span class="principle-letter" data-cursor="Happiness">H</span>
           <div class="principle-titles">
             <span class="principle-en">Happiness</span>
             <h3 class="principle-zh">快乐</h3>
-            <span class="principle-role">— 关注阅读与观看中的愉悦和满足</span>
+            <span class="principle-role">— 关注观看中的愉悦与满足</span>
           </div>
           <div class="principle-stat">
             <span>检查</span>
@@ -2520,17 +2368,17 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
           </div>
         </div>
 
-        <p class="principle-def"><span class="drop">快</span>乐关注阅读或观看中的愉悦与满足。幽默、惊喜、审美享受、解惑后的畅快和释然，都可以成为它的来源。检查时，找到让人愿意多停留一下、觉得这段体验值得的具体时刻。</p>
+        <p class="principle-def"><span class="drop">快</span>乐关注观看时的愉悦与满足。幽默、惊喜、审美享受、解惑后的畅快、释然和希望感，都可以成为它的来源。我检查的是哪一处让人觉得这段体验值得，而非只找笑点或励志金句。</p>
 
         <div class="principle-grid">
           <div>
             <div class="principle-misc">
-              <span class="lbl">判断重点 · What to look for</span>
-              <p><strong>先找内容已经拥有的吸引力。</strong>一个恰当的比喻、一处意外发现、一段完整呈现的画面，都可能让体验更有满足感。严肃话题也可以靠解释清楚、表达体贴来提供这种感受。</p>
+              <span class="lbl">误区 · Misconception</span>
+              <p><strong>愉悦可以有不同来源。</strong>搞笑、漂亮画面和认知打开都可能带来快乐，具体选哪一种要顺着内容本身。严肃话题不必硬加笑料，结尾也不必强行积极。</p>
             </div>
             <div class="principle-example">
-              <span class="lbl">审稿提示 · Review cue</span>
-              <p><b>同一个解释，可以同时有 K 和 H。</b>K 看观众是否理解了原因，H 看这个理解发生时是否有恍然大悟的畅快。修改时，可以用一个贴切的对照，让原本抽象的关系变得可见。</p>
+              <span class="lbl">实例 · In Practice</span>
+              <p><b>“这一刻看得很满足。”</b>同一个解释，K 看它是否讲清了问题，H 看恍然大悟时是否带来畅快。两者可以出现在同一处，不必硬分开。</p>
             </div>
           </div>
           <div class="principle-methods r-children">
@@ -2538,15 +2386,15 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
             <article class="method">
               <span class="num">i</span>
               <div>
-                <h5>把吸引人的那一处呈现出来。</h5>
-                <p>先圈出一个值得停留的发现或细节，再检查它是否被抽象概括遮住。文章把“很好看”写成可感知的变化；视频让关键画面被看清，声音和字幕为它让出空间。</p>
+                <h5>找到内容本身的愉悦点。</h5>
+                <p>圈出让人感到有趣、好看、惊喜或释然的片段。没有合适的地方，就先检查表达是否枯燥，不急着补段子和金句。</p>
               </div>
             </article>
             <article class="method">
               <span class="num">ii</span>
               <div>
-                <h5>让前面的期待得到回应。</h5>
-                <p>回看开头提出了什么问题、制造了什么期待，在合适的位置给出发现、解释或结果。读到或看到这里时，检查回应是否清楚；必要时删去紧跟其后的重复解释，留一点消化和回味的空间。</p>
+                <h5>检查结尾留下的感受。</h5>
+                <p>希望感可以是落点，平静、理解或余味也可以。结尾应接住前文的情绪和承诺，不为追求上扬而跳过真实的问题。</p>
               </div>
             </article>
           </div>
@@ -2577,7 +2425,7 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter">K</span>
+          <span class="principle-letter" data-cursor="Knowledge">K</span>
           <div class="principle-titles">
             <span class="principle-en">Knowledge</span>
             <h3 class="principle-zh">知识</h3>
@@ -2594,12 +2442,12 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         <div class="principle-grid">
           <div>
             <div class="principle-misc">
-              <span class="lbl">判断重点 · What to look for</span>
-              <p><strong>先确定观众原来知道多少。</strong>同一句解释，对新手可能是关键，对熟悉的人可能只是重复。围绕这次受众补足必要背景，把新增的理解讲到位。</p>
+              <span class="lbl">误区 · Misconception</span>
+              <p><strong>收获不必都能立刻操作。</strong>解释清楚一个现象、纠正一个误解，也有认知价值。堆名词和资料不等于讲清楚；需要交代信息依据、推理过程和适用条件。</p>
             </div>
             <div class="principle-example">
-              <span class="lbl">审稿提示 · Review cue</span>
-              <p><b>把预期收获写成一句话。</b>例如“能把模糊任务改成可动手的一步”。接着回看正文，能否找到示范、理由和适用条件，让读者理解如何使用它。</p>
+              <span class="lbl">实例 · In Practice</span>
+              <p><b>“我终于理解它为什么会这样。”</b>观众可能带走一个解释，也可能带走一个动作。审稿时把这份收获写成一句话，再看正文是否足以支撑它。</p>
             </div>
           </div>
           <div class="principle-methods r-children">
@@ -2607,15 +2455,15 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
             <article class="method">
               <span class="num">i</span>
               <div>
-                <h5>补上从结论到理解的那一步。</h5>
-                <p>找到最重要的结论，问它凭什么成立、在哪些情况下适用。解释型内容补推理和证据；方法型内容补操作示范和检查结果的办法。事实、推断与个人经验分别说清。</p>
+                <h5>把预期收获说清楚。</h5>
+                <p>说明观众会多理解哪件事，或能作出什么判断。方法型内容再补操作步骤，解释型内容则把原因和依据讲透，不强凑行动清单。</p>
               </div>
             </article>
             <article class="method">
               <span class="num">ii</span>
               <div>
-                <h5>用一个具体问题检验是否讲清。</h5>
-                <p>让读者用刚才的解释判断一个例子，或按步骤尝试一个动作。若必须额外猜测，补齐缺失环节；删去与主问题无关的名词和资料，让关键收获更容易被记住。</p>
+                <h5>围绕主问题组织收获。</h5>
+                <p>短内容先讲清一个主问题；长内容可以展开多个层次，但每一部分都应服务主线。检查哪些信息帮助理解，哪些只是显得懂得多，再决定保留或删减。</p>
               </div>
             </article>
           </div>
@@ -2646,7 +2494,7 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter">R<sub class="variable-index" aria-hidden="true">1</sub></span>
+          <span class="principle-letter" data-cursor="Resonance">R<sub class="variable-index" aria-hidden="true">1</sub></span>
           <div class="principle-titles">
             <span class="principle-en">Resonance</span>
             <h3 class="principle-zh">共鸣</h3>
@@ -2658,17 +2506,17 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
           </div>
         </div>
 
-        <p class="principle-def"><span class="drop">共</span>鸣关注观众能否在内容里认出自己的处境、感受、愿望或价值取向。检查时，找到他们想做什么、顾虑什么、在意什么，让观点与这些具体关切发生联系。</p>
+        <p class="principle-def"><span class="drop">共</span>鸣关注观众能否在内容里认出自己的处境、感受、愿望或价值取向。素材可以来自亲历，也可以来自观察、采访和可靠记录。我检查的是有没有理解观众在意什么，不能把他人的经历写成自己的亲历。</p>
 
         <div class="principle-grid">
           <div>
             <div class="principle-misc">
-              <span class="lbl">判断重点 · What to look for</span>
-              <p><strong>挑出会影响选择的细节。</strong>一个人既想尝试、又怕给别人添麻烦，这种两难比单说“他很焦虑”更接近处境。保留能解释选择的细节，再讲自己的判断。</p>
+              <span class="lbl">误区 · Misconception</span>
+              <p><strong>细节要与处境有关。</strong>日期和数字很具体，却未必能让人代入。比起堆细节，更要讲准人在那种处境中的选择和感受。共鸣能建立连接，信任还要靠真实、准确和长期一致。</p>
             </div>
             <div class="principle-example">
-              <span class="lbl">审稿提示 · Review cue</span>
-              <p><b>分清“他在做什么”和“他在担心什么”。</b>只写迟迟没开始，容易直接下判断；再看清他想尝试什么、怕失去什么，建议才更有可能回应真实顾虑。</p>
+              <span class="lbl">实例 · In Practice</span>
+              <p><b>“这说的就是我的处境。”</b>一个被说准的犹豫、一种共同在意的价值，都可能产生连接。素材先求真实，再判断它是否与这次要服务的人有关。</p>
             </div>
           </div>
           <div class="principle-methods r-children">
@@ -2676,15 +2524,15 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
             <article class="method">
               <span class="num">i</span>
               <div>
-                <h5>把抽象情绪落到具体选择。</h5>
-                <p>找到“焦虑、迷茫、害怕”这类概括，追问它发生在什么场景、面前有哪些选择、各自有什么代价。选最能说明问题的一处展开，再接上观点或建议。</p>
+                <h5>先给处境，再说明判断。</h5>
+                <p>用有关的场景和细节支持判断，也把需要说明的结论讲清楚。检查观众是否知道这件事与自己有什么关系，不用堆细节代替解释。</p>
               </div>
             </article>
             <article class="method">
               <span class="num">ii</span>
               <div>
-                <h5>核对素材，再校准表达。</h5>
-                <p>亲历、观察、采访和可靠记录都可以使用，标明归属；自拟场景明确标注。回看是否把少数人的情况说成所有人的感受，必要时用“如果你也遇到……”限定对象。</p>
+                <h5>选择与主题有关的真实过程。</h5>
+                <p>成功、犹豫、失败或普通日常都可以成为素材。只保留有助理解主题的部分，不为打动人而编挫折，也不要求每条内容都自曝私事。</p>
               </div>
             </article>
           </div>
@@ -2715,7 +2563,7 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         </div>
 
         <div class="principle-head">
-          <span class="principle-letter">R<sub class="variable-index" aria-hidden="true">2</sub></span>
+          <span class="principle-letter" data-cursor="Rhythm">R<sub class="variable-index" aria-hidden="true">2</sub></span>
           <div class="principle-titles">
             <span class="principle-en">Rhythm</span>
             <h3 class="principle-zh">节奏</h3>
@@ -2732,12 +2580,12 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         <div class="principle-grid">
           <div>
             <div class="principle-misc">
-              <span class="lbl">判断重点 · What to look for</span>
-              <p><strong>每一段都应带来一点进展。</strong>进展可以是补足背景、解答疑问、推进情节，也可以是让感受沉下来。标出这一段的作用，再决定该加快、展开还是停留。</p>
+              <span class="lbl">误区 · Misconception</span>
+              <p><strong>速度要服务于理解和感受。</strong>该解释的地方讲清楚，该停留的地方留出余味，重复和无用的过渡则删减。完读或留存可以提供线索，还要结合内容长度与受众判断。</p>
             </div>
             <div class="principle-example">
-              <span class="lbl">审稿提示 · Review cue</span>
-              <p><b>把“没跟上”定位到具体一处。</b>因果缺了一步，就补解释；同一意思说了两遍，就合并；关键画面刚出现就被字幕盖住，就调整字幕和停留。问题不同，改法也不同。</p>
+              <span class="lbl">实例 · In Practice</span>
+              <p><b>“我跟得上，也想知道接下来。”</b>承接前面的疑问，给出新的解释，再推进到下一步。检查有没有突兀跳跃、重复兜圈，或来不及理解就切走的地方。</p>
             </div>
           </div>
           <div class="principle-methods r-children">
@@ -2745,15 +2593,15 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
             <article class="method">
               <span class="num">i</span>
               <div>
-                <h5>先排清信息出现的顺序。</h5>
-                <p>给各段写一句作用说明，检查观众在这一刻已经知道什么、接下来会问什么。开头交代关切，后文沿问题推进；把依赖前文的结论放在必要解释之后，合并重复铺垫。</p>
+                <h5>尽早交代为什么值得继续。</h5>
+                <p>开头让目标观众知道这条内容与自己有什么关系，会获得什么。文章可以用标题和首段承接，口播和视频还要检查第一段表达；删掉无关铺垫，也不为了赶秒数省掉必要背景。</p>
               </div>
             </article>
             <article class="method">
               <span class="num">ii</span>
               <div>
-                <h5>按实际阅读或播放速度复核。</h5>
-                <p>文章通读一遍，口播完整读出声，视频连同画面、字幕和声音一起看。标出需要回读、抢气或来不及看的位置；分别调整句长、停顿和呈现时机，再完整过一遍。</p>
+                <h5>在内容停滞处检查推进。</h5>
+                <p>按正常速度通读或播放，标出重复、走神和理解卡住的位置。需要时补解释、例子或转折，删掉绕圈的部分；正在积累理解或情绪的段落，不必按固定间隔插刺激点。</p>
               </div>
             </article>
           </div>
@@ -2782,50 +2630,50 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
       </div>
 
       <h2 class="s-title">四个变量<span class="accent">相互影响</span>，<br/>先找真正的瓶颈。</h2>
-      <p class="s-lead">把判断落到同一个片段上，说明哪里卡住、准备怎样改。<span class="strong">改完再通读或播放一次，看原来的问题是否减轻，也看有没有损失别的东西。</span></p>
+      <p class="s-lead">我用四个维度检查具体片段，再决定先改哪一处。数据不理想时，也要回看选题、标题、封面和受众是否匹配。<span class="strong">先提出一个有证据的修改判断，再用下一次发布验证。</span></p>
 
       <div class="synth-stage">
         <div class="synth-eyebrow">选择字母，回到对应章节 · Jump to a variable</div>
         <p class="synth-formula">
-          <a class="term h" href="#happiness" aria-label="H 快乐，前往快乐章节"><span class="gly" aria-hidden="true">H</span><span class="role">快乐</span></a>
+          <a class="term h" href="#happiness" data-cursor="Happiness" aria-label="H 快乐，前往快乐章节"><span class="gly" aria-hidden="true">H</span><span class="role">快乐</span></a>
           <span class="x">×</span>
-          <a class="term k" href="#knowledge" aria-label="K 知识，前往知识章节"><span class="gly" aria-hidden="true">K</span><span class="role">知识</span></a>
+          <a class="term k" href="#knowledge" data-cursor="Knowledge" aria-label="K 知识，前往知识章节"><span class="gly" aria-hidden="true">K</span><span class="role">知识</span></a>
           <span class="x">×</span>
-          <a class="term r1" href="#resonance" aria-label="R₁ 共鸣，前往共鸣章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="role">共鸣</span></a>
+          <a class="term r1" href="#resonance" data-cursor="Resonance" aria-label="R₁ 共鸣，前往共鸣章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">1</sub></span><span class="role">共鸣</span></a>
           <span class="x">×</span>
-          <a class="term r2" href="#rhythm" aria-label="R₂ 节奏，前往节奏章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">2</sub></span><span class="role">节奏</span></a>
+          <a class="term r2" href="#rhythm" data-cursor="Rhythm" aria-label="R₂ 节奏，前往节奏章节"><span class="gly" aria-hidden="true">R<sub class="variable-index" aria-hidden="true">2</sub></span><span class="role">节奏</span></a>
         </p>
-        <p class="synth-note"><b>×</b> 提醒我留意相互影响，从最妨碍本条目标的一处改起。</p>
+        <p class="synth-note"><b>×</b> 提醒我留意短板，先补影响本条目标的缺口。</p>
       </div>
 
       <div class="bridge r-children">
         <div class="bridge-block">
           <h4>与“有用 · 好看 · 动人”的对照</h4>
-          <div class="bridge-row k">
+          <div class="bridge-row k" data-cursor="K">
             <span class="src">有用</span>
             <span class="arr">→</span>
             <span class="dst">Knowledge · 知识</span>
           </div>
-          <div class="bridge-row r1">
+          <div class="bridge-row r1" data-cursor="R">
             <span class="src">动人</span>
             <span class="arr">→</span>
             <span class="dst">Resonance · 共鸣</span>
           </div>
-          <div class="bridge-row h">
+          <div class="bridge-row h" data-cursor="H">
             <span class="src">好看 · 愉悦体验</span>
             <span class="arr">→</span>
             <span class="dst">Happiness · 快乐</span>
           </div>
-          <div class="bridge-row r2">
+          <div class="bridge-row r2" data-cursor="R">
             <span class="src">好看 · 观看体验</span>
             <span class="arr">→</span>
             <span class="dst">Rhythm · 节奏</span>
           </div>
         </div>
         <div class="bridge-body">
-          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pap-3);margin:0 0 28px">一次修改，可以改善多个维度</h4>
-          <p>比如一句抽象解释读起来费劲，可以先换成一个贴切的例子，让 <span style="color:var(--k)">K</span> 更清楚；再安排它出现的位置和停顿，让 <span style="color:var(--r2)">R₂</span> 更顺畅。理解发生时的畅快，也可能带来 <span style="color:var(--h)">H</span>。</p>
-          <p>左侧是便于调用的个人对照，维度之间会重叠。<strong>复核时，也要看修改的代价。</strong>为了流畅删掉的内容，是否恰好是理解结论所需的条件？增加的情节，是否让主问题更清楚？</p>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--pap-3);margin:0 0 28px">我怎样理解“好看”</h4>
+          <p>对我来说，"好看"可以继续拆开检查。<span style="color:var(--h)">快乐</span>（H）让我关注观看中的愉悦与满足，<span style="color:var(--r2)">节奏</span>（R₂）让我关注内容怎样展开。</p>
+          <p>这张对照表是我的理解，不是严格的一一对应。<strong>同一个片段可以同时带来收获、愉悦和共鸣。</strong>用它找到具体改法，比纠结一个片段究竟属于哪一项更有用。</p>
         </div>
       </div>
     </div>
@@ -2841,86 +2689,63 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         <span class="dot"></span>
       </div>
       <h2 class="s-title">拿出具体片段，<br/><span class="it">再决定怎么改</span>。</h2>
-      <p class="s-lead">下面是四组自拟练习，按知识、共鸣、快乐、节奏分别突出一处改法；不代表真实作品或实测效果。方括号内为拍摄或剪辑提示。<span class="strong">先看目标与问题，再比较片段，最后按复核问题判断是否值得采用。</span></p>
+      <p class="s-lead">下面是三组自拟练习片段，不是我的真实作品或效果记录。<span class="strong">先看本条目标，再对照修改前后，最后检查改动有没有解决原来的问题。</span></p>
 
       <div class="cases r-children">
-        <article class="case case-k" id="case-k" tabindex="-1">
+        <article class="case case-1">
           <div>
-            <div class="case-meta">Case 01 · 成长文章 · K</div>
-            <h3>让第一步可执行。</h3>
-            <p>目标是帮助读者开始写文章。原稿在反复要求行动，读者仍不知道如何下手。</p>
-            <p class="case-change"><span class="case-stage">这次改动</span>把“提高执行力”换成能直接执行的动作，并示范模糊任务怎样改写。</p>
+            <div class="case-meta">Case 01 · 成长文章</div>
+            <h3>从口号到可执行。</h3>
+            <p>目标是帮助读者开始眼前的任务。原段落只有鼓励，没有讲清第一步怎么做。<em>先补 K 的具体收获，再用 R₂ 整理行动顺序。</em></p>
           </div>
           <div class="case-compare">
             <div class="case-fragment">
               <span class="case-stage">修改前</span>
-              <p>“想写好文章，就要提高执行力。先认真列好计划，再把任务拆小，逐步完成。遇到困难也别轻易放弃，养成每天行动的习惯，慢慢就能离目标更近。”</p>
+              <p>“不要总是拖延。把计划列清楚，提高执行力，坚持下去，你就会离目标越来越近。”</p>
             </div>
             <div class="case-fragment case-after">
               <span class="case-stage">修改后</span>
-              <p>“清单上只有‘写文章’，还不容易下手。把它改成‘写下这篇想回答的问题’。打开文档，把这个问题写出来；接着列一个要点，或找一个能说明它的例子。”</p>
+              <p>“如果清单上写着‘写文章’，先把它改成眼下能动手的一步，比如‘写下这篇想回答的问题’。打开文档，只完成这一步；再决定接着列要点，还是先找一个例子。”</p>
             </div>
-            <p class="case-note"><span class="lbl">复核</span>遮住说明，读者能否直接指出第一步？若读者连问题都想不出，是否还需要一个选题示范？</p>
+            <p class="case-note"><span class="lbl">复核</span>读者能否指出第一步？例子是否适合当前任务？不额外塞一句口号来充当 H。</p>
           </div>
         </article>
 
-        <article class="case case-r1" id="case-r1" tabindex="-1">
+        <article class="case case-2">
           <div>
-            <div class="case-meta">Case 02 · 观点口播 · R₁</div>
+            <div class="case-meta">Case 02 · 观点口播</div>
             <h3>把判断放回处境。</h3>
-            <p>目标是检查性格标签是否限制了尝试。原稿直接归因于胆小，跳过了做决定时的顾虑。</p>
-            <p class="case-change"><span class="case-stage">这次改动</span>限定讨论对象，呈现“想试又犹豫”的处境，再给出可用的区分问题。</p>
+            <p>目标是提醒观众检查自己是否被性格标签限制。原稿先训人，缺少观众作决定时的具体犹豫。<em>先用 R₁ 接住处境，再用 K 给出判断问题。</em></p>
           </div>
           <div class="case-compare">
             <div class="case-fragment">
               <span class="case-stage">修改前</span>
-              <p>“你想试一件事，却总说自己内向、不适合。说到底，还是不敢走出舒适区。机会就在眼前，别继续犹豫了；只有勇敢迈出第一步，才能发现自己的可能。”</p>
+              <p>“别再拿性格当借口了。你做不到，就是因为你不敢走出舒适区。”</p>
             </div>
             <div class="case-fragment case-after">
               <span class="case-stage">修改后</span>
-              <p>“如果你想试一件事，却因为‘我偏内向’先把它划掉，可以问问自己：我不喜欢这件事，还是不熟悉开口的过程？如果只是陌生，先找个小场景试试，再作判断。”</p>
+              <p>“如果你想试一件事，却因为‘我偏内向，肯定不适合’先把它划掉，可以多问一句：我不喜欢这件事本身，还是不熟悉开口的过程？若只是陌生，能不能先选一个小场景试试，再作判断？”</p>
             </div>
-            <p class="case-note"><span class="lbl">复核</span>是否说清了犹豫所在？“不喜欢”和“不熟悉”的区分，能否帮助这个观众作决定？</p>
+            <p class="case-note"><span class="lbl">复核</span>有没有把观众一概归为胆小？问题是否帮助判断？不虚构一段自己的受挫经历来制造共鸣。</p>
           </div>
         </article>
 
-        <article class="case case-h" id="case-h" tabindex="-1">
+        <article class="case case-3">
           <div>
-            <div class="case-meta">Case 03 · 生活短片 · H</div>
-            <h3>让细节被看见。</h3>
-            <p>目标是呈现一个安静的小发现。两版使用相同的窗边雨滴素材，只调整旁白与注意力。</p>
-            <p class="case-change"><span class="case-stage">这次改动</span>用一个可观察的问题引导观看，让画面给出回应；关键时刻留出原声。</p>
+            <div class="case-meta">Case 03 · 字幕教程</div>
+            <h3>让步骤跟得上。</h3>
+            <p>目标是检查自动字幕是否便于阅读。原稿混杂字幕、音乐和封面，主线不清。<em>保留 K 的检查步骤，用 R₂ 按操作顺序展开。</em></p>
           </div>
           <div class="case-compare">
             <div class="case-fragment">
               <span class="case-stage">修改前</span>
-              <p>“下雨的时候，窗边总是特别好看。雨滴贴着玻璃慢慢落下来，窗外的光也很柔和。这样的画面让人放松，也让我觉得，平凡生活里其实藏着许多值得欣赏的美好。”</p>
+              <p>“先生成字幕，再调字体，音乐也要选好。字幕不能太长，封面要吸引人，最后检查一下就能发布。”</p>
             </div>
             <div class="case-fragment case-after">
               <span class="case-stage">修改后</span>
-              <p>“先看玻璃上这两滴水。一滴停着，另一滴慢慢靠近。它们碰到一起后，会停在原地，还是往下滑？［留出画面与雨声］合在一起，滑下去了。下面，又留下一颗小小的水珠。”</p>
+              <p>“这次只检查字幕。先对照原声核准人名、术语和漏字，再按意思停顿的位置断句。按正常速度播放，看看字幕是否跟得上表达、长句是否来得及读。音乐和封面留到各自的检查环节。”</p>
             </div>
-            <p class="case-note"><span class="lbl">复核</span>旁白所说的变化，画面里是否真的看得见？留出的时间够不够观察？加入旁白后，是更容易发现细节，还是干扰了原有的安静？</p>
-          </div>
-        </article>
-
-        <article class="case case-r2" id="case-r2" tabindex="-1">
-          <div>
-            <div class="case-meta">Case 04 · 口播＋演示视频 · R₂</div>
-            <h3>让声画同步推进。</h3>
-            <p>目标是演示如何检查自动字幕。两版保留相同的三个步骤，重点比较分句、停顿和画面时机。</p>
-            <p class="case-change"><span class="case-stage">这次改动</span>每讲到一步就展示对应操作，关键位置留给观众看清；停顿随实际表达调整。</p>
-          </div>
-          <div class="case-compare">
-            <div class="case-fragment">
-              <span class="case-stage">修改前</span>
-              <p>“检查自动字幕，先对照原声核准人名、术语和漏字，再按意思停顿的位置断句，最后正常播放，检查字幕是否跟得上表达，长句是否来得及读。”</p>
-            </div>
-            <div class="case-fragment case-after">
-              <span class="case-stage">修改后</span>
-              <p>“先对照原声，核准人名、术语和漏字。［展示一处改字］再按意思停顿的位置断句。［展示断句］最后，正常播放一遍。字幕跟得上吗？长句来得及读吗？”</p>
-            </div>
-            <p class="case-note"><span class="lbl">复核</span>只听声音，能否分清三个步骤？再连画面看，操作是否与讲解同步，字幕是否来得及读？停顿过长也要缩短。</p>
+            <p class="case-note"><span class="lbl">复核</span>能否按顺序完成？需要时再配实际画面示范。不因教程语气平静，就认定它缺少快乐或共鸣。</p>
           </div>
         </article>
       </div>
@@ -2932,13 +2757,13 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
     <div class="wrap">
       <div class="s-marker">
         <span class="n">08</span>
-        <span class="lbl">自检 · Audit</span>
+        <span class="lbl">互动 · Audit</span>
         <span class="bar"></span>
         <span class="dot"></span>
       </div>
 
       <h2 class="s-title">拿一条具体内容，<br/>找到<span class="it">下一处修改</span>。</h2>
-      <p class="s-lead">先用<em>快速检查</em>找到支撑片段，需要时再做<em>四维自评</em>。<span class="strong">每个判断都尽量对应一个段落、句子或时间点，本轮先选一处值得修改的地方。</span></p>
+      <p class="s-lead">先明确本条目标，再选择<em>精细打分</em>或<em>是非自检</em>。<span class="strong">每个判断都尽量对应一个段落、句子或时间点，本轮先选一处值得修改的地方。</span></p>
 
       <div class="audit-workflow" aria-label="创作与复盘的三个步骤">
         <article><h3>创作前 · 定目标</h3><p>写清给谁看、希望带走什么，以及本条侧重的维度。选题、标题和封面是否匹配，也单独检查。</p></article>
@@ -2949,17 +2774,17 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
       <div class="audit-shell r-pop" id="auditShell">
         <noscript><p class="audit-fallback">自检工具需要 JavaScript。你仍可阅读四个变量，对照正文完成检查。</p></noscript>
         <div class="audit-tabs" role="tablist" aria-label="自检模式">
-          <button type="button" class="audit-tab active" id="tabYesno" role="tab" aria-selected="true" aria-controls="panelYesno" tabindex="0" data-tab="yesno" disabled>快速检查</button>
-          <button type="button" class="audit-tab" id="tabSliders" role="tab" aria-selected="false" aria-controls="panelSliders" tabindex="-1" data-tab="sliders" disabled>四维自评</button>
+          <button type="button" class="audit-tab active" id="tabSliders" role="tab" aria-selected="true" aria-controls="panelSliders" tabindex="0" data-tab="sliders" data-cursor="Score" disabled>精细打分</button>
+          <button type="button" class="audit-tab" id="tabYesno" role="tab" aria-selected="false" aria-controls="panelYesno" tabindex="-1" data-tab="yesno" data-cursor="Check" disabled>是非自检</button>
         </div>
 
-        <div class="audit-panel" id="panelSliders" role="tabpanel" aria-labelledby="tabSliders" tabindex="0" data-panel="sliders" hidden>
+        <div class="audit-panel active" id="panelSliders" role="tabpanel" aria-labelledby="tabSliders" tabindex="0" data-panel="sliders">
           <div class="audit-tools">
             <p class="audit-note" id="scoreHelp">每项 0—10 分，先找片段证据，再参照下方说明。初始 6 / 7 / 5 / 6 只是演示值。</p>
             <button type="button" class="audit-reset" id="resetSliders" disabled>恢复示例</button>
           </div>
           <details class="audit-rubric">
-            <summary>评分参照 · 展开查看</summary>
+            <summary>评分参照 · 点开按同一把尺检查</summary>
             <ul>
               <li><b>0—3 分</b> 尚未找到清楚的片段支撑，或表达意图尚未落地。</li>
               <li><b>4—6 分</b> 能指出支撑片段，但表达、依据或衔接仍有明显可改处。</li>
@@ -2971,18 +2796,18 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
           <div class="audit-grid">
             <div class="sliders" id="sliderList"></div>
             <aside class="score-card" id="scoreCard" aria-labelledby="scoreLabel">
-              <h3 class="score-label" id="scoreLabel">本轮复核建议</h3>
-              <p class="score-tier" id="scoreTier">—</p>
-              <div class="score-advice" id="scoreAdvice">结合片段评估各维度，再选本轮要改的一处。</div>
-              <div class="score-summary"><span>综合自评</span><div class="score-display"><span id="scoreVal">—</span><span class="max">/ 100</span></div></div>
+              <div class="score-label" id="scoreLabel">综合自评分 · Composite</div>
+              <div class="score-display"><span id="scoreVal">—</span><span class="max">/ 100</span></div>
+              <div class="score-tier" id="scoreTier">—</div>
               <div class="score-bars" id="scoreBars"></div>
-              <details class="score-calculation"><summary>综合分如何计算</summary><p class="score-method">四项几何平均 × 10，取整。高项会在数值上补偿低项；任一项为 0，综合分为 0。它仅用于对照自评，不能作为发布门槛或传播预测。</p></details>
+              <div class="score-advice" id="scoreAdvice">结合片段评估各维度，再选本轮要改的一处。</div>
+              <p class="score-method">综合分沿用四项几何平均 × 10，取整。高项会在数值上补偿低项；任一项为 0，综合分为 0。它仅用于对照自评，不能作为发布门槛或传播预测。</p>
             </aside>
           </div>
           <p class="audit-sr" id="scoreFeedback" role="status" aria-atomic="true"></p>
         </div>
 
-        <div class="audit-panel active" id="panelYesno" role="tabpanel" aria-labelledby="tabYesno" tabindex="0" data-panel="yesno">
+        <div class="audit-panel" id="panelYesno" role="tabpanel" aria-labelledby="tabYesno" tabindex="0" data-panel="yesno" hidden>
           <div class="audit-tools">
             <p class="audit-note">“是”表示能指出支撑片段；“否”表示暂未体现或仍需回看。两种模式独立记录，切换不会清空。</p>
             <button type="button" class="audit-reset" id="resetYesno" disabled>重新开始</button>
@@ -3019,7 +2844,7 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
         <span class="line"><span class="word r2-w">节奏</span> <span class="role">关注持续投入。</span></span>
       </p>
 
-      <p class="manifesto-coda">持续打磨，让内容更值得读、值得看。<br/><em><span class="coda-unit">有收获，</span><span class="coda-unit">有共鸣，</span><span class="coda-unit">有体验，</span><span class="coda-unit">有节奏。</span></em></p>
+      <p class="manifesto-coda">未来每一条内容——<br/><em><span class="coda-unit">有收获，</span><span class="coda-unit">有共鸣，</span><span class="coda-unit">有体验，</span><span class="coda-unit">有节奏。</span></em></p>
 
       <div class="manifesto-sig">
         <span class="blink"></span>
@@ -3028,7 +2853,7 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
 
       <a class="manifesto-xref" href="idop.html">
         <span class="m-ar">↗</span>
-        <span>在 <b>IDOP</b> 的输出与复盘中，用 HKRR 检查具体表达</span>
+        <span>HKRR 贯穿在 <b>IDOP</b> 闭环里作为输出端的质量标尺</span>
       </a>
     </div>
   </section>
@@ -3038,7 +2863,7 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
 <footer class="colophon">
   <div class="wrap">
     <div class="formula" aria-hidden="true">
-      <span>创作检查 ·</span>
+      <span>好内容 =</span>
       <span class="l l-1">H</span><span class="x">×</span><span class="l l-2">K</span><span class="x">×</span><span class="l l-3">R₁</span><span class="x">×</span><span class="l l-4">R₂</span>
     </div>
     <div class="meta">
@@ -3052,21 +2877,21 @@ body::after, .hero::after, .principle-mega, .principle-letter::before { display:
 <script>
 window.HKRR = {
   sliders: [
-    { letter: 'H', name: '快乐', en: 'Happiness',  m: 'h',  hint: '有趣、惊喜、审美享受、释然或希望感',           start: 6, color: '#ffb86a', action: '圈出值得呈现的发现或细节，用贴切的例子、画面或表达把它讲具体，检查前面的期待是否得到回应。' },
+    { letter: 'H', name: '快乐', en: 'Happiness',  m: 'h',  hint: '有趣、惊喜、审美享受、释然或希望感',           start: 6, color: '#ffb86a', action: '圈出体验平淡的片段，检查能否用更贴切的例子、画面或表达增加趣味与满足，不硬加笑料。' },
     { letter: 'K', name: '知识', en: 'Knowledge',  m: 'k',  hint: '有准确的新信息、解释、判断或方法',          start: 7, color: '#7eb9f5', action: '写下观众应带走的一句话，补足支撑它的依据、解释或步骤，删去只堆名词的部分。' },
-    { letter: 'R₁', name: '共鸣', en: 'Resonance',  m: 'r1', hint: '说准观众处境、感受或关切，素材真实',                start: 5, color: '#ff8a93', action: '写清目标观众想做什么、顾虑什么，保留能解释选择的细节；核对素材来源与归属，再接上判断。' },
+    { letter: 'R₁', name: '共鸣', en: 'Resonance',  m: 'r1', hint: '说准观众处境、感受或关切，素材真实',                start: 5, color: '#ff8a93', action: '指出目标观众正在意的处境或问题，检查素材是否真实、有关，不靠虚构亲历来补共鸣。' },
     { letter: 'R₂', name: '节奏', en: 'Rhythm',     m: 'r2', hint: '顺序清楚、密度合适，信息与情绪有推进',           start: 6, color: '#6fe1b3', action: '按正常速度标出重复、跳跃或来不及理解的位置，调整顺序、停顿或密度。' },
   ],
   yesno: [
     { letter: 'H', name: 'Happiness · 快乐',  m: 'h',
       q: '这条内容里，有带来趣味、惊喜、审美享受或释然的片段吗？',
-      sub: '指出满足感发生的那一处，看看细节、发现或解释是否被充分呈现。' },
+      sub: '按这条内容的目的判断，不硬加笑料或励志结尾。' },
     { letter: 'K', name: 'Knowledge · 知识', m: 'k',
       q: '观众看完后，能多知道或理解一件事，或带走一个判断、方法吗？',
-      sub: '用一句话说清收获，再找支撑它的依据、解释或操作示范。' },
+      sub: '说清收获是什么，正文有依据、有解释，不必每条都有行动清单。' },
     { letter: 'R₁', name: 'Resonance · 共鸣', m: 'r1',
       q: '内容是否说准了目标观众的处境、感受、愿望或共同关切？',
-      sub: '指出观众的选择与顾虑，检查细节是否贴合处境、素材归属是否清楚。' },
+      sub: '亲历、观察、采访均可，注明素材归属，不把别人的经历写成自己。' },
     { letter: 'R₂', name: 'Rhythm · 节奏',    m: 'r2',
       q: '信息和情绪的展开是否顺畅，观众跟得上，也有继续看的理由吗？',
       sub: '按正常阅读或播放速度检查顺序、停顿、重复和信息密度。' },
@@ -3083,29 +2908,19 @@ window.HKRR.reviewScores = function(state) {
   const weakest = data.filter((_, i) => state[i] === min);
   const names = weakest.map(d => d.name).join('、');
   const same = state.every(v => v === state[0]);
-  let label, lead, steps = '';
-  if (min >= 7) {
-    label = '自评均有清楚支撑';
-    lead = '按评分参照，四项均已有清楚支撑，暂未显示需要优先补强的维度。核对这些分数是否对应具体片段；若符合本条目标，可以保留当前版本，再用实际反馈校正判断。';
-  } else if (same) {
-    label = min === 0 ? '四项支撑待确认' : '四项自评分相同';
-    lead = min === 0
-      ? '先区分尚未评估、暂未找到支撑，以及本条并不侧重。综合分归零不代表整条内容没有价值；确认目标后，再选一个相关维度回看。'
-      : '相同分数没有指出优先项。先结合本条目标选一个维度，核对具体片段，再决定是否修改。';
-  } else {
-    label = '优先核对 · ' + names;
-    lead = min === 0
-      ? '有维度自评为零，先核对它是否影响本条目标。以下是回看方向；若属于有意取舍，可以保留当前表达。'
-      : '这些维度自评相对较低。先判断它们是否影响本条目标，以下动作按实际片段选用。';
-    steps = '<ul class="audit-actions">' + weakest.map(d => '<li><b>' + d.name + '</b> ' + d.action + '</li>').join('') + '</ul>';
-  }
-  return { score, min, weakest, label, advice: '<p>' + lead + '</p>' + steps };
+  let lead;
+  if (min === 0) lead = '有自评为零的维度，综合分按算法归零。先核对是缺少支撑，还是本条并不侧重，不据此直接否定内容。';
+  else if (same) lead = '四项自评分相同，先结合本条目标选一项复核；不需要为了提高总分同时修改四项。';
+  else lead = '较低项是检查线索，先判断它是否影响本条目标，再选一处修改。';
+  const steps = weakest.map(d => '<li><b>' + d.name + '</b> ' + d.action + '</li>').join('');
+  return { score, min, weakest, label: '低分线索 · ' + names,
+    advice: '<p>' + lead + '</p><ul class="audit-actions">' + steps + '</ul>' };
 };
 window.HKRR.reviewAnswers = function(state) {
   const data = window.HKRR.yesno;
   const answered = state.filter(v => v !== null).length;
   const missing = data.filter((_, i) => state[i] === 'no');
-  const names = missing.map(d => window.HKRR.sliders.find(item => item.m === d.m).name).join('、');
+  const names = missing.map(d => d.name).join('、');
   if (answered < data.length) return { kind: '', stamp: '— 待检查 —',
     html: '<p>已回答 <b>' + answered + '/' + data.length + '</b>。' +
       (missing.length ? '暂未体现或待回看：<b>' + names + '</b>。' : '') +
@@ -3119,6 +2934,79 @@ window.HKRR.reviewAnswers = function(state) {
   return { kind: 'fail', stamp: '→ 有 ' + missing.length + ' 项待判断',
     html: '<p>暂未体现或待回看：<b>' + names + '</b>。先选影响本条目标的一处，不必把所有“否”都补成“是”。</p><ul class="audit-actions">' + steps + '</ul>' };
 };
+
+/* ----------------------------------------------------------
+   Optional cursor — render only while moving; native cursor is the fallback
+   ---------------------------------------------------------- */
+(function customCursor() {
+  const cur = document.getElementById('cursor');
+  const ring = cur && cur.querySelector('.cursor-ring');
+  const dot = cur && cur.querySelector('.cursor-dot');
+  const label = document.getElementById('cursorLabel');
+  if (!cur || !ring || !dot || !label) return;
+  let raf = null, idle = null, positioned = false, lastTime = 0;
+  let tx = 0, ty = 0, rx = 0, ry = 0, dx = 0, dy = 0;
+  let allowed;
+  function stop() {
+    if (raf !== null) cancelAnimationFrame(raf);
+    clearTimeout(idle);
+    raf = idle = null;
+    positioned = false;
+    lastTime = 0;
+    document.body.classList.remove('has-custom-cursor');
+    cur.style.opacity = 0;
+    cur.classList.remove('hover', 'tiny');
+    label.textContent = '';
+  }
+  function eligible() {
+    return allowed.matches && !document.hidden && !document.body.classList.contains('page-inactive');
+  }
+  function paint(time) {
+    raf = null;
+    try {
+      if (!eligible()) { stop(); return; }
+      const step = lastTime ? Math.min(64, time-lastTime)/(1000/60) : 1;
+      lastTime = time;
+      const slow = 1-Math.pow(.86, step), fast = 1-Math.pow(.55, step);
+      rx += (tx-rx)*slow; ry += (ty-ry)*slow;
+      dx += (tx-dx)*fast; dy += (ty-dy)*fast;
+      const settled = Math.max(Math.abs(tx-rx), Math.abs(ty-ry), Math.abs(tx-dx), Math.abs(ty-dy)) < .25;
+      if (settled) { rx = dx = tx; ry = dy = ty; }
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%, -50%)`;
+      cur.style.opacity = 1;
+      document.body.classList.add('has-custom-cursor');
+      if (!settled) raf = requestAnimationFrame(paint);
+      else lastTime = 0;
+    } catch (_) { stop(); }
+  }
+  try {
+    allowed = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 721px) and (prefers-reduced-motion: no-preference)');
+    addEventListener('mousemove', e => {
+      try {
+        if (!eligible()) { stop(); return; }
+        tx = e.clientX; ty = e.clientY;
+        if (!positioned) { rx = dx = tx; ry = dy = ty; positioned = true; }
+        const target = e.target.closest('[data-cursor], a, button, input, summary, label');
+        label.textContent = target ? target.dataset.cursor || '' : '';
+        cur.classList.toggle('hover', !!label.textContent);
+        cur.classList.toggle('tiny', !!target && !label.textContent);
+        clearTimeout(idle);
+        idle = setTimeout(stop, 900);
+        if (raf === null) raf = requestAnimationFrame(paint);
+      } catch (_) { stop(); }
+    }, { passive: true });
+    document.addEventListener('mouseleave', stop);
+    document.addEventListener('keydown', stop);
+    document.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') stop(); });
+    addEventListener('scroll', stop, { passive: true });
+    addEventListener('resize', stop);
+    addEventListener('blur', stop);
+    addEventListener('pagehide', stop);
+    document.addEventListener('visibilitychange', stop);
+    allowed.addEventListener('change', stop);
+  } catch (_) { stop(); }
+})();
 
 /* Opening and closing decoration: no endless JS loop or observer dependency. */
 (function decorationMotion() {
@@ -3247,7 +3135,7 @@ window.HKRR.reviewAnswers = function(state) {
     // so moving from the summary to a chapter link cannot cancel its click.
     if (e.relatedTarget && !menu.contains(e.relatedTarget)) close();
   });
-  matchMedia('(min-width: 1040px)').addEventListener('change', e => { if (e.matches) close(); });
+  matchMedia('(min-width: 880px)').addEventListener('change', e => { if (e.matches) close(); });
   function restoreChapter() {
     if (!location.hash) { close(); document.getElementById('top').focus({ preventScroll: true }); return; }
     const target = document.getElementById(location.hash.slice(1));
@@ -3262,7 +3150,7 @@ window.HKRR.reviewAnswers = function(state) {
   const sections = document.querySelectorAll('[data-tint]');
   const navLinks = document.querySelectorAll('a[data-section]');
   const menuChapter = document.getElementById('menuChapter');
-  const labels = {quick:'速查', origin:'起源', happiness:'快乐', knowledge:'知识', resonance:'共鸣', rhythm:'节奏', synthesis:'合一', cases:'案例', audit:'自检', manifesto:'原则'};
+  const labels = {origin:'起源', happiness:'快乐', knowledge:'知识', resonance:'共鸣', rhythm:'节奏', synthesis:'合一', cases:'案例', audit:'自检', manifesto:'原则'};
   const root = document.documentElement;
 
   function update() {
