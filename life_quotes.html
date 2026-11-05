@@ -22,6 +22,18 @@ footer{display:flex;justify-content:space-between;gap:30px;border-top:1px solid 
 @media(max-width:600px){.wrap{width:calc(100% - 36px)}header{min-height:84px}.brand{gap:10px}.brand-name{font-size:16px}.brand small{font-size:8px;letter-spacing:.15em}.seal{height:32px;width:32px;font-size:21px}nav{gap:10px}nav a{font-size:12px}#theme{padding:5px 9px;font-size:11px}.intro{padding-top:34px}.intro h1{font-size:39px;margin-top:12px}.intro p{font-size:12px;max-width:260px;line-height:1.9}.eyebrow{font-size:9px}.encounter{margin-top:28px;padding:24px 22px 22px}.quote-top{gap:8px}.quote-top .eyebrow{letter-spacing:.14em;font-size:8px}.quote-top span:last-child{font-size:10px}.quote-stage{min-height:245px;padding:32px 0}#featured{font-size:27px;line-height:1.95}#featured.medium{font-size:24px}#featured.long{font-size:20px}.quote-controls{gap:18px}.actions{width:100%;justify-content:space-between;gap:6px}.primary{padding:12px 17px;font-size:13px}.primary span{margin-left:10px}.quiet{font-size:11px}.scope{width:100%;justify-content:space-between}.scope select{max-width:180px;flex:1}.encounter-note{font-size:10px}.encounter-note span{max-width:210px}.library{padding-top:62px}.library-head{align-items:stretch;flex-direction:column;gap:20px}.library h2{font-size:28px}.search{width:100%}.filters{gap:4px;margin-top:21px}.filters button{padding:8px 9px;font-size:11px}.filters span{margin-left:4px}.grid{grid-template-columns:1fr;gap:14px}.quote-card.long{grid-column:auto}.quote-card{padding:26px 24px 16px}.quote-card blockquote,.quote-card.long blockquote{font-size:19px}.result-bar{font-size:10px}.result-bar span:last-child{text-align:right}footer{margin-top:48px;flex-direction:column;gap:12px;padding-bottom:25px}dialog{padding:23px}dialog blockquote{font-size:22px}.dialog-actions{flex-wrap:wrap}}
 @media(max-width:360px){header{gap:10px}.brand small{display:none}.brand{gap:8px}.brand-name{font-size:15px;letter-spacing:.1em}nav{gap:9px}nav a,#theme{white-space:nowrap}.seal{width:29px;height:31px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Reading refinements: feedback belongs to the modal's top layer. */
+html{scrollbar-gutter:stable}html:has(dialog[open]){overflow:hidden}
+dialog{max-height:85vh;max-height:85dvh;overscroll-behavior:contain}
+dialog{padding:0}
+.dialog-top{position:sticky;top:0;background:var(--panel);z-index:2;padding:18px 32px;border-bottom:1px solid var(--line)}
+dialog blockquote{margin:24px 32px 34px}
+dialog .dialog-actions{margin:0 32px;padding:18px 0 0}
+#reader-status{min-height:24px;margin:12px 32px 24px;font-size:12px;color:var(--accent)}
+#copy-fallback{margin:0 32px 24px}
+@media(max-width:600px){.dialog-top{padding:12px 22px}dialog blockquote{margin:20px 22px 30px}dialog .dialog-actions{margin-inline:22px}#reader-status{margin-inline:22px}#copy-fallback{margin-inline:22px}}
+.toast{bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body id="top">
@@ -216,7 +228,7 @@ footer{display:flex;justify-content:space-between;gap:30px;border-top:1px solid 
 </main>
 <footer><div><div class="footer-word">把触动留下，让力量常在。</div><p>追光者的个人收藏 · 保留不同阶段触动过我的表达。</p></div><div><p>这些句子不必适用于每个时刻。</p><a href="#top">回到此刻 ↑</a></div></footer>
 </div>
-<dialog id="reader" aria-labelledby="reader-title"><div class="dialog-top"><h2 id="reader-title">单独读一句</h2><button id="close" type="button" aria-label="关闭阅读">×</button></div><blockquote id="reader-text"></blockquote><div class="dialog-actions"><button id="copy-reader" class="quiet" type="button">复制句子</button><button id="share-reader" class="quiet" type="button">复制这句的链接 ↗</button></div><div id="copy-fallback" hidden><p>复制未成功，可选中下方文字手动复制：</p><textarea class="fallback" readonly aria-label="可手动复制的内容"></textarea></div></dialog>
+<dialog id="reader" aria-labelledby="reader-title"><div class="dialog-top"><h2 id="reader-title">单独读一句</h2><button id="close" type="button" aria-label="关闭阅读">×</button></div><blockquote id="reader-text"></blockquote><div class="dialog-actions"><button id="copy-reader" class="quiet" type="button">复制句子</button><button id="share-reader" class="quiet" type="button">复制这句的链接 ↗</button></div><p id="reader-status" role="status" aria-live="polite" aria-atomic="true"></p><div id="copy-fallback" hidden><p>复制未成功，可选中下方文字手动复制：</p><textarea class="fallback" readonly aria-label="可手动复制的内容"></textarea></div></dialog>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
 'use strict';
@@ -225,13 +237,13 @@ const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(
 const names={all:'全部金句',action:'行动与实践',growth:'成长与时间',hope:'信念与逆境',self:'自我与内心',relations:'相逢与关系',life:'生活与体验',mind:'认知与选择',wealth:'财富与自由',ideal:'理想与担当'};
 const quotes=$$('.quote-card').map((el,i)=>({id:i+1,text:el.querySelector('blockquote').textContent,category:el.dataset.category,el}));
 let active='all',current=null,history=[],position=-1,deck=[],deckCategory='',readerId=null,toastTimer;
-function message(text){$('#toast').textContent=text;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,2400)}
+function message(text){clearTimeout(toastTimer);if($('#reader').open){$('#toast').hidden=true;$('#reader-status').textContent=text;return}$('#toast').textContent=text;$('#toast').hidden=false;toastTimer=setTimeout(()=>$('#toast').hidden=true,2400)}
 function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function show(id,animate=true){const q=quotes[id-1];if(!q)return;current=id;const el=$('#featured');el.textContent=q.text;el.className=q.text.length>60?'long':q.text.length>28?'medium':'';if(animate){void el.offsetWidth;el.classList.add('arriving')}$('#featured-category').textContent=names[q.category];$('#previous').disabled=position<=0}
 function remember(id){history=history.slice(0,position+1);history.push(id);position=history.length-1;show(id)}
 function nextQuote(){if(position<history.length-1){position++;show(history[position]);return}if(!deck.length||deckCategory!==active){deck=shuffle(quotes.filter(q=>active==='all'||q.category===active).map(q=>q.id));deckCategory=active;if(deck.length>1&&deck[deck.length-1]===current)[deck[0],deck[deck.length-1]]=[deck[deck.length-1],deck[0]]}remember(deck.pop())}
 function filter(){const term=$('#search').value.trim().toLocaleLowerCase();let count=0;for(const q of quotes){const visible=(active==='all'||q.category===active)&&(!term||q.text.toLocaleLowerCase().includes(term));q.el.hidden=!visible;if(visible)count++}$('#result').textContent=`${names[active]} · ${count} 句${term?' · 搜索结果':''}`;$('#empty').hidden=count>0;$('#clear').hidden=!$('#search').value}
-function setCategory(cat){if(!names[cat])return;active=cat;deck=[];history=history.slice(0,position+1);$('#scope').value=cat;$$('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===cat)));filter()}
+function setCategory(cat){if(!names[cat])return;if(cat===active){filter();return}active=cat;deck=[];history=history.slice(0,position+1);$('#scope').value=cat;$$('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===cat)));filter()}
 $('#random').addEventListener('click',nextQuote);
 $('#previous').addEventListener('click',()=>{if(position>0){position--;show(history[position])}});
 $('#scope').addEventListener('change',e=>setCategory(e.target.value));
@@ -239,13 +251,13 @@ $$('[data-filter]').forEach(b=>b.addEventListener('click',()=>setCategory(b.data
 $('#search').addEventListener('input',filter);
 $('#clear').addEventListener('click',()=>{$('#search').value='';filter();$('#search').focus()});
 $('#reset').addEventListener('click',()=>{$('#search').value='';setCategory('all');$('#search').focus()});
-function openReader(id){const q=quotes[id-1];if(!q)return;readerId=id;$('#reader-title').textContent=names[q.category];$('#reader-text').textContent=q.text;$('#copy-fallback').hidden=true;if(!$('#reader').open)$('#reader').showModal()}
+function openReader(id){const q=quotes[id-1];if(!q)return;readerId=id;$('#reader-status').textContent='';$('#toast').hidden=true;$('#reader-title').textContent=names[q.category];$('#reader-text').textContent=q.text;$('#copy-fallback').hidden=true;if(!$('#reader').open)$('#reader').showModal()}
 $('#close').addEventListener('click',()=>$('#reader').close());
 $('#reader').addEventListener('click',e=>{if(e.target===$('#reader')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
-async function copy(text,id){try{if(!navigator.clipboard?.writeText)throw Error('unavailable');await navigator.clipboard.writeText(text);message('已复制，可以带走这句话。')}catch{if(!$('#reader').open)openReader(id);$('#copy-fallback').hidden=false;const t=$('#copy-fallback textarea');t.value=text;t.focus();t.select()}}
+async function copy(text,id,isLink=false){try{if(!navigator.clipboard?.writeText)throw Error('unavailable');await navigator.clipboard.writeText(text);message(isLink?'链接已复制，打开即可读到这句话。':'句子已复制。')}catch{if(!$('#reader').open)openReader(id);$('#copy-fallback').hidden=false;const t=$('#copy-fallback textarea');t.value=text;t.focus();t.select()}}
 $('#copy-featured').addEventListener('click',()=>copy(quotes[current-1].text,current));
 $('#copy-reader').addEventListener('click',()=>copy(quotes[readerId-1].text,readerId));
-$('#share-reader').addEventListener('click',()=>{const u=new URL(location.href);u.hash='quote-'+String(readerId).padStart(3,'0');copy(u.href,readerId)});
+$('#share-reader').addEventListener('click',()=>{const u=new URL(location.href);u.hash='quote-'+String(readerId).padStart(3,'0');copy(u.href,readerId,true)});
 $('#quotes').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.open)openReader(Number(b.dataset.open));else if(b.dataset.copy)copy(quotes[Number(b.dataset.copy)-1].text,Number(b.dataset.copy))});
 function applyTheme(theme){document.documentElement.dataset.theme=theme;$('#theme-label').textContent=theme==='dark'?'日读':'夜读';$('#theme').setAttribute('aria-label',theme==='dark'?'切换到日读模式':'切换到夜读模式');$('#theme .sun').textContent=theme==='dark'?'☀':'☾'}
 let savedTheme;try{savedTheme=localStorage.getItem('life-quotes-theme')}catch{}applyTheme(savedTheme==='dark'?'dark':'light');
@@ -258,3 +270,4 @@ window.addEventListener('hashchange',()=>{const id=quoteFromHash();if(id){rememb
 filter();
 </script>
 </body></html>
+
