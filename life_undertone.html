@@ -1391,6 +1391,12 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   #s2 .slogan-wall { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   #s2 .quote-card { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 22px 20px; }
 }
+/* Open the full quote collection from this selection. */
+#s2 .quotes-portal{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin:-6px 0 24px}
+#s2 .quotes-portal p{color:var(--ink-soft);font-size:13px;line-height:1.9}
+#s2 .quotes-portal .chip{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-size:13px;text-decoration:none}
+#s2 .quotes-portal .chip:focus-visible{outline:2px solid var(--sc);outline-offset:5px}
+@media(max-width:560px){#s2 .quotes-portal{align-items:flex-start;flex-direction:column;margin-bottom:20px}}
 </style>
 </head>
 <body>
@@ -1613,7 +1619,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   <div class="reveal">
     <div class="section-label">II · SPIRITUAL TOTEM</div>
     <h2 class="section-title">精神<span class="hl">图腾</span></h2>
-    <p class="section-sub">我相信什么——理想、人物、Slogan、座右铭。这一团<em>赤红</em>，是我血液里的火。</p>
+    <p class="section-sub">我相信什么——理想、人物、金句、座右铭。这一团<em>赤红</em>，是我血液里的火。</p>
     <nav class="section-overview" id="s2-overview" tabindex="-1" aria-label="精神图腾本章速览">
       <span class="overview-label">本章速览</span>
       <a href="#s2-ideals">理想</a>
@@ -1621,7 +1627,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
       <a href="#s2-six-things">人生最重要的六件事</a>
       <a href="#s2-mentors">核心指路人</a>
       <a href="#s2-role-models">榜样群像</a>
-      <a href="#s2-slogans">灵魂指令墙</a>
+      <a href="#s2-slogans">人生金句</a>
       <a href="#s2-motto">座右铭</a>
       <a href="#s2-voices">博主语录</a>
       <a href="#s2-authors">作者</a>
@@ -1728,7 +1734,8 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s2-slogans" tabindex="-1" class="subsection-label">Slogan · 灵魂指令墙 <small>14 LIFE COMMANDS</small></h3>
+    <h3 id="s2-slogans" tabindex="-1" class="subsection-label">人生金句 <small>WORDS TO KEEP · 14</small></h3>
+    <div class="quotes-portal"><p>这些话曾给我力量，也想与你分享。</p><a class="chip" href="https://zhuigz.github.io/life_quotes.html">翻阅全部金句 <span aria-hidden="true">↗</span></a></div>
     <div class="slogan-wall">
       <div class="slogan-card big tilt-l"><span class="idx">01</span>世界不死，理想不灭</div>
       <div class="slogan-card big tilt-r"><span class="idx">02</span>追光的人，终会光芒万丈</div>
@@ -2740,4 +2747,3 @@ updateReadingPosition();
 
 </body>
 </html>
-
