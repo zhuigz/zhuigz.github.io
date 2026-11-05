@@ -1919,6 +1919,26 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
 
 /* Closing copy: keep the new centered subtitle aligned with its heading. */
 #become .section-sub { margin-left: auto; margin-right: auto; }
+
+/* The public quote collection is reachable from both the hero and its chapter. */
+.hero-quicklinks { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+.hero-quicklinks .hero-action { padding-inline: 12px; }
+.hero-action.tertiary.quotes-entry { color: var(--gold-light); }
+.hero-action.tertiary.quotes-entry:hover { background: rgba(232,184,122,.06); }
+.quotes-collection-link {
+  display: inline-flex; align-items: center; justify-content: center; gap: 20px;
+  margin-top: 26px; min-height: 48px; padding: 12px 20px; border-radius: 999px;
+  border: 1px solid rgba(232,184,122,.35); background: rgba(232,184,122,.035);
+  color: var(--gold-light); font: 500 14px var(--sans-cn); text-decoration: none;
+  transition: background .2s, border-color .2s;
+}
+.quotes-collection-link:hover { border-color: var(--gold); background: rgba(232,184,122,.09); }
+.quotes-collection-link:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 5px; }
+@media(max-width:600px) {
+  .hero-quicklinks { flex-basis: 100%; gap: 12px; }
+  .hero-actions .hero-quicklinks .hero-action.tertiary { flex-basis: auto; padding-inline: 6px; font-size: 12px; gap: 8px; min-height: 44px; }
+  .quotes-collection-link { margin-top: 22px; font-size: 13px; }
+}
 </style>
 </head>
 <body id="top">
@@ -1945,7 +1965,7 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
       <li><a href="#metrics">数据</a></li>
       <li><a href="#practice">实践</a></li>
       <li><a href="#gallery">视觉</a></li>
-      <li><a href="#beliefs">信念</a></li>
+      <li><a href="#beliefs">金句</a></li>
     </ul>
     <details class="mobile-nav">
       <summary>目录<span class="nav-current" aria-hidden="true"></span><span aria-hidden="true">＋</span></summary>
@@ -1953,7 +1973,7 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
         <div class="mobile-nav-heading" aria-hidden="true">随光探索<small>EXPLORE</small></div>
         <a href="#intro">自我介绍</a><a href="#about">基本信息</a>
         <a href="#metrics">关键数据</a><a href="#practice">我的实践</a>
-        <a href="#gallery">视觉作品</a><a href="#beliefs">我的信念</a>
+        <a href="#gallery">视觉作品</a><a href="#beliefs">人生金句</a>
         <a href="#topics">聊什么</a><a href="#become">我想成为</a><a href="#connect">联系我</a>
       </div>
     </details>
@@ -1990,7 +2010,10 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
     <div class="hero-actions">
       <a class="hero-action primary" href="#topics">可以聊什么 <span aria-hidden="true">↓</span></a>
       <a class="hero-action secondary" href="#gallery">看我的作品 <span aria-hidden="true">↗</span></a>
-      <a class="hero-action tertiary" href="#practice">了解我在做什么 <span aria-hidden="true">↓</span></a>
+      <div class="hero-quicklinks">
+        <a class="hero-action tertiary" href="#practice">了解我在做什么 <span aria-hidden="true">↓</span></a>
+        <a class="hero-action tertiary quotes-entry" href="https://zhuigz.github.io/life_quotes.html">人生金句 <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
     <div class="hero-motto">
       <em>道阻且长</em>，行则将至<br>
@@ -2105,7 +2128,7 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
       </div>
       <div class="metric-cell metric-featured">
         <div class="m-label">AI 内容累计变现</div>
-        <div class="num">5000<span class="unit">+ 元</span></div>
+        <div class="num">6000<span class="unit">+ 元</span></div>
         <div class="m-sub">公众号与 AI 内容变现</div>
       </div>
       <div class="metric-cell">
@@ -2162,7 +2185,7 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
         <p class="result-stat">100<span>万+</span></p>
         <p class="result-label">累计阅读量</p>
         <p class="result-copy">用 AI 辅助内容生产与矩阵运营，积累了第一段真实的线上变现经历。</p>
-        <div class="result-foot">累计变现 <strong>5000+ 元</strong></div>
+        <div class="result-foot">累计变现 <strong>6000+ 元</strong></div>
       </article>
       <article class="practice-result">
         <div class="result-kicker">02 · 数字资产</div>
@@ -2369,9 +2392,10 @@ body.loaded .hero-intro { animation: fadeUp .65s ease .23s both; }
   <!-- BELIEFS -->
   <section id="beliefs">
     <div class="section-head reveal">
-      <div class="section-label"><span class="idx">06</span> Core Beliefs</div>
-      <h2 class="section-title">我相信的<span class="hl">几句话</span></h2>
-      <p class="section-sub">这些话，是我给自己的提醒。</p>
+      <div class="section-label"><span class="idx">06</span> Words to Keep</div>
+      <h2 class="section-title">人生<span class="hl">金句</span></h2>
+      <p class="section-sub">这些话曾给我力量，也想与你分享。</p>
+      <a class="quotes-collection-link" href="https://zhuigz.github.io/life_quotes.html">翻阅全部金句 <span aria-hidden="true">↗</span></a>
     </div>
 
     <div class="manifesto reveal-stagger">
