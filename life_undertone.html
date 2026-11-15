@@ -507,7 +507,7 @@ section[id] { scroll-margin-top: 70px; }
 
 /* 人生人物 */
 .mentor-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
 }
 .mentor-card {
@@ -521,24 +521,13 @@ section[id] { scroll-margin-top: 70px; }
   border-color: rgba(var(--sc-rgb), 0.36);
   transform: translateY(-4px);
 }
-.mentor-avatar {
-  width: 48px; height: 48px; border-radius: 50%;
-  background: linear-gradient(135deg, rgba(var(--sc-rgb),0.3), rgba(var(--sc-rgb),0.08));
-  margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
-  font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 18px;
-  color: var(--ink); border: 1px solid rgba(var(--sc-rgb), 0.3);
-}
 .mentor-name {
   font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 15px;
   color: var(--ink);
 }
-.mentor-role {
-  font-size: 13px; color: var(--ink-dim); letter-spacing: 1px;
-  margin-top: 4px; font-family: 'Outfit', sans-serif; text-transform: uppercase;
-}
-
-.role-chips { display: flex; flex-wrap: wrap; gap: 9px; }
-.role-chips .chip { font-size: 13px; padding: 7px 14px; }
+.mentor-note { margin: -14px 0 20px; color: var(--ink-dim); font-size: 13px; }
+@media (max-width: 880px) { .mentor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .mentor-card { padding: 22px 10px; } }
 
 /* Slogan 灵魂墙 — masonry 风格 */
 .slogan-wall {
@@ -1625,8 +1614,7 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
       <a href="#s2-ideals">理想</a>
       <a href="#s2-frameworks">我的理论</a>
       <a href="#s2-six-things">人生最重要的六件事</a>
-      <a href="#s2-mentors">核心指路人</a>
-      <a href="#s2-role-models">榜样群像</a>
+      <a href="#s2-mentors">人生人物</a>
       <a href="#s2-slogans">人生金句</a>
       <a href="#s2-motto">座右铭</a>
       <a href="#s2-voices">博主语录</a>
@@ -1676,60 +1664,19 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   </div>
 
   <div class="reveal">
-    <h3 id="s2-mentors" tabindex="-1" class="subsection-label">人生人物 · 核心指路人 <small>MENTORS · 6</small></h3>
+    <h3 id="s2-mentors" tabindex="-1" class="subsection-label">人生人物 <small>PEOPLE · 10</small></h3>
+    <p class="mentor-note">排名不分先后</p>
     <div class="mentor-grid">
-      <div class="mentor-card">
-        <div class="mentor-avatar">习</div>
-        <div class="mentor-name">习总书记</div>
-        <div class="mentor-role">领路人</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-avatar">树</div>
-        <div class="mentor-name">树林</div>
-        <div class="mentor-role">成长教练</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-avatar">王</div>
-        <div class="mentor-name">老王</div>
-        <div class="mentor-role">思维导师</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-avatar">适</div>
-        <div class="mentor-name">高适</div>
-        <div class="mentor-role">心中之灯</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-avatar">炎</div>
-        <div class="mentor-name">叶炎</div>
-        <div class="mentor-role">同路人</div>
-      </div>
-      <div class="mentor-card">
-        <div class="mentor-avatar">李</div>
-        <div class="mentor-name">李笑来</div>
-        <div class="mentor-role">作者</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <h3 id="s2-role-models" tabindex="-1" class="subsection-label">榜样群像 <small>ROLE MODELS · 16</small></h3>
-    <div class="role-chips">
-      <span class="chip"><span class="dot"></span>姜哥</span>
-      <span class="chip"><span class="dot"></span>张桂梅</span>
-      <span class="chip"><span class="dot"></span>黄文秀</span>
-      <span class="chip"><span class="dot"></span>蔡磊</span>
-      <span class="chip"><span class="dot"></span>雷军</span>
-      <span class="chip"><span class="dot"></span>付航</span>
-      <span class="chip"><span class="dot"></span>哪吒</span>
-      <span class="chip"><span class="dot"></span>碎嘴企鹅</span>
-      <span class="chip"><span class="dot"></span>老李</span>
-      <span class="chip"><span class="dot"></span>范仲淹</span>
-      <span class="chip"><span class="dot"></span>蔡垒磊</span>
-      <span class="chip"><span class="dot"></span>梦章</span>
-      <span class="chip"><span class="dot"></span>风铃</span>
-      <span class="chip"><span class="dot"></span>于东来</span>
-      <span class="chip"><span class="dot"></span>刘强东</span>
-      <span class="chip"><span class="dot"></span>马斯克</span>
+      <div class="mentor-card"><div class="mentor-name">习总书记</div></div>
+      <div class="mentor-card"><div class="mentor-name">树林</div></div>
+      <div class="mentor-card"><div class="mentor-name">老王</div></div>
+      <div class="mentor-card"><div class="mentor-name">李笑来</div></div>
+      <div class="mentor-card"><div class="mentor-name">蔡磊</div></div>
+      <div class="mentor-card"><div class="mentor-name">雷军</div></div>
+      <div class="mentor-card"><div class="mentor-name">Tim</div></div>
+      <div class="mentor-card"><div class="mentor-name">老杨的猫头鹰</div></div>
+      <div class="mentor-card"><div class="mentor-name">碧树西风</div></div>
+      <div class="mentor-card"><div class="mentor-name">闪耀的北辰星</div></div>
     </div>
   </div>
 
