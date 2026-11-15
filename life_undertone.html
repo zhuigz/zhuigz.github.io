@@ -511,6 +511,7 @@ section[id] { scroll-margin-top: 70px; }
   gap: 14px;
 }
 .mentor-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 152px;
   text-align: center; padding: 26px 16px; border-radius: 16px;
   background: rgba(var(--sc-rgb), 0.05);
   border: 1px solid rgba(var(--sc-rgb), 0.16);
@@ -524,6 +525,14 @@ section[id] { scroll-margin-top: 70px; }
 .mentor-name {
   font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 15px;
   color: var(--ink);
+}
+.mentor-detail {
+  color: var(--ink-soft); font-size: 13px; line-height: 1.85;
+  width: 100%; overflow-wrap: anywhere; text-wrap: pretty;
+}
+.mentor-detail::before {
+  content: ''; display: block; width: 24px; height: 1px;
+  margin: 13px auto 11px; background: rgba(var(--sc-rgb), 0.45);
 }
 .mentor-note { margin: -14px 0 20px; color: var(--ink-dim); font-size: 13px; }
 @media (max-width: 880px) { .mentor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -1667,16 +1676,46 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
     <h3 id="s2-mentors" tabindex="-1" class="subsection-label">人生人物 <small>PEOPLE · 10</small></h3>
     <p class="mentor-note">排名不分先后</p>
     <div class="mentor-grid">
-      <div class="mentor-card"><div class="mentor-name">习总书记</div></div>
-      <div class="mentor-card"><div class="mentor-name">树林</div></div>
-      <div class="mentor-card"><div class="mentor-name">老王</div></div>
-      <div class="mentor-card"><div class="mentor-name">李笑来</div></div>
-      <div class="mentor-card"><div class="mentor-name">蔡磊</div></div>
-      <div class="mentor-card"><div class="mentor-name">雷军</div></div>
-      <div class="mentor-card"><div class="mentor-name">Tim</div></div>
-      <div class="mentor-card"><div class="mentor-name">老杨的猫头鹰</div></div>
-      <div class="mentor-card"><div class="mentor-name">碧树西风</div></div>
-      <div class="mentor-card"><div class="mentor-name">闪耀的北辰星</div></div>
+      <div class="mentor-card">
+        <div class="mentor-name">习总书记</div>
+        <div class="mentor-detail">《习近平的七年知青岁月》</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">树林</div>
+        <div class="mentor-detail">树成林</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">老王</div>
+        <div class="mentor-detail">浪前</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">李笑来</div>
+        <div class="mentor-detail">通往财富自由之路</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">蔡磊</div>
+        <div class="mentor-detail">《相信》</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">雷军</div>
+        <div class="mentor-detail">小米</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">Tim</div>
+        <div class="mentor-detail">影视飓风</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">老杨的猫头鹰</div>
+        <div class="mentor-detail">《人生的容错率大到你难以想象》</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">碧树西风</div>
+        <div class="mentor-detail">记忆承载</div>
+      </div>
+      <div class="mentor-card">
+        <div class="mentor-name">闪耀的北辰星</div>
+        <div class="mentor-detail">北辰星之所向</div>
+      </div>
     </div>
   </div>
 
