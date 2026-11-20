@@ -482,6 +482,40 @@ section[id] { scroll-margin-top: 70px; }
 }
 
 /* ===================== §2 精神图腾 · 赤红 ===================== */
+
+/* 精神图腾 · S级人生三观 */
+.outlook-intro, .outlook-end { max-width: 46em; line-height: 1.85; }
+.outlook-intro { margin-bottom: 20px; color: var(--ink-dim); }
+.outlook-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+.outlook-card {
+  min-width: 0;
+  padding: clamp(18px, 2.3vw, 30px);
+  border-radius: 18px;
+  border: 1px solid rgba(var(--sc-rgb), .24);
+  background: linear-gradient(160deg, rgba(var(--sc-rgb), .095), rgba(var(--sc-rgb), .02));
+  overflow-wrap: anywhere;
+}
+.outlook-card h4 { font: 700 1.4rem/1.5 'Noto Serif SC', serif; }
+.outlook-question { color: var(--ink-dim); margin: 3px 0 18px; font-size: .92rem; }
+.outlook-card dl { border-top: 1px solid rgba(var(--sc-rgb), .22); }
+.outlook-card dt { margin-top: 16px; font-weight: 650; line-height: 1.55; }
+.outlook-card dd { margin: 4px 0 0; color: var(--ink-dim); font-size: .94rem; line-height: 1.8; }
+.outlook-card details { border-top: 1px solid rgba(var(--sc-rgb), .22); margin-top: 20px; }
+.outlook-card summary { cursor: pointer; padding: 12px 0 4px; min-height: 44px; color: var(--ink); font-size: .92rem; }
+.outlook-card summary::marker { color: var(--sc); }
+.outlook-card summary:focus-visible { outline: 2px solid var(--sc); outline-offset: 3px; }
+.outlook-card ul { margin: 6px 0 0; padding-inline-start: 1.2em; font-size: .92rem; line-height: 1.95; }
+.outlook-card li::marker { color: var(--sc); }
+.outlook-end { margin-top: 18px; font-family: 'Noto Serif SC', serif; }
+@media (max-width: 950px) {
+  .outlook-grid { grid-template-columns: 1fr; }
+}
+
 .ideal-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 18px;
@@ -1617,10 +1651,11 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
   <div class="reveal">
     <div class="section-label">II · SPIRITUAL TOTEM</div>
     <h2 class="section-title">精神<span class="hl">图腾</span></h2>
-    <p class="section-sub">我相信什么——理想、人物、金句、座右铭。这一团<em>赤红</em>，是我血液里的火。</p>
+    <p class="section-sub">我相信什么——理想、三观、人物、金句、座右铭。这一团<em>赤红</em>，是我血液里的火。</p>
     <nav class="section-overview" id="s2-overview" tabindex="-1" aria-label="精神图腾本章速览">
       <span class="overview-label">本章速览</span>
       <a href="#s2-ideals">理想</a>
+      <a href="#s2-worldviews">S级人生三观</a>
       <a href="#s2-frameworks">我的理论</a>
       <a href="#s2-six-things">人生最重要的六件事</a>
       <a href="#s2-mentors">人生人物</a>
@@ -1652,6 +1687,109 @@ h3.subsection-label:focus-visible { outline: 2px solid var(--sc); outline-offset
       <a class="chip" href="ideal.html">查看三级人生目标 <span aria-hidden="true">↗</span></a>
     </div>
   </div>
+
+  <section class="outlook" aria-labelledby="s2-worldviews">
+    <h3 id="s2-worldviews" tabindex="-1" class="subsection-label">S级人生三观</h3>
+    <p class="outlook-intro">过去一年，阅读、听课、和 AI 深聊，以及一次次实践与复盘，让这些原则逐渐清晰。遇到重大选择时，我用它们判断方向。事情做完后，再回看自己做对了什么、下次想改什么。</p>
+    <div class="outlook-grid">
+      <article class="outlook-card">
+        <h4>世界观</h4>
+        <p class="outlook-question">我相信世界如何运行</p>
+        <dl>
+          <dt>第一性原理</dt>
+          <dd>遇到难题，我先弄清事实和约束，再从这些条件出发寻找答案。</dd>
+          <dt>系统思维</dt>
+          <dd>一个结果反复出现时，我会看哪些因素彼此影响，又有哪些反馈让它持续发生。</dd>
+          <dt>复利效应</dt>
+          <dd>今天练成的能力、积累的信任，会成为下一次行动的起点。</dd>
+          <dt>二八定律</dt>
+          <dd>我先找出对结果影响最大的少数因素，把有限的精力用在上面。</dd>
+          <dt>杠杆思维</dt>
+          <dd>借助 AI、代码、内容和他人的协作，我能让一次投入发挥更大的作用。</dd>
+        </dl>
+        <details>
+          <summary>其他观念 · 9 条</summary>
+          <ul>
+            <li>熵增定律</li>
+            <li>概率思维</li>
+            <li>反脆弱性</li>
+            <li>价值稀缺原理</li>
+            <li>注意力稀缺</li>
+            <li>自证预言</li>
+            <li>思维决定命运链路</li>
+            <li>选择比努力更重要</li>
+            <li>马克思主义与历史发展</li>
+          </ul>
+        </details>
+      </article>
+      <article class="outlook-card">
+        <h4>人生观</h4>
+        <p class="outlook-question">我决定如何安排自己的人生</p>
+        <dl>
+          <dt>知行合一</dt>
+          <dd>一个道理能改变我下一次的实际行动，才算真正成为了我的东西。</dd>
+          <dt>长期主义</dt>
+          <dd>值得做很多年的事，我愿意持续投入，也愿意根据反馈调整做法。</dd>
+          <dt>财富自由</dt>
+          <dd>我追求 FIRE，是想把时间的支配权拿回来，自主选择怎样生活、陪伴谁、为谁做事。</dd>
+          <dt>反向思维</dt>
+          <dd>做决定前，我也会问自己怎样做最容易把事情搞砸，提前避开那些坑。</dd>
+          <dt>时间管理</dt>
+          <dd>我把最重要的事排进日程，再用复盘看看时间究竟花在了哪里。</dd>
+        </dl>
+        <details>
+          <summary>其他观念 · 12 条</summary>
+          <ul>
+            <li>终身成长</li>
+            <li>无限进步</li>
+            <li>对自己的人生负责</li>
+            <li>元认知能力</li>
+            <li>先完成，再完美</li>
+            <li>先突破，后补齐</li>
+            <li>主动真的会有故事</li>
+            <li>不下牌桌</li>
+            <li>愿赌服输</li>
+            <li>真正重要的事值得重复</li>
+            <li>不抱怨</li>
+            <li>学习延后，做事提前，休息打散</li>
+          </ul>
+        </details>
+      </article>
+      <article class="outlook-card">
+        <h4>价值观</h4>
+        <p class="outlook-question">我认为什么最重要</p>
+        <dl>
+          <dt>注意力 &gt; 时间 &gt; 金钱</dt>
+          <dd>我愿意花钱买回时间，也愿意把最清醒、最专注的时段留给真正重要的事。</dd>
+          <dt>未来 &gt; 现在 &gt; 过去（活在未来）</dt>
+          <dd>我从过去吸取经验，让想去的未来指引今天的选择。</dd>
+          <dt>乐观主义</dt>
+          <dd>结果还不明朗时，我愿意相信事情有转机，并主动试试自己能做什么。</dd>
+          <dt>感性和理性平衡</dt>
+          <dd>我用理性想清楚怎样做，也给感受留出位置，珍惜眼前的人和此刻的生活。</dd>
+          <dt>理想主义</dt>
+          <dd>即使目标很远，我也愿意为自己相信的未来做一件今天就能做的事。</dd>
+          <dt>对事不对人</dt>
+          <dd>遇到分歧，我会说清具体哪件事出了问题，和对方一起找改法。</dd>
+        </dl>
+        <details>
+          <summary>其他观念 · 9 条</summary>
+          <ul>
+            <li>成长 &gt; 成功</li>
+            <li>有情有义</li>
+            <li>利他就是利己</li>
+            <li>对知识诚实</li>
+            <li>与人为善</li>
+            <li>能用蠢解释的，就不要用恶意</li>
+            <li>划清边界</li>
+            <li>君子之交淡如水</li>
+            <li>共产主义与人的全面发展</li>
+          </ul>
+        </details>
+      </article>
+    </div>
+    <p class="outlook-end">知行合一，持续成长，主动掌控人生，先立己，再达人。</p>
+  </section>
 
   <div class="reveal">
     <h3 id="s2-frameworks" tabindex="-1" class="subsection-label">我的理论 <small>FRAMEWORKS · 2</small></h3>
