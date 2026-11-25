@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="color-scheme" content="dark"><title>深色配色预览 · 人生系统</title><style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#191f2c;color:#f1eee8}body{display:grid;grid-template-rows:auto minmax(0,1fr);font:15px/1.45 system-ui,sans-serif}header{display:flex;justify-content:center;align-items:center;gap:20px;padding:5px 10px;background:#17181c;border-bottom:1px solid #505057}header strong{font-size:14px;font-weight:500;color:#ddd}nav{display:flex;gap:4px}button{display:flex;gap:8px;align-items:center;justify-content:center;border:1px solid transparent;color:#cdcad1;background:transparent;font:inherit;min-height:44px;padding:5px 13px;border-radius:4px;cursor:pointer}button i{height:12px;width:12px;border:1px solid #a2a0aa;border-radius:50%;background:var(--swatch)}button[aria-pressed=true]{border-color:#a7a8b1;color:white}button:focus-visible{outline:2px solid #eed8a8;outline-offset:1px}iframe{width:100%;height:100%;border:0}@media(max-width:490px){header{gap:5px;justify-content:space-between;padding:4px 6px}header strong{font-size:12px}button{font-size:14px;padding:4px 7px;gap:5px}nav{gap:1px}}
+</style></head><body><header><strong>深色配色预览</strong><nav aria-label="选择配色"><button type="button" data-id="ink" style="--swatch:#303b50" aria-pressed="true"><i aria-hidden="true"></i>午夜蓝</button><button type="button" data-id="graphite" style="--swatch:#39393d" aria-pressed="false"><i aria-hidden="true"></i>石墨灰</button><button type="button" data-id="plum" style="--swatch:#413849" aria-pressed="false"><i aria-hidden="true"></i>暮紫</button></nav></header><iframe title="人生系统配色预览" src="system.html#top"></iframe><script>
+const colors=[{"id":"ink","name":"午夜蓝","bg":"#191f2c","surface":"#242d3f","raised":"#303b50","ink":"#f1eee8","soft":"#d5d8df","quiet":"#adb7c8","rule":"#414c60","accent":"#f2c48e","tint":"#333749","shade":"18,24,38"},{"id":"graphite","name":"石墨灰","bg":"#212123","surface":"#2d2d31","raised":"#39393d","ink":"#f3f0e9","soft":"#d6d3ce","quiet":"#b9b6b1","rule":"#4d4b4c","accent":"#e4c99f","tint":"#383431","shade":"25,24,26"},{"id":"plum","name":"暮紫","bg":"#26212b","surface":"#332c3a","raised":"#413849","ink":"#f4edf0","soft":"#ded4dd","quiet":"#c1b0c0","rule":"#574856","accent":"#e9b6ac","tint":"#41323d","shade":"34,25,37"}];
+const frame=document.querySelector('iframe'),buttons=[...document.querySelectorAll('button')];
+let selected=colors.find(p=>p.id===location.hash.slice(1))||colors[0];
+function mount(){
+ const doc=frame.contentDocument;
+ if(!doc||!doc.head||!doc.body)return;
+ let style=doc.getElementById('palette-preview-style');
+ if(style&&style.dataset.id===selected.id&&doc.documentElement.dataset.theme==='dark')return;
+ if(!style){style=doc.createElement('style');style.id='palette-preview-style';doc.body.append(style);}
+ doc.documentElement.dataset.theme='dark';style.dataset.id=selected.id;
+ const p=selected;
+ style.textContent=`
+ :root.module-view[data-theme="dark"],html[data-theme="dark"] body{--paper:${p.bg};--surface:${p.surface};--raised:${p.raised};--ink:${p.ink};--soft:${p.soft};--quiet:${p.quiet};--rule:${p.rule};--metal:${p.accent};--tint:${p.tint};--bg:${p.bg};--panel:${p.surface};--button:${p.accent};--button-ink:${p.bg};--muted:${p.quiet};--field:${p.bg};--line:${p.rule};--accent:${p.accent};--gold:${p.accent};--bg-deep:${p.bg};--bg-card:${p.surface};--text-primary:${p.ink};--text-secondary:${p.soft};--text-dim:${p.quiet}}
+ :root.module-view[data-theme="dark"] :is(#learning,#work,#life).studio .room-heading{background:${p.surface}}
+ :root.module-view[data-theme="dark"] :is(#learning,#work,#life).studio .room-land{background-image:linear-gradient(0deg,rgba(${p.shade},.97),rgba(${p.shade},.70) 39%,rgba(${p.shade},.04) 78%),var(--studio-image)}
+ @media(max-width:760px){:root.module-view[data-theme="dark"] :is(#learning,#work,#life).studio .room-land{background-image:linear-gradient(90deg,rgba(${p.shade},.94),rgba(${p.shade},.87) 42%,rgba(${p.shade},.18) 80%),var(--studio-image)}}
+ #themeToggle{display:none}
+ `;
+}
+function select(id){selected=colors.find(p=>p.id===id)||colors[0];buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===selected.id)));mount()}
+buttons.forEach(b=>b.onclick=()=>{history.replaceState(null,'','#'+b.dataset.id);select(b.dataset.id)});
+select(selected.id);frame.addEventListener('load',mount);setInterval(mount,350);
+</script></body></html>
